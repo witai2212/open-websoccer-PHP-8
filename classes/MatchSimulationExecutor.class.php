@@ -315,6 +315,7 @@ class MatchSimulationExecutor {
 		$columns['w_kondition'] = 'stamina';
 		$columns['w_frische'] = 'freshness';
 		$columns['w_zufriedenheit'] = 'satisfaction';
+		$columns['w_talent'] = 'talent';
 		$columns['st_spiele'] = 'matches_played';
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
@@ -352,7 +353,7 @@ class MatchSimulationExecutor {
 				
 				$position = $positionMapping[$mainPosition];
 				
-				$strength = $playerinfo['strength'];
+				$strength = $playerinfo['strength']*($playerinfo['talent']/5);
 				
 				// player becomes weaker: wrong position
 				if ($playerinfo['position'] != $position 

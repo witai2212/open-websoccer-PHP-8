@@ -267,14 +267,14 @@ class StockMarketDataService {
             $portfolioUpdateStr = "INSERT ". $websoccer->getConfig("db_prefix") ."_user_stock (user_id, stock_id, qty) VALUES ('$teamId','$index','$qty')";
         }
         
-        //pay price
-        $budgetUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET finanz_budget=finanz_budget-$price WHERE id='$teamId'";
+        // credit / debit amount
+        BankAccountDataService::debitAmount($websoccer, $db, $teamId, $price, "buy_stock_message", "sender_name");
+        
         //deduct from available stock on from stockmarket table
         $stockmarketUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket SET quantity=quantity-$qty WHERE id='$index'";
-
+        
         $db->executeQuery($stockmarketUpdateStr);
         $db->executeQuery($portfolioUpdateStr);
-        $db->executeQuery($budgetUpdateStr);
     }
     
     /**
@@ -299,8 +299,9 @@ class StockMarketDataService {
         //index money - 5%
         $price = $price*$qty*0.95;
         
-        //get money price
-        $budgetUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET finanz_budget=finanz_budget+$price WHERE id='$teamId'";
+        // credit / debit amount
+        BankAccountDataService::creditAmount($websoccer, $db, $teamId, $price, "sell_stock_message", "sender_name");
+        
         //deduct from available stock on from stockmarket table
         $stockmarketUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket SET quantity=quantity+$qty WHERE id='$index'";
         //portfolioUpdateQty
@@ -308,7 +309,155 @@ class StockMarketDataService {
         
         $db->executeQuery($stockmarketUpdateStr);
         $db->executeQuery($portfolioUpdateStr);
-        $db->executeQuery($budgetUpdateStr);
+    }
+    
+    /*
+     * Check if club is on stockmarket
+     */
+    public static function checkClubOnStockmarket(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        
+        $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket
+                            WHERE team_id='".$teamId."'";
+        $return = $db->executeQuery($sqlStr);
+        $index = $return->fetch_array();
+        
+        if(isset($index['team_id'])) {
+            return $index;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    /*
+     * Check club stockmarket criteria
+     */
+    public static function clubStockmarketCriteria(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        
+        global $conf;
+        $criteria_not_met = 0;
+        
+        //GET GLOBAL SETTINGS
+        $min_stadium_size = $conf["min_stadium_size"];
+        $min_team_value = $conf["min_team_value"];
+        $active_credits = $conf["active_credits"];
+        $min_team_titles_won = $conf["min_team_titles_won"];
+        
+        //CHECK IF ALREADY ON STOCKMARKET
+        $onStockmarket = self::checkClubOnStockmarket($websoccer, $db, $teamId);
+        if($onStockmarket==true) {
+            $criteria_not_met++;
+        }
+        
+        //CHECK IF ACTIVE CREDITS
+        //NOT SET YET
+        
+        //GET STADIUM SIZE >=25.000
+        $stadium = StadiumsDataService::getStadiumByTeamId($websoccer, $db, $teamId);
+        $stadium_size = $stadium['p_steh']+$stadium['p_sitz']+$stadium['p_haupt_steh']+$stadium['p_haupt_sitz']+$stadium['p_vip'];
+        
+        if($stadium_size<$min_stadium_size) {
+            $criteria_not_met++;
+        }
+        
+        //GET TEAM VALUE >= 25.000.000
+        $team_marketvalue = TeamsDataService::getTeamValue($websoccer, $db, $teamId);
+        if($team_marketvalue<$min_team_value) {
+            $criteria_not_met++;
+        }
+        
+        //GET HISTORY 10 Championships, Cups, etc. --> global config
+        $titles = TeamsDataService::getNumberTeamTitlesWon($websoccer, $db, $teamId);
+        if($titles<$min_team_titles_won) {
+            $criteria_not_met++;
+        }
+        
+        //SET 0 for testing reasons
+        //$criteria_not_met = 0;
+        
+        if($criteria_not_met>=1) {
+            return  true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    /*
+     * Get Club value to be registred on stockmarket
+     */
+    public static function clubValue(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        
+        //GET finanz_budet
+        $sqlStrFin = "SELECT finanz_budget
+                        FROM ". $websoccer->getConfig("db_prefix") ."_verein
+                        WHERE id='".$teamId."'";
+        $returnFin = $db->executeQuery($sqlStrFin);
+        $finance = $returnFin->fetch_array();
+        
+        $finance_budget = $finance['finanz_budget']*0.1;
+        
+        //GET TEAM market value
+        $team_marketvalue = TeamsDataService::getTeamValue($websoccer, $db, $teamId);
+        $team_marketvalue = $team_marketvalue['team_marketvalue'];
+        
+        //GET STADIUM SIZE + VALUE
+        $stadium = StadiumsDataService::getStadiumByTeamId($websoccer, $db, $teamId);
+        $stadium_size = $stadium['p_steh']+$stadium['p_sitz']+$stadium['p_haupt_steh']+$stadium['p_haupt_sitz']+$stadium['p_vip'];
+        $stadium_value = $stadium_size*100000;
+        
+        //GET CLUB TITLES WON
+        $titles = TeamsDataService::getNumberTeamTitlesWon($websoccer, $db, $teamId);
+        $titles_value = $titles*1000000;
+        
+        //GET PORTFOLIO VALUE
+        $portfolio_value = self::getPortfolioValue($websoccer, $db, $teamId);
+        $portfolio_value = $portfolio_value*0.5;
+        
+        $total_club_value = $finance_budget+$team_marketvalue+$stadium_value+$titles_value+$portfolio_value;
+        
+        return $total_club_value;
+        
+    }
+    
+    /*
+     * GET USER PORTFOLIO VALUE
+     */
+    public static function getPortfolioValue(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        
+        $portfolio_value = 0;
+        
+        $sqlStr = "SELECT us.qty*sm.v1 AS value
+                    FROM ". $websoccer->getConfig("db_prefix") ."_user_stock AS us, ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm
+                    WHERE us.user_id='$teamId'
+                        AND us.stock_id=sm.id; ";
+        $result = $db->executeQuery($sqlStr);
+        while ($stockdata = $result->fetch_array())
+        {
+            $portfolio_value = $portfolio_value+$stockdata['value'];
+        }
+        $result->free();
+        
+        return $portfolio_value;
+        
+    }
+    
+    /*
+     * PUT TEAM ON STOCKMARKET
+     *
+     */
+    public static function putTeamOnStockmarket(WebSoccer $websoccer, DbConnection $db, $teamId, $abbrev, $name, $qty, $v1) {
+        
+        $stockcolumns['team_id'] = $teamId;
+        $stockcolumns['abbrev'] = $abbrev;
+        $stockcolumns['name'] = $name;
+        $stockcolumns['quantity'] = $qty;
+        $stockcolumns['v1'] = $v1;
+        
+        $fromTable = $websoccer->getConfig('db_prefix') . '_stockmarket';
+        
+        $db->queryInsert($stockcolumns, $fromTable);
+        
     }
 }
 ?>

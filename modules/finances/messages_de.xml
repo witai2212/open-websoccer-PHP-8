@@ -42,5 +42,6 @@
     <message id="can_put_club-on_stockmarket">Dein Verein erfüllt alle Kriterien um an der Börse notiert zu werden. Eine Börsennotierung würde folgenden Betrag in die Kasse spülen:</message>
     <message id="put_team_on_stockmarket">Verein an Börse notieren.</message>
     <message id="team_now_on_stockmarket">Herzlichen Glückwunsch. Dein Team ist jetzt an der Börse notiert.</message>
+    <message id="team_on_stockmarket_message">Börsennotierung des Clubs</message>
     
 </messages>

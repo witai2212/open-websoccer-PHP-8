@@ -1,0 +1,51 @@
+{% import "macros/paginator.twig" as pagination %}
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("uefa_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("uefatable_head_land") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_s1") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_s2") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_s3") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_s4") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_s5") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_total") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_cl_teams") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_uc_teams") }}</th>
+				<th>{{ i18n.getMessage("uefatable_head_cc_teams") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+
+
+		{% for uefa in uefas %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td>{{ uefa.land }}</td>
+				<td>{{ uefa.uefa_s1 }}</td>
+				<td>{{ uefa.uefa_s2 }}</td>
+				<td>{{ uefa.uefa_s3 }}</td>
+				<td>{{ uefa.uefa_s4 }}</td>
+				<td>{{ uefa.uefa_s5 }}</td>
+				<td>{{ uefa.total }}</td>
+				<td>{{ uefa.cl_teams }}</td>
+				<td>{{ uefa.uc_teams }}</td>
+				<td>{{ uefa.cc_teams }}</td>
+			</tr>	
+		
+		{% endfor %}
+		
+		</tbody>
+	</table>
+
+
+{% endblock %}

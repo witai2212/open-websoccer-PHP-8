@@ -170,6 +170,11 @@
 	</marquee>
   </div>
   {% endif %}
+  {% if on_my_watchlist==false %}
+  	<a class="btn btn-mini" href="?page=mywatchlist&id={{ player.player_id }}&action=put-player-on-watchlist"><i class="icon-hand-up"></i> {{ i18n.getMessage("button_put_on_watchlist") }}</a>
+  {% else %}
+  	<a class="btn btn-mini" href="?page=mywatchlist&id={{ player.player_id }}&action=remove-player-from-watchlist"><i class="icon-trash"></i>&nbsp;</i> {{ i18n.getMessage("watchlist_remove_label") }}</a>
+  {% endif %}
   
   <div class="tab-pane" id="statistic">
   

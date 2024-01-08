@@ -61,7 +61,7 @@
 {% endif %}
 
 <p><em>{{ i18n.getMessage('entity_club_finanz_budget') }}</em><br/>
-<a href="{{ env.getInternalUrl("finances") }}">{{ userteam.team_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</a></p>
+<a href="{{ env.getInternalUrl("finance") }}">{{ userteam.team_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</a></p>
 {% endif %}
 
 {% if env.getConfig("premium_enabled") %}

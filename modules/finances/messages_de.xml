@@ -15,6 +15,8 @@
     <message id="indexes_qty">Anzahl</message>
     <message id="indexes_buy">Kaufen</message>
     <message id="indexes_sell">Verkaufen</message>
+    <message id="indexes_action">Aktion</message>
+    <message id="indexes_percent">%-Anteil</message>
     
     <message id="buystock_navlabel">Aktien kaufen</message>
     <message id="buystock_max_qty">Die maximale Anzahl an Aktien die Du kaufen kannst beträgt: </message>
@@ -27,5 +29,18 @@
     
     <message id="stock_chart_navlabel">Kursentwicklung</message>
     <message id="stock_chart_title">Kursentwicklung</message>
+    
+    <message id="sellstock_navlabel">Aktien verkaufen</message>
+    <message id="sellstock_five_percent">Die Transaktionsgebür für den Verkauf von Aktien beträgt %s.</message>
+    <message id="sellstock_stock_quantity">Aktienanzahl</message>
+    <message id="sellstock_user_max">Maximale Aktienmenge zum Verkauf ist</message>
+    <message id="button_sell">Verkaufen</message>
+    
+    <message id="sender_name">Börse</message>
+    <message id="buy_stock_message">Du hast Aktien gekauft.</message>
+    <message id="sell_stock_message">Du hast Aktien verkauft.</message>
+    <message id="can_put_club-on_stockmarket">Dein Verein erfüllt alle Kriterien um an der Börse notiert zu werden. Eine Börsennotierung würde folgenden Betrag in die Kasse spülen:</message>
+    <message id="put_team_on_stockmarket">Verein an Börse notieren.</message>
+    <message id="team_now_on_stockmarket">Herzlichen Glückwunsch. Dein Team ist jetzt an der Börse notiert.</message>
     
 </messages>

@@ -52,7 +52,7 @@
 				<td>{{ player.position_second }}</td>
 				<td>{{ player.marktwert}}{{ transfermarktLabel }}</td>
 				<td>{{ player.note_schitt }}</td>
-				<td><a href="{{ env.getInternalActionUrl("remove-player-from-watchlist", "id=" ~ player.id) }}" class="btn btn-danger"><i class="icon-remove-circle"></i> {{ i18n.getMessage("watchlist_remove_label") }}</a></td>
+				<td><a class="btn btn-mini" href="?page=mywatchlist&id={{ player.id }}&action=remove-player-from-watchlist"><i class="icon-trash"></i>&nbsp;</i> {{ i18n.getMessage("mywatchlist_delete") }}</a></td>
 			</tr>	
 		
 		{% endfor %}

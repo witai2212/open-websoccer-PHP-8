@@ -1,0 +1,27 @@
+{% import "macros/formelements.twig" as formelements %}
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("sellstock_navlabel") }}: {{ index.name }}
+{% endblock %}
+
+{% block page_content %}
+
+
+<p><i class="icon-info-sign"></i> {{ i18n.getMessage("sellstock_five_percent")|format(transaction_fee)}}%</p>
+<p><i class="icon-info-sign"></i> {{ i18n.getMessage('sellstock_user_max') }}: {{ max|number_format(0, ',', ' ') }}</p>
+
+<form class="form-horizontal" method="post">
+	
+	{{ formelements.textfield('qty', i18n.getMessage('sellstock_stock_quantity'), '', false, validationMsg) }}
+	
+	<div class="form-actions">
+		<button type="submit" class="btn btn-warning">{{ i18n.getMessage('button_sell') }}</button>
+		<a href="{{ env.getInternalUrl("portfolio") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+	</div>
+	<input type="hidden" name="index" value="{{ index.id }}"/>
+	<input type="hidden" name="action" value="sell_stock"/>
+</form>
+
+{% endblock %}

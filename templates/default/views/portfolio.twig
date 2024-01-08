@@ -18,8 +18,7 @@
 				<th>{{ i18n.getMessage("indexes_qty") }}</th>
 				<th>{{ i18n.getMessage("indexes_percent") }}</th>
 				<th>{{ i18n.getMessage("indexes_index_value") }}</th>
-				<th>{{ i18n.getMessage("indexes_buy") }}</th>
-				<th>{{ i18n.getMessage("indexes_sell") }}</th>
+				<th>{{ i18n.getMessage("indexes_action") }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,11 +28,20 @@
 				<td><strong>{{ loop.index }}</strong></td>
 				<td><p><a href="{{ env.getInternalUrl("stock_chart", "id=" ~ index.stock_id) }}">{{ index.name }} </a></p></td>
 				<td>{% if index.v1>index.v2 %} <p color="green"> {% elseif index.v1<index.v2 %} <p color="red"> {% elseif index.v1==index.v2 %} <p color="black"> {%  endif %} {{ index.v1 }} </p></td>
-				<td>{{ index.qty|number_format(0, ',', ' ') }}</td>
-				<td>{{ index.total_qty|number_format(0, ',', ' ') }}%</td>
+				<td>{{ (index.qty)|number_format(0, ',', ' ') }}%</td>
+				<td>{{ ((index.qty/index.total_qty)*100)|number_format(3, ',', ' ') }}%</td>
 				<td>{{(index.qty*index.v1)|number_format(0, ',', ' ') }}</td>
-				<td>buy</td>
-				<td>sell</td>
+				
+				
+				<td>
+					<div class="btn-group">
+						<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">{{ i18n.getMessage("myteam_action_button") }} <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ env.getInternalUrl("buystock", "id=" ~ index.stock_id) }}"><i class="icon-thumbs-up"></i>&nbsp;{{ i18n.getMessage("indexes_buy") }}</a></li>
+							<li><a href="{{ env.getInternalUrl("sellstock", "id=" ~ index.stock_id) }}"><i class="icon-trash"></i>&nbsp;{{ i18n.getMessage("indexes_sell") }}</a></li>
+						</ul>
+					</div>
+				</td>
 			</tr>
 			{% endfor %}
 		

@@ -16,6 +16,7 @@
 				<th>{{ i18n.getMessage("indexes_head_name") }}</th>
 				<th>{{ i18n.getMessage("indexes_stock_price") }}</th>
 				<th>{{ i18n.getMessage("indexes_qty") }}</th>
+				<th>{{ i18n.getMessage("indexes_percent") }}</th>
 				<th>{{ i18n.getMessage("indexes_index_value") }}</th>
 				<th>{{ i18n.getMessage("indexes_buy") }}</th>
 				<th>{{ i18n.getMessage("indexes_sell") }}</th>
@@ -29,6 +30,7 @@
 				<td><p><a href="{{ env.getInternalUrl("stock_chart", "id=" ~ index.stock_id) }}">{{ index.name }} </a></p></td>
 				<td>{% if index.v1>index.v2 %} <p color="green"> {% elseif index.v1<index.v2 %} <p color="red"> {% elseif index.v1==index.v2 %} <p color="black"> {%  endif %} {{ index.v1 }} </p></td>
 				<td>{{ index.qty|number_format(0, ',', ' ') }}</td>
+				<td>{{ index.total_qty|number_format(0, ',', ' ') }}%</td>
 				<td>{{(index.qty*index.v1)|number_format(0, ',', ' ') }}</td>
 				<td>buy</td>
 				<td>sell</td>

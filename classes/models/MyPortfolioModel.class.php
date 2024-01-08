@@ -49,6 +49,7 @@ class MyPortfolioModel implements IModel {
         $teamId = $team['team_id'];
         
         $indexes = StockMarketDataService::getUserPortfolio($this->_websoccer, $this->_db, $teamId);
+        print_r($indexes);
         
         return array("indexes" => $indexes);
     }

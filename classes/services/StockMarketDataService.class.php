@@ -158,13 +158,32 @@ class StockMarketDataService {
         $result = $db->executeQuery($sqlStr);
         while ($stockdata = $result->fetch_array())
         {
+            $totalQty = self::totalQtyByStockId($websoccer, $db, $stockdata['stock_id']);
             $indexes[$i] = $stockdata;
+            $indexes['total_qty'] = $totalQty;
             $i++;
         }
         $result->free();
         
         return $indexes;
         
+    }
+    
+    /*
+     * GET TOTAL AVAILABLE ON MARKET BY stock_id
+     */
+    static function totalQtyByStockId(WebSoccer $websoccer, DbConnection $db, $stockId) {
+        //SELECT sm.quantity+SUM(us.qty) AS total FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm, cm23_user_stock AS us WHERE us.stock_id=sm.id AND sm.id='$stockId';
+        $indexes = array();
+        
+        $sqlStr = "SELECT sm.quantity+SUM(us.qty) AS total
+                    FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm, ". $websoccer->getConfig("db_prefix") ."_user_stock AS us
+                    WHERE us.stock_id=sm.id AND sm.id='$stockId'";
+        $result = $db->executeQuery($sqlStr);
+        $qty = $result->fetch_array();
+        $result->free();
+        
+        return $qty;
     }
 
     /**

@@ -353,6 +353,7 @@ class MatchSimulationExecutor {
 				
 				$position = $positionMapping[$mainPosition];
 				
+				//Stärke = Stärke x (Talent/5);
 				$strength = $playerinfo['strength']*($playerinfo['talent']/5);
 				
 				// player becomes weaker: wrong position

@@ -1,0 +1,50 @@
+{% import "macros/paginator.twig" as pagination %}
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("uefa_ranking_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if uefas|length == 0 %}
+{{ i18n.getMessage("news_no_items") }}
+{% endif %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("uefatable_land") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_total") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_cl") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_ul") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_conf") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for uefa in uefas %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				
+				{% set nationImg = skin.getImage("flags/players/" ~ uefa.name ~ ".png") %}
+			  	{% if i18n.hasMessage("option_" ~ uefa.name) %}
+					{% set countryLabel = i18n.getMessage("option_" ~ uefa.name) %}
+				{% else %}
+					{% set countryLabel = uefa.name %}
+				{% endif %}
+				
+				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}&nbsp;{{ uefa.name }}</td>
+				<td>{{ uefa.total }}</td>
+				<td>{{ uefa.uefa_cl }}</td>
+				<td>{{ uefa.uefa_ul }}</td>
+				<td>{{ uefa.uefa_conf }}</td>
+			</tr>	
+		
+		{% endfor %}
+		</tbody>
+		</table>
+{{ pagination.paginator(paginator) }}
+
+{% endblock %}

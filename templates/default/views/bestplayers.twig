@@ -1,0 +1,59 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("bestplayers_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if players|length == 0 %}
+{{ i18n.getMessage("news_no_items") }}
+{% else %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("bestplayers_name") }}</th>
+				<th>{{ i18n.getMessage("bestplayers_verein") }}</th>
+				<th>{{ i18n.getMessage("bestplayers_alter") }}</th>
+				<th>{{ i18n.getMessage("bestplayers_position_main") }}</th>
+				<th>{{ i18n.getMessage("bestplayers_position_second") }}</th>
+				<th>{{ i18n.getMessage("bestplayers_marktwert") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for player in players %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				
+				{% set nationImg = skin.getImage("flags/players/" ~ player.nation ~ ".png") %}
+			  	{% if i18n.hasMessage("option_" ~ player.nation) %}
+					{% set countryLabel = i18n.getMessage("option_" ~ player.nation) %}
+				{% else %}
+					{% set countryLabel = player.nation %}
+				{% endif %}
+				
+				{% if player.transfermarkt >0 %}
+					{% set transfermarktLabel = "*" %}
+				{% else %}
+					{% set transfermarktLabel = "" %}
+				{% endif %}
+				
+				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />
+					{% endif %}&nbsp;<a href="?page=player&id={{ player.id }}">{{ player.vorname }}&nbsp{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</a></td>
+				<td><a href="?page=team&id={{ player.verein.team_id }}">{{ player.verein.team_name }}</a></td>
+				<td>{{ player.alter }}</td>
+				<td>{{ player.position_main }}</td>
+				<td>{{ player.position_second }}</td>
+				<td>{{ player.marktwert}}{{ transfermarktLabel }}</td>
+			</tr>	
+		
+		{% endfor %}
+		</tbody>
+		</table>
+
+{% endif %}
+{% endblock %}

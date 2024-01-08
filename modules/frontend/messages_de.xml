@@ -42,6 +42,7 @@
 	<message id="button_choose">Auswählen</message>
 	<message id="button_confirm">Bestätigen</message>
 	<message id="button_delete">Löschen</message>
+	<message id="button_buy">Kaufen</message>
 	
 	<message id="saved_message_title">Erfolgreich gespeichert.</message>
 	

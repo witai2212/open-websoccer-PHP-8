@@ -50,6 +50,7 @@ class PlayerDetailsModel implements IModel {
 		if (!isset($player["player_id"])) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
+		//print_r($watchlist);
 		
 		return array("player" => $player);
 	}

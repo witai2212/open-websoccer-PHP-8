@@ -247,8 +247,10 @@ class DataGeneratorService {
 		$columns['w_kondition'] = max(1, min(100, $strengths['stamina'] + self::_getRandomDeviationValue($maxDeviation)));
 		$columns['w_frische'] = max(1, min(100, $strengths['freshness'] + self::_getRandomDeviationValue($maxDeviation)));
 		$columns['w_zufriedenheit'] = max(1, min(100, $strengths['satisfaction'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_talent'] = max(1, min(6, $strengths['talent'] + self::_getRandomDeviationValue($maxDeviation)));
 		$columns['vertrag_gehalt'] = $salary;
 		$columns['vertrag_spiele'] = $contractDuration;
+		$columns['vertrag_torpraemie'] = max(1, 1000);
 		$columns['status'] = '1';
 		
 		if ($teamId) {

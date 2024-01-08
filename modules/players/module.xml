@@ -102,6 +102,7 @@
 					<field id="w_kondition" type="percent" required="true" roles="r_staerken" />
 					<field id="w_frische" type="percent" required="true" roles="r_staerken" />
 					<field id="w_zufriedenheit" type="percent" required="true" roles="r_staerken" />
+					<field id="w_talent" type="number" required="true" roles="r_staerken" />
 					
 					<field id="transfermarkt" type="boolean" />
 					<field id="transfer_start" type="timestamp" />

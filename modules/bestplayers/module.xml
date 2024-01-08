@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <pages>
+        <page
+            id="stats"
+            template="uefa-ranking-overview"
+            navitem="true"
+            navweight="5"
+            model="UEFARankingModel"
+            role="user">
+	        <page
+	            id="bestplayers"
+	            template="bestplayers"
+	            navitem="true"
+	            model="BestPlayersModel"
+	            navweight="0"
+	            role="user"/>
+	        <page
+	            id="bestgoalscorers"
+	            template="bestgoalscorers"
+	            navitem="true"
+	            model="BestGoalscorersModel"
+	            navweight="0"
+	            role="user"/>
+	        
+   
+        </page>
+        
+    </pages> 
+     
+</module>

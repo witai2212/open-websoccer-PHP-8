@@ -35,7 +35,7 @@ class PlayersDataService {
 	 * @param boolean $considerBlocksForCups if TRUE, then consider only blocked matches for cups, not for league matches.
 	 * @return array array with key=converted position ID, value=array of players.
 	 */
-	public static function getPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = 'ASC', $considerBlocksForCups = FALSE, $considerBlocks = TRUE) {
+    public static function getPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = 'ASC', $considerBlocksForCups = FALSE, $considerBlocks = TRUE) {
 		$columns = array(
 				'id' => 'id', 
 				'vorname' => 'firstname', 
@@ -115,7 +115,8 @@ class PlayersDataService {
 				'w_technik' => 'strength_technic',
 				'w_kondition' => 'strength_stamina',
 				'w_frische' => 'strength_freshness',
-				'w_zufriedenheit' => 'strength_satisfaction',
+		        'w_zufriedenheit' => 'strength_satisfaction',
+		        'w_talent' => 'strength_talent',
 				'transfermarkt' => 'transfermarket',
 				'nation' => 'player_nationality',
 				'picture' => 'picture',
@@ -312,6 +313,7 @@ class PlayersDataService {
 		$columns['P.w_kondition'] = 'player_strength_stamina';
 		$columns['P.w_frische'] = 'player_strength_freshness';
 		$columns['P.w_zufriedenheit'] = 'player_strength_satisfaction';
+		$columns['P.w_talent'] = 'player_strength_talent';
 		
 		$columns['P.sa_tore'] = 'player_season_goals';
 		$columns['P.sa_assists'] = 'player_season_assists';
@@ -365,6 +367,9 @@ class PlayersDataService {
 			$player['player_nationality_filename'] = self::getFlagFilename($player['player_nationality']);
 			
 			$matchesInfo = explode(';', $player['matches_info']);
+			if(empty($matchesInfo[0])) {
+			    $matchesInfo[0] = 0;
+			}
 			$player['player_avg_grade'] = round($matchesInfo[0], 2);
 			if (isset($matchesInfo[1])) {
 				$player['player_assists'] = $matchesInfo[1];
@@ -658,7 +663,9 @@ class PlayersDataService {
 			+ $websoccer->getConfig('sim_weight_strengthStamina') + $websoccer->getConfig('sim_weight_strengthFreshness')
 			+ $websoccer->getConfig('sim_weight_strengthSatisfaction');
 		
-		return $totalStrength * $websoccer->getConfig('transfermarket_value_per_strength');
+			$totalStrength =  $totalStrength * $websoccer->getConfig('transfermarket_value_per_strength') * ($player[$columnPrefix . 'strength_technique']/5);
+			
+			return $totalStrength;
 	}
 	
 	/**
@@ -682,6 +689,113 @@ class PlayersDataService {
 		$filename = str_replace('??', 'oe', $filename);
 		$filename = str_replace('??', 'ue', $filename);
 		return $filename;
+	}
+
+	/**
+	 * Provides best players.
+	 *
+	 * @param string $nationalitygetConfig('db_prefix')
+	 * @return array with best players.
+	 */
+	public static function getBestPlayersByStrength(WebSoccer $websoccer, DbConnection $db) {
+	    
+	    $queryString = "SELECT s.*, (s.w_staerke/s.w_talent) AS strength
+                            FROM ". $websoccer->getConfig('db_prefix') ."_spieler AS s
+                            ORDER BY (s.w_staerke/s.w_talent) DESC, marktwert DESC LIMIT 20";
+	    $result = $db->executeQuery($queryString);
+	    
+	    $players = array();
+	    $i = 0;
+	    while ($player = $result->fetch_array()) {
+	        
+	        $players[] = $player;
+	        if(isset($players[$i]['verein_id'])) {
+	            $verein = TeamsDataService::getTeamById($websoccer, $db, $players[$i]['verein_id']);
+	            $players[$i]['verein'] = $verein;
+	        }
+	    $i++;
+	    }
+	    $result->free();
+	    
+	    return $players;
+	}
+	
+	/**
+	 * Provides best players.
+	 *
+	 * @param string $nationalitygetConfig('db_prefix')
+	 * @return array with best players.
+	 */
+	public static function getBestGoalscorers(WebSoccer $websoccer, DbConnection $db) {
+	    
+	    $queryString = "SELECT *, (sa_tore+sa_assists) AS scores
+                            FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+                            ORDER BY (sa_tore/sa_spiele) DESC, 
+                                sa_tore DESC, sa_assists, note_schnitt DESC
+                            LIMIT 20";
+	    $result = $db->executeQuery($queryString);
+	    
+	    $players = array();
+	    $i = 0;
+	    while ($player = $result->fetch_array()) {
+	        
+	        $players[] = $player;
+	        if(isset($players[$i]['verein_id'])) {
+	            $verein = TeamsDataService::getTeamById($websoccer, $db, $players[$i]['verein_id']);
+	            $players[$i]['verein'] = $verein;
+	        }
+	        $i++;
+	    }
+	    $result->free();
+	    
+	    return $players;
+	}
+
+	/**
+	 * Provides on which Teams watchlist the playerId is.
+	 *
+	 * @param string $playerId
+	 * @return array with club names.
+	 */
+	public static function whoIsWatchingPlayerId(WebSoccer $websoccer, DbConnection $db, $playerId) {
+	    
+	    $queryString = "SELECT wl.verein_id, v.name 
+                FROM ". $websoccer->getConfig('db_prefix') ."_watchlist AS wl, cm23_verein AS v 
+                WHERE wl.spieler_id='$playerId' 
+                    AND wl.verein_id=v.id";
+	    $result = $db->executeQuery($queryString);
+	    
+	    $clubs = array();
+	    $i = 0;
+	    while ($club = $result->fetch_array()) {
+	        $clubs[$i]['name'] = $club['name'];
+	        $i++;
+	    }
+	    $result->free();
+	    
+	    return $clubs;
+	}
+	
+	/**
+	 * Provides if playerId is on my watchlist.
+	 *
+	 * @param string $playerId
+	 * @return boolean.
+	 */
+	public static function checkIfPlayerOnWatchlist(WebSoccer $websoccer, DbConnection $db, $playerId, $teamId) {
+	    
+	    $queryString = "SELECT spieler_id  
+                        FROM ". $websoccer->getConfig('db_prefix') ."_watchlist AS wl
+                        WHERE spieler_id='$playerId' AND wl.verein_id='$teamId'";
+	    $result = $db->executeQuery($queryString);
+	    $wl = $result->fetch_array();
+	    
+	    if(isset($wl['spieler_id'])) {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	    
 	}
 	
 }

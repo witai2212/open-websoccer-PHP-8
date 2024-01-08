@@ -29,11 +29,13 @@
 	<message id="entity_player_w_kondition">Kondition</message>
 	<message id="entity_player_w_frische">Frische</message>
 	<message id="entity_player_w_zufriedenheit">Zufriedenheit</message>
+	<message id="entity_player_w_talent">Talent</message>
 	<message id="entity_player_transfermarkt">Ist auf Transfermarkt</message>
 	<message id="entity_player_transfer_start">Auf Transfermarkt seit</message>
 	<message id="entity_player_transfer_ende">Auf Transfermarkt bis</message>
 	<message id="entity_player_transfer_mindestgebot">Mindestgebot</message>
 	<message id="entity_player_vertrag_gehalt">Gehalt pro Spiel</message>
+	<message id="entity_player_marktwert">Marktwert</message>
 	<message id="entity_player_vertrag_spiele">Restspiele bei Verein</message>				
 	<message id="entity_player_vertrag_torpraemie">Torprämie</message>
 	<message id="entity_player_marktwert">Marktwert</message>	

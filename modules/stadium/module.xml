@@ -238,7 +238,6 @@
             id="stadium"
             template="stadium"
             model="StadiumModel"
-            parentItem="office"
             navitem="true"
             navweight="6"
             role="user">
@@ -250,6 +249,15 @@
 	        
 	        <script file="stadium.js" />
         </page>
+	        
+        <page
+            id="tickets"
+            template="tickets"
+            model="TicketsModel"
+            parentItem="stadium"
+            navitem="true"
+            navweight="5"
+            role="user"/>
 
     </pages>
     

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../messages.dtd">
+<messages>
+    <message id="finance_navlabel">Finanzen</message>
+    
+    
+    <message id="stockmarket_title">Börse</message>
+    <message id="stockmarket_navlabel">Börse</message>
+    <message id="indexes_head_name">Aktien</message>
+    <message id="indexes_stock_price">Kurs</message>	
+    <message id="indexes_v1">V1</message>	
+    <message id="indexes_v2">V2</message>	
+    <message id="indexes_v3">V3</message> 	
+    <message id="indexes_v4">V4</message>
+    <message id="indexes_qty">Anzahl</message>
+    <message id="indexes_buy">Kaufen</message>
+    <message id="indexes_sell">Verkaufen</message>
+    
+    <message id="buystock_navlabel">Aktien kaufen</message>
+    <message id="buystock_max_qty">Die maximale Anzahl an Aktien die Du kaufen kannst beträgt: </message>
+    <message id="buystock_stock_quantity">Aktienanzahl</message>
+    <message id="buystock_stock_min_qty">min. 100 Aktien</message>
+    
+    <message id="portfolio_navlabel">Aktiendepot</message>
+    <message id="portfolio_title">Aktiendepot</message>
+    <message id="indexes_index_value">Wert</message>
+    
+    <message id="stock_chart_navlabel">Kursentwicklung</message>
+    <message id="stock_chart_title">Kursentwicklung</message>
+    
+</messages>

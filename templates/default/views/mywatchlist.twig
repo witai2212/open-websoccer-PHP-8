@@ -1,0 +1,63 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("mywatchlist_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if watchlist|length == 0 %}
+{{ i18n.getMessage("no_items") }}
+{% else %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("mywatchlist_playername") }}</th>
+				<th>{{ i18n.getMessage("mywatchlist_verein") }}</th>
+				<th>{{ i18n.getMessage("mywatchlist_alter") }}</th>
+				<th>{{ i18n.getMessage("mywatchlist_position_main") }}</th>
+				<th>{{ i18n.getMessage("mywatchlist_position_second") }}</th>
+				<th>{{ i18n.getMessage("mywatchlist_marktwert") }}</th>
+				<th>{{ i18n.getMessage("mywatchlist_noten_druchschnitt") }}</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for player in watchlist %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				
+				{% set nationImg = skin.getImage("flags/players/" ~ player.nation ~ ".png") %}
+			  	{% if i18n.hasMessage("option_" ~ player.nation) %}
+					{% set countryLabel = i18n.getMessage("option_" ~ player.nation) %}
+				{% else %}
+					{% set countryLabel = player.nation %}
+				{% endif %}
+				
+				{% if player.transfermarkt >0 %}
+					{% set transfermarktLabel = "*" %}
+				{% else %}
+					{% set transfermarktLabel = "" %}
+				{% endif %}
+				
+				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />
+					{% endif %}&nbsp;<a href="?page=player&id={{ player.id }}">{{ player.vorname }}&nbsp{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</a></td>
+				<td><a href="?page=team&id={{ player.verein_id }}">{{ player.team_name }}</a></td>
+				<td>{{ player.age }}</td>
+				<td>{{ player.position_main }}</td>
+				<td>{{ player.position_second }}</td>
+				<td>{{ player.marktwert}}{{ transfermarktLabel }}</td>
+				<td>{{ player.note_schitt }}</td>
+				<td><a href="{{ env.getInternalActionUrl("remove-player-from-watchlist", "id=" ~ player.id) }}" class="btn btn-danger"><i class="icon-remove-circle"></i> {{ i18n.getMessage("watchlist_remove_label") }}</a></td>
+			</tr>	
+		
+		{% endfor %}
+		</tbody>
+		</table>
+
+{% endif %}
+{% endblock %}

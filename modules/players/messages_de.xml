@@ -17,6 +17,7 @@
     <message id="playertable_head_strength_stamina_abbr">Kon</message>
     <message id="playertable_head_strength_stamina">Kondition</message>
     <message id="playertable_head_strength_satisfaction_abbr">Zuf</message>
+    <message id="playertable_head_strength_talent_abbr">Tal</message>
     <message id="playertable_head_strength_satisfaction">Zufriedenheit</message>
     <message id="playertable_head_age">Alter</message>
     <message id="playertable_head_blocked">Ausfall</message>
@@ -79,4 +80,6 @@
     
     <message id="topscorers_navlabel">Top-Scorer</message>
     <message id="topscorers_head_score">Score</message>
+    
+    <message id="entity_player_is_on_watchlist">Auf der Beobachtingsliste</message>
 </messages>

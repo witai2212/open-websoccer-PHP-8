@@ -46,6 +46,7 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		}
 		
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $playerId);
+		$watchlist = PlayersDataService::whoIsWatchingPlayerId($this->_websoccer, $this->_db, $playerId);
 		
 		if (!isset($player["player_id"])) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
@@ -54,7 +55,8 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		$grades = $this->_getGrades($playerId);
 		
 		$transfers = TransfermarketDataService::getCompletedTransfersOfPlayer($this->_websoccer, $this->_db, $playerId);
-		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers);
+
+		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers, "watchlist" => $watchlist);
 	}
 	
 	private function _getGrades($playerId) {

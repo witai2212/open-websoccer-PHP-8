@@ -32,14 +32,6 @@
 		            template="extend-contract"
 		            role="user" />
 	  		</page>
-	  		
-	        <page
-	            id="finances"
-	            template="finances"
-	            model="FinancesModel"
-	            navitem="true"
-	            navweight="4"
-	            role="user"/>
 	        
 	        <page
 	            id="tickets"

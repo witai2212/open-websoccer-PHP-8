@@ -22,8 +22,7 @@
             model="TransfermarketOverviewModel"
             role="user"
             navitem="true"
-            navweight="2"
-            parentItem="office"
+            navweight="4"
             navitemOnlyForConfigEnabled="transfermarket_enabled">
 	        <page
 	            id="sell-player"

@@ -546,5 +546,79 @@ class TeamsDataService {
 		return $fromTable;
 	}
 	
+	/**
+	 * Provides data about team with specified userID.
+	 *
+	 * @param WebSoccer $websoccer Application Context
+	 * @param DbConnection $db DB connection
+	 * @param int $teamId ID of requested team
+	 * @return array team information as an assoc. array.
+	 */
+	public static function getTeamByUserId(WebSoccer $websoccer, DbConnection $db, $userId) {
+	    $fromTable = self::_getFromPart($websoccer);
+	    
+	    // where
+	    $whereCondition = 'C.user_id = %d AND C.status = 1';
+	    $parameters = $userId;
+	    
+	    // select
+	    $columns['C.id'] = 'team_id';
+	    $columns['C.bild'] = 'team_logo';
+	    $columns['C.name'] = 'team_name';
+	    $columns['C.kurz'] = 'team_short';
+	    $columns['C.strength'] = 'team_strength';
+	    $columns['C.finanz_budget'] = 'team_budget';
+	    $columns['C.min_target_rank'] = 'team_min_target_rank';
+	    $columns['C.nationalteam'] = 'is_nationalteam';
+	    $columns['C.captain_id'] = 'captain_id';
+	    $columns['C.interimmanager'] = 'interimmanager';
+	    
+	    $columns['C.history'] = 'team_history';
+	    
+	    $columns['L.name'] = 'team_league_name';
+	    $columns['L.id'] = 'team_league_id';
+	    $columns['SPON.name'] = 'team_sponsor_name';
+	    $columns['SPON.bild'] = 'team_sponsor_picture';
+	    $columns['SPON.id'] = 'team_sponsor_id';
+	    $columns['U.nick'] = 'team_user_name';
+	    $columns['U.id'] = 'team_user_id';
+	    $columns['U.email'] = 'team_user_email';
+	    $columns['U.picture'] = 'team_user_picture';
+	    $columns['DEPUTY.nick'] = 'team_deputyuser_name';
+	    $columns['DEPUTY.id'] = 'team_deputyuser_id';
+	    $columns['DEPUTY.email'] = 'team_deputyuser_email';
+	    $columns['DEPUTY.picture'] = 'team_deputyuser_picture';
+	    
+	    // statistic
+	    $columns['C.sa_tore'] = 'team_season_goals';
+	    $columns['C.sa_gegentore'] = 'team_season_againsts';
+	    $columns['C.sa_spiele'] = 'team_season_matches';
+	    $columns['C.sa_siege'] = 'team_season_wins';
+	    $columns['C.sa_niederlagen'] = 'team_season_losses';
+	    $columns['C.sa_unentschieden'] = 'team_season_draws';
+	    $columns['C.sa_punkte'] = 'team_season_score';
+	    
+	    $columns['C.st_tore'] = 'team_total_goals';
+	    $columns['C.st_gegentore'] = 'team_total_againsts';
+	    $columns['C.st_spiele'] = 'team_total_matches';
+	    $columns['C.st_siege'] = 'team_total_wins';
+	    $columns['C.st_niederlagen'] = 'team_total_losses';
+	    $columns['C.st_unentschieden'] = 'team_total_draws';
+	    $columns['C.st_punkte'] = 'team_total_score';
+	    
+	    $teaminfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
+	    $team = (isset($teaminfos[0])) ? $teaminfos[0] : array();
+	    
+	    if (isset($team['team_user_email'])) {
+	        $team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer, $team['team_user_picture'], $team['team_user_email'], 20);
+	    }
+	    
+	    if (isset($team['team_deputyuser_email'])) {
+	        $team['deputyuser_picture'] = UsersDataService::getUserProfilePicture($websoccer, $team['team_deputyuser_picture'], $team['team_deputyuser_email'], 20);
+	    }
+	    
+	    return $team;
+	}
+	
 }
 ?>

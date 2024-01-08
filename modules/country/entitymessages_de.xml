@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_country">Länder</message>
+	<message id="entity_country_name">Land</message>
+	<message id="entity_league_kurz">Kürzel</message>
+	<message id="entity_league_land">Land</message>
+	<message id="entity_league_p_steh">Durch. Auslastung Stehplätze</message>
+	<message id="entity_league_p_sitz">Durch. Auslastung Sitzplätze</message>
+	<message id="entity_league_p_haupt_steh">Durch. Auslastung Stehplätze (Haupttribüne)</message>
+	<message id="entity_league_p_haupt_sitz">Durch. Auslastung Sitzplätze (Haupttribüne)</message>
+	<message id="entity_league_p_vip">Durch. Auslastung VIP-Loge</message>
+	<message id="entity_league_preis_steh">Durch. Preis für Stehplätze</message>
+	<message id="entity_league_preis_sitz">Durch. Preis für Sitzplätze</message>
+	<message id="entity_league_preis_vip">Durch. Preis für VIP-Logen</message>
+	<message id="entity_country_uefa_s1">UEFA S1</message>
+	<message id="entity_country_uefa_s2">UEFA S2</message>
+	<message id="entity_country_uefa_s3">UEFA S3</message>
+	<message id="entity_country_uefa_s4">UEFA S4</message>
+	<message id="entity_country_uefa_s5">UEFA S5</message>
+	<message id="entity_country_uefa_cl">CL Plätze</message>
+	<message id="entity_country_uefa_ul">UEFA League Plätze</message>
+	<message id="entity_country_uefa_conf">Conference Plätze</message>
+	<message id="entity_country_coeff">UEFA Koeffizient</message>
+	<message id="entity_uefa_coeff">UEFA Koeffizient</message>
+	<message id="entity_country_uefa_coeff">UEFA Koeffizient</message>
+	
+    <message id="uefa_navlabel">UEFA</message>
+    <message id="uefa_ranking_navlabel">UEFA Ranking</message>
+    <message id="uefa_ranking_title">UEFA Ranking</message>    
+    <message id="uefatable_land">Land</message>
+	<message id="uefatable_uefa_s1">S1</message>
+	<message id="uefatable_uefa_s2">S2</message>
+	<message id="uefatable_uefa_s3">S3</message>
+	<message id="uefatable_uefa_s4">S4</message>
+	<message id="uefatable_uefa_s5">S5</message>
+	<message id="uefatable_uefa_total">UEFA Gesamt</message>
+	<message id="uefatable_uefa_cl">CL Plätze</message>
+	<message id="uefatable_uefa_ul">UL Plätze</message>
+	<message id="uefatable_uefa_conf">Conference Plätze</message>
+
+</messages>

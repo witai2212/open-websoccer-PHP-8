@@ -74,7 +74,7 @@
             id="stadiumenvironment"
             template="stadiumenvironment"
             model="StadiumEnvironmentModel"
-            parentItem="office"
+            parentItem="stadium"
             navitem="true"
             navweight="7"
             role="user">

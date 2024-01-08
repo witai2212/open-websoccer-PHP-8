@@ -9,9 +9,9 @@ $(function() {
 				   tickSize: 1, 
 				   tickDecimals: 0
 			   },
-			yaxis: {
-				   min: 0,
-				   max: 6
+			   yaxis: {
+				   min: 1,
+				   max: 4
 			   },
 			   lines: { show: true },
 			   points: { show: true },

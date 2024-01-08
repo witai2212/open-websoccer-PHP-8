@@ -52,5 +52,6 @@
       <setting id="offline" category="offlinemode" type="select" selection="online,offline" default="online" />
       <setting id="offline_text" category="offlinemode" type="textarea" default="We are offline at the moment." />
       <setting id="offline_times" category="offlinemode" type="tags" default="" />
+      <setting id="alphavantage_api" category="stockmarket" type="text" default="ABCDEFGHIJK" />
   </settings>
 </module>

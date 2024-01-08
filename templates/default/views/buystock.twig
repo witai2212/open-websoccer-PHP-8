@@ -1,0 +1,27 @@
+{% import "macros/formelements.twig" as formelements %}
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("buystock_navlabel") }}: {{ index.name }}
+{% endblock %}
+
+{% block page_content %}
+
+
+<p><i class="icon-info-sign"></i> {{ i18n.getMessage("buystock_max_qty")|raw }}&nbsp;{{ max|number_format(0, ',', ' ') }}</p>
+
+<form class="form-horizontal" method="post">
+	
+	{{ formelements.textfield('qty', i18n.getMessage('buystock_stock_quantity'), '', false, validationMsg) }}
+	<!-- {{ formelements.textfield('index', i18n.getMessage('buystock_stock_index'), index.id, false, validationMsg) }}&nbsp;{{ i18n.getMessage('buystock_stock_min_qty') }} -->
+	
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_buy') }}</button>
+		<a href="{{ env.getInternalUrl("stockmarket") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+	</div>
+	<input type="hidden" name="index" value="{{ index.id }}"/>
+	<input type="hidden" name="action" value="buy_stock"/>
+</form>
+
+{% endblock %}

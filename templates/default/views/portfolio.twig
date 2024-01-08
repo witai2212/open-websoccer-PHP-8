@@ -1,0 +1,45 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("portfolio_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+
+{% if indexes is defined and indexes|length > 0 %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>{{ i18n.getMessage("indexes_head_name") }}</th>
+				<th>{{ i18n.getMessage("indexes_stock_price") }}</th>
+				<th>{{ i18n.getMessage("indexes_qty") }}</th>
+				<th>{{ i18n.getMessage("indexes_index_value") }}</th>
+				<th>{{ i18n.getMessage("indexes_buy") }}</th>
+				<th>{{ i18n.getMessage("indexes_sell") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{% for index in indexes %}
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td><p><a href="{{ env.getInternalUrl("stock_chart", "id=" ~ index.stock_id) }}">{{ index.name }} </a></p></td>
+				<td>{% if index.v1>index.v2 %} <p color="green"> {% elseif index.v1<index.v2 %} <p color="red"> {% elseif index.v1==index.v2 %} <p color="black"> {%  endif %} {{ index.v1 }} </p></td>
+				<td>{{ index.qty|number_format(0, ',', ' ') }}</td>
+				<td>{{(index.qty*index.v1)|number_format(0, ',', ' ') }}</td>
+				<td>buy</td>
+				<td>sell</td>
+			</tr>
+			{% endfor %}
+		
+		</tbody>
+	</table>
+
+{% else %}
+	{{ messagebox.box(i18n.getMessage("no_stockmarket_indexes"), "", "info") }}
+{% endif %}
+
+{% endblock %}

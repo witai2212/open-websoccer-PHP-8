@@ -22,7 +22,7 @@
 				{% endif %}
 				
 				<th>{{ i18n.getMessage("playertable_head_age") }}</th>
-				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }} / <br>{{ i18n.getMessage("entity_player_marktwert") }}</th>
 				<th><abbr title="{{ i18n.getMessage("entity_player_vertrag_spiele") }}">{{ i18n.getMessage("playertable_head_matches_abbr") }}</abbr></th>
 			</tr>
 		</thead>
@@ -129,15 +129,23 @@
 								<span {{ playerlists.strengthClass(player.strength_stamina) }}>{{ player.strength_stamina }}</span></li>
 							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_satisfaction") }}">{{ i18n.getMessage("playertable_head_strength_satisfaction_abbr") }}</abbr>:</span> 
 								<span {{ playerlists.strengthClass(player.strength_satisfaction) }}>{{ player.strength_satisfaction }}</span></li>
+								
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_talent") }}">{{ i18n.getMessage("playertable_head_strength_talent_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_talent) }}>{{ player.strength_talent }}</span></li>
 						</ul>
 					</td>
 				{% endif %}
 				
 				<td>{{ player.age }}</td>
-				<td>{{ player.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
+				<td><ul class="unstyled">
+					<li>
+					{{ player.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
 					{% if player.lending_fee > 0 and player.lending_owner_id > 0 %}
 						<br><small>+ {{ i18n.getMessage("entity_player_lending_fee") }}: {{ player.lending_fee|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</small> 
 					{% endif %}
+					</li>
+					<li>{{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</li>
+					</ul>
 				</td>
 				<td>
 					{% if player.lending_matches > 0 %}
@@ -155,7 +163,9 @@
 		<tfoot>
 			<tr>
 				<td colspan="{% if env.getConfig("hide_strength_attributes") != "1" %}4{% else %}3{% endif %}"><strong>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</strong></td>
-				<td><strong>{{ salarySum|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</strong></td>
+				<td>
+					<strong>{{ salarySum|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</strong>
+				</td>
 				<td>&nbsp;</td>
 			</tr>
 		</tfoot>

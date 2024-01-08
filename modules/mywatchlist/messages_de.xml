@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="mywatchlist_navlabel">Beobachtungsliste</message>
+    <message id="mywatchlist_title">Beobachtungsliste</message>
+    <message id="mywatchlist_playername">Spieler</message>
+	<message id="mywatchlist_verein">Verein</message>
+	<message id="mywatchlist_alter">Alter</message>
+	<message id="mywatchlist_position_main">Position</message>
+	<message id="mywatchlist_position_second">Nebenposition</message>
+	<message id="mywatchlist_marktwert">Marktwert</message>
+	<message id="mywatchlist_noten_druchschnitt">Noten</message>
+	<message id="no_items">Keine Spieler auf der Beobachtungsliste</message>
+	<message id="mywatchlist_delete">Löschen</message>
+	
+	<message id="watchlist_remove_label"></message>
+	<message id="watchlist_remove_success">Der Spieler steht nicht mehr auf der Beobachtungsliste.</message>
+    
+</messages>

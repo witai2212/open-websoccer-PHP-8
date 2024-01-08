@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+
+{% import "macros/statisticelements.twig" as statisticelements %}
+
+{% block page_title %}
+{{ i18n.getMessage("stock_chart_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h4>{{ index.name }} ({{ index.abbrev }})</h4>
+	
+	<div id="grades" style="width: 600px; height: 300px; margin-left: 30px; margin-bottom: 30px"
+		data-series="[{% for grade in grades %}{% if loop.index > 1 %}, {% endif %}[{{ loop.index }}, {{ grade }}]{% endfor %}]">
+	</div>
+
+{% endblock %}

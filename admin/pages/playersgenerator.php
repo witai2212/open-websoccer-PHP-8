@@ -143,6 +143,7 @@ elseif ($show == "generateform") {
 	$formFields["entity_player_w_kondition"] = array("type" => "percent", "value" => 70);
 	$formFields["entity_player_w_frische"] = array("type" => "percent", "value" => 80);
 	$formFields["entity_player_w_zufriedenheit"] = array("type" => "percent", "value" => 80);
+	$formFields["entity_player_w_talent"] = array("type" => "number", "value" => 3);
 	
 	$formFields["playersgenerator_label_deviation"] = array("type" => "percent", "value" => 10);
 	
@@ -193,6 +194,7 @@ elseif ($show == "generate") {
 	$strengths["stamina"] = $_POST['entity_player_w_kondition'];
 	$strengths["freshness"] = $_POST['entity_player_w_frische'];
 	$strengths["satisfaction"] = $_POST['entity_player_w_zufriedenheit'];
+	$strengths["talent"] = $_POST['entity_player_w_talent'];
 	
 	$positions["T"] = $_POST["option_T"];
 	$positions["LV"] = $_POST["option_LV"];

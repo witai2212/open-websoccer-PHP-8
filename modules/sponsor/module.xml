@@ -81,7 +81,7 @@
             id="sponsor"
             template="sponsor"
             model="SponsorModel"
-            parentItem="office"
+            parentItem="finance"
             navitem="true"
             navweight="5"
             role="user">

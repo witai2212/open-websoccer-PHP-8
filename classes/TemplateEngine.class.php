@@ -21,7 +21,7 @@
 ******************************************************/
 /**
  * Clear the template-folder for Twig 2.x,
- * because the Twig clearcache Function doesen´t exits anymore.
+ * because the Twig clearcache Function doesenï¿½t exits anymore.
  *
  * You can use the function delDir for other directory deleting too.
  *
@@ -109,8 +109,10 @@ class TemplateEngine {
 		}
 
 		// environment config
+		// set 'FALSE' to disable caching
 		$twigConfig = array(
-				'cache' => CACHE_FOLDER,
+			//'cache' => CACHE_FOLDER,
+		    'cache' => FALSE,
 		);
 		if (DEBUG) {
 			$twigConfig['auto_reload'] = TRUE;

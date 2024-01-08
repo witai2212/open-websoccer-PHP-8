@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+    
+    <admin>
+        <adminpage
+            id="country"
+            entity="country"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="land" >
+
+                <overview
+                    delete="true"
+                    edit="true" >
+
+                    <column
+                        id="entity_country_name"
+                        field="name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_country_uefa_s1"
+                        field="uefa_s1"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_country_uefa_s2"
+                        field="uefa_s2"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_country_uefa_s3"
+                        field="uefa_s3"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_country_uefa_s4"
+                        field="uefa_s4"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_country_uefa_s5"
+                        field="uefa_s5"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_country_uefa_cl"
+                        field="uefa_cl"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_country_uefa_ul"
+                        field="uefa_ul"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_country_uefa_conf"
+                        field="uefa_conf"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
+                        id="entity_uefa_coeff"
+                        field="uefa_coeff"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                </overview>
+
+                <editform>
+
+                    <field
+                        id="name"
+                        type="text"
+                        required="true"  />
+                    <field
+                        id="uefa_s1"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_s2"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_s3"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_s4"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_s5"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_cl"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_ul"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_conf"
+                        type="number"
+                        required="true"  />
+                    <field
+                        id="uefa_coeff"
+                        type="number"
+                        required="true"  />
+
+                </editform>
+            </entity>
+        </adminpage>
+    </admin>
+
+    <pages>
+        <page
+            id="uefa"
+            template="uefa-ranking-overview"
+            navitem="true"
+            navweight="3"
+            model="UEFARankingModel"
+            role="user">
+	        <page
+	            id="uefa_championsleague"
+	            template="uefa_championsleague"
+	            navitem="true"
+	            model="UEFAChampionsLeagueModel"
+	            navweight="0"
+	            role="user"/>
+	        
+   
+        </page>
+        
+    </pages> 
+     
+</module>

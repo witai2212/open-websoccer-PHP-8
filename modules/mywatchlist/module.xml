@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <pages>
+        <page
+            id="mywatchlist"
+            template="mywatchlist"
+            navitem="true"
+            navweight="5"
+            model="MyWatchlistModel"
+            parentItem="transfermarket"
+            role="user">
+        </page>
+        
+    </pages>
+    
+    <actions>
+    	<action id="remove-player-from-watchlist" controller="RemovePlayerFromWatchlistController" role="user">
+			<param id="id" type="number" required="true" />
+		</action>
+	</actions>
+     
+</module>

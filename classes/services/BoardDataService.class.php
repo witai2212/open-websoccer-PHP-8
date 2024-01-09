@@ -54,7 +54,7 @@ class BoardDataService {
     /*
      * LOWER BOARD SATISFACTION
      */
-    public static function lowerBoardSatisfactionByTeamId(WebSoccer $websoccer, DbConnection $db, $value, $teamId) {
+    public static function lowerBoardSatisfactionByTeamId(WebSoccer $websoccer, DbConnection $db, $value, $teamId, $userId) {
         
         $sqlStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET board_satisfaction=board_satisfaction-'$value' WHERE id='$teamId'";
         $db->executeQuery($sqlStr);
@@ -64,14 +64,42 @@ class BoardDataService {
     /*
      * BOARD SATISFACTION UPDATE
      */
-    public static function updateBoardSatisfactionById(WebSoccer $websoccer, DbConnection $db, $value, $teamId) {
+    public static function updateBoardSatisfactionById(WebSoccer $websoccer, DbConnection $db, $index, $teamId) {
         
         //GET SATISFACTION
+        $satisfaction = self::getBoardSatisfactionByTeamId($websoccer, $db, $teamId);        
         
         //GET SHARES
+        $qtyFromUserClub = StockMarketDataService::getUserQuantityFromUserTeam($websoccer, $db, $index, $userId);
+        
+        //GET TOTAL OF INDEX
+        $totalQty = StockMarketDataService::totalQtyByStockId($websoccer, $db, $index);
+        
+        //USER PERCENTAGE
+        $userPercent = round(($qtyFromUserClub/$totalQty)*100,0);
+        
+        $new_satis = $satisfaction;
 
         //UPDATE ACC. SHARES
+        if($satisfaction>100) {
+            $new_satis = 100;
+        } else if($satisfaction<0) {
+            $new_satis = 10;
+        }
         
+        if($userPercent>33) {
+            $new_satis = 51;
+        } else if($userPercent>=100) {
+            $new_satis = 100;
+        }
+        
+        //UPDATE BOARD SATISFACTION IF CHANGE
+        if($new_satis!=$satisfaction) {
+            $sqlStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein
+                        SET board_satisfaction=$new_satis'
+                        WHERE id='$teamId'";
+            $db->executeQuery($sqlStr);
+        }
     }
 }
 ?>

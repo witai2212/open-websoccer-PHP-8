@@ -96,7 +96,7 @@ class StockMarketDataService {
                                     timestamp=".$now."
                                 WHERE abbrev='".$ticker."'";
                     echo"updSql: ". $updSql ."<br>";
-                    $db->executeQuery($updSql);
+                    //$db->executeQuery($updSql);
                     
                 }
             }
@@ -223,10 +223,10 @@ class StockMarketDataService {
     /**
      * getting user quantity of stock_id
      */
-    public static function getQuantityFromUsersByIndex(WebSoccer $websoccer, DbConnection $db, $index) {
+    public static function getQuantityFromUsersByIndex(WebSoccer $websoccer, DbConnection $db, $index, $userId) {
         
         $sqlStr = "SELECT SUM(qty) AS qty FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
-                    WHERE stock_id='".$index."'";
+                    WHERE stock_id='".$index."' AND user_id='".$userId."'";
         $result = $db->executeQuery($sqlStr);
         $qty = $result->fetch_array();
         
@@ -488,6 +488,23 @@ class StockMarketDataService {
         $fromTable = $websoccer->getConfig('db_prefix') . '_stockmarket';
         
         $db->queryInsert($stockcolumns, $fromTable);
+        
+    }
+    
+    /**
+     * getting user quantity of own team
+     */
+    public static function getUserQuantityFromUserTeam(WebSoccer $websoccer, DbConnection $db, $index, $userId) {
+        
+        $sqlStr = "SELECT qty
+                    FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
+                    WHERE stock_id='".$index."' AND user_id='".$userId."'";
+        $result = $db->executeQuery($sqlStr);
+        $qty = $result->fetch_array();
+        
+        $qty = $qty['qty'];
+        
+        return $qty;
         
     }
 }

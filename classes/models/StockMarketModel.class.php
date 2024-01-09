@@ -46,6 +46,8 @@ class StockMarketModel implements IModel {
             throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
         }
         
+        StockMarketDataService::updateStockDataFromAlphavantage($this->_websoccer, $this->_db);
+        
         $indexes = StockMarketDataService::getStockMarketData($this->_websoccer, $this->_db);
         
         return array("indexes" => $indexes);

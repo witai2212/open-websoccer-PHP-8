@@ -30,6 +30,9 @@ class StockMarketDataService {
      */
     public static function updateStockDataFromAlphavantage(WebSoccer $websoccer, DbConnection $db) {
         
+        global $conf;
+        $api_key = $conf["alphavantage_api"];
+        
         $month = date("M");
         $day = date("d");
         $year = date("Y");
@@ -38,7 +41,7 @@ class StockMarketDataService {
         
         $api_key = $conf["alphavantage_api"];
         
-        $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket ORDER BY id"; 
+        $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE team_id<=0 ORDER BY id"; 
         $result = $db->executeQuery($sqlStr);
         while ($stockdata = $result->fetch_array())
         {
@@ -56,13 +59,41 @@ class StockMarketDataService {
                 $json = file_get_contents("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=".$ticker."&apikey=".$api_key."");
                 $data = json_decode($json,true);
                 
+                print_r($data);
+                echo"<br>";
+                
                 foreach ($data as $quote) {
+                    
+                    $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE id='$ticker'";
+                    $result = $db->executeQuery($sqlStr);
+                    $index = $result->fetch_array();
+                    $result->free();
                     
                     $price = str_replace(".", ",", $quote['05. price']);
                     
+                    $v1 = $price;
+                    $v2 = $v1;
+                    $v3 = $v2;
+                    $v4 = $v3;
+                    $v5 = $v4;
+                    $v6 = $v5;
+                    $v7 = $v6;
+                    $v8 = $v7;
+                    $v9 = $v8;
+                    $v10 = $v9;
+                    
                     $updSql = "UPDATE  ". $websoccer->getConfig("db_prefix") ."_stockmarket
-                                SET v10=v9, v9=v8, v8=v7, v7=v6, v6=v5, v5=v4, v4=v3, v3=v2, v2=v1,
-                                        v1='".$price."', timestamp=".$now."
+                                SET v1='".$price."', 
+                                    v2='".$v2."',  
+                                    v3='".$v3."',  
+                                    v4='".$v4."',  
+                                    v5='".$v5."',  
+                                    v6='".$v6."',  
+                                    v7='".$v7."',  
+                                    v8='".$v8."',  
+                                    v9='".$v9."',  
+                                    v10='".$v10."', 
+                                    timestamp=".$now."
                                 WHERE abbrev='".$ticker."'";
                     echo"updSql: ". $updSql ."<br>";
                     $db->executeQuery($updSql);

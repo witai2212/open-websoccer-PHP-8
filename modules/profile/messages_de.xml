@@ -46,4 +46,6 @@
 	
 	<message id="user_deletepicture_button">Bild löschen</message>
 	<message id="delete-profile-picture_success">Das Profilbild wurde erfolgreich gelöscht.</message>
+	
+	<message id="board_satisfaction_title">Vorstandszufriedenheit</message>
 </messages>

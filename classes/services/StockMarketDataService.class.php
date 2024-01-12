@@ -41,9 +41,9 @@ class StockMarketDataService {
         
         $api_key = $conf["alphavantage_api"];
         
-        $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE team_id<=0 ORDER BY id"; 
-        $result = $db->executeQuery($sqlStr);
-        while ($stockdata = $result->fetch_array())
+        $sqlStr0 = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE team_id IS NULL ORDER BY id";
+        $result0 = $db->executeQuery($sqlStr0);
+        while ($stockdata = $result0->fetch_array())
         {
             
             $ticker = $stockdata['abbrev'];
@@ -52,52 +52,50 @@ class StockMarketDataService {
             //only update stockmarket data between Monday an Friday and within 24 hours = 86400 seconds
             if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
                 
-                //ALPHAVANTAGE GLOBAL DATA
-                //https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=DH3TRU61NC6C1R5K
-                //SEARCH:
-                //https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=cbo&apikey=DH3TRU61NC6C1R5K
+                /**
+                 * ALPHAVANTAGE GLOBAL DATA
+                 * https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=
+                 * SEARCH:
+                 * https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=cbo&apikey=
+                **/
                 $json = file_get_contents("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=".$ticker."&apikey=".$api_key."");
                 $data = json_decode($json,true);
                 
-                print_r($data);
-                echo"<br>";
-                
                 foreach ($data as $quote) {
                     
-                    $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE id='$ticker'";
-                    $result = $db->executeQuery($sqlStr);
+                    $sqlStr2 = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE id='$ticker'";
+                    $result = $db->executeQuery($sqlStr2);
                     $index = $result->fetch_array();
-                    $result->free();
                     
-                    $price = str_replace(".", ",", $quote['05. price']);
-                    
-                    $v1 = $price;
-                    $v2 = $v1;
-                    $v3 = $v2;
-                    $v4 = $v3;
-                    $v5 = $v4;
-                    $v6 = $v5;
-                    $v7 = $v6;
-                    $v8 = $v7;
-                    $v9 = $v8;
-                    $v10 = $v9;
-                    
-                    $updSql = "UPDATE  ". $websoccer->getConfig("db_prefix") ."_stockmarket
-                                SET v1='".$price."', 
-                                    v2='".$v2."',  
-                                    v3='".$v3."',  
-                                    v4='".$v4."',  
-                                    v5='".$v5."',  
-                                    v6='".$v6."',  
-                                    v7='".$v7."',  
-                                    v8='".$v8."',  
-                                    v9='".$v9."',  
-                                    v10='".$v10."', 
-                                    timestamp=".$now."
-                                WHERE abbrev='".$ticker."'";
-                    echo"updSql: ". $updSql ."<br>";
-                    //$db->executeQuery($updSql);
-                    
+                    if(isset($quote['05. price'])) {
+                        $price = str_replace(".", ",", $quote['05. price']);
+                        
+                        $v1 = $price;
+                        $v2 = $index['v1'];
+                        $v3 = $index['v2'];
+                        $v4 = $index['v3'];
+                        $v5 = $index['v4'];
+                        $v6 = $index['v5'];
+                        $v7 = $index['v6'];
+                        $v8 = $index['v7'];
+                        $v9 = $index['v8'];
+                        $v10 = $index['v9'];
+                        
+                        $updSql = "UPDATE  ". $websoccer->getConfig("db_prefix") ."_stockmarket
+                                    SET v1='".$v1."', 
+                                        v2='".$v2."',  
+                                        v3='".$v3."',  
+                                        v4='".$v4."',  
+                                        v5='".$v5."',  
+                                        v6='".$v6."',  
+                                        v7='".$v7."',  
+                                        v8='".$v8."',  
+                                        v9='".$v9."',  
+                                        v10='".$v10."', 
+                                        timestamp=".$now."
+                                    WHERE abbrev='".$ticker."'";
+                        $db->executeQuery($updSql);
+                    }
                 }
             }
         }

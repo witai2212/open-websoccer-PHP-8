@@ -64,6 +64,9 @@
 <a href="{{ env.getInternalUrl("finance") }}">{{ userteam.team_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</a></p>
 {% endif %}
 
+<p><em>{{ i18n.getMessage('board_satisfaction_title') }}</em><br/>
+{{ boardsatisfaction|number_format(0, ',', ' ') }}%</p>
+
 {% if env.getConfig("premium_enabled") %}
 	<p><em>{{ i18n.getMessage('entity_users_premium_balance') }}</em><br/>
 	<a href="{{ env.getInternalUrl("premiumaccount") }}">{{ env.user.premiumBalance|number_format(0, ',', ' ') }} {{ env.getConfig("premium_credit_unit") }}</a></p>

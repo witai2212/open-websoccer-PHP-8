@@ -64,8 +64,12 @@ class ProfileBlockModel implements IModel {
 		// unseen notifications
 		$unseenNotifications = NotificationsDataService::countUnseenNotifications($this->_websoccer, $this->_db, $user->id, $clubId);
 		
+		// board satisfaction
+		$boradSatisfaction = BoardDataService::getBoardSatisfactionByTeamId($this->_websoccer, $this->_db, $clubId);
+		
 		return array("profile" => $userinfo, "userteam" => $team, "unseenMessages" => $unseenMessages,
-				"unseenNotifications" => $unseenNotifications);
+				"unseenNotifications" => $unseenNotifications,
+		        "boardsatisfaction" => $boradSatisfaction);
 	}
 	
 	

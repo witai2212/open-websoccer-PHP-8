@@ -205,5 +205,25 @@ class StadiumsDataService {
 		return round($baseCost + $baseCost * $additionFactor);
 	}
 	
+	/**
+	 * Gets largest Stadium for Cup Finals.
+	 *
+	 * @param WebSoccer $websoccer Application context.
+	 * @param string $type pitch|videowall|seatsquality|vipquality
+	 * @param array $stadium stadium data record.
+	 * @return int costs for upgrading to the next level.
+	 */
+	public static function getLargestStadium(WebSoccer $websoccer, DbConnection $db) {
+	    
+	    $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stadion
+					ORDER BY (p_sitz+p_steh+p_haupt_steh+p_haupt_sitz+p_vip) DESC
+					LIMIT 1";
+	    $result = $db->executeQuery($sqlStr);
+	    $stadium = $result->fetch_array();
+	    $result->free();
+	    
+	    return $stadium;
+	}	
+	
 }
 ?>

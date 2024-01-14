@@ -64,8 +64,15 @@
 <a href="{{ env.getInternalUrl("finance") }}">{{ userteam.team_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</a></p>
 {% endif %}
 
+<br />
+<h4>{{ i18n.getMessage('userprofile_block_board_title') }}</h4>
 <p><em>{{ i18n.getMessage('board_satisfaction_title') }}</em><br/>
-{{ boardsatisfaction|number_format(0, ',', ' ') }}%</p>
+{{ statisticelements.progressbar(boardsatisfaction) }}</p>
+<p>{{ i18n.getMessage('board_info_season_target') }}:<br />
+<em>{{ i18n.getMessage('board_info_season_ranking') }}: </em>
+{{ boardinfo.min_target_rank }}<br />
+<em>{{ i18n.getMessage('board_info_season_targethighscore') }}: </em>
+{{ boardinfo.min_target_highscore }}</p><br>
 
 {% if env.getConfig("premium_enabled") %}
 	<p><em>{{ i18n.getMessage('entity_users_premium_balance') }}</em><br/>

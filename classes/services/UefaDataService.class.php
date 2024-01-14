@@ -82,7 +82,7 @@ class UefaDataService {
 		while ($player = $result->fetch_array()) {
 			$player['position'] = self::_convertPosition($player['position']);
 			$player['player_nationality_filename'] = self::getFlagFilename($player['player_nationality']);
-			$player['marketvalue'] = self::getMarketValue($websoccer, $player, '');
+			$player['marketvalue'] = PlayersDataService::getMarketValue($websoccer, $db, $player['id']);
 			$players[$player['position']][] = $player;
 		}
 		$result->free();

@@ -82,7 +82,7 @@ class PlayersDataService {
 		while ($player = $result->fetch_array()) {
 			$player['position'] = self::_convertPosition($player['position']);
 			$player['player_nationality_filename'] = self::getFlagFilename($player['player_nationality']);
-			$player['marketvalue'] = self::getMarketValue($websoccer, $player, '');
+			$player['marketvalue'] = self::getMarketValue($websoccer, $db, $player, '');
 			$players[$player['position']][] = $player;
 		}
 		$result->free();
@@ -168,6 +168,10 @@ class PlayersDataService {
 		while ($player = $result->fetch_array()) {
 			$player['position'] = self::_convertPosition($player['position']);
 			$players[$player['id']] = $player;
+			
+			//update marketvalue
+			$marketvalue = PlayersDataService::getMarketValue($websoccer, $db, $player);
+			$player['marketvalue'] = $marketvalue;
 		}
 		$result->free();
 	
@@ -363,7 +367,7 @@ class PlayersDataService {
 			$player = $players[0];
 			
 			$player['player_position'] = self::_convertPosition($player['player_position']);
-			$player['player_marketvalue'] = self::getMarketValue($websoccer, $player);
+			$player['player_marketvalue'] = self::getMarketValue($websoccer, $db, $player);
 			$player['player_nationality_filename'] = self::getFlagFilename($player['player_nationality']);
 			
 			$matchesInfo = explode(';', $player['matches_info']);
@@ -647,25 +651,36 @@ class PlayersDataService {
 	 * @param string $columnPrefix column prefix used in player array.
 	 * @return int market value of player.
 	 */
-	public static function getMarketValue(WebSoccer $websoccer, $player, $columnPrefix = 'player_') {
+	public static function getMarketValue(WebSoccer $websoccer, DbConnection $db, $player, $columnPrefix = 'player_') {
 		if (!$websoccer->getConfig('transfermarket_computed_marketvalue')) {
 			return $player[$columnPrefix . 'marketvalue'];
 		}
 		
 		// compute market value
+		/*
 		$totalStrength = $websoccer->getConfig('sim_weight_strength') * $player[$columnPrefix . 'strength'];
 		$totalStrength += $websoccer->getConfig('sim_weight_strengthTech') * $player[$columnPrefix . 'strength_technique'];
 		$totalStrength += $websoccer->getConfig('sim_weight_strengthStamina') * $player[$columnPrefix . 'strength_stamina'];
 		$totalStrength += $websoccer->getConfig('sim_weight_strengthFreshness') * $player[$columnPrefix . 'strength_freshness'];
 		$totalStrength += $websoccer->getConfig('sim_weight_strengthSatisfaction') * $player[$columnPrefix . 'strength_satisfaction'];
+		*/
+		$totalStrength = $websoccer->getConfig('sim_weight_strength') * $player['strength'];
+		$totalStrength += $websoccer->getConfig('sim_weight_strengthTech') * $player['strength_technique'];
+		$totalStrength += $websoccer->getConfig('sim_weight_strengthStamina') * $player['strength_stamina'];
+		$totalStrength += $websoccer->getConfig('sim_weight_strengthFreshness') * $player['strength_freshness'];
+		$totalStrength += $websoccer->getConfig('sim_weight_strengthSatisfaction') * $player['strength_satisfaction'];
 		
 		$totalStrength /= $websoccer->getConfig('sim_weight_strength') + $websoccer->getConfig('sim_weight_strengthTech')
 			+ $websoccer->getConfig('sim_weight_strengthStamina') + $websoccer->getConfig('sim_weight_strengthFreshness')
 			+ $websoccer->getConfig('sim_weight_strengthSatisfaction');
 		
-			$totalStrength =  $totalStrength * $websoccer->getConfig('transfermarket_value_per_strength') * ($player[$columnPrefix . 'strength_technique']/5);
+			$marketvalue =  $totalStrength * $websoccer->getConfig('transfermarket_value_per_strength') * ($player['strength_technic']/5);
+		
+		// update marketvalue in DB
+		$updStr = "UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler SET marktwert='".$marketvalue."' WHERE id='".$player['id']."'";
+    	$db->executeQuery($updStr);
 			
-			return $totalStrength;
+		return $marketvalue;
 	}
 	
 	/**
@@ -714,6 +729,34 @@ class PlayersDataService {
 	            $players[$i]['verein'] = $verein;
 	        }
 	    $i++;
+	    }
+	    $result->free();
+	    
+	    return $players;
+	}
+	
+	/**
+	 * Provides most valueable players.
+	 *
+	 * @param string $nationalitygetConfig('db_prefix')
+	 * @return array with best players.
+	 */
+	public static function getMostValuablePlayers(WebSoccer $websoccer, DbConnection $db) {
+	    
+	    $queryString = "SELECT * FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+                            ORDER BY marktwert DESC LIMIT 20";
+	    $result = $db->executeQuery($queryString);
+	    
+	    $players = array();
+	    $i = 0;
+	    while ($player = $result->fetch_array()) {
+	        
+	        $players[] = $player;
+	        if(isset($players[$i]['verein_id'])) {
+	            $verein = TeamsDataService::getTeamById($websoccer, $db, $players[$i]['verein_id']);
+	            $players[$i]['verein'] = $verein;
+	        }
+	        $i++;
 	    }
 	    $result->free();
 	    

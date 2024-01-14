@@ -67,9 +67,12 @@ class ProfileBlockModel implements IModel {
 		// board satisfaction
 		$boradSatisfaction = BoardDataService::getBoardSatisfactionByTeamId($this->_websoccer, $this->_db, $clubId);
 		
+		// board info and season targets
+		$boardInfo = BoardDataService::getBoardinfoByTeamId($this->_websoccer, $this->_db, $clubId);
+		
 		return array("profile" => $userinfo, "userteam" => $team, "unseenMessages" => $unseenMessages,
 				"unseenNotifications" => $unseenNotifications,
-		        "boardsatisfaction" => $boradSatisfaction);
+		        "boardsatisfaction" => $boradSatisfaction, "boardinfo" => $boardInfo);
 	}
 	
 	

@@ -297,7 +297,7 @@ class DirectTransfersDataService {
 		$offers = array();
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 		while ($offer = $result->fetch_array()) {
-			$offer["player_marketvalue"] = PlayersDataService::getMarketValue($websoccer, $offer);
+			$offer["player_marketvalue"] = PlayersDataService::getMarketValue($websoccer, $db, $offer['P.id']);
 			$offers[] = $offer;
 		}
 		$result->free();

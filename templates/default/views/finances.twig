@@ -49,7 +49,7 @@
 					{{ statement.subject }}
 				{% endif %}
 			</td>
-			<td>
+			<td align="right">
 				{% if statement.amount < 0 %}<span style="color: red">{% endif %}
 				{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
 				{% if statement.amount < 0 %}</span>{% endif %}

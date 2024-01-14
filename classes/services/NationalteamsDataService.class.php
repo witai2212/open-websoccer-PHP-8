@@ -98,7 +98,7 @@ class NationalteamsDataService {
 		while ($player = $result->fetch_array()) {
 			$player["position"] = PlayersDataService::_convertPosition($player["position"]);
 			$player["player_nationality_filename"] = PlayersDataService::getFlagFilename($player["player_nationality"]);
-			$player["marketvalue"] = PlayersDataService::getMarketValue($websoccer, $player, "");
+			$player["marketvalue"] = PlayersDataService::getMarketValue($websoccer, $db, $player, "");
 			$players[$player["position"]][] = $player;
 		}
 		$result->free();

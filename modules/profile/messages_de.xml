@@ -48,4 +48,9 @@
 	<message id="delete-profile-picture_success">Das Profilbild wurde erfolgreich gelöscht.</message>
 	
 	<message id="board_satisfaction_title">Vorstandszufriedenheit</message>
+	<message id="board_info_season_target">Saisonziele</message>
+	<message id="board_info_season_ranking">Platzierung</message>
+	<message id="board_info_season_targethighscore">Highscore</message>
+	<message id="userprofile_block_board_title">Vorstand</message>
+	
 </messages>

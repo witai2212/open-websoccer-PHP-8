@@ -15,5 +15,7 @@
 	
 	<message id="watchlist_remove_label"></message>
 	<message id="watchlist_remove_success">Der Spieler steht nicht mehr auf der Beobachtungsliste.</message>
+	
+	<message id="mywatchlist_player_on_transferlist">*) Spieler ist auf dem Transfermarkt</message>
     
 </messages>

@@ -910,5 +910,28 @@ class TeamsDataService {
 	    return $value;
 	}
 	
+	/*
+	 * Return all titles won specified by TeamId
+	 * @param WebSoccer $websoccer Application Context
+	 * @param DbConnection $db DB connection
+	 * @return array of titles won by team
+	 */
+	public static function getNumberTeamTitlesWon(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	    
+	    $titles = array();
+	    
+	    $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_titles_won WHERE team_id='".$teamId."'
+                    ORDER BY saison_name DESC";
+	    //echo $sqlStr ."<br>";
+	    $result = $db->executeQuery($sqlStr);
+	    while ($title = $result->fetch_array()) {
+	        $titles[] = $title;
+	    }
+	    $result->free();
+	    
+	    return $titles;
+	    
+	}
+	
 }
 ?>

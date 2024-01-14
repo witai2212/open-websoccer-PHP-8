@@ -101,5 +101,24 @@ class BoardDataService {
             $db->executeQuery($sqlStr);
         }
     }
+    
+    public static function getBoardinfoByTeamId(WebSoccer $websoccer, DbConnection $db, $clubId) {
+        
+        $SqlStr = "SELECT min_target_rank, min_target_highscore, highscore
+					FROM ". $websoccer->getConfig("db_prefix") ."_verein
+					WHERE id='".$clubId."'";
+        $result = $db->executeQuery($SqlStr);
+        $boardInfo = $result->fetch_array();
+        $result->free();
+        
+        if($boardInfo['min_target_highscore']<1) {
+            $boardInfo['min_target_highscore'] = 1;
+        }
+        if($boardInfo['min_target_rank']<1) {
+            $boardInfo['min_target_rank'] = 1;
+        }
+        
+        return $boardInfo;
+    }
 }
 ?>

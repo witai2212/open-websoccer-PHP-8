@@ -48,15 +48,18 @@ class StockMarketDataService {
             
             $ticker = $stockdata['abbrev'];
             $time = $now-$stockdata['timestamp'];
+            
+            echo $weekday ." - ". $ticker ." - ". $time ."<br>";
 
             //only update stockmarket data between Monday an Friday and within 24 hours = 86400 seconds
             if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
+            //if($time>=86400) {
                 
                 /**
                  * ALPHAVANTAGE GLOBAL DATA
-                 * https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=
+                 * https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=ABCDEFG
                  * SEARCH:
-                 * https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=cbo&apikey=
+                 * https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=cbo&apikey=ABCDEFG
                 **/
                 $json = file_get_contents("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=".$ticker."&apikey=".$api_key."");
                 $data = json_decode($json,true);
@@ -70,6 +73,8 @@ class StockMarketDataService {
                     if(isset($quote['05. price'])) {
                         $price = str_replace(".", ",", $quote['05. price']);
                         
+                        echo"price: ". $price ."<br>";
+                        
                         $v1 = $price;
                         $v2 = $index['v1'];
                         $v3 = $index['v2'];
@@ -81,7 +86,7 @@ class StockMarketDataService {
                         $v9 = $index['v8'];
                         $v10 = $index['v9'];
                         
-                        $updSql = "UPDATE  ". $websoccer->getConfig("db_prefix") ."_stockmarket
+                        $updSql = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket
                                     SET v1='".$v1."', 
                                         v2='".$v2."',  
                                         v3='".$v3."',  
@@ -94,12 +99,13 @@ class StockMarketDataService {
                                         v10='".$v10."', 
                                         timestamp=".$now."
                                     WHERE abbrev='".$ticker."'";
+                        echo $updSql ."<br>";
                         $db->executeQuery($updSql);
                     }
                 }
             }
         }
-        $result->free();
+        $result0->free();
         
     }
     
@@ -390,7 +396,7 @@ class StockMarketDataService {
         }
         
         //GET TEAM VALUE >= 25.000.000
-        $team_marketvalue = TeamsDataService::getTeamValue($websoccer, $db, $teamId);
+        $team_marjetvalue = TeamsDataService::getTeamValueByTeamId($websoccer, $db, $teamId);
         if($team_marketvalue<$min_team_value) {
             $criteria_not_met++;
         }
@@ -427,7 +433,7 @@ class StockMarketDataService {
         $finance_budget = $finance['finanz_budget']*0.1;
         
         //GET TEAM market value
-        $team_marketvalue = TeamsDataService::getTeamValue($websoccer, $db, $teamId);
+        $team_marketvalue = TeamsDataService::getTeamValueByTeamId($websoccer, $db, $teamId);
         $team_marketvalue = $team_marketvalue['team_marketvalue'];
         
         //GET STADIUM SIZE + VALUE
@@ -437,7 +443,7 @@ class StockMarketDataService {
         
         //GET CLUB TITLES WON
         $titles = TeamsDataService::getNumberTeamTitlesWon($websoccer, $db, $teamId);
-        $titles_value = $titles*1000000;
+        $titles_value = count($titles)*1000000;
         
         //GET PORTFOLIO VALUE
         $portfolio_value = self::getPortfolioValue($websoccer, $db, $teamId);

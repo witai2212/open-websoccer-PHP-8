@@ -63,7 +63,7 @@
         <page
             id="highscore"
             model="HighscoreModel"
-            navitem="true"
+            navitem="false"
             navweight="3"
             template="users-highscore"
             role="guest,user">

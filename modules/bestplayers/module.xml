@@ -7,7 +7,7 @@
             id="stats"
             template="uefa-ranking-overview"
             navitem="true"
-            navweight="5"
+            navweight="11"
             model="UEFARankingModel"
             role="user">
 	        <page

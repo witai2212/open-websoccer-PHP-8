@@ -52,8 +52,8 @@ class StockMarketDataService {
             echo $weekday ." - ". $ticker ." - ". $time ."<br>";
 
             //only update stockmarket data between Monday an Friday and within 24 hours = 86400 seconds
-            if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
-            //if($time>=86400) {
+            //if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
+            //if($time>0) {
                 
                 /**
                  * ALPHAVANTAGE GLOBAL DATA
@@ -61,14 +61,25 @@ class StockMarketDataService {
                  * SEARCH:
                  * https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=cbo&apikey=ABCDEFG
                 **/
-                $json = file_get_contents("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=".$ticker."&apikey=".$api_key."");
-                $data = json_decode($json,true);
+                //$json = file_get_contents("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=".$ticker."&apikey=".$api_key."");
+                //$data = json_decode($json,true);
+                
+            $json = file_get_contents("https://www.google.com/finance/quote/AMZN:NASDAQ?hl=de");
+            $data = json_decode($json, true);
+                
+                //$data = "Array ( [Global Quote] => Array ( [01. symbol] => XOM [02. open] => 100.1400 [03. high] => 100.6500 [04. low] => 99.1703 [05. price] => 99.9500 [06. volume] => 18041683 [07. latest trading day] => 2024-01-12 [08. previous close] => 98.6700 [09. change] => 1.2800 [10. change percent] => 1.2973% ) )";
+                echo"<pre>";
+                print_r($data);
+                echo"</pre>";
+                echo"PR: ". $data['Global Quote']['05. price'] ."<br>";
+                echo"<hr>";
                 
                 foreach ($data as $quote) {
                     
                     $sqlStr2 = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE id='$ticker'";
-                    $result = $db->executeQuery($sqlStr2);
-                    $index = $result->fetch_array();
+                    echo"index: ". $sqlStr2 ."<br>";
+                    $result2 = $db->executeQuery($sqlStr2);
+                    $index = $result2->fetch_array();
                     
                     if(isset($quote['05. price'])) {
                         $price = str_replace(".", ",", $quote['05. price']);
@@ -103,7 +114,7 @@ class StockMarketDataService {
                         $db->executeQuery($updSql);
                     }
                 }
-            }
+            //}
         }
         $result0->free();
         

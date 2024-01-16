@@ -235,8 +235,10 @@ class DirectTransfersDataService {
 	 * @return array sent offers
 	 */
 	public static function getSentOffers(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $clubId, $userId) {
-		$whereCondition = "O.sender_club_id = %d AND O.sender_user_id = %d";
-		$parameters = array($clubId, $userId);
+		//$whereCondition = "O.sender_club_id = %d AND O.sender_user_id = %d";
+	    $whereCondition = "O.sender_club_id = %d";
+		//$parameters = array($clubId, $userId);
+	    $parameters = array($clubId);
 	
 		return self::_queryOffers($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters);
 	}
@@ -301,6 +303,8 @@ class DirectTransfersDataService {
 			$offers[] = $offer;
 		}
 		$result->free();
+		
+		print_r($offers);
 		
 		return $offers;
 	}

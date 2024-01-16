@@ -31,15 +31,13 @@ class StockMarketDataService {
     public static function updateStockDataFromAlphavantage(WebSoccer $websoccer, DbConnection $db) {
         
         global $conf;
-        $api_key = $conf["alphavantage_api"];
+        $api_key = $conf["finnhub_api"];
         
         $month = date("M");
         $day = date("d");
         $year = date("Y");
         $weekday = date("D");
         $now = time();
-        
-        $api_key = $conf["alphavantage_api"];
         
         $sqlStr0 = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE team_id IS NULL ORDER BY id";
         $result0 = $db->executeQuery($sqlStr0);
@@ -48,73 +46,51 @@ class StockMarketDataService {
             
             $ticker = $stockdata['abbrev'];
             $time = $now-$stockdata['timestamp'];
-            
-            echo $weekday ." - ". $ticker ." - ". $time ."<br>";
 
             //only update stockmarket data between Monday an Friday and within 24 hours = 86400 seconds
-            //if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
-            //if($time>0) {
+            if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
                 
                 /**
-                 * ALPHAVANTAGE GLOBAL DATA
-                 * https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=ABCDEFG
-                 * SEARCH:
-                 * https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=cbo&apikey=ABCDEFG
-                **/
-                //$json = file_get_contents("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=".$ticker."&apikey=".$api_key."");
-                //$data = json_decode($json,true);
-                
-            $json = file_get_contents("https://www.google.com/finance/quote/AMZN:NASDAQ?hl=de");
-            $data = json_decode($json, true);
-                
-                //$data = "Array ( [Global Quote] => Array ( [01. symbol] => XOM [02. open] => 100.1400 [03. high] => 100.6500 [04. low] => 99.1703 [05. price] => 99.9500 [06. volume] => 18041683 [07. latest trading day] => 2024-01-12 [08. previous close] => 98.6700 [09. change] => 1.2800 [10. change percent] => 1.2973% ) )";
-                echo"<pre>";
-                print_r($data);
-                echo"</pre>";
-                echo"PR: ". $data['Global Quote']['05. price'] ."<br>";
-                echo"<hr>";
-                
-                foreach ($data as $quote) {
+                 * FINNHUB.IO to retreive stock exchange data
+                 * https://finnhub.io/api/v1/quote?symbol=".$ticker."&token=ABCDEF1234567890
+                **/                
+                $json = file_get_contents("https://finnhub.io/api/v1/quote?symbol=".$ticker."&token=".$api_key."");
+                $data = json_decode($json, true);
                     
-                    $sqlStr2 = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE id='$ticker'";
-                    echo"index: ". $sqlStr2 ."<br>";
-                    $result2 = $db->executeQuery($sqlStr2);
-                    $index = $result2->fetch_array();
+                $sqlStr2 = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE abbrev='$ticker'";
+                $result2 = $db->executeQuery($sqlStr2);
+                $index = $result2->fetch_array();
                     
-                    if(isset($quote['05. price'])) {
-                        $price = str_replace(".", ",", $quote['05. price']);
-                        
-                        echo"price: ". $price ."<br>";
-                        
-                        $v1 = $price;
-                        $v2 = $index['v1'];
-                        $v3 = $index['v2'];
-                        $v4 = $index['v3'];
-                        $v5 = $index['v4'];
-                        $v6 = $index['v5'];
-                        $v7 = $index['v6'];
-                        $v8 = $index['v7'];
-                        $v9 = $index['v8'];
-                        $v10 = $index['v9'];
-                        
-                        $updSql = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket
-                                    SET v1='".$v1."', 
-                                        v2='".$v2."',  
-                                        v3='".$v3."',  
-                                        v4='".$v4."',  
-                                        v5='".$v5."',  
-                                        v6='".$v6."',  
-                                        v7='".$v7."',  
-                                        v8='".$v8."',  
-                                        v9='".$v9."',  
-                                        v10='".$v10."', 
-                                        timestamp=".$now."
-                                    WHERE abbrev='".$ticker."'";
-                        echo $updSql ."<br>";
-                        $db->executeQuery($updSql);
-                    }
+                if(isset($data['c'])) {
+                    $price = str_replace(".", ",", $data['c']);
+                    
+                    $v1 = $price;
+                    $v2 = $index['v1'];
+                    $v3 = $index['v2'];
+                    $v4 = $index['v3'];
+                    $v5 = $index['v4'];
+                    $v6 = $index['v5'];
+                    $v7 = $index['v6'];
+                    $v8 = $index['v7'];
+                    $v9 = $index['v8'];
+                    $v10 = $index['v9'];
+                    
+                    $updSql = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket
+                                SET v1='".$v1."', 
+                                    v2='".$v2."',  
+                                    v3='".$v3."',  
+                                    v4='".$v4."',  
+                                    v5='".$v5."',  
+                                    v6='".$v6."',  
+                                    v7='".$v7."',  
+                                    v8='".$v8."',  
+                                    v9='".$v9."',  
+                                    v10='".$v10."', 
+                                    timestamp=".$now."
+                                WHERE abbrev='".$ticker."'";
+                    $db->executeQuery($updSql);
                 }
-            //}
+            }
         }
         $result0->free();
         

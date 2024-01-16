@@ -263,8 +263,8 @@ class DirectTransfersDataService {
 				"P.w_frische" => "player_strength_freshness",
 				"P.w_zufriedenheit" => "player_strength_satisfaction",
 				"P.position_main" => "player_position_main",
-				"SU.id" => "sender_user_id",
-				"SU.nick" => "sender_user_name",
+				//"SU.id" => "sender_user_id",
+				//"SU.nick" => "sender_user_name",
 				"SC.id" => "sender_club_id",
 				"SC.name" => "sender_club_name",
 				"RU.id" => "receiver_user_id",
@@ -283,7 +283,7 @@ class DirectTransfersDataService {
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_transfer_offer AS O";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = O.player_id";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS SU ON SU.id = O.sender_user_id";
+		//$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS SU ON SU.id = O.sender_user_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS SC ON SC.id = O.sender_club_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS RC ON RC.id = O.receiver_club_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS RU ON RU.id = RC.user_id";

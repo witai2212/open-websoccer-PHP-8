@@ -8,7 +8,7 @@
             template="finances"
             model="FinancesModel"
             navitem="true"
-            navweight="3"
+            navweight="2"
             role="user">
 			<page
 	            id="stockmarket"

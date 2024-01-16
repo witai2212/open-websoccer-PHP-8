@@ -50,7 +50,7 @@
 				<td>{{ player.age }}</td>
 				<td>{{ player.position_main }}</td>
 				<td>{{ player.position_second }}</td>
-				<td>{{ player.marktwert}}{{ transfermarktLabel }}</td>
+				<td>{{ player.marktwert|number_format(0, ',', ' ') }} {{ transfermarktLabel }}</td>
 				<td>{{ player.note_schitt }}</td>
 				<td><a class="btn btn-mini" href="?page=mywatchlist&id={{ player.id }}&action=remove-player-from-watchlist"><i class="icon-trash"></i>&nbsp;</i> {{ i18n.getMessage("mywatchlist_delete") }}</a></td>
 			</tr>	
@@ -58,7 +58,7 @@
 		{% endfor %}
 		</tbody>
 		</table>
-{{ i18n.getMessage("mywatchlist_player_on_transferlist") }}
+<strong>{{ i18n.getMessage("mywatchlist_player_on_transferlist") }}</strong>
 
 {% endif %}
 {% endblock %}

@@ -243,6 +243,6 @@
 	<message id="entitylogging_action_delete">Löschung</message>
 	
 	<message id="settings_tab_stockmarket">Stockmarket API</message>
-	<message id="settings_label_alphavantage_api">Alphavantage API</message>
+	<message id="settings_label_finnhub_api">Alphavantage API</message>
 	<message id="default_starting_value">Standard-Ausgabewert</message>
 </messages>

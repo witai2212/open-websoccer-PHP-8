@@ -22,7 +22,7 @@
             model="TransfermarketOverviewModel"
             role="user"
             navitem="true"
-            navweight="4"
+            navweight="5"
             navitemOnlyForConfigEnabled="transfermarket_enabled">
 	        <page
 	            id="sell-player"

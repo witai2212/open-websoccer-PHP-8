@@ -96,7 +96,7 @@
             id="leagues"
             template="league-details"
             navitem="true"
-            navweight="3"
+            navweight="4"
             model="LeagueDetailsModel"
             role="user,guest">
 	        <page

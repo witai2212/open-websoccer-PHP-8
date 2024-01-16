@@ -52,7 +52,7 @@
       <setting id="offline" category="offlinemode" type="select" selection="online,offline" default="online" />
       <setting id="offline_text" category="offlinemode" type="textarea" default="We are offline at the moment." />
       <setting id="offline_times" category="offlinemode" type="tags" default="" />
-      <setting id="alphavantage_api" category="stockmarket" type="text" default="ABCDEFGHIJK" />
+      <setting id="finnhub_api" category="stockmarket" type="text" default="ABCDEFGHIJK" />
       <setting id="default_starting_value" category="stockmarket" type="number" default="50" />
   </settings>
 </module>

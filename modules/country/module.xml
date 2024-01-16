@@ -139,7 +139,7 @@
             id="uefa"
             template="uefa-ranking-overview"
             navitem="true"
-            navweight="3"
+            navweight="6"
             model="UEFARankingModel"
             role="user">
 	        <page

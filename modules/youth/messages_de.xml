@@ -2,7 +2,7 @@
 <!DOCTYPE module SYSTEM "../messages.dtd">
 <messages>
     <message id="youth-team_navlabel">Jugendteam</message>
-    <message id="youth-scouting_navlabel">Scouting</message>
+    <message id="youth-scouting_navlabel">Jugendscouting</message>
     <message id="youth-matchrequests_navlabel">Spielgesuche</message>
     <message id="youth-matches_navlabel">Spiele</message>
     <message id="youth-marketplace_navlabel">Marktplatz</message>
@@ -60,12 +60,12 @@
 	<message id="team_details_tab_youthplayers">Jugendkader</message>
 	<message id="youthteam_no_players_in_team">Dieses Team besitzt derzeit keine Jugendspieler.</message>
 	
-	<message id="youthteam_scouting_lastexecution">Letztes Scouting</message>
+	<message id="youthteam_scouting_lastexecution">Letztes Jugendscouting</message>
 	<message id="youthteam_scouting_lastexecution_never">Noch nie ausgeführt</message>
-	<message id="youthteam_scouting_nextpossibleexecution">Das nächste Scouting ist erst wieder möglich am %s</message>
+	<message id="youthteam_scouting_nextpossibleexecution">Das nächste Jugendscouting ist erst wieder möglich am %s</message>
 	
-	<message id="youthteam_scouting_schoosescout">Wählen Sie Ihren Scout</message>
-	<message id="youthteam_scouting_noscoutavailable">Im Moment steht Ihnen kein Scout zur Verfügung.</message>
+	<message id="youthteam_scouting_schoosescout">Wählen Sie Ihren Jugendscout</message>
+	<message id="youthteam_scouting_noscoutavailable">Im Moment steht Ihnen kein Jugendscout zur Verfügung.</message>
 	<message id="youthteam_scouting_schoosecountry">In welchem Land soll nach Talenten gesucht werden?</message>
 	
 	<message id="youthteam_scouting_err_breakviolation">Sie können erst wieder scouten am: %s</message>

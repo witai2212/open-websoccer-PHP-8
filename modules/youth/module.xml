@@ -216,7 +216,7 @@
             template="youth_team"
             model="MyYouthTeamModel"
             navitem="true"
-            navweight="2"
+            navweight="3"
             role="user"
             navitemOnlyForConfigEnabled="youth_enabled">
             

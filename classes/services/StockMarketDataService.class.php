@@ -92,6 +92,11 @@ class StockMarketDataService {
                 }
             }
         }
+        
+        $updSql = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket_date
+                                SET date=$now";
+        $db->executeQuery($updSql);
+        
         $result0->free();
         
     }

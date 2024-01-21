@@ -388,7 +388,7 @@ class StockMarketDataService {
         }
         
         //GET TEAM VALUE >= 25.000.000
-        $team_marjetvalue = TeamsDataService::getTeamValueByTeamId($websoccer, $db, $teamId);
+        $team_marketvalue = TeamsDataService::getTeamValueByTeamId($websoccer, $db, $teamId);
         if($team_marketvalue<$min_team_value) {
             $criteria_not_met++;
         }

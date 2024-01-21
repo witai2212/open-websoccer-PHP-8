@@ -371,6 +371,13 @@ class TeamsDataService {
 	 * @return array array of teams which do not have a manager or only an interims manager assigned.
 	 */
 	public static function getTeamsWithoutUser(WebSoccer $websoccer, DbConnection $db) {
+	    /*
+	     * SELECT V.name, V.strength, L.name, L.land, S.name
+FROM cm23_verein AS V, cm23_liga AS L, cm23_stadion AS S
+WHERE V.liga_id=L.id AND S.id=V.stadion_id
+ORDER BY L.land ASC, L.division ASC, V.name LIMIT 1000;
+	     */
+	    
 		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON C.liga_id = L.id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON C.stadion_id = S.id';
@@ -385,6 +392,7 @@ class TeamsDataService {
 		$columns['L.id'] = 'league_id';
 		$columns['L.name'] = 'league_name';
 		$columns['L.land'] = 'league_country';
+		$columns['L.division'] = 'league_division';
 		$columns['S.p_steh'] = 'stadium_p_steh';
 		$columns['S.p_sitz'] = 'stadium_p_sitz';
 		$columns['S.p_haupt_steh'] = 'stadium_p_haupt_steh';
@@ -392,11 +400,11 @@ class TeamsDataService {
 		$columns['S.p_vip'] = 'stadium_p_vip';
 		
 		// order by
-		$whereCondition .= ' ORDER BY league_country ASC, league_name ASC, team_name ASC';
+		$whereCondition .= ' ORDER BY league_country ASC, league_division ASC, league_name ASC, team_name ASC';
 		
 		$teams = array();
 		
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 300);
+		$result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 1000);
 		while ($team = $result->fetch_array()) {
 			$teams[$team['league_country']][] = $team;
 		}

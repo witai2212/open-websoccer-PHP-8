@@ -57,7 +57,9 @@ class FinancesModel implements IModel {
 			$statements = array();
 		}
 		
-		return array("budget" => $team["team_budget"], "statements" => $statements, "paginator" => $paginator);
+		$stockmarketCriteria = StockMarketDataService::clubStockmarketCriteria($this->_websoccer, $this->_db, $teamId);
+		
+		return array("budget" => $team["team_budget"], "statements" => $statements, "paginator" => $paginator, "stockmarketCriteria" => $stockmarketCriteria);
 	}
 	
 }

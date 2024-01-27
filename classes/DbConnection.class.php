@@ -88,7 +88,7 @@ class DbConnection {
 	public function querySelect($columns, $fromTable, $whereCondition, $parameters = null, $limit = null) {
 		
 		$queryStr = $this->buildQueryString($columns, $fromTable, $whereCondition, $parameters, $limit);
-		echo"Str: ". $queryStr ."<br>";
+		//echo"Str: ". $queryStr ."<br>";
 		return $this->executeQuery($queryStr);
 	}
 	

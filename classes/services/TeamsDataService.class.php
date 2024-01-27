@@ -404,7 +404,7 @@ ORDER BY L.land ASC, L.division ASC, V.name LIMIT 1000;
 		
 		$teams = array();
 		
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 1000);
+		$result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 100000);
 		while ($team = $result->fetch_array()) {
 			$teams[$team['league_country']][] = $team;
 		}

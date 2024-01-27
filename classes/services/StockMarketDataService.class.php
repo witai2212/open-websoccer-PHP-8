@@ -48,7 +48,8 @@ class StockMarketDataService {
             $time = $now-$stockdata['timestamp'];
 
             //only update stockmarket data between Monday an Friday and within 24 hours = 86400 seconds
-            if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
+            //if($weekday!="Sat" && $weekday!="Sun" && ($time>=86400)) {
+            if($time>=86400) {
                 
                 /**
                  * FINNHUB.IO to retreive stock exchange data

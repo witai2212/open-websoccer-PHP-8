@@ -370,19 +370,18 @@ class TeamsDataService {
 	 * @param DbConnection $db DB connection
 	 * @return array array of teams which do not have a manager or only an interims manager assigned.
 	 */
-	public static function getTeamsWithoutUser(WebSoccer $websoccer, DbConnection $db) {
-	    /*
-	     * SELECT V.name, V.strength, L.name, L.land, S.name
-FROM cm23_verein AS V, cm23_liga AS L, cm23_stadion AS S
-WHERE V.liga_id=L.id AND S.id=V.stadion_id
-ORDER BY L.land ASC, L.division ASC, V.name LIMIT 1000;
-	     */
+	public static function getTeamsWithoutUser(WebSoccer $websoccer, DbConnection $db, $userId) {
 	    
-		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C';
+	    // GET USER DATA TO DEFINE HIGHSCORE
+	    $user = UsersDataService::getUserById($websoccer, $db, $userId);
+	    $userHighScore = $user['highscore']+20;
+	    /*
+	     * 
+	    $fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C, ';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON C.liga_id = L.id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON C.stadion_id = S.id';
 		
-		$whereCondition = 'nationalteam != \'1\' AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = \'1\') AND C.status = 1';
+		$whereCondition = 'C.liga_id=L.id AND C.stadion_id=S.id AND nationalteam != \'1\' AND (C.user_id <= 0 OR C.user_id IS NULL OR C.interimmanager = \'1\') AND C.status = 1';
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
@@ -402,14 +401,44 @@ ORDER BY L.land ASC, L.division ASC, V.name LIMIT 1000;
 		// order by
 		$whereCondition .= ' ORDER BY league_country ASC, league_division ASC, league_name ASC, team_name ASC';
 		
-		$teams = array();
-		
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 100000);
-		while ($team = $result->fetch_array()) {
-			$teams[$team['league_country']][] = $team;
-		}
-		$result->free();
-		
+	     $teams = array();
+	     
+	     $result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 100000);
+	     while ($team = $result->fetch_array()) {
+	     $teams[$team['league_country']][] = $team;
+	     }
+	     $result->free();
+	     */
+	    
+	    $sqlStr = "SELECT C.id AS team_id,
+                    	    C.name AS team_name,
+                    	    C.finanz_budget AS team_budget,
+                    	    C.bild AS team_picture,
+                    	    C.strength AS team_strength,
+                    	    L.id AS league_id,
+                    	    L.name AS league_name,
+                    	    L.land AS league_country,
+                    	    L.division AS league_division,
+                    	    S.p_steh AS stadium_p_steh,
+                    	    S.p_sitz AS stadium_p_sitz,
+                    	    S.p_haupt_steh AS stadium_p_haupt_steh,
+                    	    S.p_haupt_sitz AS stadium_p_haupt_sitz,
+                    	    S.p_vip AS stadium_p_vip
+        	       FROM ". $websoccer->getConfig('db_prefix') . "_verein AS C,
+                            ". $websoccer->getConfig('db_prefix') . "_liga AS L,
+                            ". $websoccer->getConfig('db_prefix') . "_stadion AS S
+        	       WHERE L.id=C.liga_id AND S.id=C.stadion_id AND C.highscore<=$userHighScore
+                    ORDER BY RAND() LIMIT 25";
+        //ORDER BY L.land ASC, L.division ASC, C.name LIMIT 75";
+	    $result = $db->executeQuery($sqlStr);
+	    
+	    $teams = array();
+	    
+	    while ($team = $result->fetch_array()) {
+	        $teams[$team['league_country']][] = $team;
+	    }
+	    $result->free();
+	    		
 		return $teams;
 	}
 	

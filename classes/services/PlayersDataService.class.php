@@ -218,7 +218,8 @@ class PlayersDataService {
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
 		
-		$whereCondition = 'P.status = 1 AND P.transfermarkt = 1 AND P.transfer_ende > %d';
+		//$whereCondition = 'P.status = 1 AND P.transfermarkt = 1 AND P.transfer_ende > %d';
+		$whereCondition = 'P.status = 1 AND P.transfermarkt = 1';
 		$parameters[] = $websoccer->getNowAsTimestamp();
 		
 		if ($positionFilter != null) {

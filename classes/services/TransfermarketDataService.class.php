@@ -387,5 +387,20 @@ class TransfermarketDataService {
 		}
 	}
 	
+	public static function getTransferOffers(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	    
+	    /*
+	     * "SELECT T.spieler_id, P.vorname, C.*
+            FROM cm23_transfer_angebot AS T,
+                    cm23_spieler AS P,
+                    cm23_verein AS C
+            WHERE C.id=T.verein_id AND 
+                    P.id=T.spieler_id AND
+                    P.verein_id='22'"
+         *
+	     */
+	    
+	}
+	
 }
 ?>

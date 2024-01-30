@@ -9,6 +9,7 @@
 				<th>{{ i18n.getMessage("transfer_bid_amount") }}</th>
 				<th>{{ i18n.getMessage("transfer_bid_handmoney") }}</th>
 				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				<th>&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,6 +24,7 @@
 				<td>{{ bid.amount|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
 				<td>{{ bid.hand_money|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
 				<td>{{ bid.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
+				<td><a class="btn btn-mini" href="?page=transfermarket&id={{ bid.player_id }}&action=withdraw-bid"><i class="icon-trash"></i>&nbsp;</i></a></td>
 			</tr>
 	  	{% endfor %}
 	  	

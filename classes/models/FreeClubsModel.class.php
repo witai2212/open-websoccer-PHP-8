@@ -51,7 +51,14 @@ class FreeClubsModel implements IModel {
 	    $user = $this->_websoccer->getUser();
 	    $userId = $user->id;
 	    
-		return array("countries" => TeamsDataService::getTeamsWithoutUser($this->_websoccer, $this->_db, $userId));
+	    if(!isset($_SESSION['freeclubs'])) {
+	        $_SESSION['freeclubs'] = TeamsDataService::getTeamsWithoutUser($this->_websoccer, $this->_db, $userId);
+	        $freeClubs = $_SESSION['freeclubs'];
+	    } else {
+	        $freeClubs = $_SESSION['freeclubs'];
+	    }
+	    
+		return array("countries" => $freeClubs);
 	}
 	
 }

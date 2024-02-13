@@ -842,5 +842,14 @@ class PlayersDataService {
 	    
 	}
 	
+	/*
+	 * Correction on w_staerke acc. to w_staerke_max
+	 */
+	public static function playerStrengthCorrection(WebSoccer $websoccer, DbConnection $db) {
+	    
+	    $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler SET w_staerke=w_staerke_max WHERE w_staerke>w_staerke_max";
+	    $db->executeQuery($updStr);
+	    
+	}
 }
 ?>

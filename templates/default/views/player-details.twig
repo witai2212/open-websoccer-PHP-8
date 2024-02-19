@@ -114,6 +114,11 @@
 				  <dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
 				  <dd>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 				  
+				  {% if env.getUser().getClubId() == player.team_id %}
+					<dt>{{ i18n.getMessage("entity_player_talent") }}</dt>
+				  	<dd>{{ player.player_strength_talent }}</dd>
+				  {% endif %}
+				  
 				</dl>
 			</div>
 		</div>  

@@ -34,7 +34,7 @@
 				<td>{{ index.v4 }}</td>
 				<td>{{ index.quantity|number_format(0, ',', ' ') }}</td>
 				<td>
-					<p><a class="btn btn-mini" href="?page=stockmarket&id={{ team_data.team_id }}&action=put_team_on_stockmarket"><i class="icon-shopping-cart"></i> {{ i18n.getMessage("indexes_buy") }}</a></p>
+					<p><a class="btn btn-mini" href="?page=buystock&id={{ index.id }}"><i class="icon-shopping-cart"></i> {{ i18n.getMessage("indexes_buy") }}</a></p>
 				</td>
 					
 			</tr>

@@ -53,6 +53,8 @@
     <message id="account_statement_sender">Absender / Empfänger</message>
     <message id="account_statement_subject">Betreff</message>
     <message id="account_statement_amount">Betrag</message>
+    <message id="account_statement_revenues">Einnahmen</message>
+    <message id="account_statement_expenses">Ausgaben</message>
     
     <message id="tickets_navlabel">Eintrittspreise</message>
     

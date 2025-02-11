@@ -168,6 +168,12 @@
                 </editform>
             </entity>
         </adminpage>
+        
+        <adminpage
+            id="admin-execute-match"
+            filename="admin-execute-match"
+            navcategory="season"
+            permissionrole="r_spiele" />
     </admin>
     
     <pages>

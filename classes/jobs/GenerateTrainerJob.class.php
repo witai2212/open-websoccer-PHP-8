@@ -25,14 +25,16 @@
  * 
  * @author Ingo Hofmann
  */
-class ExecuteTransfersJob extends AbstractJob {
+class GenerateTrainerJob extends AbstractJob {
 	
 	/**
 	 * @see AbstractJob::execute()
 	 */
 	function execute() {
-		TransfermarketDataService::executeOpenTransfers($this->_websoccer, $this->_db);
-		ComputerTransfermarketDataService::executeComputerBids($this->_websoccer, $this->_db);
+		
+	    echo"executing trainer job\n";
+		TrainingDataService::generateTrainer($this->_websoccer, $this->_db);
+		
 	}
 }
 

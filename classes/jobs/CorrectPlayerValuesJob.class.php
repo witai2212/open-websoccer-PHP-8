@@ -25,14 +25,14 @@
  * 
  * @author Ingo Hofmann
  */
-class ExecuteTransfersJob extends AbstractJob {
+class CorrectPlayerValuesJob extends AbstractJob {
 	
 	/**
 	 * @see AbstractJob::execute()
 	 */
 	function execute() {
-		TransfermarketDataService::executeOpenTransfers($this->_websoccer, $this->_db);
-		ComputerTransfermarketDataService::executeComputerBids($this->_websoccer, $this->_db);
+	    PlayersDataService::playerStrengthCorrection($this->_websoccer, $this->_db);
+	    PlayersDataService::updateMarketValue($this->_websoccer, $this->_db);
 	}
 }
 

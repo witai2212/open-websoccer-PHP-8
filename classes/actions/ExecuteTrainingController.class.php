@@ -186,6 +186,12 @@ class ExecuteTrainingController implements IActionController {
 					$effectFreshness, $effectTechnique, $effectStamina, $effectSatisfaction);
 			PluginMediator::dispatchEvent($event);
 			
+			// slow down training to 10%
+			$effectFreshness = $effectFreshness*0.1;
+			$effectTechnique = $effectTechnique*0.1;
+			$effectStamina = $effectStamina*0.1;
+			$effectSatisfaction = $effectSatisfaction*0.1;
+			
 			// update player
 			$columns = array(
 					"w_frische" => min(100, max(1, $player["strength_freshness"] + $effectFreshness)),

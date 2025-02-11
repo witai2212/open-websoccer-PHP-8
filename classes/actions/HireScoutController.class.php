@@ -21,10 +21,9 @@ If not, see <http://www.gnu.org/licenses/>.
 ******************************************************/
 
 /**
- * Manager of a player can remove player from transfer market
- * as long as there is no bid for him.
+ * Manager canfie scouts if scouting results are not accieved.
  */
-class SellStockController implements IActionController {
+class HireScoutController implements IActionController {
     private $_i18n;
     private $_websoccer;
     private $_db;
@@ -42,25 +41,17 @@ class SellStockController implements IActionController {
     //public function executeAction($parameters) {
     public function executeAction($parameters) {
         
-        $index = $parameters['index'];
-        
-		$max_qty = $parameters['max_qty'];
-		if($parameters['qty']>$max_qty) {
-			$qty = $max_qty;
-		} else {
-			$qty = $parameters['qty'];
-		}
+        $scoutId = $parameters['id'];
         $user = $this->_websoccer->getUser();
         $teamId = $user->getClubId($this->_websoccer, $this->_db);
-
-        StockMarketDataService::sellStock($this->_websoccer, $this->_db, $index, $qty, $teamId);
+        
+        ScoutingDataService::hireScout($this->_websoccer, $this->_db, $scoutId, $teamId);
         
         // success message
         $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
-            $this->_i18n->getMessage("saved_message_title"),
-            ""));
+            $this->_i18n->getMessage("hire_scout_message"),""));
             
-        return "portfolio";
+        return "scouting";
     }
     
 }

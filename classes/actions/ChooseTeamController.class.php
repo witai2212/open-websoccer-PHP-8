@@ -70,6 +70,9 @@ class ChooseTeamController implements IActionController {
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
 				$this->_i18n->getMessage("freeclubs_msg_success"),
 				""));
+				
+		//reset stadium levels
+		StadiumsDataService::resetStadiumLevels($this->_websoccer, $this->_db, $teamId);
 		
 		return "office";
 	}

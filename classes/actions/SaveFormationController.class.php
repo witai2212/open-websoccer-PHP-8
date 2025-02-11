@@ -75,6 +75,7 @@ class SaveFormationController implements IActionController {
 		
 		// get team players and check whether provided IDs are valid players (in team and not blocked)
 		$players = PlayersDataService::getPlayersOfTeamById($this->_websoccer, $this->_db, $teamId, $this->_isNationalTeam, $matchinfo['match_type'] == 'cup', $matchinfo['match_type'] != 'friendly');
+
 		$this->validatePlayer($parameters['player1'], $players);
 		$this->validatePlayer($parameters['player2'], $players);
 		$this->validatePlayer($parameters['player3'], $players);
@@ -198,6 +199,7 @@ class SaveFormationController implements IActionController {
 		} else {
 			$columns['match_id'] = $matchId;
 			$this->_db->queryInsert($columns, $fromTable);
+			
 		}
 		
 		// save as template

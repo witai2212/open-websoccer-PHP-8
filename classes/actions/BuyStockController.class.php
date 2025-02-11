@@ -46,15 +46,14 @@ class BuyStockController implements IActionController {
         $qty = $parameters['qty'];
         $user = $this->_websoccer->getUser();
         $teamId = $user->getClubId($this->_websoccer, $this->_db);
-
+        
         StockMarketDataService::buyStock($this->_websoccer, $this->_db, $index, $qty, $teamId);
         
         // success message
         $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
-            $this->_i18n->getMessage("saved_message_title"),
-            ""));
+            $this->_i18n->getMessage("saved_message_title"),""));
             
-        //return "stockmarket";
+        return "stockmarket";
     }
     
 }

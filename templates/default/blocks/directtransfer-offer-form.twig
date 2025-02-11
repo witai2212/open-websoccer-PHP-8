@@ -10,7 +10,7 @@
 {% if showForm %}
 	{{ formelements.textfield('amount', i18n.getMessage('transferoffer_label_amount'), env.getRequestParameter("amount"), true, validationMsg, 'number', env.getConfig("game_currency")) }}
 	
-	{{ formelements.textarea('comment', i18n.getMessage('transferoffer_label_comment'), env.getRequestParameter("comment"), false, validationMsg, null, 3) }}
+	<!--{{ formelements.textarea('comment', i18n.getMessage('transferoffer_label_comment'), env.getRequestParameter("comment"), false, validationMsg, null, 3) }}
 	
 	
 	<fieldset>
@@ -22,7 +22,7 @@
 		{{ formelements.teamPlayerSelection("exchangeplayer2", i18n.getMessage('transferoffer_label_exchangeplayer2'), 
 			env.getRequestParameter("exchangeplayer2"), players) }}
 		
-	</fieldset>
+	</fieldset>-->
 	
 	<fieldset>
 		<legend>{{ i18n.getMessage('transferoffer_label_fieldset_contract') }}</legend>

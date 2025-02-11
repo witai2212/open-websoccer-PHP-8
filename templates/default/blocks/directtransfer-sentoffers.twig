@@ -20,7 +20,7 @@
 				{% if offer.offer_message|length > 0 %}
 				<a href="#" class="btn btn-mini wspopover" data-toggle="popover" 
 					data-title="{{ i18n.getMessage("transferoffers_offer_comment_title", offer.sender_user_name) }}" 
-					data-content="{{ offer.offer_message }}">{{ i18n.getMessage("transferoffers_offer_showcomment") }}</a>
+					data-content="{{ offer.offer_message }}">{{ i18n.getMessage("transferoffers_offer_showcomment") }}lalalalalal</a>
 				{% endif %}
 				</td>
 				<td><a href="{{ env.getInternalUrl("player", "id=" ~ offer.player_id) }}">{% if offer.player_pseudonym|length > 0 %}{{ offer.player_pseudonym }}{% else %}{{ offer.player_firstname }} {{ offer.player_lastname }}{% endif %}</a>

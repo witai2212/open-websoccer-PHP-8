@@ -1,0 +1,35 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>{{ i18n.getMessage("offertable_head_player") }}</th>
+			<th>{{ i18n.getMessage("offertable_head_position") }}</th>
+			<th>{{ i18n.getMessage("offertable_head_enddate") }}</th>
+			<th>{{ i18n.getMessage("offertable_head_transfer_fee") }}</th>
+			<th>{{ i18n.getMessage("offertable_head_market_value") }}</th>
+			<th>{{ i18n.getMessage("offertable_team_name") }}</th>
+			<th>{{ i18n.getMessage("transferoffers_offer_withdraw") }}</th>
+		</tr>
+	</thead>
+	<tbody>
+
+
+	{% for bid in bids %}
+
+		<tr>
+			<td><strong>{{ loop.index }}</strong></td>
+			<td><a href="?page=player&id={{bid.player_id }}" {% if bid.ishighest %}title="{{ i18n.getMessage("transfer_bids_ishighest") }}"{% endif %}>{{ bid.player_firstname }} {{ bid.player_lastname }}</a></td>
+			
+			
+			<td>{{ bid.position_main }} ({{ bid.position_second }})</td>
+			<td>{{ env.getFormattedDatetime(bid.auction_end) }}</td>
+			<td>{{ bid.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+			<td>{{ bid.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+			<td><a href="?page=team&id={{bid.player_team.team_id }}">{{ bid.player_team.team_name }}</a></td>
+			<td><a class="btn btn-mini" href="?page=mybids&id={{ bid.player_id }}&action=withdraw-bid"><i class="icon-trash"></i>&nbsp;</i> {{ i18n.getMessage("transferoffers_offer_withdraw") }}</a></td>
+		</tr>	
+	
+	{% endfor %}
+	
+	</tbody>
+</table>

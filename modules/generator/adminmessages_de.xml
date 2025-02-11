@@ -26,6 +26,7 @@
     <message id="generator_validationerror_noleague">Es muss eine Liga ausgewählt werden.</message>
     
     <message id="generator_success">Daten wurden erfolgreich generiert.</message>
+    <message id="generator_error">Daten wurden NICHT erfolgreich generiert!</message>
     
 	<message id="generator_err_filedoesnotexist">Um Daten für diese Liga generieren zu können, benötigen Sie die Datei: %s</message>
 	<message id="generator_err_emptyfile">Die folgende Datei hat keine gültigen Einträge: %s</message>
@@ -46,4 +47,11 @@
 	<message id="player_age_deviation_help">Wenn das Spieleralter zufällig schwanken soll, kann z.B. 5 für eine Abweichung zwischen -5 und +5 Jahren gewählt werden.</message>
 	
 	<message id="playersgenerator_generator_for_transfermarket">Für den Transfermarkt generieren</message>
+	
+	<message id="groupmatchesgenerator_select_cups">Wähle Pokal aus</message>
+	<message id="groupmatchesgenerator_label_firstmatchday">Datum des ersten Spiels</message>
+	<message id="groupmatchesgenerator_label_timebreak">Pause zwischen jedem Spiel</message>
+	<message id="groupmatchesgenerator_label_matchesperteam">Spiele pro Team</message>
+
+	
 </messages>

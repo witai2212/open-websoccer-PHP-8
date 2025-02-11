@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../messages.dtd">
 <messages>
-    <message id="finance_navlabel">Finanzen</message>
     
-    <message id="stockmarket_navlabel">Börse</message>
+    <message id="formlogin_block_title">Anmelden</message>
+    <message id="formlogin_option_rememberme">Angemeldet bleiben</message>
+    <message id="formlogin_submit_button">Anmelden</message>
+    <message id="formlogin_link_register">Registrieren</message>
+    <message id="formlogin_link_forgot_password">Passwort vergessen?</message>
+    
+    <message id="formlogin_invalid_data">Eingabe ist falsch</message>
+    
+    <message id="login_navlabel">Anmelden</message>
+    <message id="login_title">Anmelden</message>
+    
+    <message id="forgot-password_navlabel">Neues Passwort senden</message>
+    <message id="forgot-password_title">Neues Passwort generieren</message>
+    <message id="forgot-password_submit_button">Neues Passwort senden</message>
+    
+    <message id="forgot-password_email-not-found">Kein aktiver Benutzer mit dieser E-Mailadresse gefunden. Bitte Eingabe prüfen.</message>
+    <message id="forgot-password_already-sent">Du hast bereits in den letzten 24h ein neues Passwort angefragt. Es kann nur ein neues Passwort pro Tag angefordert werden.</message>
+    
+    <message id="forgot-password_message_title">Neues Passwort wurde gesendet.</message>
+    <message id="forgot-password_message_content">Bitte Email und Spam jetzt prüfen</message>
+    
+    <message id="activate-user_navlabel">Account aktivieren</message>
+    <message id="activate-user_title">Account aktivieren</message>
+    <message id="activate-user_content">Hast Du Schwierigkeiten mit deinem Account? Einfach uns kontaktieren.</message>
+    <message id="activate-user_user-not-found">Entweder dein Account ist bereits aktiviert, oder du hast ein falsche E-Mailadresse angegeben. Bitte Aktivierungs URL in der E-Mail erneut prüfen.</message>
+    <message id="activate-user_message_title">Dein Account wurde erfolgreich aktiviert.</message>
+    <message id="activate-user_message_content">Du kannst Dich jetzt mit E-Mail und Passowrt anmelden. Viel Spaß!</message>
 </messages>

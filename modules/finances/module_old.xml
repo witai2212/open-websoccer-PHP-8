@@ -51,7 +51,7 @@
 	            model="MyPortfolioModel"
 	            navitem="true"
 	            navweight="3"
-	            parentItem="stockmarket"
+	            parentItem="finances"
 	            role="user">
 	        
 	        </page>
@@ -67,7 +67,6 @@
 		<action id="sell_stock" controller="SellStockController" role="user">
 			<param id="index" type="text" min="1" max="10000000" required="true" />
 			<param id="qty" type="text" min="1" max="100000000" required="true" />
-			<param id="max_qty" type="text" min="1" max="100000000" required="true" />
 		</action>
 		
 	</actions>    

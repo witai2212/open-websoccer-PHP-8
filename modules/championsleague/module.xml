@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+  
+    <pages>
+        <page
+            id="championsleague"
+            template="championsleague"
+            navitem="true"
+            navweight="2"
+            model="ChampionsleagueModel"
+            parentItem="uefa"
+            role="user">
+        </page>
+    </pages>
+     
+</module>

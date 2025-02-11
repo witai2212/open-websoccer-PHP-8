@@ -142,15 +142,6 @@
             navweight="6"
             model="UEFARankingModel"
             role="user">
-	        <page
-	            id="uefa_championsleague"
-	            template="uefa_championsleague"
-	            navitem="true"
-	            model="UEFAChampionsLeagueModel"
-	            navweight="0"
-	            role="user"/>
-	        
-   
         </page>
         
     </pages> 

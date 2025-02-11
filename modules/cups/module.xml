@@ -65,6 +65,17 @@
         
     </admin>
   
+    <pages>
+        <page
+            id="cups"
+            template="cups"
+            navitem="true"
+            navweight="4"
+            model="CupsModel"
+            role="user">
+        </page>
+    </pages>
+  
     <blocks>
 
         <block

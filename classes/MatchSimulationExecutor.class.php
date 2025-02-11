@@ -35,7 +35,17 @@ class MatchSimulationExecutor {
 	 * @param WebSoccer $websoccer request context.
 	 * @param DbConnection $db database connection.
 	 */
-	public static function simulateOpenMatches(WebSoccer $websoccer, DbConnection $db) {
+    public static function simulateOpenMatches(WebSoccer $websoccer, DbConnection $db) {
+        
+        // count open matches
+        $now = $websoccer->getNowAsTimestamp();
+        $matchesStr = "SELECT COUNT(*) AS matches
+                        FROM ". $websoccer->getConfig('db_prefix') ."_spiel
+                        WHERE berechnet != '1' AND blocked != '1' AND datum <= '".$now."'";
+        $result = $db->executeQuery($matchesStr);
+        $open_matches = $result->fetch_assoc();
+        $result->free();
+        echo"open matches: ". $open_matches['matches'] ."\n";
 		
 		$simulator = new Simulator($db, $websoccer);
 		
@@ -111,6 +121,9 @@ class MatchSimulationExecutor {
 		$columns['GUEST_T.name'] = 'guest_name';
 		$columns['GUEST_T.captain_id'] = 'guest_captain_id';
 		$columns['GUEST_T.interimmanager'] = 'guest_interimmanager';
+		
+		$columns['HOME_T.user_id'] = 'home_user_id';
+		$columns['GUEST_T.user_id'] = 'guest_user_id';
 		
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
 			$columns['HOME_F.spieler' . $playerNo] = 'home_formation_player' . $playerNo;
@@ -197,6 +210,42 @@ class MatchSimulationExecutor {
 			$db->queryUpdate($unlockArray, $matchTable, 'id = %d', $matchinfo['match_id']);
 			
 			$matchesSimulated++;
+			
+			// update UEFA value
+			//$matchinfo['cup_name'];
+			//$matchinfo['home_goals'];
+			//$matchinfo['guest_goals'];
+			if($matchinfo['cup_name']=='Champions League' || $matchinfo['cup_name']=='UEFA Euro League' || $matchinfo['cup_name']=='UEFA Conference League' || $matchinfo['cup_name']=='Conference League') {
+				
+				$homeUefa = 0;
+				$guestUefa = 0;
+				
+				$homeTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['home_id']);
+				$guestTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['guest_id']);
+				
+				$homeTeamCountry = $homeTeam['team_country'];
+				$guestTeamCountry = $guestTeam['team_country'];
+				
+				if($matchinfo['home_goals']>$matchinfo['guest_goals']) {
+					$homeUefa = 1;
+					$guestUefa = 0.5;
+				} else if($matchinfo['home_goals']<$matchinfo['guest_goals']) {
+					$homeUefa = 0.5;
+					$guestUefa = 1;
+				} else if($matchinfo['home_goals']==$matchinfo['guest_goals']) {
+					$homeUefa = 0.5;
+					$guestUefa = 0.5;
+				} else {
+					$homeUefa = 0;
+					$guestUefa = 0;
+				}
+				
+				$updStr1 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$homeUefa' WHERE name='$homeTeamCountry'";
+				$db->executeQuery($updStr1);
+				$updStr2 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$guestUefa' WHERE name='$guestTeamCountry'";
+				$db->executeQuery($updStr2);
+			
+			}
 
 		}
 		$result->free();
@@ -352,9 +401,28 @@ class MatchSimulationExecutor {
 					|| $team->isNationalTeam && $playerinfo['nation'] == $team->name) {
 				
 				$position = $positionMapping[$mainPosition];
+
+				// add strength if player has no user
+				$playerTeam = TeamsDataService::getTeamById($websoccer, $db, $playerinfo['team_id']);
+				if($playerTeam['team_user_id']<=0) {
+					$computerFactor = 1.2;
+				} else {
+					$computerFactor = 1;
+				}
 				
-				//Stärke = Stärke x (Talent/5);
-				$strength = $playerinfo['strength']*($playerinfo['talent']/5);
+				echo "ComputerFactor: ". $computerFactor ." userId: ". $playerinfo['team_id'] ."<br>";
+				
+				// add strength if team is 'superclub'
+				if($playerTeam['team_superclub']=='1') {
+					$superTeamFactor = 1.2;
+				} else {
+					$superTeamFactor = 1;
+				}
+				
+				echo "superTeamFactor: ". $superTeamFactor ."<br>";
+				
+				//Stärke = Stärke x (Talent/5) * computerFactor;
+				$strength = ($playerinfo['strength'] * ($playerinfo['talent']/5)) * $computerFactor * $superTeamFactor;
 				
 				// player becomes weaker: wrong position
 				if ($playerinfo['position'] != $position 

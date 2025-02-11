@@ -112,6 +112,10 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 				SimulationCupMatchHelper::checkIfMatchIsLastMatchOfGroupRoundAndCreateFollowingMatches($this->_websoccer, $this->_db, $match);
 			}
 			
+			/* scouting salaries*************
+			 * CREATE A FUNCTION TO PAY ALL OTHER PAYMENTS COMING IN THE FUTURE
+			 */
+			
 			// highscore and fan popularity
 			$this->updateUsers($match);
 		}

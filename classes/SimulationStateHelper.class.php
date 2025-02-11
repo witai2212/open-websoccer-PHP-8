@@ -161,6 +161,10 @@ class SimulationStateHelper {
 		
 		if ($match->isCompleted) {
 			$columns['berechnet'] = 1;
+			
+			// reduce games for scouts
+			ScoutingDataService::reduceTeamMatches($websoccer, $db);
+			
 		}
 		
 		$columns['minutes'] = $match->minute;

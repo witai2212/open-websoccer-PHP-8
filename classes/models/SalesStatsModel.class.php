@@ -21,9 +21,9 @@
 ******************************************************/
 
 /**
- * Provides Player in team_id watchlist
+ * Provides bst players of the world
  */
-class MyWatchlistModel implements IModel {
+class SalesStatsModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
@@ -48,11 +48,21 @@ class MyWatchlistModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+	    $avgGates = null;
+		
+		$user = $this->_websoccer->getUser();
+	    $userId = $user->id;
 	    
-	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
+	    $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
+		$leagueId = $team['team_league_id'];
 	    
-	    return array("watchlist" => $watchlist);
+	    $avgGates = DestatisDataService::getAvgGatesByLeagueId($this->_websoccer, $this->_db, $leagueId);
+		
+		$most_visitors_clubs = DestatisDataService::highestClubStadiumVisitorsByClub($this->_websoccer, $this->_db);
+		$most_visitors_leagues = DestatisDataService::highestClubStadiumVisitorsByLeague($this->_websoccer, $this->_db);
+		
+	    return array("avg_gates" => $avgGates, "most_visitors_clubs" => $most_visitors_clubs, "most_visitors_leagues" => $most_visitors_leagues);
+		
 	}
 	
 }

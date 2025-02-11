@@ -19,12 +19,11 @@ License along with OpenWebSoccer-Sim.
 If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
-define('NUMBER_OF_PLAYERS', 20);
 
 /**
- * Provides list of actual stock exchange market values.
+ * Provides bids made by the user's team.
  */
-class MyPortfolioModel implements IModel {
+class MyBidsModel implements IModel {
     private $_db;
     private $_i18n;
     private $_websoccer;
@@ -35,30 +34,29 @@ class MyPortfolioModel implements IModel {
         $this->_websoccer = $websoccer;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see IModel::renderView()
+     */
     public function renderView() {
         return TRUE;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see IModel::getTemplateParameters()
+     */
     public function getTemplateParameters() {
         
-        $userId = $this->_websoccer->getUser()->id;
-        if ($userId < 1) {
-            throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
-        }
+        $user = $this->_websoccer->getUser();
+        $userId = $user->id;
+        
         $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
         $teamId = $team['team_id'];
         
-        $indexes = StockMarketDataService::getUserPortfolio($this->_websoccer, $this->_db, $teamId);
-		
-		//echo str_replace("world","Peter","Hello world!");
-		//$indexes['v1'] = str_replace(',', '.', $indexes['v1']);
-		//$indexes['price'] = str_replace(',', '.', $indexes['price']);
-		
-		/*echo"<pre>";
-		print_r($indexes);
-		echo"</pre>";*/
+        $mybids = TransfermarketDataService::getTransferBids($this->_websoccer, $this->_db, $teamId);
         
-        return array("indexes" => $indexes);
+        return array("bids" => $mybids);
     }
     
 }

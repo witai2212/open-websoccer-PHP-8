@@ -21,9 +21,9 @@
 ******************************************************/
 
 /**
- * Provides Player in team_id watchlist
+ * Provides bst players of the world
  */
-class MyWatchlistModel implements IModel {
+class MostValuableTeamsModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
@@ -47,12 +47,16 @@ class MyWatchlistModel implements IModel {
 	 * @see IModel::getTemplateParameters()
 	 */
 	public function getTemplateParameters() {
+		
+		$user = $this->_websoccer->getUser();
+	    $userId = $user->id;
+	    $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
+		$leagueId = $team['team_league_id'];
 	    
-	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+	    $teams = TeamsDataService::mostValuableTeams($this->_websoccer, $this->_db);
+		$teams_of_league = TeamsDataService::mostValuableTeamsByLeagueId($this->_websoccer, $this->_db, $leagueId);
 	    
-	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
-	    
-	    return array("watchlist" => $watchlist);
+		return array("teams" => $teams, "teams_of_league" => $teams_of_league);
 	}
 	
 }

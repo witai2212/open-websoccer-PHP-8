@@ -45,10 +45,17 @@ class TeamDetailsModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 		
+		// user data
+		$user = $this->_websoccer->getUser();
+	    $userId = $user->id;
+		
 		$teamId = (int) $this->_websoccer->getRequestParameter('id');
 		if ($teamId < 1) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
+		
+		//update team strength
+		TeamsDataService::updateTeamStrength($this->_websoccer, $this->_db, $teamId);
 		
 		$team = TeamsDataService::getTeamById($this->_websoccer, $this->_db, $teamId);
 		if (!isset($team['team_id'])) {
@@ -60,7 +67,7 @@ class TeamDetailsModel implements IModel {
 		// compute strength level of national team
 		if ($team['is_nationalteam']) {
 			$dbPrefix = $this->_websoccer->getConfig('db_prefix') ;
-			$result = $this->_db->querySelect('AVG(P.w_staerke) AS avgstrength', 
+			$result = $this->_db->querySelect('(AVG(P.w_staerke)/100) AS avgstrength', 
 					$dbPrefix . '_spieler AS P INNER JOIN ' . $dbPrefix . '_nationalplayer AS NP ON P.id = NP.player_id', 
 					'NP.team_id = %d', $team['team_id']);
 			$players = $result->fetch_array();
@@ -78,7 +85,8 @@ class TeamDetailsModel implements IModel {
 		
 		$team['victories'] = $this->getVictories($team['team_id'], $team['team_league_id']);
 		$team['cupvictories'] = $this->getCupVictories($team['team_id']);
-		return array('team' => $team, 'stadium' => $stadium, 'playerfacts' => $playerfacts);
+
+		return array('team' => $team, 'stadium' => $stadium, 'playerfacts' => $playerfacts, 'user_id' => $userId);
 	}
 	
 	private function getVictories($teamId, $leagueId) {
@@ -144,7 +152,8 @@ class TeamDetailsModel implements IModel {
 		$columns['AVG(' . $ageColumn . ')'] = 'avgAge';
 		
 		// marketvalue
-		if ($this->_websoccer->getConfig('transfermarket_computed_marketvalue')) {
+		/*
+		 * if ($this->_websoccer->getConfig('transfermarket_computed_marketvalue')) {
 			$columns['SUM(w_staerke)'] = 'sumStrength';
 			$columns['SUM(w_technik)'] = 'sumTechnique';
 			$columns['SUM(w_frische)'] = 'sumFreshness';
@@ -152,22 +161,37 @@ class TeamDetailsModel implements IModel {
 			$columns['SUM(w_kondition)'] = 'sumStamina';
 		} else {
 			$columns['SUM(marktwert)'] = 'sumMarketValue';
-		}
+		}*/
+		
+		$columns['SUM(w_staerke)'] = 'sumStrength';
+		$columns['SUM(w_technik)'] = 'sumTechnique';
+		$columns['SUM(w_frische)'] = 'sumFreshness';
+		$columns['SUM(w_zufriedenheit)'] = 'sumSatisfaction';
+		$columns['SUM(w_kondition)'] = 'sumStamina';
+		$columns['SUM(marktwert)'] = 'sumMarketValue';
+		
+		$mwStr = "SELECT SUM(marktwert) AS sumMarketValue
+                    FROM ". $this->_websoccer->getConfig("db_prefix") ."_spieler
+					WHERE verein_id='".$teamId."'";
+		$result = $this->_db->executeQuery($mwStr);
+		$mwPlayer = $result->fetch_array();
 		
 		$result = $this->_db->querySelect($columns, $this->_websoccer->getConfig('db_prefix') .'_spieler', 'verein_id = %d AND status = \'1\'', $teamId);
 		$playerfacts = $result->fetch_array();
 		$result->free();
 		
-		if ($this->_websoccer->getConfig('transfermarket_computed_marketvalue')) {
+		/*if ($this->_websoccer->getConfig('transfermarket_computed_marketvalue')) {
 			$playerfacts['sumMarketValue'] = $this->computeMarketValue($playerfacts['sumStrength'], $playerfacts['sumTechnique'],
 					$playerfacts['sumFreshness'], $playerfacts['sumSatisfaction'], $playerfacts['sumStamina']);
-		}
+		}*/
+		
+		$playerfacts['sumMarketValue'] = $mwPlayer['sumMarketValue'];
+		
 		if ($playerfacts['numberOfPlayers'] > 0) {
 			$playerfacts['avgMarketValue'] = $playerfacts['sumMarketValue'] / $playerfacts['numberOfPlayers'];
 		} else {
 			$playerfacts['avgMarketValue'] = 0;
 		}
-		
 		
 		return $playerfacts;
 	}

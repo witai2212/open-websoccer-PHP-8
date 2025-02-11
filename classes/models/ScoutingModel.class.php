@@ -21,9 +21,9 @@
 ******************************************************/
 
 /**
- * Provides Player in team_id watchlist
+ * Provieds scouting lis ofteam_id and available scouts
  */
-class MyWatchlistModel implements IModel {
+class ScoutingModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
@@ -50,9 +50,11 @@ class MyWatchlistModel implements IModel {
 	    
 	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 	    
-	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
+	    $availableScouts = ScoutingDataService::getAvailableScouts($this->_websoccer, $this->_db);
+	    $teamScouts = ScoutingDataService::getTeamScouts($this->_websoccer, $this->_db, $teamId);
+	    $canHire = ScoutingDataService::checkHiredScoutsByTeam($this->_websoccer, $this->_db, $teamId);
 	    
-	    return array("watchlist" => $watchlist);
+	    return array("team_scouts" => $teamScouts, "free_scouts" => $availableScouts, "can_hire" => $canHire);
 	}
 	
 }

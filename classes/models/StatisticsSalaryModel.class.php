@@ -21,9 +21,9 @@
 ******************************************************/
 
 /**
- * Provides Player in team_id watchlist
+ * Provides data for information about user's stadium.
  */
-class MyWatchlistModel implements IModel {
+class StatisticsSalaryModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
@@ -48,13 +48,11 @@ class MyWatchlistModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+	    //$players = PlayersDataService::getBestPlayersByStrength($this->_websoccer, $this->_db);
+	    $salaries = SalaryStatisticsDataService::getAvgSalaries($this->_websoccer, $this->_db);
 	    
-	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
-	    
-	    return array("watchlist" => $watchlist);
+		return array("salaries" => $salaries);
 	}
-	
 }
 
 ?>

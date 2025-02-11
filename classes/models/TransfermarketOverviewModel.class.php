@@ -39,6 +39,10 @@ class TransfermarketOverviewModel implements IModel {
 	}
 	
 	public function getTemplateParameters() {
+	    
+	    //execute Computer transfers
+	    TransfermarketDataService::executeOpenTransfers($this->_websoccer, $this->_db);
+	    ComputerTransfersDataService::executeComputerBids($this->_websoccer, $this->_db);
 		
 		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 		if ($teamId < 1) {
@@ -47,6 +51,7 @@ class TransfermarketOverviewModel implements IModel {
 		
 		$positionInput = $this->_websoccer->getRequestParameter("position");
 		$positionFilter = null;
+		/*
 		if ($positionInput == "goaly") {
 			$positionFilter = "Torwart";
 		} else if ($positionInput == "defense") {
@@ -55,9 +60,12 @@ class TransfermarketOverviewModel implements IModel {
 			$positionFilter = "Mittelfeld";
 		} else if ($positionInput == "striker") {
 			$positionFilter = "Sturm";
-		}
+		}*/
+		
+		$positionFilter = $positionInput;
 		
 		$count = PlayersDataService::countPlayersOnTransferList($this->_websoccer, $this->_db, $positionFilter);
+		$countOffers = PlayersDataService::countPlayerOffers($this->_websoccer, $this->_db);
 		$eps = $this->_websoccer->getConfig("entries_per_page");
 		$paginator = new Paginator($count, $eps, $this->_websoccer);
 		if ($positionFilter != null) {
@@ -70,7 +78,7 @@ class TransfermarketOverviewModel implements IModel {
 			$players = array();
 		}
 		
-		return array("transferplayers" => $players, "playerscount" => $count, "paginator" => $paginator);
+		return array("transferplayers" => $players, "playerscount" => $count, "playeroffers" => $countOffers, "paginator" => $paginator);
 	}
 	
 }

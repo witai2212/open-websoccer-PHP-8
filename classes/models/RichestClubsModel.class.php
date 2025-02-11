@@ -21,9 +21,9 @@
 ******************************************************/
 
 /**
- * Provides Player in team_id watchlist
+ * Provides bst players of the world
  */
-class MyWatchlistModel implements IModel {
+class RichestClubsModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
@@ -48,11 +48,12 @@ class MyWatchlistModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+	    $clubs = null;
+	    $leagueId = (int) $this->_websoccer->getRequestParameter("id");
 	    
-	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
+	    $clubs = DestatisDataService::getRichestClubs($this->_websoccer, $this->_db);
 	    
-	    return array("watchlist" => $watchlist);
+	    return array("clubs" => $clubs);
 	}
 	
 }

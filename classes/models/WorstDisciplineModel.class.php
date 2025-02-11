@@ -21,9 +21,9 @@
 ******************************************************/
 
 /**
- * Provides Player in team_id watchlist
+ * Provides bst players of the world
  */
-class MyWatchlistModel implements IModel {
+class WorstDisciplineModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
@@ -48,11 +48,12 @@ class MyWatchlistModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+	    $wDisciplines = null;
+	    $leagueId = (int) $this->_websoccer->getRequestParameter("id");
 	    
-	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
+	    $wDisciplines = DestatisDataService::getWorstDiscipinesByLeagueId($this->_websoccer, $this->_db, $leagueId=1);
 	    
-	    return array("watchlist" => $watchlist);
+	    return array("wDisciplines" => $wDisciplines);
 	}
 	
 }

@@ -21,9 +21,9 @@
 ******************************************************/
 
 /**
- * Provides Player in team_id watchlist
+ * Provides teams without manager.
  */
-class MyWatchlistModel implements IModel {
+class MyOffersModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
@@ -48,11 +48,27 @@ class MyWatchlistModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+	    $user = $this->_websoccer->getUser();
+	    $userId = $user->id;
 	    
-	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
+	    $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
+	    $teamId = $team['team_id'];
 	    
-	    return array("watchlist" => $watchlist);
+	    $myoffers = TransfermarketDataService::getTransferOffers($this->_websoccer, $this->_db, $teamId);
+		$mybids = TransfermarketDataService::getCurrentBidsOfTeam($this->_websoccer, $this->_db, $teamId);
+		$myplayers = TransfermarketDataService::getPlayersOnTLByTeamId($this->_websoccer, $this->_db, $teamId);
+		
+		//echo"<pre>";
+		//print_r($myplayers);
+		//echo"</pre>";
+		/*
+		Array ( [4568] => Array ( [0] => 1000000 [amount] => 1000000 [1] => 0 [hand_money] => 0 [2] => 60 [contract_matches] => 60 [3] => 15000 
+		[contract_salary] => 15000 [4] => 1500 [contract_goalbonus] => 1500 [5] => 1737483163 [date] => 1737483163 [6] => 1 [ishighest] => 1 
+		[7] => 4568 [player_id] => 4568 [8] => Jover [player_firstname] => Jover [9] => Querano [player_lastname] => Querano [
+		10] => [player_pseudonym] => [11] => 1737819158 [auction_end] => 1737819158 ) )
+		*/
+	    
+		return array("offers" => $myoffers, "bids" => $mybids, "myplayers" => $myplayers);
 	}
 	
 }

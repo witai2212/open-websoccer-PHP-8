@@ -331,6 +331,9 @@ elseif ($show == 'select') {
 		// update season
 		$db->queryUpdate($seasoncolumns, $conf['db_prefix'] .'_saison', 'id = %d', $season['id']);
 		
+		// update salary history
+		SalaryStatisticsDataService::SalaryStatisticsDataService($website, $db);
+		
 		echo createSuccessMessage($i18n->getMessage('alert_save_success'), '');
 		
 		echo '<p>&raquo; <a href=\'?site='. $site .'\'>'. $i18n->getMessage('back_label') . '</a></p>';

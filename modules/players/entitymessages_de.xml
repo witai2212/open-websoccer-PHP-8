@@ -61,7 +61,9 @@
 	
 	<message id="entity_player_lending_owner_id">Verleiher</message>	
 	<message id="entity_player_lending_fee">Leihgebühr pro Spieltag</message>	
-	<message id="entity_player_lending_matches">Ausgeliehene Spiele</message>	
+	<message id="entity_player_lending_matches">Ausgeliehene Spiele</message>
+	
+	<message id="entity_player_talent">Talent</message>
 					
     <message id="player_position_goaly">Torwart</message>
     <message id="option_Torwart">Torwart</message>

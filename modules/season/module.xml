@@ -8,6 +8,12 @@
     
     <admin>
         <adminpage id="schedulegenerator" permissionrole="r_spiele" navcategory="season" filename="schedulegenerator"/>
+        <adminpage id="tablemaker" permissionrole="r_spiele" navcategory="season" filename="tablemaker"/>
+        
+        <adminpage id="uefatempgenerator" permissionrole="r_spiele" navcategory="cup" filename="uefatempgenerator"/>
+        <adminpage id="groupmatchesgenerator" permissionrole="r_spiele" navcategory="cup" filename="groupmatchesgenerator"/>
+        <adminpage id="nationalcupgenerator" permissionrole="r_spiele" navcategory="cup" filename="nationalcupgenerator"/>
+        <adminpage id="schedulegenerator_cups" permissionrole="r_spiele" navcategory="cup" filename="schedulegenerator_cups"/>
         
         <adminpage
             id="season"

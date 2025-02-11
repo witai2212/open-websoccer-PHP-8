@@ -82,4 +82,7 @@
     <message id="topscorers_head_score">Score</message>
     
     <message id="entity_player_is_on_watchlist">Auf der Beobachtingsliste</message>
+    
+    <message id="player_scouting_talent_result">Talent (Scout)</message>
+	<message id="player_scounting_no_scout_no_watchlist">*) Du benötigst einen Scout und der Spieler muss auf deiner Beobachtungsliste sein.</message>
 </messages>

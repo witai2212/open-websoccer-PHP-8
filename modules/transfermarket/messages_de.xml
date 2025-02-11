@@ -24,7 +24,8 @@
     
     <message id="transfermarket_filter_by_position">Nach Position filtern</message>
     <message id="transfermarket_no_players">Keine Spieler auf dem Transfermarkt gefunden.</message>
-	<message id="transfermarket_playerscount">%d Spieler gefunden.</message>
+	<message id="transfermarket_playerscount">%d Spieler gefunden</message>
+	<message id="transfermarket_offerscount">%d Angebote für Spieler</message>
     
     
     <message id="transfermarket_head_deadline">Auktionsende</message>
@@ -84,4 +85,10 @@
     <message id="transfermarket_remove_label">Vom Transfermarkt entfernen</message>
     <message id="transfermarket_remove_err_bidexists">Auf den Spieler wurde bereits geboten. Er kann nicht vom Transfermarkt genommen werden.</message>
     <message id="transfermarket_remove_success">Der Spieler steht nicht mehr zum Verkauf.</message>
+    
+    <message id="transferoffers_offer_withdraw_success">Das Angebot wurde erfolgreich zurückgezogen</message>
+    <message id="transferoffers_offer_withdraw">Angebot zurückziehen</message>
+	
+	<message id="received_offer_for_player">Du hast für den Spieler <strong>{player}</strong> ein Angebot erhalten.</message>
+	<message id="player_on_watchlist_notification">Der Spieler, <strong>{player}</strong>, ist jetzt auf den Transfermarkt</message>
 </messages>

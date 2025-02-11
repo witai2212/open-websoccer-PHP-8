@@ -58,7 +58,7 @@
 					<field id="construction_time_days" type="number" required="true" default="0" />
 					<field id="premiumfee" type="number" required="true" default="0" />
 					
-					<field id="effect_training" type="number" required="true" default="0" />
+					<field id="effect_training" type="text" required="true" default="0" />
 					<field id="effect_youthscouting" type="number" required="true" default="0" />
 					<field id="effect_tickets" type="number" required="true" default="0" />
 					<field id="effect_fanpopularity" type="number" required="true" default="0" />

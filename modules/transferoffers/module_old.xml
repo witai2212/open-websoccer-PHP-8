@@ -145,7 +145,7 @@
             template="mybids"
             model="MyBidsModel"
             role="user"
-            navitem="false"
+            navitem="true"
             navweight="2"
             parentItem="transfermarket" 
             navitemOnlyForConfigEnabled="transferoffers_enabled" />
@@ -178,22 +178,6 @@
             area="custom"
             role="user" />
         
-        <block
-            id="mybids"
-            template="mybids"
-            model="MyOffersModel"
-            includepages="none"
-            area="custom"
-            role="user" />
-        
-        <block
-            id="myplayersontl"
-            template="myplayersontl"
-            model="MyOffersModel"
-            includepages="none"
-            area="custom"
-            role="user" />
-        
     </blocks>
     
 	<actions>
@@ -221,22 +205,13 @@
 		
 		<action id="reject_offer" controller="TransferRejectController" role="user">
 			<param id="id" type="number" required="true" />
+			<param id="allow_alternative" type="boolean" />
 		</action>
-		
 		
 		<action id="accept_offer" controller="TransferAcceptController" role="user">
 			<param id="id" type="number" required="true" />
 			<param id="allow_alternative" type="boolean" />
 		</action>
-
-		<action id="withdraw-bid" controller="WithdrawBidController" role="user">
-			<param id="id" type="number" required="true" />
-			<param id="allow_alternative" type="boolean" />
-		</action>
-		
-		<action id="remove-player-from-transfermarket" controller="RemovePlayerFromTransfermarketController" role="user">
-		<param id="id" type="number" required="true" />
-	</action>
 		
 	</actions>
   

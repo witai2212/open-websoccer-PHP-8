@@ -92,6 +92,22 @@
             area="custom"
             role="user" />
         
+        <block
+            id="mybids"
+            template="mybids"
+            model="MyOffersModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
+        <block
+            id="myplayersontl"
+            template="myplayersontl"
+            model="MyOffersModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
     </blocks>
     
   <actions>
@@ -112,6 +128,12 @@
 	<action id="remove-player-from-transfermarket" controller="RemovePlayerFromTransfermarketController" role="user">
 		<param id="id" type="number" required="true" />
 	</action>
+
+	<action id="withdraw-bid-id" controller="WithdrawBidController" role="user">
+		<param id="id" type="number" required="true" />
+		<param id="allow_alternative" type="boolean" />
+		</action>
+	
   </actions>
     
 </module>

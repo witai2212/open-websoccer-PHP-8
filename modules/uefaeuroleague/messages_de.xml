@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+    <message id="uefaeuroleague_navlabel">UEFA Euro League</message>
+    <message id="uefaeuroleaguetitle">UEFA Euro League</message>
+	
+	<message id="uefa_euro_league_select_phase">Gruppe oder Phase wählen</message>
+	<message id="champions_select_choose">Bitte wählen</message>
+	
+	<message id="uefa_euro_league_groupa">Gruppe A</message>
+	<message id="uefa_euro_league_groupb">Gruppe B</message>
+	<message id="uefa_euro_league_groupc">Gruppe C</message>
+	<message id="uefa_euro_league_groupd">Gruppe D</message>
+	
+	<message id="group_title_a">Gruppe A</message>
+	<message id="group_title_b">Gruppe B</message>
+	<message id="group_title_c">Gruppe C</message>
+	<message id="group_title_d">Gruppe D</message>
+	<message id="1round_title">1. Runde</message>
+	<message id="afinal_title">Achtelfinale</message>
+	<message id="qfinal_title">Viertelfinale</message>
+	<message id="sfinal_title">Halbfinale</message>
+	<message id="final_title">Finale</message>
+	
+	<message id="uefa_euro_league_round1">1. Runde</message>
+	<message id="uefa_euro_league_afinal">Achtelfinale</message>
+	<message id="uefa_euro_league_qfinal">Viertelfinale</message>
+	<message id="uefa_euro_league_sfinal">Halbfinale</message>
+	<message id="uefa_euro_league_final">Finale</message>
+	
+	<message id="uefa_euro_league_grouptable_team">Verein</message>
+	<message id="uefa_euro_league_grouptable_points">Punkte</message>
+	<message id="uefa_euro_league_grouptable_wins">Siege</message>
+	<message id="uefa_euro_league_grouptable_draws">Unentsch.</message>
+	<message id="uefa_euro_league_grouptable_losses">Niederl.</message>
+	<message id="uefa_euro_league_grouptable_goals">Tore</message>
+	<message id="uefa_euro_league_grouptable_goalsreceived">kassierte Tore</message>
+
+</messages>

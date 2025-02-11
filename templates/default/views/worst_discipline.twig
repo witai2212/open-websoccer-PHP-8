@@ -1,0 +1,41 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("worst_discipline_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if wDisciplines|length == 0 %}
+{{ i18n.getMessage("no_items") }}
+{% else %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("avg_ratings_player_name") }}</th>
+				<th>{{ i18n.getMessage("worst_discipline_red_cards") }}</th>
+				<th>{{ i18n.getMessage("worst_discipline_yellow_red_cards") }}</th>
+				<th>{{ i18n.getMessage("worst_discipline_yellow_cards") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		{% for wd in wDisciplines %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td><a href="?page=player&id={{ wd.id }}">{{ wd.vorname }}&nbsp;{{ wd.nachname }}</a></td>
+				<td>{{ wd.sa_karten_rot|number_format(0, ',', ' ') }}</td>
+				<td>{{ wd.sa_karten_gelb_rot|number_format(0, ',', ' ') }}</td>
+				<td>{{ wd.sa_karten_gelb|number_format(0, ',', ' ') }}</td>
+			</tr>	
+		
+		{% endfor %}
+		</tbody>
+		</table>
+
+{% endif %}
+{% endblock %}

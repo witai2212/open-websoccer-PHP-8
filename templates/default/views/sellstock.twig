@@ -8,7 +8,6 @@
 
 {% block page_content %}
 
-
 <p><i class="icon-info-sign"></i> {{ i18n.getMessage("sellstock_five_percent")|format(transaction_fee)}}%</p>
 <p><i class="icon-info-sign"></i> {{ i18n.getMessage('sellstock_user_max') }}: {{ max|number_format(0, ',', ' ') }}</p>
 
@@ -21,6 +20,7 @@
 		<a href="{{ env.getInternalUrl("portfolio") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
 	</div>
 	<input type="hidden" name="index" value="{{ index.id }}"/>
+	<input type="hidden" name="max_qty" value="{{ max }}"/>
 	<input type="hidden" name="action" value="sell_stock"/>
 </form>
 

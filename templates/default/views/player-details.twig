@@ -114,11 +114,22 @@
 				  <dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
 				  <dd>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 				  
+				  <dt>{{ i18n.getMessage("player_scouting_talent_result") }}</dt>
+				  {% if scouting|length > 0 %}
+				  <dd>{% for i in 1..scouting %}
+						<i class="icon-star"></i>
+					{% endfor %}
+				  </dd>
+				  {% else %}
+				  <dd>*</dd>
+				  {% endif %}
 				  {% if env.getUser().getClubId() == player.team_id %}
 					<dt>{{ i18n.getMessage("entity_player_talent") }}</dt>
-				  	<dd>{{ player.player_strength_talent }}</dd>
+				  	<dd>{% for i in 1..player.player_strength_talent %}
+							<i class="icon-star"></i>
+						{% endfor %}</dd>
 				  {% endif %}
-				  
+
 				</dl>
 			</div>
 		</div>  
@@ -170,15 +181,30 @@
   	<marquee>
   	{{ i18n.getMessage('entity_player_is_on_watchlist') }}:
 	{% for list in watchlist %}
+	
+		{% if list.bild|length >0 %}
+			{% set teamLogo = skin.getImage("../uploads/club/" ~ list.bild ~ ".png") %}
+			<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ list.bild }}" style="max-width: 20px"/>
+		{% else %}
+			{% set teamLogo = skin.getImage("flags/players/" ~ list.land ~ ".png") %}
+			<img src="{{ teamLogo }}" title="{{ list.land }}" alt="{{ list.land }}" />
+		{% endif %}
 		{{ list.name }}{% if watchlist|length > 1 %},&nbsp;{% endif %}
 	{% endfor %}
 	</marquee>
   </div>
   {% endif %}
-  {% if on_my_watchlist==false %}
+  {% if onmywatchlist<=0 %}
   	<a class="btn btn-mini" href="?page=mywatchlist&id={{ player.player_id }}&action=put-player-on-watchlist"><i class="icon-hand-up"></i> {{ i18n.getMessage("button_put_on_watchlist") }}</a>
   {% else %}
   	<a class="btn btn-mini" href="?page=mywatchlist&id={{ player.player_id }}&action=remove-player-from-watchlist"><i class="icon-trash"></i>&nbsp;</i> {{ i18n.getMessage("watchlist_remove_label") }}</a>
+  {% endif %}
+  
+  {% if scouting|length<=0 and watchlist.0|length <=0 and env.getUser().getClubId() != player.team_id %}
+    <hr>
+	<div>
+		{{ i18n.getMessage("player_scounting_no_scout_no_watchlist") }}
+	</div>
   {% endif %}
   
   <div class="tab-pane" id="statistic">

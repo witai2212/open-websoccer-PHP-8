@@ -20,20 +20,39 @@
 
 <h3>{{ i18n.getMessage("entity_club_finanz_budget") }}: {{ budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</h3>
 
+<table class="table table-striped">
+	<tr>
+		<td><b>{{ i18n.getMessage("account_statement_revenues") }}:</b></td>
+		<td>{{ total_revenues|number_format(0, ',', ' ') }}</td>
+		<td><b>{{ i18n.getMessage("account_statement_expenses") }}:</b></td>
+		<td>{% if total_expenses < 0 %}<span style="color: red">{% endif %}
+			{{ total_expenses|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+			{% if total_expenses < 0 %}</span>{% endif %}</td>
+		<td><b>{{ i18n.getMessage("entity_club_finanz_balance") }}:</b></td>
+		<td><b>{% if total_revenues < 0 %}<span style="color: red">{% endif %}
+			{{ balance|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+			{% if balance < 0 %}</span>{% endif %}</b></td>
+	</tr>
+</table>
+<hr>
+
 {% if statements is defined and statements|length > 0 %}
 
 	<table class="table table-striped">
 		<thead>
 			<tr>
+				<th>&nbsp;</th>
 				<th>{{ i18n.getMessage("account_statement_date") }}</th>
 				<th>{{ i18n.getMessage("account_statement_sender") }}</th>
 				<th>{{ i18n.getMessage("account_statement_subject") }}</th>
-				<th>{{ i18n.getMessage("account_statement_amount") }}</th>
+				<th>{{ i18n.getMessage("account_statement_revenues") }}</th>
+				<th>{{ i18n.getMessage("account_statement_expenses") }}</th>
 			</tr>
 		</thead>
 		<tbody>
 		{% for statement in statements %}
 		<tr>
+			<td>&nbsp;</td>
 			<td>{{ env.getFormattedDate(statement.date) }}</td>
 			<td>
 				{% if i18n.hasMessage(statement.sender) %}
@@ -50,9 +69,14 @@
 				{% endif %}
 			</td>
 			<td align="right">
-				{% if statement.amount < 0 %}<span style="color: red">{% endif %}
-				{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
-				{% if statement.amount < 0 %}</span>{% endif %}
+				{% if statement.amount > 0 %}
+					{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+				{% endif %}
+			</td>
+			<td align="right">
+				{% if statement.amount < 0 %}
+					<span style="color: red">{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+				{% endif %}
 			</td>
 		</tr>
 		{% endfor %}

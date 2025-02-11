@@ -49,7 +49,7 @@
 								<small>
 									<p><strong>{{ i18n.getMessage("entity_player_w_staerke") }}</strong><br>
 									{% for strengthlevel in 1..5 %}
-										<i class="icon-star{% if (30 + strengthlevel * 10) > club.team_strength %}-empty{% endif %}"></i>
+										<i class="icon-star{% if (30 + strengthlevel * 10) > club.avgstrength %}-empty{% endif %}"></i>
 									{% endfor %}</p>
 								
 									<p><strong>{{ i18n.getMessage("entity_club_finanz_budget") }}</strong><br>

@@ -1,0 +1,93 @@
+{% extends "base.twig" %}
+
+{% import "blocks/most_valuable_teams_league.twig" as pagination %}
+
+{% block page_title %}
+{{ i18n.getMessage("most_valuable_teams_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<ul class="nav nav-tabs" id="offersTab">
+  <li class="active"><a href="#most_valuable_teams1" data-toggle="tab">{{ i18n.getMessage("most_valuable_teams_title") }}</a></li>
+  
+  <li><a href="#most_valuable_teams_league" data-toggle="tab"
+  	data-ajaxtarget="most_valuable_teams_leaguelist" data-ajaxblock="most_valuable_teams_league" class="ajaxLink">{{ i18n.getMessage("most_valuable_teams_league_title") }}</a></li>
+</ul>
+
+{% if teams|length == 0 %}
+{{ i18n.getMessage("news_no_items") }}
+{% else %}
+<div class="tab-content">
+
+	<div class="tab-pane active" id="most_valuable_teams1">
+	
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>{{ i18n.getMessage("most_valuable_team_name") }}</th>
+					<th>{{ i18n.getMessage("most_valuable_team_values") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			{% for club in teams %}
+		
+				<tr>
+					<td><strong>{{ loop.index }}</strong></td>
+					<td>
+						{% if club.bild|length > 0 %}
+							<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.bild }}" style="max-width: 20px"/>
+						{% endif %}
+						<a href="?page=team&id={{ club.club_id }}">{{ club.club_name }}</a></td>
+					<td>
+						{{ club.marketvalue|number_format(0, ',', ' ') }} EUR
+					</td>
+				</tr>	
+			
+			{% endfor %}
+			</tbody>
+			</table>
+			
+	</div>
+	
+	<div class="tab-pane" id="most_valuable_teams_league">
+		<div class="tab-pane" id="most_valuable_teams_leaguelist">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>{{ i18n.getMessage("most_valuable_team_name") }}</th>
+					<th>{{ i18n.getMessage("most_valuable_team_values") }}</th>
+					<th>{{ i18n.getMessage("most_valuable_team_avg_values") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			{% for team in teams_of_league %}
+
+				<tr>
+					<td><strong>{{ loop.index }}</strong></td>
+					<td>
+						{% if team.bild|length > 0 %}
+							<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ team.bild }}" style="max-width: 20px"/>
+						{% endif %}
+						<a href="?page=team&id={{ team.club_id }}">{{ team.club_name }}</a></td>
+					<td>
+						{{ team.marketvalue|number_format(0, ',', ' ') }} EUR
+					</td>
+					<td>
+						{{ team.avg_marketvalue|number_format(0, ',', ' ') }} EUR
+					</td>
+				</tr>	
+			
+			{% endfor %}
+			</tbody>
+		</table>
+		</div>
+	</div>
+</div>
+
+{% endif %}
+{% endblock %}

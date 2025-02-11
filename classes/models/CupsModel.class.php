@@ -21,13 +21,12 @@
 ******************************************************/
 
 /**
- * @author Ingo Hofmann
+ * Provides names of cups and their rounds.
  */
-class LeagueSelectionModel implements IModel {
+class CupsModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
-	private $_country;
 	
 	public function __construct($db, $i18n, $websoccer) {
 		$this->_db = $db;
@@ -35,28 +34,43 @@ class LeagueSelectionModel implements IModel {
 		$this->_websoccer = $websoccer;
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see IModel::renderView()
+	 */
 	public function renderView() {
-		$this->_country = $this->_websoccer->getRequestParameter("country");
-		return (strlen($this->_country));
+		return TRUE;
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see IModel::getTemplateParameters()
+	 */
 	public function getTemplateParameters() {
 		
-		// get table markers
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_liga";
-		$whereCondition = "land = '%s' ORDER BY division ASC, name ASC";
+		// userId
+		$user = $this->_websoccer->getUser();
+	    $userId = $user->id;
 		
-		$leagues = array();
-		
-		$result = $this->_db->querySelect("id, name", $fromTable, $whereCondition, $this->_country);
-		while ($league = $result->fetch_array()) {
-			$leagues[] = $league;
+		// user teamId
+		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		if ($teamId < 1) {
+			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
 		}
-		$result->free();
 		
-		return array("leagues" => $leagues);
+		$myCup = CupsDataService::getCupDataByTeamId($this->_websoccer, $this->_db, $teamId);
+		$cupId = $this->_websoccer->getRequestParameter('cup');
+		$cups = CupsDataService::getCups($this->_websoccer, $this->_db);
+		
+		if($cupId < 1) {
+			$cupId = $myCup['id'];
+		}
+		
+		$cup = CupsDataService::getCupDataByCupId($this->_websoccer, $this->_db, $cupId);
+		$matches = CupsDataService::getMatchesByCupname($this->_websoccer, $this->_db, $cup['name']);
+		
+		return array('cups' => $cups, 'cup' => $cup, 'matches' => $matches, "user_id" => $userId);
 	}
-	
 	
 }
 

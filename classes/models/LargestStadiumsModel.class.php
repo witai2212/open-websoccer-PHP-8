@@ -21,13 +21,12 @@
 ******************************************************/
 
 /**
- * @author Ingo Hofmann
+ * Provides bst players of the world
  */
-class LeagueSelectionModel implements IModel {
+class LargestStadiumsModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
-	private $_country;
 	
 	public function __construct($db, $i18n, $websoccer) {
 		$this->_db = $db;
@@ -35,28 +34,25 @@ class LeagueSelectionModel implements IModel {
 		$this->_websoccer = $websoccer;
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see IModel::renderView()
+	 */
 	public function renderView() {
-		$this->_country = $this->_websoccer->getRequestParameter("country");
-		return (strlen($this->_country));
+		return TRUE;
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see IModel::getTemplateParameters()
+	 */
 	public function getTemplateParameters() {
-		
-		// get table markers
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_liga";
-		$whereCondition = "land = '%s' ORDER BY division ASC, name ASC";
-		
-		$leagues = array();
-		
-		$result = $this->_db->querySelect("id, name", $fromTable, $whereCondition, $this->_country);
-		while ($league = $result->fetch_array()) {
-			$leagues[] = $league;
-		}
-		$result->free();
-		
-		return array("leagues" => $leagues);
+	    
+	    $stadiums = null;
+	    $stadiums = StadiumsDataService::getLargestStadium($this->_websoccer, $this->_db);
+			    
+	    return array("stadiums" => $stadiums);
 	}
-	
 	
 }
 

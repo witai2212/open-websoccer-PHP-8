@@ -64,7 +64,6 @@ class LeagueDetailsModel implements IModel {
 				throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 			}
 		}
-
 		
 		return array("league" => $league, "leagues" => LeagueDataService::getLeaguesSortedByCountry($this->_websoccer, $this->_db));
 	}

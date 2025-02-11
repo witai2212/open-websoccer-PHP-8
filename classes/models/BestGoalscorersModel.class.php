@@ -47,7 +47,10 @@ class BestGoalscorersModel implements IModel {
      * @see IModel::getTemplateParameters()
      */
     public function getTemplateParameters() {
-        return array("players" => PlayersDataService::getBestGoalscorers($this->_websoccer, $this->_db));
+        
+        $scorers = PlayersDataService::getBestGoalscorers($this->_websoccer, $this->_db);
+        
+        return array("players" => $scorers);
     }
     
 }

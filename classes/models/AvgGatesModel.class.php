@@ -21,13 +21,12 @@
 ******************************************************/
 
 /**
- * @author Ingo Hofmann
+ * Provides bst players of the world
  */
-class LeagueSelectionModel implements IModel {
+class AvgGatesModel implements IModel {
 	private $_db;
 	private $_i18n;
 	private $_websoccer;
-	private $_country;
 	
 	public function __construct($db, $i18n, $websoccer) {
 		$this->_db = $db;
@@ -35,28 +34,36 @@ class LeagueSelectionModel implements IModel {
 		$this->_websoccer = $websoccer;
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see IModel::renderView()
+	 */
 	public function renderView() {
-		$this->_country = $this->_websoccer->getRequestParameter("country");
-		return (strlen($this->_country));
+		return TRUE;
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see IModel::getTemplateParameters()
+	 */
 	public function getTemplateParameters() {
+	    
+	    $avgGates = null;
 		
-		// get table markers
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_liga";
-		$whereCondition = "land = '%s' ORDER BY division ASC, name ASC";
+		$user = $this->_websoccer->getUser();
+	    $userId = $user->id;
+	    
+	    $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
+		$leagueId = $team['team_league_id'];
+	    
+	    $avgGates = DestatisDataService::getAvgGatesByLeagueId($this->_websoccer, $this->_db, $leagueId);
 		
-		$leagues = array();
+		$most_visitors_clubs = DestatisDataService::highestClubStadiumVisitorsByClub($this->_websoccer, $this->_db);
+		$most_visitors_leagues = DestatisDataService::highestClubStadiumVisitorsByLeague($this->_websoccer, $this->_db);
 		
-		$result = $this->_db->querySelect("id, name", $fromTable, $whereCondition, $this->_country);
-		while ($league = $result->fetch_array()) {
-			$leagues[] = $league;
-		}
-		$result->free();
+	    return array("avg_gates" => $avgGates, "most_visitors_clubs" => $most_visitors_clubs, "most_visitors_leagues" => $most_visitors_leagues);
 		
-		return array("leagues" => $leagues);
 	}
-	
 	
 }
 

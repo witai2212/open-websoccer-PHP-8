@@ -55,6 +55,8 @@ class TransfermarketDataService {
 	}
 	
 	public static function getCurrentBidsOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	    
+		$columns['B.id'] = 'bid_id';
 		$columns['B.abloese'] = 'amount';
 		$columns['B.handgeld'] = 'hand_money';
 		$columns['B.vertrag_spiele'] = 'contract_matches';
@@ -64,10 +66,14 @@ class TransfermarketDataService {
 		$columns['B.ishighest'] = 'ishighest';
 	
 		$columns['P.id'] = 'player_id';
+		$columns['P.verein_id'] = 'player_team_id';
 		$columns['P.vorname'] = 'player_firstname';
 		$columns['P.nachname'] = 'player_lastname';
 		$columns['P.kunstname'] = 'player_pseudonym';
 		$columns['P.transfer_ende'] = 'auction_end';
+		$columns['P.marktwert'] = 'marketvalue';
+		$columns['P.position_main'] = 'position_main';
+		$columns['P.position_second'] = 'position_second';
 	
 		$fromTable = $websoccer->getConfig('db_prefix') . '_transfer_angebot AS B';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = B.verein_id';
@@ -79,12 +85,11 @@ class TransfermarketDataService {
 		$bids = array();
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 20);
 		while ($bid = $result->fetch_array()) {
-			if (!isset($bids[$bid['player_id']])) {
-				$bids[$bid['player_id']] = $bid;
-			}
+			$bid['player_team'] = TeamsDataService::getTeamById($websoccer, $db, $bid['player_team_id']);
+			$bids[] = $bid;
 		}
 		$result->free();
-	
+		
 		return $bids;
 	}
 	
@@ -241,6 +246,8 @@ class TransfermarketDataService {
 	
 	public static function executeOpenTransfers(WebSoccer $websoccer, DbConnection $db) {
 		
+		self::transferLog($websoccer, $db, $text="im in function");
+		
 		// get ended auctions
 		$columns['P.id'] = 'player_id';
 		$columns['P.transfer_start'] = 'transfer_start';
@@ -263,11 +270,32 @@ class TransfermarketDataService {
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 50);
 		while ($player = $result->fetch_array()) {
 			
+			$txt = "while:player ". $player['player_id'];
+			self::transferLog($websoccer, $db, $txt);
+			
 			$bid = self::getHighestBidForPlayer($websoccer, $db, $player['player_id'], $player['transfer_start'], $player['transfer_end']);
 			if (!isset($bid['bid_id'])) {
-				self::extendDuration($websoccer, $db, $player['player_id']);
+				
+				//self::extendDuration($websoccer, $db, $player['player_id']);
+				$updStr = "UPDATE " . $websoccer->getConfig('db_prefix') . "_spieler SET transfermarkt='0', transfer_start='0', transfer_ende='0' WHERE id='".$player['player_id']."'";
+				$db->executeQuery($updStr);
+				$strLog = "___". $updStr ."___";
+				self::transferLog($websoccer, $db, $strStr);
+				
+				// delete all other offers
+				ComputerTransfersDataService::deleteOfferByPlayerId($websoccer, $db, $player['player_id']);
+				
 			} else {
+				
+				$strLog = "___". $string ."___";
+				self::transferLog($websoccer, $db, $strLog);
 				self::transferPlayer($websoccer, $db, $player, $bid);
+				
+				$updStr = "UPDATE " . $websoccer->getConfig('db_prefix') . "_spieler SET transfermarkt='0', transfer_start='0', transfer_ende='0' WHERE id='".$player['player_id']."'";
+				$db->executeQuery($updStr);
+				
+				// delete all other offers
+				ComputerTransfersDataService::deleteOfferByPlayerId($websoccer, $db, $player['player_id']);
 			}
 		}
 		$result->free();
@@ -308,7 +336,7 @@ class TransfermarketDataService {
 		BadgesDataService::awardBadgeIfApplicable($websoccer, $db, $userId, 'x_trades', $transactions['hits']);
 	}
 	
-	private function extendDuration($websoccer, $db, $playerId) {
+	public static function extendDuration($websoccer, $db, $playerId) {
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
 		
 		$columns['transfer_ende'] = $websoccer->getNowAsTimestamp() + 24 * 3600 * $websoccer->getConfig('transfermarket_duration_days');
@@ -318,9 +346,12 @@ class TransfermarketDataService {
 		$db->queryUpdate($columns, $fromTable, $whereCondition, $playerId);
 	}
 	
-	private function transferPlayer(WebSoccer $websoccer, DbConnection $db, $player, $bid) {
+	public static function transferPlayer(WebSoccer $websoccer, DbConnection $db, $player, $bid) {
 		
 		$playerName = (strlen($player['pseudonym'])) ? $player['pseudonym'] : $player['first_name'] . ' ' . $player['last_name'];
+		
+		$text = "transferPlayer: ". $playerName;
+		self::transferLog($websoccer, $db, $text);
 		
 		// transfer without fee
 		if ($player['team_id'] < 1) {
@@ -351,6 +382,7 @@ class TransfermarketDataService {
 		$columns['transfermarkt'] = 0;
 		$columns['transfer_start'] = 0;
 		$columns['transfer_ende'] = 0;
+		$columns['last_transfer'] = $websoccer->getNowAsTimestamp();
 		$columns['verein_id'] = $bid['team_id'];
 		
 		$columns['vertrag_spiele'] = $bid['contract_matches'];
@@ -359,6 +391,9 @@ class TransfermarketDataService {
 		
 		$whereCondition = 'id = %d';
 		$db->queryUpdate($columns, $fromTable, $whereCondition, $player['player_id']);
+		
+		$db->executeQuery("UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler SET last_transfer=".$websoccer->getNowAsTimestamp()." 
+                            WHERE id='".$player['player_id']."'");
 		
 		// create transfer log
 		$logcolumns['spieler_id'] = $player['player_id'];
@@ -385,22 +420,119 @@ class TransfermarketDataService {
 		if ($player['team_user_id']) {
 			self::awardUserForTrades($websoccer, $db, $player['team_user_id']);
 		}
+		
+		//save in _transfer table
+		//id spieler_id seller_user_id seller_club_id buyer_user_id buyer_club_id datum bid_id directtransfer_amount directtransfer_player1 directtransfer_player2
+		if(isset($bid['id'])) {
+			$bidId = $bid['id'];
+		} else {
+			$bidId = '';
+		}
+		
+		//$date = new DateTime();
+		$trStr = "INSERT INTO " . $websoccer->getConfig("db_prefix") . "_transfer (spieler_id, seller_club_id, buyer_club_id, datum, bid_id, directtransfer_amount)
+					VALUES ('".$player['player_id']."','".$player['team_id']."', '".$bid['team_id']."', 
+							'".$websoccer->getNowAsTimestamp()."', '".$bidId."',
+							'".$bid['amount']."')";
+		$db->executeQuery($trStr);
+		
+		$text = "___". $trStr ."___";
+		self::transferLog($websoccer, $db, $text);
 	}
 	
 	public static function getTransferOffers(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	           
+	    $offers = array();
+	    $bids = array();
 	    
-	    /*
-	     * "SELECT T.spieler_id, P.vorname, C.*
-            FROM cm23_transfer_angebot AS T,
-                    cm23_spieler AS P,
-                    cm23_verein AS C
-            WHERE C.id=T.verein_id AND 
-                    P.id=T.spieler_id AND
-                    P.verein_id='22'"
-         *
-	     */
+	    $sqlStr = "SELECT T.*, P.vorname, P.nachname, P.verein_id, P.position_main, P.position_second, P.marktwert
+                    FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS P,
+                                ". $websoccer->getConfig("db_prefix") ."_transfer_angebot AS T
+                    WHERE P.verein_id='$teamId'
+                    AND P.id=T.spieler_id";
+	    $result = $db->executeQuery($sqlStr);
+	    $i = 0;
+	    while ($offer = $result->fetch_array()) {
+	        
+	        $offers[] = $offer;
+	        
+	        $bidderId = $offers[$i][2];
+	        $bidder = TeamsDataService::getTeamById($websoccer, $db, $bidderId);
+	        $offers[$i]['bidder'] = $bidder;
+	        
+	        $i++;
+	    }
+	    $result->free();
 	    
+	    return $offers;
 	}
 	
+	public static function getTransferBids(WebSoccer $websoccer, DbConnection $db, $clubId) {
+
+	    /*
+	    $bid = array();
+	    
+	    $bid['id'] = '1111';
+	    $bid['player_name'] = 'SpielerClubname';
+	    $bid['amount'] = '123456789';
+	    $bid['status'] = 'pending';
+	    */
+	    $bids = array();
+	    /*
+	    $sqlStr = "SELECT O.*, O.offer_amount AS abloese, P.id AS p_id, P.vorname, P.nachname, P.position_main, P.position_second, C.id AS player_club_id, C.name AS team_name
+                    FROM ". $websoccer->getConfig("db_prefix") ."_transfer_offer AS O, 
+                        ". $websoccer->getConfig("db_prefix") ."_spieler AS P, 
+                        ". $websoccer->getConfig("db_prefix") ."_verein AS C
+                    WHERE P.verein_id=O.receiver_club_id 
+                    AND C.id=P.verein_id
+                    AND O.sender_club_id='$clubId'
+                    AND P.id=O.player_id
+                    GROUP BY O.sender_club_id
+                    ORDER BY P.nachname ASC, O.offer_amount DESC, O.submitted_date";
+	    */	    
+	    
+	    $sqlStr = "SELECT A.*, P.id AS p_id, P.verein_id, P.vorname, P.nachname, P.position_main, P.position_second, P.marktwert AS marketvalue,
+                        S.id AS player_club_id, S.name AS team_name
+        	       FROM ". $websoccer->getConfig("db_prefix") ."_transfer_angebot AS A 
+                        INNER JOIN ". $websoccer->getConfig("db_prefix") ."_spieler AS P ON P.id = A.spieler_id
+                        INNER JOIN ". $websoccer->getConfig("db_prefix") ."_verein AS S
+                   WHERE A.verein_id='$clubId' AND S.id=P.verein_id
+                    ORDER BY A.datum";
+                    
+	    $result = $db->executeQuery($sqlStr);
+	    $i = 0;
+	    while ($offer = $result->fetch_array()) {
+	        
+	        $bids[] = $offer;
+	        $i++;
+	        
+	    }
+	    $result->free();
+	 
+	    return $bids;
+	}
+	
+	public static function getPlayersOnTLByTeamId(WebSoccer $websoccer, DbConnection $db, $clubId) {
+		
+	    $sqlStr = "SELECT P.*
+					FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS P
+                    WHERE P.verein_id='$clubId' AND P.transfermarkt='1'
+                    ORDER BY transfer_start, nachname, vorname";
+	    $result = $db->executeQuery($sqlStr);
+	    while ($player = $result->fetch_array()) {
+	        $players[] = $player;
+	    }
+	    $result->free();
+	 
+	    return $players;
+		
+	}
+	
+	public static function transferLog(WebSoccer $websoccer, DbConnection $db, $text) {
+		
+			$insStr = "INSERT INTO cm23_transfer_log (text) VALUES ('".$text."')";
+			$db->executeQuery($insStr);
+	
+	}
 }
 ?>

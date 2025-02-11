@@ -51,11 +51,60 @@ class WatchlistDataService {
             //GET PLAYERS TEAM DATA
             $playerTeam = TeamsDataService::getTeamById($websoccer, $db, $player['verein_id']);
             $players[$i]['team_name'] = $playerTeam['team_name'];
+            $players[$i]['team_country'] = $playerTeam['team_country'];
+			
+			//GET CHECK if on Player has an offer
+			$hasOffer = self:: checkIfPLayerHasOffer($websoccer, $db, $player['spieler_id'], $teamId);
+			$players[$i]['hasoffer'] = $hasOffer;
+			
             $i++;
         }
         $result->free();
         
         return $players;
     }
+    
+    /**
+     * Check if playerId is on watchlist
+     *
+     * @param WebSoccer $websoccer Application context.
+     * @param DbConnection $db DB connection.
+     * @param int $playerId ID of player and teamId of team
+     * @return boolean if player in watchlist.
+     */
+    public static function checkIfPlayerOnWatchlist(WebSoccer $websoccer, DbConnection $db, $playerId, $teamId) {
+        
+        $onList = 0;
+        
+        $queryString = "SELECT * FROM ". $websoccer->getConfig('db_prefix') ."_watchlist
+                            WHERE verein_id='$teamId' AND spieler_id='$playerId'";
+        $result = $db->executeQuery($queryString);
+        $wl = $result->fetch_array();
+        $result->free();
+        
+        if($wl['id']>0) {
+            $onList = 1;
+        }
+        return $onList;
+    }
+	
+	public static function checkIfPLayerHasOffer(WebSoccer $websoccer, DbConnection $db, $playerId, $teamId) {
+		
+		$bid = 0;
+        
+        $queryString = "SELECT * FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot
+                            WHERE verein_id='$teamId' AND spieler_id='$playerId'";
+        $result = $db->executeQuery($queryString);
+        $tl = $result->fetch_array();
+        $result->free();
+        
+        if($tl['id']>0) {
+            $bid = 1;
+        }
+        return $bid;
+		
+		
+	}
+
 }
 ?>

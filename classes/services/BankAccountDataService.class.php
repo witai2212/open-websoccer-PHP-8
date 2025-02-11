@@ -170,5 +170,134 @@ class BankAccountDataService {
         $parameters = $teamId;
         $db->queryUpdate($updateColumns, $fromTable, $whereCondition, $parameters);
     }
+    
+    public static function onMatchCompletedPayments(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        
+    }
+	
+	public static function getAccountBalance(WebSoccer $websoccer, DbConnection $db, $teamId) {
+
+		/*
+			id
+			verein_id
+			absender
+			betrag
+			datum
+			verwendung
+		*/
+		$columns = "SUM(betrag) AS balance";
+        
+        $fromTable = $websoccer->getConfig("db_prefix") . "_konto";
+        
+        $whereCondition = "verein_id = %d";
+        $parameters = $teamId;
+        
+        $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+        $balance = $result->fetch_array();
+        $result->free();
+        
+        if (isset($balance["balance"])) {
+            return $balance["balance"];
+        }
+        
+        return 0;
+	}
+	
+	public static function getRevenuesBalance(WebSoccer $websoccer, DbConnection $db, $teamId) {
+
+		$columns = "SUM(betrag) AS balance";
+        
+        $fromTable = $websoccer->getConfig("db_prefix") . "_konto";
+        
+        $whereCondition = "verein_id = %d AND betrag>=0";
+        $parameters = $teamId;
+        
+        $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+        $balance = $result->fetch_array();
+        $result->free();
+        
+        if (isset($balance["balance"])) {
+            return $balance["balance"];
+        }
+        
+        return 0;
+	}
+	
+	public static function getRevenuesByTeamId(WebSoccer $websoccer, DbConnection $db, $teamId) {
+
+		$columns = "verein_id, betrag, verwendung";
+        
+        $fromTable = $websoccer->getConfig("db_prefix") . "_konto";
+        
+        $whereCondition = "verein_id = %d AND betrag>=0 GROUP BY verwendung";
+        $parameters = $teamId;
+        
+        $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		while ($income = $result->fetch_array()) {
+			$revenues[] = $income;
+		}
+		$result->free();
+		
+		return $revenues;
+	}
+	
+	public static function getExpensesBalance(WebSoccer $websoccer, DbConnection $db, $teamId) {
+
+		$columns = "SUM(betrag) AS balance";
+        
+        $fromTable = $websoccer->getConfig("db_prefix") . "_konto";
+        
+        $whereCondition = "verein_id = %d AND betrag<0";
+        $parameters = $teamId;
+        
+        $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+        $balance = $result->fetch_array();
+        $result->free();
+        
+        if (isset($balance["balance"])) {
+            return $balance["balance"];
+        }
+        
+        return 0;
+	}
+	
+	public static function getExpensesByTeamId(WebSoccer $websoccer, DbConnection $db, $teamId) {
+
+		$columns = "verein_id, betrag, verwendung";
+        
+        $fromTable = $websoccer->getConfig("db_prefix") . "_konto";
+        
+        $whereCondition = "verein_id = %d AND betrag<0 GROUP BY verwendung";
+        $parameters = $teamId;
+        
+        $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		while ($cost = $result->fetch_array()) {
+			$expenses[] = $cost;
+		}
+		$result->free();
+		
+		return $expenses;
+	}
+	
+	public static function groupedFinanceByTeamId(WebSoccer $websoccer, DbConnection $db, $teamId) {
+		
+		$statements = [];
+
+		$sqlStr = "SELECT verwendung, SUM(betrag) as betrag
+					FROM " . $websoccer->getConfig("db_prefix") . "_konto
+					WHERE verein_id='$teamId'
+					GROUP BY verwendung";
+		$result = $db->executeQuery($sqlStr);
+
+		while ($cost = $result->fetch_array()) {
+			$statements[] = $cost;
+		}
+		$result->free();
+		
+		/*echo"<pre>";
+		print_r($statements);
+		echo"</pre>";*/
+		return $statements;
+	}
 }
 ?>

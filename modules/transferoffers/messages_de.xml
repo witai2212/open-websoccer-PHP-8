@@ -36,7 +36,7 @@
 	<message id="transferoffer_submitted_message">Der Manager des Spielers erhält eine Benachrichtigung und muss Ihr Angebot annehmen oder ablehnen.</message>
 
 	<message id="transferoffers_navlabel">Transferangebote</message>
-	<message id="transferoffers_tab_received">Erhaltene Gebote</message>
+	<message id="transferoffers_tab_received">Erhaltene Angebote</message>
 	<message id="transferoffers_tab_sent">Versendete Gebote</message>
 	
 	<message id="transferoffers_no_received_offers">Derzeit gibt es keine offenen Angebote von anderen Managern.</message>
@@ -50,6 +50,7 @@
 	
 	<message id="transferoffers_offer_showcomment">Kommentar anzeigen</message>
 	<message id="transferoffers_offer_comment_title">%s schrieb:</message>
+	<message id="transferoffers_offer_accept_success">Das Angebot angenommen.</message>
 	
 	<message id="transferoffer_accepted_title">Das Angebot wurde angenommen!</message>
 	<message id="transferoffer_accepted_message">Der Spieler hat erfolgreich das Team gewechselt.</message>
@@ -74,4 +75,26 @@
 	<message id="transferoffer_notification_offerreceived"><strong>{sendername}</strong> hat Ihnen ein Spielerkaufangebot gemacht.</message>
 	<message id="transferoffer_notification_executed">Der vereinbarte Transfer des Spielers <strong>{playername}</strong> wurde durchgeführt.</message>
 	<message id="transferoffer_notification_rejected"><strong>{receivername}</strong> hat Ihr Kaufangebot für den Spieler <strong>{playername}</strong> abgelehnt.</message>
+	
+	<message id="myoffers_navlabel">Transferangebote</message>
+	<message id="myoffers_title">Transferangebote</message>
+	<message id="offertable_head_player">Spieler</message>
+	<message id="offertable_head_position">Position</message>
+	<message id="offertable_head_transfer_fee">Ablöse</message>
+	<message id="offertable_head_market_value">Marktwert</message>
+	<message id="offertable_head_enddate">Angebotsende</message>
+	<message id="offertable_bidder">Bieter</message>
+	<message id="offer_accept">Akzeptieren</message>
+	<message id="offer_reject">Ablehnen</message>
+	<message id="offertable_team_name">Verein</message>
+	
+	<message id="mybids_navlabel">Meine Gebote</message>
+	<message id="mybids_title">Meine Gebote</message>
+	
+	<message id="player_bought_message">Spieler gekauft.</message>
+	<message id="player_sold_message">Spieler verkauft.</message>
+	<message id="player_transfer_message">Spielertransfer</message>
+	
+	<message id="myplayers_on_transferlist">Eigene Spieler auf dem Transfermarkt</message>
+	<message id="remove-player-from-transfermarket">Spieler vom Transfermakrt nehmen</message>
 </messages>

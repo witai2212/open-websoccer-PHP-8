@@ -43,7 +43,13 @@ class SellStockController implements IActionController {
     public function executeAction($parameters) {
         
         $index = $parameters['index'];
-        $qty = $parameters['qty'];
+        
+		$max_qty = $parameters['max_qty'];
+		if($parameters['qty']>$max_qty) {
+			$qty = $max_qty;
+		} else {
+			$qty = $parameters['qty'];
+		}
         $user = $this->_websoccer->getUser();
         $teamId = $user->getClubId($this->_websoccer, $this->_db);
 
@@ -54,7 +60,7 @@ class SellStockController implements IActionController {
             $this->_i18n->getMessage("saved_message_title"),
             ""));
             
-        //return "stockmarket";
+        return "portfolio";
     }
     
 }

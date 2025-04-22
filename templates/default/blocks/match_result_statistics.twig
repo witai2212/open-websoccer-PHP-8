@@ -28,6 +28,24 @@
  
 {% if guestStatistics.passes_successed > 0 or guestStatistics.passes_failed > 0 %}
 {% set guestPasses = (guestStatistics.passes_successed * 100 / (guestStatistics.passes_successed + guestStatistics.passes_failed))|number_format %}
+
 <p>{{ match.match_guest_name }} ({{ guestPasses }}%)</p>
 {{ statisticelements.progressbar(guestPasses) }}
+{% endif %} 
+
+
+<h3>{{ i18n.getMessage("match_details_statistic_successfulfreekicks") }}</h3>
+  	
+{% if homeStatistics.freekicks_successed > 0 or homeStatistics.freekicks_failed > 0 %}
+{% set homeFreekicks = (homeStatistics.freekicks_successed * 100 / (homeStatistics.freekicks_successed + homeStatistics.freekicks_failed))|number_format  %}
+
+<p>{{ match.match_home_name }} ({{ homeFreekicks }}%)</p>
+{{ statisticelements.progressbar(homeFreekicks) }}
+{% endif %} 	
+ 
+{% if guestStatistics.freekicks_successed > 0 or guestStatistics.freekicks_failed > 0 %}
+{% set guestFreekicks = (guestStatistics.freekicks_successed * 100 / (guestStatistics.freekicks_successed + guestStatistics.freekicks_failed))|number_format %}
+
+<p>{{ match.match_guest_name }} ({{ guestFreekicks }}%)</p>
+{{ statisticelements.progressbar(guestFreekicks) }}
 {% endif %} 

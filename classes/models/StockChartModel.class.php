@@ -50,6 +50,14 @@ class StockChartModel implements IModel {
         $index = StockMarketDataService::getStockMarketDataById($this->_websoccer, $this->_db, $stockId);
         $grades = StockMarketDataService::getStockMarketDataByIdInverse($this->_websoccer, $this->_db, $stockId);
         
+        /*
+        print_r($index);
+        echo"<br><br>";
+        print_r($grades);
+        */
+        
+        $grades = str_replace(",", ".", $grades);
+        
         return array("grades" => $grades, "index" => $index);
     }
     

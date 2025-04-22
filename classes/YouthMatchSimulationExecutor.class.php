@@ -1,14 +1,11 @@
 <?php
 /******************************************************
-
   This file is part of OpenWebSoccer-Sim.
-
-  OpenWebSoccer-Sim is free software: you can redistribute it 
+  OpenWebSoccer-Sim is free software: you can redistribute it
   and/or modify it under the terms of the 
   GNU Lesser General Public License 
   as published by the Free Software Foundation, either version 3 of
   the License, or any later version.
-
   OpenWebSoccer-Sim is distributed in the hope that it will be
   useful, but WITHOUT ANY WARRANTY; without even the implied
   warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
@@ -17,13 +14,11 @@
   You should have received a copy of the GNU Lesser General Public 
   License along with OpenWebSoccer-Sim.  
   If not, see <http://www.gnu.org/licenses/>.
-
 ******************************************************/
 define('DEFAULT_YOUTH_OFFENSIVE', 60);
 define('DEFAULT_PLAYER_AGE', 20);
 define('MIN_NUMBER_OF_PLAYERS', 9);
 define('YOUTH_MATCH_TYPE', 'Youth');
-
 define('YOUTH_STRENGTH_STAMINA', 100);
 define('YOUTH_STRENGTH_FRESHNESS', 100);
 define('YOUTH_STRENGTH_SATISFACTION', 100);
@@ -32,7 +27,6 @@ define('YOUTH_STRENGTH_SATISFACTION', 100);
  * Finds matches to simulate, initializes them and triggers their simulation.
  */
 class YouthMatchSimulationExecutor {
-	
 	/**
 	 * Simulates youth matches. They are executed differently from normal matches sinc they have a different structure
 	 * and other simulation observers.
@@ -42,25 +36,23 @@ class YouthMatchSimulationExecutor {
 	 * @param int $maxMatchesToSimulate Maximum number of matches to simulate.
 	 */
 	public static function simulateOpenYouthMatches(WebSoccer $websoccer, DbConnection $db, $maxMatchesToSimulate) {
-		
 		// is feature enabled at the moment?
 		if (!$websoccer->getConfig('youth_enabled')) {
 			return;
 		}
-		
 		$simulator = new Simulator($db, $websoccer);
-		
 		// observer stores results
 		$simulator->attachObserver(new YouthMatchDataUpdateSimulatorObserver($websoccer, $db));
 		
 		// ceate match report items on events
 		$simulator->getSimulationStrategy()->attachObserver(new YouthMatchReportSimulationObserver($websoccer, $db));
-		
 		// get matches to simulate
 		$result = $db->querySelect('*', $websoccer->getConfig('db_prefix') . '_youthmatch', 
 				'simulated != \'1\' AND matchdate <= %d ORDER BY matchdate ASC', $websoccer->getNowAsTimestamp(), $maxMatchesToSimulate);
 		while ($matchinfo = $result->fetch_array()) {
 			$match = self::_createMatch($websoccer, $db, $matchinfo);
+			
+			echo"- y_m_id: ". $matchinfo['id'] ."\n";
 				
 			if ($match != null) {
 				$simulator->simulateMatch($match, 100);
@@ -72,7 +64,7 @@ class YouthMatchSimulationExecutor {
 		}
 		$result->free();
 	}
-	
+
 	/**
 	 * Builds the simulation model for a specified match.
 	 * 
@@ -98,7 +90,7 @@ class YouthMatchSimulationExecutor {
 		
 		return $match;
 	}
-	
+
 	/**
 	 * Adds players to the team model. First tries to query in a formation saved players. If not enough, then
 	 * creates a random formation.
@@ -125,7 +117,7 @@ class YouthMatchSimulationExecutor {
 				'P.lastname' => 'lastname',
 				'P.position' => 'player_position',
 				'MP.position' => 'match_position',
-				'MP.position_main' => 'match_position_main',
+		        'MP.position_main' => 'match_position_main',
 				'MP.grade' => 'grade',
 				'MP.state' => 'state'
 				);
@@ -143,9 +135,25 @@ class YouthMatchSimulationExecutor {
 			$position = $playerinfo['player_position'];
 			$mainPosition = $playerinfo['match_position_main'];
 			
+			$strengthPassing = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthShooting = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthTackling = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthHeading = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthInfluence = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthCreativity = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthFlair = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthPace = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthFreekick = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthPenalty = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthPenaltyKilling = SimulationHelper::getMagicNumber(10, $strength);
+			
 			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, $playerinfo['grade'], 
 					DEFAULT_PLAYER_AGE, $strength, $technique, 
-					YOUTH_STRENGTH_STAMINA, YOUTH_STRENGTH_FRESHNESS, YOUTH_STRENGTH_SATISFACTION);
+			    YOUTH_STRENGTH_STAMINA, YOUTH_STRENGTH_FRESHNESS, YOUTH_STRENGTH_SATISFACTION,
+			    
+			    $strengthPassing, $strengthShooting, $strengthTackling, $strengthHeading, $strengthInfluence, $strengthCreativity,
+			    $strengthFlair, $strengthPace, $strengthFreekick, $strengthPenalty, $strengthPenaltyKilling);
+			
 			$player->name = $name;
 			
 			// bench player
@@ -206,9 +214,25 @@ class YouthMatchSimulationExecutor {
 			$mainPosition = $formationPositions[$positionIndex];
 			$position = $positionMapping[$mainPosition];
 			
+			$strengthPassing = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthShooting = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthTackling = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthHeading = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthInfluence = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthCreativity = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthFlair = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthPace = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthFreekick = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthPenalty = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthPenaltyKilling = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+		
 			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, 3.0,
 					DEFAULT_PLAYER_AGE, $playerinfo['strength'], $playerinfo['strength'],
-					YOUTH_STRENGTH_STAMINA, YOUTH_STRENGTH_FRESHNESS, YOUTH_STRENGTH_SATISFACTION);
+			    YOUTH_STRENGTH_STAMINA, YOUTH_STRENGTH_FRESHNESS, YOUTH_STRENGTH_SATISFACTION,
+			    
+			    $strengthPassing, $strengthShooting, $strengthTackling, $strengthHeading, $strengthInfluence, $strengthCreativity,
+			    $strengthFlair, $strengthPace, $strengthFreekick, $strengthPenalty, $strengthPenaltyKilling);
+			
 			$player->name = $playerinfo['firstname'] . ' ' . $playerinfo['lastname'];
 			
 			// strength adaption required?
@@ -261,7 +285,7 @@ class YouthMatchSimulationExecutor {
 				$minute = $matchinfo[$teamPrefix . '_s' . $subNo . '_minute'];
 				$condition = $matchinfo[$teamPrefix . '_s' . $subNo . '_condition'];
 				$position = $matchinfo[$teamPrefix . '_s' . $subNo . '_position'];
-				
+			
 				if (isset($team->playersOnBench[$in])) {
 					$playerIn = $team->playersOnBench[$in];
 						
@@ -278,7 +302,7 @@ class YouthMatchSimulationExecutor {
 		}
 	}
 	
-	private function findPlayerOnField(SimulationTeam $team, $playerId) {
+	public static function findPlayerOnField(SimulationTeam $team, $playerId) {
 		foreach ($team->positionsAndPlayers as $position => $players) {
 			foreach ($players as $player) {
 				if ($player->id == $playerId) {

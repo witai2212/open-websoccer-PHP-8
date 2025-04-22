@@ -1,0 +1,48 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("richest_clubs_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if clubs|length == 0 %}
+{{ i18n.getMessage("no_items") }}
+{% else %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("avg_gates_team_name") }}</th>
+				<th>{{ i18n.getMessage("richest_clubs_money") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		{% for club in clubs %}
+		
+						
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td>
+				{% if club.bild|length > 0 %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.bild }}" style="max-width: 20px"/>
+				{% endif %}
+					<a href="?page=team&id={{ cub.id }}">{{ club.name }}</a>
+				</td>
+				<td>
+					{% if club.finanz_budget > 0 %}
+						{{ club.finanz_budget|number_format(0, ',', ' ') }} EUR
+					{% endif %}
+				</td>
+			</tr>	
+		
+		{% endfor %}
+		</tbody>
+		</table>
+
+{% endif %}
+{% endblock %}

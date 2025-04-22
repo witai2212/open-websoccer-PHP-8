@@ -16,6 +16,9 @@
     </pages>
     
     <actions>
+    	<action id="put-player-on-watchlist" controller="PutPlayerOnWatchlistController" role="user">
+			<param id="id" type="number" required="true" />
+		</action>
     	<action id="remove-player-from-watchlist" controller="RemovePlayerFromWatchlistController" role="user">
 			<param id="id" type="number" required="true" />
 		</action>

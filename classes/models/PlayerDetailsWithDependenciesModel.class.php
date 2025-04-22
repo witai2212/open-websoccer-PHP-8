@@ -39,14 +39,24 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 	}
 	
 	public function getTemplateParameters() {
+	    
+	    $scouting = null;
+	    $correctScout = null;
 		
 		$playerId = (int) $this->_websoccer->getRequestParameter("id");
 		if ($playerId < 1) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
 		
+		$userTeam = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		
+		//strength + marketvalue update
+		//PlayersStrengthDataService::updateAllPlayersMarketAndStrengthByPlayerId($this->_websoccer, $this->_db, $playerId);
+		PlayersStrengthDataService::calculatePlayerStats($this->_websoccer, $this->_db, $playerId);
+		
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $playerId);
 		$watchlist = PlayersDataService::whoIsWatchingPlayerId($this->_websoccer, $this->_db, $playerId);
+		$onMyWhatchlist = WatchlistDataService::checkIfPlayerOnWatchlist($this->_websoccer, $this->_db, $playerId, $userTeam);
 		
 		if (!isset($player["player_id"])) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
@@ -55,8 +65,25 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		$grades = $this->_getGrades($playerId);
 		
 		$transfers = TransfermarketDataService::getCompletedTransfersOfPlayer($this->_websoccer, $this->_db, $playerId);
+		
+		//check if player is on watchlist from this user
+		$onWL = WatchlistDataService::checkIfPlayerOnWatchlist($this->_websoccer, $this->_db, $playerId, $userTeam);
+		//check if scout has same spaciality as player's position
+		$correctScout = ScoutingDataService::getScoutByTeamSpeciality($this->_websoccer, $this->_db, $userTeam, $player['player_position_de']);
 
-		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers, "watchlist" => $watchlist);
+		if($onWL>0 && $correctScout>0) {
+		  
+    		$scouting = ScoutingDataService::getTalentEvaluation($this->_websoccer, $this->_db, $userTeam, $playerId);
+    		
+    		if(!isset($_SESSION['scouting_result'])) {
+    		    $_SESSION['scouting_result'] = $scouting;
+    		} else {
+    		    $scouting = $_SESSION['scouting_result'];
+    		}
+		}
+
+		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers, "watchlist" => $watchlist,
+		              "onmywatchlist" => $onMyWhatchlist, "scouting" => $scouting);
 	}
 	
 	private function _getGrades($playerId) {

@@ -1,0 +1,26 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>{{ i18n.getMessage("offertable_head_player") }}</th>
+			<th>{{ i18n.getMessage("offertable_head_position") }}</th>
+			<th>{{ i18n.getMessage("offertable_head_market_value") }}</th>
+			<th>{{ i18n.getMessage("remove-player-from-transfermarket") }}</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+	{% for player in myplayers %}
+
+		<tr>
+			<td><strong>{{ loop.index }}</strong></td>
+			<td><a href="?page=player&id={{player.id }}">{{ player.vorname }} {{ player.nachname }}</a></td>
+			<td>{{ player.position_main }} ({{ player.position_second }})</td>
+			<td>{{ player.marktwert|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+			<td><a class="btn btn-mini" href="?page=myoffers&id={{ player.id }}&action=remove-player-from-transfermarket"><i class="icon-trash"></i>&nbsp;</i> {{ i18n.getMessage("mywatchlist_delete") }}</a></td>
+		</tr>	
+	
+	{% endfor %}
+	
+	</tbody>
+</table>

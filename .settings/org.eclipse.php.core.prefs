@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
 include_path=0;/open-websoccer-PHP-8
+phpVersion=php8.2
+useShortTags=true
+use_asp_tags_as_php=false

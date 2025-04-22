@@ -55,6 +55,9 @@ class DefaultBootstrapSkin implements ISkin {
 		$files[] = $dir . 'websoccer.css';
 		$files[] = $dir . 'bootstrap-responsive.min.css';
 		
+		$files[] = $dir . 'charts.css';
+		$files[] = $dir . 'charts.min.css';
+		
 		return $files;
 	}
 	

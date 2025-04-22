@@ -69,6 +69,7 @@ class ExtendStadiumController implements IActionController {
 		}
 		
 		$seatsVip = $stadium["places_vip"] + $parameters["vip"];
+		
 		if ($seatsVip > $this->_websoccer->getConfig("stadium_max_vip")) {
 			throw new Exception($this->_i18n->getMessage("stadium_extend_err_exceed_max_vip", $this->_websoccer->getConfig("stadium_max_vip")));
 		}

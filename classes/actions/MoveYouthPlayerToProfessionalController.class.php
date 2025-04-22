@@ -80,12 +80,62 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("youthteam_makeprofessional_err_budgettooless"));
 		}
 		
+		// generate talent
+		mt_srand((double)microtime()*1000000);
+        $r_talent = mt_rand(1,100);
+        
+		if($r_talent>94) {
+			$talent = 6;
+		} else {
+			mt_srand((double)microtime()*1000000);
+			$talent = mt_rand(1,5);
+		}
+		$player["w_talent"] = $talent;
+		
+		// generate max_strength
+		if($talent>=4) {
+			mt_srand((double)microtime()*1000000);
+			$max_strength = mt_rand(75,100);
+			$a = 75;
+			$b = 100;
+			
+		} else if($talent>=2 && $talent<4) {
+			mt_srand((double)microtime()*1000000);
+			$max_strength = mt_rand(50,80);
+			$a = 50;
+			$b = 80;
+			
+		} else if($talent>=0 && $talent<2) {
+			mt_srand((double)microtime()*1000000);
+			$max_strength = mt_rand(25,60);
+			$a = 25;
+			$b = 60;
+			
+		} else {
+			mt_srand((double)microtime()*1000000);
+			$max_strength = mt_rand(25,100);
+			$a = 25;
+			$b = 100;
+		}
+		$player["strength_max"] = $max_strength;
+		
+		
+		$player['w_passing'] = self::myMagicNumber($a, $b);
+		$player['w_shooting'] = self::myMagicNumber($a, $b);
+		$player['w_heading'] = self::myMagicNumber($a, $b);
+		$player['w_tackling'] = self::myMagicNumber($a, $b);
+		$player['w_freekick'] = self::myMagicNumber($a, $b);
+		$player['w_pace'] = self::myMagicNumber($a, $b);
+		$player['w_creativity'] = self::myMagicNumber($a, $b);
+		$player['w_influence'] = self::myMagicNumber($a, $b);
+		$player['w_flair'] = self::myMagicNumber($a, $b);
+		$player['w_penalty'] = self::myMagicNumber($a, $b);
+		$player['w_penalty_killing'] = self::myMagicNumber($a, $b);
+		
 		$this->createPlayer($player, $parameters["mainposition"]);
 		
 		// success message
-		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
-				$this->_i18n->getMessage("youthteam_makeprofessional_success"),
-				""));
+		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, $this->_i18n->getMessage("youthteam_makeprofessional_success"), ""));
 		
 		return "myteam";
 	}
@@ -106,10 +156,25 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
 				"position_main" => $mainPosition,
 				"nation" => $player["nation"],
 				"w_staerke" => $player["strength"],
+				"w_staerke_max" => $player["strength_max"],
 				"w_technik" => $this->_websoccer->getConfig("youth_professionalmove_technique"),
 				"w_kondition" => $this->_websoccer->getConfig("youth_professionalmove_stamina"),
 				"w_frische" => $this->_websoccer->getConfig("youth_professionalmove_freshness"),
 				"w_zufriedenheit" => $this->_websoccer->getConfig("youth_professionalmove_satisfaction"),
+				"w_talent" => $player["talent"],
+		    
+                "w_passing" => $player["w_passing"],
+                "w_shooting" => $player["w_shooting"],
+                "w_heading" => $player["w_heading"],
+                "w_tackling" => $player["w_tackling"],
+                "w_freekick" => $player["w_freekick"],
+                "w_pace" => $player["w_pace"],
+                "w_creativity" => $player["w_creativity"],
+                "w_influence" => $player["w_influence"],
+                "w_flair" => $player["w_flair"],
+                "w_penalty" => $player["w_penaly"],
+                "w_penalty_killing" => $player["w_penalty_killing"],
+		    
 				"vertrag_gehalt" => $this->_websoccer->getConfig("youth_salary_per_strength") * $player["strength"],
 				"vertrag_spiele" => $this->_websoccer->getConfig("youth_professionalmove_matches"),
 				"vertrag_torpraemie" => 0,
@@ -120,6 +185,14 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
 		
 		// delete youth player
 		$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") ."_youthplayer", "id = %d", $player["id"]);
+	}
+	
+	private function myMagicNumber($a, $b) {
+	    
+	    mt_srand((double)microtime()*1000000);
+	    $magic = mt_rand($a,$b);
+	    
+	    return $magic;
 	}
 	
 }

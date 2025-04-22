@@ -13,6 +13,7 @@
       <setting id="transfermarket_value_per_strength" category="transfermarket" type="number" default="10000" />
       <setting id="transfermarket_min_teamsize" category="transfermarket" type="number" default="18" />
       <setting id="transfermarket_max_transactions_between_users" category="transfermarket" type="number" default="2" />
+      <setting id="transfermarket_max_players_on_tl" category="transfermarket" type="number" default="250" />
   </settings>
   
     <pages>
@@ -92,6 +93,22 @@
             area="custom"
             role="user" />
         
+        <block
+            id="mybids"
+            template="mybids"
+            model="MyOffersModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
+        <block
+            id="myplayersontl"
+            template="myplayersontl"
+            model="MyOffersModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
     </blocks>
     
   <actions>
@@ -112,6 +129,12 @@
 	<action id="remove-player-from-transfermarket" controller="RemovePlayerFromTransfermarketController" role="user">
 		<param id="id" type="number" required="true" />
 	</action>
+
+	<action id="withdraw-bid-id" controller="WithdrawBidController" role="user">
+		<param id="id" type="number" required="true" />
+		<param id="allow_alternative" type="boolean" />
+		</action>
+	
   </actions>
     
 </module>

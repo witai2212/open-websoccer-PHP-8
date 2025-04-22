@@ -14,6 +14,7 @@
 	<message id="entity_club_sponsor_spiele">Restliche Spiele mit Sponsor</message>
 	<message id="entity_club_training_id">Trainingseinheit</message>
 	<message id="entity_club_finanz_budget">Budget</message>
+	<message id="entity_club_finanz_balance">Bilanz</message>
 	<message id="entity_club_finanz_sponsor">Sponsoreneinnahmen</message>
 	<message id="entity_club_finanz_transfer">Transferüberschuss</message>
 	<message id="entity_club_finanz_gehalt">Gehaltszahlungen</message>
@@ -51,4 +52,5 @@
 	<message id="entity_club_nationalteam">Ist Nationalmannschaft</message>
 	<message id="entity_club_captain_id">Kapitän</message>
 	<message id="entity_club_interimmanager">Wird von Interims-Manager betreut</message>
+	<message id="entity_club_highscore">Highscore</message>
 </messages>

@@ -1,0 +1,160 @@
+{% extends "base.twig" %}
+{% import "macros/messagebox.twig" as messagebox %}
+{% import "macros/paginator.twig" as pagination %}
+
+{% block page_title %}
+{{ i18n.getMessage("uefaeuroleague_navlabel") }}
+{% endblock %}
+
+{% block page_content %}
+
+<script>
+function updateURLWithSelectedValue() {
+	const selectElement = document.getElementById("phase");
+	const selectedValue = selectElement.value;
+
+	if (selectedValue) {
+		const currentURL = new URL(window.location.href);
+		currentURL.searchParams.set("phase", selectedValue);
+		window.location.href = currentURL.toString();
+	}
+}
+</script>
+
+<h1>{{ i18n.getMessage( group_title ) }}</h1>
+<br>
+<form>
+	<label for="phase">{{ i18n.getMessage("champions_league_select_phase") }}:</label>
+	<select id="phase" onchange="updateURLWithSelectedValue()">
+		<option value="">{{ i18n.getMessage("champions_select_choose") }}</option>
+		<option value="A" <?= $_GET['selectedValue'] == 'A' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_groupa") }}</option>
+		<option value="B" <?= $_GET['selectedValue'] == 'B' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_groupb") }}</option>
+		<option value="C" <?= $_GET['selectedValue'] == 'C' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_groupc") }}</option>
+		<option value="D" <?= $_GET['selectedValue'] == 'D' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_groupd") }}</option>
+		<option value="round1" <?= $_GET['selectedValue'] == 'round1' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_round1") }}</option>
+		<option value="afinal" <?= $_GET['selectedValue'] == 'afinal' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_afinal") }}</option>
+		<option value="vfinal" <?= $_GET['selectedValue'] == 'vfinal' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_qfinal") }}</option>
+		<option value="hfinal" <?= $_GET['selectedValue'] == 'hfinal' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_sfinal") }}</option>
+		<option value="final" <?= $_GET['selectedValue'] == 'finale' ? 'selected' : '' ?>{{ i18n.getMessage("champions_league_final") }}</option>
+	</select>
+</form>
+
+<hr>
+{% if group_title == "group_title_a" or group_title == "group_title_b" or group_title == "group_title_c"  or group_title == "group_title_d"  %}
+		
+		<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>{{ i18n.getMessage("championsleague_grouptable_team") }}</th>
+				<th>{{ i18n.getMessage("championsleague_grouptable_points") }}</th>
+				<th>{{ i18n.getMessage("championsleague_grouptable_wins") }}</th>
+				<th>{{ i18n.getMessage("championsleague_grouptable_draws") }}</th>
+				<th>{{ i18n.getMessage("championsleague_grouptable_losses") }}</th>
+				<th>{{ i18n.getMessage("championsleague_grouptable_goals") }}</th>
+				<th>{{ i18n.getMessage("championsleague_grouptable_goalsreceived") }}</th>
+			</tr>
+		</thead>
+		
+			{% for group_data in group_table %}
+			<tr>
+				<td><strong>{{ loop.group_data }}</strong></td>
+				
+				{% set nationImg = skin.getImage("flags/" ~ group_data.land ~ ".png") %}
+				  	{% if i18n.hasMessage("option_" ~ group_data.land) %}
+						{% set countryLabel = i18n.getMessage("option_" ~ group_data.land) %}
+					{% else %}
+						{% set countryLabel = group_data.land %}
+					{% endif %}
+				{% if nationImg|length < 1 %}
+					{% set nationImg = skin.getImage("flags/europeanunion.png") %}
+				{% endif %}
+				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% else %}{{ countryLabel }}{% endif %}
+					&nbsp;<a href="?page=team&id={{ group_data.team_id }}">{{ group_data.club_name }}</a></</td>
+				<td>{{ group_data.tab_points }}</td>
+				<td>{{ group_data.tab_wins }}</td>
+				<td>{{ group_data.tab_draws }}</td>
+				<td>{{ group_data.tab_losses }}</td>
+				<td>{{ group_data.tab_goals }}</td>
+				<td>{{ group_data.tab_goalsreceived }}</td>
+			</tr>
+			{% endfor %}
+		
+		</tbody>
+	</table>
+		
+{% endif %}
+
+<hr>
+
+{% if matches is defined and matches|length > 0 %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>{{ i18n.getMessage("entity_match_datum") }}</th>
+				<th>{{ i18n.getMessage("entity_match_home_verein") }}</th>
+				<th>{{ i18n.getMessage("entity_match_gast_verein") }}</th>
+				<th>{{ i18n.getMessage("match_result") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for match in matches %}
+			<tr>
+				<td>
+					<i class="icon-trophy wstooltip" title="{{ i18n.getMessage("option_Pokalspiel") }} ({{ match.pokalname }}, {{ match.pokalrunde }})"></i>
+					{{ env.getFormattedDatetime(match.datum, i18n) }}
+				</td>
+				<td>
+					{% if match.home_team_picture|length %}
+						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_verein_picture }}" style="max-width: 20px"/>
+					{% endif %}
+					<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_verein) }}">{{ match.home_team_name }}</a>
+					{% if match.home_noformation %}
+						<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.home_team_name) }}"></i>
+					{% endif %}
+					{% if match.home_user_id > 0 %}
+						<br>
+						{% if match.home_user_picture|length > 0 %}
+							<a href="{{ env.getInternalUrl("user", "id=" ~ match.home_user_id) }}"><img src="{{ match.home_user_picture }}" style="width: 20px; height: 20px"/></a>
+						{% endif %}
+						<small><a href="{{ env.getInternalUrl("user", "id=" ~ match.home_user_id) }}">{{ match.home_user_nick }}</a></small>
+					{% endif %}
+				</td>
+				<td>
+					{% if match.guest_team_picture|length %}
+						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
+					{% endif %}
+					<a href="{{ env.getInternalUrl("team", "id=" ~ match.gast_verein) }}">{{ match.away_team_name }}</a>
+					{% if match.guest_noformation %}
+						<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.away_team_name) }}"></i>
+					{% endif %}
+					{% if match.guest_user_id > 0 %}
+						<br>
+						{% if match.guest_user_picture|length > 0 %}
+							<a href="{{ env.getInternalUrl("user", "id=" ~ match.guest_user_id) }}"><img src="{{ match.guest_user_picture }}" style="width: 20px; height: 20px"/></a>
+						{% endif %}
+						<small><a href="{{ env.getInternalUrl("user", "id=" ~ match.guest_user_id) }}">{{ match.guest_user_nick }}</a></small>
+					{% endif %}
+				</td>
+				<td><a href="{{ env.getInternalUrl("match", "id=" ~ match.id) }}" title="{{ i18n.getMessage("match_navlabel") }}">
+				{% if match.berechnet == 1 %}
+				{{ match.home_tore }} - {{ match.gast_tore }}
+				{% elseif match.minutes > 0  %}
+				<i class="icon-fire" title="{{ i18n.getMessage("match_live_label") }}"></i> {{ match.home_tore }} - {{ match.gast_tore }}
+				{% else %}
+				{{ i18n.getMessage("match_navlabel") }}
+				{% endif %}
+				</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+{% else %}
+	{{ messagebox.box(i18n.getMessage("results_no_matches_found"), "", "info") }}
+{% endif %}	
+
+
+{{ pagination.paginator(paginator) }}
+{% endblock %}

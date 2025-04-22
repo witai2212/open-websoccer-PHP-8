@@ -18,6 +18,9 @@
 	<message id="settings_label_transfermarket_min_teamsize_help">Anzahl an Spieler, die mindestens im Team sind. Spieler können nicht verkauft werden, wenn die Mindestgrösse unterschritten wird.</message>
 
 	<message id="settings_label_transfermarket_max_transactions_between_users">Transaktionen zwischen Benutzern</message>
-<message id="settings_label_transfermarket_max_transactions_between_users_help">Höchstanzahl erlaubter Transaktionen zwischen zwei Benutzern innerhalb der letzten 30 Tage.</message>
+	<message id="settings_label_transfermarket_max_transactions_between_users_help">Höchstanzahl erlaubter Transaktionen zwischen zwei Benutzern innerhalb der letzten 30 Tage.</message>
+	<message id="settings_label_transfermarket_max_players_on_tl">max. Spieler auf TL</message>
+	<message id="settings_label_transferoffers_max_offer_deviation">max. Abweichung bei Transfers [%]</message>
+	<message id="settings_label_transferoffers_deviation_penalty">Strafe bei Abweichung</message>
 
 </messages>

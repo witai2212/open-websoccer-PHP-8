@@ -1,0 +1,43 @@
+{% import "macros/paginator.twig" as pagination %}
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("mybids_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("offertable_head_player") }}</th>
+				<th>{{ i18n.getMessage("offertable_head_position") }}</th>
+				<th>{{ i18n.getMessage("offertable_head_transfer_fee") }}</th>
+				<th>{{ i18n.getMessage("offertable_head_market_value") }}</th>
+				<th>{{ i18n.getMessage("offertable_team_name") }}</th>
+				<th>{{ i18n.getMessage("transferoffers_offer_withdraw") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+
+
+		{% for bid in bids %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td><a href="?page=player&id={{bid.p_id }}">{{ bid.vorname }} {{ bid.nachname }}</a></td>
+				<td>{{ bid.position_main }} ({{ bid.position_second }})</td>
+				<td>{{ bid.abloese|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td>{{ bid.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td><a href="?page=team&id={{bid.player_club_id }}">{{ bid.team_name }}</a></td>
+				<td><a class="btn btn-mini" href="?page=mybids&id={{ bid.p_id }}&action=withdraw-bid"><i class="icon-trash"></i>&nbsp;</i> {{ i18n.getMessage("mywatchlist_delete") }}</a></td>
+			</tr>	
+		
+		{% endfor %}
+		
+		</tbody>
+	</table>
+
+
+{% endblock %}

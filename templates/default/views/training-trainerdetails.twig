@@ -23,16 +23,12 @@
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
 
 <form class="form-horizontal" method="post">
-	<fieldset>
-    	<legend>{{ i18n.getMessage('training_choose_trainer_title') }}</legend>
-    	
-    	
-		{{ formelements.textfield('units', i18n.getMessage('training_choose_trainer_units'), env.getRequestParameter("units"), true, validationMsg, "number") }}
-	</fieldset>
+
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
 		<a href="{{ env.getInternalUrl("training") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
 	</div>
+	<input type="hidden" name="units" value="10"/>
 	<input type="hidden" name="id" value="{{ trainer.id }}"/>
 	<input type="hidden" name="page" value="trainer-details"/>
 	<input type="hidden" name="action" value="choose-trainer"/>

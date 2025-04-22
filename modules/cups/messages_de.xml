@@ -13,5 +13,14 @@
     <message id="cup_title_groups">Gruppen</message>
     <message id="cup_group_noteamsavailable">Dieser Gruppe wurden noch keine Teams zugeteilt.</message>
     <message id="cup_group_select_group_placeholder">Bitte wählen Sie eine Gruppe aus.</message>
+	
+	<message id="cups_navlabel">Pokal</message>
+	<message id="cups_title">Pokal</message>
+	<message id="select_cup">Pokal wählen</message>
+	<message id="cup_select_choose">Bitte Pokal wählen</message>
+	
+	<message id="entity_match_cup_round">Pokalrunde</message>
+	
+	<message id="uefatempgenerator_navlabel">UEFA Temp generieren</message>
     
 </messages>

@@ -19,4 +19,6 @@
 	<message id="option_player_happiness">Zufriedenheit eines Spielers verändert sich</message>
 	<message id="option_player_fitness">Frische eines Spielers verändert sich</message>
 	<message id="option_player_stamina">Kondition eines Spielers verändert sich</message>
+	
+	<message id="entity_randomevent_effect_renovation">Renovierung</message>
 </messages>

@@ -73,7 +73,7 @@
 	<message id="youthteam_scouting_err_invalidscout">Der ausgewählte Scout existiert nicht (mehr).</message>
 	<message id="youthteam_scouting_err_notenoughbudget">Im Moment können Sie das Honorar des Scouts nicht bezahlen.</message>
 
-	<message id="youthteam_scouting_fee_subject">Honorar für Jugendspielerscouting</message>
+	<message id="youthteam_scouting_fee_subject">Scouting Jugendspieler</message>
 	<message id="youthteam_scouting_failure">Leider hat der Scout auf seiner Reise keine Talente gefunden.</message>
 	
 	<message id="youthteam_scouting_success">Glückwunsch! Der Scout konnte ein Talent finden.</message>

@@ -9,6 +9,7 @@
 
 {% block page_content %}
 
+
 {% block formation_setup %}
 {% endblock %}
 
@@ -379,7 +380,7 @@
 										| {{ i18n.getMessage("player_details_statistic_yellow") }}: {{ player.st_cards_yellow }}
 										{% if player.marketvalue is defined %}
 										| {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
-										{% endif %}
+										{% endif %}lala {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
 									</small>
 									
 									{% if env.getConfig("hide_strength_attributes") != "1" or youthFormation is defined and youthFormation %}

@@ -1,0 +1,29 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>{{ i18n.getMessage("avg_gates_team_name") }}</th>
+			<th>{{ i18n.getMessage("avg_gates_team_viewers_total") }}</th>
+			<th>{{ i18n.getMessage("entity_stadium_name") }}</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+	{% for visitor in most_visitors_clubs %}
+
+		<tr>
+			<td><strong>{{ loop.index }}</strong></td>
+			<td>
+				{% if visitor.club_bild|length > 0 %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ visitor.club_bild }}" style="max-width: 20px"/>
+				{% endif %}
+				<a href="?page=team&id={{ visitor.club_id }}">{{ visitor.club_name }}</a>
+			</td>
+			<td>{{ visitor.visitors|number_format(0, ',', ' ') }}</td>
+			<td><a href="?page=stadium&id={{ visitor.stadium_id }}">{{ visitor.stadium_name }}</a></td>
+		</tr>	
+	
+	{% endfor %}
+	
+	</tbody>
+</table>

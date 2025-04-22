@@ -47,6 +47,171 @@
 	  		</select>
 		</div>
 	</div>
+	<div class="control-group">
+		<label class="control-label" for="passing">
+			{{ i18n.getMessage("entity_player_w_passing") }}
+		</label>
+		<div class="controls">
+	  		<select name="passing" id="passing">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("passing") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("passing") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("passing") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("passing") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("passing") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="shooting">
+			{{ i18n.getMessage("entity_player_w_shooting") }}
+		</label>
+		<div class="controls">
+	  		<select name="shooting" id="shooting">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("shooting") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("shooting") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("shooting") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("shooting") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("shooting") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="heading">
+			{{ i18n.getMessage("entity_player_w_heading") }}
+		</label>
+		<div class="controls">
+	  		<select name="heading" id="heading">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("heading") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("heading") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("heading") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("heading") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("heading") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="tackling">
+			{{ i18n.getMessage("entity_player_w_tackling") }}
+		</label>
+		<div class="controls">
+	  		<select name="tackling" id="tackling">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("tackling") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("tackling") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("tackling") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("tackling") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("tackling") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="freekick">
+			{{ i18n.getMessage("entity_player_w_freekick") }}
+		</label>
+		<div class="controls">
+	  		<select name="freekick" id="freekick">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("freekick") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("freekick") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("freekick") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("freekick") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("freekick") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="creativity">
+			{{ i18n.getMessage("entity_player_w_creativity") }}
+		</label>
+		<div class="controls">
+	  		<select name="creativity" id="creativity">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("creativity") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("creativity") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("creativity") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("creativity") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("creativity") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="pace">
+			{{ i18n.getMessage("entity_player_w_pace") }}
+		</label>
+		<div class="controls">
+	  		<select name="pace" id="pace">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("pace") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("pace") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("pace") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("pace") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("pace") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="influence">
+			{{ i18n.getMessage("entity_player_w_influence") }}
+		</label>
+		<div class="controls">
+	  		<select name="influence" id="influence">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("influence") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("influence") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("influence") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("influence") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("influence") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="flair">
+			{{ i18n.getMessage("entity_player_w_flair") }}
+		</label>
+		<div class="controls">
+	  		<select name="flair" id="flair">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("flair") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("flair") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("flair") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("flair") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("flair") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="penalty">
+			{{ i18n.getMessage("entity_player_w_penalty") }}
+		</label>
+		<div class="controls">
+	  		<select name="penalty" id="penalty">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("penalty") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("penalty") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("penalty") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("penalty") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("penalty") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="penalty_killing">
+			{{ i18n.getMessage("entity_player_w_penalty_killing") }}
+		</label>
+		<div class="controls">
+	  		<select name="penalty_killing" id="penalty_killing">
+	  			<option></option>
+	  			<option value="20"{% if env.getRequestParameter("penalty_killing") == "20" %} selected{% endif %}>1% - 20%</option>
+	  			<option value="40"{% if env.getRequestParameter("penalty_killing") == "40" %} selected{% endif %}>21% - 40%</option>
+	  			<option value="60"{% if env.getRequestParameter("penalty_killing") == "60" %} selected{% endif %}>41% - 60%</option>
+	  			<option value="80"{% if env.getRequestParameter("penalty_killing") == "80" %} selected{% endif %}>61% - 80%</option>
+	  			<option value="100"{% if env.getRequestParameter("penalty_killing") == "100" %} selected{% endif %}>81% - 100%</option>
+	  		</select>
+		</div>
+	</div>
 	{% endif %}
 	
 	{% if env.getConfig("lending_enabled") %}

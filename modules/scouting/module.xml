@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    
+  	<settings>
+		<setting id="max_scouts_per_team" category="scouting" type="number" default="4" />
+		<setting id="scouts_matches" category="scouting" type="number" default="20" />
+ 	</settings>
+  
+    <pages>
+        <page
+            id="scouting"
+            template="scouting"
+            navitem="true"
+            navweight="5"
+            model="ScoutingModel"
+            parentItem="transfermarket"
+            role="user">
+        </page>
+        
+    </pages>
+    
+    <actions>
+    	<action id="hire-scout" controller="HireScoutController" role="user">
+			<param id="id" type="number" required="true" />
+		</action>
+    	<action id="fire-scout" controller="FireScoutController" role="user">
+			<param id="id" type="number" required="true" />
+		</action>
+	</actions>
+     
+</module>

@@ -56,13 +56,14 @@
 	
 	{{ formelements.textfield('contract_goal_bonus', i18n.getMessage('entity_player_vertrag_torpraemie'), env.getRequestParameter('contract_goal_bonus'), false, validationMsg, 'number') }}
 	
-	{{ formelements.textfield('contract_matches', i18n.getMessage('entity_player_vertrag_spiele'), env.getRequestParameter('contract_matches'), true, validationMsg, 'number') }}
+	<!-- {{ formelements.textfield('contract_matches', i18n.getMessage('entity_player_vertrag_spiele'), env.getRequestParameter('contract_matches'), true, validationMsg, 'number') }} -->
 	
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary ajaxSubmit" 
 		data-ajaxtarget="transfer-bid_block" data-ajaxblock="transfer-bid" data-messagetarget="bidmessages">{{ i18n.getMessage('transfermarket_bid') }}</button>
 		<a href="{{ env.getInternalUrl("transfermarket") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
 	</div>
+	<input type="hidden" name="contract_matches" value="60"/>
 	<input type="hidden" name="page" value="transfer-bid"/>
 	<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
 	<input type="hidden" name="action" value="transfer-bid"/>

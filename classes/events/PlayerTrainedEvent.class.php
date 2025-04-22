@@ -62,6 +62,61 @@ class PlayerTrainedEvent extends AbstractEvent {
 	public $effectSatisfaction;
 	
 	/**
+	 * @var reference reference to integer indicating training effect of attribute passing.
+	 */
+	public $effectPassing;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute shooting.
+	 */
+	public $effectShooting;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute heading.
+	 */
+	public $effectHeading;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute tackling.
+	 */
+	public $effectTackling;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute freekick.
+	 */
+	public $effectFreekick;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute pace.
+	 */
+	public $effectPace;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute creativity.
+	 */
+	public $effectCreativity;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute influence.
+	 */
+	public $effectInfluence;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute flair.
+	 */
+	public $effectFlair;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute penalty.
+	 */
+	public $effectPenalty;
+	
+	/**
+	 * @var reference reference to integer indicating training effect of attribute penalty_killing.
+	 */
+	public $effectPenaltyKilling;
+	
+	/**
 	 * 
 	 * @param WebSoccer $websoccer Application context.
 	 * @param DbConnection $db DB connection.
@@ -73,7 +128,9 @@ class PlayerTrainedEvent extends AbstractEvent {
 	 */
 	function __construct(WebSoccer $websoccer, DbConnection $db, I18n $i18n,
 			$playerId, $teamId, $trainerId,
-			&$effectFreshness, &$effectTechnique, &$effectStamina, &$effectSatisfaction) {
+			&$effectFreshness, &$effectTechnique, &$effectStamina, &$effectSatisfaction, &$effectPassing,
+	        &$effectShooting, &$effectHeading, &$effectTackling, &$effectFreekick, &$effectPace, &$effectCreativity,
+	        &$effectInfluence, &$effectFlair, &$effectPenalty, &$effectPenaltyKilling) {
 		parent::__construct($websoccer, $db, $i18n);
 		
 		$this->playerId = $playerId;
@@ -84,6 +141,17 @@ class PlayerTrainedEvent extends AbstractEvent {
 		$this->effectTechnique =& $effectTechnique;
 		$this->effectStamina =& $effectStamina;
 		$this->effectSatisfaction =& $effectSatisfaction;
+		
+		$this->effectPassing =& $effectPassing;
+		$this->effectShooting =& $effectShooting;
+		$this->effectHeading =& $effectHeading;
+		$this->effectTackling =& $effectTackling;
+		$this->effectCreativity =& $effectCreativity;
+		$this->effectInfluence =& $effectInfluence;
+		$this->effectFlair =& $effectFlair;
+		$this->effectPenalty =& $effectPenalty;
+		$this->effectPenaltyKilling =& $effectPenaltyKilling;
+		
 	}
 
 }

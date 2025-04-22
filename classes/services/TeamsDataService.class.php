@@ -56,6 +56,7 @@ class TeamsDataService {
 		
 		$columns['L.name'] = 'team_league_name';
 		$columns['L.id'] = 'team_league_id';
+		$columns['L.land'] = 'team_country';
 		$columns['SPON.name'] = 'team_sponsor_name';
 		$columns['SPON.bild'] = 'team_sponsor_picture';
 		$columns['SPON.id'] = 'team_sponsor_id';
@@ -84,6 +85,9 @@ class TeamsDataService {
 		$columns['C.st_niederlagen'] = 'team_total_losses';
 		$columns['C.st_unentschieden'] = 'team_total_draws';
 		$columns['C.st_punkte'] = 'team_total_score';
+		
+		$columns['C.highscore'] = 'team_highscore';
+		$columns['C.superclub'] = 'team_superclub';
 		
 		$teaminfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
 		$team = (isset($teaminfos[0])) ? $teaminfos[0] : array();
@@ -370,18 +374,12 @@ class TeamsDataService {
 	 * @param DbConnection $db DB connection
 	 * @return array array of teams which do not have a manager or only an interims manager assigned.
 	 */
-	public static function getTeamsWithoutUser(WebSoccer $websoccer, DbConnection $db, $userId) {
-	    
-	    // GET USER DATA TO DEFINE HIGHSCORE
-	    $user = UsersDataService::getUserById($websoccer, $db, $userId);
-	    $userHighScore = $user['highscore']+20;
-	    /*
-	     * 
-	    $fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C, ';
+	public static function getTeamsWithoutUser(WebSoccer $websoccer, DbConnection $db) {
+		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON C.liga_id = L.id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON C.stadion_id = S.id';
 		
-		$whereCondition = 'C.liga_id=L.id AND C.stadion_id=S.id AND nationalteam != \'1\' AND (C.user_id <= 0 OR C.user_id IS NULL OR C.interimmanager = \'1\') AND C.status = 1';
+		$whereCondition = 'nationalteam != \'1\' AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = \'1\') AND C.status = 1';
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
@@ -391,7 +389,6 @@ class TeamsDataService {
 		$columns['L.id'] = 'league_id';
 		$columns['L.name'] = 'league_name';
 		$columns['L.land'] = 'league_country';
-		$columns['L.division'] = 'league_division';
 		$columns['S.p_steh'] = 'stadium_p_steh';
 		$columns['S.p_sitz'] = 'stadium_p_sitz';
 		$columns['S.p_haupt_steh'] = 'stadium_p_haupt_steh';
@@ -399,46 +396,16 @@ class TeamsDataService {
 		$columns['S.p_vip'] = 'stadium_p_vip';
 		
 		// order by
-		$whereCondition .= ' ORDER BY league_country ASC, league_division ASC, league_name ASC, team_name ASC';
+		$whereCondition .= ' ORDER BY RAND()';
 		
-	     $teams = array();
-	     
-	     $result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 100000);
-	     while ($team = $result->fetch_array()) {
-	     $teams[$team['league_country']][] = $team;
-	     }
-	     $result->free();
-	     */
-	    
-	    $sqlStr = "SELECT C.id AS team_id,
-                    	    C.name AS team_name,
-                    	    C.finanz_budget AS team_budget,
-                    	    C.bild AS team_picture,
-                    	    C.strength AS team_strength,
-                    	    L.id AS league_id,
-                    	    L.name AS league_name,
-                    	    L.land AS league_country,
-                    	    L.division AS league_division,
-                    	    S.p_steh AS stadium_p_steh,
-                    	    S.p_sitz AS stadium_p_sitz,
-                    	    S.p_haupt_steh AS stadium_p_haupt_steh,
-                    	    S.p_haupt_sitz AS stadium_p_haupt_sitz,
-                    	    S.p_vip AS stadium_p_vip
-        	       FROM ". $websoccer->getConfig('db_prefix') . "_verein AS C,
-                            ". $websoccer->getConfig('db_prefix') . "_liga AS L,
-                            ". $websoccer->getConfig('db_prefix') . "_stadion AS S
-        	       WHERE L.id=C.liga_id AND S.id=C.stadion_id AND C.highscore<=$userHighScore
-                    ORDER BY RAND() LIMIT 25";
-        //ORDER BY L.land ASC, L.division ASC, C.name LIMIT 75";
-	    $result = $db->executeQuery($sqlStr);
-	    
-	    $teams = array();
-	    
-	    while ($team = $result->fetch_array()) {
-	        $teams[$team['league_country']][] = $team;
-	    }
-	    $result->free();
-	    		
+		$teams = array();
+		
+		$result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 30);
+		while ($team = $result->fetch_array()) {
+			$teams[$team['league_country']][] = $team;
+		}
+		$result->free();
+		
 		return $teams;
 	}
 	
@@ -490,15 +457,15 @@ class TeamsDataService {
 	 * 
 	 * @param WebSoccer $websoccer application context.
 	 * @param DbConnection $db DB connection.
-	 * @param int $clubId club ID.
+	 * @param int $playerId club ID.
 	 * @return int number of players playing for specified team.
 	 */
-	public static function getTeamSize(WebSoccer $websoccer, DbConnection $db, $clubId) {
+	public static function getTeamSize(WebSoccer $websoccer, DbConnection $db, $playerId) {
 		$columns = 'COUNT(*) AS number';
 	
 		$fromTable = $websoccer->getConfig('db_prefix') .'_spieler';
 		$whereCondition = 'verein_id = %d AND status = \'1\' AND transfermarkt != \'1\' AND lending_fee = 0';
-		$parameters = $clubId;
+		$parameters = $playerId;
 	
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
 		$players = $result->fetch_array();
@@ -512,15 +479,15 @@ class TeamsDataService {
 	 * 
 	 * @param WebSoccer $websoccer Application context.
 	 * @param DbConnection $db DB connection.
-	 * @param int $clubId ID of team
+	 * @param int $playerId ID of team
 	 * @return int sum of all wages. 0 if team has no players or team ID is invalid.
 	 */
-	public static function getTotalPlayersSalariesOfTeam(WebSoccer $websoccer, DbConnection $db, $clubId) {
+	public static function getTotalPlayersSalariesOfTeam(WebSoccer $websoccer, DbConnection $db, $playerId) {
 		$columns = 'SUM(vertrag_gehalt) AS salary';
 	
 		$fromTable = $websoccer->getConfig('db_prefix') .'_spieler';
 		$whereCondition = 'verein_id = %d AND status = \'1\'';
-		$parameters = $clubId;
+		$parameters = $playerId;
 	
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
 		$players = $result->fetch_array();
@@ -535,11 +502,11 @@ class TeamsDataService {
 	 * 
 	 * @param WebSoccer $websoccer Application context.
 	 * @param DbConnection $db DB Connection.
-	 * @param int $clubId team id.
+	 * @param int $playerId team id.
 	 * @return int ID of team captain. 0 if no captain available.
 	 */
-	public static function getTeamCaptainIdOfTeam(WebSoccer $websoccer, DbConnection $db, $clubId) {
-		$result = $db->querySelect('captain_id', $websoccer->getConfig('db_prefix') .'_verein', 'id = %d', $clubId);
+	public static function getTeamCaptainIdOfTeam(WebSoccer $websoccer, DbConnection $db, $playerId) {
+		$result = $db->querySelect('captain_id', $websoccer->getConfig('db_prefix') .'_verein', 'id = %d', $playerId);
 		$team = $result->fetch_array();
 		$result->free();
 		
@@ -552,20 +519,20 @@ class TeamsDataService {
 	 * @param WebSoccer $websoccer Application context.
 	 * @param DbConnection $db DB Connection.
 	 * @param I18n $i18n I18n.
-	 * @param int $clubId team id.
+	 * @param int $playerId team id.
 	 * @param int $salary Salary which the user whishes to offer.
 	 * @throws Exception if budget is not enough. Exception contains translated message.
 	 */
-	public static function validateWhetherTeamHasEnoughBudgetForSalaryBid(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $clubId, $salary) {
+	public static function validateWhetherTeamHasEnoughBudgetForSalaryBid(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $playerId, $salary) {
 		
 		// get salary sum of all players
-		$result = $db->querySelect('SUM(vertrag_gehalt) AS salary_sum', $websoccer->getConfig('db_prefix') .'_spieler', 'verein_id = %d', $clubId);
+		$result = $db->querySelect('SUM(vertrag_gehalt) AS salary_sum', $websoccer->getConfig('db_prefix') .'_spieler', 'verein_id = %d', $playerId);
 		$players = $result->fetch_array();
 		$result->free();
 		
 		// check if team can afford at least X matches
 		$minBudget = ($players['salary_sum'] + $salary) * 2;
-		$team = self::getTeamSummaryById($websoccer, $db, $clubId);
+		$team = self::getTeamSummaryById($websoccer, $db, $playerId);
 		if ($team['team_budget'] < $minBudget) {
 			throw new Exception($i18n->getMessage("extend-contract_cannot_afford_offer"));
 		}
@@ -657,318 +624,232 @@ class TeamsDataService {
 	    return $team;
 	}
 	
-	public static function getWealthiestTeams(WebSoccer $websoccer, DbConnection $db, $limit) {
+	/**
+	 * Provides Team marketvalue.
+	 *
+	 * @param WebSoccer $websoccer Application Context
+	 * @param DbConnection $db DB connection
+	 * @param int $teamId ID of requested team
+	 * @return integer team_marketvalue
+	 */
+	public static function getTeamValue(WebSoccer $websoccer, DbConnection $db, $teamId) {
 	    
-	    $wealthiestTeams = array();
-	    
-	    //GET wealthiest teams
-	    $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_verein
-					ORDER BY finanz_budget DESC
-					LIMIT $limit";
+	    $sqlStr = "SELECT SUM(marktwert) AS team_marketvalue
+                    FROM ". $websoccer->getConfig("db_prefix") ."_spieler
+                    WHERE id='".$teamId."'";
 	    $result = $db->executeQuery($sqlStr);
-	    while ($team = $result->fetch_array()) {
-	        
-	        $leagueData = LeagueDataService::getLeagueById($websoccer, $db, $team['liga_id']);
-	        $team['league_data'] = $leagueData;
-	        
-	        if($team['user_id']>0) {
-	            $userData = UsersDataService::getUserById($websoccer, $db, $team['user_id']);
-	            $team['nick_id'] = $userData['id'];
-	            $team['nick'] = $userData['nick'];
-	        } else {
-	            $team['nick'] = '';
-	        }
-	        $wealthiestTeams[] = $team;
+	    $team_marketvalue = $result->fetch_array();
+	    
+	    if(!isset($team_marketvalue)) {
+	        $team_marketvalue = null;
 	    }
 	    
-	    return $wealthiestTeams;
-	    
-	}
-	
-	public static function getTeamsByMaxPlayerNumber(WebSoccer $websoccer, DbConnection $db, $limit) {
-	    
-	    $verein = array();
-	    $club = array();
-	    
-	    $Str = "SELECT COUNT(s.id) AS anzahl, v.id AS verein_id
-					FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS s, ". $websoccer->getConfig("db_prefix") ."_verein AS v
-					WHERE s.verein_id=v.id
-					GROUP BY s.verein_id
-					HAVING COUNT(s.id)<'$limit'
-					ORDER BY anzahl ASC
-					LIMIT 1";
-	    $result = $db->executeQuery($Str);
-	    //$cnt_rows = $result->num_rows;
-	    while ($vereine = $result->fetch_array())
-	    {
-	        $club[] = $vereine;
-	    }
-	    $result->free();
-	    
-	    return $club;
-	}
-	
-	public static function updateTeamTransfermarket(WebSoccer $websoccer, DbConnection $db) {
-	    
-	    
-	    $Str = "SELECT COUNT(s.id) AS countSp, v.id
-				FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS s, ". $websoccer->getConfig("db_prefix") ."_verein AS v
-				WHERE s.verein_id=v.id
-				AND s.transfermarkt=1
-				ORDER BY v.id";
-	    $result = $db->executeQuery($Str);
-	    //$cnt_rows = $result->num_rows;
-	    while ($verein = $result->fetch_array())
-	    {
-	        $updSql = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET transfermarkt='".$verein['countSp']."' WHERE id='".$verein['id']."'";
-	        $db->executeQuery($sqlStr);
-	        $club[] = $verein;
-	    }
-	    $result->free();
-	    
-	    return $club;
-	    
-	    
-	}
-	
-	public static function getBankClub(WebSoccer $websoccer, DbConnection $db) {
-	    
-	    $Str = "SELECT id FROM ". $websoccer->getConfig("db_prefix") ."_verein
-				WHERE name = 'Bank'
-				LIMIT 1";
-	    $result = $db->executeQuery($Str);
-	    //$cnt_rows = $result->num_rows;
-	    $club = $result->fetch_array();
-	    $result->free();
-	    
-	    return $club;
-	    
-	}
-	
-	//get achievement point to put club onto stock market
-	public static function getClubAchievementPoints(WebSoccer $websoccer, DbConnection $db, $clubId) {
-	    
-	    //GET FINALS
-	    $Str = "SELECT COUNT(*) AS finals
-				FROM ". $websoccer->getConfig("db_prefix") ."_achievement AS a
-				LEFT JOIN ". $websoccer->getConfig("db_prefix") ."_cup_round AS cr
-					ON a.cup_round_id = cr.id
-				WHERE a.team_id='".$clubId."' AND cr.name='Finale'";
-	    $result = $db->executeQuery($Str);
-	    $finals = $result->fetch_array();
-	    $result->free();
-	    
-	    //GET CHAMPIONSHIPS
-	    $Str = "SELECT COUNT(*) AS champions
-				FROM ". $websoccer->getConfig("db_prefix") ."_achievement
-					WHERE rank='1' AND team_id='".$clubId."'";
-	    $result = $db->executeQuery($Str);
-	    $champions = $result->fetch_array();
-	    $result->free();
-	    
-	    $achievements['achievements'] = $finals['finals']+$champions['champions'];
-	    
-	    return $achievements;
-	    
-	}
-	
-	//GET TOTAL TEAM VALUE
-	public static function getTeamValueByTeamId(WebSoccer $websoccer, DbConnection $db, $clubId) {
-	    
-	    //GET FINALS
-	    /*
-	     $weightStrength = $this->_websoccer->getConfig('sim_weight_strength');
-	     $weightTech = $this->_websoccer->getConfig('sim_weight_strengthTech');
-	     $weightStamina = $this->_websoccer->getConfig('sim_weight_strengthStamina');
-	     $weightFreshness = $this->_websoccer->getConfig('sim_weight_strengthFreshness');
-	     $weightSatisfaction = $this->_websoccer->getConfig('sim_weight_strengthSatisfaction');
-	     */
-	    
-	    $Str = "SELECT COUNT(id) AS spieler, SUM(w_staerke) AS strength,
-						SUM(w_technik) AS technik,
-						SUM(w_kondition) AS kondition,
-						SUM(w_frische) AS frische,
-						SUM(w_zufriedenheit) AS zufriedenheit
-				FROM ". $websoccer->getConfig("db_prefix") ."_spieler
-				WHERE verein_id='".$clubId."'";
-	    $result = $db->executeQuery($Str);
-	    $teamfacts = $result->fetch_array();
-	    $result->free();
-	    
-	    $weightStrength = $websoccer->getConfig('sim_weight_strength');
-	    $weightTech = $websoccer->getConfig('sim_weight_strengthTech');
-	    $weightStamina = $websoccer->getConfig('sim_weight_strengthStamina');
-	    $weightFreshness = $websoccer->getConfig('sim_weight_strengthFreshness');
-	    $weightSatisfaction = $websoccer->getConfig('sim_weight_strengthSatisfaction');
-	    
-	    $totalStrength = $weightStrength * $teamfacts['strength'];
-	    $totalStrength += $weightTech * $teamfacts['technik'];
-	    $totalStrength += $weightStamina * $teamfacts['kondition'];
-	    $totalStrength += $weightFreshness * $teamfacts['frische'];
-	    $totalStrength += $weightSatisfaction * $teamfacts['zufriedenheit'];
-	    
-	    $totalStrength /= $weightStrength + $weightTech + $weightStamina + $weightFreshness + $weightSatisfaction;
-	    $totalMarketvalue = $totalStrength * $websoccer->getConfig('transfermarket_value_per_strength');
-	    
-	    return round($totalMarketvalue,0);
-	}
-	
-	
-	//get average highscore
-	public static function getTeamHighscore() {
-	    
-	    $sqlStr = "SELECT SUM(highscore) AS highscore, COUNT(id) AS teams FROM ". $websoccer->getConfig("db_prefix") ."_verein WHERE STATUS = '1'";
-	    $result = $db->executeQuery($sqlStr);
-	    $highscore = $result->fetch_array();
-	    $result->free();
-	    
-	    $teamHighscore['teams'] = $highscore['teams'];
-	    $teamHighscore['highscore'] = $highscore['highscore'];
-	    $teamHighscore['avg_highscore'] = $highScore['highscore']/$highscore['teams'];
-	    
-	    return $teamHighscore;
+	    return $team_marketvalue;
 	}
 	
 	/**
+	 * Provides Team titles won.
 	 *
+	 * @param WebSoccer $websoccer Application Context
+	 * @param DbConnection $db DB connection
+	 * @param int $teamId ID of requested team
+	 * @return array titles won
+	 */
+	public static function getNumberTeamTitlesWon(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	   
+	    $sqlStr = "SELECT COUNT(*) AS titles FROM ". $websoccer->getConfig("db_prefix") ."_titles_won
+                            WHERE team_id='".$teamId."'";
+	    $return = $db->executeQuery($sqlStr);
+	    $titles = $return->fetch_array();
+	    $titles = $titles['titles'];
+	    
+	    return $titles;
+	   
+	}
+	
+	/**
+	 * Provides boolean if Club has a User.
+	 *
+	 * @param WebSoccer $websoccer Application Context
+	 * @param DbConnection $db DB connection
+	 * @param int $userId ID of requested team
+	 * @return boolean for userId
+	 */
+	public static function clubHasUser(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	    
+	    $hasUser = 0;
+	    
+	    $sqlStr = "SELECT user_id AS userid FROM ". $websoccer->getConfig("db_prefix") ."_verein
+                            WHERE id='".$teamId."'";
+	    $return = $db->executeQuery($sqlStr);
+	    $result = $return->fetch_array();
+	    $user = $result['userid'];
+	    
+	    if($user>0) {
+	        $hasUser = 1;
+	    }
+	    
+	    return $hasUser;
+	}
+	
+	/**
+	 * Number of teams by country.
+	 *
+	 * @param WebSoccer $websoccer Application Context
+	 * @param DbConnection $db DB connection
+	 * @return interger Value for number of teams for country
+	 */	
+	public static function getNumberOfTeamsByCountry(WebSoccer $websoccer, DbConnection $db) {
+		
+		$teams = null;
+		$i = 0;
+		
+		$sqlStr = "SELECT L.name, COUNT(C.id) AS teams
+					FROM ". $websoccer->getConfig("db_prefix") ."_verein AS C, ". $websoccer->getConfig("db_prefix") ."_land AS L,
+								". $websoccer->getConfig("db_prefix") ."_liga AS LG
+					WHERE C.liga_id=LG.id AND LG.land=L.name
+					GROUP BY LG.land";
+	    $result = $db->executeQuery($sqlStr);
+		while ($country = $result->fetch_array()) {
+			$teams[$i] = $country;
+			$i++;
+		}
+		
+		return $teams;
+		
+	}
+	
+		/**
+	 * 
 	 * @param WebSoccer $websoccer Application Context
 	 * @param DbConnection $db DB connection
 	 * @return array array of teams which do not have a manager or only an interims manager assigned.
 	 */
-	public static function getTeamsWithoutUserByhighscore(WebSoccer $websoccer, DbConnection $db, $highScore) {
-	    $fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C';
-	    $fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON C.liga_id = L.id';
-	    $fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON C.stadion_id = S.id';
+	public static function getFreeClubs(WebSoccer $websoccer, DbConnection $db, $x, $y) {
+		
+		if($x<0) {
+			$x = 0;
+		}
+		
+		$teams = array();
+		// (AVG(P.w_staerke)/100) AS avgstrength', 
+		$sqlStr = "SELECT C.id AS team_id, 
+						C.name AS team_name, 
+						C.finanz_budget AS team_budget, 
+						C.bild AS team_picture, 
+						C.strength AS team_strength,
+						C.highscore AS team_highscore,
+						L.id AS league_id, 
+						L.name AS league_name, 
+						L.land AS league_country, 
+						S.p_steh AS stadium_p_steh, 
+						S.p_sitz AS stadium_p_sitz, 
+						S.p_haupt_steh AS stadium_p_haupt_steh, 
+						S.p_haupt_sitz AS stadium_p_haupt_sitz, 
+						S.p_vip AS stadium_p_vip
+					FROM ". $websoccer->getConfig("db_prefix") ."_verein AS C
+						INNER JOIN ". $websoccer->getConfig("db_prefix") ."_liga AS L ON C.liga_id = L.id
+						INNER JOIN ". $websoccer->getConfig("db_prefix") ."_stadion AS S ON C.stadion_id = S.id
+					WHERE (C.highscore BETWEEN $x AND $y)
+							AND nationalteam != '1' 
+							AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = '1') 
+							AND C.status = 1
+					ORDER BY RAND() LIMIT 20";
+		$result = $db->executeQuery($sqlStr);
+		while($team = $result->fetch_array()) {
+			
+			$teams[$team['league_country']][] = $team;
+		}
+		$result->free();
+		
+		$count = count($teams);
+		if(!isset($teams) || $count<5) {
+			$p = $x-20;
+			$q = $y+25;
+			
+			if($p<0) {
+				$p = 0;
+			}
+			
+			$teams = self::getFreeClubs($websoccer, $db, $p, $q);
+			return $teams;
+			
+		} else {	
+		
+			return $teams;
+		}
+	}
+	
+	
+	public static function updateTeamStrength(WebSoccer $websoccer, DbConnection $db, $teamId) {
 	    
-	    $whereCondition = 'nationalteam != \'1\' AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = \'1\') AND C.status = 1';
+	    $playerStr = "SELECT ((AVG(w_staerke)+AVG(w_technik)+AVG(w_frische)+AVG(w_kondition)+AVG(w_zufriedenheit))/5)*(AVG(w_talent)/5) AS avg_strength
+                        FROM ". $websoccer->getConfig("db_prefix") ."_spieler WHERE verein_id='".$teamId."'";
+	    $result = $db->executeQuery($playerStr);
+	    $team = $result->fetch_array();
+	    $result->free();
 	    
-	    $columns['C.id'] = 'team_id';
-	    $columns['C.name'] = 'team_name';
-	    $columns['C.finanz_budget'] = 'team_budget';
-	    $columns['C.bild'] = 'team_picture';
-	    $columns['C.strength'] = 'team_strength';
-	    $columns['C.highscore'] = 'team_highscore';
-	    $columns['L.id'] = 'league_id';
-	    $columns['L.division'] = 'league_division';
-	    $columns['L.name'] = 'league_name';
-	    $columns['L.land'] = 'league_country';
-	    $columns['S.p_steh'] = 'stadium_p_steh';
-	    $columns['S.p_sitz'] = 'stadium_p_sitz';
-	    $columns['S.p_haupt_steh'] = 'stadium_p_haupt_steh';
-	    $columns['S.p_haupt_sitz'] = 'stadium_p_haupt_sitz';
-	    $columns['S.p_vip'] = 'stadium_p_vip';
+	    $teamStrength = $team['avg_strength'];
 	    
-	    // order by
-	    $whereCondition .= ' AND team_highscore<=\'$highScore\' ORDER BY league_country ASC, league_division ASC, league_name ASC, team_name ASC';
+	    $updStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET strength='".$teamStrength."' WHERE id='".$teamId."'";
+	    $db->executeQuery($updStr);
+	    
+	}
+	
+	/**
+	 * Provides most valuable teams
+	 *
+	 * @param string $playerId
+	 * @return boolean.
+	 */
+	public static function mostValuableTeams(WebSoccer $websoccer, DbConnection $db) {
 	    
 	    $teams = array();
 	    
-	    $result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 3000);
-	    while ($team = $result->fetch_array()) {
-	        $teams[$team['league_country']][] = $team;
+	    $sqlStr = "SELECT C.id AS club_id, C.name AS club_name, C.bild, SUM(P.marktwert) AS marketvalue, L.land AS country
+                    FROM ". $websoccer->getConfig('db_prefix') ."_spieler AS P,
+                        ". $websoccer->getConfig('db_prefix') ."_verein AS C,
+                        ". $websoccer->getConfig('db_prefix') ."_liga AS L
+                    WHERE P.verein_id=C.id AND L.id=C.liga_id
+                    GROUP BY P.verein_id
+                    ORDER BY marketvalue DESC
+                    LIMIT 20";
+	    $result = $db->executeQuery($sqlStr);
+	    while($team = $result->fetch_array()) {
+	        $teams[] = $team;
 	    }
 	    $result->free();
 	    
 	    return $teams;
-	}
-	
-	public static function updateTeamsHighscore(WebSoccer $websoccer, DbConnection $db) {
-	    
-	    $updStr1 = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET highscore=(st_siege*3)+(st_unentschieden*1)-(st_niederlagen*1)";
-	    $db->executeQuery($updStr1);
-	    
-	    //correct if negative
-	    $updStr2 = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET highscore='0' WHERE highscore<0";
-	    $db->executeQuery($updStr2);
 	    
 	}
 	
-	public static function getTeamsAvgHighscore(WebSoccer $websoccer, DbConnection $db) {
-	    
-	    $sqlStr = "SELECT SUM(highscore) AS highscore, COUNT(id) AS teams FROM ". $websoccer->getConfig("db_prefix") ."_verein WHERE STATUS = '1'";
-	    $result = $db->executeQuery($sqlStr);
-	    $highscore = $result->fetch_array();
-	    $result->free();
-	    
-	    $teamHighscore['teams'] = $highscore['teams'];
-	    $teamHighscore['highscore'] = $highscore['highscore'];
-	    $teamHighscore['avg_highscore'] = $highScore['highscore']/$highscore['teams'];
-	    
-	    return $teamHighscore;
-	    
-	}
-	
-	public static function getTeamsByHighscore(WebSoccer $websoccer, DbConnection $db, $highscore) {
+	/**
+	 * Provides most valuable teams by leagueId
+	 *
+	 * @param int leagueId
+	 * @return boolean.
+	 */
+	public static function mostValuableTeamsByLeagueId(WebSoccer $websoccer, DbConnection $db, $leagueId) {
 	    
 	    $teams = array();
-	    $i = 0;
 	    
-	    if($highscore<0) {
-	        $highscore = '0';
-	    }
-	    
-	    $sqlStr = "SELECT C.id AS team_id, C.name AS team_name, C.finanz_budget AS team_budget, C.bild AS team_picture, C.strength AS team_strength, C.highscore AS team_highscore,
-                    L.id AS league_id, L.division AS league_division, L.name AS league_name, L.land AS league_country,
-                    S.p_steh AS stadium_p_steh, S.p_sitz AS stadium_p_sitz, S.p_haupt_steh AS stadium_p_haupt_steh, S.p_haupt_sitz AS stadium_p_haupt_sitz, S.p_vip AS stadium_p_vip
-                    FROM ". $websoccer->getConfig("db_prefix") ."_verein AS C, ". $websoccer->getConfig("db_prefix") ."_liga AS L, ". $websoccer->getConfig("db_prefix") ."_stadion AS S
-                    WHERE C.liga_id = L.id AND C.stadion_id=S.id
-                        AND C.highscore<='$highscore'
-                        AND nationalteam!='1'
-                        AND (C.user_id <= 0 OR C.user_id IS NULL OR C.interimmanager = '1')
-                        AND C.status = '1'
-                    ORDER BY league_country ASC, league_division ASC, league_name ASC, team_name ASC LIMIT 1000";
-	    //echo $sqlStr ."<br>";
+	    $sqlStr = "SELECT C.id AS club_id, C.name AS club_name, C.bild, SUM(P.marktwert) AS marketvalue, SUM(P.marktwert)/COUNT(P.id) AS avg_marketvalue, L.land AS country
+                    FROM ". $websoccer->getConfig('db_prefix') ."_spieler AS P,
+                        ". $websoccer->getConfig('db_prefix') ."_verein AS C,
+                        ". $websoccer->getConfig('db_prefix') ."_liga AS L
+                    WHERE P.verein_id=C.id AND L.id=C.liga_id AND C.liga_id='$leagueId'
+                    GROUP BY P.verein_id
+                    ORDER BY marketvalue DESC
+                    LIMIT 30";
 	    $result = $db->executeQuery($sqlStr);
-	    while ($team = $result->fetch_array()) {
-	        $teams[$team['league_country']][] = $team;
+	    while($team = $result->fetch_array()) {
+	        $teams[] = $team;
 	    }
 	    $result->free();
 	    
-	    if(count($teams)<1) {
-	        self::getTeamsByHighscore($websoccer, $db, $highscore=$highscore+1);
-	        $i++;
-	    } else {
-	        return $teams;
-	    }
-	}
-	
-	public static function getAvgTeamSkills(WebSoccer $websoccer, DbConnection $db, $verein_id) {
-	    
-	    $sqlStr = "SELECT ROUND(AVG(w_staerke),0) AS avg_strength, ROUND(AVG(w_technik),0) AS avg_technik,
-                          ROUND(AVG(w_kondition),0) AS avg_stamina, ROUND(AVG(w_frische),0) AS avg_freshness,
-                          ROUND(AVG(w_zufriedenheit),0) AS avg_satisfaction
-                       FROM ". $websoccer->getConfig("db_prefix") ."_spieler
-            	       WHERE verein_id='".$verein_id."'
-            	       AND status='1'";
-	    $result = $db->executeQuery($sqlStr);
-	    $value = $result->fetch_array();
-	    $result->free();
-	    
-	    return $value;
-	}
-	
-	/*
-	 * Return all titles won specified by TeamId
-	 * @param WebSoccer $websoccer Application Context
-	 * @param DbConnection $db DB connection
-	 * @return array of titles won by team
-	 */
-	public static function getNumberTeamTitlesWon(WebSoccer $websoccer, DbConnection $db, $teamId) {
-	    
-	    $titles = array();
-	    
-	    $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_titles_won WHERE team_id='".$teamId."'
-                    ORDER BY saison_name DESC";
-	    //echo $sqlStr ."<br>";
-	    $result = $db->executeQuery($sqlStr);
-	    while ($title = $result->fetch_array()) {
-	        $titles[] = $title;
-	    }
-	    $result->free();
-	    
-	    return $titles;
+	    return $teams;
 	    
 	}
-	
 }
 ?>

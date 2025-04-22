@@ -21,7 +21,7 @@
 ******************************************************/
 
 /**
- * Provides bst players of the world
+ * Provides Player in team_id watchlist
  */
 class MyWatchlistModel implements IModel {
 	private $_db;
@@ -50,7 +50,9 @@ class MyWatchlistModel implements IModel {
 	    
 	    $teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 	    
-	    return array("watchlist" => WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId));
+	    $watchlist = WatchlistDataService::getMyWatchlist($this->_websoccer, $this->_db, $teamId);
+	    
+	    return array("watchlist" => $watchlist);
 	}
 	
 }

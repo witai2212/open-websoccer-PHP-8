@@ -7,6 +7,9 @@
     </dependencies>
     
     <admin>
+        <adminpage id="computertransfers" permissionrole="r_spiele" navcategory="transfers" filename="computertransfers"/>
+    
+    
         <adminpage
             id="transfers"
             entity="transfers"

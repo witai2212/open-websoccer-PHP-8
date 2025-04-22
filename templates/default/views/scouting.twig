@@ -1,0 +1,88 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("scouting_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if team_scouts|length == 0 %}
+{{ i18n.getMessage("no_scouts") }}
+{% else %}
+
+	<h4>{{ i18n.getMessage("scouting_team_scouts") }}</h4>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("scouting_name") }}</th>
+				<th>{{ i18n.getMessage("scouting_expertise") }}</th>
+				<th>{{ i18n.getMessage("scouting_speciality") }}</th>
+				<th>{{ i18n.getMessage("scouting_team_matches") }}</th>
+				<th>{{ i18n.getMessage("scouting_fee") }}</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for scout in team_scouts %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>				
+				<td>{{ scout.name }}</td>
+				<td>{{ scout.expertise }}%</td>
+				<td>{{ scout.speciality }}</td>
+				<td>{{ scout.team_matches }}</td>
+				<td>{{ scout.fee|number_format(0, ',', ' ') }} </td>
+				<td><a class="btn btn-mini" href="?page=scouting&id={{ scout.id }}&action=fire-scout"><i class="icon-thumbs-down"></i>&nbsp;</i> {{ i18n.getMessage("fire-scout") }}</a></td>
+			</tr>
+		
+		{% endfor %}
+		</tbody>
+		</table>
+
+{% endif %}
+
+<hr>
+<p><i class="icon-info-sign"></i> {{ i18n.getMessage("info") }}</p>
+<br>
+{% if free_scouts|length == 0 %}
+{{ i18n.getMessage("no_scouts") }}
+{% elseif free_scouts|length > 0 and can_hire > 0%}
+
+	<h4>{{ i18n.getMessage("scouting_free_scouts") }}</h4>
+	
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("scouting_name") }}</th>
+				<th>{{ i18n.getMessage("scouting_expertise") }}</th>
+				<th>{{ i18n.getMessage("scouting_speciality") }}</th>
+				<th>{{ i18n.getMessage("scouting_team_matches") }}</th>
+				<th>{{ i18n.getMessage("scouting_fee") }}</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for free in free_scouts %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>				
+				<td>{{ free.name }}</td>
+				<td>{{ free.expertise }}%</td>
+				<td>{{ free.speciality }}</td>
+				<td>{{ free.team_matches }}</td>
+				<td>{{ free.fee|number_format(0, ',', ' ') }} </td>
+				<td><a class="btn btn-mini" href="?page=scouting&id={{ free.id }}&action=hire-scout"><i class="icon-thumbs-up"></i>&nbsp;</i> {{ i18n.getMessage("hire-scout") }}</a></td>
+			</tr>
+		
+		{% endfor %}
+		</tbody>
+		</table>
+		
+		
+	
+{% endif %}
+{% endblock %}

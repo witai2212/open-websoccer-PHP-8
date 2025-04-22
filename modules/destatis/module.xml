@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <pages>
+        <page
+            id="stats"
+            template="destatis"
+            navitem="true"
+            model="BestPlayersModel"
+            navweight="11"
+            role="user">
+	        <page
+	            id="bestplayers"
+	            template="bestplayers"
+	            navitem="true"
+	            model="BestPlayersModel"
+	            navweight="0"
+	            role="user"/>
+	        <page
+	            id="bestgoalscorers"
+	            template="bestgoalscorers"
+	            navitem="true"
+	            model="BestGoalscorersModel"
+	            navweight="0"
+	            role="user"/>
+	        <page
+	            id="avg_gates"
+	            template="avg_gates"
+	            navitem="true"
+	            model="AvgGatesModel"
+	            navweight="0"
+	            role="user"/>
+	        <page
+	            id="avg_ratings"
+	            template="avg_ratings"
+	            navitem="true"
+	            model="AvgRatingsModel"
+	            navweight="0"
+	            role="user"/>
+	        <page
+	            id="worst_discipline"
+	            template="worst_discipline"
+	            navitem="true"
+	            model="WorstDisciplineModel"
+	            navweight="0"
+	            role="user"/>
+	        <page
+	            id="richest_clubs"
+	            template="richest_clubs"
+	            navitem="true"
+	            model="RichestClubsModel"
+	            navweight="0"
+	            role="user"/>
+	        <page
+	            id="statistics_salary"
+	            template="statistics-salary"
+	            navitem="true"
+	            model="StatisticsSalaryModel"
+	            navweight="0"
+	            role="user"/>
+        	<page
+	            id="halloffame"
+	            template="halloffame"
+	            navitem="true"
+	            model="HallOfFameModel"
+	            navweight="0"
+	            role="user"/>
+        	<page
+	            id="largest_stadiums"
+	            template="largest_stadiums"
+	            navitem="true"
+	            model="LargestStadiumsModel"
+	            navweight="0"
+	            role="user"/>
+        	<page
+	            id="sales_stats"
+	            template="sales_stats"
+	            navitem="false"
+	            model="SalesStatsModel"
+	            navweight="0"
+	            role="user"/>
+        	<page
+	            id="most_valuable_teams"
+	            template="most_valuable_teams"
+	            navitem="true"
+	            model="MostValuableTeamsModel"
+	            navweight="3"
+	            role="user"/>
+
+        </page>
+        
+    </pages>
+	
+	<blocks>
+		
+        <block
+            id="club_gates"
+            template="gates_clubs"
+            model="AvgGatesModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
+        <block
+            id="league_gates"
+            template="gates_leagues"
+            model="AvgGatesModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
+        <block
+            id="most_valuable_teams_league"
+            template="most_valuable_teams_league"
+            model="MostValuableTeamsModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+	
+	</blocks>
+     
+</module>

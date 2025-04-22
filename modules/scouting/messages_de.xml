@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+    <message id="scouting_navlabel">Scouting</message>
+    <message id="scouting_title">Scouting</message>
+    <message id="no_scouts">Zur Zeit keine Scouts verfügbar.</message>
+    
+    <message id="scouting_abteilung">Scouting Abt.</message>
+    
+    <message id="scouting_nation">Land</message>
+	<message id="scouting_name">Name</message>
+	<message id="scouting_expertise">Kompetenz</message>
+	<message id="scouting_speciality">Spezilität</message>
+	<message id="scouting_team_matches">Spiele</message>
+	<message id="scouting_fee">Kosten/Spiel</message>
+	
+	<message id="no_scouts_hired">Keine Scouts eingestellt</message>
+	<message id="no_free_scouts">Keine Scouts verfügbar</message>
+	
+	<message id="fire-scout">Entlassen</message>
+	<message id="fire_scout_message">Scout wurde entlassen.</message>
+	<message id="scouting_message">Scouting</message>
+	
+	<message id="hire-scout">Einstellen</message>
+	<message id="hire_scout_message">Scout wurde eingestellt.</message>
+	
+	<message id="scouting_team_scouts">Eingestellte Scouts</message>
+	<message id="scouting_free_scouts">Verfügbare Scouts</message>
+	
+	<message id="info">Info: Es können maximal 4 Scouts eingestellt werden. Bei Entlassung wird das Gehalt mal die restlichen Spiele fällig.</message>
+	<message id="info_fire_scout">Bitte beachte, wenn du einen Scout feuerst, bekommt der Scout die übrigen Spiele ausgezahlt.</message>
+
+</messages>

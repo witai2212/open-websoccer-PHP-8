@@ -1,0 +1,75 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("stats_salary_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if salaries|length == 0 %}
+{{ i18n.getMessage("news_no_items") }}
+{% else %}
+
+<style>
+/* Heading */
+#my-chart {
+  width: 100%;
+  max-width: auto;
+  margin: 0 auto;
+}
+
+#my-chart caption {
+  background-color: hotpink;
+  color: white;
+}
+
+/* Chart */
+#my-chart tbody {
+  background-color: beige;
+  color: black;
+}
+
+/* Labels */
+#my-chart tbody th {
+  background-color: deepskyblue;
+  color: blue;
+}
+
+</style>
+<table class="charts-css column show-heading show-labels show-primary-axis  show-data-axes data-spacing-20 show-data">
+
+  <tbody>
+    <tr>
+      <th> 1 </th>
+      <td style="--size: {{ (salaries.0/max(salaries))|round(2, 'ceil') }};"> {{ salaries.0|number_format(0, ',', ' ') }} </td>
+    </tr>
+    <tr>
+      <th> 2 </th>
+      <td style="--size: {{ (salaries.1/max(salaries))|round(2, 'ceil') }};"> {{ salaries.1|number_format(0, ',', ' ') }} </td>
+    </tr>
+    <tr>
+      <th> 3 </th>
+      <td style="--size: {{ (salaries.2/max(salaries))|round(2, 'ceil') }};"> {{ salaries.2|number_format(0, ',', ' ') }} </td>
+    </tr>
+    <tr>
+      <th> 4 </th>
+      <td style="--size: {{ (salaries.3/max(salaries))|round(2, 'ceil') }};"> {{ salaries.3|number_format(0, ',', ' ') }} </td>
+    </tr>
+    <tr>
+      <th> 5 </th>
+      <td style="--size: {{ (salaries.4/max(salaries))|round(2, 'ceil') }};"> {{ salaries.4|number_format(0, ',', ' ') }} </td>
+    </tr>
+    <tr>
+      <th> 6 </th>
+      <td style="--size: {{ (salaries.5/max(salaries))|round(2, 'ceil') }};"> {{ salaries.5|number_format(0, ',', ' ') }} </td>
+    </tr>
+    <tr>
+      <th> 7 </th>
+      <td style="--size: {{ (salaries.6/max(salaries))|round(2, 'ceil') }};"> {{ salaries.6|number_format(0, ',', ' ') }} </td>
+    </tr>
+  </tbody>
+</table>
+
+{% endif %}
+{% endblock %}

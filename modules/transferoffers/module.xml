@@ -117,6 +117,8 @@
 	    <setting id="transferoffers_transfer_stop_days" category="transfermarket" type="number" default="30" />
 	    <setting id="transferoffers_adminapproval_required" category="transfermarket" type="boolean" default="0" />
 	    <setting id="transferoffers_contract_matches" category="transfermarket" type="number" default="20" />
+	    <setting id="transferoffers_max_offer_deviation" category="transfermarket" type="number" default="25" />
+	    <setting id="transferoffers_deviation_penalty" category="transfermarket" type="boolean" default="1" />
 	</settings>
 	
     <pages>
@@ -125,7 +127,25 @@
             template="transferoffers"
             model="TransferOffersModel"
             role="user"
+            navitem="false"
+            navweight="2"
+            parentItem="transfermarket" 
+            navitemOnlyForConfigEnabled="transferoffers_enabled" />
+        <page
+            id="myoffers"
+            template="myoffers"
+            model="MyOffersModel"
+            role="user"
             navitem="true"
+            navweight="2"
+            parentItem="transfermarket" 
+            navitemOnlyForConfigEnabled="transferoffers_enabled" />
+        <page
+            id="mybids"
+            template="mybids"
+            model="MyBidsModel"
+            role="user"
+            navitem="false"
             navweight="2"
             parentItem="transfermarket" 
             navitemOnlyForConfigEnabled="transferoffers_enabled" />
@@ -158,6 +178,22 @@
             area="custom"
             role="user" />
         
+        <block
+            id="mybids"
+            template="mybids"
+            model="MyOffersModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
+        <block
+            id="myplayersontl"
+            template="myplayersontl"
+            model="MyOffersModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+        
     </blocks>
     
 	<actions>
@@ -182,6 +218,25 @@
 			<param id="comment" type="text" max="255" />
 			<param id="allow_alternative" type="boolean" />
 		</action>
+		
+		<action id="reject_offer" controller="TransferRejectController" role="user">
+			<param id="id" type="number" required="true" />
+		</action>
+		
+		
+		<action id="accept_offer" controller="TransferAcceptController" role="user">
+			<param id="id" type="number" required="true" />
+			<param id="allow_alternative" type="boolean" />
+		</action>
+
+		<action id="withdraw-bid" controller="WithdrawBidController" role="user">
+			<param id="id" type="number" required="true" />
+			<param id="allow_alternative" type="boolean" />
+		</action>
+		
+		<action id="remove-player-from-transfermarket" controller="RemovePlayerFromTransfermarketController" role="user">
+		<param id="id" type="number" required="true" />
+	</action>
 		
 	</actions>
   

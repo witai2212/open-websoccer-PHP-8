@@ -53,8 +53,9 @@ class SellStockModel implements IModel {
         $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
         $teamId = $team['team_id'];
         
-        $userMax = StockMarketDataService::getUserPortfolioByIndex($this->_websoccer, $this->_db, $stockId, $teamId);
-        $userMax = $userMax['qty'];
+        //$userMax = StockMarketDataService::getUserPortfolioByIndex($this->_websoccer, $this->_db, $stockId, $teamId);
+        $userMax = StockMarketDataService::getUserQuantityFromUserTeam($this->_websoccer, $this->_db, $stockId, $teamId);
+        //$userMax = $userMax['qty'];
         
         $index = StockMarketDataService::getStockMarketDataById($this->_websoccer, $this->_db, $stockId);
         

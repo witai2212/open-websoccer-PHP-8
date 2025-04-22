@@ -75,4 +75,6 @@
 	<message id="transferoffer_notification_offerreceived"><strong>{sendername}</strong> sent you a player transfer offer.</message>
 	<message id="transferoffer_notification_executed">The agreed transfer of <strong>{playername}</strong> has been executed.</message>
 	<message id="transferoffer_notification_rejected"><strong>{receivername}</strong> rejected your transfer offer for <strong>{playername}</strong>.</message>
+	
+	<message id="player_bought_message">Player has been bought</message>
 </messages>

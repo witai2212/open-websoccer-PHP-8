@@ -238,5 +238,21 @@ class YouthMatchesDataService {
 		return $items;
 	}
 	
+	/**
+	 * get boolean for open youth matches
+	 */
+	public static function getOpenYouthMatches(WebSoccer $websoccer, DbConnection $db) {
+	    
+	    $now = $websoccer->getNowAsTimestamp();
+	    
+	    $sqlStr = "SELECT COUNT(*) as hits FROM ". $websoccer->getConfig("db_prefix") . "_youthmatch WHERE simulated='0' AND matchdate<=$now";
+	    
+	    $result = $db->executeQuery($sqlStr);
+	    $match = $result->fetch_array();
+	    $result->free();
+	    
+	    return $match['hits'];
+	    
+	}
 }
 ?>

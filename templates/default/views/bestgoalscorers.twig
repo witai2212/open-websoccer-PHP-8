@@ -29,7 +29,7 @@
 			<tr>
 				<td><strong>{{ loop.index }}</strong></td>
 				
-				{% set nationImg = skin.getImage("flags/players/" ~ player.nation ~ ".png") %}
+				{% set nationImg = skin.getImage("flags/" ~ player.nation ~ ".png") %}
 			  	{% if i18n.hasMessage("option_" ~ player.nation) %}
 					{% set countryLabel = i18n.getMessage("option_" ~ player.nation) %}
 				{% else %}
@@ -43,7 +43,8 @@
 				{% endif %}
 				
 				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />
-					{% endif %}&nbsp;{{ player.vorname }}&nbsp{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</td>
+					{% endif %}&nbsp;<a href="?page=player&id={{ player.id }}">{{ player.vorname }}&nbsp{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</a>
+					</td>
 				<td><a href="?page=team&id={{ player.verein.team_id }}">{{ player.verein.team_name }}</a></td>
 				<td>{{ player.sa_tore }}</td>
 				<td>{{ player.sa_assists }}</td>

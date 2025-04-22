@@ -40,6 +40,8 @@ class AcceptStadiumConstructionWorkController implements IActionController {
 	 * @see IActionController::executeAction()
 	 */
 	public function executeAction($parameters) {
+	    
+	    echo"stad<br>";
 		
 		$user = $this->_websoccer->getUser();
 		$clubId = $user->getClubId($this->_websoccer, $this->_db);

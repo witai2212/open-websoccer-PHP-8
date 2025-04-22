@@ -72,7 +72,7 @@ class RemovePlayerFromTransfermarketController implements IActionController {
 				$this->_i18n->getMessage("transfermarket_remove_success"),
 				""));
 		
-		return "myteam";
+		return "myoffers";
 	}
 	
 }

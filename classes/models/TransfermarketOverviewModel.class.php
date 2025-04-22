@@ -45,8 +45,11 @@ class TransfermarketOverviewModel implements IModel {
 			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
 		}
 		
-		$positionInput = $this->_websoccer->getRequestParameter("position");
 		$positionFilter = null;
+		$positionInput = $this->_websoccer->getRequestParameter("position");
+		$positionFilter = $positionInput;
+		
+		/*
 		if ($positionInput == "goaly") {
 			$positionFilter = "Torwart";
 		} else if ($positionInput == "defense") {
@@ -55,13 +58,17 @@ class TransfermarketOverviewModel implements IModel {
 			$positionFilter = "Mittelfeld";
 		} else if ($positionInput == "striker") {
 			$positionFilter = "Sturm";
-		}
+		}*/
+		
 		
 		$count = PlayersDataService::countPlayersOnTransferList($this->_websoccer, $this->_db, $positionFilter);
+		$countOffers = PlayersDataService::countPlayerOffers($this->_websoccer, $this->_db);
+		
 		$eps = $this->_websoccer->getConfig("entries_per_page");
 		$paginator = new Paginator($count, $eps, $this->_websoccer);
+		
 		if ($positionFilter != null) {
-			$paginator->addParameter("position", $positionInput);
+		    $paginator->addParameter("position", $positionInput);
 		}
 		
 		if ($count > 0) {
@@ -70,7 +77,7 @@ class TransfermarketOverviewModel implements IModel {
 			$players = array();
 		}
 		
-		return array("transferplayers" => $players, "playerscount" => $count, "paginator" => $paginator);
+		return array("transferplayers" => $players, "playerscount" => $count, "playeroffers" => $countOffers, "paginator" => $paginator);
 	}
 	
 }

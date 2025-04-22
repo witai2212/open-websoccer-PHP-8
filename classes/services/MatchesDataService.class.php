@@ -659,5 +659,19 @@ class MatchesDataService {
 				return 'friendly';
 		}
 	}
+	
+	public static function countOpenMatches(WebSoccer $websoccer, DbConnection $db) {
+	    
+	    $now = $websoccer->getNowAsTimestamp();
+	    $matchesStr = "SELECT COUNT(*) AS open_matches
+                        FROM ". $websoccer->getConfig('db_prefix') ."_spiel
+                        WHERE berechnet != '1' AND datum <= '".$now."' ORDER BY datum, id";
+	    $result = $db->executeQuery($matchesStr);
+	    $open_matches = $result->fetch_assoc();
+	    $result->free();
+	    
+	    return $open_matches['open_matches'];
+	    
+	}
 }
 ?>

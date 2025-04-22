@@ -139,7 +139,7 @@ class RandomEventsDataService {
 			
 			// notification
 			NotificationsDataService::createNotification($websoccer, $db, $userId, $subject, null, 
-				$notificationType, 'finances', null, $clubId);
+				$notificationType, 'finance', null, $clubId);
 			
 			// execute on random player
 		} else {

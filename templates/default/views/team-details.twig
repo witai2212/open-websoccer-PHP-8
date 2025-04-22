@@ -8,6 +8,7 @@
 {% block page_content %}
 
 <p style="font-size: 20px; margin-top: -15px">
+
 {% for strengthlevel in 1..5 %}
 	<i class="icon-star{% if (30 + strengthlevel * 10) > team.team_strength %}-empty{% endif %}"></i>
 {% endfor %}
@@ -54,9 +55,13 @@
   
   {% if team.team_user_id > 0 %}
 	{% set manager = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\">" ~ team.team_user_name|e ~ "</a>" %}
+	<!-- {% set friendly_request = "Request friendly match" %}-->
 
 	{% if team.user_picture|length > 0 %}
-		{% set manager = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\"><img src=\"" ~ team.user_picture ~ "\" style=\"width: 20px; height: 20px\"/></a> " ~ manager %}
+		{% if team.team_user_id != user_id %}
+			<!-- {% set invite_link = "&nbsp;<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\" class=\"btn\">" ~ i18n.getMessage("friendly_request") ~ "</a>" ~ invite_link %} -->
+		{% endif %}
+		{% set manager = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\"><img src=\"" ~ team.user_picture ~ "\" style=\"width: 20px; height: 20px\"/></a>" ~ manager %}
 	{% endif %}
 	
 	{% if team.interimmanager %}
@@ -84,9 +89,14 @@
   {{ profile.infofield(i18n.getMessage("entity_club_kurz"), team.team_short) }}
   {{ profile.infofield(i18n.getMessage("entity_club_liga_id"), league, true) }}
   {{ profile.infofield(i18n.getMessage("team_details_manager"), manager, true) }}
+  
+<!-- {{ profile.infofield(i18n.getMessage("friendly_request"), friendly_request, true) }}-->
+	
   {% if deputy is defined %}
   	{{ profile.infofield(i18n.getMessage("entity_club_user_id_actual"), deputy, true) }}
   {% endif %}
+  
+  {{ profile.infofield(i18n.getMessage("entity_club_highscore"), team.team_highscore, true) }}
   
   {% if not team.is_nationalteam %}
 	  {% if team.team_min_target_rank > 0 %}

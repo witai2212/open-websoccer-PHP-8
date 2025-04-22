@@ -7,7 +7,8 @@
     <message id="stockmarket_title">Börse</message>
     <message id="stockmarket_navlabel">Börse</message>
     <message id="indexes_head_name">Aktien</message>
-    <message id="indexes_stock_price">Kurs</message>	
+    <message id="indexes_stock_price">Kurs</message>
+	<message id="indexes_portfolio_price">Portfolio Preis</message>
     <message id="indexes_v1">V1</message>	
     <message id="indexes_v2">V2</message>	
     <message id="indexes_v3">V3</message> 	
@@ -39,9 +40,22 @@
     <message id="sender_name">Börse</message>
     <message id="buy_stock_message">Du hast Aktien gekauft.</message>
     <message id="sell_stock_message">Du hast Aktien verkauft.</message>
+    <message id="stock_action_message">Aktienhandel</message>
     <message id="can_put_club-on_stockmarket">Dein Verein erfüllt alle Kriterien um an der Börse notiert zu werden. Eine Börsennotierung würde folgenden Betrag in die Kasse spülen:</message>
     <message id="put_team_on_stockmarket">Verein an Börse notieren.</message>
     <message id="team_now_on_stockmarket">Herzlichen Glückwunsch. Dein Team ist jetzt an der Börse notiert.</message>
     <message id="team_on_stockmarket_message">Börsennotierung des Clubs</message>
+	
+	<message id="finance_overview">Finanzübersicht</message>
+	<message id="finance_account_statement">Kontoauszüge</message>
+	
+	<message id="fix_term_deposit_interest">Stand. Zinssatz/Spiel</message>
+	<message id="fix-term-deposit_navlabel">Sparbuch</message>
+	<message id="deposit_title">Sparbuch</message>
+	<message id="deposit_amount">Wert</message>
+	<message id="deposit_interest">Zinssatz</message>
+	<message id="deposit_difference">Gewinn</message>
+	<message id="deposit_total_value">Gesamtwert</message>
+	<message id="deposit_matches">verbl. Spiele</message>
     
 </messages>

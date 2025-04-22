@@ -65,13 +65,14 @@ class LeagueDataService {
 		$fromTable = $websoccer->getConfig("db_prefix") . "_liga AS L";
 	
 		// where
-		$whereCondition = "1 ORDER BY league_country ASC, league_name ASC";
+		$whereCondition = "1 ORDER BY league_country ASC, league_division ASC, league_name ASC";
 	
 		// select
 		$columns["L.id"] = "league_id";
 		$columns["L.name"] = "league_name";
 		$columns["L.kurz"] = "league_short";
 		$columns["L.land"] = "league_country";
+		$columns["L.division"] = "league_division";
 	
 		return $db->queryCachedSelect($columns, $fromTable, $whereCondition);
 	}
@@ -94,6 +95,28 @@ class LeagueDataService {
 		}
 	
 		return 0;
+	}
+	
+	/**
+	 * Provides leagues in a by country sorted order.
+	 * Query is cached.
+	 * 
+	 * @param WebSoccer $websoccer Application context.
+	 * @param DbConnection $db DB connection.
+	 * @return array list of leagues or empty array.
+	 */
+	public static function getLeaguesByCountryDivision1(WebSoccer $websoccer, DbConnection $db) {
+		
+		$leagues = []; // Initialize the result array
+		$sqlStr = "SELECT L.id AS league_id, L.land AS league_country
+				   FROM " . $websoccer->getConfig("db_prefix") . "_liga AS L 
+				   WHERE L.division ='1'";
+		$result = $db->executeQuery($sqlStr);
+		while ($row = $result->fetch_assoc()) {
+			$teams[] = $row;
+		}
+		$result->free();
+		return $teams;
 	}
 	
 }

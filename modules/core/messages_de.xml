@@ -12,4 +12,6 @@
 	<message id="date_tomorrow">Morgen</message>
 	
 	<message id="privacypolicy_navlabel">Datenschutzerklärung</message>
+	
+	<message id="settings_label_fix_term_deposit_interest">Stand. Zinssatz/Spiel</message>
 </messages>

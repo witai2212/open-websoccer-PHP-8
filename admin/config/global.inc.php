@@ -90,7 +90,7 @@ $block = null;
 try {
 	$website = WebSoccer::getInstance();
 	if (!file_exists(CONFIGCACHE_FILE_FRONTEND)) {
-		$website->resetConfigCache();
+	    $website->resetConfigCache();
 	}
 } catch(Exception $e) {
 	// write to log

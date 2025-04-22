@@ -331,6 +331,17 @@ elseif ($show == 'select') {
 		// update season
 		$db->queryUpdate($seasoncolumns, $conf['db_prefix'] .'_saison', 'id = %d', $season['id']);
 		
+		// update salary history
+		SalaryStatisticsDataService::updateSalaryStats($website, $db);
+		
+		// pay taxes
+		try {
+			BankAccountDataService::payTaxes($website, $db);
+					
+		} catch (Exception $e) {
+			echo createErrorMessage($i18n->getMessage("subpage_error_title") , $e->getMessage());
+		}
+		
 		echo createSuccessMessage($i18n->getMessage('alert_save_success'), '');
 		
 		echo '<p>&raquo; <a href=\'?site='. $site .'\'>'. $i18n->getMessage('back_label') . '</a></p>';

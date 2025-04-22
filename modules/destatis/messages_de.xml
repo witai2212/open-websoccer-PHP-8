@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="stats_navlabel">CM|STATIS</message>
+	<message id="destatis_title">CM|STATIS</message>
+    <message id="stats_title">Vereine ohne Manager BBB</message>
+    <message id="stats_no_free_clubs_available">Derzeit gibt es keine freien Vereine. ccc</message>
+    <message id="stats_head_choose">Auswahl ddd</message>
+    <message id="stats_button_choose">Team übernehmen eee</message>
+    <message id="stats_button_choose_another">Weiteres Team übernehmen fff</message>
+    <message id="stats_msg_success">Glückwunsch! Sie sind jetzt der Manager des ausgewählten Teams. ggg</message>
+    <message id="stats_msg_error">Das Team ist wohl inzwischen bereits vergeben. hhh</message>
+    <message id="stats_msg_error_user_is_already_manager">Sie sind bereits Manager eines Teams. iii</message>
+    <message id="stats_msg_error_max_number_of_teams">Sie dürfen derzeit höchstens %d Teams managen. jjj</message>
+    <message id="stats_msg_error_no_club_from_same_league">Sie dürfen nicht mehrere Teams aus der selben Liga managen. kkk</message>
+    <message id="stats_msg_error_minhighscore">Sie benötigen eine Highscore von mindestens %d, um einen weiteren Verein managen zu dürfen. lll</message>
+    
+    <message id="bestplayers_navlabel">Weltbeste Spieler</message>
+    <message id="bestplayers_title">Weltbeste Spieler</message>
+    <message id="bestplayers_name">Name</message>	
+    <message id="bestplayers_verein">Verein</message> 	
+    <message id="bestplayers_alter">Alter</message>	
+    <message id="bestplayers_position_main">Position</message>	
+    <message id="bestplayers_position_second">Neben-Position</message>	
+    <message id="bestplayers_marktwert">Marktwert</message>
+    
+    <message id="bestgoalscorers_navlabel">Beste Scorer</message>"
+    <message id="bestgoalscorers_title">Beste Scorer</message>
+    <message id="bestgoalscorers_name">Name</message>
+    <message id="bestgoalscorers_verein">Verein</message>
+	<message id="bestplayersbestgoalscorers_goals">Tore</message>
+	<message id="bestgoalscorers_position_assists">Assists</message>
+	<message id="bestgoalscorers_position_scores">Score</message>
+	<message id="bestgoalscorers_note_schnitt">Notenschnitt</message>
+	
+	<message id="avg_gates_navlabel">Zuschauer</message>
+	<message id="avg_gates_title">Zuschauerstatistik</message>
+	<message id="avg_gates_team_name">Verein</message>
+	<message id="avg_gates_team_viewers">Zuschauerdurschschnitt</message>
+	<message id="avg_gates_team_viewers_total">Zuschauerzahl</message>
+	<message id="avg_gates_position">Tabellenplatz</message>
+	
+	<message id="avg_ratings_navlabel">Spielernoten</message>
+	<message id="avg_ratings_title">Spielernoten</message>
+	<message id="avg_ratings_player_name">Spieler</message>
+	<message id="avg_ratings_players_rating_avg">Notenschnitt</message>
+	<message id="avg_ratings_players_rating_last">Letzte Note</message>
+	
+	<message id="worst_discipline_navlabel">Karten</message>
+	<message id="worst_discipline_title">Karten</message>
+	<message id="worst_discipline_red_cards">rote Karten</message>
+	<message id="worst_discipline_yellow_red_cards">gelb/rote Karten</message>
+	<message id="worst_discipline_yellow_cards">gelbe Karten</message>
+	
+	<message id="richest_clubs_navlabel">Reichste Vereine</message>
+	<message id="richest_clubs_title">Reichste Vereine</message>
+	<message id="richest_clubs_money">Festgeldkonto</message>
+	
+	<message id="halloffame_navlabel">Hall of Fame</message>
+    <message id="halloffame_no_seasons">Bisher wurden noch keine Saisons abgeschlossen.</message>
+    <message id="halloffame_no_cups">Bisher wurden noch keine Pokalwettbewerbe ausgetragen.</message>
+    
+    <message id="statistics_salary_navlabel">Gehaltsstatistik</message>
+    <message id="stats_salary_title">Gehaltsstatistik</message>
+    
+    <message id="most_titles_navlabeltitle">Meiste Titel</message>
+    <message id="most_titles_title">Meiste Titel</message>
+	
+	<message id="largest_stadiums_navlabel">Größte Stadien</message>
+	<message id="largest_stadiums_title">Größte Stadien</message>
+	<message id="largest_stadiums_name">Stadion</message>
+	<message id="largest_stadiums_club">Verein</message>
+	<message id="largest_stadiums_capacity">Kapazität</message>
+	
+	<message id="destatis_bestplayers_tooltip">Weltbeste Spieler</message>
+	<message id="destatis_richest_clubs_tooltip">Reichste Vereine</message>
+	<message id="destatis_statssalary_tooltip">Gehaltsstatistik</message>
+	<message id="destatis_bestscorers_tooltip">Best Scorer</message>
+	<message id="destatis_avg_gates_tooltip">Zuschauerstatistik</message>
+	<message id="destatis_avg_ratings_tooltip">Spielernoten</message>
+	<message id="destatis_trophy_collectors_tooltip">Meiste Titel</message>
+	<message id="destatis_worst_discipline_tooltip">Kartensammler</message>
+	<message id="destatis_largest_stadiums_tooltip">Größte Stadien</message>
+	
+	<message id="avg_gates_title">Zuschauerdurchschnitt</message>
+	<message id="ratings_by_club">Meiste Zuschauer (Verein)</message>
+	<message id="ratings_by_league">Meiste Zuschauer (Liga)</message>
+	
+	<message id="most_valuable_teams_navlabel">Wertvollste Teams</message>
+	<message id="most_valuable_teams_title">Wertvollste Teams</message>
+	<message id="most_valuable_teams_league_title">Wertvollste Teams der Liga</message>
+	<message id="most_valuable_team_name">Verein</message>
+	<message id="most_valuable_team_values">Marktwert</message>
+	<message id="most_valuable_team_avg_values">Druchschn. Marktwert</message>
+	
+</messages>

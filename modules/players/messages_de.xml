@@ -17,8 +17,31 @@
     <message id="playertable_head_strength_stamina_abbr">Kon</message>
     <message id="playertable_head_strength_stamina">Kondition</message>
     <message id="playertable_head_strength_satisfaction_abbr">Zuf</message>
-    <message id="playertable_head_strength_talent_abbr">Tal</message>
     <message id="playertable_head_strength_satisfaction">Zufriedenheit</message>
+    <message id="playertable_head_strength_talent_abbr">Tal</message>
+    <message id="playertable_head_strength_talent">Talent</message>
+
+    <message id="playertable_head_strength_shooting_abbr">Sch</message>
+    <message id="playertable_head_strength_shooting">Schuss</message>
+    <message id="playertable_head_strength_passing_abbr">Pas</message>
+    <message id="playertable_head_strength_passing">Passen</message>
+    <message id="playertable_head_strength_tackling_abbr">Zw</message>
+    <message id="playertable_head_strength_tackling">Zweikampf</message>
+    <message id="playertable_head_strength_freekick_abbr">Fs</message>
+    <message id="playertable_head_strength_freekick">Freistoß</message>
+    <message id="playertable_head_strength_heading_abbr">Kb</message>
+    <message id="playertable_head_strength_heading">Kopfball</message>
+    <message id="playertable_head_strength_creativity_abbr">Kre</message>
+    <message id="playertable_head_strength_creativity">Kreativität</message>
+    <message id="playertable_head_strength_influence_abbr">Einf</message>
+    <message id="playertable_head_strength_influence">Einfluss</message>
+    <message id="playertable_head_strength_flair_abbr">Cha</message>
+    <message id="playertable_head_strength_flair">Charakter</message>
+    <message id="playertable_head_strength_penalty_abbr">11m</message>
+    <message id="playertable_head_strength_penalty">Elfmeter</message>
+    <message id="playertable_head_strength_penalty_killing_abbr">Ek</message>
+    <message id="playertable_head_strength_penalty_killing">Elfmeterkiller</message>
+	
     <message id="playertable_head_age">Alter</message>
     <message id="playertable_head_blocked">Ausfall</message>
     <message id="playertable_head_matches_abbr">Spiele</message>
@@ -82,4 +105,7 @@
     <message id="topscorers_head_score">Score</message>
     
     <message id="entity_player_is_on_watchlist">Auf der Beobachtingsliste</message>
+    
+    <message id="player_scouting_talent_result">Talent (Scout)</message>
+	<message id="player_scounting_no_scout_no_watchlist">*) Du benötigst einen Scout und der Spieler muss auf deiner Beobachtungsliste sein.</message>
 </messages>

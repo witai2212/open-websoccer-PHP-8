@@ -1,0 +1,46 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>{{ i18n.getMessage("account_statement_date") }}</th>
+			<th>{{ i18n.getMessage("account_statement_sender") }}</th>
+			<th>{{ i18n.getMessage("account_statement_subject") }}</th>
+			<th>{{ i18n.getMessage("account_statement_revenues") }}</th>
+			<th>{{ i18n.getMessage("account_statement_expenses") }}</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for statement in statements %}
+	<tr>
+		<td>&nbsp;</td>
+		<td>{{ env.getFormattedDate(statement.date) }}</td>
+		<td>
+			{% if i18n.hasMessage(statement.sender) %}
+				{{ i18n.getMessage(statement.sender) }}
+			{% else %}
+				{{ statement.sender }}
+			{% endif %}
+		</td>
+		<td>
+			{% if i18n.hasMessage(statement.subject) %}
+				{{ i18n.getMessage(statement.subject) }}
+			{% else %}
+				{{ statement.subject }}
+			{% endif %}
+		</td>
+		<td align="right">
+			{% if statement.amount > 0 %}
+				{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+			{% endif %}
+		</td>
+		<td align="right">
+			{% if statement.amount < 0 %}
+				<span style="color: red">{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+			{% endif %}
+		</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+{{ pagination.paginator(paginator) }}

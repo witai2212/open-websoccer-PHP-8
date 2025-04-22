@@ -9,9 +9,193 @@
 {% block page_content %}
 
 <h4>{{ index.name }} ({{ index.abbrev }})</h4>
-	
+<!--	
 	<div id="grades" style="width: 600px; height: 300px; margin-left: 30px; margin-bottom: 30px"
+		data-maxpos="500"
 		data-series="[{% for grade in grades %}{% if loop.index > 1 %}, {% endif %}[{{ loop.index }}, {{ grade }}]{% endfor %}]">
 	</div>
+<hr>
+{% for grade in grades %}{% if loop.index > 1 %}, {% endif %}[{{ loop.index }}, {{ grade }}]{% endfor %}
+<hr>-->
+
+<style>
+/* Heading */
+#my-chart {
+  width: 100%;
+  max-width: auto;
+  margin: 0 auto;
+}
+
+#my-chart caption {
+  background-color: hotpink;
+  color: white;
+}
+
+/* Chart */
+#my-chart tbody {
+  background-color: beige;
+  color: black;
+}
+
+/* Labels */
+#my-chart tbody th {
+  background-color: deepskyblue;
+  color: blue;
+}
+
+</style>
+<table class="charts-css column show-heading show-labels show-primary-axis  show-data-axes data-spacing-20 show-data">
+
+  <tbody>
+    <tr>
+      <th> 1 </th>
+      <td style="--size: {{ (grades.0/max(grades))|round(2, 'ceil') }};"> {{ grades.0 }} </td>
+    </tr>
+    <tr>
+      <th> 2 </th>
+      <td style="--size: {{ (grades.1/max(grades))|round(2, 'ceil') }};"> {{ grades.1 }} </td>
+    </tr>
+    <tr>
+      <th> 3 </th>
+      <td style="--size: {{ (grades.2/max(grades))|round(2, 'ceil') }};"> {{ grades.2 }} </td>
+    </tr>
+    <tr>
+      <th> 4 </th>
+      <td style="--size: {{ (grades.3/max(grades))|round(2, 'ceil') }};"> {{ grades.3 }} </td>
+    </tr>
+    <tr>
+      <th> 5 </th>
+      <td style="--size: {{ (grades.4/max(grades))|round(2, 'ceil') }};"> {{ grades.4 }} </td>
+    </tr>
+    <tr>
+      <th> 6 </th>
+      <td style="--size: {{ (grades.5/max(grades))|round(2, 'ceil') }};"> {{ grades.5 }} </td>
+    </tr>
+    <tr>
+      <th> 7 </th>
+      <td style="--size: {{ (grades.6/max(grades))|round(2, 'ceil') }};"> {{ grades.6 }} </td>
+    </tr>
+    <tr>
+      <th> 8 </th>
+      <td style="--size: {{ (grades.7/max(grades))|round(2, 'ceil') }};"> {{ grades.7 }} </td>
+    </tr>
+    <tr>
+      <th> 9 </th>
+      <td style="--size: {{ (grades.8/max(grades))|round(2, 'ceil') }};"> {{ grades.8 }} </td>
+    </tr>
+    <tr>
+      <th> 10 </th>
+      <td style="--size: {{ (grades.9/max(grades))|round(2, 'ceil') }};"> {{ grades.9 }} </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+
+<!--
+<br>
+<table class="charts-css area show-heading show-labels show-primary-axis  show-data-axes data-spacing-10 show-data">
+
+  <caption> <h4>{{ index.name }} ({{ index.abbrev }})</h4> </caption>
+
+  <thead>
+    <tr>
+      <th scope="col"> Year </th>
+      <th scope="col"> Value </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th> 1 </th>
+      <td style="--start:{{ (grades.0/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.0/max(grades))|round(2, 'ceil') }};"> {{ grades.0 }} </td>
+    </tr>
+    <tr>
+      <th> 2 </th>
+      <td style="--start:{{ (grades.0/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.1/max(grades))|round(2, 'ceil') }};"> {{ grades.1 }} </td>
+    </tr>
+    <tr>
+      <th> 3 </th>
+      <td style="--start:{{ (grades.1/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.2/max(grades))|round(2, 'ceil') }};"> {{ grades.2 }} </td>
+    </tr>
+    <tr>
+      <th> 4 </th>
+      <td style="--start:{{ (grades.2/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.3/max(grades))|round(2, 'ceil') }};"> {{ grades.3 }} </td>
+    </tr>
+    <tr>
+      <th> 5 </th>
+      <td style="--start:{{ (grades.3/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.4/max(grades))|round(2, 'ceil') }};"> {{ grades.4 }} </td>
+    </tr>
+    <tr>
+      <th> 6 </th>
+      <td style="--start:{{ (grades.4/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.5/max(grades))|round(2, 'ceil') }};"> {{ grades.5 }} </td>
+    </tr>
+    <tr>
+      <th> 7 </th>
+      <td style="--start:{{ (grades.5/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.6/max(grades))|round(2, 'ceil') }};"> {{ grades.6 }} </td>
+    </tr>
+    <tr>
+      <th> 8 </th>
+      <td style="--start:{{ (grades.6/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.7/max(grades))|round(2, 'ceil') }};"> {{ grades.7 }} </td>
+    </tr>
+    <tr>
+      <th> 9 </th>
+      <td style="--start:{{ (grades.7/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.8/max(grades))|round(2, 'ceil') }};"> {{ grades.8 }} </td>
+    </tr>
+    <tr>
+      <th> 10 </th>
+      <td style="--start:{{ (grades.8/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.9/max(grades))|round(2, 'ceil') }};"> {{ grades.9 }} </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<br>
+
+
+<table class="charts-css line show-primary-axis show-data-axes show-10-secondary-axes">
+
+  <tbody>
+    <tr>
+      <th> 1 </th>
+      <td style="--start:{{ (grades.0/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.0/max(grades))|round(2, 'ceil') }};"> {{ grades.0 }} </td>
+    </tr>
+    <tr>
+      <th> 2 </th>
+      <td style="--start:{{ (grades.0/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.1/max(grades))|round(2, 'ceil') }};"> {{ grades.1 }} </td>
+    </tr>
+    <tr>
+      <th> 3 </th>
+      <td style="--start:{{ (grades.1/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.2/max(grades))|round(2, 'ceil') }};"> {{ grades.2 }} </td>
+    </tr>
+    <tr>
+      <th> 4 </th>
+      <td style="--start:{{ (grades.2/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.3/max(grades))|round(2, 'ceil') }};"> {{ grades.3 }} </td>
+    </tr>
+    <tr>
+      <th> 5 </th>
+      <td style="--start:{{ (grades.3/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.4/max(grades))|round(2, 'ceil') }};"> {{ grades.4 }} </td>
+    </tr>
+    <tr>
+      <th> 6 </th>
+      <td style="--start:{{ (grades.4/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.5/max(grades))|round(2, 'ceil') }};"> {{ grades.5 }} </td>
+    </tr>
+    <tr>
+      <th> 7 </th>
+      <td style="--start:{{ (grades.5/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.6/max(grades))|round(2, 'ceil') }};"> {{ grades.6 }} </td>
+    </tr>
+    <tr>
+      <th> 8 </th>
+      <td style="--start:{{ (grades.6/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.7/max(grades))|round(2, 'ceil') }};"> {{ grades.7 }} </td>
+    </tr>
+    <tr>
+      <th> 9 </th>
+      <td style="--start:{{ (grades.7/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.8/max(grades))|round(2, 'ceil') }};"> {{ grades.8 }} </td>
+    </tr>
+    <tr>
+      <th> 10 </th>
+      <td style="--start:{{ (grades.8/max(grades))|round(2, 'ceil') }}; --end: {{ (grades.9/max(grades))|round(2, 'ceil') }};"> {{ grades.9 }} </td>
+    </tr>
+  </tbody>
+</table>-->
+
 
 {% endblock %}

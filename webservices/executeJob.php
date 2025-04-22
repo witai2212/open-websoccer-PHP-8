@@ -19,6 +19,9 @@
   If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
+/* seckey = b54b8754811c59a03d0fe08edfdbce28
+ * url = https://moritzschneider.net/cm23/webservices/executeJob.php?sectoken=b54b8754811c59a03d0fe08edfdbce28&jobid=trainer
+*/
 
 define('BASE_FOLDER', __DIR__ .'/..');
 include(BASE_FOLDER . '/admin/config/global.inc.php');

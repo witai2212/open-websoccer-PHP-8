@@ -39,10 +39,10 @@ class LeaguesListModel implements IModel {
 	}
 	
 	public function getTemplateParameters() {
-		
+	    
 		// get table markers
 		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_liga";
-		$whereCondition = "1=1 ORDER BY land ASC, name ASC";
+		$whereCondition = "1=1 ORDER BY land ASC, division ASC, name ASC";
 		
 		$leagues = array();
 		

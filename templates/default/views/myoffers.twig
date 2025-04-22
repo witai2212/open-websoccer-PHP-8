@@ -1,0 +1,79 @@
+{% import "macros/paginator.twig" as pagination %}
+{% extends "base.twig" %}
+
+
+{% import "views/mybids.twig" as mybids %}
+{% import "blocks/myplayersontl.twig" as mybids %}
+
+{% block page_title %}
+{{ i18n.getMessage("myoffers_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<ul class="nav nav-tabs" id="transferTab">
+  <li class="active"><a href="#overview" data-toggle="tab">{{ i18n.getMessage("transferoffers_tab_received") }}</a></li>
+  <li><a href="#mybids" data-toggle="tab" class="ajaxLink"
+			data-ajaxtarget="mybidslist" data-ajaxblock="mybids">{{ i18n.getMessage("transferoffers_tab_sent") }}</a></li>
+  <li><a href="#myplayersontl" data-toggle="tab" class="ajaxLink"
+			data-ajaxtarget="myplayersontllist" data-ajaxblock="myplayersontl">{{ i18n.getMessage("myplayers_on_transferlist") }}</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="overview">
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("offertable_head_player") }}</th>
+				<th>{{ i18n.getMessage("offertable_head_position") }}</th>
+				<th>{{ i18n.getMessage("offertable_head_enddate") }}</th>
+				<th>{{ i18n.getMessage("offertable_head_transfer_fee") }}</th>
+				<th>{{ i18n.getMessage("offertable_head_market_value") }}</th>
+				<th>{{ i18n.getMessage("offertable_bidder") }}</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+
+
+		{% for offer in offers %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td><a href="?page=player&id={{offer.spieler_id }}">{{ offer.vorname }} {{ offer.nachname }}</a></td>
+				<td>{{ offer.position_main }} ({{ offer.position_second }})</td>
+				<td>{{ env.getFormattedDatetime(bid.auction_end) }}</td>
+				<td>{{ offer.abloese|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td>{{ offer.marktwert|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td>{{ offer.bidder.team_name }}</td>
+				<td>
+					<div>
+						<a class="btn btn-mini" href="?page=myoffers&id={{ offer.id }}&action=accept_offer"><i class="icon-thumbs-up"></i> {{ i18n.getMessage("offer_accept") }}</a>&nbsp;
+						<a class="btn btn-mini" href="?page=myoffers&id={{ offer.id }}&action=reject_offer"><i class="icon-thumbs-down"></i> {{ i18n.getMessage("offer_reject") }}</a>
+					</div>
+				</td>
+			</tr>	
+		
+		{% endfor %}
+		
+		</tbody>
+	</table>
+  </div> 
+
+  <div class="tab-pane" id="mybids">
+  	<div id="mybidslist">
+
+	</div>
+  </div> 
+
+  <div class="tab-pane" id="myplayersontl">
+  	<div id="myplayersontllist">
+
+	</div>
+  </div>
+
+</div>
+
+{% endblock %}

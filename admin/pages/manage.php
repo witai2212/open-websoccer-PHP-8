@@ -60,6 +60,10 @@ if (isset($_REQUEST['id'])) $id = (int) $_REQUEST['id'];
 
 echo "<h1>". $i18n->getMessage("entity_". $entity)  ."</h1>";
 
+if($_REQUEST['entity']=='cup') {
+    echo "<p>&raquo; <a href=\"?site=schedulegenerator_cups&show=generate\" class=\"btn\">Generate first cup matches</a></p>\n";
+}
+
 // remove alias
 $tablePrefix = $website->getConfig("db_prefix") ."_";
 $mainTable = $tablePrefix . $entityConfig[0]->attributes()->dbtable;

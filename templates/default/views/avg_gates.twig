@@ -1,0 +1,124 @@
+{% extends "base.twig" %}
+
+{% import "blocks/gates_clubs.twig" as pagination %}
+
+{% block page_title %}
+{{ i18n.getMessage("avg_gates_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+
+<ul class="nav nav-tabs" id="offersTab">
+  <li class="active"><a href="#avarages" data-toggle="tab">{{ i18n.getMessage("avg_gates_title") }}</a></li>
+  <li><a href="#club_gates" data-toggle="tab"
+  	data-ajaxtarget="club_gateslist" data-ajaxblock="club_gates" class="ajaxLink">{{ i18n.getMessage("ratings_by_club") }}</a></li>
+  <li><a href="#league_gates" data-toggle="tab"
+  	data-ajaxtarget="league_gateslist" data-ajaxblock="league_gates" class="ajaxLink">{{ i18n.getMessage("ratings_by_league") }}</a></li>
+</ul>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="avarages">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>{{ i18n.getMessage("avg_gates_team_name") }}</th>
+					<th>{{ i18n.getMessage("avg_gates_team_viewers") }}</th>
+					<th>{{ i18n.getMessage("avg_gates_position") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			{% for gate in avg_gates %}
+		
+				<tr>
+					<td><strong>{{ loop.index }}</strong></td>
+					<td>
+					{% if gate.team_bild|length > 0 %}
+						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ gate.team_bild }}" style="max-width: 20px"/>
+					{% endif %}
+					<a href="?page=team&id={{ gate.home_verein }}">{{ gate.team_name }}</a></td>
+					<td>{{ gate.zuschauer|number_format(0, ',', ' ') }} ({{ gate.occupation }}%)</td>
+					<td>{{ gate.platz }}</td>
+				</tr>	
+			
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+ 
+	<div class="tab-pane" id="club_gates">
+		<div class="tab-pane" id="club_gateslist">
+		
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>{{ i18n.getMessage("avg_gates_team_name") }}</th>
+						<th>{{ i18n.getMessage("avg_gates_team_viewers") }}</th>
+						<th>{{ i18n.getMessage("entity_stadium_name") }}</th>
+					</tr>
+				</thead>
+				<tbody>
+				
+				{% for visitor in most_visitors_clubs %}
+
+					<tr>
+						<td><strong>{{ loop.index }}</strong></td>
+						<td><a href="?page=team&id={{ visitor.club_id }}">{{ visitor.club_name }}</a></td>
+						<td>{{ visitor.visitors|number_format(0, ',', ' ') }}</td>
+						<td><a href="?page=stadium&id={{ visitor.stadium_id }}">{{ visitor.stadium_name }}</a></td>
+					</tr>	
+				
+				{% endfor %}
+				
+				</tbody>
+			</table>
+		
+		</div>
+	</div> 
+	<div class="tab-pane" id="league_gates">
+		<div class="tab-pane" id="league_gateslist">
+		
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>{{ i18n.getMessage("entity_league") }}</th>
+						<th>{{ i18n.getMessage("avg_gates_team_viewers_total") }}</th>
+						<th>{{ i18n.getMessage("avg_gates_team_viewers") }}</th>
+					</tr>
+				</thead>
+				<tbody>
+				
+				{% for visitor in most_visitors_leagues %}
+
+					<tr>
+						<td><strong>{{ loop.index }}</strong></td>
+						
+						{% set nationImg = skin.getImage("flags/" ~ visitor.league_country ~ ".png") %}
+						{% if i18n.hasMessage("option_" ~ visitor.nation) %}
+							{% set countryLabel = i18n.getMessage("option_" ~ visitor.nation) %}
+						{% else %}
+							{% set countryLabel = visitor.nation %}
+						{% endif %}
+						
+						<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}"/>
+								{% endif %}&nbsp;{{ visitor.league_country }}
+							</td>
+						<td>{{ visitor.visitors|number_format(0, ',', ' ') }}</td>
+						<td>{{ visitor.avg_visitors|number_format(0, ',', ' ') }}</td>
+					</tr>	
+				
+				{% endfor %}
+				
+				</tbody>
+			</table>
+		
+		</div>
+	</div> 
+	
+</div>
+
+{% endblock %}

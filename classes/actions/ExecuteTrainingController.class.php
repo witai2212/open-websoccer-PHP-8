@@ -155,9 +155,11 @@ class ExecuteTrainingController implements IActionController {
 						$pStamina[1] = 100 - $successFactor;
 						
 						$staminaIncrease += SimulationHelper::selectItemFromProbabilities($pStamina);
+						$paceIncrease += SimulationHelper::selectItemFromProbabilities($pStamina);
 					}
 					
 					$effectStamina = $staminaIncrease;
+					$effectPace = $paceIncrease;
 					
 					// technique
 				} else {
@@ -174,34 +176,102 @@ class ExecuteTrainingController implements IActionController {
 						$pTech[0] = 100 - $successFactor;
 					
 						$techIncrease += SimulationHelper::selectItemFromProbabilities($pTech);
+						
+						$passIncrease += SimulationHelper::selectItemFromProbabilities($pTech);
+						$shootIncreas += SimulationHelper::selectItemFromProbabilities($pTech);
+						$headIncrease += SimulationHelper::selectItemFromProbabilities($pTech);
+						$tacklingIncrease += SimulationHelper::selectItemFromProbabilities($pTech);
+						$freekickIncrease += SimulationHelper::selectItemFromProbabilities($pTech);
+						$paceIncrease += SimulationHelper::selectItemFromProbabilities($pTech);
+						$penaltyIncrease += SimulationHelper::selectItemFromProbabilities($pTech);
+						if($player['position_main']=='T') {
+						  $penkillingIncease += SimulationHelper::selectItemFromProbabilities($pTech);
+						} else {
+						  $penkillingIncease = 0;
+						}
 					}
 					
 					$effectTechnique = $techIncrease;
+					$effectPassing = $passIncrease;
+					$effectShooting = $shootIncreas;
+					$effectHeading = $headIncrease;
+					$effectTackling = $tacklingIncrease;
+					$effectFreekick = $freekickIncrease;
+					$effectPace = $paceIncrease;
+					$effectPenalty = $penaltyIncrease; 
+					$effectPenaltyKilling = $penkillingIncease;
 				}
 			}
+			
+			$effectInfluence = $effectFreshness;
+			$effectFlair = $effectFreshness;
+			$effectCreativity = $effectFreshness;
 			
 			// call plugins
 			$event = new PlayerTrainedEvent($this->_websoccer, $this->_db, $this->_i18n,
 					$player["id"], $teamId, $trainer["id"], 
-					$effectFreshness, $effectTechnique, $effectStamina, $effectSatisfaction);
+			    $effectFreshness, $effectTechnique, $effectStamina, $effectSatisfaction, $effectPassing,
+			    $effectShooting, $effectHeading, $effectTackling, $effectFreekick, $effectPace, $effectCreativity, $effectInfluence,
+			    $effectFlair, $effectPenalty, $effectPenaltyKilling
+			    );
 			PluginMediator::dispatchEvent($event);
+			
+			// slow down training to 10%
+			$talent_factor = $player['strength_talent']/5;
+			$effectFreshness = $effectFreshness*0.2*$talent_factor;
+			$effectTechnique = $effectTechnique*0.1*$talent_factor;
+			$effectStamina = $effectStamina*0.1*$talent_factor;
+			$effectSatisfaction = $effectSatisfaction*0.1*$talent_factor;
+			$effectPassing = $effectPassing*0.1*$talent_factor;
+			$effectShooting = $effectShooting*0.1*$talent_factor;
+			$effectHeading = $effectHeading*0.1*$talent_factor;
+			$effectTackling = $effectTackling*0.1*$talent_factor;
+			$effectFreekick = $effectFreekick*0.1*$talent_factor;
+			$effectPace = $effectPace*0.1*$talent_factor;
+			$effectCreativity = $effectCreativity*0.1*$talent_factor;
+			$effectInfluence = $effectInfluence*0.1*$talent_factor;
+			$effectFlair = $effectFlair*0.1*$talent_factor;
+			$effectPenalty = $effectPenalty*0.1*$talent_factor;
+			$effectPenaltyKilling = $effectPenaltyKilling*0.1*$talent_factor;
 			
 			// update player
 			$columns = array(
-					"w_frische" => min(100, max(1, $player["strength_freshness"] + $effectFreshness)),
-					"w_technik" => min(100, max(1, $player["strength_technic"] + $effectTechnique)),
-					"w_kondition" => min(100, max(1, $player["strength_stamina"] + $effectStamina)),
-					"w_zufriedenheit" => min(100, max(1, $player["strength_satisfaction"] + $effectSatisfaction))
-					);
+			    "w_frische" => round(min(100, max(1, $player["strength_freshness"] + $effectFreshness)),2),
+			    "w_technik" => round(min(100, max(1, $player["strength_technic"] + $effectTechnique)),2),
+			    "w_kondition" => round(min(100, max(1, $player["strength_stamina"] + $effectStamina)),2),
+			    "w_zufriedenheit" => round(min(100, max(1, $player["strength_satisfaction"] + $effectSatisfaction)),2),
+			    "w_passing" => round(min(100, max(1, $player["strength_passing"] + $effectPassing)),2),
+			    "w_shooting" => round(min(100, max(1, $player["strength_shooting"] + $effectShooting)),2),
+			    "w_heading" => round(min(100, max(1, $player["strength_heading"] + $effectHeading)),2),
+			    "w_tackling" => round(min(100, max(1, $player["strength_tackling"] + $effectTackling)),2),
+			    "w_freekick" => round(min(100, max(1, $player["strength_freekick"] + $effectFreekick)),2),
+			    "w_pace" => round(min(100, max(1, $player["strength_pace"] + $effectPace)),2),
+			    "w_influence" => round(min(100, max(1, $player["strength_influence"] + $effectInfluence)),2),
+			    "w_creativity" => round(min(100, max(1, $player["strength_creativity"] + $effectCreativity)),2),
+			    "w_flair" => round(min(100, max(1, $player["strength_flair"] + $effectFlair)),2),
+			    "w_penalty" => round(min(100, max(1, $player["strength_penalty"] + $effectPenalty)),2),
+			    "w_penalty_killing" => round(min(100, max(1, $player["strength_penalty_killing"] + $effectPenaltyKilling)),2)
+			    );
 			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $player["id"]);
 			
 			// add effect
 			$trainingEffects[$player["id"]] = array(
 					"name" => ($player["pseudonym"]) ? $player["pseudonym"] : $player["firstname"] . " " . $player["lastname"],
-					"freshness" => $effectFreshness,
-					"technique" => $effectTechnique,
-					"stamina" => $effectStamina,
-					"satisfaction" => $effectSatisfaction
+					"freshness" => round($effectFreshness,2),
+    			    "technique" => round($effectTechnique,2),
+    			    "stamina" => round($effectStamina,2),
+    			    "satisfaction" => round($effectSatisfaction,2),
+    			    "passing" => round($effectPassing,2),
+    			    "shooting" => round($effectShooting,2),
+    			    "heading" => round($effectHeading,2),
+    			    "tackling" => round($effectTackling,2),
+    			    "freekick" => round($effectFreekick,2),
+    			    "pace" => round($effectPace,2),
+    			    "influence" => round($effectInfluence,2),
+    			    "creativity" => round($effectCreativity,2),
+    			    "flair" => round($effectFlair,2),
+    			    "penalty" => round($effectPenalty,2),
+    			    "penalty_killing" => round($effectPenaltyKilling,2)
 					);
 		}
 		

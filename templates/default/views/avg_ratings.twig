@@ -1,0 +1,39 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("avg_ratings_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if avg_ratings|length == 0 %}
+{{ i18n.getMessage("no_items") }}
+{% else %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("avg_ratings_player_name") }}</th>
+				<th>{{ i18n.getMessage("avg_ratings_players_rating_avg") }}</th>
+				<th>{{ i18n.getMessage("avg_ratings_players_rating_last") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		{% for rating in avg_ratings %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td><a href="?page=player&id={{ rating.id }}">{{ rating.vorname }}&nbsp;{{ rating.nachname }}</a></td>
+				<td>{{ rating.note_schnitt }}</td>
+				<td>{{ rating.note_last }}</td>
+			</tr>	
+		
+		{% endfor %}
+		</tbody>
+		</table>
+
+{% endif %}
+{% endblock %}

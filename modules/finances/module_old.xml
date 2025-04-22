@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+  
+    <pages>
+        <page
+            id="finance"
+            template="finances"
+            model="FinancesModel"
+            navitem="true"
+            navweight="2"
+            role="user">
+			<page
+	            id="stockmarket"
+	            template="stockmarket"
+	            navitem="true"
+	            model="StockMarketModel"
+	            navweight="5"
+	            role="user">
+	        
+		        <page
+		            id="buystock"
+		            template="buystock"
+		            model="BuyStockModel"
+		            role="user">
+		         </page>
+	        
+		        <page
+		            id="sellstock"
+		            template="sellstock"
+		            model="SellStockModel"
+		            role="user">
+		         </page>
+			
+    			<page
+    				id="stock_chart"
+    				template="stock_chart"
+    				model="StockChartModel"
+    				parentItem="portfolio"
+    				role="user">
+    				<script file="flot/jquery.flot.min.js" />
+    				<script file="charts.js" />
+    				<script file="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.cjs"/>
+    				<css file="charts.css"/>
+    			 </page>
+			</page>
+			
+	        <page
+	            id="portfolio"
+	            template="portfolio"
+	            model="MyPortfolioModel"
+	            navitem="true"
+	            navweight="3"
+	            parentItem="finances"
+	            role="user">
+	        
+	        </page>
+			
+        </page>
+    </pages>
+    
+	<actions>
+		<action id="buy_stock" controller="BuyStockController" role="user">
+			<param id="index" type="text" min="1" max="10000000" required="true" />
+			<param id="qty" type="text" min="1" max="100000000" required="true" />
+		</action>
+		<action id="sell_stock" controller="SellStockController" role="user">
+			<param id="index" type="text" min="1" max="10000000" required="true" />
+			<param id="qty" type="text" min="1" max="100000000" required="true" />
+		</action>
+		
+	</actions>    
+    
+</module>

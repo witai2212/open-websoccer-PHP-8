@@ -1,0 +1,67 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("deposit_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if deposits|length == 0 %}
+{{ i18n.getMessage("deposit_no_items") }}
+{% else %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{{ i18n.getMessage("deposit_amount") }}</th>
+				<th>{{ i18n.getMessage("deposit_interest") }}</th>
+				<th>{{ i18n.getMessage("deposit_difference") }}</th>
+				<th>{{ i18n.getMessage("deposit_total_value") }}</th>
+				<th>{{ i18n.getMessage("deposit_matches") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for deposit in deposits %}
+	
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>				
+				<td>{{ deposit.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td>{{ deposit.interest }} %</td>
+				<td>{{ (deposit.amount*(deposit.interest/100))|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td>{{ (deposit.amount+(deposit.amount*(deposit.interest/100)))|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td>{{ deposit.matches }}</td>
+			</tr>	
+		
+		{% endfor %}
+		</tbody>
+		</table>
+
+{% endif %}
+<hr>
+
+{{ i18n.getMessage("deposit_transfer_money_title") }}
+
+<form class="form-horizontal" method="post">
+	
+	{{ formelements.textfield('money_qty', i18n.getMessage('buystock_stock_quantity'), '', false, validationMsg) }}
+		<div class="controls">
+	  		<select name="position" id="position">
+	  			<option></option>
+	  			<option value="Torwart"{% if env.getRequestParameter("position") == "Torwart" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
+	  			<option value="Abwehr"{% if env.getRequestParameter("position") == "Abwehr" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
+	  			<option value="Mittelfeld"{% if env.getRequestParameter("position") == "Mittelfeld" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
+	  			<option value="Sturm"{% if env.getRequestParameter("position") == "Sturm" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>
+	  		</select>
+		</div>
+	
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_buy') }}</button>
+		<a href="{{ env.getInternalUrl("stockmarket") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+	</div>
+	<input type="hidden" name="index" value="{{ index.id }}"/>
+	<input type="hidden" name="action" value="buy_stock"/>
+</form>
+
+{% endblock %}

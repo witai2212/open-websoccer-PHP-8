@@ -32,6 +32,7 @@ class ExecuteTransfersJob extends AbstractJob {
 	 */
 	function execute() {
 		TransfermarketDataService::executeOpenTransfers($this->_websoccer, $this->_db);
+		ComputerTransfermarketDataService::executeComputerBids($this->_websoccer, $this->_db);
 	}
 }
 

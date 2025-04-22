@@ -44,7 +44,7 @@ class LeagueSelectionModel implements IModel {
 		
 		// get table markers
 		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_liga";
-		$whereCondition = "land = '%s' ORDER BY name ASC";
+		$whereCondition = "land = '%s' ORDER BY division ASC, name ASC";
 		
 		$leagues = array();
 		

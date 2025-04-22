@@ -215,15 +215,41 @@ class StadiumsDataService {
 	 */
 	public static function getLargestStadium(WebSoccer $websoccer, DbConnection $db) {
 	    
-	    $sqlStr = "SELECT * FROM ". $websoccer->getConfig("db_prefix") ."_stadion
-					ORDER BY (p_sitz+p_steh+p_haupt_steh+p_haupt_sitz+p_vip) DESC
-					LIMIT 1";
+		$stadiums = array();
+		
+		$sqlStr = "SELECT S.id, S.name, (S.p_sitz+S.p_steh+S.p_haupt_steh+S.p_haupt_sitz+S.p_vip) AS total_capacity, C.id AS club_id, C.bild AS club_bild, C.name AS club_name, L.land
+					FROM ". $websoccer->getConfig("db_prefix") ."_stadion AS S 
+						INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.stadion_id = S.id
+						INNER JOIN " . $websoccer->getConfig("db_prefix") . "_liga AS L ON L.id = C.liga_id		
+					ORDER BY (S.p_sitz+S.p_steh+S.p_haupt_steh+S.p_haupt_sitz+S.p_vip) DESC
+					LIMIT 20";
 	    $result = $db->executeQuery($sqlStr);
-	    $stadium = $result->fetch_array();
+		while ($stadium = $result->fetch_array()) {
+			$stadiums[] = $stadium;
+		}
 	    $result->free();
-	    
-	    return $stadium;
+		
+		return $stadiums;
+		
 	}	
+
+	/**
+	 * Rest stadium levels for new users
+	 *
+	 * @param WebSoccer $websoccer Application context.
+	 */
+	public static function resetStadiumLevels(WebSoccer $websoccer, DbConnection $db, $teamId) {
+		
+		//get stadiumId
+		$stadium = self::getStadiumByTeamId($websoccer, $db, $teamId);
+		$stadiumId = $stadium['stadium_id'];
+		
+		$updStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stadion
+					SET level_pitch='5', level_videowall='5', level_seatsquality='5', level_vipquality='5'
+					WHERE id='$stadiumId'";
+	    $db->executeQuery($updStr);
+		
+	}
 	
 }
 ?>

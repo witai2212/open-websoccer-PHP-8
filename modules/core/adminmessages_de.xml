@@ -21,6 +21,7 @@
     <message id="alert_save_success">Die Daten wurden erfolgreich gespeichert.</message>
     <message id="subpage_error_alertbox_title">Es sind folgende Fehler aufgetreten:</message>
     <message id="back_label">Zurück</message>
+    <message id="continue_label">Weiter zum nächsten Punkt</message>
     
     <message id="button_save">Speichern</message>
     <message id="button_reset">Zurücksetzen</message>
@@ -76,6 +77,15 @@
     
     <message id="category_website_navlabel">Website</message>
     <message id="category_settings_navlabel">Allgemein</message>
+    
+	<message id="nationalcupgenerator_navlabel">Nationale Pokale generieren</message>
+	<message id="category_transfers_navlabel">Transfers</message>
+	<message id="computertransfers_navlabel">Computer Transfers</message>
+	<message id="computertransfers_generator_label">Computer Transfers</message>
+	<message id="rounds">Runden</message>
+	<message id="computertransfers_generator_label">Computer Transfers generieren</message>
+	
+	<message id="schedulegenerator_cups_navlabel">Pokalspiele generieren</message>
 	
 	<message id="admincenter_link_website">Website</message>
 	<message id="admincenter_link_profile">Profil</message>
@@ -243,6 +253,20 @@
 	<message id="entitylogging_action_delete">Löschung</message>
 	
 	<message id="settings_tab_stockmarket">Stockmarket API</message>
-	<message id="settings_label_finnhub_api">Alphavantage API</message>
+	<message id="settings_label_finnhub_api">Finnhub.io API</message>
 	<message id="default_starting_value">Standard-Ausgabewert</message>
+	<message id="settings_label_default_starting_value">Standard-Ausgabewert</message>
+	
+	<message id="settings_label_max_scouts_per_team">Max. Scouts/Team</message>
+	<message id="settings_label_scouts_matches">Scout Spiele/Team</message>
+	<message id="settings_tab_scouting">Scouting</message>
+	
+	<message id="tablemaker_navlabel">Tabellenmarkierung</message>
+	
+	<message id="subpage_error_tax_payment">Fehler bei der Steuerzahlung</message>
+
+	<message id="category_unblock_matches_navlabel">Unblock matches</message>
+	<message id="unblock_matches_navlabel">Unblock matches</message>
+	
+	<message id="admin-execute-match_navlabel">Spiele manuell simulieren</message>
 </messages>

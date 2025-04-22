@@ -54,5 +54,6 @@
       <setting id="offline_times" category="offlinemode" type="tags" default="" />
       <setting id="finnhub_api" category="stockmarket" type="text" default="ABCDEFGHIJK" />
       <setting id="default_starting_value" category="stockmarket" type="number" default="50" />
+      <setting id="fix_term_deposit_interest" category="general" type="number" default="0.375" />
   </settings>
 </module>

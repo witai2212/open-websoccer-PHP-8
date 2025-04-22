@@ -1,0 +1,60 @@
+
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("destatis_title") }}
+{% endblock %}
+
+{% block page_content %}
+<!-- <h1>D|STATIS</h1><img src="{{ env.getConfig("context_root") }}/img/logo/destatis_logo.png" style="max-width: 64px"/> -->
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/stark.png" style="max-width: 64px"/>
+					<a href="?page=bestplayers" title="{{ i18n.getMessage("destatis_bestplayers_tooltip") }}">{{ i18n.getMessage("bestplayers_title") }}</a>
+				</td>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/geldtasche.png" style="max-width: 64px"/>
+					<a href="?page=richest_clubs" title="{{ i18n.getMessage("destatis_bestplayers_tooltip") }}">{{ i18n.getMessage("richest_clubs_title") }}</a>
+				</td>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/gehalt.png" style="max-width: 64px"/>
+					<a href="?page=statistics_salary" title="{{ i18n.getMessage("destatis_statssalary_tooltip") }}">{{ i18n.getMessage("stats_salary_title") }}</a>
+				</td>
+			</tr>
+			<tr>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/tor.png" style="max-width: 64px"/>
+					<a href="?page=bestgoalscorers" title="{{ i18n.getMessage("destatis_bestscorers_tooltip") }}">{{ i18n.getMessage("bestgoalscorers_title") }}</a>
+				</td>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/publikum.png" style="max-width: 64px"/>
+					<a href="?page=avg_gates" title="{{ i18n.getMessage("destatis_avg_gates_tooltip") }}">{{ i18n.getMessage("avg_gates_title") }}</a>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/schulprufung.png" style="max-width: 64px"/>
+					<a href="?page=avg_ratings" title="{{ i18n.getMessage("destatis_avg_ratings_tooltip") }}">{{ i18n.getMessage("avg_ratings_title") }}</a>
+				</td>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/soccer-world-cup.png" style="max-width: 64px"/>
+					<a href="?page=trophy_collectors" title="{{ i18n.getMessage("destatis_avg_ratings_tooltip") }}">{{ i18n.getMessage("most_titles_title") }}</a>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/gelbe-karte.png" style="max-width: 64px"/>
+					<a href="?page=worst_disciplines" title="{{ i18n.getMessage("destatis_avg_ratings_tooltip") }}">{{ i18n.getMessage("worst_discipline_title") }}</a>
+				</td>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/stadion.png" style="max-width: 64px"/>
+					<a href="?page=largest_stadiums" title="{{ i18n.getMessage("destatis_largest_stadiums_tooltip") }}">{{ i18n.getMessage("largest_stadiums_title") }}</a>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><img src="{{ env.getConfig("context_root") }}/img/icons/geldtasche.png" style="max-width: 64px"/>
+					<a href="?page=most_valuable_teams" title="{{ i18n.getMessage("most_valuable_teams_title") }}">{{ i18n.getMessage("most_valuable_teams_title") }}</a>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+		</tbody>
+		</table>
+
+{% endblock %}

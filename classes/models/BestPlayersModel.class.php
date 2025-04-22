@@ -47,7 +47,10 @@ class BestPlayersModel implements IModel {
 	 * @see IModel::getTemplateParameters()
 	 */
 	public function getTemplateParameters() {
-		return array("players" => PlayersDataService::getBestPlayersByStrength($this->_websoccer, $this->_db));
+	    
+	    $bestplayers = PlayersDataService::getBestPlayersByStrength($this->_websoccer, $this->_db);
+	    
+		return array("players" => $bestplayers);
 	}
 	
 }

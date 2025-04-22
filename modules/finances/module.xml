@@ -24,6 +24,25 @@
 		            model="BuyStockModel"
 		            role="user">
 		         </page>
+	        
+		        <page
+		            id="sellstock"
+		            template="sellstock"
+		            model="SellStockModel"
+		            role="user">
+		         </page>
+			
+    			<page
+    				id="stock_chart"
+    				template="stock_chart"
+    				model="StockChartModel"
+    				parentItem="portfolio"
+    				role="user">
+    				<script file="flot/jquery.flot.min.js" />
+    				<script file="charts.js" />
+    				<script file="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.cjs"/>
+    				<css file="charts.css"/>
+    			 </page>
 			</page>
 			
 	        <page
@@ -32,31 +51,44 @@
 	            model="MyPortfolioModel"
 	            navitem="true"
 	            navweight="3"
-	            parentItem="finances"
+	            parentItem="stockmarket"
 	            role="user">
 	        
-		        <page
-		            id="stock_chart"
-		            template="stock_chart"
-		            model="StockChartModel"
-	                parentItem="portfolio"
-		            role="user">
-            		<script file="flot/jquery.flot.min.js" />
-            		<script file="charts.js" />
-		         </page>
+	        </page>
+			
+	        <page
+	            id="fix-term-deposit"
+	            template="fix-term-deposit"
+	            model="FixTermDepositModel"
+	            navitem="true"
+	            navweight="5"
+	            parentItem="finance"
+	            role="user">
+	        
 	        </page>
 			
         </page>
     </pages>
+	
+	<blocks>
+        <block
+            id="account_statement"
+            template="account_statement"
+            model="FinancesModel"
+            includepages="none"
+            area="custom"
+            role="user" />
+	</blocks>
     
 	<actions>
 		<action id="buy_stock" controller="BuyStockController" role="user">
 			<param id="index" type="text" min="1" max="10000000" required="true" />
 			<param id="qty" type="text" min="1" max="100000000" required="true" />
 		</action>
-		<action id="buy_stock" controller="SellStockController" role="user">
+		<action id="sell_stock" controller="SellStockController" role="user">
 			<param id="index" type="text" min="1" max="10000000" required="true" />
 			<param id="qty" type="text" min="1" max="100000000" required="true" />
+			<param id="max_qty" type="text" min="1" max="100000000" required="true" />
 		</action>
 		
 	</actions>    

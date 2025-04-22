@@ -20,7 +20,7 @@
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 					<th>{{ i18n.getMessage("playertable_head_strength") }}</th>
 				{% endif %}
-				
+				<th>&nbsp;</th>
 				<th>{{ i18n.getMessage("playertable_head_age") }}</th>
 				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }} / <br>{{ i18n.getMessage("entity_player_marktwert") }}</th>
 				<th><abbr title="{{ i18n.getMessage("entity_player_vertrag_spiele") }}">{{ i18n.getMessage("playertable_head_matches_abbr") }}</abbr></th>
@@ -129,9 +129,32 @@
 								<span {{ playerlists.strengthClass(player.strength_stamina) }}>{{ player.strength_stamina }}</span></li>
 							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_satisfaction") }}">{{ i18n.getMessage("playertable_head_strength_satisfaction_abbr") }}</abbr>:</span> 
 								<span {{ playerlists.strengthClass(player.strength_satisfaction) }}>{{ player.strength_satisfaction }}</span></li>
-								
 							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_talent") }}">{{ i18n.getMessage("playertable_head_strength_talent_abbr") }}</abbr>:</span> 
 								<span {{ playerlists.strengthClass(player.strength_talent) }}>{{ player.strength_talent }}</span></li>
+						</ul>
+					</td>
+					<td>
+						<ul class="unstyled">
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_passing") }}">{{ i18n.getMessage("playertable_head_strength_passing_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_passing) }}>{{ player.strength_passing }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_shooting") }}">{{ i18n.getMessage("playertable_head_strength_shooting_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_shooting) }}>{{ player.strength_shooting }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_tackling") }}">{{ i18n.getMessage("playertable_head_strength_tackling_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_tackling) }}>{{ player.strength_tackling }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_heading") }}">{{ i18n.getMessage("playertable_head_strength_heading_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_heading) }}>{{ player.strength_heading }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_freekick") }}">{{ i18n.getMessage("playertable_head_strength_freekick_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_freekick) }}>{{ player.strength_freekick }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_creativity") }}">{{ i18n.getMessage("playertable_head_strength_creativity_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_creativity) }}>{{ player.strength_creativity }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_influence") }}">{{ i18n.getMessage("playertable_head_strength_influence_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_influence) }}>{{ player.strength_influence }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_flair") }}">{{ i18n.getMessage("playertable_head_strength_flair_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_flair) }}>{{ player.strength_flair }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_penalty") }}">{{ i18n.getMessage("playertable_head_strength_penalty_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_penalty) }}>{{ player.strength_penalty }}</span></li>
+							<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_penalty_killing") }}">{{ i18n.getMessage("playertable_head_strength_penalty_killing_abbr") }}</abbr>:</span> 
+								<span {{ playerlists.strengthClass(player.strength_penalty_killing) }}>{{ player.strength_penalty_killing }}</span></li>
 						</ul>
 					</td>
 				{% endif %}

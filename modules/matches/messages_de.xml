@@ -47,6 +47,7 @@
     <message id="match_details_statistic_tackles">Zweikämpfe</message>
     <message id="match_details_statistic_ballcontacts">Ballbesitz</message>
     <message id="match_details_statistic_successfulpasses">Passquote</message>
+    <message id="match_details_statistic_successfulfreekicks">Freistossquote</message>
     
     <message id="results_tab_leagues">Ligen</message>
     <message id="results_tab_cups">Pokale</message>

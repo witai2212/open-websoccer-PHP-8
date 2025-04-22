@@ -123,7 +123,7 @@ class UsersDataService {
 		$columns["nick"] = "nick";
 		$columns["email"] = "email";
 		$columns["U.picture"] = "picture";
-		$columns["highscore"] = "highscore";
+		$columns["U.highscore"] = "highscore";
 		$columns["datum_anmeldung"] = "registration_date";
 		$columns["C.id"] = "team_id";
 		$columns["C.name"] = "team_name";
@@ -133,7 +133,7 @@ class UsersDataService {
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_user AS U";
 		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.user_id = U.id";
-		$whereCondition = "U.status = 1 AND highscore > 0 GROUP BY id ORDER BY highscore DESC, datum_anmeldung ASC";
+		$whereCondition = "U.status = 1  GROUP BY id ORDER BY U.highscore DESC, datum_anmeldung ASC";
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, null, $limit);
 		

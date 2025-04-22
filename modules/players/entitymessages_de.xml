@@ -30,6 +30,35 @@
 	<message id="entity_player_w_frische">Frische</message>
 	<message id="entity_player_w_zufriedenheit">Zufriedenheit</message>
 	<message id="entity_player_w_talent">Talent</message>
+	
+	<message id="entity_player_w_passing">Passen</message>
+	<message id="entity_player_w_shooting">Schiessen</message>
+	<message id="entity_player_w_tackling">Zweikampf</message>
+	<message id="entity_player_w_heading">Kopfball</message>
+	<message id="entity_player_w_freekick">Freistoss</message>
+	<message id="entity_player_w_pace">Schnelligkeit</message>
+	<message id="entity_player_w_creativity">Kreativität</message>
+	<message id="entity_player_w_influence">Einfluss</message>
+	<message id="entity_player_w_flair">Charakter</message>
+	<message id="entity_player_w_penalty">Elfmeter</message>
+	<message id="entity_player_w_penalty_killing">Elfmeterkiller</message>
+	
+	<message id="entity_player_w_technik_abbrev">TE</message>
+	<message id="entity_player_w_kondition_abbrev">KO</message>
+	<message id="entity_player_w_frische_abbrev">FR</message>
+	<message id="entity_player_w_zufriedenheit_abbrev">ZU</message>
+	<message id="entity_player_w_passing_abbrev">PA</message>
+	<message id="entity_player_w_shooting_abbrev">SCHU</message>
+	<message id="entity_player_w_tackling_abbrev">ZK</message>
+	<message id="entity_player_w_heading_abbrev">KB</message>
+	<message id="entity_player_w_freekick_abbrev">FS</message>
+	<message id="entity_player_w_pace_abbrev">SCHN</message>
+	<message id="entity_player_w_creativity_abbrev">KR</message>
+	<message id="entity_player_w_influence_abbrev">EF</message>
+	<message id="entity_player_w_flair_abbrev">CH</message>
+	<message id="entity_player_w_penalty_abbrev">11m</message>
+	<message id="entity_player_w_penalty_killing_abbrev">EK</message>
+	
 	<message id="entity_player_transfermarkt">Ist auf Transfermarkt</message>
 	<message id="entity_player_transfer_start">Auf Transfermarkt seit</message>
 	<message id="entity_player_transfer_ende">Auf Transfermarkt bis</message>
@@ -61,7 +90,9 @@
 	
 	<message id="entity_player_lending_owner_id">Verleiher</message>	
 	<message id="entity_player_lending_fee">Leihgebühr pro Spieltag</message>	
-	<message id="entity_player_lending_matches">Ausgeliehene Spiele</message>	
+	<message id="entity_player_lending_matches">Ausgeliehene Spiele</message>
+	
+	<message id="entity_player_talent">Talent</message>
 					
     <message id="player_position_goaly">Torwart</message>
     <message id="option_Torwart">Torwart</message>

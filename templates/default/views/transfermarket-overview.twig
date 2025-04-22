@@ -12,8 +12,9 @@
 
 <ul class="nav nav-tabs" id="transferTab">
   <li class="active"><a href="#overview" data-toggle="tab">{{ i18n.getMessage("transfermarket_tab_overview") }}</a></li>
-  <li><a href="#mybids" data-toggle="tab"
-  	data-ajaxtarget="mybidslist" data-ajaxblock="transfermarket-mybids" class="ajaxLink">{{ i18n.getMessage("transfermarket_tab_mybids") }}</a></li>
+  <!-- <li><a href="#mybids" data-toggle="tab"
+  	data-ajaxtarget="mybidslist" data-ajaxblock="transfermarket-mybids" class="ajaxLink">{{ i18n.getMessage("transfermarket_tab_mybids") }}</a></li>-->
+	
   <li><a href="#lasttransfers" data-toggle="tab"
   	data-ajaxtarget="lasttransferslist" data-ajaxblock="transfermarket-lasttransfers" class="ajaxLink">{{ i18n.getMessage("transfermarket_tab_lasttransfers") }}</a></li>
   <li><a href="#mytransfers" data-toggle="tab"
@@ -27,10 +28,23 @@
   		<label for="position">{{ i18n.getMessage("transfermarket_filter_by_position") }}</label>
   		<select name="position" id="position">
   			<option></option>
-  			<option value="goaly"{% if env.getRequestParameter("position") == "goaly" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
+  			<!-- <option value="goaly"{% if env.getRequestParameter("position") == "goaly" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
   			<option value="defense"{% if env.getRequestParameter("position") == "defense" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
   			<option value="midfield"{% if env.getRequestParameter("position") == "midfield" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
-  			<option value="striker"{% if env.getRequestParameter("position") == "striker" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>
+  			<option value="striker"{% if env.getRequestParameter("position") == "striker" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>-->
+  			
+  			<option value="T"{% if env.getRequestParameter("position") == "T" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
+  			<option value="LV"{% if env.getRequestParameter("position") == "LV" %} selected{% endif %}>{{ i18n.getMessage("option_LV") }}</option>
+  			<option value="IV"{% if env.getRequestParameter("position") == "IV" %} selected{% endif %}>{{ i18n.getMessage("option_IV") }}</option>
+  			<option value="RV"{% if env.getRequestParameter("position") == "RV" %} selected{% endif %}>{{ i18n.getMessage("option_RV") }}</option>
+  			<option value="LM"{% if env.getRequestParameter("position") == "LM" %} selected{% endif %}>{{ i18n.getMessage("option_LM") }}</option>
+  			<option value="DM"{% if env.getRequestParameter("position") == "DM" %} selected{% endif %}>{{ i18n.getMessage("option_DM") }}</option>
+  			<option value="ZM"{% if env.getRequestParameter("position") == "ZM" %} selected{% endif %}>{{ i18n.getMessage("option_ZM") }}</option>
+  			<option value="OM"{% if env.getRequestParameter("position") == "OM" %} selected{% endif %}>{{ i18n.getMessage("option_OM") }}</option>
+  			<option value="RM"{% if env.getRequestParameter("position") == "RM" %} selected{% endif %}>{{ i18n.getMessage("option_RM") }}</option>
+  			<option value="LS"{% if env.getRequestParameter("position") == "LS" %} selected{% endif %}>{{ i18n.getMessage("option_LS") }}</option>
+  			<option value="MS"{% if env.getRequestParameter("position") == "MS" %} selected{% endif %}>{{ i18n.getMessage("option_MS") }}</option>
+  			<option value="RS"{% if env.getRequestParameter("position") == "RS" %} selected{% endif %}>{{ i18n.getMessage("option_RS") }}</option>
   		</select>
 	  	<button type="submit" class="btn btn-primary">{{ i18n.getMessage("button_display") }}</button>
 	  	<a href="{{ env.getInternalUrl("transfermarket") }}" class="btn">{{ i18n.getMessage("button_reset") }}</a>
@@ -40,7 +54,7 @@
   
   {% if transferplayers is defined and transferplayers|length > 0 %}
   
-  	<p>{{ i18n.getMessage("transfermarket_playerscount", playerscount) }}</p>
+  	<p>{{ i18n.getMessage("transfermarket_playerscount", playerscount) }} - {{ i18n.getMessage("transfermarket_offerscount",  playeroffers) }}</p>
   
 	<table class="table table-striped">
 		<thead>
@@ -53,7 +67,7 @@
 				{% endif %}
 				
 				<th>{{ i18n.getMessage("transfermarket_head_deadline") }}</th>
-				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				<th>{{ i18n.getMessage("entity_player_marktwert") }}/<br>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
 				<th>{{ i18n.getMessage("transfermarket_head_highestbid") }}</th>
 			</tr>
 		</thead>
@@ -94,7 +108,10 @@
 				{% endif %}
 				
 				<td>{{ env.getFormattedDatetime(player.transfer_deadline) }}</td>
-				<td>{{ player.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
+				<td>
+					{{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}<br>
+					{{ player.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
+				</td>
 				<td>
 				<p>{% if player.highestbid.contract_matches is defined and player.highestbid.contract_matches > 0 %}
 					<a href="{{ env.getInternalUrl("transfer-bid", "id=" ~ player.id) }}">{% if player.team_id > 0 %}
@@ -123,11 +140,7 @@
   {% else %}
   	{{ messagebox.box(i18n.getMessage("transfermarket_no_players"), "", "info") }}
   {% endif %}
-  </div>
-  
-  <div class="tab-pane" id="mybids">
-  	<div id="mybidslist"></div>
-  </div>
+  </div>  
   
   <div class="tab-pane" id="lasttransfers">
   	<div id="lasttransferslist"></div>

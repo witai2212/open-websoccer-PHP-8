@@ -58,8 +58,20 @@ class FinancesModel implements IModel {
 		}
 		
 		$stockmarketCriteria = StockMarketDataService::clubStockmarketCriteria($this->_websoccer, $this->_db, $teamId);
+		$balance = BankAccountDataService::getAccountBalance($this->_websoccer, $this->_db, $teamId);
 		
-		return array("budget" => $team["team_budget"], "statements" => $statements, "paginator" => $paginator, "stockmarketCriteria" => $stockmarketCriteria);
+		$total_revenues = BankAccountDataService::getRevenuesBalance($this->_websoccer, $this->_db, $teamId);
+		$total_expenses = BankAccountDataService::getExpensesBalance($this->_websoccer, $this->_db, $teamId);
+		
+		$expenses = BankAccountDataService::getExpensesByTeamId($this->_websoccer, $this->_db, $teamId);
+		$revenues = BankAccountDataService::getRevenuesByTeamId($this->_websoccer, $this->_db, $teamId);
+		
+		$groupedCosts = BankAccountDataService::groupedFinanceByTeamId($this->_websoccer, $this->_db, $teamId);
+		
+		return array("budget" => $team["team_budget"], "statements" => $statements, "stockmarketCriteria" => $stockmarketCriteria,
+						"balance" => $balance, "total_revenues" => $total_revenues,
+						"total_expenses" => $total_expenses, "grouped_costs" => $groupedCosts,
+						"expenses" => $expenses, "paginator" => $paginator);
 	}
 	
 }

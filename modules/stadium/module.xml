@@ -49,11 +49,11 @@
                     <field id="land" type="text" required="true" />
                     <field id="picture" type="file" />
                     
-					<field id="p_steh" type="number" required="true" />
-					<field id="p_sitz" type="number" required="true" />
-					<field id="p_haupt_steh" type="number" required="true" />
+					<field id="p_steh" type="number" required="true" default="0"  />
+					<field id="p_sitz" type="number" required="true" default="0"  />
+					<field id="p_haupt_steh" type="number" required="true" default="0"  />
 					<field id="p_haupt_sitz" type="number" required="true" />
-					<field id="p_vip" type="number" required="true" />
+					<field id="p_vip" type="number" required="true" default="0"  />
 					
 					<field id="level_pitch" type="number" required="true" default="0" />
 					<field id="level_videowall" type="number" required="true" default="0" />

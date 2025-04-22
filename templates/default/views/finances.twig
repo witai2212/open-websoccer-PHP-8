@@ -1,4 +1,6 @@
 {% extends "base.twig" %}
+
+{% import "blocks/account_statement.twig" as pagination %}
 {% import "macros/messagebox.twig" as messagebox %}
 {% import "macros/paginator.twig" as pagination %}
 
@@ -8,6 +10,14 @@
 
 {% block page_content %}
 
+<ul class="nav nav-tabs" id="financesTab">
+  <li class="active"><a href="#grouped_values" data-toggle="tab">{{ i18n.getMessage("finance_overview") }}</a></li>
+  
+  <li><a href="#account_statement" data-toggle="tab" class="ajaxLink"
+			data-ajaxtarget="account_statementlist" data-ajaxblock="account_statement">{{ i18n.getMessage("finance_account_statement") }}</a></li>
+</ul>
+
+<!-- ---------------------------------------------------------------
 {% if stockmarketCriteria<=0  %}
 	<p>
 		<i class="icon-info-sign"></i> {{ i18n.getMessage("can_put_club-on_stockmarket")}}&nbsp;{{ club_value|number_format(0, ',', ' ') }}
@@ -17,49 +27,92 @@
 	</p>
 	<br>
 {% endif %}
+--------------------------------------------------------------- -->
 
-<h3>{{ i18n.getMessage("entity_club_finanz_budget") }}: {{ budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</h3>
+<div class="tab-content">
+	<h3>{{ i18n.getMessage("entity_club_finanz_budget") }}: {{ budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</h3>
+	<hr>
+	<div class="tab-pane active" id="grouped_values">
 
-{% if statements is defined and statements|length > 0 %}
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ i18n.getMessage("account_statement_date") }}</th>
-				<th>{{ i18n.getMessage("account_statement_sender") }}</th>
-				<th>{{ i18n.getMessage("account_statement_subject") }}</th>
-				<th>{{ i18n.getMessage("account_statement_amount") }}</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for statement in statements %}
-		<tr>
-			<td>{{ env.getFormattedDate(statement.date) }}</td>
-			<td>
-				{% if i18n.hasMessage(statement.sender) %}
-					{{ i18n.getMessage(statement.sender) }}
+		{% if grouped_costs|length>0 %}
+			<table class="table table-striped">
+				
+				<tr>
+					<th>&nbsp;</th><th>&nbsp;</th>
+					<th><span style="color: black"><b>{{ total_revenues|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</b></span></th>
+					<th><span style="color: red"><b>{{ total_expenses|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</b></span></th>
+				</tr>
+					
+			{% for grouped_cost in grouped_costs %}
+				{% if grouped_cost.betrag < 0 %}
+					<tr>
+						<td>{{ i18n.getMessage(grouped_cost.verwendung) }}<td>
+						<td>&nbsp;</td>
+						<td align="right"><span style="color: red">{{ grouped_cost.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></td>
+					</tr>
 				{% else %}
-					{{ statement.sender }}
+					<tr>
+						<td>{{ i18n.getMessage(grouped_cost.verwendung) }}<td>
+						<td>{{ grouped_cost.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+						<td align="right">&nbsp;</td>
+					</tr>
 				{% endif %}
-			</td>
-			<td>
-				{% if i18n.hasMessage(statement.subject) %}
-					{{ i18n.getMessage(statement.subject) }}
-				{% else %}
-					{{ statement.subject }}
-				{% endif %}
-			</td>
-			<td align="right">
-				{% if statement.amount < 0 %}<span style="color: red">{% endif %}
-				{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
-				{% if statement.amount < 0 %}</span>{% endif %}
-			</td>
-		</tr>
-		{% endfor %}
-		</tbody>
-	</table>
+			{% endfor %}
+			</table>
+		{% endif %}
+		
+	</div>
 	
-	{{ pagination.paginator(paginator) }}
+	<div class="tab-pane" id="account_statement">
+		<div id="account_statementlist">
+			<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>&nbsp;</th>
+					<th>{{ i18n.getMessage("account_statement_date") }}</th>
+					<th>{{ i18n.getMessage("account_statement_sender") }}</th>
+					<th>{{ i18n.getMessage("account_statement_subject") }}</th>
+					<th>{{ i18n.getMessage("account_statement_revenues") }}</th>
+					<th>{{ i18n.getMessage("account_statement_expenses") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for statement in statements %}
+			<tr>
+				<td>&nbsp;</td>
+				<td>{{ env.getFormattedDate(statement.date) }}</td>
+				<td>
+					{% if i18n.hasMessage(statement.sender) %}
+						{{ i18n.getMessage(statement.sender) }}
+					{% else %}
+						{{ statement.sender }}
+					{% endif %}
+				</td>
+				<td>
+					{% if i18n.hasMessage(statement.subject) %}
+						{{ i18n.getMessage(statement.subject) }}
+					{% else %}
+						{{ statement.subject }}
+					{% endif %}
+				</td>
+				<td align="right">
+					{% if statement.amount > 0 %}
+						{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+					{% endif %}
+				</td>
+				<td align="right">
+					{% if statement.amount < 0 %}
+						<span style="color: red">{{ statement.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
 
-{% endif %}
+		{{ pagination.paginator(paginator) }}
+		</div>
+	</div>
+	
+</div>
 {% endblock %}

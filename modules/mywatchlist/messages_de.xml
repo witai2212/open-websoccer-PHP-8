@@ -7,15 +7,20 @@
 	<message id="mywatchlist_verein">Verein</message>
 	<message id="mywatchlist_alter">Alter</message>
 	<message id="mywatchlist_position_main">Position</message>
-	<message id="mywatchlist_position_second">Nebenposition</message>
+	<message id="mywatchlist_position_second">Pos. 2</message>
 	<message id="mywatchlist_marktwert">Marktwert</message>
 	<message id="mywatchlist_noten_druchschnitt">Noten</message>
 	<message id="no_items">Keine Spieler auf der Beobachtungsliste</message>
 	<message id="mywatchlist_delete">Löschen</message>
 	
-	<message id="watchlist_remove_label"></message>
+	<message id="watchlist_remove_label">von Beobachtungsliste löschen</message>
 	<message id="watchlist_remove_success">Der Spieler steht nicht mehr auf der Beobachtungsliste.</message>
 	
-	<message id="mywatchlist_player_on_transferlist">*) Spieler ist auf dem Transfermarkt</message>
+	<message id="mywatchlist_player_on_transferlist">1) Spieler ist auf dem Transfermarkt</message>
+	<message id="mywatchlist_player_has_offer">2) Du hast für den Spieler geboten</message>
+	
+	<message id="button_put_on_watchlist">Spieler auf Beobachtungsliste setzen</message>
+	<message id="button_delete_from_watchlist">Spieler von Beobachtungsliste löschen</message>
+	<message id="watchlist_put_on_success">Der Spieler ist jetzt auf deiner Beobachtungsliste</message>
     
 </messages>

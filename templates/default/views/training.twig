@@ -32,10 +32,20 @@
 		<thead>
 			<tr>
 				<th>{{ i18n.getMessage("entity_player") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_technik") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_kondition") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_frische") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_zufriedenheit") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_technik_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_kondition_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_frische_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_zufriedenheit_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_passing_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_shooting_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_heading_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_tackling_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_freekick_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_pace_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_creativity_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_flair_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_penalty_abbrev") }}</th>
+				<th>{{ i18n.getMessage("entity_player_w_penalty_killing_abbrev") }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -90,6 +100,129 @@
 					{% endif %}
 					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
 				</td>
+				
+				<td>
+					{% set changeLabel = effect.passing %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.shooting %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.heading %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.tackling %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.freekick %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.pace %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.creativity %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.flair %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.penalty %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				<td>
+					{% set changeLabel = effect.penalty_killing %}
+					{% if changeLabel > 0 %}
+						{% set changeCssClass = "badge-success" %}
+						{% set changeLabel = "+" ~ changeLabel %}
+					{% elseif changeLabel < 0 %}
+						{% set changeCssClass = "badge-important" %}
+					{% else %}
+						{% set changeCssClass = "" %}
+					{% endif %}
+					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
+				</td>
+				
+				
 			</tr>
 		{% endfor %}
 		</tbody>

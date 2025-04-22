@@ -57,4 +57,9 @@
 	<message id="managecuprounds_groups_generate_alert">Achtung: Bisher angesetzte Spiele werden gelöscht!</message>
 	<message id="managecuprounds_groups_created_matches">angesetzte Spiele.</message>
 	
+	<message id="category_cup_navlabel">Int. Pokale</message>
+	<message id="groupmatchesgenerator_navlabel">Gruppenspiele generieren</message>
+	<message id="uefatempgenerator_navlabel">UEFA Temp generieren</message>
+	<message id="uefatempgenerator_label">temp. Tabelle generieren</message>
+	
 </messages>

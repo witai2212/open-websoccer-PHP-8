@@ -28,7 +28,16 @@
 			<tr>
 				<td><strong>{{ loop.index }}</strong></td>
 				<td><p>{% if index.user_qty<index.quantity %}<a href="{{ env.getInternalUrl("stock_chart", "id=" ~ index.id) }}">{{ index.name }} </a>{% else %}{{ index.name }}{% endif %}</p></td>
-				<td>{% if index.v1>index.v2 %} <p color="green"> {% elseif index.v1<index.v2 %} <p color="red"> {% elseif index.v1==index.v2 %} <p color="black"> {%  endif %} {{ index.v1 }} </p></td>
+				<td>
+					<p>
+						{% if index.v1 > index.v2 %}<i class="icon-chevron-up"></i>
+						{% elseif index.v1 < index.v2 %}<i class="icon-chevron-down"></i>
+						{% else %}<i class="icon-minus-sign"></i>
+						{% endif %}
+						
+						{{ index.v1 }}
+					</p>
+				</td>
 				<td>{{ index.v2 }}</td>
 				<td>{{ index.v3 }}</td>
 				<td>{{ index.v4 }}</td>

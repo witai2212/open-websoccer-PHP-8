@@ -21,6 +21,7 @@
 ******************************************************/
 define("NOTIFICATION_TYPE", "transferoffer");
 define("NOTIFICATION_TARGETPAGE", "transferoffers");
+define("NOTIFICATION_TARGETPAGE_MYOFFERS", "myoffers");
 
 /**
  * Data service for processing direct transfers. Direct transfers are player transfers which are agreed outside of the
@@ -47,25 +48,38 @@ class DirectTransfersDataService {
 			$senderUserId, $senderClubId, $receiverUserId, $receiverClubId,
 			$offerAmount, $offerMessage, $offerPlayerId1 = null, $offerPlayerId2 = null) {
 		
+		$now =$websoccer->getNowAsTimestamp();
+			    
 		$columns = array(
 				"player_id" => $playerId,
 				"sender_user_id" => $senderUserId,
 				"sender_club_id" => $senderClubId,
 				"receiver_club_id" => $receiverClubId,
-				"submitted_date" => $websoccer->getNowAsTimestamp(),
+				"submitted_date" => $now,
 				"offer_amount" => $offerAmount,
 				"offer_message" => $offerMessage,
 				"offer_player1" => $offerPlayerId1,
 				"offer_player2" => $offerPlayerId2
 				);
 		
-		$db->queryInsert($columns, $websoccer->getConfig("db_prefix") . "_transfer_offer");
+		//$db->queryInsert($columns, $websoccer->getConfig("db_prefix") . "_transfer_offer");
+		
+		
+		$player = PlayersDataService::getPlayerById($websoccer, $db, $playerId);
+		$new_salary = $player['player_contract_salary']*(rand(8,15)/10);
+		$goal_bonus = $player['player_contract_goalbonus']*(rand(8,15)/10);
+		
+		$insStr = "INSERT INTO ". $websoccer->getConfig("db_prefix") . "_transfer_angebot
+                    (spieler_id, verein_id, user_id, datum, abloese, vertrag_spiele, vertrag_gehalt, vertrag_torpraemie)
+                    VALUES ('$playerId', '$senderClubId', '$senderUserId', '$now', '$offerAmount', '60', '$new_salary', '$goal_bonus')";
+		echo $insStr ."<br>";
+		$db->executeQuery($insStr);
 		
 		$sender = UsersDataService::getUserById($websoccer, $db, $senderUserId);
 		
 		// create notification
 		NotificationsDataService::createNotification($websoccer, $db, $receiverUserId, "transferoffer_notification_offerreceived",
-			array("sendername" => $sender["nick"]), NOTIFICATION_TYPE, NOTIFICATION_TARGETPAGE, null, $receiverClubId);
+		    array("sendername" => $sender["nick"]), NOTIFICATION_TYPE, NOTIFICATION_TARGETPAGE_MYOFFERS, null, $receiverClubId);
 		
 	}
 	

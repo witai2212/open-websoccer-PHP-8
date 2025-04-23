@@ -977,8 +977,7 @@ class PlayersDataService {
 	    
 	    $queryString = "SELECT *, (sa_tore+sa_assists) AS scores
                             FROM ". $websoccer->getConfig('db_prefix') ."_spieler
-                            ORDER BY (sa_tore/sa_spiele) DESC, 
-                                sa_tore DESC, sa_assists, note_schnitt DESC
+                            ORDER BY sa_tore DESC, sa_assists, note_schnitt DESC
                             LIMIT 20";
 	    $result = $db->executeQuery($queryString);
 	    

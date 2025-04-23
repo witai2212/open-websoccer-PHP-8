@@ -48,7 +48,7 @@ class ChampionsleagueDataService {
 	 * @param WebSoccer $websoccer Application context.
 	 * @return return array of Champions league data.
 	 */
-	public static function getCLGroupDataByGroup(WebSoccer $websoccer, DbConnection $db, $cup_round_id, $group_name) {
+	public static function getCLGroupDataByGroup(WebSoccer $websoccer, DbConnection $db, $cup_round_id, $group_name, $limit) {
 		
 		//$cup_round_id = '18';
 		//$group_name = 'A';
@@ -62,12 +62,15 @@ class ChampionsleagueDataService {
 						INNER JOIN " . $websoccer->getConfig("db_prefix") . "_liga AS L ON L.id = V.liga_id
 					WHERE CR.id = '$cup_round_id'
 					AND CG.name = '$group_name'
-					ORDER BY CG.tab_points DESC, CG.tab_wins DESC, CG.tab_goals DESC, CG.tab_draws ASC, CG.tab_losses ASC, CG.tab_goalsreceived ASC";
+					ORDER BY CG.tab_points DESC, CG.tab_wins DESC, CG.tab_goals DESC, CG.tab_draws ASC, CG.tab_losses ASC, CG.tab_goalsreceived ASC
+                    LIMIT $limit";
 	    $result = $db->executeQuery($sqlStr);
 		while ($gr = $result->fetch_array()) {
 			$group[] = $gr;
 		}
 	    $result->free();
+	    
+	    print_r($group);
 		
 		return $group;
 		

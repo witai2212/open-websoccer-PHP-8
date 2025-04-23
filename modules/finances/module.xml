@@ -60,7 +60,7 @@
 	            id="fix-term-deposit"
 	            template="fix-term-deposit"
 	            model="FixTermDepositModel"
-	            navitem="true"
+	            navitem="false"
 	            navweight="5"
 	            parentItem="finance"
 	            role="user">

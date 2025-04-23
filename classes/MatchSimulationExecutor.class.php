@@ -430,8 +430,6 @@ class MatchSimulationExecutor {
                     } else {
                         $computerFactor = 1;
                         
-                        //by user_id
-                        ScoutingDataService::reduceTeamMatches($websoccer, $db, $playerTeam);
                     }
                     
                     echo "ComputerFactor: ". $computerFactor ." userId: ". $playerinfo['team_id'] ."<br>\n";

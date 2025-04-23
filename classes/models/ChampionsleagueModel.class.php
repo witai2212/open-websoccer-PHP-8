@@ -62,7 +62,7 @@ class ChampionsleagueModel implements IModel {
 		
 		
 		if($phase=='A' || $phase=='B' || $phase=='C' || $phase=='D') {
-		    $gr_phase_data = ChampionsleagueDataService::getCLGroupDataByGroup($this->_websoccer, $this->_db, $clGroupId, $phase);
+		    $gr_phase_data = ChampionsleagueDataService::getCLGroupDataByGroup($this->_websoccer, $this->_db, $clGroupId, $phase, $limit=16);
 		    $group_title = "group_title_". $str_phase;
 		    $cup_round = "Gruppen";
 		    $cup_group = "Gruppe $phase";
@@ -98,7 +98,7 @@ class ChampionsleagueModel implements IModel {
 		    $cup_group = NULL;
 		    
 		} else {
-		    $gr_phase_data = ChampionsleagueDataService::getCLGroupDataByGroup($this->_websoccer, $this->_db, $clGroupId, $phase="A");
+		    $gr_phase_data = ChampionsleagueDataService::getCLGroupDataByGroup($this->_websoccer, $this->_db, $clGroupId, $phase="A", $limit=16);
 		    $group_title = "group_title_a";
 		    $cup_round = "Gruppen";
 		    $cup_group = "Gruppe A";

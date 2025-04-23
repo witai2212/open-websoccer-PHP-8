@@ -35,11 +35,11 @@ class WatchlistDataService {
 	 */
     public static function getMyWatchlist(WebSoccer $websoccer, DbConnection $db, $teamId) {
         
-        $queryString = "SELECT wl.*, s.*
+        $queryString = "SELECT wl.*, s.*, v.id, v.bild
                 FROM ". $websoccer->getConfig('db_prefix') ."_watchlist AS wl,
-                    ". $websoccer->getConfig('db_prefix') ."_spieler AS s
-                WHERE wl.verein_id='$teamId' 
-                    AND s.id=wl.spieler_id";
+                    ". $websoccer->getConfig('db_prefix') ."_spieler AS s, 
+                    ". $websoccer->getConfig('db_prefix') ."_verein AS v
+                WHERE wl.verein_id='$teamId' AND s.id=wl.spieler_id AND v.id=s.verein_id";
         $result = $db->executeQuery($queryString);
         
         $i=0;

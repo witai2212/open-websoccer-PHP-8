@@ -21,7 +21,6 @@
 				<th>{{ i18n.getMessage("mywatchlist_position_main") }}</th>
 				<th>{{ i18n.getMessage("mywatchlist_position_second") }}</th>
 				<th>{{ i18n.getMessage("mywatchlist_marktwert") }}</th>
-				<th>{{ i18n.getMessage("mywatchlist_noten_druchschnitt") }}</th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
@@ -55,12 +54,16 @@
 					{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}
 					<a href="?page=player&id={{ player.id }}">{{ player.vorname }}&nbsp{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</a>
 				</td>
-				<td><a href="?page=team&id={{ player.verein_id }}">{{ player.team_name }}</a></td>
+				<td>
+					{% if player.bild|length > 0 %}
+						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ player.bild }}" style="max-width: 20px"/>
+					{% endif %}
+					<a href="?page=team&id={{ player.verein_id }}">{{ player.team_name }}</a>
+				</td>
 				<td>{{ player.age }}</td>
 				<td>{{ player.position_main }}</td>
 				<td>{{ player.position_second }}</td>
 				<td>{{ player.marktwert|number_format(0, ',', ' ') }} <sub>{{ transfermarktLabel }}{{ hasOfferLabel }}</sub></td>
-				<td>{{ player.note_schitt }}</td>
 				<td>
 					<form action="?page=mywatchlist&action=remove-player-from-watchlist" class="form-inline" method="post">
 						<button type="submit" class="btn btn-mini"><i class="icon-trash"></i> {{ i18n.getMessage("mywatchlist_delete") }}</button>

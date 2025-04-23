@@ -289,6 +289,9 @@ function renderRound($roundNode) {
 		if (!$roundNode["round"]["groupmatches"]) {
 			echo "<p><a href=\"$addMatchUrl\" class=\"btn btn-mini\"><i class=\"icon-plus-sign\"></i> ". $i18n->getMessage("managecuprounds_add_match") . "</a>";
 			echo " <a href=\"?site=managecuprounds-generate&round=". $roundNode["round"]["id"] . "\" class=\"btn btn-mini\"><i class=\"icon-random\"></i> ". $i18n->getMessage("managecuprounds_generate_matches") . "</a>";
+			if($_GET['cup']==2) {
+		        echo " <a href=\"?site=managecuprounds-generate_temp&round=". $roundNode["round"]["id"] . "\" class=\"btn btn-mini\"><i class=\"icon-random\"></i>temp tabelle generieren</a>";
+			}
 			echo "</p>";
 		} else {
 			echo "<p><a href=\"?site=managecuprounds-groups&round=". $roundNode["round"]["id"] . "\" class=\"btn btn-mini\"><i class=\"icon-list\"></i> ". $i18n->getMessage("managecuprounds_manage_groups") . "</a>";

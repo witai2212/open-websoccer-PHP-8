@@ -159,6 +159,16 @@ class ScoutingDataService {
      * @param int $teamId ID of team
      */
     public static function hireScout(WebSoccer $websoccer, DbConnection $db, $scoutId, $teamId) {
+        
+        // get data from scout
+        $scout = self::getScoutById($websoccer, $db, $scoutId);
+        
+        $remaining_matches = $scout['team_matches'];
+        $scout_fee = $scout['fee'];
+        $total_amount = $remaining_matches*$scout_fee;
+        
+        // debit amount
+        BankAccountDataService::debitAmount($websoccer, $db, $teamId, $total_amount, "scouting_message", "scouting_abteilung");
 
         /// set team_id in database
         $sqlStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_scout SET team_id='$teamId', team_matches='20' WHERE id='$scoutId'";
@@ -174,16 +184,6 @@ class ScoutingDataService {
      * @param int $teamId ID of team
      */
     public static function fireScout(WebSoccer $websoccer, DbConnection $db, $scoutId, $teamId) {
-        
-        // get data from scout
-        $scout = self::getScoutById($websoccer, $db, $scoutId);
-        
-        $remaining_matches = $scout['team_matches'];
-        $scout_fee = $scout['fee'];
-        $total_amount = $remaining_matches*$scout_fee;
-        
-        // debit amount
-        BankAccountDataService::debitAmount($websoccer, $db, $teamId, $total_amount, "scouting_message", "scouting_abteilung");
         
         $scout_matches = $websoccer->getConfig("scouts_matches");
         
@@ -221,9 +221,9 @@ class ScoutingDataService {
         }
     }
 	
-    public static function reduceTeamMatches(WebSoccer $websoccer, DbConnection $db, $playerTeam) {
+    public static function reduceTeamMatches(WebSoccer $websoccer, DbConnection $db) {
 		
-		$updScout = "UPDATE ". $websoccer->getConfig("db_prefix") ."_scout SET team_matches=team_matches-1 WHERE team_matches>0 AND team_id='$playerTeam'";
+		$updScout = "UPDATE ". $websoccer->getConfig("db_prefix") ."_scout SET team_matches=team_matches-1 WHERE team_matches>0";
 		$db->executeQuery($updScout);
 		
 	}

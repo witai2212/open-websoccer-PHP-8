@@ -199,7 +199,7 @@ class TransfermarketDataService {
 	
 	public static function movePlayersWithoutTeamToTransfermarket(WebSoccer $websoccer, DbConnection $db) {
 	    
-	    echo"PL->TL<br>";
+	    echo"PL without Team -> TL\n";
 		
 		$columns['unsellable'] = 0;
 		$columns['lending_fee'] = 0;

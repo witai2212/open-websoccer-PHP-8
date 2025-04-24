@@ -21,8 +21,6 @@ class ComputerTransfersDataService {
 
 	    $MAX_PLAYERS_ON_TL = $websoccer->getConfig("transfermarket_max_players_on_tl");
 	    
-	    echo"- compTL\n";
-	    
 	    // TL time expired
 	    self::TLExpired($websoccer, $db);
 	    
@@ -34,6 +32,8 @@ class ComputerTransfersDataService {
 
 		// --- Managing Transfer List (only if condition is met) ---
 		$playersOnTL = self::getNumberOfPlayersOnTL($websoccer, $db);
+		
+		echo"- compTL ". $playersOnTL ." - ". $MAX_PLAYERS_ON_TL ."\n";
 
 		if($playersOnTL<$MAX_PLAYERS_ON_TL) {
 		//if ((($playersOnTL / $totalPlayers) < self::MAX_PERCENTAGE_PLAYERS_ON_TL) || ($playersOnTL < self::MAX_PLAYERS_ON_TL)) {
@@ -275,6 +275,8 @@ class ComputerTransfersDataService {
                     (spieler_id, verein_id, abloese, handgeld, vertrag_spiele, datum, vertrag_gehalt, vertrag_torpraemie)
                     VALUES ('$playerId', '$teamId', '$bidAmount', '$handgeld', '60', '$now', '$salaryAmount', '$goalAmount')";
         $db->executeQuery($insStr);
+        
+        echo"___BID: ". $playerId ."\n";
 
 		// create notification for owner
 		$playerData = PlayersDataService::getPlayerById($websoccer, $db, $playerId);
@@ -366,6 +368,8 @@ class ComputerTransfersDataService {
                     WHERE id='$playerId'";
         $db->executeQuery($updStr);
 		
+        echo"___ON TL: ". $playerId ."\n";
+        
 		/* check if player on watchlist
 		 *
 		 */

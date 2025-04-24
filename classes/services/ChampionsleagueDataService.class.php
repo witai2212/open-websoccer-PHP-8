@@ -70,7 +70,7 @@ class ChampionsleagueDataService {
 		}
 	    $result->free();
 	    
-	    print_r($group);
+	    //print_r($group);
 		
 		return $group;
 		
@@ -145,12 +145,11 @@ class ChampionsleagueDataService {
 	    
 	    if(isset($cup_group)) {
 	        
-	        $group = explode(" ", $cup_group);      
+	        $group = explode(" ", $cup_group);
 	        $cup_group_str = " AND M.pokalgruppe='$cup_group'";
 	        
 	    } else {
 	        $cup_group_str = "";
-	        $group[1] = "A";
 	    }
 	    
 	    $sqlStr = "SELECT M.*, HT.name AS home_team_name, HT.bild AS home_team_logo, HT.liga_id AS home_team_ligaid, 
@@ -163,8 +162,9 @@ class ChampionsleagueDataService {
 					INNER JOIN " . $websoccer->getConfig("db_prefix") . "_liga AS AL ON AL.id = AT.liga_id
 
                     WHERE M.spieltyp='Pokalspiel'
-                        AND M.pokalname='$cup_name' AND M.pokalrunde='".$cup_round."' AND M.pokalgruppe='".$group[1]."'
+                        AND M.pokalname='$cup_name' AND M.pokalrunde='".$cup_round."' $cup_group_str
                     ORDER BY datum ASC";
+	    
 	    $result = $db->executeQuery($sqlStr);
 		while ($match = $result->fetch_array()) {
 			$matches[] = $match;

@@ -137,7 +137,7 @@ class UEFAEuroLeagueDataService {
 
 	    $matches = array();
 	    
-	    if(isset($cup_group)) {
+	    /*if(isset($cup_group)) {
 	        
 	        $group = explode(" ", $cup_group);
 	        $cup_group_str = " AND M.pokalgruppe='$cup_group'";
@@ -145,6 +145,15 @@ class UEFAEuroLeagueDataService {
 	    } else {
 	        $cup_group_str = "";
 	        $group[1] = "A";
+	    }*/
+	    
+	    if(isset($cup_group)) {
+	        
+	        $group = explode(" ", $cup_group);
+	        $cup_group_str = " AND M.pokalgruppe='$cup_group'";
+	        
+	    } else {
+	        $cup_group_str = "";
 	    }
 	    
 	    //echo $group[1] ."<br>";
@@ -157,9 +166,9 @@ class UEFAEuroLeagueDataService {
 					INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS AT ON AT.id = M.gast_verein
 					INNER JOIN " . $websoccer->getConfig("db_prefix") . "_liga AS HL ON HL.id = HT.liga_id
 					INNER JOIN " . $websoccer->getConfig("db_prefix") . "_liga AS AL ON AL.id = AT.liga_id
-
+					
                     WHERE M.spieltyp='Pokalspiel'
-                        AND M.pokalname='$cup_name' AND M.pokalrunde='$cup_round' AND M.pokalgruppe='".$group[1]."'
+                        AND M.pokalname='$cup_name' AND M.pokalrunde='".$cup_round."' $cup_group_str
                     ORDER BY datum ASC";
 	    //echo $sqlStr ."<br>";
 	    $result = $db->executeQuery($sqlStr);

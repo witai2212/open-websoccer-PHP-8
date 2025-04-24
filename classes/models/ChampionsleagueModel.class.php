@@ -79,13 +79,13 @@ class ChampionsleagueModel implements IModel {
 		    $cup_round = "Achtelfinale";
 		    $cup_group = NULL;
 		    
-		} else if($phase=='qfinal') {
+		} else if($phase=='vfinal') {
 		    //get group quarter finale data
 		    $group_title = "qfinal_title";
 		    $cup_round = "Viertelfinale";
 		    $cup_group = NULL;
 		    
-		} else if($phase=='sfinal') {
+		} else if($phase=='hfinal') {
 		    //get semi final data
 		    $group_title = "sfinal_title";
 		    $cup_round = "Halbfinale";

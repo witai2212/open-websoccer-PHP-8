@@ -49,6 +49,9 @@
   </a>
   <a href="{{ env.getInternalUrl("team", "id=" ~ userteam.team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}" style="margin: 0 5px"><i class="icon-info-sign darkIcon"></i></a> 
   <a href="{{ env.getInternalUrl("league", "id=" ~ userteam.team_league_id) }}" title="{{ i18n.getMessage("userprofile_block_link_table") }}"><i class="icon-table darkIcon"></i></a>
+  
+  <a href="{{ env.getInternalUrl("league", "id=" ~ userteam.team_league_id) }}" title="{{ i18n.getMessage("userprofile_block_link_table") }}"><img src="{{ env.getConfig("context_root") }}/img/icons/famfamfam/table.png"></a>
+  
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" id="clubsSelectionList">
     
   </ul>

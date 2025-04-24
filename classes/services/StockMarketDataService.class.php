@@ -101,6 +101,10 @@ class StockMarketDataService {
         
         $result0->free();
         
+        //delete stock if qty = 0
+        $delStockStr = "DELETE FROM ". $websoccer->getConfig("db_prefix") ."_user_stock WHERE qty<=0";
+        $db->executeQuery($delStockStr);
+        
     }
     
     /**
@@ -339,6 +343,7 @@ class StockMarketDataService {
         
         $db->executeQuery($stockmarketUpdateStr);
         $db->executeQuery($portfolioUpdateStr);
+        
     }
     
     /*

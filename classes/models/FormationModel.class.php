@@ -87,6 +87,9 @@ class FormationModel implements IModel {
 			} else {
 				$players = PlayersDataService::getPlayersOfTeamByPosition($this->_websoccer, $this->_db, $clubId, 'DESC', count($matchinfo) && $matchinfo['match_type'] == 'cup',
 						(isset($matchinfo['match_type']) && $matchinfo['match_type'] != 'friendly'));
+				if (class_exists('MedicalCenterDataService')) {
+					$players = MedicalCenterDataService::decorateFormationPlayers($this->_websoccer, $this->_db, $this->_i18n, $clubId, $matchinfo['match_id'], $players);
+				}
 			}
 		}
 		
@@ -161,11 +164,16 @@ class FormationModel implements IModel {
 			}
 		}
 		
-		// free kick taker
+		// free kick and corner takers
 		if ($this->_websoccer->getRequestParameter('freekickplayer')) {
 			$formation['freekickplayer'] = $this->_websoccer->getRequestParameter('freekickplayer');
 		} else if (!isset($formation['freekickplayer'])) {
 			$formation['freekickplayer'] = '';
+		}
+		if ($this->_websoccer->getRequestParameter('cornerplayer')) {
+			$formation['cornerplayer'] = $this->_websoccer->getRequestParameter('cornerplayer');
+		} else if (!isset($formation['cornerplayer'])) {
+			$formation['cornerplayer'] = '';
 		}
 		
 		// tactical options
@@ -195,12 +203,24 @@ class FormationModel implements IModel {
 			}
 		}
 		
+		$medicalWarnings = array();
+		if (!$this->_nationalteam && class_exists('MedicalCenterDataService')) {
+			$medicalWarnings = MedicalCenterDataService::getFormationWarnings($this->_websoccer, $this->_db, $this->_i18n, $clubId, $matchinfo['match_id']);
+		}
+		
+		$tacticalStyleData = array('enabled' => FALSE, 'human_team' => FALSE, 'styles' => array(), 'current' => array());
+		if (!$this->_nationalteam && class_exists('TacticalStyleDataService')) {
+			$tacticalStyleData = TacticalStyleDataService::getPageData($this->_websoccer, $this->_db, $this->_i18n, $clubId, $this->_websoccer->getUser()->id);
+		}
+		
 		return array('nextMatches' => $nextMatches,
 				'next_match' => $matchinfo, 
 				'previous_matches' => MatchesDataService::getPreviousMatches($matchinfo, $this->_websoccer, $this->_db),
 				'players' => $players, 
 				'formation' => $formation, 
 				'setup' => $setup,
+				'medical_warnings' => $medicalWarnings,
+				'tactical_style' => $tacticalStyleData,
 				'captain_id' => TeamsDataService::getTeamCaptainIdOfTeam($this->_websoccer, $this->_db, $clubId));
 	}
 	

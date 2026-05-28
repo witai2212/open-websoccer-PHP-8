@@ -19,6 +19,8 @@
 	<message id="entity_player_position_main_help">Ist keine Hauptposition angegeben, ist der Spieler All-Rounder innerhalb der oben angegebenen Spielposition.</message>
 	<message id="entity_player_position_second">Nebenposition</message>
 	<message id="entity_player_nation">Nationalität (Land)</message>
+	<message id="entity_player_personality">Persönlichkeit</message>
+	<message id="entity_player_personality_help">Ein Hauptcharakterzug des Spielers. Sichtbar für den eigenen Verein und nach Scouting.</message>
 	<message id="entity_player_picture">Bild</message>
 	<message id="entity_player_verletzt">Verletzt</message>
 	<message id="entity_player_gesperrt">Gesperrt</message>
@@ -119,4 +121,13 @@
     <message id="option_RS">Rechtsaußen</message>
     <message id="option_OM">Offensives Mittelfeld</message>
     <message id="option_DM">Defensives Mittelfeld</message>
+
+    <message id="option_leader">Anführer</message>
+    <message id="option_professional">Profi</message>
+    <message id="option_injury_prone">Verletzungsanfällig</message>
+    <message id="option_inconsistent">Unbeständig</message>
+    <message id="option_loyal">Loyal</message>
+    <message id="option_ambitious">Ehrgeizig</message>
+    <message id="option_big_game_player">Mann für große Spiele</message>
+    <message id="option_troublemaker">Unruhestifter</message>
 </messages>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="clubs" version="1.0.0"/>
+        <dependency module="office" version="1.0.0"/>
+    </dependencies>
+
+    <admin>
+        <adminpage
+            id="clubstaff"
+            entity="clubstaff"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="club_staff AS StaffTab" >
+
+                <overview delete="true" edit="true" >
+                    <column
+                        id="entity_clubstaff_name"
+                        field="StaffTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_clubstaff_role"
+                        field="StaffTab.role"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_clubstaff_level"
+                        field="StaffTab.level"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_clubstaff_salary"
+                        field="StaffTab.salary"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_clubstaff_bonus"
+                        field="StaffTab.bonus"
+                        type="percent"
+                        sort="true" />
+
+                    <column
+                        id="entity_clubstaff_active"
+                        field="StaffTab.active"
+                        type="boolean"
+                        sort="true"
+                        filter="true" />
+                </overview>
+
+                <editform>
+                    <field id="name" type="text" required="true" />
+                    <field id="role" type="select" required="true" selection="assistant_manager|goalkeeping_coach|fitness_coach|youth_coach|physio|marketing_manager|financial_advisor" />
+                    <field id="level" type="number" required="true" default="1" />
+                    <field id="salary" type="number" required="true" default="0" />
+                    <field id="bonus" type="percent" required="true" default="2" />
+                    <field id="description" type="textarea" required="false" />
+                    <field id="active" type="boolean" required="false" default="1" />
+                </editform>
+            </entity>
+        </adminpage>
+    </admin>
+
+    <settings>
+        <setting id="club_staff_enabled" category="game" type="boolean" default="1" />
+    </settings>
+
+    <pages>
+        <page
+            id="club-staff"
+            template="club-staff"
+            model="ClubStaffModel"
+            parentItem="office"
+            navitem="true"
+            navweight="7"
+            role="user"
+            navitemOnlyForConfigEnabled="club_staff_enabled">
+        </page>
+    </pages>
+
+    <actions>
+        <action id="hire-club-staff" controller="HireClubStaffController" role="user" log="true">
+            <param id="id" type="number" required="true" min="1" max="2000000000" />
+        </action>
+
+        <action id="fire-club-staff" controller="FireClubStaffController" role="user" log="true">
+            <param id="role" type="text" required="true" min="3" max="64" />
+        </action>
+    </actions>
+
+    <plugins>
+        <eventlistener event="PlayerTrainedEvent" class="ClubStaffPlugin" method="handlePlayerTrained" />
+        <eventlistener event="YouthPlayerPlayedEvent" class="ClubStaffPlugin" method="handleYouthPlayerPlayed" />
+        <eventlistener event="YouthPlayerScoutedEvent" class="ClubStaffPlugin" method="handleYouthPlayerScouted" />
+        <eventlistener event="TicketsComputedEvent" class="ClubStaffPlugin" method="handleTicketsComputed" />
+        <eventlistener event="MatchCompletedEvent" class="ClubStaffPlugin" method="handleMatchCompleted" />
+    </plugins>
+
+</module>

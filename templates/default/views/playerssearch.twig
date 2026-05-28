@@ -1,5 +1,8 @@
 {% extends "base.twig" %}
-{% import "macros/formelements.twig" as formelements %}
+
+{% import "macros/paginator.twig" as pagination %}
+{% import "macros/playerlists.twig" as playerlists %}
+{% import "macros/messagebox.twig" as messagebox %}
 
 {% block page_title %}
 {{ i18n.getMessage("playerssearch_navlabel") }}
@@ -7,222 +10,147 @@
 
 {% block page_content %}
 
+<form class="form-inline" method="get">
+	<label for="position">{{ i18n.getMessage("transfermarket_filter_by_position") }}</label>
+	<select name="position" id="position">
+		<option></option>
+		<option value="T"{% if env.getRequestParameter("position") == "T" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
+		<option value="LV"{% if env.getRequestParameter("position") == "LV" %} selected{% endif %}>{{ i18n.getMessage("option_LV") }}</option>
+		<option value="IV"{% if env.getRequestParameter("position") == "IV" %} selected{% endif %}>{{ i18n.getMessage("option_IV") }}</option>
+		<option value="RV"{% if env.getRequestParameter("position") == "RV" %} selected{% endif %}>{{ i18n.getMessage("option_RV") }}</option>
+		<option value="LM"{% if env.getRequestParameter("position") == "LM" %} selected{% endif %}>{{ i18n.getMessage("option_LM") }}</option>
+		<option value="DM"{% if env.getRequestParameter("position") == "DM" %} selected{% endif %}>{{ i18n.getMessage("option_DM") }}</option>
+		<option value="ZM"{% if env.getRequestParameter("position") == "ZM" %} selected{% endif %}>{{ i18n.getMessage("option_ZM") }}</option>
+		<option value="OM"{% if env.getRequestParameter("position") == "OM" %} selected{% endif %}>{{ i18n.getMessage("option_OM") }}</option>
+		<option value="RM"{% if env.getRequestParameter("position") == "RM" %} selected{% endif %}>{{ i18n.getMessage("option_RM") }}</option>
+		<option value="LS"{% if env.getRequestParameter("position") == "LS" %} selected{% endif %}>{{ i18n.getMessage("option_LS") }}</option>
+		<option value="MS"{% if env.getRequestParameter("position") == "MS" %} selected{% endif %}>{{ i18n.getMessage("option_MS") }}</option>
+		<option value="RS"{% if env.getRequestParameter("position") == "RS" %} selected{% endif %}>{{ i18n.getMessage("option_RS") }}</option>
+	</select>
 
-<form class="form-horizontal" method="post">
+	{% if playerssearch_filter_definitions is defined and playerssearch_filter_definitions|length > 0 %}
+		<a class="btn" data-toggle="collapse" href="#playersSearchAdvancedSearch" style="margin-left: 8px;">
+			<i class="icon-search"></i> {{ i18n.getMessage("transfermarket_filter_advanced") }}
+		</a>
 
-	{{ formelements.textfield('fname', i18n.getMessage('entity_player_vorname'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
-	
-	{{ formelements.textfield('lname', i18n.getMessage('entity_player_nachname'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
-	
-	{{ formelements.autocomplete("club", i18n.getMessage("entity_player_verein_id"), env.getRequestParameter('club'), false, validationMsg, "clubsearch") }}
-  
-	<div class="control-group">
-		<label class="control-label" for="position">
-			{{ i18n.getMessage("entity_player_position") }}
-		</label>
-		<div class="controls">
-	  		<select name="position" id="position">
-	  			<option></option>
-	  			<option value="Torwart"{% if env.getRequestParameter("position") == "Torwart" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
-	  			<option value="Abwehr"{% if env.getRequestParameter("position") == "Abwehr" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
-	  			<option value="Mittelfeld"{% if env.getRequestParameter("position") == "Mittelfeld" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
-	  			<option value="Sturm"{% if env.getRequestParameter("position") == "Sturm" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>
-	  		</select>
+		<div id="playersSearchAdvancedSearch" class="collapse{% if playerssearch_advancedfilters_active is defined and playerssearch_advancedfilters_active %} in{% endif %}">
+			<div class="well well-small" style="margin-top: 10px; margin-bottom: 10px; max-width: 560px;">
+				<table class="table table-condensed" style="margin-bottom: 0; background: transparent;">
+					<thead>
+						<tr>
+							<th>{{ i18n.getMessage("transfermarket_filter_attribute") }}</th>
+							<th style="width: 90px;">{{ i18n.getMessage("transfermarket_filter_min") }}</th>
+							<th style="width: 90px;">{{ i18n.getMessage("transfermarket_filter_max") }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for filterkey, filter in playerssearch_filter_definitions %}
+							<tr>
+								<td><label for="{{ filterkey }}_min" style="margin-bottom: 0;">{{ i18n.getMessage(filter.label_key) }}</label></td>
+								<td><input type="text" class="input-mini" name="{{ filterkey }}_min" id="{{ filterkey }}_min" value="{{ env.getRequestParameter(filterkey ~ '_min') }}" placeholder="{{ i18n.getMessage('transfermarket_filter_min') }}" /></td>
+								<td><input type="text" class="input-mini" name="{{ filterkey }}_max" id="{{ filterkey }}_max" value="{{ env.getRequestParameter(filterkey ~ '_max') }}" placeholder="{{ i18n.getMessage('transfermarket_filter_max') }}" /></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
-	
-	{% if env.getConfig("hide_strength_attributes") != "1" %}
-	<div class="control-group">
-		<label class="control-label" for="strength">
-			{{ i18n.getMessage("entity_player_w_staerke") }}
-		</label>
-		<div class="controls">
-	  		<select name="strength" id="strength">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("strength") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("strength") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("strength") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("strength") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("strength") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="passing">
-			{{ i18n.getMessage("entity_player_w_passing") }}
-		</label>
-		<div class="controls">
-	  		<select name="passing" id="passing">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("passing") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("passing") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("passing") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("passing") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("passing") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="shooting">
-			{{ i18n.getMessage("entity_player_w_shooting") }}
-		</label>
-		<div class="controls">
-	  		<select name="shooting" id="shooting">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("shooting") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("shooting") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("shooting") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("shooting") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("shooting") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="heading">
-			{{ i18n.getMessage("entity_player_w_heading") }}
-		</label>
-		<div class="controls">
-	  		<select name="heading" id="heading">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("heading") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("heading") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("heading") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("heading") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("heading") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="tackling">
-			{{ i18n.getMessage("entity_player_w_tackling") }}
-		</label>
-		<div class="controls">
-	  		<select name="tackling" id="tackling">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("tackling") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("tackling") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("tackling") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("tackling") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("tackling") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="freekick">
-			{{ i18n.getMessage("entity_player_w_freekick") }}
-		</label>
-		<div class="controls">
-	  		<select name="freekick" id="freekick">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("freekick") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("freekick") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("freekick") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("freekick") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("freekick") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="creativity">
-			{{ i18n.getMessage("entity_player_w_creativity") }}
-		</label>
-		<div class="controls">
-	  		<select name="creativity" id="creativity">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("creativity") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("creativity") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("creativity") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("creativity") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("creativity") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="pace">
-			{{ i18n.getMessage("entity_player_w_pace") }}
-		</label>
-		<div class="controls">
-	  		<select name="pace" id="pace">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("pace") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("pace") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("pace") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("pace") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("pace") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="influence">
-			{{ i18n.getMessage("entity_player_w_influence") }}
-		</label>
-		<div class="controls">
-	  		<select name="influence" id="influence">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("influence") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("influence") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("influence") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("influence") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("influence") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="flair">
-			{{ i18n.getMessage("entity_player_w_flair") }}
-		</label>
-		<div class="controls">
-	  		<select name="flair" id="flair">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("flair") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("flair") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("flair") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("flair") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("flair") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="penalty">
-			{{ i18n.getMessage("entity_player_w_penalty") }}
-		</label>
-		<div class="controls">
-	  		<select name="penalty" id="penalty">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("penalty") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("penalty") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("penalty") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("penalty") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("penalty") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label" for="penalty_killing">
-			{{ i18n.getMessage("entity_player_w_penalty_killing") }}
-		</label>
-		<div class="controls">
-	  		<select name="penalty_killing" id="penalty_killing">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("penalty_killing") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("penalty_killing") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("penalty_killing") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("penalty_killing") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("penalty_killing") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
-		</div>
-	</div>
 	{% endif %}
-	
-	{% if env.getConfig("lending_enabled") %}
-		{{ formelements.checkbox('lendable', i18n.getMessage('lending_player_marker_lendable'), env.getRequestParameter('lendable')) }}
-	{% endif %}
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary ajaxSubmit" 
-		data-ajaxblock="playerssearch-results"
-		data-ajaxtarget="playerssearch-results_block">{{ i18n.getMessage('playerssearch_submit') }}</button>
-	</div>
-	<input type="hidden" name="page" value="playerssearch"/>
+
+	<button type="submit" class="btn btn-primary">{{ i18n.getMessage("button_display") }}</button>
+	<a href="{{ env.getInternalUrl("playerssearch") }}" class="btn">{{ i18n.getMessage("button_reset") }}</a>
+	<input type="hidden" name="page" value="playerssearch" />
 </form>
+
+{% if players is defined and players|length > 0 %}
+	<p>{{ i18n.getMessage("playerssearch_hits", playersCount) }}</p>
+	
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th><abbr title="{{ i18n.getMessage("playertable_head_position") }}">{{ i18n.getMessage("playertable_head_position_abbr") }}</abbr></th>
+				<th>{{ i18n.getMessage("playertable_head_name") }}</th>
+				<th>{{ i18n.getMessage("entity_player_verein_id") }}</th>
+				<th>{{ i18n.getMessage("entity_player_age") }}</th>
+				{% if env.getConfig("hide_strength_attributes") != "1" %}
+					<th>{{ i18n.getMessage("playertable_head_strength") }}</th>
+				{% endif %}
+				<th>{{ i18n.getMessage("entity_player_marktwert") }}/<br>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				<th>{{ i18n.getMessage("playerssearch_transfer_status") }}</th>
+				<th>{{ i18n.getMessage("playerssearch_actions") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for player in players %}
+				<tr>
+					<td>
+						<img src="{{ skin.getImage("icons/playertype_" ~ player.position ~ ".png") }}"
+							alt="{{ i18n.getMessage("player_position_" ~ player.position) }}" title="{{ i18n.getMessage("player_position_" ~ player.position) }}" />
+						{% if player.position_main|length > 0 %}<abbr title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</abbr>{% endif %}
+						{% if player.position_second|length > 0 %}/ <abbr title="{{ i18n.getMessage("option_" ~ player.position_second) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_second) }}</abbr>{% endif %}
+					</td>
+					<td>
+						<a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a>
+					</td>
+					<td>
+						{% if player.team_id > 0 %}
+							<a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
+						{% else %}
+							{{ i18n.getMessage("transfermarket_without_team") }}
+						{% endif %}
+					</td>
+					<td>{{ player.age }}</td>
+					{% if env.getConfig("hide_strength_attributes") != "1" %}
+						<td>
+							<ul class="unstyled">
+								<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength") }}">{{ i18n.getMessage("playertable_head_strength_abbr") }}</abbr>:</span>
+									<span {{ playerlists.strengthClass(player.strength) }}>{{ player.strength }}</span></li>
+								<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_technic") }}">{{ i18n.getMessage("playertable_head_strength_technic_abbr") }}</abbr>:</span>
+									<span {{ playerlists.strengthClass(player.strength_technique) }}>{{ player.strength_technique }}</span></li>
+								<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_freshness") }}">{{ i18n.getMessage("playertable_head_strength_freshness_abbr") }}</abbr>:</span>
+									<span {{ playerlists.strengthClass(player.strength_freshness) }}>{{ player.strength_freshness }}</span></li>
+								<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_stamina") }}">{{ i18n.getMessage("playertable_head_strength_stamina_abbr") }}</abbr>:</span>
+									<span {{ playerlists.strengthClass(player.strength_stamina) }}>{{ player.strength_stamina }}</span></li>
+								<li><span class="incell-strength-label"><abbr title="{{ i18n.getMessage("playertable_head_strength_satisfaction") }}">{{ i18n.getMessage("playertable_head_strength_satisfaction_abbr") }}</abbr>:</span>
+									<span {{ playerlists.strengthClass(player.strength_satisfaction) }}>{{ player.strength_satisfaction }}</span></li>
+							</ul>
+						</td>
+					{% endif %}
+					<td>
+						{{ player.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br>
+						{{ player.contract_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+					</td>
+					<td>
+						{% if player.transfermarket == '1' or player.transfermarket == 1 %}
+							<span class="label label-success">{{ i18n.getMessage("playerssearch_status_on_transferlist") }}</span><br>
+							<small>{{ i18n.getMessage("transfermarket_head_deadline") }}: {{ env.getFormattedDatetime(player.transfer_deadline) }}</small>
+						{% else %}
+							<span class="label">{{ i18n.getMessage("playerssearch_status_not_on_transferlist") }}</span>
+						{% endif %}
+					</td>
+					<td>
+						<p><a class="btn btn-mini" href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}"><i class="icon-user"></i> {{ i18n.getMessage("playerssearch_profile") }}</a></p>
+						{% if player.on_watchlist > 0 %}
+							<p><span class="muted"><i class="icon-ok"></i> {{ i18n.getMessage("playerssearch_already_on_watchlist") }}</span></p>
+						{% else %}
+							<form action="?page=mywatchlist" class="form-inline" method="post" style="margin: 0 0 5px 0;">
+								<button type="submit" class="btn btn-mini"><i class="icon-eye-open"></i> {{ i18n.getMessage("playerssearch_add_to_watchlist") }}</button>
+								<input type="hidden" name="action" value="put-player-on-watchlist" />
+								<input type="hidden" name="id" value="{{ player.id }}" />
+							</form>
+						{% endif %}
+						{% if player.transfermarket == '1' or player.transfermarket == 1 %}
+							<p><a class="btn btn-mini" href="{{ env.getInternalUrl("transfer-bid", "id=" ~ player.id) }}"><i class="icon-hand-up"></i> {{ i18n.getMessage("transfermarket_bid") }}</a></p>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	{{ pagination.paginator(paginator) }}
+{% else %}
+	{{ messagebox.box(i18n.getMessage("playerssearch_no_players"), "", "info") }}
+{% endif %}
 
 {% endblock %}

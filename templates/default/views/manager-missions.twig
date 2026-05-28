@@ -1,0 +1,89 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("manager-missions_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("manager-missions_title") }}</h3>
+<p>{{ i18n.getMessage("manager-missions_intro") }}</p>
+
+{% if season_id < 1 %}
+    <div class="alert alert-info">
+        <i class="icon-info-sign"></i>
+        {{ i18n.getMessage("manager_mission_no_active_season") }}
+    </div>
+{% else %}
+
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("manager_mission_season") }}</strong><br>
+                {{ season_name }}
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("manager_mission_board_satisfaction") }}</strong><br>
+                {{ board_satisfaction }}%
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("manager_mission_summary") }}</strong><br>
+                {{ summary.completed }} / {{ summary.total }} {{ i18n.getMessage("manager_mission_completed_short") }}
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        {{ i18n.getMessage("manager_mission_rewards_hint") }}
+        +{{ reward_board }}% {{ i18n.getMessage("manager_mission_board_satisfaction") }},
+        +{{ reward_highscore }} {{ i18n.getMessage("manager_mission_highscore") }}.
+        {{ i18n.getMessage("manager_mission_penalty_hint") }}
+        -{{ penalty_board }}% {{ i18n.getMessage("manager_mission_board_satisfaction") }}.
+    </div>
+
+    {% if missions|length == 0 %}
+        <div class="alert alert-warning">
+            {{ i18n.getMessage("manager_mission_no_missions") }}
+        </div>
+    {% else %}
+        {% for mission in missions %}
+            <div class="well">
+                <span class="label {{ mission.status_class }} pull-right">{{ mission.status_label }}</span>
+                <h4>{{ mission.title }}</h4>
+                <p>{{ mission.description }}</p>
+
+                <div class="progress">
+                    <div class="bar" style="width: {{ mission.progress_percent }}%;"></div>
+                </div>
+
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <th style="width: 25%;">{{ i18n.getMessage("manager_mission_baseline") }}</th>
+                            <td>{{ mission.baseline_label }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ i18n.getMessage("manager_mission_target") }}</th>
+                            <td>{{ mission.target_label }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ i18n.getMessage("manager_mission_current") }}</th>
+                            <td>
+                                {{ mission.progress_label }}
+                                {% if mission.progress_detail %}
+                                    <br><small>{{ mission.progress_detail }}</small>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+
+{% endblock %}

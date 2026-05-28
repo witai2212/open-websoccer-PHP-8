@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="teamchemistry_navlabel">Teamchemie</message>
+    <message id="teamchemistry_title">Teamchemie</message>
+    <message id="teamchemistry_intro">Die Teamchemie zeigt, wie gut dein Kader als Einheit funktioniert. Sie wird aus Nationalität, Eingespieltheit, Formation, Kapitän, Transfers, Zufriedenheit und Charakter berechnet.</message>
+    <message id="teamchemistry_schema_missing">Die Datenbankspalten für Teamchemie fehlen noch. Bitte zuerst das SQL-Update ausführen.</message>
+
+    <message id="teamchemistry_score">Chemie</message>
+    <message id="teamchemistry_match_effect">Spiel-Effekt</message>
+    <message id="teamchemistry_match_effect_help">Kleiner Effekt auf Passspiel, Moral und Stabilität.</message>
+    <message id="teamchemistry_factor">Faktor</message>
+    <message id="teamchemistry_value">Wert</message>
+    <message id="teamchemistry_detail">Details</message>
+    <message id="teamchemistry_recent_development">Letzte Entwicklung</message>
+    <message id="teamchemistry_no_log">Noch keine Chemie-Entwicklung gespeichert.</message>
+    <message id="teamchemistry_date">Datum</message>
+    <message id="teamchemistry_source">Auslöser</message>
+    <message id="teamchemistry_old_new">Alt / Neu</message>
+    <message id="teamchemistry_change">Änderung</message>
+
+    <message id="teamchemistry_value_good">gut eingespielt</message>
+    <message id="teamchemistry_value_neutral">ordentlich</message>
+    <message id="teamchemistry_value_bad">unruhig</message>
+    <message id="teamchemistry_hint_good">Dein Team wirkt eingespielt. Das kann im Spiel kleine Vorteile bei Pässen, Moral und Stabilität geben.</message>
+    <message id="teamchemistry_hint_neutral">Die Chemie ist solide. Mehr Kontinuität bei Formation, Kader und Kapitän kann den Wert verbessern.</message>
+    <message id="teamchemistry_hint_bad">Die Chemie ist niedrig. Viele neue Transfers, unzufriedene Spieler oder wenig Eingespieltheit können dein Team unruhiger machen.</message>
+
+    <message id="teamchemistry_factor_nationality">Nationalität</message>
+    <message id="teamchemistry_factor_settled">Zeit im Verein</message>
+    <message id="teamchemistry_factor_formation">Formation</message>
+    <message id="teamchemistry_factor_captain">Kapitän</message>
+    <message id="teamchemistry_factor_transfers">Neue Transfers</message>
+    <message id="teamchemistry_factor_happiness">Zufriedenheit</message>
+    <message id="teamchemistry_factor_personality">Charakter</message>
+
+    <message id="teamchemistry_source_page">Seitenaufruf</message>
+    <message id="teamchemistry_source_match">Spielvorbereitung</message>
+    <message id="teamchemistry_source_runtime">Live-Simulation</message>
+    <message id="teamchemistry_source_match_completed">Spiel beendet</message>
+    <message id="teamchemistry_source_manual">Aktualisierung</message>
+    <message id="teamchemistry_factor_trainingcamp">Trainingslager</message>
+    <message id="teamchemistry_source_trainingcamp">Trainingslager</message>
+    
+    <message id="teamchemistry_factor_training">Training</message>
+</messages>

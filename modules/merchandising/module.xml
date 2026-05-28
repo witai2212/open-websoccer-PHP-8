@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="clubs" version="1.0.0"/>
+    </dependencies>
+
+    <admin>
+        <adminpage
+            id="merchandisingproduct"
+            entity="merchandisingproduct"
+            navcategory="league"
+            permissionrole="r_daten">
+
+            <entity dbtable="merchandising_product AS ProductTab">
+
+                <overview delete="true" edit="true">
+
+                    <column
+                        id="entity_merchandisingproduct_name"
+                        field="ProductTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_merchandisingproduct_purchase_price"
+                        field="ProductTab.purchase_price"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_merchandisingproduct_sales_price"
+                        field="ProductTab.sales_price"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_merchandisingproduct_base_demand"
+                        field="ProductTab.base_demand"
+                        type="text"
+                        sort="true" />
+
+                    <column
+                        id="entity_merchandisingproduct_active"
+                        field="ProductTab.active"
+                        type="boolean"
+                        sort="true" />
+
+                </overview>
+
+                <editform>
+                    <field id="name" type="text" required="true" />
+                    <field id="description" type="textarea" required="false" />
+                    <field id="purchase_price" type="number" required="true" default="0" />
+                    <field id="sales_price" type="number" required="true" default="0" />
+                    <field id="base_demand" type="text" required="true" default="0.0100" />
+                    <field id="active" type="boolean" required="false" />
+                </editform>
+
+            </entity>
+        </adminpage>
+    </admin>
+
+    <settings>
+        <setting
+            id="merchandising_enabled"
+            category="game"
+            type="boolean"
+            default="1" />
+    </settings>
+
+    <pages>
+        <page
+            id="merchandising"
+            template="merchandising"
+            model="MerchandisingModel"
+            parentItem="finance"
+            navitem="true"
+            navweight="6"
+            role="user"
+            navitemOnlyForConfigEnabled="merchandising_enabled">
+        </page>
+    </pages>
+
+    <actions>
+        <action
+            id="save-merchandising-product"
+            controller="SaveMerchandisingProductController"
+            role="user"
+            log="true">
+
+            <param
+                id="productid"
+                type="number"
+                required="true"
+                min="1"
+                max="2000000000" />
+
+            <param
+                id="enabled"
+                type="boolean"
+                required="false" />
+
+            <param
+                id="price_factor"
+                type="text"
+                required="true" />
+
+        </action>
+    </actions>
+
+    <plugins>
+        <eventlistener
+            event="MatchCompletedEvent"
+            class="MerchandisingPlugin"
+            method="creditMatchdayMerchandisingRevenue" />
+    </plugins>
+
+</module>

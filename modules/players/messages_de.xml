@@ -8,6 +8,7 @@
     <message id="playertable_head_position_abbr">Pos</message>
     <message id="playertable_head_position">Position</message>
     <message id="playertable_head_name">Name</message>
+    <message id="playertable_head_personality">Persönlichkeit</message>
     <message id="playertable_head_strength_abbr">Stä</message>
     <message id="playertable_head_strength">Stärke</message>
     <message id="playertable_head_strength_technic_abbr">Tec</message>
@@ -108,4 +109,14 @@
     
     <message id="player_scouting_talent_result">Talent (Scout)</message>
 	<message id="player_scounting_no_scout_no_watchlist">*) Du benötigst einen Scout und der Spieler muss auf deiner Beobachtungsliste sein.</message>
+
+    <message id="player_personality_unknown">Unbekannt</message>
+    <message id="player_personality_leader">Anführer</message>
+    <message id="player_personality_professional">Profi</message>
+    <message id="player_personality_injury_prone">Verletzungsanfällig</message>
+    <message id="player_personality_inconsistent">Unbeständig</message>
+    <message id="player_personality_loyal">Loyal</message>
+    <message id="player_personality_ambitious">Ehrgeizig</message>
+    <message id="player_personality_big_game_player">Mann für große Spiele</message>
+    <message id="player_personality_troublemaker">Unruhestifter</message>
 </messages>

@@ -68,10 +68,186 @@ class FinancesModel implements IModel {
 		
 		$groupedCosts = BankAccountDataService::groupedFinanceByTeamId($this->_websoccer, $this->_db, $teamId);
 		
-		return array("budget" => $team["team_budget"], "statements" => $statements, "stockmarketCriteria" => $stockmarketCriteria,
-						"balance" => $balance, "total_revenues" => $total_revenues,
-						"total_expenses" => $total_expenses, "grouped_costs" => $groupedCosts,
-						"expenses" => $expenses, "paginator" => $paginator);
+		$cashDevelopment = BankAccountDataService::getCashDevelopmentOfCurrentSeason(
+		    $this->_websoccer,
+		    $this->_db,
+		    $teamId,
+		    $team["team_budget"]
+		    );
+		
+		$transferPenaltySummary = $this->_getTransferPenaltySummary($teamId, $team);
+		
+		return array(
+		    "budget" => $team["team_budget"],
+		    "statements" => $statements,
+		    "stockmarketCriteria" => $stockmarketCriteria,
+		    "balance" => $balance,
+		    "total_revenues" => $total_revenues,
+		    "total_expenses" => $total_expenses,
+		    "grouped_costs" => $groupedCosts,
+		    "expenses" => $expenses,
+		    "paginator" => $paginator,
+		    
+		    "cash_chart_labels" => $cashDevelopment["labels"],
+		    "cash_chart_values" => $cashDevelopment["values"],
+		    "cash_chart_season_start" => $cashDevelopment["season_start"],
+		    "transfer_penalty_summary" => $transferPenaltySummary
+		);
+		
+	}
+	
+	/**
+	 * Builds a compact transfer penalty summary for the finances page.
+	 * Penalties are booked as normal account statements with subject
+	 * transfer_violation. The global penalty pot is stored in cm23_penalty.
+	 *
+	 * @param int $teamId
+	 * @param array $team
+	 * @return array
+	 */
+	private function _getTransferPenaltySummary($teamId, $team) {
+	    $teamId = (int) $teamId;
+	    $seasonStart = 0;
+	    
+	    if (isset($team["team_league_id"]) && (int) $team["team_league_id"] > 0) {
+	        $seasonStart = $this->_getCurrentSeasonStartDate((int) $team["team_league_id"]);
+	    }
+	    
+	    $whereCondition = "verein_id = %d AND verwendung = 'transfer_violation'";
+	    $parameters = array($teamId);
+	    
+	    if ($seasonStart > 0) {
+	        $whereCondition .= " AND datum >= %d";
+	        $parameters[] = $seasonStart;
+	    }
+	    
+	    $result = $this->_db->querySelect(
+	        "COALESCE(SUM(ABS(betrag)), 0) AS season_total",
+	        $this->_websoccer->getConfig("db_prefix") . "_konto",
+	        $whereCondition,
+	        $parameters,
+	        1
+	        );
+	    
+	    $seasonPenalty = $result->fetch_array();
+	    $result->free();
+	    
+	    $seasonTotal = 0;
+	    if (isset($seasonPenalty["season_total"]) && $seasonPenalty["season_total"] !== null) {
+	        $seasonTotal = (int) round($seasonPenalty["season_total"], 0);
+	    }
+	    
+	    $result = $this->_db->querySelect(
+	        "ABS(betrag) AS last_amount, datum AS last_date",
+	        $this->_websoccer->getConfig("db_prefix") . "_konto",
+	        "verein_id = %d AND verwendung = 'transfer_violation' ORDER BY datum DESC, id DESC",
+	        $teamId,
+	        1
+	        );
+	    
+	    $lastPenalty = $result->fetch_array();
+	    $result->free();
+	    
+	    $lastAmount = 0;
+	    $lastDate = 0;
+	    
+	    if (isset($lastPenalty["last_amount"])) {
+	        $lastAmount = (int) round($lastPenalty["last_amount"], 0);
+	    }
+	    
+	    if (isset($lastPenalty["last_date"])) {
+	        $lastDate = (int) $lastPenalty["last_date"];
+	    }
+
+	    $result = $this->_db->querySelect(
+	        "betrag AS last_distribution_amount, datum AS last_distribution_date",
+	        $this->_websoccer->getConfig("db_prefix") . "_konto",
+	        "verein_id = %d AND verwendung = 'transfer_penalty_distribution' ORDER BY datum DESC, id DESC",
+	        $teamId,
+	        1
+	        );
+
+	    $lastDistribution = $result->fetch_array();
+	    $result->free();
+
+	    $lastDistributionAmount = 0;
+	    $lastDistributionDate = 0;
+
+	    if (isset($lastDistribution["last_distribution_amount"])) {
+	        $lastDistributionAmount = (int) round($lastDistribution["last_distribution_amount"], 0);
+	    }
+
+	    if (isset($lastDistribution["last_distribution_date"])) {
+	        $lastDistributionDate = (int) $lastDistribution["last_distribution_date"];
+	    }
+	    
+	    $penaltyPot = 0;
+	    $penaltyTable = $this->_websoccer->getConfig("db_prefix") . "_penalty";
+	    $result = $this->_db->executeQuery("SELECT COALESCE(SUM(penalty), 0) AS penalty_pot FROM " . $penaltyTable);
+	    $potRow = $result->fetch_array();
+	    $result->free();
+	    
+	    if (isset($potRow["penalty_pot"]) && $potRow["penalty_pot"] !== null) {
+	        $penaltyPot = (int) round($potRow["penalty_pot"], 0);
+	    }
+	    
+	    return array(
+	        "season_total" => $seasonTotal,
+	        "last_amount" => $lastAmount,
+	        "last_date" => $lastDate,
+	        "last_distribution_amount" => $lastDistributionAmount,
+	        "last_distribution_date" => $lastDistributionDate,
+	        "penalty_pot" => $penaltyPot,
+	        "season_start" => $seasonStart
+	    );
+	}
+	
+	/**
+	 * Returns the first scheduled match date of the active season of the
+	 * current league. Used to keep the penalty summary season-based even
+	 * though account statements do not store a season id.
+	 *
+	 * @param int $leagueId
+	 * @return int Unix timestamp or 0
+	 */
+	private function _getCurrentSeasonStartDate($leagueId) {
+	    $leagueId = (int) $leagueId;
+	    
+	    if ($leagueId < 1) {
+	        return 0;
+	    }
+	    
+	    $result = $this->_db->querySelect(
+	        "id",
+	        $this->_websoccer->getConfig("db_prefix") . "_saison",
+	        "liga_id = %d AND beendet = '0' ORDER BY name DESC",
+	        $leagueId,
+	        1
+	        );
+	    
+	    $season = $result->fetch_array();
+	    $result->free();
+	    
+	    if (!isset($season["id"]) || (int) $season["id"] < 1) {
+	        return 0;
+	    }
+	    
+	    $result = $this->_db->querySelect(
+	        "MIN(datum) AS season_start",
+	        $this->_websoccer->getConfig("db_prefix") . "_spiel",
+	        "saison_id = %d",
+	        (int) $season["id"],
+	        1
+	        );
+	    
+	    $seasonDate = $result->fetch_array();
+	    $result->free();
+	    
+	    if (isset($seasonDate["season_start"]) && (int) $seasonDate["season_start"] > 0) {
+	        return (int) $seasonDate["season_start"];
+	    }
+	    
+	    return 0;
 	}
 	
 }

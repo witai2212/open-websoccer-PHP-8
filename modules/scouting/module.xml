@@ -2,12 +2,312 @@
 <!DOCTYPE module SYSTEM "../module.dtd">
 <module version="1.0.0">
 
-    
-  	<settings>
-		<setting id="max_scouts_per_team" category="scouting" type="number" default="4" />
-		<setting id="scouts_matches" category="scouting" type="number" default="20" />
- 	</settings>
-  
+    <dependencies>
+        <dependency module="transfermarket" version="1.0.0"/>
+        <dependency module="clubs" version="1.0.0"/>
+    </dependencies>
+
+    <admin>
+        <adminpage
+            id="scout"
+            entity="scout"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="scout AS ScoutTab" >
+
+                <overview delete="true" edit="true" >
+                    <column
+                        id="entity_scout_name"
+                        field="ScoutTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scout_nation"
+                        field="ScoutTab.nation"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scout_speciality"
+                        field="ScoutTab.speciality"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scout_expertise"
+                        field="ScoutTab.expertise"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scout_fee"
+                        field="ScoutTab.fee"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scout_team_id"
+                        field="ClubTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scout_team_matches"
+                        field="ScoutTab.team_matches"
+                        type="number"
+                        sort="true" />
+
+                    <join type="LEFT" jointable="verein AS ClubTab" joincondition="ScoutTab.team_id = ClubTab.id" />
+                </overview>
+
+                <editform>
+                    <field id="name" type="text" required="true" />
+                    <field id="nation" type="text" required="true" />
+                    <field id="speciality" type="select" required="true" selection="Torwart|Abwehr|Mittelfeld|Sturm" />
+                    <field id="expertise" type="number" required="true" />
+                    <field id="fee" type="number" required="true" />
+                    <field id="team_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" required="false" default="0" />
+                    <field id="team_matches" type="number" required="false" default="0" />
+                </editform>
+            </entity>
+        </adminpage>
+
+        <adminpage
+            id="scoutingdepartmentlevel"
+            entity="scoutingdepartmentlevel"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="scouting_department_level AS LevelTab" >
+
+                <overview delete="true" edit="true" >
+                    <column
+                        id="entity_scoutingdepartmentlevel_level"
+                        field="LevelTab.level"
+                        type="number"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingdepartmentlevel_name"
+                        field="LevelTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingdepartmentlevel_build_cost"
+                        field="LevelTab.build_cost"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingdepartmentlevel_maintenance_fee"
+                        field="LevelTab.maintenance_fee"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingdepartmentlevel_max_scouts"
+                        field="LevelTab.max_scouts"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingdepartmentlevel_max_camps"
+                        field="LevelTab.max_camps"
+                        type="number"
+                        sort="true" />
+                </overview>
+
+                <editform>
+                    <field id="level" type="number" required="true" />
+                    <field id="name" type="text" required="true" />
+                    <field id="build_cost" type="number" required="true" />
+                    <field id="maintenance_fee" type="number" required="true" />
+                    <field id="max_scouts" type="number" required="true" default="4" />
+                    <field id="max_camps" type="number" required="true" default="0" />
+                    <field id="status" type="boolean" required="false" default="1" />
+                </editform>
+            </entity>
+        </adminpage>
+
+        <adminpage
+            id="scoutingcamplocation"
+            entity="scoutingcamplocation"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="scouting_camp_location AS LocationTab" >
+
+                <overview delete="true" edit="true" >
+                    <column
+                        id="entity_scoutingcamplocation_name"
+                        field="LocationTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_country"
+                        field="LocationTab.country"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_continent"
+                        field="LocationTab.continent"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_base_fee"
+                        field="LocationTab.base_fee"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_travel_cost_modifier"
+                        field="LocationTab.travel_cost_modifier"
+                        type="percent"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_quality_modifier"
+                        field="LocationTab.quality_modifier"
+                        type="percent"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_talent_modifier"
+                        field="LocationTab.talent_modifier"
+                        type="percent"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_min_department_level"
+                        field="LocationTab.min_department_level"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingcamplocation_status"
+                        field="LocationTab.status"
+                        type="boolean"
+                        sort="true"
+                        filter="true" />
+                </overview>
+
+                <editform>
+                    <field id="name" type="text" required="true" />
+                    <field id="country" type="text" required="false" />
+                    <field id="continent" type="select" required="false" selection="EU|AF|AS|NA|SA|OC" />
+                    <field id="base_fee" type="number" required="true" default="0" />
+                    <field id="travel_cost_modifier" type="percent" required="true" default="0" />
+                    <field id="quality_modifier" type="percent" required="true" default="0" />
+                    <field id="talent_modifier" type="percent" required="true" default="0" />
+                    <field id="min_department_level" type="number" required="true" default="1" />
+                    <field id="status" type="boolean" required="false" default="1" />
+                </editform>
+            </entity>
+        </adminpage>
+
+        <adminpage
+            id="scoutingproposal"
+            entity="scoutingproposal"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="scouting_proposal AS ProposalTab" >
+
+                <overview add="false" delete="true" edit="false" >
+                    <column
+                        id="entity_scoutingproposal_created_date"
+                        field="ProposalTab.created_date"
+                        type="timestamp"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingproposal_team_id"
+                        field="ClubTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingproposal_name"
+                        field="CONCAT(ProposalTab.firstname, ' ', ProposalTab.lastname)"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingproposal_position"
+                        field="ProposalTab.position"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_scoutingproposal_real_w_staerke"
+                        field="ProposalTab.real_w_staerke"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingproposal_real_w_staerke_max"
+                        field="ProposalTab.real_w_staerke_max"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingproposal_real_w_talent"
+                        field="ProposalTab.real_w_talent"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingproposal_transfer_fee"
+                        field="ProposalTab.transfer_fee"
+                        type="number"
+                        sort="true" />
+
+                    <column
+                        id="entity_scoutingproposal_status"
+                        field="ProposalTab.status"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <join type="LEFT" jointable="verein AS ClubTab" joincondition="ProposalTab.team_id = ClubTab.id" />
+                </overview>
+            </entity>
+        </adminpage>
+    </admin>
+
+    <settings>
+        <setting id="scouting_enabled" category="scouting" type="boolean" default="1" />
+        <setting id="max_scouts_per_team" category="scouting" type="number" default="4" />
+        <setting id="scouts_matches" category="scouting" type="number" default="20" />
+        <setting id="scout_hire_matches" category="scouting" type="number" default="3" />
+        <setting id="scouting_default_department_build_cost" category="scouting" type="number" default="1000000" />
+        <setting id="scouting_default_department_maintenance_fee" category="scouting" type="number" default="50000" />
+        <setting id="scouting_proposal_min_matches" category="scouting" type="number" default="10" />
+        <setting id="scouting_proposal_max_matches" category="scouting" type="number" default="20" />
+        <setting id="scouting_proposal_expire_matches" category="scouting" type="number" default="20" />
+        <setting id="scouting_max_open_proposals_per_team" category="scouting" type="number" default="10" />
+        <setting id="scouting_same_country_cost_percent" category="scouting" type="number" default="75" />
+        <setting id="scouting_abroad_cost_percent" category="scouting" type="number" default="125" />
+    </settings>
+
     <pages>
         <page
             id="scouting"
@@ -16,18 +316,53 @@
             navweight="5"
             model="ScoutingModel"
             parentItem="transfermarket"
-            role="user">
+            role="user"
+            navitemOnlyForConfigEnabled="scouting_enabled">
         </page>
-        
     </pages>
-    
+
     <actions>
-    	<action id="hire-scout" controller="HireScoutController" role="user">
-			<param id="id" type="number" required="true" />
-		</action>
-    	<action id="fire-scout" controller="FireScoutController" role="user">
-			<param id="id" type="number" required="true" />
-		</action>
-	</actions>
-     
+        <action id="build-scouting-department" controller="BuildScoutingDepartmentController" role="user" log="true">
+        </action>
+
+        <action id="upgrade-scouting-department" controller="UpgradeScoutingDepartmentController" role="user" log="true">
+        </action>
+
+        <action id="hire-scout" controller="HireScoutController" role="user" log="true">
+            <param id="id" type="number" required="true" />
+        </action>
+
+        <action id="fire-scout" controller="FireScoutController" role="user" log="true">
+            <param id="id" type="number" required="true" />
+        </action>
+
+        <action id="create-scouting-camp" controller="CreateScoutingCampController" role="user" log="true">
+            <param id="location_id" type="number" required="true" />
+            <param id="scout_id" type="number" required="true" />
+            <param id="position" type="text" required="false" />
+            <param id="age_min" type="number" required="true" min="16" max="45" />
+            <param id="age_max" type="number" required="true" min="16" max="45" />
+            <param id="strength_min" type="number" required="true" min="1" max="100" />
+            <param id="strength_max" type="number" required="true" min="1" max="100" />
+            <param id="budget_min" type="number" required="false" min="0" max="1000000000" />
+            <param id="budget_max" type="number" required="false" min="0" max="1000000000" />
+        </action>
+
+        <action id="close-scouting-camp" controller="CloseScoutingCampController" role="user" log="true">
+            <param id="id" type="number" required="true" />
+        </action>
+
+        <action id="accept-scouting-proposal" controller="AcceptScoutingProposalController" role="user" log="true">
+            <param id="id" type="number" required="true" />
+        </action>
+
+        <action id="reject-scouting-proposal" controller="RejectScoutingProposalController" role="user" log="true">
+            <param id="id" type="number" required="true" />
+        </action>
+    </actions>
+    
+    <plugins>
+        <eventlistener event="MatchCompletedEvent" class="ScoutingPlugin" method="handleMatchCompleted" />
+    </plugins>
+
 </module>

@@ -54,8 +54,15 @@ class TeamDetailsModel implements IModel {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
 		
-		//update team strength
-		TeamsDataService::updateTeamStrength($this->_websoccer, $this->_db, $teamId);
+		// update raw team strength. For relative star ratings, refresh all active clubs
+		// occasionally so every club is compared on the same formula.
+		$now = $this->_websoccer->getNowAsTimestamp();
+		if (!isset($_SESSION['teamstrength_refresh']) || $_SESSION['teamstrength_refresh'] < ($now - 3600)) {
+			TeamsDataService::updateAllActiveTeamStrengths($this->_websoccer, $this->_db);
+			$_SESSION['teamstrength_refresh'] = $now;
+		} else {
+			TeamsDataService::updateTeamStrength($this->_websoccer, $this->_db, $teamId);
+		}
 		
 		$team = TeamsDataService::getTeamById($this->_websoccer, $this->_db, $teamId);
 		if (!isset($team['team_id'])) {
@@ -78,8 +85,17 @@ class TeamDetailsModel implements IModel {
 		}
 		
 		if (!$team['is_nationalteam']) {
+			$strengthComparison = TeamsDataService::getTeamStrengthComparison($this->_websoccer, $this->_db, $teamId, $team['team_league_id']);
+			$team = array_merge($team, $strengthComparison);
 			$playerfacts = $this->getPlayerFacts($teamId);
 		} else {
+			$team['team_strength_stars'] = 0;
+			$team['team_strength_global_rank'] = 0;
+			$team['team_strength_global_count'] = 0;
+			$team['team_strength_global_top_percent'] = 0;
+			$team['team_strength_league_rank'] = 0;
+			$team['team_strength_league_count'] = 0;
+			$team['team_strength_league_top_percent'] = 0;
 			$playerfacts = array();
 		}
 		
@@ -160,7 +176,7 @@ class TeamDetailsModel implements IModel {
 			$columns['SUM(w_zufriedenheit)'] = 'sumSatisfaction';
 			$columns['SUM(w_kondition)'] = 'sumStamina';
 		} else {
-			$columns['SUM(marktwert)'] = 'sumMarketValue';
+			$columns['SUM(CAST(marktwert AS UNSIGNED))'] = 'sumMarketValue';
 		}*/
 		
 		$columns['SUM(w_staerke)'] = 'sumStrength';
@@ -168,13 +184,14 @@ class TeamDetailsModel implements IModel {
 		$columns['SUM(w_frische)'] = 'sumFreshness';
 		$columns['SUM(w_zufriedenheit)'] = 'sumSatisfaction';
 		$columns['SUM(w_kondition)'] = 'sumStamina';
-		$columns['SUM(marktwert)'] = 'sumMarketValue';
+		$columns['SUM(CAST(marktwert AS UNSIGNED))'] = 'sumMarketValue';
 		
-		$mwStr = "SELECT SUM(marktwert) AS sumMarketValue
-                    FROM ". $this->_websoccer->getConfig("db_prefix") ."_spieler
-					WHERE verein_id='".$teamId."'";
+		$mwStr = "SELECT SUM(CAST(marktwert AS UNSIGNED)) AS sumMarketValue
+	                    FROM ". $this->_websoccer->getConfig("db_prefix") ."_spieler
+						WHERE verein_id='".(int) $teamId."' AND status='1'";
 		$result = $this->_db->executeQuery($mwStr);
 		$mwPlayer = $result->fetch_array();
+		$result->free();
 		
 		$result = $this->_db->querySelect($columns, $this->_websoccer->getConfig('db_prefix') .'_spieler', 'verein_id = %d AND status = \'1\'', $teamId);
 		$playerfacts = $result->fetch_array();

@@ -21,13 +21,13 @@ If not, see <http://www.gnu.org/licenses/>.
 ******************************************************/
 
 /**
- * Provides uefa ranking
+ * Provides UEFA ranking.
  */
 class UEFARankingModel implements IModel {
+    
     private $_db;
     private $_i18n;
     private $_websoccer;
-    private $_teamid;
     
     public function __construct($db, $i18n, $websoccer) {
         $this->_db = $db;
@@ -36,7 +36,6 @@ class UEFARankingModel implements IModel {
     }
     
     /**
-     * (non-PHPdoc)
      * @see IModel::renderView()
      */
     public function renderView() {
@@ -44,27 +43,19 @@ class UEFARankingModel implements IModel {
     }
     
     /**
-     * (non-PHPdoc)
      * @see IModel::getTemplateParameters()
      */
     public function getTemplateParameters() {
         
-        $uefas = array();
+        $uefas = UefaDataService::getUefaRanking(
+            $this->_websoccer,
+            $this->_db
+            );
         
-        $SqlStr = "SELECT *, (uefa_s1+uefa_s2+uefa_s3+uefa_s4+uefa_s5) AS total
-                    FROM ". $this->_websoccer->getConfig("db_prefix") ."_land
-					ORDER BY total DESC";
-
-        $result = $this->_db->executeQuery($SqlStr);
-        while ($uefa = $result->fetch_array())  {
-            $uefas[] = $uefa;
-        }
-        $result->free();
-        
-        return array("uefas" => $uefas);
-
+        return array(
+            "uefas" => $uefas
+        );
     }
-    
 }
 
 ?>

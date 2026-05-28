@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="rivalry_navlabel">Rivalries</message>
+    <message id="settings_label_rivalries_enabled">Enable rivalries and derbies</message>
+    <message id="settings_label_rivalries_enabled_help">Enables automatic and manually maintained derby effects.</message>
+    <message id="settings_label_rivalries_auto_history_min_matches">Historical matches until automatic rivalry</message>
+    <message id="settings_label_rivalries_auto_history_min_matches_help">Number of completed league/cup matches between two teams from the same country required to automatically detect a derby.</message>
+    <message id="settings_label_rivalries_create_preview_news">Create derby preview news</message>
+    <message id="settings_label_rivalries_create_preview_news_help">Automatically creates a news article before the derby.</message>
+    <message id="settings_label_rivalries_create_result_news">Create derby result news</message>
+    <message id="settings_label_rivalries_create_result_news_help">Automatically creates a news article after the derby.</message>
+</messages>

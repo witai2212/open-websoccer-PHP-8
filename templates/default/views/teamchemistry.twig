@@ -1,0 +1,103 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("teamchemistry_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("teamchemistry_title") }}</h3>
+<p>{{ i18n.getMessage("teamchemistry_intro") }}</p>
+
+{% if not schema_ready %}
+    <div class="alert alert-warning">
+        <i class="icon-warning-sign"></i>
+        {{ i18n.getMessage("teamchemistry_schema_missing") }}
+    </div>
+{% endif %}
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="well">
+            <h4>{{ i18n.getMessage("teamchemistry_score") }}</h4>
+            <div class="progress">
+                <div class="bar" style="width: {{ score }}%;"></div>
+            </div>
+            <p><strong>{{ score }}%</strong> · {{ i18n.getMessage(score_label) }}</p>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="well">
+            <h4>{{ i18n.getMessage("teamchemistry_match_effect") }}</h4>
+            <p><strong>{{ effect_signed }}%</strong></p>
+            <p><small>{{ i18n.getMessage("teamchemistry_match_effect_help") }}</small></p>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <i class="icon-info-sign"></i>
+    {{ i18n.getMessage(hint_key) }}
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{ i18n.getMessage("teamchemistry_factor") }}</th>
+            <th style="text-align: right;">{{ i18n.getMessage("teamchemistry_value") }}</th>
+            <th>{{ i18n.getMessage("teamchemistry_detail") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, factor in factors %}
+            <tr>
+                <td><strong>{{ i18n.getMessage("teamchemistry_factor_" ~ key) }}</strong></td>
+                <td style="text-align: right;">{{ factor.score }}%</td>
+                <td>{{ factor.detail }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+
+<h3>{{ i18n.getMessage("teamchemistry_recent_development") }}</h3>
+
+{% if log|length == 0 %}
+    <div class="alert alert-warning">
+        {{ i18n.getMessage("teamchemistry_no_log") }}
+    </div>
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("teamchemistry_date") }}</th>
+                <th>{{ i18n.getMessage("teamchemistry_source") }}</th>
+                <th>{{ i18n.getMessage("teamchemistry_old_new") }}</th>
+                <th style="text-align: right;">{{ i18n.getMessage("teamchemistry_change") }}</th>
+                <th style="text-align: right;">{{ i18n.getMessage("teamchemistry_match_effect") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in log %}
+                <tr>
+                    <td>{{ item.event_date|date(env.getConfig("date_format")) }}</td>
+                    <td>{{ item.source_label }}</td>
+                    <td>{{ item.old_score }}% / {{ item.new_score }}%</td>
+                    <td style="text-align: right;">
+                        {% if item.change > 0 %}
+                            <span style="color: green;">{{ item.change_signed }}</span>
+                        {% elseif item.change < 0 %}
+                            <span style="color: red;">{{ item.change_signed }}</span>
+                        {% else %}
+                            {{ item.change_signed }}
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">{{ item.effect_signed }}%</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

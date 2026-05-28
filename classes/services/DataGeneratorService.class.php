@@ -248,6 +248,7 @@ class DataGeneratorService {
 		$columns['w_frische'] = max(1, min(100, $strengths['freshness'] + self::_getRandomDeviationValue($maxDeviation)));
 		$columns['w_zufriedenheit'] = max(1, min(100, $strengths['satisfaction'] + self::_getRandomDeviationValue($maxDeviation)));
 		$columns['w_talent'] = max(1, min(6, $strengths['talent'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['personality'] = PlayerPersonalityDataService::getRandomTrait();
 		$columns['vertrag_gehalt'] = $salary;
 		$columns['vertrag_spiele'] = $contractDuration;
 		$columns['vertrag_torpraemie'] = max(1, 1000);

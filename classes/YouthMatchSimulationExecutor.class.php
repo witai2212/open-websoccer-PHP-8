@@ -135,17 +135,17 @@ class YouthMatchSimulationExecutor {
 			$position = $playerinfo['player_position'];
 			$mainPosition = $playerinfo['match_position_main'];
 			
-			$strengthPassing = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthShooting = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthTackling = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthHeading = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthInfluence = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthCreativity = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthFlair = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthPace = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthFreekick = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthPenalty = SimulationHelper::getMagicNumber(10, $strength);
-			$strengthPenaltyKilling = SimulationHelper::getMagicNumber(10, $strength);
+			$strengthPassing = self::_getYouthSkillValue($strength);
+			$strengthShooting = self::_getYouthSkillValue($strength);
+			$strengthTackling = self::_getYouthSkillValue($strength);
+			$strengthHeading = self::_getYouthSkillValue($strength);
+			$strengthInfluence = self::_getYouthSkillValue($strength);
+			$strengthCreativity = self::_getYouthSkillValue($strength);
+			$strengthFlair = self::_getYouthSkillValue($strength);
+			$strengthPace = self::_getYouthSkillValue($strength);
+			$strengthFreekick = self::_getYouthSkillValue($strength);
+			$strengthPenalty = self::_getYouthSkillValue($strength);
+			$strengthPenaltyKilling = self::_getYouthSkillValue($strength);
 			
 			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, $playerinfo['grade'], 
 					DEFAULT_PLAYER_AGE, $strength, $technique, 
@@ -191,6 +191,24 @@ class YouthMatchSimulationExecutor {
 	}
 	
 	/**
+	 * Creates a safe youth skill value for the simulation.
+	 * Youth player strength can be below 10, therefore getMagicNumber(10, strength)
+	 * would crash on PHP 8 when strength is e.g. 7.
+	 *
+	 * @param int|string $strength Base youth player strength.
+	 * @return int Safe skill value.
+	 */
+	private static function _getYouthSkillValue($strength) {
+		$strength = max(1, (int) $strength);
+
+		if ($strength <= 10) {
+			return $strength;
+		}
+
+		return SimulationHelper::getMagicNumber(10, $strength);
+	}
+
+	/**
 	 * Creates a new formation for specified team.
 	 * Will simply take the first 11 players and place them in a 4-4-2 formation.
 	 * 
@@ -200,8 +218,25 @@ class YouthMatchSimulationExecutor {
 	 * @param SimulationTeam $team team model.
 	 */
 	private static function _createRandomFormation(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match, SimulationTeam $team) {
-		// better delete possible previous formation with too few players
-		$db->queryDelete($websoccer->getConfig('db_prefix') . '_youthmatch_player', 'match_id = %d AND team_id = %d', array($match->id, $team->id));
+	    // better delete possible previous formation with too few players
+	    $db->queryDelete(
+	        $websoccer->getConfig('db_prefix') . '_youthmatch_player',
+	        'match_id = %d AND team_id = %d',
+	        array($match->id, $team->id)
+	        );
+	    
+	    // Very important:
+	    // _addPlayers() may already have loaded an incomplete formation into memory.
+	    // Before we create the fallback/random formation, we must clear the team model,
+	    // otherwise old players remain and the new formation is added on top of them.
+	    $team->positionsAndPlayers = array(
+	        PLAYER_POSITION_GOALY => array(),
+	        PLAYER_POSITION_DEFENCE => array(),
+	        PLAYER_POSITION_MIDFIELD => array(),
+	        PLAYER_POSITION_STRIKER => array()
+	    );
+	    
+	    $team->playersOnBench = array();
 		
 		// define the exact default formation
 		$formationPositions = array('T', 'LV', 'IV', 'IV', 'RV', 'LM', 'ZM', 'ZM', 'RM', 'LS', 'RS');
@@ -214,17 +249,17 @@ class YouthMatchSimulationExecutor {
 			$mainPosition = $formationPositions[$positionIndex];
 			$position = $positionMapping[$mainPosition];
 			
-			$strengthPassing = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthShooting = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthTackling = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthHeading = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthInfluence = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthCreativity = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthFlair = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthPace = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthFreekick = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthPenalty = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
-			$strengthPenaltyKilling = SimulationHelper::getMagicNumber(10, $playerinfo['strength']);
+			$strengthPassing = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthShooting = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthTackling = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthHeading = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthInfluence = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthCreativity = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthFlair = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthPace = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthFreekick = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthPenalty = self::_getYouthSkillValue($playerinfo['strength']);
+			$strengthPenaltyKilling = self::_getYouthSkillValue($playerinfo['strength']);
 		
 			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, 3.0,
 					DEFAULT_PLAYER_AGE, $playerinfo['strength'], $playerinfo['strength'],

@@ -194,8 +194,9 @@
 	            model="MatchChangesModel"
 	            role="user">
                 <script file="jquery-ui-1.10.2.custom.min.js" debugonly="true"/>
-	            <script file="formationws4.js" debugonly="true"/>
-	            <script file="formation.min.js" productiononly="true"/>
+	            <script file="formationws4.js?v=8" debugonly="true"/>
+	            <script file="formation.min.js?v=8" productiononly="true"/>
+	            <script file="formation-setpieces.js?v=1"/>
 	            
 	            <script file="bootstrap-slider.js" />
 	            <script file="bootstrap-switch.js" />
@@ -204,6 +205,12 @@
 	        	<css file="formation.css"/>
 	        	<css file="bootstrap-switch.css"/>
             </page>
+            
+            <page
+                id="matchanalytics"
+                template="matchanalytics"
+                model="MatchAnalyticsModel"
+                role="user,guest" />
             
             <script file="flot/jquery.flot.min.js" />
             <script file="flot/jquery.flot.pie.min.js" />
@@ -307,6 +314,7 @@
 		<param id="longpasses" type="boolean" />
 		<param id="counterattacks" type="boolean" />
 		<param id="freekickplayer" type="number" />
+		<param id="cornerplayer" type="number" />
 		
 		<param id="player1" type="number" />
 		<param id="player2" type="number" />

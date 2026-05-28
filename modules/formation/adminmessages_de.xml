@@ -7,4 +7,7 @@
 
 	<message id="settings_label_formation_max_templates">Aufstellungsabgabe: Speichern von Vorlagen</message> 
 	<message id="settings_label_formation_max_templates_help">Wieviele Aufstellungen als Vorlage zur Wiederverwendung gespeichert werden können. 0 für Deaktivierung der Funktion.</message>
+	<message id="settings_label_tactical_style">Taktische Identität aktivieren</message>
+	<message id="settings_label_tactical_style_help">Ermöglicht menschlichen Vereinen einen festen Spielstil mit kleiner Matchsimulationswirkung. Computervereine wählen den Stil automatisch.</message>
+
 </messages>

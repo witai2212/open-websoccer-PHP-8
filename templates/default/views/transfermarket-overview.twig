@@ -24,15 +24,10 @@
 <div class="tab-content">
   <div class="tab-pane active" id="overview">
   
-    <form class="form-inline">
+    <form class="form-inline" method="get">
   		<label for="position">{{ i18n.getMessage("transfermarket_filter_by_position") }}</label>
   		<select name="position" id="position">
   			<option></option>
-  			<!-- <option value="goaly"{% if env.getRequestParameter("position") == "goaly" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
-  			<option value="defense"{% if env.getRequestParameter("position") == "defense" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
-  			<option value="midfield"{% if env.getRequestParameter("position") == "midfield" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
-  			<option value="striker"{% if env.getRequestParameter("position") == "striker" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>-->
-  			
   			<option value="T"{% if env.getRequestParameter("position") == "T" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
   			<option value="LV"{% if env.getRequestParameter("position") == "LV" %} selected{% endif %}>{{ i18n.getMessage("option_LV") }}</option>
   			<option value="IV"{% if env.getRequestParameter("position") == "IV" %} selected{% endif %}>{{ i18n.getMessage("option_IV") }}</option>
@@ -46,11 +41,40 @@
   			<option value="MS"{% if env.getRequestParameter("position") == "MS" %} selected{% endif %}>{{ i18n.getMessage("option_MS") }}</option>
   			<option value="RS"{% if env.getRequestParameter("position") == "RS" %} selected{% endif %}>{{ i18n.getMessage("option_RS") }}</option>
   		</select>
-	  	<button type="submit" class="btn btn-primary">{{ i18n.getMessage("button_display") }}</button>
-	  	<a href="{{ env.getInternalUrl("transfermarket") }}" class="btn">{{ i18n.getMessage("button_reset") }}</a>
-	  	
-	  	<input type="hidden" name="page" value="transfermarket" />
-	</form>
+
+		{% if transfermarket_filter_definitions is defined and transfermarket_filter_definitions|length > 0 %}
+			<a class="btn" data-toggle="collapse" href="#transfermarketAdvancedSearch" style="margin-left: 8px;">
+				<i class="icon-search"></i> {{ i18n.getMessage("transfermarket_filter_advanced") }}
+			</a>
+
+			<div id="transfermarketAdvancedSearch" class="collapse{% if transfermarket_advancedfilters_active is defined and transfermarket_advancedfilters_active %} in{% endif %}">
+				<div class="well well-small" style="margin-top: 10px; margin-bottom: 10px; max-width: 560px;">
+					<table class="table table-condensed" style="margin-bottom: 0; background: transparent;">
+						<thead>
+							<tr>
+								<th>{{ i18n.getMessage("transfermarket_filter_attribute") }}</th>
+								<th style="width: 90px;">{{ i18n.getMessage("transfermarket_filter_min") }}</th>
+								<th style="width: 90px;">{{ i18n.getMessage("transfermarket_filter_max") }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for filterkey, filter in transfermarket_filter_definitions %}
+								<tr>
+									<td><label for="{{ filterkey }}_min" style="margin-bottom: 0;">{{ i18n.getMessage(filter.label_key) }}</label></td>
+									<td><input type="text" class="input-mini" name="{{ filterkey }}_min" id="{{ filterkey }}_min" value="{{ env.getRequestParameter(filterkey ~ '_min') }}" placeholder="{{ i18n.getMessage('transfermarket_filter_min') }}" /></td>
+									<td><input type="text" class="input-mini" name="{{ filterkey }}_max" id="{{ filterkey }}_max" value="{{ env.getRequestParameter(filterkey ~ '_max') }}" placeholder="{{ i18n.getMessage('transfermarket_filter_max') }}" /></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		{% endif %}
+
+  		<button type="submit" class="btn btn-primary">{{ i18n.getMessage("button_display") }}</button>
+  		<a href="{{ env.getInternalUrl("transfermarket") }}" class="btn">{{ i18n.getMessage("button_reset") }}</a>
+  		<input type="hidden" name="page" value="transfermarket" />
+		</form>
   
   {% if transferplayers is defined and transferplayers|length > 0 %}
   

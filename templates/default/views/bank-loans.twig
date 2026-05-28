@@ -1,0 +1,168 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("bankloans_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("bankloans_title") }}</h3>
+<p class="muted">{{ i18n.getMessage("bankloans_intro") }}</p>
+
+{% if not enabled %}
+    <div class="alert alert-info">{{ i18n.getMessage("bankloans_disabled") }}</div>
+{% else %}
+
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("bankloans_credit_rating") }}</strong><br>
+            <span class="label label-info">{{ rating.rating }}</span>
+            {{ i18n.getMessage(rating.label_key) }}<br>
+            <small>{{ i18n.getMessage("bankloans_credit_score") }}: {{ rating.score }}/100</small>
+        </div>
+    </div>
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("bankloans_current_debt") }}</strong><br>
+            {% if rating.active_debt > 0 %}<span style="color: red">{% endif %}
+            {{ rating.active_debt|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+            {% if rating.active_debt > 0 %}</span>{% endif %}
+        </div>
+    </div>
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("bankloans_debt_limit") }}</strong><br>
+            {{ rating.max_debt|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+        </div>
+    </div>
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("bankloans_available_credit") }}</strong><br>
+            {{ rating.available_debt|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br>
+            <small>{{ i18n.getMessage("bankloans_debt_ratio") }}: {{ rating.debt_ratio }}%</small>
+        </div>
+    </div>
+</div>
+
+{% if rating.debt_ratio >= 80 %}
+    <div class="alert alert-error">
+        <strong>{{ i18n.getMessage("bankloans_warning_high_debt_title") }}</strong><br>
+        {{ i18n.getMessage("bankloans_warning_high_debt_text") }}
+    </div>
+{% elseif rating.debt_ratio >= 60 %}
+    <div class="alert alert-warning">
+        {{ i18n.getMessage("bankloans_warning_medium_debt_text") }}
+    </div>
+{% endif %}
+
+<h4>{{ i18n.getMessage("bankloans_offers") }}</h4>
+{% if offers|length > 0 %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("bankloans_offer") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_amount") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_interest_rate") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_total_repayment") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_duration") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_installment") }}</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for offer in offers %}
+                <tr>
+                    <td><strong>{{ i18n.getMessage(offer.label_key) }}</strong></td>
+                    <td align="right">{{ offer.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td align="right">{{ offer.interest_rate }}%</td>
+                    <td align="right">{{ offer.total_repayment|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td align="right">{{ offer.matches_total }} {{ i18n.getMessage("bankloans_matches") }}</td>
+                    <td align="right">{{ offer.installment|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td align="right">
+                        <form action="?page=bank-loans" method="post" class="form-inline" style="margin: 0">
+                            <input type="hidden" name="action" value="take-bank-loan">
+                            <input type="hidden" name="offer_key" value="{{ offer.key }}">
+                            <button type="submit" class="btn btn-small btn-primary"><i class="icon-ok icon-white"></i> {{ i18n.getMessage("bankloans_take_loan") }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info">{{ i18n.getMessage("bankloans_no_offers") }}</div>
+{% endif %}
+
+<h4>{{ i18n.getMessage("bankloans_active_loans") }}</h4>
+{% if active_loans|length > 0 %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("bankloans_date") }}</th>
+                <th>{{ i18n.getMessage("bankloans_rating_short") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_original_amount") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_remaining_amount") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_matches_left") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_next_installment") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_early_repayment") }}</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in active_loans %}
+                <tr>
+                    <td>{% if loan.created_date > 0 %}{{ env.getFormattedDate(loan.created_date) }}{% else %}&ndash;{% endif %}</td>
+                    <td><span class="label">{{ loan.credit_rating }}</span></td>
+                    <td align="right">{{ loan.original_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td align="right"><span style="color: red">{{ loan.remaining_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span><br><small>{{ loan.progress_percent }}% {{ i18n.getMessage("bankloans_paid") }}</small></td>
+                    <td align="right">{{ loan.matches_left }} / {{ loan.matches_total }}</td>
+                    <td align="right">{{ loan.next_installment|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td align="right">
+                        {{ loan.early_repayment_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                        {% if loan.interest_saved_early > 0 %}<br><small>{{ i18n.getMessage("bankloans_interest_saved") }}: {{ loan.interest_saved_early|number_format(0, ',', ' ') }}</small>{% endif %}
+                    </td>
+                    <td align="right">
+                        <form action="?page=bank-loans" method="post" class="form-inline" style="margin: 0">
+                            <input type="hidden" name="action" value="repay-bank-loan">
+                            <input type="hidden" name="loan_id" value="{{ loan.id }}">
+                            <button type="submit" class="btn btn-small"><i class="icon-forward"></i> {{ i18n.getMessage("bankloans_repay_now") }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{{ i18n.getMessage("bankloans_no_active_loans") }}</p>
+{% endif %}
+
+{% if repaid_loans|length > 0 %}
+    <h4>{{ i18n.getMessage("bankloans_repaid_loans") }}</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("bankloans_date") }}</th>
+                <th>{{ i18n.getMessage("bankloans_repaid_date") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_original_amount") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("bankloans_total_repayment") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in repaid_loans %}
+                <tr>
+                    <td>{% if loan.created_date > 0 %}{{ env.getFormattedDate(loan.created_date) }}{% else %}&ndash;{% endif %}</td>
+                    <td>{% if loan.repaid_date > 0 %}{{ env.getFormattedDate(loan.repaid_date) }}{% else %}&ndash;{% endif %}</td>
+                    <td align="right">{{ loan.original_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td align="right">{{ loan.total_repayment|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<p class="muted">{{ i18n.getMessage("bankloans_note") }}</p>
+
+{% endif %}
+
+{% endblock %}

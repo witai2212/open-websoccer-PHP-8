@@ -231,6 +231,12 @@
       <setting id="stadium_videowall_effect" category="stadium" type="number" default="1" />
       <setting id="stadium_seatsquality_effect" category="stadium" type="number" default="2" />
       <setting id="stadium_vipquality_effect" category="stadium" type="number" default="5" />
+
+      <setting id="stadium_naming_offer_count" category="stadium" type="number" default="3" />
+      <setting id="stadium_naming_min_payout" category="stadium" type="number" default="10000" />
+      <setting id="stadium_naming_base_factor_percent" category="stadium" type="number" default="100" />
+      <setting id="stadium_naming_capacity_bonus_per_seat" category="stadium" type="number" default="1" />
+      <setting id="stadium_naming_fan_mood_max_bonus_percent" category="stadium" type="number" default="25" />
   </settings>
     
     <pages>
@@ -247,6 +253,7 @@
 	            model="StadiumExtensionModel"
 	            role="user"/>
 	        
+	        <css file="stadium.css" />
 	        <script file="stadium.js" />
         </page>
 	        
@@ -258,6 +265,16 @@
             navitem="true"
             navweight="5"
             role="user"/>
+
+        <page
+            id="stadium-attendance"
+            template="stadium-attendance"
+            model="StadiumAttendanceModel"
+            parentItem="stadium"
+            navitem="true"
+            navweight="7"
+            role="user"/>
+
 
     </pages>
     
@@ -277,7 +294,19 @@
 	<action id="upgrade-stadium" controller="UpgradeStadiumController" role="user" log="true">
 	    <param id="type" type="text" required="true" />
 	</action>
+
+	<action id="rename-stadium" controller="RenameStadiumController" role="user" log="true">
+	    <param id="stadium_name" type="text" required="true" min="2" max="60" />
+	</action>
+
+	<action id="sign-stadium-naming-contract" controller="SignStadiumNamingContractController" role="user" log="true">
+	    <param id="id" type="number" required="true" min="1" max="100000000" />
+	</action>
 	
   </actions>
+
+  <plugins>
+      <eventlistener event="MatchCompletedEvent" class="StadiumNamingRightsPlugin" method="handleMatchCompleted" />
+  </plugins>
     
 </module>

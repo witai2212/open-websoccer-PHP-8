@@ -8,9 +8,11 @@
     <message id="userprofile_block_link_profile">Profil bearbeiten</message>
     <message id="userprofile_block_popularity">Fanbeliebtheit</message>
     <message id="userprofile_block_highscore">Highscore</message>
+    <message id="userprofile_block_reputation">Reputation</message>
     <message id="userprofile_block_link_table">Tabelle</message>
     
     <message id="userprofile_block_tooltip_popularity">Richtet sich nach Ihrem Erfolg und beeinflusst die Zuschauerzahlen bei Heimspielen.</message>
+    <message id="userprofile_block_tooltip_reputation">Ihre Manager-Reputation basiert auf Highscore, Fanbeliebtheit und Vorstandszufriedenheit. Sie beeinflusst Jobangebote und verfügbare freie Vereine.</message>
     
     <message id="profile_navlabel">Benutzerprofil</message>
     <message id="profile_title">Profil bearbeiten</message>
@@ -52,5 +54,8 @@
 	<message id="board_info_season_ranking">Platzierung</message>
 	<message id="board_info_season_targethighscore">Highscore</message>
 	<message id="userprofile_block_board_title">Vorstand</message>
+	<message id="userprofile_block_board_details">Zu den Saisonzielen</message>
+	<message id="userprofile_block_board_no_active_season">Aktuell gibt es keine aktive Saison für deinen Verein.</message>
+	<message id="userprofile_block_club_highscore">Vereins-Highscore</message>
 	
 </messages>

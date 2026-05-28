@@ -55,6 +55,7 @@
 					<field id="b_heimzuschlag" type="number" required="true" />
 					<field id="b_sieg" type="number" required="true" />
 					<field id="b_meisterschaft" type="number" required="true" />
+					<field id="b_cup" type="number" required="false" default="0" />
 					<field id="max_teams" type="number" required="true" />
 					<field id="min_platz" type="number" required="true" />
 					<field id="bild" type="file" />
@@ -72,6 +73,11 @@
   <actions>
 	<action id="choose-sponsor" controller="ChooseSponsorController" role="user">
 	    <param id="id" type="number" required="true" min="1" max="2000000000" />
+	    <param id="offer_type" type="text" required="true" min="3" max="16" />
+	</action>
+	<action id="negotiate-sponsor" controller="NegotiateSponsorController" role="user">
+	    <param id="id" type="number" required="true" min="1" max="2000000000" />
+	    <param id="offer_type" type="text" required="true" min="3" max="16" />
 	</action>
 	
   </actions>

@@ -1,7 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
 <module version="1.0.0">
+
+    <settings>
+        <setting id="bank_loans_enabled" category="game" type="boolean" default="1" />
+    </settings>
   
+
+    <admin>
+        <adminpage
+            id="bankloans"
+            entity="bankloans"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="bank AS BankLoan" >
+
+                <overview delete="false" edit="true" add="false" >
+                    <column id="entity_bankloans_id" field="BankLoan.id" type="number" sort="true" />
+                    <column id="entity_bankloans_verein_id" field="BankLoan.verein_id" type="number" sort="true" />
+                    <column id="entity_bankloans_original_amount" field="BankLoan.original_amount" type="number" sort="true" />
+                    <column id="entity_bankloans_remaining_amount" field="BankLoan.remaining_amount" type="number" sort="true" />
+                    <column id="entity_bankloans_interest_rate" field="BankLoan.interest_rate" type="percent" sort="true" />
+                    <column id="entity_bankloans_matches_left" field="BankLoan.matches_left" type="number" sort="true" />
+                    <column id="entity_bankloans_status" field="BankLoan.status" type="text" sort="true" />
+                    <column id="entity_bankloans_credit_rating" field="BankLoan.credit_rating" type="text" sort="true" />
+                    <column id="entity_bankloans_created_date" field="BankLoan.created_date" type="timestamp" sort="true" />
+                </overview>
+
+                <editform>
+                    <field id="original_amount" type="number" required="true" />
+                    <field id="remaining_principal" type="number" required="true" />
+                    <field id="interest_rate" type="number" required="true" />
+                    <field id="remaining_interest" type="number" required="true" />
+                    <field id="remaining_amount" type="number" required="true" />
+                    <field id="matches_left" type="number" required="true" />
+                    <field id="status" type="select" selection="active,repaid,defaulted" required="true" />
+                    <field id="board_warning_sent" type="select" selection="1,0" required="true" />
+                </editform>
+            </entity>
+        </adminpage>
+    </admin>
+
     <pages>
         <page
             id="finance"
@@ -44,7 +84,27 @@
     				<css file="charts.css"/>
     			 </page>
 			</page>
+
+	        <page
+	            id="financialforecast"
+	            template="financialforecast"
+	            model="FinancialForecastModel"
+	            navitem="true"
+	            navweight="4"
+	            role="user">
+	        </page>
 			
+	        <page
+	            id="bank-loans"
+	            template="bank-loans"
+	            model="BankLoansModel"
+	            navitem="true"
+	            navweight="2"
+	            parentItem="finance"
+	            role="user"
+	            navitemOnlyForConfigEnabled="bank_loans_enabled">
+	        </page>
+
 	        <page
 	            id="portfolio"
 	            template="portfolio"
@@ -52,17 +112,6 @@
 	            navitem="true"
 	            navweight="3"
 	            parentItem="stockmarket"
-	            role="user">
-	        
-	        </page>
-			
-	        <page
-	            id="fix-term-deposit"
-	            template="fix-term-deposit"
-	            model="FixTermDepositModel"
-	            navitem="false"
-	            navweight="5"
-	            parentItem="finance"
 	            role="user">
 	        
 	        </page>
@@ -91,6 +140,18 @@
 			<param id="max_qty" type="text" min="1" max="100000000" required="true" />
 		</action>
 		
+        <action id="take-bank-loan" controller="TakeBankLoanController" role="user">
+            <param id="offer_key" type="text" min="1" max="16" required="true" />
+        </action>
+        <action id="repay-bank-loan" controller="RepayBankLoanController" role="user">
+            <param id="loan_id" type="number" min="1" max="100000000" required="true" />
+        </action>
+
 	</actions>    
     
+
+    <plugins>
+        <eventlistener event="MatchCompletedEvent" class="BankLoansPlugin" method="handleMatchCompleted" />
+    </plugins>
+
 </module>

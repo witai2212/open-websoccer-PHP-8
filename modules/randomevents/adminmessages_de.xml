@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	
-	<message id="settings_label_randomevents_interval_days">Zufallsereignisse: Intervall</message> 
-	<message id="settings_label_randomevents_interval_days_help">Nach wievielen Tagen ein neues Ereignis für den Benutzer eintreten kann. 0 um Zufalssereignisse zu deaktivieren.</message> 
+    <message id="settings_label_randomevents_interval_days">Zufallsereignisse: Intervall</message>
+    <message id="settings_label_randomevents_interval_days_help">Nach wievielen Tagen ein neues Sofort-Ereignis für den Benutzer eintreten kann. 0 um alte Sofort-Zufallsereignisse zu deaktivieren.</message>
+    <message id="settings_label_randomevent_chain_enabled">Ereignisketten aktivieren</message>
+    <message id="settings_label_randomevent_chain_enabled_help">Aktiviert neue Vereinsereignisse mit Manager-Entscheidungen.</message>
+    <message id="settings_label_randomevent_chain_chance_percent">Ereignisketten: Chance pro Spieltag</message>
+    <message id="settings_label_randomevent_chain_chance_percent_help">Prozentchance, dass beim Öffnen des Büros nach einem Spieltag ein neues Ereignis erzeugt wird. Empfehlung: 15.</message>
+    <message id="settings_label_randomevent_chain_expire_matchdays">Ereignisketten: Ablauf nach Spieltagen</message>
+    <message id="settings_label_randomevent_chain_expire_matchdays_help">Anzahl Spieltage, nach denen eine offene Ereigniskette automatisch mit der Standardentscheidung abläuft.</message>
 </messages>

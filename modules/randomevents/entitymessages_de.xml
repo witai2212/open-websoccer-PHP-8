@@ -2,23 +2,54 @@
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_randomevent">Zufallsereignisse</message>
-	<message id="entity_randomevent_message">Nachricht</message>
-	<message id="entity_randomevent_message_help">Kann auch ein Messages-Key sein. Nachricht kann Platzhalter "{playername}" enthalten bei spielerspezifischen Ereignissen.</message>
-	<message id="entity_randomevent_effect">Auswirkung</message>
-	<message id="entity_randomevent_effect_money_amount">Auswirkung: Geldbetrag</message>
-	<message id="entity_randomevent_effect_money_amount_help">Positiver oder negativer Betrag, der beim entsprechenden Ereignis vom bzw. auf das Vereinskonto gebucht wird.</message>
-	<message id="entity_randomevent_effect_blocked_matches">Auswirkung: Anzahl gesperrte Spiele</message>
-	<message id="entity_randomevent_effect_skillchange">Auswirkung: Stärkenänderung</message>
-	<message id="entity_randomevent_effect_skillchange_help">Positive oder negative Änderung des entsprechenden Spielerattributs.</message>
-	<message id="entity_randomevent_weight">Gewichtung</message>
-	<message id="entity_randomevent_weight_help">Wirkt sich auf die Wahrscheinlichkeit des Eintretens aus. 1 bedeutet normale Wahrscheinlichkeit; 5 bedeutet, dass es fünf mal so wahrscheinlich eintreten kann. 0 deaktiviert das Ereignis.</message>
+    <message id="entity_randomevent_message">Nachricht</message>
+    <message id="entity_randomevent_message_help">Kann auch ein Messages-Key sein. Nachricht kann Platzhalter "{playername}" enthalten bei spielerspezifischen Ereignissen.</message>
+    <message id="entity_randomevent_effect">Auswirkung</message>
+    <message id="entity_randomevent_effect_money_amount">Auswirkung: Geldbetrag</message>
+    <message id="entity_randomevent_effect_money_amount_help">Positiver oder negativer Betrag, der beim entsprechenden Ereignis vom bzw. auf das Vereinskonto gebucht wird.</message>
+    <message id="entity_randomevent_effect_blocked_matches">Auswirkung: Anzahl gesperrte Spiele</message>
+    <message id="entity_randomevent_effect_skillchange">Auswirkung: Stärkenänderung</message>
+    <message id="entity_randomevent_effect_skillchange_help">Positive oder negative Änderung des entsprechenden Spielerattributs.</message>
+    <message id="entity_randomevent_weight">Gewichtung</message>
+    <message id="entity_randomevent_weight_help">Wirkt sich auf die Wahrscheinlichkeit des Eintretens aus. 1 bedeutet normale Wahrscheinlichkeit; 5 bedeutet, dass es fünf mal so wahrscheinlich eintreten kann. 0 deaktiviert das Ereignis.</message>
 
-	<message id="option_money">Vereinskonto wird verändert</message>
-	<message id="option_player_injured">Ein Spieler fällt verletzt aus</message>
-	<message id="option_player_blocked">Ein Spieler fällt gesperrt aus</message>
-	<message id="option_player_happiness">Zufriedenheit eines Spielers verändert sich</message>
-	<message id="option_player_fitness">Frische eines Spielers verändert sich</message>
-	<message id="option_player_stamina">Kondition eines Spielers verändert sich</message>
-	
-	<message id="entity_randomevent_effect_renovation">Renovierung</message>
+    <message id="entity_randomeventchain">Ereignisketten</message>
+    <message id="entity_randomeventchain_event_key">Schlüssel</message>
+    <message id="entity_randomeventchain_title">Titel</message>
+    <message id="entity_randomeventchain_message">Nachricht</message>
+    <message id="entity_randomeventchain_event_type">Ereignistyp</message>
+    <message id="entity_randomeventchain_weight">Gewichtung</message>
+    <message id="entity_randomeventchain_active">Aktiv</message>
+
+    <message id="entity_randomeventchainchoice">Ereignisketten-Entscheidungen</message>
+    <message id="entity_randomeventchainchoice_chain_id">Ereigniskette</message>
+    <message id="entity_randomeventchainchoice_choice_key">Schlüssel</message>
+    <message id="entity_randomeventchainchoice_label">Beschriftung</message>
+    <message id="entity_randomeventchainchoice_description">Beschreibung</message>
+    <message id="entity_randomeventchainchoice_effect_money_amount">Geldeffekt</message>
+    <message id="entity_randomeventchainchoice_effect_player_happiness">Spielerzufriedenheit</message>
+    <message id="entity_randomeventchainchoice_effect_player_fitness">Spielerfrische</message>
+    <message id="entity_randomeventchainchoice_effect_player_stamina">Spielerkondition</message>
+    <message id="entity_randomeventchainchoice_effect_blocked_matches">Sperre Spiele</message>
+    <message id="entity_randomeventchainchoice_effect_injured_matches">Verletzung Spiele</message>
+    <message id="entity_randomeventchainchoice_effect_board_satisfaction">Vorstandszufriedenheit</message>
+    <message id="entity_randomeventchainchoice_effect_fanpopularity">Fanbeliebtheit</message>
+    <message id="entity_randomeventchainchoice_effect_stadium_attendance">Zuschauer-Effekt %</message>
+    <message id="entity_randomeventchainchoice_set_player_transfermarket">Spieler auf Transfermarkt setzen</message>
+    <message id="entity_randomeventchainchoice_create_youthplayer">Jugendspieler erstellen</message>
+    <message id="entity_randomeventchainchoice_keep_open">Offen halten</message>
+    <message id="entity_randomeventchainchoice_is_default">Standard bei Ablauf</message>
+    <message id="entity_randomeventchainchoice_sort_order">Sortierung</message>
+
+    <message id="option_money">Vereinskonto wird verändert</message>
+    <message id="option_player_injured">Ein Spieler fällt verletzt aus</message>
+    <message id="option_player_blocked">Ein Spieler fällt gesperrt aus</message>
+    <message id="option_player_happiness">Zufriedenheit eines Spielers verändert sich</message>
+    <message id="option_player_fitness">Frische eines Spielers verändert sich</message>
+    <message id="option_player_stamina">Kondition eines Spielers verändert sich</message>
+
+    <message id="option_player_unhappy">Unzufriedener Spieler</message>
+    <message id="option_sponsor_scandal">Sponsor-Skandal</message>
+    <message id="option_youth_discovered">Jugendspieler entdeckt</message>
+    <message id="option_stadium_damage">Stadionschaden</message>
 </messages>

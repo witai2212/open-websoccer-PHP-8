@@ -8,6 +8,10 @@
     <message id="matchtype_cup">Pokalspiel</message>
     <message id="matchtype_friendly">Freundschaftsspiel</message>
     
+    <message id="matchtype_Ligaspiel">Ligaspiel</message>
+    <message id="matchtype_Pokalspiel">Pokalspiel</message>
+    <message id="matchtype_Freundschaft">Freundschaftsspiel</message>
+    
     <message id="last_match_block_title">Mein letztes Spiel</message>
     <message id="last_match_block_no_lastmatch">Ihr Team hat noch kein Spiel bestritten.</message>
     
@@ -102,4 +106,54 @@
 	<message id="matchpreview_last_matches">Letzte Spiele im Wettbewerb</message>
 	<message id="matchpreview_nolastmatches">%s hat in diesem Wettbewerb noch nicht gespielt.</message>
 	<message id="matchpreview_nouser">%s hat derzeit keinen Manager.</message>
+
+    <message id="matchanalytics_navlabel">Analyse</message>
+    <message id="matchanalytics_title">Spielanalyse</message>
+    <message id="matchanalytics_back_to_match">Zurück zum Spielbericht</message>
+    <message id="matchanalytics_not_simulated">Dieses Spiel wurde noch nicht berechnet. Die Analyse ist erst nach Spielende verfügbar.</message>
+    <message id="matchanalytics_deprecated_report">Für alte Spielberichte sind keine detaillierten Analysedaten verfügbar.</message>
+    <message id="matchanalytics_team_comparison">Teamvergleich</message>
+    <message id="matchanalytics_metric">Wert</message>
+    <message id="matchanalytics_pass_success">Passquote</message>
+    <message id="matchanalytics_tackle_success">Zweikampfquote</message>
+    <message id="matchanalytics_tackles_won_lost">Zweikämpfe gewonnen/verloren</message>
+    <message id="matchanalytics_shots">Schüsse</message>
+    <message id="matchanalytics_ballcontacts">Ballkontakte</message>
+    <message id="matchanalytics_assists">Vorlagen</message>
+    <message id="matchanalytics_freekicks_success">Freistöße erfolgreich/fehlgeschlagen</message>
+    <message id="matchanalytics_freekick_success">Freistoßquote</message>
+    <message id="matchanalytics_average_grade">Durchschnittsnote</message>
+    <message id="matchanalytics_explanation_title">Warum war das Spiel so?</message>
+    <message id="matchanalytics_goalkeeper_note">Hinweis: Torhüter werden normal angezeigt, offensive Werte wie Schüsse oder Vorlagen sind bei ihnen aber weniger aussagekräftig.</message>
+    <message id="matchanalytics_summary_pass_advantage">%s hatte die klarere Passstruktur (%s%% zu %s%%).</message>
+    <message id="matchanalytics_summary_tackle_advantage">%s war in den Zweikämpfen stabiler (%s%% zu %s%%).</message>
+    <message id="matchanalytics_summary_shots_advantage">%s kam deutlich häufiger zum Abschluss (%d zu %d Schüsse).</message>
+    <message id="matchanalytics_summary_ball_advantage">%s hatte mehr Spielanteile und deutlich mehr Ballkontakte.</message>
+    <message id="matchanalytics_summary_assists_advantage">%s erspielte mehr direkte Vorlagen und wirkte im letzten Drittel gefährlicher.</message>
+    <message id="matchanalytics_summary_balanced">Die wichtigsten Kennzahlen waren relativ ausgeglichen. Das Ergebnis wurde wahrscheinlich durch Einzelaktionen, Chancenverwertung oder Standards entschieden.</message>
+    <message id="matchanalytics_rating_trend">Notentrend</message>
+    <message id="matchanalytics_rating_trend_help">Die Grafik vergleicht die aktuelle Spielnote mit letzter Note und Durchschnittsnote. Bei Noten ist 1,00 sehr gut und 6,00 schlecht.</message>
+    <message id="matchanalytics_current_grade">Spielnote</message>
+    <message id="matchanalytics_last_grade">Letzte Note</message>
+    <message id="matchanalytics_top_performers">Top-Spieler</message>
+    <message id="matchanalytics_best_grade">Beste Note</message>
+    <message id="matchanalytics_most_ballcontacts">Meiste Ballkontakte</message>
+    <message id="matchanalytics_best_passer">Bester Passspieler</message>
+    <message id="matchanalytics_best_tackler">Bester Zweikämpfer</message>
+    <message id="matchanalytics_most_shots">Meiste Schüsse</message>
+    <message id="matchanalytics_most_assists">Meiste Vorlagen</message>
+    <message id="matchanalytics_minutes_short">Min.</message>
+    <message id="matchanalytics_trend">Trend</message>
+    <message id="matchanalytics_pass_success_short">Pass</message>
+    <message id="matchanalytics_tackles_short">Zw.</message>
+    <message id="matchanalytics_shots_short">Sch.</message>
+    <message id="matchanalytics_ballcontacts_short">Ball</message>
+    <message id="matchanalytics_assists_short">Vor.</message>
+    <message id="matchanalytics_freekicks_short">FS</message>
+    <message id="matchanalytics_bench">Ersatzbank</message>
+    <message id="matchanalytics_trend_better">besser</message>
+    <message id="matchanalytics_trend_worse">schlechter</message>
+    <message id="matchanalytics_trend_stable">stabil</message>
+    <message id="matchanalytics_no_player_data">Keine Spielerdaten vorhanden.</message>
+
 </messages>

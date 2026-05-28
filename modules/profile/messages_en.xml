@@ -46,4 +46,13 @@
 	
 	<message id="user_deletepicture_button">Delete picture</message>
 	<message id="delete-profile-picture_success">The profile picture has been successfully deleted.</message>
+	
+	<message id="board_satisfaction_title">Board satisfaction</message>
+	<message id="board_info_season_target">Season objectives</message>
+	<message id="board_info_season_ranking">Ranking</message>
+	<message id="board_info_season_targethighscore">Highscore</message>
+	<message id="userprofile_block_board_title">Board</message>
+	<message id="userprofile_block_board_details">View season objectives</message>
+	<message id="userprofile_block_board_no_active_season">There is currently no active season for your club.</message>
+	<message id="userprofile_block_club_highscore">Club highscore</message>
 </messages>

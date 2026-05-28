@@ -25,4 +25,23 @@
 	
 	<message id="stadiumenvironment_matchincome_subject">Stadium environment revenue</message>
 	<message id="stadiumenvironment_costs_per_match_subject">Stadium environment costs</message>
+
+	<message id="stadiumenvironment_effect_injury_unit">match(es)</message>
+	
+	<message id="stadiumfacility_youthacademy_name">Youth Academy</message>
+	<message id="stadiumfacility_youthacademy_desc">Improves youth development and increases the chance of stronger youth players.</message>
+	<message id="stadiumfacility_medicalcenter_name">Medical Center</message>
+	<message id="stadiumfacility_medicalcenter_desc">Better diagnosis and rehabilitation reduce player injury durations.</message>
+	<message id="stadiumfacility_trainingcenter_name">Training Center</message>
+	<message id="stadiumfacility_trainingcenter_desc">Modern training pitches and analysis areas improve training effects.</message>
+	<message id="stadiumfacility_fanshop_name">Fan Shop</message>
+	<message id="stadiumfacility_fanshop_desc">Increases merchandising sales on home matchdays and adds extra revenue.</message>
+	<message id="stadiumfacility_mediacenter_name">Media Center</message>
+	<message id="stadiumfacility_mediacenter_desc">Professional media work improves fan popularity and sponsor-related home match revenue.</message>
+	<message id="stadiumfacility_viplounge_name">VIP Lounge</message>
+	<message id="stadiumfacility_viplounge_desc">Improves hospitality, ticket demand and home match revenue.</message>
+	<message id="stadiumfacility_pitchheating_name">Pitch Heating</message>
+	<message id="stadiumfacility_pitchheating_desc">Improves pitch conditions, stabilizes attendance and reduces injury impact.</message>
+	<message id="stadiumfacility_scoutingoffice_name">Scouting Office</message>
+	<message id="stadiumfacility_scoutingoffice_desc">Improves youth scouting and the quality of new scouting proposals.</message>
 </messages>

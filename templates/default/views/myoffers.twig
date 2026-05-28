@@ -44,7 +44,7 @@
 				<td><strong>{{ loop.index }}</strong></td>
 				<td><a href="?page=player&id={{offer.spieler_id }}">{{ offer.vorname }} {{ offer.nachname }}</a></td>
 				<td>{{ offer.position_main }} ({{ offer.position_second }})</td>
-				<td>{{ env.getFormattedDatetime(bid.auction_end) }}</td>
+				<td>{{ env.getFormattedDatetime(offer.transfer_ende) }}</td>
 				<td>{{ offer.abloese|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 				<td>{{ offer.marktwert|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 				<td>{{ offer.bidder.team_name }}</td>

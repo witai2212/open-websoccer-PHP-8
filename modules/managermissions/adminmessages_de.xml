@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_manager_missions_enabled">Manager-Missionen aktivieren</message>
+    <message id="settings_label_manager_missions_reward_board">Vorstandsbonus bei erfüllter Mission</message>
+    <message id="settings_label_manager_missions_reward_highscore">Highscore-Bonus bei erfüllter Mission</message>
+    <message id="settings_label_manager_missions_penalty_board">Vorstandsabzug bei gescheiterter Mission</message>
+    <message id="settings_label_manager_missions_salary_reduce_percent">Zielwert Gehaltsreduktion in Prozent</message>
+</messages>

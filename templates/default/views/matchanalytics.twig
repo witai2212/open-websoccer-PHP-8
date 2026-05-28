@@ -1,0 +1,220 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("matchanalytics_title") }}: {{ match.match_home_name }} - {{ match.match_guest_name }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("matchanalytics_title") }}</h3>
+<p class="muted">
+    {{ match.match_home_name }} {{ match.match_goals_home }} - {{ match.match_goals_guest }} {{ match.match_guest_name }}
+    &ndash; {{ env.getFormattedDatetime(match.match_date, i18n) }}
+</p>
+
+<p>
+    <a class="btn" href="{{ env.getInternalUrl("match", "id=" ~ match.match_id) }}"><i class="icon-arrow-left"></i> {{ i18n.getMessage("matchanalytics_back_to_match") }}</a>
+</p>
+
+{% if match.match_simulated == 0 %}
+    <div class="alert alert-info">{{ i18n.getMessage("matchanalytics_not_simulated") }}</div>
+{% elseif match.match_deprecated_report|length > 0 %}
+    <div class="alert alert-info">{{ i18n.getMessage("matchanalytics_deprecated_report") }}</div>
+{% else %}
+
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="well">
+                <h4>{{ i18n.getMessage("matchanalytics_team_comparison") }}</h4>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>{{ i18n.getMessage("matchanalytics_metric") }}</th>
+                            <th style="text-align: right">{{ match.match_home_name }}</th>
+                            <th style="text-align: right">{{ match.match_guest_name }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ i18n.getMessage("matchanalytics_pass_success") }}</td>
+                            <td style="text-align: right">{{ home_statistics.pass_success_percent|number_format(1, ',', ' ') }}%</td>
+                            <td style="text-align: right">{{ guest_statistics.pass_success_percent|number_format(1, ',', ' ') }}%</td>
+                        </tr>
+                        <tr>
+                            <td>{{ i18n.getMessage("matchanalytics_tackles_won_lost") }}</td>
+                            <td style="text-align: right">{{ home_statistics.wontackles }} / {{ home_statistics.losttackles }} ({{ home_statistics.tackle_success_percent|number_format(1, ',', ' ') }}%)</td>
+                            <td style="text-align: right">{{ guest_statistics.wontackles }} / {{ guest_statistics.losttackles }} ({{ guest_statistics.tackle_success_percent|number_format(1, ',', ' ') }}%)</td>
+                        </tr>
+                        <tr>
+                            <td>{{ i18n.getMessage("matchanalytics_shots") }}</td>
+                            <td style="text-align: right">{{ home_statistics.shoots }}</td>
+                            <td style="text-align: right">{{ guest_statistics.shoots }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ i18n.getMessage("matchanalytics_ballcontacts") }}</td>
+                            <td style="text-align: right">{{ home_statistics.ballcontacts }}</td>
+                            <td style="text-align: right">{{ guest_statistics.ballcontacts }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ i18n.getMessage("matchanalytics_assists") }}</td>
+                            <td style="text-align: right">{{ home_statistics.assists }}</td>
+                            <td style="text-align: right">{{ guest_statistics.assists }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ i18n.getMessage("matchanalytics_freekicks_success") }}</td>
+                            <td style="text-align: right">{{ home_statistics.freekicks_successed }} / {{ home_statistics.freekicks_failed }} ({{ home_statistics.freekick_success_percent|number_format(1, ',', ' ') }}%)</td>
+                            <td style="text-align: right">{{ guest_statistics.freekicks_successed }} / {{ guest_statistics.freekicks_failed }} ({{ guest_statistics.freekick_success_percent|number_format(1, ',', ' ') }}%)</td>
+                        </tr>
+                        <tr>
+                            <td>{{ i18n.getMessage("matchanalytics_average_grade") }}</td>
+                            <td style="text-align: right">{{ home_statistics.grade_average|number_format(2, ',', ' ') }}</td>
+                            <td style="text-align: right">{{ guest_statistics.grade_average|number_format(2, ',', ' ') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="well">
+                <h4>{{ i18n.getMessage("matchanalytics_explanation_title") }}</h4>
+                <ul>
+                    {% for item in summary_items %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                <p class="muted">{{ i18n.getMessage("matchanalytics_goalkeeper_note") }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span4">
+            <h4>{{ i18n.getMessage("matchanalytics_pass_success") }}</h4>
+            <p>{{ match.match_home_name }}: {{ home_statistics.pass_success_percent|number_format(1, ',', ' ') }}%</p>
+            <div class="progress"><div class="bar" style="width: {{ home_statistics.pass_success_percent }}%"></div></div>
+            <p>{{ match.match_guest_name }}: {{ guest_statistics.pass_success_percent|number_format(1, ',', ' ') }}%</p>
+            <div class="progress"><div class="bar" style="width: {{ guest_statistics.pass_success_percent }}%"></div></div>
+        </div>
+        <div class="span4">
+            <h4>{{ i18n.getMessage("matchanalytics_tackle_success") }}</h4>
+            <p>{{ match.match_home_name }}: {{ home_statistics.tackle_success_percent|number_format(1, ',', ' ') }}%</p>
+            <div class="progress"><div class="bar" style="width: {{ home_statistics.tackle_success_percent }}%"></div></div>
+            <p>{{ match.match_guest_name }}: {{ guest_statistics.tackle_success_percent|number_format(1, ',', ' ') }}%</p>
+            <div class="progress"><div class="bar" style="width: {{ guest_statistics.tackle_success_percent }}%"></div></div>
+        </div>
+        <div class="span4">
+            <h4>{{ i18n.getMessage("matchanalytics_freekick_success") }}</h4>
+            <p>{{ match.match_home_name }}: {{ home_statistics.freekick_success_percent|number_format(1, ',', ' ') }}%</p>
+            <div class="progress"><div class="bar" style="width: {{ home_statistics.freekick_success_percent }}%"></div></div>
+            <p>{{ match.match_guest_name }}: {{ guest_statistics.freekick_success_percent|number_format(1, ',', ' ') }}%</p>
+            <div class="progress"><div class="bar" style="width: {{ guest_statistics.freekick_success_percent }}%"></div></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h4>{{ i18n.getMessage("matchanalytics_rating_trend") }}</h4>
+    <p class="muted">{{ i18n.getMessage("matchanalytics_rating_trend_help") }}</p>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="matchAnalyticsRatingChart" width="900" height="300"></canvas>
+    <script>
+        var matchAnalyticsCanvas = document.getElementById('matchAnalyticsRatingChart');
+        if (matchAnalyticsCanvas) {
+            new Chart(matchAnalyticsCanvas.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: {{ chart.labels|raw }},
+                    datasets: [{
+                        label: '{{ i18n.getMessage("matchanalytics_current_grade") }}',
+                        data: {{ chart.match_grades|raw }},
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }, {
+                        label: '{{ i18n.getMessage("matchanalytics_last_grade") }}',
+                        data: {{ chart.last_grades|raw }},
+                        fill: false,
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        tension: 0.1
+                    }, {
+                        label: '{{ i18n.getMessage("matchanalytics_average_grade") }}',
+                        data: {{ chart.average_grades|raw }},
+                        fill: false,
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            min: 1,
+                            max: 6,
+                            reverse: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+    <hr>
+
+    <h4>{{ i18n.getMessage("matchanalytics_top_performers") }}</h4>
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("matchanalytics_best_grade") }}</strong><br>
+                {% if top_performers.best_grade %}{{ top_performers.best_grade.display_name }} ({{ top_performers.best_grade.grade|number_format(2, ',', ' ') }}){% else %}-{% endif %}
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("matchanalytics_most_ballcontacts") }}</strong><br>
+                {% if top_performers.most_ballcontacts %}{{ top_performers.most_ballcontacts.display_name }} ({{ top_performers.most_ballcontacts.ballcontacts }}){% else %}-{% endif %}
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("matchanalytics_best_passer") }}</strong><br>
+                {% if top_performers.best_passer %}{{ top_performers.best_passer.display_name }} ({{ top_performers.best_passer.pass_success_percent|number_format(1, ',', ' ') }}%){% else %}-{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("matchanalytics_best_tackler") }}</strong><br>
+                {% if top_performers.best_tackler %}{{ top_performers.best_tackler.display_name }} ({{ top_performers.best_tackler.tackle_success_percent|number_format(1, ',', ' ') }}%){% else %}-{% endif %}
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("matchanalytics_most_shots") }}</strong><br>
+                {% if top_performers.most_shots %}{{ top_performers.most_shots.display_name }} ({{ top_performers.most_shots.shoots }}){% else %}-{% endif %}
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <strong>{{ i18n.getMessage("matchanalytics_most_assists") }}</strong><br>
+                {% if top_performers.most_assists %}{{ top_performers.most_assists.display_name }} ({{ top_performers.most_assists.assists }}){% else %}-{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <h4>{{ match.match_home_name }}</h4>
+            {% include "blocks/matchanalytics_player_table.twig" with { 'players': home_players } %}
+        </div>
+        <div class="span6">
+            <h4>{{ match.match_guest_name }}</h4>
+            {% include "blocks/matchanalytics_player_table.twig" with { 'players': guest_players } %}
+        </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_fanpressure_enabled">Enable fan mood and media pressure</message>
+    <message id="settings_label_fanpressure_attendance_max_effect">Maximum attendance effect of fan mood in percent</message>
+    <message id="settings_label_fanpressure_sponsor_max_effect">Maximum fan-sponsor effect in percent</message>
+    <message id="settings_label_fanpressure_notification_threshold">Notify from mood change of X points</message>
+    <message id="settings_label_fanpressure_create_extreme_news">Create news for extreme fan mood</message>
+</messages>

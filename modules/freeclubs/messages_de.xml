@@ -13,4 +13,9 @@
     <message id="freeclubs_msg_error_max_number_of_teams">Sie dürfen derzeit höchstens %d Teams managen.</message>
     <message id="freeclubs_msg_error_no_club_from_same_league">Sie dürfen nicht mehrere Teams aus der selben Liga managen.</message>
     <message id="freeclubs_msg_error_minhighscore">Sie benötigen eine Highscore von mindestens %d, um einen weiteren Verein managen zu dürfen.</message>
+    <message id="freeclubs_reputation_intro">Stärkere Vereine benötigen eine höhere Manager-Reputation. Schwächere Vereine bleiben auch für neue oder vereinslose Manager erreichbar.</message>
+    <message id="freeclubs_locked_hint">Reputation zu niedrig</message>
+    <message id="freeclubs_msg_error_reputation_required">Für diesen Verein benötigst du mindestens {required} Manager-Reputation. Deine aktuelle Reputation: {score}.</message>
+    <message id="freeclubs_button_switch">Zu diesem Verein wechseln</message>
+    <message id="freeclubs_msg_switch_success">Glückwunsch! Sie haben den Verein gewechselt.</message>
 </messages>

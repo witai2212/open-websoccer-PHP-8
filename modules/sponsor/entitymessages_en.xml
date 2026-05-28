@@ -9,6 +9,7 @@
 	<message id="entity_sponsor_b_heimzuschlag">Bonus per home match</message>
 	<message id="entity_sponsor_b_sieg">Bonus per win</message>
 	<message id="entity_sponsor_b_meisterschaft">Bonus when winning the championship</message>
+	<message id="entity_sponsor_b_cup">Bonus per cup round</message>
 	<message id="entity_sponsor_max_teams">Maximum number of teams</message>
 	<message id="entity_sponsor_min_platz">Minimum rank in league</message>
 </messages>

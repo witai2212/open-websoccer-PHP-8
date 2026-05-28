@@ -64,15 +64,51 @@ class ProfileBlockModel implements IModel {
 		// unseen notifications
 		$unseenNotifications = NotificationsDataService::countUnseenNotifications($this->_websoccer, $this->_db, $user->id, $clubId);
 		
-		// board satisfaction
-		$boradSatisfaction = BoardDataService::getBoardSatisfactionByTeamId($this->_websoccer, $this->_db, $clubId);
+		$boardSatisfaction = 0;
+		$boardInfo = array("min_target_rank" => 0, "min_target_highscore" => 0, "highscore" => 0);
+		$boardMissions = null;
+		$managerReputation = null;
+
+		// Keep this value aligned with Manager Career / free club eligibility.
+		try {
+			if (class_exists('ManagerCareerDataService') && ManagerCareerDataService::isEnabled($this->_websoccer)) {
+				$managerReputation = ManagerCareerDataService::getManagerScoreForUser(
+					$this->_websoccer,
+					$this->_db,
+					(int) $user->id
+				);
+			}
+		} catch (Exception $e) {
+			$managerReputation = null;
+		}
 		
-		// board info and season targets
-		$boardInfo = BoardDataService::getBoardinfoByTeamId($this->_websoccer, $this->_db, $clubId);
+		if ($clubId > 0) {
+			// board satisfaction
+			$boardSatisfaction = BoardDataService::getBoardSatisfactionByTeamId($this->_websoccer, $this->_db, $clubId);
+			
+			// legacy board info and season targets; used only as fallback when manager missions are unavailable.
+			$boardInfo = BoardDataService::getBoardinfoByTeamId($this->_websoccer, $this->_db, $clubId);
+			
+			// Keep the sidebar in sync with the Vorstand / Saisonziele page.
+			try {
+				if (class_exists('ManagerMissionsDataService') && ManagerMissionsDataService::isEnabled($this->_websoccer)) {
+					$boardMissions = ManagerMissionsDataService::getMissionPageData(
+						$this->_websoccer,
+						$this->_db,
+						$this->_i18n,
+						(int) $user->id,
+						(int) $clubId
+					);
+				}
+			} catch (Exception $e) {
+				$boardMissions = null;
+			}
+		}
 		
 		return array("profile" => $userinfo, "userteam" => $team, "unseenMessages" => $unseenMessages,
 				"unseenNotifications" => $unseenNotifications,
-		        "boardsatisfaction" => $boradSatisfaction, "boardinfo" => $boardInfo);
+		        "boardsatisfaction" => $boardSatisfaction, "boardinfo" => $boardInfo, "boardmissions" => $boardMissions,
+				"managerReputation" => $managerReputation);
 	}
 	
 	

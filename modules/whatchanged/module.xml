@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="clubs" version="1.0.0"/>
+        <dependency module="office" version="1.0.0"/>
+        <dependency module="notifications" version="1.0.0"/>
+        <dependency module="news" version="1.0.0"/>
+    </dependencies>
+
+    <settings>
+        <setting id="what_changed_enabled" category="game" type="boolean" default="1" />
+    </settings>
+
+    <pages>
+        <page
+            id="what-changed"
+            template="what-changed"
+            model="WhatChangedModel"
+            parentItem="office"
+            navitem="true"
+            navweight="10"
+            role="user"
+            navitemOnlyForConfigEnabled="what_changed_enabled">
+        </page>
+    </pages>
+
+    <blocks>
+        <block
+            id="what-changed-office-latest"
+            template="what-changed-office-latest"
+            model="WhatChangedOfficeBlockModel"
+            includepages="office"
+            area="content_top"
+            weight="3"
+            role="user" />
+    </blocks>
+
+    <plugins>
+        <eventlistener event="MatchCompletedEvent" class="WhatChangedPlugin" method="handleMatchCompleted" />
+    </plugins>
+
+</module>

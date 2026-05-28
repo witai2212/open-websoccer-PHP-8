@@ -104,15 +104,8 @@ class OrderBuildingController implements IActionController {
 			PremiumDataService::debitAmount($this->_websoccer, $this->_db, $user->id, $building['premiumfee'], "order-building");
 		}
 		
-		// credit fan popularity change
-		if ($building['effect_fanpopularity'] != 0) {
-			$result = $this->_db->querySelect('fanbeliebtheit', $dbPrefix . '_user', 'id = %d', $user->id, 1);
-			$userinfo = $result->fetch_array();
-			$result->free();
-			
-			$popularity = min(100, max(1, $building['effect_fanpopularity'] + $userinfo['fanbeliebtheit']));
-			$this->_db->queryUpdate(array('fanbeliebtheit' => $popularity), $dbPrefix . '_user', 'id = %d', $user->id);
-		}
+		// fan popularity effects are applied only after construction has finished.
+		// See StadiumEnvironmentPlugin::applyCompletedFanPopularityBuildings().
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

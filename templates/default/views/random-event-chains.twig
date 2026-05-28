@@ -1,0 +1,61 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("random-events_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("random-events_title") }}</h3>
+<p>{{ i18n.getMessage("random-events_intro") }}</p>
+
+{% if events|length == 0 %}
+    <div class="alert alert-info">
+        <i class="icon-info-sign"></i>
+        {{ i18n.getMessage("randomevent_chain_no_open_events") }}
+    </div>
+{% else %}
+    {% for event in events %}
+        <div class="well">
+            <h4>{{ event.title_text }}</h4>
+            <p>{{ event.message_text|raw }}</p>
+
+            <p>
+                <span class="label label-info">{{ i18n.getMessage("randomevent_chain_expires_matchday") }} {{ event.expires_matchday }}</span>
+            </p>
+
+            {% if event.selected_choice_id %}
+                <div class="alert alert-warning">
+                    <strong>{{ i18n.getMessage("randomevent_chain_choice_selected") }}:</strong>
+                    {{ event.selected_choice_text|raw }}<br>
+                    {{ i18n.getMessage("randomevent_chain_waiting_until_expiry") }}
+                </div>
+            {% else %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{ i18n.getMessage("randomevent_chain_choice") }}</th>
+                            <th>{{ i18n.getMessage("randomevent_chain_effect") }}</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for choice in event.choices %}
+                        <tr>
+                            <td><strong>{{ choice.label_text|raw }}</strong></td>
+                            <td>{{ choice.description_text|raw }}</td>
+                            <td style="white-space: nowrap;">
+                                <a class="btn btn-primary btn-small" href="?page=random-events&id={{ event.id }}&choice_id={{ choice.id }}&action=resolve-random-event-chain">
+                                    <i class="icon-ok icon-white"></i> {{ i18n.getMessage("randomevent_chain_choose") }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

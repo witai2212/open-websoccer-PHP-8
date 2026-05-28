@@ -18,9 +18,14 @@
     <message id="sell_player_success">The player is now available at the transfer market.</message>
     
     <message id="transfermarket_filter_by_position">Filter by position</message>
+    <message id="transfermarket_filter_advanced">Advanced Search</message>
+    <message id="transfermarket_filter_attribute">Attribute</message>
+    <message id="transfermarket_filter_min">Min</message>
+    <message id="transfermarket_filter_max">Max</message>
     
     <message id="transfermarket_no_players">Could not find any players on the transfer market.</message>
     <message id="transfermarket_playerscount">%d players found.</message>
+    <message id="transfermarket_offerscount">%d offers for players</message>
     
     <message id="transfermarket_tab_overview">Current Transfer List</message>
     <message id="transfermarket_tab_mybids">My Bids</message>

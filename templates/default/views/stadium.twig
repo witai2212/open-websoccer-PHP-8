@@ -1,5 +1,4 @@
 {% extends "base.twig" %}
-{% import "macros/profileelements.twig" as profile %}
 {% import "macros/formelements.twig" as formelements %}
 {% import "macros/messagebox.twig" as msgbox %}
 
@@ -9,135 +8,316 @@
 
 {% block page_content %}
 
-{# show current stadium details #}
 {% if stadium is defined and stadium|length > 0 %}
+	{% set sideCapacity = stadium.places_seats + stadium.places_stands %}
+	{% set grandCapacity = stadium.places_seats_grand + stadium.places_stands_grand %}
+	{% set capacity = stadiumDashboard.total_capacity %}
+	{% set maxCapacity = stadiumDashboard.max_capacity %}
+	{% set ratioSide = env.getConfig("stadium_max_side") > 0 ? (sideCapacity / env.getConfig("stadium_max_side") * 100) : 0 %}
+	{% set ratioGrand = env.getConfig("stadium_max_grand") > 0 ? (grandCapacity / env.getConfig("stadium_max_grand") * 100) : 0 %}
+	{% set ratioVip = env.getConfig("stadium_max_vip") > 0 ? (stadium.places_vip / env.getConfig("stadium_max_vip") * 100) : 0 %}
+	{% set standingRatioGrand = grandCapacity > 0 ? (stadium.places_stands_grand / grandCapacity * 100) : 0 %}
+	{% set standingRatioSide = sideCapacity > 0 ? (stadium.places_stands / sideCapacity * 100) : 0 %}
 
-	{{ profile.infofield(i18n.getMessage("entity_stadium_name"), stadium.name) }}
-	
-	{% set capacity = stadium.places_stands + stadium.places_seats + stadium.places_stands_grand + stadium.places_seats_grand + stadium.places_vip %}
-	{{ profile.infofield(i18n.getMessage("stadium_capacity"), capacity|number_format(0, ',', ' ')) }}
-	
-	<div class="row">
-		<div class="span12">
-			<canvas id="stadium" width="600" height="375" style="margin: 20px;"
-				data-ratioside="{{ ((stadium.places_seats + stadium.places_stands) / env.getConfig("stadium_max_side") * 100)|number_format }}"
-				data-ratiogrand="{{ ((stadium.places_seats_grand + stadium.places_stands_grand) / env.getConfig("stadium_max_grand") * 100)|number_format }}"
-				data-ratiovip="{{ ((stadium.places_vip) / env.getConfig("stadium_max_vip") * 100)|number_format }}"
-				data-labelside="{{ i18n.getMessage("entity_stadium_p_steh") }}: {{ stadium.places_stands|number_format(0, ',', ' ') }}, {{ i18n.getMessage("entity_stadium_p_sitz") }}: {{ stadium.places_seats|number_format(0, ',', ' ') }}"
-				data-labelgrand="{{ i18n.getMessage("entity_stadium_p_steh") }}: {{ stadium.places_stands_grand|number_format(0, ',', ' ') }}, {{ i18n.getMessage("entity_stadium_p_sitz") }}: {{ stadium.places_seats_grand|number_format(0, ',', ' ') }}"
-				data-labelvip="{{ i18n.getMessage("entity_stadium_p_vip") }}: {{ stadium.places_vip|number_format(0, ',', ' ') }}"
-				data-standingratiogrand="{{ (stadium.places_stands_grand / (stadium.places_stands_grand + stadium.places_seats_grand) * 100)|number_format }}"
-				data-standingratioside="{{ (stadium.places_stands / (stadium.places_stands + stadium.places_seats) * 100)|number_format }}">
-				<p>Your browser does not support this feature.</p>
-			</canvas>
+	<div class="stadium-dashboard">
+		<div class="stadium-hero">
+			<div class="stadium-hero-main">
+				{% if stadium.picture is defined and stadium.picture|length > 0 %}
+					<div class="stadium-hero-picture" style="background-image: url('{{ env.getConfig("context_root") }}/uploads/stadium/{{ stadium.picture }}');"></div>
+				{% else %}
+					<div class="stadium-hero-picture stadium-hero-picture-fallback"><i class="icon-home"></i></div>
+				{% endif %}
+				<div class="stadium-hero-copy">
+					<p class="stadium-kicker">{{ i18n.getMessage("stadium_dashboard_title") }}</p>
+					<h1>{{ stadium.name }}</h1>
+					<p class="stadium-hero-subtitle">
+						{{ i18n.getMessage("stadium_capacity") }}: <strong>{{ capacity|number_format(0, ',', ' ') }}</strong>
+						{% if maxCapacity > 0 %}
+							<span class="stadium-muted">/ {{ maxCapacity|number_format(0, ',', ' ') }}</span>
+						{% endif %}
+					</p>
+				</div>
+			</div>
+			<div class="stadium-hero-status">
+				{% if namingContract is defined and namingContract|length > 0 %}
+					<span class="label label-info">{{ i18n.getMessage("stadium_naming_active_label") }}</span>
+					<strong>{{ namingContract.sponsor_name }}</strong>
+					<small>{{ namingContract.base_payout_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }} / {{ i18n.getMessage("stadium_visual_home_match") }}</small>
+				{% else %}
+					<span class="label label-success">{{ i18n.getMessage("stadium_visual_name_free") }}</span>
+					<strong>{{ i18n.getMessage("stadium_rename_title") }}</strong>
+					<small>{{ i18n.getMessage("stadium_rename_help") }}</small>
+				{% endif %}
+			</div>
 		</div>
-	</div>
-	
-	<h2>{{ i18n.getMessage("stadium_maintenance_title") }}</h2>
-	
-	<table class="table">
-		{% for upgradetype in ['pitch', 'videowall', 'seatsquality', 'vipquality'] %}
-			<tr>
-				<td>{{ i18n.getMessage("entity_stadium_level_" ~ upgradetype) }} <i class="icon-question-sign wstooltip" data-toggle="tooltip" title="{{ i18n.getMessage('stadium_maintenance_' ~ upgradetype ~ '_tooltip') }}"></i></td>
-				<td>
+
+		<div class="stadium-stat-grid">
+			<div class="stadium-stat-card">
+				<div class="stadium-stat-card-top">
+					<div class="stadium-stat-icon stadium-stat-icon-capacity" aria-hidden="true">
+						<svg viewBox="0 0 24 24" focusable="false"><path d="M3 16c0-3.3 2.7-6 6-6h6c3.3 0 6 2.7 6 6v2h-2v-2c0-2.2-1.8-4-4-4H9c-2.2 0-4 1.8-4 4v2H3v-2zm4-7c0-2.8 2.2-5 5-5s5 2.2 5 5h-2c0-1.7-1.3-3-3-3S9 7.3 9 9H7zm4 4h2v6h-2v-6z"/></svg>
+					</div>
+					<span>{{ i18n.getMessage("stadium_capacity") }}</span>
+				</div>
+				<strong>{{ capacity|number_format(0, ',', ' ') }}</strong>
+				<div class="stadium-progress"><div class="stadium-progress-fill" style="width: {{ stadiumDashboard.capacity_percent|number_format(1, '.', '') }}%;"></div></div>
+				<small>{{ stadiumDashboard.capacity_percent|number_format(1, ',', ' ') }}% {{ i18n.getMessage("stadium_visual_of_maximum") }}</small>
+			</div>
+			<div class="stadium-stat-card">
+				<div class="stadium-stat-card-top">
+					<div class="stadium-stat-icon stadium-stat-icon-standing" aria-hidden="true">
+						<svg viewBox="0 0 24 24" focusable="false"><path d="M9 5.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0zM7.5 20v-5.5l-1.8 1.6-1.4-1.4L7 11.9c.4-.4.9-.6 1.5-.6h1.4l1.3 1.6 1.3-1.6h1.4c.6 0 1.1.2 1.5.6l2.7 2.8-1.4 1.4-1.8-1.6V20h-2v-4.5h-2V20h-2z"/></svg>
+					</div>
+					<span>{{ i18n.getMessage("stadium_visual_standing") }}</span>
+				</div>
+				<strong>{{ stadiumDashboard.standing_capacity|number_format(0, ',', ' ') }}</strong>
+				<div class="stadium-progress"><div class="stadium-progress-fill stadium-progress-fill-standing" style="width: {{ stadiumDashboard.standing_share_percent|number_format(1, '.', '') }}%;"></div></div>
+				<small>{{ stadiumDashboard.standing_share_percent|number_format(1, ',', ' ') }}% {{ i18n.getMessage("stadium_visual_capacity_share") }}</small>
+			</div>
+			<div class="stadium-stat-card">
+				<div class="stadium-stat-card-top">
+					<div class="stadium-stat-icon stadium-stat-icon-seating" aria-hidden="true">
+						<svg viewBox="0 0 24 24" focusable="false"><path d="M8 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm7 1h2v6h2v6h-2v2h-2v-2H9v2H7v-5a3 3 0 0 1 3-3h5V5zM9 13a1 1 0 0 0-1 1v1h9v-2H9z"/></svg>
+					</div>
+					<span>{{ i18n.getMessage("stadium_visual_seating") }}</span>
+				</div>
+				<strong>{{ stadiumDashboard.seating_capacity|number_format(0, ',', ' ') }}</strong>
+				<div class="stadium-progress"><div class="stadium-progress-fill stadium-progress-fill-seating" style="width: {{ stadiumDashboard.seating_share_percent|number_format(1, '.', '') }}%;"></div></div>
+				<small>{{ stadiumDashboard.seating_share_percent|number_format(1, ',', ' ') }}% {{ i18n.getMessage("stadium_visual_capacity_share") }}</small>
+			</div>
+			<div class="stadium-stat-card">
+				<div class="stadium-stat-card-top">
+					<div class="stadium-stat-icon stadium-stat-icon-vip" aria-hidden="true">
+						<svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l2.3 4.7 5.2.8-3.8 3.8.9 5.4-4.6-2.4-4.6 2.4.9-5.4-3.8-3.8 5.2-.8L12 3zm-4.5 15h9l1 3h-11l1-3z"/></svg>
+					</div>
+					<span>{{ i18n.getMessage("entity_stadium_p_vip") }}</span>
+				</div>
+				<strong>{{ stadiumDashboard.vip_capacity|number_format(0, ',', ' ') }}</strong>
+				<div class="stadium-progress"><div class="stadium-progress-fill stadium-progress-fill-vip" style="width: {{ stadiumDashboard.vip_share_percent|number_format(1, '.', '') }}%;"></div></div>
+				<small>{{ stadiumDashboard.vip_share_percent|number_format(1, ',', ' ') }}% {{ i18n.getMessage("stadium_visual_capacity_share") }}</small>
+			</div>
+		</div>
+
+		<div class="row-fluid stadium-visual-row">
+			<div class="span8">
+				<div class="stadium-panel stadium-canvas-panel">
+					<div class="stadium-panel-heading">
+						<h2>{{ i18n.getMessage("stadium_visual_bowl_title") }}</h2>
+						<p>{{ i18n.getMessage("stadium_visual_bowl_intro") }}</p>
+					</div>
+					<div class="stadium-canvas-wrap">
+						<canvas id="stadium" width="720" height="430"
+							data-ratioside="{{ ratioSide|number_format(2, '.', '') }}"
+							data-ratiogrand="{{ ratioGrand|number_format(2, '.', '') }}"
+							data-ratiovip="{{ ratioVip|number_format(2, '.', '') }}"
+							data-labelside="{{ i18n.getMessage("stadium_visual_side_stand") }}"
+							data-labelgrand="{{ i18n.getMessage("stadium_visual_main_stand") }}"
+							data-labelvip="{{ i18n.getMessage("entity_stadium_p_vip") }}"
+							data-sidecapacity="{{ sideCapacity|number_format(0, ',', ' ') }}"
+							data-grandcapacity="{{ grandCapacity|number_format(0, ',', ' ') }}"
+							data-vipcapacity="{{ stadium.places_vip|number_format(0, ',', ' ') }}"
+							data-standingratiogrand="{{ standingRatioGrand|number_format(2, '.', '') }}"
+							data-standingratioside="{{ standingRatioSide|number_format(2, '.', '') }}">
+							<p>Your browser does not support this feature.</p>
+						</canvas>
+					</div>
+					<div class="stadium-legend">
+						<span><i class="legend-seat stadium-legend-icon"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm7 1h2v6h2v6h-2v2h-2v-2H9v2H7v-5a3 3 0 0 1 3-3h5V5zM9 13a1 1 0 0 0-1 1v1h9v-2H9z"/></svg></i>{{ i18n.getMessage("stadium_visual_seating") }}</span>
+						<span><i class="legend-standing stadium-legend-icon"><svg viewBox="0 0 24 24" focusable="false"><path d="M9 5.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0zM7.5 20v-5.5l-1.8 1.6-1.4-1.4L7 11.9c.4-.4.9-.6 1.5-.6h1.4l1.3 1.6 1.3-1.6h1.4c.6 0 1.1.2 1.5.6l2.7 2.8-1.4 1.4-1.8-1.6V20h-2v-4.5h-2V20h-2z"/></svg></i>{{ i18n.getMessage("stadium_visual_standing") }}</span>
+						<span><i class="legend-vip stadium-legend-icon"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l2.3 4.7 5.2.8-3.8 3.8.9 5.4-4.6-2.4-4.6 2.4.9-5.4-3.8-3.8 5.2-.8L12 3zm-4.5 15h9l1 3h-11l1-3z"/></svg></i>{{ i18n.getMessage("entity_stadium_p_vip") }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="stadium-panel">
+					<div class="stadium-panel-heading">
+						<h2>{{ i18n.getMessage("stadium_visual_attendance_title") }}</h2>
+						<p>{{ i18n.getMessage("stadium_visual_attendance_intro") }}</p>
+					</div>
+					{% if stadiumDashboard.has_attendance %}
+						<div class="stadium-metric-list">
+							<div>
+								<span>{{ i18n.getMessage("stadium_visual_last_attendance") }}</span>
+								<strong>{{ stadiumDashboard.latest_visitors|number_format(0, ',', ' ') }}</strong>
+								<small>{{ stadiumDashboard.latest_utilization_percent|number_format(1, ',', ' ') }}%</small>
+							</div>
+							<div>
+								<span>{{ i18n.getMessage("stadium_visual_average_attendance") }}</span>
+								<strong>{{ stadiumDashboard.average_visitors|number_format(0, ',', ' ') }}</strong>
+								<small>{{ stadiumDashboard.average_utilization_percent|number_format(1, ',', ' ') }}%</small>
+							</div>
+							<div>
+								<span>{{ i18n.getMessage("stadium_visual_average_ticket_income") }}</span>
+								<strong>{{ stadiumDashboard.average_revenue|number_format(0, ',', ' ') }}</strong>
+								<small>{{ env.getConfig("game_currency") }}</small>
+							</div>
+						</div>
+					{% else %}
+						<p class="stadium-empty-note">{{ i18n.getMessage("stadium_visual_no_attendance") }}</p>
+					{% endif %}
+					<p><a href="{{ env.getInternalUrl("stadium-attendance") }}" class="btn btn-small"><i class="icon-bar-chart"></i> {{ i18n.getMessage("stadium_visual_open_attendance") }}</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="stadium-panel">
+			<div class="stadium-panel-heading">
+				<h2>{{ i18n.getMessage("stadium_naming_title") }}</h2>
+				<p>{{ i18n.getMessage("stadium_visual_commercial_intro") }}</p>
+			</div>
+			{% if namingContract is defined and namingContract|length > 0 %}
+				<div class="stadium-contract-card">
+					<div>
+						<span class="label label-info">{{ i18n.getMessage("stadium_naming_active_label") }}</span>
+						<h3>{{ namingContract.stadium_name }}</h3>
+						<p>{{ i18n.getMessage("stadium_naming_sponsor") }}: <strong>{{ namingContract.sponsor_name }}</strong></p>
+						<p class="stadium-muted">{{ i18n.getMessage("stadium_rename_locked_by_contract") }}</p>
+					</div>
+					<div class="stadium-contract-money">
+						<span>{{ i18n.getMessage("stadium_naming_base_payout") }}</span>
+						<strong>{{ namingContract.base_payout_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong>
+						<small>{{ i18n.getMessage("stadium_naming_attendance_hint") }}</small>
+						<hr>
+						<span>{{ i18n.getMessage("stadium_naming_total_earned") }}</span>
+						<strong>{{ namingContract.total_earned|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong>
+						<small>{{ i18n.getMessage("stadium_naming_duration_season_end") }}</small>
+					</div>
+				</div>
+			{% else %}
+				<div class="row-fluid">
+					<div class="span4">
+						<form class="stadium-card-form" method="post">
+							<h3>{{ i18n.getMessage("stadium_rename_title") }}</h3>
+							<p>{{ i18n.getMessage("stadium_rename_help") }}</p>
+							{{ formelements.textfield('stadium_name', i18n.getMessage('stadium_rename_name'), stadium.name, true, validationMsg, 'text', null) }}
+							<button type="submit" class="btn btn-primary"><i class="icon-save"></i> {{ i18n.getMessage('stadium_rename_button') }}</button>
+							<input type="hidden" name="page" value="stadium"/>
+							<input type="hidden" name="action" value="rename-stadium"/>
+						</form>
+					</div>
+					<div class="span8">
+						<h3>{{ i18n.getMessage("stadium_naming_offers_title") }}</h3>
+						<p>{{ i18n.getMessage("stadium_naming_offers_intro") }}</p>
+						{% if namingOffers is defined and namingOffers|length > 0 %}
+							<div class="stadium-offer-grid">
+							{% for offer in namingOffers %}
+								<div class="stadium-offer-card">
+									<div class="stadium-offer-top">
+										<strong>{{ offer.name }}</strong>
+										{% if offer.is_current_sponsor %}<span class="label label-info">{{ i18n.getMessage("stadium_naming_current_sponsor") }}</span>{% endif %}
+									</div>
+									<h4>{{ offer.stadium_name }}</h4>
+									<div class="stadium-offer-money">{{ offer.base_payout_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</div>
+									<small>{{ i18n.getMessage("stadium_naming_base_payout") }}</small>
+									<ul>
+										<li>{{ i18n.getMessage("stadium_naming_offer_base") }}: {{ offer.base_amount|number_format(0, ',', ' ') }}</li>
+										<li>{{ i18n.getMessage("stadium_naming_offer_capacity_bonus") }}: {{ offer.capacity_bonus|number_format(0, ',', ' ') }}</li>
+										<li>{{ i18n.getMessage("stadium_naming_offer_fan_mood_bonus") }}: {{ offer.fan_mood_bonus|number_format(0, ',', ' ') }}</li>
+									</ul>
+									<a href="{{ env.getInternalActionUrl("sign-stadium-naming-contract", "id=" ~ offer.sponsor_id) }}" class="btn btn-small btn-primary"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a>
+								</div>
+							{% endfor %}
+							</div>
+						{% else %}
+							{{ msgbox.box(i18n.getMessage("stadium_naming_no_offers"), "", "info") }}
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		<div class="stadium-panel">
+			<div class="stadium-panel-heading">
+				<h2>{{ i18n.getMessage("stadium_maintenance_title") }}</h2>
+				<p>{{ i18n.getMessage("stadium_visual_maintenance_intro") }}</p>
+			</div>
+			<div class="stadium-maintenance-grid">
+			{% for upgradetype in ['pitch', 'videowall', 'seatsquality', 'vipquality'] %}
+				<div class="stadium-maintenance-card">
+					<h3>{{ i18n.getMessage("entity_stadium_level_" ~ upgradetype) }}</h3>
+					<p class="stadium-stars">
 					{% for level in 1..5 %}
 						<i class="icon-star{% if level > stadium['level_' ~ upgradetype] %}-empty{% endif %}"></i>
 					{% endfor %}
-				</td>
-				<td>
+					</p>
+					<p class="stadium-muted">{{ i18n.getMessage('stadium_maintenance_' ~ upgradetype ~ '_tooltip') }}</p>
 					{% if stadium['level_' ~ upgradetype] < 5 %}
-						<small>{{ i18n.getMessage("stadium_maintenance_upgradecost_label") }}<br></small>
-						{{ upgradeCosts[upgradetype]|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
-					{% else %}
-						-
-					{% endif %}
-				</td>
-				<td>
-					{% if stadium['level_' ~ upgradetype] < 5 %}
+						<p><small>{{ i18n.getMessage("stadium_maintenance_upgradecost_label") }}</small><br><strong>{{ upgradeCosts[upgradetype]|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong></p>
 						<a href="{{ env.getInternalActionUrl("upgrade-stadium", "type=" ~ upgradetype) }}" class="btn btn-small"><i class="icon-external-link-sign"></i> {{ i18n.getMessage("stadium_upgrade_button") }}</a>
+					{% else %}
+						<span class="label label-success">{{ i18n.getMessage("stadium_visual_max_level") }}</span>
 					{% endif %}
-				</td>
-			</tr>
-		{% endfor %}
-	</table>
-	
-	{% if construction != NULL %}
-		<h2>{{ i18n.getMessage("entity_stadiumconstruction") }}</h2>
-	
-		<p>{{ i18n.getMessage("stadium_construction_ongoing") }}</p>
-		
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_builder_id"), construction.builder_name) }}
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_started"), env.getFormattedDatetime(construction.started)) }}
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_deadline"), env.getFormattedDatetime(construction.deadline)) }}
-		
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_p_steh"), construction.p_steh) }}
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_p_sitz"), construction.p_sitz) }}
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_p_haupt_steh"), construction.p_haupt_steh) }}
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_p_haupt_sitz"), construction.p_haupt_sitz) }}
-		{{ profile.infofield(i18n.getMessage("entity_stadiumconstruction_p_vip"), construction.p_vip) }}
-		
-		<div style="margin-top: 10px">
-			{% if construction.deadline > env.getNowAsTimestamp() %}
-				{{ msgbox.box("", i18n.getMessage("stadium_construction_checkstatuslater"), "info") }}
-			{% else %}
-				<p><a href="{{ env.getInternalActionUrl("accept-stadium-construction-work") }}" class="btn btn-primary"><i class="icon-check"></i> {{ i18n.getMessage("stadium_construction_verifystatus") }}</a></p>
-			{% endif %}
-		</div>
-	{% else %}
-		{# extend stadium #}
-		{% set maxSide = env.getConfig("stadium_max_side") - stadium.places_seats - stadium.places_stands %}
-		{% set maxGrand = env.getConfig("stadium_max_grand") - stadium.places_seats_grand - stadium.places_stands_grand %}
-		{% set maxVip = env.getConfig("stadium_max_vip") - stadium.places_vip %}
-		
-		{% if maxSide > 0 or maxGrand > 0 or maxVip > 0 %}
-			<form class="form-horizontal" method="post">
-				<fieldset>
-			    	<legend>{{ i18n.getMessage('stadium_extend_title') }}</legend>
-			    	
-			    	<div class="well">
-			    		<p>{{ i18n.getMessage('stadium_extend_limitation_intro') }}:</p>
-			    		
-			    		<ul>
-			    			<li><strong>{{ i18n.getMessage('stadium_extend_limitation_side') }}:</strong> {{ maxSide|number_format(0, ',', ' ') }}</li>
-			    			<li><strong>{{ i18n.getMessage('stadium_extend_limitation_grand') }}:</strong> {{ maxGrand|number_format(0, ',', ' ') }}</li>
-			    			<li><strong>{{ i18n.getMessage('stadium_extend_limitation_vip') }}:</strong> {{ maxVip|number_format(0, ',', ' ') }}</li>
-			    		</ul>
-			    		
-			    		<p>{{ i18n.getMessage('stadium_extend_limitation_instruction') }}</p>
-			    	</div>
-				
-					{% if maxSide > 0 %}
-						{{ formelements.textfield('side_standing', i18n.getMessage('entity_stadium_p_steh'), env.getRequestParameter("side_standing"), false, validationMsg, "number", null) }}
-						
-						{{ formelements.textfield('side_seats', i18n.getMessage('entity_stadium_p_sitz'), env.getRequestParameter("side_seats"), false, validationMsg, "number", null) }}
-					{% endif %}
-					
-					{% if maxGrand > 0 %}
-						{{ formelements.textfield('grand_standing', i18n.getMessage('entity_stadium_p_haupt_steh'), env.getRequestParameter("grand_standing"), false, validationMsg, "number", null) }}
-						
-						{{ formelements.textfield('grand_seats', i18n.getMessage('entity_stadium_p_haupt_sitz'), env.getRequestParameter("grand_seats"), false, validationMsg, "number", null) }}
-					{% endif %}
-					
-					{% if maxVip > 0 %}
-						{{ formelements.textfield('vip', i18n.getMessage('entity_stadium_p_vip'), env.getRequestParameter("vip"), false, validationMsg, "number", null) }}
-					{% endif %}
-				</fieldset>
-				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">{{ i18n.getMessage('stadium_extend_button') }}</button>
-					<a href="{{ env.getInternalUrl("stadium") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
 				</div>
-				<input type="hidden" name="page" value="stadium"/>
-				<input type="hidden" name="validate-only" value="1"/>
-				<input type="hidden" name="action" value="extend-stadium"/>
-			</form>
+			{% endfor %}
+			</div>
+		</div>
+
+		{% if construction != NULL %}
+			<div class="stadium-panel stadium-construction-panel">
+				<div class="stadium-panel-heading">
+					<h2>{{ i18n.getMessage("entity_stadiumconstruction") }}</h2>
+					<p>{{ i18n.getMessage("stadium_construction_ongoing") }}</p>
+				</div>
+				<div class="stadium-construction-grid">
+					<div><span>{{ i18n.getMessage("entity_stadiumconstruction_builder_id") }}</span><strong>{{ construction.builder_name }}</strong></div>
+					<div><span>{{ i18n.getMessage("entity_stadiumconstruction_started") }}</span><strong>{{ env.getFormattedDatetime(construction.started) }}</strong></div>
+					<div><span>{{ i18n.getMessage("entity_stadiumconstruction_deadline") }}</span><strong>{{ env.getFormattedDatetime(construction.deadline) }}</strong></div>
+					<div><span>{{ i18n.getMessage("stadium_capacity") }}</span><strong>{{ (construction.p_steh + construction.p_sitz + construction.p_haupt_steh + construction.p_haupt_sitz + construction.p_vip)|number_format(0, ',', ' ') }}</strong></div>
+				</div>
+				<div class="stadium-construction-actions">
+					{% if construction.deadline > env.getNowAsTimestamp() %}
+						{{ msgbox.box("", i18n.getMessage("stadium_construction_checkstatuslater"), "info") }}
+					{% else %}
+						<p><a href="{{ env.getInternalActionUrl("accept-stadium-construction-work") }}" class="btn btn-primary"><i class="icon-check"></i> {{ i18n.getMessage("stadium_construction_verifystatus") }}</a></p>
+					{% endif %}
+				</div>
+			</div>
 		{% else %}
-			<p>{{ i18n.getMessage("stadium_extend_impossible") }}</p>
+			{% set maxSide = env.getConfig("stadium_max_side") - stadium.places_seats - stadium.places_stands %}
+			{% set maxGrand = env.getConfig("stadium_max_grand") - stadium.places_seats_grand - stadium.places_stands_grand %}
+			{% set maxVip = env.getConfig("stadium_max_vip") - stadium.places_vip %}
+			
+			<div class="stadium-panel">
+				<div class="stadium-panel-heading">
+					<h2>{{ i18n.getMessage('stadium_extend_title') }}</h2>
+					<p>{{ i18n.getMessage('stadium_extend_limitation_instruction') }}</p>
+				</div>
+				{% if maxSide > 0 or maxGrand > 0 or maxVip > 0 %}
+					<div class="stadium-extension-limits">
+						<div><span>{{ i18n.getMessage('stadium_extend_limitation_side') }}</span><strong>{{ maxSide|number_format(0, ',', ' ') }}</strong></div>
+						<div><span>{{ i18n.getMessage('stadium_extend_limitation_grand') }}</span><strong>{{ maxGrand|number_format(0, ',', ' ') }}</strong></div>
+						<div><span>{{ i18n.getMessage('stadium_extend_limitation_vip') }}</span><strong>{{ maxVip|number_format(0, ',', ' ') }}</strong></div>
+					</div>
+					<form class="form-horizontal stadium-extension-form" method="post">
+						<fieldset>
+							{% if maxSide > 0 %}
+								{{ formelements.textfield('side_standing', i18n.getMessage('entity_stadium_p_steh'), env.getRequestParameter("side_standing"), false, validationMsg, "number", null) }}
+								{{ formelements.textfield('side_seats', i18n.getMessage('entity_stadium_p_sitz'), env.getRequestParameter("side_seats"), false, validationMsg, "number", null) }}
+							{% endif %}
+							{% if maxGrand > 0 %}
+								{{ formelements.textfield('grand_standing', i18n.getMessage('entity_stadium_p_haupt_steh'), env.getRequestParameter("grand_standing"), false, validationMsg, "number", null) }}
+								{{ formelements.textfield('grand_seats', i18n.getMessage('entity_stadium_p_haupt_sitz'), env.getRequestParameter("grand_seats"), false, validationMsg, "number", null) }}
+							{% endif %}
+							{% if maxVip > 0 %}
+								{{ formelements.textfield('vip', i18n.getMessage('entity_stadium_p_vip'), env.getRequestParameter("vip"), false, validationMsg, "number", null) }}
+							{% endif %}
+						</fieldset>
+						<div class="form-actions">
+							<button type="submit" class="btn btn-primary">{{ i18n.getMessage('stadium_extend_button') }}</button>
+							<a href="{{ env.getInternalUrl("stadium") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+						</div>
+						<input type="hidden" name="page" value="stadium"/>
+						<input type="hidden" name="validate-only" value="1"/>
+						<input type="hidden" name="action" value="extend-stadium"/>
+					</form>
+				{% else %}
+					<p>{{ i18n.getMessage("stadium_extend_impossible") }}</p>
+				{% endif %}
+			</div>
 		{% endif %}
-	{% endif %}
+	</div>
 {% else %}
-
 	<p>{{ i18n.getMessage("stadium_nostadium") }}</p>
-
 {% endif %}
 
 {% endblock %}

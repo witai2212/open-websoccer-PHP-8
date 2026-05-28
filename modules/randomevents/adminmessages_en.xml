@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	
-	<message id="settings_label_randomevents_interval_days">Random events: Interval</message> 
-	<message id="settings_label_randomevents_interval_days_help">After how many days a new event can occur for the user. 0 for disabling random events.</message> 
+    <message id="settings_label_randomevents_interval_days">Random events: Interval</message>
+    <message id="settings_label_randomevents_interval_days_help">After how many days a new instant event can occur for the user. 0 disables old instant random events.</message>
+    <message id="settings_label_randomevent_chain_enabled">Enable event chains</message>
+    <message id="settings_label_randomevent_chain_enabled_help">Enables new club events with manager decisions.</message>
+    <message id="settings_label_randomevent_chain_chance_percent">Event chains: chance per matchday</message>
+    <message id="settings_label_randomevent_chain_chance_percent_help">Percent chance that a new event is created when the manager opens the office after a matchday. Recommended: 15.</message>
+    <message id="settings_label_randomevent_chain_expire_matchdays">Event chains: expire after matchdays</message>
+    <message id="settings_label_randomevent_chain_expire_matchdays_help">Number of matchdays after which an open event chain is automatically resolved with the default decision.</message>
 </messages>

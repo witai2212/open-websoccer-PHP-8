@@ -8,7 +8,7 @@
     <message id="lending_lendable_unmark">Spieler ist zur Ausleihe angeboten (Leihgebühr: %d). Angebot entfernen.</message>
     
     <message id="lend-player_navlabel">Spieler verleihen</message>
-    <message id="lend-player_intro">Geben Sie hier den Spieler zum Ausleihen frei. Jeder beliebige Verein kann dann bei Interesse den Spieler zur angegebenen Leihgebühr bis zu <strong>%d</strong> Spielen verpflichten. Das Leihgeschäft kommt sofort zustande, sobald ein Verein mit den Bedingungen einverstanden ist. Das Gehalt wird vom Leihenden bezahlt.</message>
+    <message id="lend-player_intro">Geben Sie hier den Spieler zum Ausleihen frei. Jeder beliebige Verein kann dann bei Interesse den Spieler zur angegebenen Leihgebühr bis zu <strong>%d</strong> Spielen verpflichten. Das Leihgeschäft kommt sofort zustande, sobald ein Verein mit den Bedingungen einverstanden ist. Der Gehaltsanteil und mögliche Kaufoptionen werden im Leihangebot definiert.</message>
 
 	<message id="lend_player_success">Der Spieler steht nun zum Leihen zur Verfügung.</message>
 	
@@ -25,7 +25,7 @@
 	<message id="lending_player_hire_button">Ausleihen</message>
 	
 	<message id="borrow-player_navlabel">Spieler ausleihen</message>
-	<message id="borrow-player_intro">Geben Sie die gewünschte Anzahl an Spiele an und der Spieler wechselt für diese Dauer umgehend in Ihr Team. Die Leihgebühr für die gesamte Dauer wird sofort fällig. Zusätzlich zahlen Sie für die Leihdauer auch das Spielergehalt.</message>
+	<message id="borrow-player_intro">Geben Sie die gewünschte Anzahl an Spiele an und der Spieler wechselt für diese Dauer umgehend in Ihr Team. Die Leihgebühr für die gesamte Dauer wird sofort fällig. Zusätzlich zahlen Sie den im Leihangebot festgelegten Gehaltsanteil.</message>
 
 	<message id="lending_matches_durationhelp">Zahl zwischen %d und %d.</message>
 	
@@ -44,4 +44,50 @@
 	<message id="lending_notification_return">Der ausgeliehene Spieler <strong>{player}</strong> ist von <strong>{borrower}</strong> zu <strong>{lender}</strong> zurückgekehrt.</message>
 	
 	<message id="lent_players">Verliehene Spieler</message>
+
+    <message id="loans_navlabel">Leihen</message>
+    <message id="loans_intro">Hier sehen Sie verliehene Spieler, geliehene Spieler, eigene Leihangebote und verfügbare Leihspieler. Leihberichte erfassen Spielzeit, Noten, Entwicklung und mögliche Kaufoptionen.</message>
+    <message id="loans_tab_loaned_out">Von uns verliehen</message>
+    <message id="loans_tab_borrowed">Von uns geliehen</message>
+    <message id="loans_tab_own_offers">Unsere Leihangebote</message>
+    <message id="loans_tab_available">Verfügbare Leihspieler</message>
+    <message id="loans_no_loaned_out">Aktuell ist kein Spieler von Ihrem Verein verliehen.</message>
+    <message id="loans_no_borrowed">Aktuell ist kein Spieler von Ihrem Verein ausgeliehen.</message>
+    <message id="loans_no_offers">Aktuell bieten Sie keinen Spieler zur Leihe an.</message>
+    <message id="loans_no_available">Aktuell sind keine passenden Leihspieler verfügbar.</message>
+    <message id="loans_borrower">Leihverein</message>
+    <message id="loans_lender">Stammverein</message>
+    <message id="loans_performance">Leistung</message>
+    <message id="loans_development">Entwicklung</message>
+    <message id="loans_destination_quality">Leihqualität</message>
+    <message id="loans_minutes">Minuten</message>
+    <message id="loans_avg_grade">Ø-Note</message>
+    <message id="loans_salary_share">Gehaltsanteil Leihverein</message>
+    <message id="loans_salary_share_help">Zwischen 50% und 100%. Den Rest übernimmt der abgebende Verein pro Spieltag.</message>
+    <message id="loans_buy_option">Kaufregelung</message>
+    <message id="loans_buy_fee">Kaufpreis</message>
+    <message id="loans_option_none">Keine Kaufoption</message>
+    <message id="loans_option_buy_option">Kaufoption</message>
+    <message id="loans_option_buy_obligation">Kaufpflicht</message>
+    <message id="loans_recall_button">Zurückrufen</message>
+    <message id="loans_recall_not_available">Rückruf noch nicht möglich</message>
+    <message id="loans_buy_button">Kaufen</message>
+    <message id="lending_lendable_unmark_short">Angebot entfernen</message>
+    <message id="lending_terms_limits">Maximale Leihgebühr pro Spieltag: <strong>%s %s</strong>. Kaufpreis muss bei Kaufoption oder Kaufpflicht zwischen <strong>%s %s</strong> und <strong>%s %s</strong> liegen.</message>
+    <message id="lending_err_fee_invalid">Die Leihgebühr muss größer als 0 sein.</message>
+    <message id="lending_err_fee_too_high">Die Leihgebühr ist zu hoch. Maximal erlaubt sind %s pro Spieltag.</message>
+    <message id="lending_err_buy_fee_invalid">Der Kaufpreis liegt außerhalb des erlaubten Rahmens (%s bis %s).</message>
+    <message id="lending_salary_share_subject">Gehaltsanteil Spielerleihe</message>
+    <message id="lending_buy_fee_subject">Kaufpreis aus Spielerleihe</message>
+    <message id="lending_recall_err_not_allowed">Sie dürfen diese Leihe nicht zurückrufen.</message>
+    <message id="lending_recall_err_too_early">Ein Rückruf ist erst nach mindestens 5 Spieltagen möglich und nur, wenn der Spieler zu wenig eingesetzt wurde.</message>
+    <message id="lending_recall_success">Der Spieler wurde aus der Leihe zurückgerufen.</message>
+    <message id="lending_buy_err_not_allowed">Sie dürfen diese Kaufoption nicht ausüben.</message>
+    <message id="lending_buy_err_no_option">Für diese Leihe wurde keine Kaufoption vereinbart.</message>
+    <message id="lending_buy_err_budget">Der Kauf konnte nicht durchgeführt werden. Das Budget reicht nicht aus.</message>
+    <message id="lending_buy_success">Der Spieler wurde fest verpflichtet.</message>
+    <message id="lending_notification_recalled">Der verliehene Spieler <strong>{player}</strong> wurde von <strong>{borrower}</strong> zu <strong>{lender}</strong> zurückgerufen.</message>
+    <message id="lending_notification_bought">Der geliehene Spieler <strong>{player}</strong> wurde von <strong>{borrower}</strong> fest verpflichtet. Stammverein war <strong>{lender}</strong>.</message>
+    <message id="lending_notification_development">Der verliehene Spieler <strong>{player}</strong> hat sich durch Spielpraxis verbessert: +{bonus} auf {attribute}.</message>
+    <message id="lending_notification_obligation_failed">Die Kaufpflicht für <strong>{player}</strong> konnte nicht ausgeführt werden. Das Budget des Leihvereins reicht nicht aus.</message>
 </messages>

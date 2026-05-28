@@ -1,4 +1,3 @@
-{% import "macros/formelements.twig" as formelements %}
 {% import "macros/statisticelements.twig" as statisticelements %}
 {% import "macros/profileelements.twig" as profile %}
 {% import "macros/premium.twig" as premium %}
@@ -12,25 +11,48 @@
 {% block page_content %}
 
 {% if trainer.premiumfee %}
-	<p>{{ premium.premiumbadge(trainer.premiumfee) }}</p>
+    <p>{{ premium.premiumbadge(trainer.premiumfee) }}</p>
 {% endif %}
 
 {% set bar_tech = statisticelements.progressbar(trainer.p_technique) %}
 {% set bar_stamina = statisticelements.progressbar(trainer.p_stamina) %}
+{% set bar_offense = statisticelements.progressbar(trainer.p_offense) %}
+{% set bar_defense = statisticelements.progressbar(trainer.p_defense) %}
+{% set bar_tactics = statisticelements.progressbar(trainer.p_tactics) %}
+{% set bar_goalkeeping = statisticelements.progressbar(trainer.p_goalkeeping) %}
+{% set bar_mental = statisticelements.progressbar(trainer.p_mental) %}
 
 {{ profile.infofield(i18n.getMessage("entity_trainer_salary"), trainer.salary|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_specialization"), i18n.getMessage(trainerSpecializations[trainer.specialization])) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_technique"), bar_tech|raw, true) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_p_offense"), bar_offense|raw, true) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_p_defense"), bar_defense|raw, true) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_p_tactics"), bar_tactics|raw, true) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_p_goalkeeping"), bar_goalkeeping|raw, true) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_p_mental"), bar_mental|raw, true) }}
 
 <form class="form-horizontal" method="post">
-
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
-		<a href="{{ env.getInternalUrl("training") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-	</div>
-	<input type="hidden" name="units" value="10"/>
-	<input type="hidden" name="id" value="{{ trainer.id }}"/>
-	<input type="hidden" name="page" value="trainer-details"/>
-	<input type="hidden" name="action" value="choose-trainer"/>
+    <fieldset>
+        <legend>{{ i18n.getMessage('training_choose_trainer_title') }}</legend>
+        <div class="control-group">
+            <label class="control-label" for="units"><strong>{{ i18n.getMessage('training_choose_trainer_units') }}</strong></label>
+            <div class="controls">
+                <select id="units" name="units">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
+        <a href="{{ env.getInternalUrl("training") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+    </div>
+    <input type="hidden" name="id" value="{{ trainer.id }}" />
+    <input type="hidden" name="page" value="trainer-details" />
+    <input type="hidden" name="action" value="choose-trainer" />
 </form>
 {% endblock %}

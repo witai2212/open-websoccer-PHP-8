@@ -12,310 +12,209 @@
 
 {% block page_content %}
 
-{# last training execution #}
-
 {{ profile.infofield(i18n.getMessage("training_units_count"), unitsCount) }}
 
 {% if lastExecution > 0 %}
-	{{ profile.infofield(i18n.getMessage("training_last_execution"), env.getFormattedDatetime(lastExecution)) }}
+    {{ profile.infofield(i18n.getMessage("training_last_execution"), env.getFormattedDatetime(lastExecution)) }}
 {% endif %}
 
-{% if env.getConfig("training_min_hours_between_execution") > 0 %}
-<p style="margin-top: 10px; margin-bottom: 20px;"><i class="icon-info-sign"></i> {{ i18n.getMessage('training_execute_training_note', env.getConfig("training_min_hours_between_execution")) }}</p>
-{% endif %}	
+{% if training_unit is defined and training_unit.id is defined %}
+    <h3>{{ i18n.getMessage("training_current_trainer") }}</h3>
 
-{# Show result of executed training unit #}
-{% if trainingEffects|length > 0 %}
-	<h3>{{ i18n.getMessage("training_execute_effects_title") }}</h3>
-	
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ i18n.getMessage("entity_player") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_technik_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_kondition_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_frische_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_zufriedenheit_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_passing_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_shooting_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_heading_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_tackling_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_freekick_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_pace_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_creativity_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_flair_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_penalty_abbrev") }}</th>
-				<th>{{ i18n.getMessage("entity_player_w_penalty_killing_abbrev") }}</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for playerId,effect in trainingEffects %}
-			<tr>
-				<td><a href="{{ env.getInternalUrl("player", "id=" ~ playerId) }}" target="_blank" title="{{ i18n.getMessage("player_navlabel") }}">{{ effect.name }}</a></td>
-				<td>
-					{% set changeLabel = effect.technique %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.stamina %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.freshness %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.satisfaction %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				
-				<td>
-					{% set changeLabel = effect.passing %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.shooting %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.heading %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.tackling %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.freekick %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.pace %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.creativity %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.flair %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.penalty %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				<td>
-					{% set changeLabel = effect.penalty_killing %}
-					{% if changeLabel > 0 %}
-						{% set changeCssClass = "badge-success" %}
-						{% set changeLabel = "+" ~ changeLabel %}
-					{% elseif changeLabel < 0 %}
-						{% set changeCssClass = "badge-important" %}
-					{% else %}
-						{% set changeCssClass = "" %}
-					{% endif %}
-					<span class="badge {{ changeCssClass }}">{{ changeLabel }}</span>
-				</td>
-				
-				
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
+    {% set bar_tech = statisticelements.progressbar(training_unit.trainer.p_technique) %}
+    {% set bar_stamina = statisticelements.progressbar(training_unit.trainer.p_stamina) %}
+    {% set bar_offense = statisticelements.progressbar(training_unit.trainer.p_offense) %}
+    {% set bar_defense = statisticelements.progressbar(training_unit.trainer.p_defense) %}
+    {% set bar_tactics = statisticelements.progressbar(training_unit.trainer.p_tactics) %}
+    {% set bar_goalkeeping = statisticelements.progressbar(training_unit.trainer.p_goalkeeping) %}
+    {% set bar_mental = statisticelements.progressbar(training_unit.trainer.p_mental) %}
 
+    {{ profile.infofield(i18n.getMessage("entity_trainer_name"), training_unit.trainer.name) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_specialization"), i18n.getMessage(trainerSpecializations[training_unit.trainer.specialization])) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_p_technique"), bar_tech|raw, true) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_p_offense"), bar_offense|raw, true) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_p_defense"), bar_defense|raw, true) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_p_tactics"), bar_tactics|raw, true) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_p_goalkeeping"), bar_goalkeeping|raw, true) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_p_mental"), bar_mental|raw, true) }}
 {% endif %}
 
-{# Select trainer #}
+<h3>{{ i18n.getMessage("training_plan_title") }}</h3>
+<p><i class="icon-info-sign"></i> {{ i18n.getMessage("training_plan_intro") }}</p>
+
+{% if unitsCount < 1 %}
+    <div class="alert alert-warning">{{ i18n.getMessage("training_plan_no_units_warning") }}</div>
+{% endif %}
+
+<form class="form-horizontal" method="post">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("training_plan_slot") }}</th>
+                <th>{{ i18n.getMessage("training_plan_type") }}</th>
+                <th>{{ i18n.getMessage("training_execute_intensity") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slotNo in trainingSlotNumbers %}
+                {% set slot = trainingPlanSlots[slotNo] %}
+                <tr>
+                    <td>{{ slotNo }}</td>
+                    <td>
+                        <select name="type_{{ slotNo }}" class="input-xlarge">
+                            {% for typeId,typeInfo in trainingTypes %}
+                                <option value="{{ typeId }}"{% if typeId == slot.training_type %} selected{% endif %}>{{ i18n.getMessage(typeInfo.label_key) }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" name="intensity_{{ slotNo }}" min="1" max="100" value="{{ slot.intensity }}" class="input-small" /> %
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> {{ i18n.getMessage('button_save') }}</button>
+    </div>
+    <input type="hidden" name="page" value="training" />
+    <input type="hidden" name="action" value="save-training-plan" />
+</form>
+
+{% if latestTrainingReport is defined and latestTrainingReport.id is defined %}
+    <h3>{{ i18n.getMessage("training_latest_report") }}</h3>
+
+    {{ profile.infofield(i18n.getMessage("training_report_date"), env.getFormattedDatetime(latestTrainingReport.created_date)) }}
+    {{ profile.infofield(i18n.getMessage("training_plan_type"), i18n.getMessage(trainingTypes[latestTrainingReport.training_type].label_key)) }}
+    {{ profile.infofield(i18n.getMessage("training_execute_intensity"), latestTrainingReport.intensity ~ " %") }}
+    {{ profile.infofield(i18n.getMessage("training_report_player_count"), latestTrainingReport.player_count) }}
+    {{ profile.infofield(i18n.getMessage("training_report_injuries"), latestTrainingReport.injuries) }}
+    {{ profile.infofield(i18n.getMessage("training_report_chemistry"), latestTrainingReport.old_chemistry ~ " → " ~ latestTrainingReport.new_chemistry ~ " (" ~ latestTrainingReport.chemistry_change ~ ")") }}
+
+    {% if latestTrainingReportPlayers|length > 0 %}
+        <h4>{{ i18n.getMessage("training_report_player_details") }}</h4>
+        <div style="overflow-x: auto;">
+            <table class="table table-striped table-condensed" style="font-size: 11px; min-width: 1100px;">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("entity_player") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_technik_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_kondition_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_frische_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_zufriedenheit_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_passing_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_shooting_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_heading_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_tackling_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_freekick_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_pace_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_creativity_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_influence_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_flair_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_penalty_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("entity_player_w_penalty_killing_abbrev") }}</th>
+                        <th>{{ i18n.getMessage("training_report_injured") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for effect in latestTrainingReportPlayers %}
+                        <tr>
+                            <td><a href="{{ env.getInternalUrl("player", "id=" ~ effect.player_id) }}" target="_blank">{{ effect.name }}</a></td>
+                            <td>{{ effect.effects.technique|default(0) }}</td>
+                            <td>{{ effect.effects.stamina|default(0) }}</td>
+                            <td>{{ effect.effects.freshness|default(0) }}</td>
+                            <td>{{ effect.effects.satisfaction|default(0) }}</td>
+                            <td>{{ effect.effects.passing|default(0) }}</td>
+                            <td>{{ effect.effects.shooting|default(0) }}</td>
+                            <td>{{ effect.effects.heading|default(0) }}</td>
+                            <td>{{ effect.effects.tackling|default(0) }}</td>
+                            <td>{{ effect.effects.freekick|default(0) }}</td>
+                            <td>{{ effect.effects.pace|default(0) }}</td>
+                            <td>{{ effect.effects.creativity|default(0) }}</td>
+                            <td>{{ effect.effects.influence|default(0) }}</td>
+                            <td>{{ effect.effects.flair|default(0) }}</td>
+                            <td>{{ effect.effects.penalty|default(0) }}</td>
+                            <td>{{ effect.effects.penalty_killing|default(0) }}</td>
+                            <td>{% if effect.injured == '1' %}<span class="badge badge-important">Ja</span>{% else %}-{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endif %}
+
+{% if trainingReports|length > 0 %}
+    <h3>{{ i18n.getMessage("training_history_title") }}</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("training_report_date") }}</th>
+                <th>{{ i18n.getMessage("training_plan_type") }}</th>
+                <th>{{ i18n.getMessage("training_execute_intensity") }}</th>
+                <th>{{ i18n.getMessage("training_report_player_count") }}</th>
+                <th>{{ i18n.getMessage("training_report_injuries") }}</th>
+                <th>{{ i18n.getMessage("training_report_chemistry") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in trainingReports %}
+                <tr>
+                    <td>{{ env.getFormattedDatetime(report.created_date) }}</td>
+                    <td>{{ i18n.getMessage(trainingTypes[report.training_type].label_key) }}</td>
+                    <td>{{ report.intensity }} %</td>
+                    <td>{{ report.player_count }}</td>
+                    <td>{{ report.injuries }}</td>
+                    <td>{{ report.old_chemistry }} → {{ report.new_chemistry }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
 {% if training_unit is not defined or training_unit|length == 0 %}
+    <h3>{{ i18n.getMessage("training_choose_trainer") }}</h3>
 
-	<h3>{{ i18n.getMessage("training_choose_trainer") }}</h3>
+    {% if trainers is defined and trainers|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ i18n.getMessage("entity_trainer_name") }}</th>
+                    <th>{{ i18n.getMessage("entity_trainer_salary") }}</th>
+                    <th>{{ i18n.getMessage("entity_trainer_specialization") }}</th>
+                    <th>{{ i18n.getMessage("entity_trainer_p_technique") }}</th>
+                    <th>{{ i18n.getMessage("entity_trainer_p_stamina") }}</th>
+                    <th>{{ i18n.getMessage("entity_trainer_p_offense") }}</th>
+                    <th>{{ i18n.getMessage("entity_trainer_p_defense") }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trainer in trainers %}
+                    <tr>
+                        <td>
+                            <p>{{ trainer.name }}</p>
+                            {% if trainer.premiumfee %}
+                                <p>{{ premium.premiumbadge(trainer.premiumfee) }}</p>
+                            {% endif %}
+                            <p><a href="{{ env.getInternalUrl("trainer-details", "id=" ~ trainer.id) }}" class="btn"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></p>
+                        </td>
+                        <td>{{ trainer.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                        <td>{{ i18n.getMessage(trainerSpecializations[trainer.specialization]) }}</td>
+                        <td>{{ statisticelements.progressbar(trainer.p_technique) }}</td>
+                        <td>{{ statisticelements.progressbar(trainer.p_stamina) }}</td>
+                        <td>{{ statisticelements.progressbar(trainer.p_offense) }}</td>
+                        <td>{{ statisticelements.progressbar(trainer.p_defense) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-	{% if trainers is defined and trainers|length > 0 %}
-	
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ i18n.getMessage("entity_trainer_name") }}</th>
-				<th>{{ i18n.getMessage("entity_trainer_salary") }}</th>
-				<th>{{ i18n.getMessage("entity_trainer_p_technique") }}</th>
-				<th>{{ i18n.getMessage("entity_trainer_p_stamina") }}</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for trainer in trainers %}
-			<tr>
-				<td><p>{{ trainer.name }}</p>
-				{% if trainer.premiumfee %}
-					<p>{{ premium.premiumbadge(trainer.premiumfee) }}</p>
-				{% endif %}
-				<p><a href="{{ env.getInternalUrl("trainer-details", "id=" ~ trainer.id) }}" class="btn"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></p></td>
-				<td>{{ trainer.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-				<td>{{ statisticelements.progressbar(trainer.p_technique) }}</td>
-				<td>{{ statisticelements.progressbar(trainer.p_stamina) }}</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-	
-	{{ pagination.paginator(paginator) }}
-	
-	{% else %}
-		<p>{{ i18n.getMessage("training_no_trainers_available") }}</p>
-	{% endif %}
-
-{# execute unit details #}
-{% else %}
-
-	<h3>{{ i18n.getMessage("training_trainer_details") }}</h3>
-
-	{% set bar_tech = statisticelements.progressbar(training_unit.trainer.p_technique) %}
-	{% set bar_stamina = statisticelements.progressbar(training_unit.trainer.p_stamina) %}
-	
-	{{ profile.infofield(i18n.getMessage("entity_trainer_name"), training_unit.trainer.name) }}
-	{{ profile.infofield(i18n.getMessage("entity_trainer_p_technique"), bar_tech|raw, true) }}
-	{{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
-	
-	<form class="form-horizontal" method="post">
-		<fieldset>
-	    	<legend>{{ i18n.getMessage('training_execute_training_title') }}</legend>
-		
-			<div class="control-group">
-				<label class="control-label" for="focus">
-					<strong>{{ i18n.getMessage('training_execute_focus') }}</strong>
-				</label>
-				<div class="controls">
-					<select id="focus" name="focus">
-  						<option value="TE"{% if env.getRequestParameter("focus") == "TE" %} selected{% endif %}>{{ i18n.getMessage('training_execute_focus_technique') }}</option>
-  						<option value="STA"{% if env.getRequestParameter("focus") == "STA" %} selected{% endif %}>{{ i18n.getMessage('training_execute_focus_stamina') }}</option>
-  						<option value="MOT"{% if env.getRequestParameter("focus") == "MOT" %} selected{% endif %}>{{ i18n.getMessage('training_execute_focus_motivation') }}</option>
-  						<option value="FR"{% if env.getRequestParameter("focus") == "FR" %} selected{% endif %}>{{ i18n.getMessage('training_execute_focus_regeneration') }}</option>
-  					</select>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" for="intensity">
-					<strong>{{ i18n.getMessage('training_execute_intensity') }}</strong>
-				</label>
-				<div class="controls">
-					{{ formelements.slider("intensity", (env.getRequestParameter("intensity") > 0) ? env.getRequestParameter("intensity") : 90 ) }}
-				</div>
-			</div>
-			
-		</fieldset>
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('training_execute_button') }}</button>
-			<a href="{{ env.getInternalUrl("office") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-		</div>
-		<input type="hidden" name="id" value="{{ training_unit.id }}"/>
-		<input type="hidden" name="page" value="training"/>
-		<input type="hidden" name="action" value="execute-training"/>
-	</form>
-
+        {{ pagination.paginator(paginator) }}
+    {% else %}
+        <p>{{ i18n.getMessage("training_no_trainers_available") }}</p>
+    {% endif %}
 {% endif %}
+
 {% endblock %}

@@ -49,26 +49,26 @@ class FreeClubsModel implements IModel {
 	public function getTemplateParameters() {
 	    
 	    $user = $this->_websoccer->getUser();
-	    $userId = $user->id;
-		
-		$userData = UsersDataService::getUserById($this->_websoccer, $this->_db, $userId);
-		
-		$x = $userData['highscore']-10;
-		$y = $userData['highscore']+10;
-		if($x<0) {
-			$x = 0;
-		}
+	    $userId = ($user->id) ? (int) $user->id : 0;
+	    $managerScore = 0;
+	    $careerEnabled = ManagerCareerDataService::isEnabled($this->_websoccer);
+	    $freeClubReputationCheck = ManagerCareerDataService::isFreeClubReputationCheckEnabled($this->_websoccer);
 	    
-	    $freeClubs = TeamsDataService::getFreeClubs($this->_websoccer, $this->_db, $x, $y);
-	    
-	    if(!isset($_SESSION['freeclubs'])) {
-	        $_SESSION['freeclubs'] = $freeClubs;
-	        
+	    if ($userId > 0) {
+	        $freeClubs = ManagerCareerDataService::getFreeClubsForManager($this->_websoccer, $this->_db, $userId, 80, TRUE);
+	        $careerData = ManagerCareerDataService::getCareerPageData($this->_websoccer, $this->_db, $this->_i18n, $userId, $userId);
+	        $managerScore = (isset($careerData['manager_score'])) ? (int) $careerData['manager_score'] : 0;
 	    } else {
-	        $freeClubs = $_SESSION['freeclubs'];
+	        // Guests cannot have a manager reputation yet. Show classic free clubs around score 0.
+	        $freeClubs = TeamsDataService::getFreeClubs($this->_websoccer, $this->_db, 0, 25);
 	    }
 	    
-		return array("countries" => $freeClubs);
+		return array(
+		    "countries" => $freeClubs,
+		    "manager_score" => $managerScore,
+		    "career_enabled" => $careerEnabled,
+		    "freeclub_rep_check" => $freeClubReputationCheck
+		);
 	}
 	
 }

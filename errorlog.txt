@@ -1,0 +1,1 @@
+Website Configuration Error: Could not create or open file /customers/3/7/6/moritzschneider.net/httpd.www/cm23/cache/wsconfigfront.inc.php! Verify that the file or its folder is writable.

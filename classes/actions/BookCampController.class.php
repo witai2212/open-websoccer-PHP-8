@@ -95,11 +95,18 @@ class BookCampController implements IActionController {
 			"trainingcamp_booking_costs_subject",
 			$camp["name"]);
 		
-		// create camp booking
+		// create camp booking. Player count and costs are stored when the SQL update is installed,
+		// so the later completion report still matches the original booking.
 		$columns["verein_id"] = $teamId;
 		$columns["lager_id"] = $camp["id"];
 		$columns["datum_start"] = $startDateTimestamp;
 		$columns["datum_ende"] = $endDateTimestamp;
+		if (TrainingcampsDataService::columnExists($this->_websoccer, $this->_db, 'trainingslager_belegung', 'player_count')) {
+			$columns["player_count"] = count($playersOfTeam);
+		}
+		if (TrainingcampsDataService::columnExists($this->_websoccer, $this->_db, 'trainingslager_belegung', 'total_costs')) {
+			$columns["total_costs"] = $totalCosts;
+		}
 		$this->_db->queryInsert($columns, $this->_websoccer->getConfig("db_prefix") . "_trainingslager_belegung");
 		
 		// success message

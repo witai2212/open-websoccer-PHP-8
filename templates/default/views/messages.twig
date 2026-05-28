@@ -61,7 +61,7 @@
   		{% for message in messages %}
   			<tr>
   				<td>{{ env.getFormattedDatetime(message.date) }}</td>
-  				<td><a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a></td>
+  				<td>{% if message.sender_id > 0 %}<a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a>{% else %}{{ message.sender_name }}{% endif %}</td>
   				<td>
   				{% if not message.seen %}<strong>{% endif %}
   				<a href="#showMessage" data-toggle="modal" class="ajaxLink"

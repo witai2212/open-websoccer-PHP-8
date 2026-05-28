@@ -42,43 +42,40 @@ class ChooseSponsorController implements IActionController {
 		$sponsor = SponsorsDataService::getSponsorinfoByTeamId($this->_websoccer, $this->_db, $teamId);
 		
 		if ($sponsor) {
-			throw new Exception($this->_i18n->getMessage("sponsor_choose_stillcontract"));
+			throw new Exception($this->_i18n->getMessage('sponsor_choose_stillcontract'));
 		}	
 		
 		// check min matchday
 		$teamMatchday = MatchesDataService::getMatchdayNumberOfTeam($this->_websoccer, $this->_db, $teamId);
-		if ($teamMatchday < $this->_websoccer->getConfig("sponsor_earliest_matchday")) {
-			throw new Exception($this->_i18n->getMessage("sponsor_choose_tooearly", $this->_websoccer->getConfig("sponsor_earliest_matchday")));
+		if ($teamMatchday < $this->_websoccer->getConfig('sponsor_earliest_matchday')) {
+			throw new Exception($this->_i18n->getMessage('sponsor_choose_tooearly', $this->_websoccer->getConfig('sponsor_earliest_matchday')));
+		}
+
+		$offerType = isset($parameters['offer_type']) ? $parameters['offer_type'] : '';
+		if (!$this->isValidOfferType($offerType)) {
+			throw new Exception($this->_i18n->getMessage('sponsor_choose_novalidsponsor'));
 		}
 		
-		// check if selected sponsor is in list of available sponsors
-		// (sponsor might be selected by other teams in meanwhile)
-		$sponsors = SponsorsDataService::getSponsorOffers($this->_websoccer, $this->_db, $teamId);
-		$found = FALSE;
-		foreach ($sponsors as $availableSponsor) {
-			if ($availableSponsor["sponsor_id"] == $parameters["id"]) {
-				$found = TRUE;
-				break;
-			}
+		$offer = SponsorsDataService::signSponsorOffer($this->_websoccer, $this->_db, $teamId, $parameters['id'], $offerType);
+		if (!$offer) {
+			throw new Exception($this->_i18n->getMessage('sponsor_choose_novalidsponsor'));
 		}
-		
-		if (!$found) {
-			throw new Exception($this->_i18n->getMessage("sponsor_choose_novalidsponsor"));
-		}
-		
-		// update team
-		$columns["sponsor_id"] = $parameters["id"];
-		$columns["sponsor_spiele"] = $this->_websoccer->getConfig("sponsor_matches");
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_verein";
-		$whereCondition = "id = %d";
-		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $teamId);
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
-				$this->_i18n->getMessage("sponsor_choose_success"),
-				""));
+				$this->_i18n->getMessage('sponsor_choose_success'),
+				''));
 		
 		return null;
+	}
+
+	private function isValidOfferType($offerType) {
+		return in_array($offerType, array(
+			SponsorsDataService::OFFER_TYPE_SAFE,
+			SponsorsDataService::OFFER_TYPE_RISKY,
+			SponsorsDataService::OFFER_TYPE_FAN,
+			SponsorsDataService::OFFER_TYPE_CUP
+		));
 	}
 	
 }

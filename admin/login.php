@@ -184,7 +184,7 @@ if ($forwarded) {
       <hr>
 
       <footer>
-        <p>Powered by <a href='http://www.websoccer-sim.com' target='_blank'>OpenWebSoccer-Sim</a></p>
+        <p>Powered by <a href='https://github.com/witai2212/open-websoccer-PHP-8' target='_blank'>OpenWebSoccer</a></p>
       </footer>		  
 	</div>
 	

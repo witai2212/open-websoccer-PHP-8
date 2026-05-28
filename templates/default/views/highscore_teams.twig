@@ -1,0 +1,66 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("highscore_teams_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if teams|length == 0 %}
+{{ i18n.getMessage("news_no_items") }}
+{% else %}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>{{ i18n.getMessage("highscore_teams_rank") }}</th>
+				<th>{{ i18n.getMessage("highscore_teams_team") }}</th>
+				<th>{{ i18n.getMessage("highscore_teams_league") }}</th>
+				<th>{{ i18n.getMessage("highscore_teams_manager") }}</th>
+				<th>{{ i18n.getMessage("highscore_teams_score") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for club in teams %}
+			{% set countryLabel = club.country %}
+			{% if i18n.hasMessage("option_" ~ club.country) %}
+				{% set countryLabel = i18n.getMessage("option_" ~ club.country) %}
+			{% endif %}
+			<tr>
+				<td><strong>{{ loop.index }}</strong></td>
+				<td>
+					{% if club.bild|length > 0 %}
+						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.bild }}"
+							alt="{{ club.club_name }}"
+							title="{{ club.club_name }}"
+							style="max-width: 20px"/>
+					{% else %}
+						{% set nationImg = skin.getImage("flags/players/" ~ club.country ~ ".png") %}
+						{% if nationImg %}
+							<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />
+						{% endif %}
+					{% endif %}
+					<a href="{{ env.getInternalUrl("team", "id=" ~ club.club_id) }}">{{ club.club_name }}</a>
+				</td>
+				<td>
+					{% if club.league_id > 0 %}
+						<a href="{{ env.getInternalUrl("league", "id=" ~ club.league_id) }}">{{ club.league_name }}</a>
+					{% else %}
+						-
+					{% endif %}
+				</td>
+				<td>
+					{% if club.user_id > 0 and club.manager_name|length > 0 %}
+						<a href="{{ env.getInternalUrl("user", "id=" ~ club.user_id) }}">{{ club.manager_name }}</a>
+					{% else %}
+						-
+					{% endif %}
+				</td>
+				<td>{{ club.highscore|number_format(0, ',', ' ') }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+{% endif %}
+{% endblock %}

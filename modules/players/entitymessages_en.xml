@@ -20,6 +20,8 @@
 	<message id="entity_player_position_main_help">If you do not specify a main position, the player is an all-rounder within the above selected position.</message>
 	<message id="entity_player_position_second">Secondary Position</message>
 	<message id="entity_player_nation">Nationality (Country)</message>
+	<message id="entity_player_personality">Personality</message>
+	<message id="entity_player_personality_help">One main player trait. Visible for own players and after scouting.</message>
 	<message id="entity_player_picture">Picture</message>
 	<message id="entity_player_verletzt">Injured</message>
 	<message id="entity_player_gesperrt">Blocked</message>
@@ -30,6 +32,18 @@
 	<message id="entity_player_w_kondition">Stamina</message>
 	<message id="entity_player_w_frische">Fitness</message>
 	<message id="entity_player_w_zufriedenheit">Morale</message>
+	<message id="entity_player_w_talent">Talent</message>
+	<message id="entity_player_w_passing">Passing</message>
+	<message id="entity_player_w_shooting">Shooting</message>
+	<message id="entity_player_w_tackling">Tackling</message>
+	<message id="entity_player_w_heading">Heading</message>
+	<message id="entity_player_w_freekick">Freekick</message>
+	<message id="entity_player_w_pace">Pace</message>
+	<message id="entity_player_w_creativity">Creativity</message>
+	<message id="entity_player_w_influence">Influence</message>
+	<message id="entity_player_w_flair">Flair</message>
+	<message id="entity_player_w_penalty">Penalty</message>
+	<message id="entity_player_w_penalty_killing">Penalty Killing</message>
 	<message id="entity_player_transfermarkt">Available on transfer market</message>
 	<message id="entity_player_transfer_start">Available on transfer market since</message>
 	<message id="entity_player_transfer_ende">Available on transfer market until</message>
@@ -93,4 +107,13 @@
     <message id="option_Frankreich">France</message>
     <message id="option_Italien">Italy</message>
     <message id="option_Spanien">Spain</message>
+
+    <message id="option_leader">Leader</message>
+    <message id="option_professional">Professional</message>
+    <message id="option_injury_prone">Injury-prone</message>
+    <message id="option_inconsistent">Inconsistent</message>
+    <message id="option_loyal">Loyal</message>
+    <message id="option_ambitious">Ambitious</message>
+    <message id="option_big_game_player">Big-game player</message>
+    <message id="option_troublemaker">Troublemaker</message>
 </messages>

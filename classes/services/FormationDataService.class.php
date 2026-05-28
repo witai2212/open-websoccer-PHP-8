@@ -66,6 +66,7 @@ class FormationDataService {
 		$columns['longpasses'] = 'longpasses';
 		$columns['counterattacks'] = 'counterattacks';
 		$columns['freekickplayer'] = 'freekickplayer';
+		$columns['cornerplayer'] = 'cornerplayer';
 	
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
 			$columns['spieler' . $playerNo] = 'player' . $playerNo;

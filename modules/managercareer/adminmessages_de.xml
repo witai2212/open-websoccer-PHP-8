@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_mgr_career_enabled">Managerkarriere aktivieren</message>
+    <message id="settings_label_mgr_job_offers">Automatische Jobangebote aktivieren</message>
+    <message id="settings_label_freeclub_rep_check">Reputationsprüfung für freie Vereine aktivieren</message>
+    <message id="settings_label_mgr_offer_limit">Maximale aktive Jobangebote pro Manager</message>
+    <message id="settings_label_mgr_offer_exp_days">Gültigkeit von Jobangeboten in Tagen</message>
+</messages>

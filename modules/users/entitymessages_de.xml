@@ -24,6 +24,8 @@
     <message id="entity_users_history">Historie</message>
     <message id="entity_users_status">Aktiv</message>
     
+    <message id="entity_users_reputation">Reputation</message>
+    
     <message id="entity_users_c_hideinonlinelist">Eigene Aktivität in der "Wer ist wo?"-Liste verstecken.</message>
     <message id="entity_users_premium_balance">Premium-Guthaben</message>
     

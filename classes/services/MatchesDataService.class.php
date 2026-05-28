@@ -206,12 +206,14 @@ class MatchesDataService {
 		$columns['M.home_longpasses'] = 'match_home_longpasses';
 		$columns['M.home_counterattacks'] = 'match_home_counterattacks';
 		$columns['M.home_freekickplayer'] = 'match_home_freekickplayer';
+		$columns['M.home_cornerplayer'] = 'match_home_cornerplayer';
 
 		$columns['M.gast_offensive_changed'] = 'match_guest_offensive_changed';
 		$columns['M.gast_offensive'] = 'match_guest_offensive';
 		$columns['M.gast_longpasses'] = 'match_guest_longpasses';
 		$columns['M.gast_counterattacks'] = 'match_guest_counterattacks';
 		$columns['M.gast_freekickplayer'] = 'match_guest_freekickplayer';
+		$columns['M.gast_cornerplayer'] = 'match_guest_cornerplayer';
 
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
 			$columns['M.home_w'. $subNo . '_raus'] = 'home_sub'. $subNo . '_out';
@@ -406,7 +408,8 @@ class MatchesDataService {
 
 	public static function getMatchesByTeamAndTimeframe(WebSoccer $websoccer, DbConnection $db, $teamId, $dateStart, $dateEnd) {
 		// where
-		$whereCondition = '(HOME.id = %d OR GUEST.id = %d) AND datum >= %d AND datum <= %d ORDER BY M.datum DESC';
+		//$whereCondition = '(HOME.id = %d OR GUEST.id = %d) AND datum >= %d AND datum <= %d ORDER BY M.datum DESC';
+		$whereCondition = '(HOME.id = %d OR GUEST.id = %d) AND M.datum >= %d AND M.datum <= %d ORDER BY M.datum DESC';
 		$parameters = array($teamId, $teamId, $dateStart, $dateEnd);
 
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, 20);
@@ -487,6 +490,7 @@ class MatchesDataService {
 				'P.w_kondition' => 'strength_stamina',
 				'P.w_frische' => 'strength_freshness',
 				'P.w_zufriedenheit' => 'strength_satisfaction',
+				'P.w_freekick' => 'strength_freekick',
 				'P.nation' => 'player_nationality',
 				'P.picture' => 'picture',
 				'P.sa_tore' => 'st_goals',
@@ -547,7 +551,7 @@ class MatchesDataService {
 		while ($reportmessage = $result->fetch_array()) {
 
 			// replace placeholders
-			$players = explode(';', $reportmessage['playerNames']);
+			$players = explode(';', (string) $reportmessage['playerNames']);
 			$rmsg = $reportmessage['message'];
 
 			// remove escaping slashes
@@ -563,7 +567,7 @@ class MatchesDataService {
 			}
 
 			// replace team name placeholders
-			if (strpos($rmsg, '{ma1}') || strpos($rmsg, '{ma2}')) {
+			if (strpos($rmsg, '{ma1}') !== false || strpos($rmsg, '{ma2}') !== false) {
 				if ($match == null) {
 					$match = self::getMatchById($websoccer, $db, $matchId, FALSE);
 				}
@@ -650,17 +654,19 @@ class MatchesDataService {
 	}
 
 	private static function _convertLeagueType($dbValue) {
-		switch ($dbValue) {
-			case 'Ligaspiel':
-				return 'league';
-			case 'Pokalspiel':
-				return 'cup';
-			case 'Freundschaft':
-				return 'friendly';
-		}
-	}
+    	switch ($dbValue) {
+    		case 'Ligaspiel':
+    			return 'league';
+    		case 'Pokalspiel':
+    			return 'cup';
+    		case 'Freundschaft':
+    			return 'friendly';
+    		default:
+    			return $dbValue;
+    	}
+    }
 	
-	public static function countOpenMatches(WebSoccer $websoccer, DbConnection $db) {
+	/*public static function countOpenMatches(WebSoccer $websoccer, DbConnection $db) {
 	    
 	    $now = $websoccer->getNowAsTimestamp();
 	    $matchesStr = "SELECT COUNT(*) AS open_matches
@@ -672,6 +678,20 @@ class MatchesDataService {
 	    
 	    return $open_matches['open_matches'];
 	    
-	}
+	}*/
+	public static function countOpenMatches(WebSoccer $websoccer, DbConnection $db) {
+    	$now = $websoccer->getNowAsTimestamp();
+    
+    	$columns = 'COUNT(*) AS open_matches';
+    	$fromTable = $websoccer->getConfig('db_prefix') . '_spiel';
+    	$whereCondition = 'berechnet != \'1\' AND datum <= %d';
+    	$parameters = array($now);
+    
+    	$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+    	$open_matches = $result->fetch_assoc();
+    	$result->free();
+    
+    	return ($open_matches) ? (int) $open_matches['open_matches'] : 0;
+    }
 }
 ?>

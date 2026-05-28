@@ -97,4 +97,7 @@
 	
 	<message id="myplayers_on_transferlist">Eigene Spieler auf dem Transfermarkt</message>
 	<message id="remove-player-from-transfermarket">Spieler vom Transfermakrt nehmen</message>
+	
+	<message id="transfer_violation">Verstoss gegen die Transferregeln</message>
+	<message id="transfer_violation_notification">Du hast gegen die Transferregeln verstossen. Die Strafe beträgt: <strong>{penalty}</strong></message>
 </messages>

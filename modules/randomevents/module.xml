@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
-<module version="1.0.0">
-    
+<module version="1.1.0">
+
     <settings>
-      	<setting id="randomevents_interval_days" category="game" type="number" default="10" />
-  	</settings>
+        <setting id="randomevents_interval_days" category="game" type="number" default="10" />
+        <setting id="randomevent_chain_enabled" category="game" type="boolean" default="1" />
+        <setting id="randomevent_chain_chance_percent" category="game" type="number" default="15" />
+        <setting id="randomevent_chain_expire_matchdays" category="game" type="number" default="2" />
+    </settings>
 
     <admin>
         <adminpage
@@ -22,14 +25,14 @@
                         field="EventTab.message"
                         type="text"
                         sort="true" />
-                    
+
                     <column
                         id="entity_randomevent_effect"
                         field="EventTab.effect"
                         type="text"
                         sort="true" />
-                    
-           			<column
+
+                    <column
                         id="entity_randomevent_weight"
                         field="EventTab.weight"
                         type="number"
@@ -38,17 +41,107 @@
 
                 <editform>
                     <field id="message" type="text" required="true" />
-					<field id="effect" type="select" required="true" 
-					    selection="money,player_injured,player_blocked,player_happiness,player_fitness,player_stamina" />
-					
-					<field id="effect_money_amount" type="number" />
-					<field id="effect_blocked_matches" type="number" />
-					<field id="effect_skillchange" type="number" />
-					
-					<field id="weight" type="number" required="true" default="3" />
+                    <field id="effect" type="select" required="true"
+                        selection="money,player_injured,player_blocked,player_happiness,player_fitness,player_stamina" />
+
+                    <field id="effect_money_amount" type="number" />
+                    <field id="effect_blocked_matches" type="number" />
+                    <field id="effect_skillchange" type="number" />
+
+                    <field id="weight" type="number" required="true" default="3" />
+                </editform>
+            </entity>
+        </adminpage>
+
+        <adminpage
+            id="randomeventchain"
+            entity="randomeventchain"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="randomevent_chain AS ChainTab" >
+                <overview delete="true" edit="true" >
+                    <column id="entity_randomeventchain_event_key" field="ChainTab.event_key" type="text" sort="true" filter="true" />
+                    <column id="entity_randomeventchain_title" field="ChainTab.title" type="text" sort="true" filter="true" />
+                    <column id="entity_randomeventchain_event_type" field="ChainTab.event_type" type="text" sort="true" filter="true" />
+                    <column id="entity_randomeventchain_weight" field="ChainTab.weight" type="number" sort="true" />
+                    <column id="entity_randomeventchain_active" field="ChainTab.active" type="boolean" sort="true" filter="true" />
+                </overview>
+
+                <editform>
+                    <field id="event_key" type="text" required="true" />
+                    <field id="title" type="text" required="true" />
+                    <field id="message" type="text" required="true" />
+                    <field id="event_type" type="select" required="true" selection="player_unhappy,sponsor_scandal,youth_discovered,stadium_damage" />
+                    <field id="weight" type="number" required="true" default="1" />
+                    <field id="active" type="boolean" required="false" default="1" />
+                </editform>
+            </entity>
+        </adminpage>
+
+        <adminpage
+            id="randomeventchainchoice"
+            entity="randomeventchainchoice"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="randomevent_chain_choice AS ChoiceTab" >
+                <overview delete="true" edit="true" >
+                    <column id="entity_randomeventchainchoice_chain_id" field="ChainTab.title" type="text" sort="true" filter="true" />
+                    <column id="entity_randomeventchainchoice_label" field="ChoiceTab.label" type="text" sort="true" filter="true" />
+                    <column id="entity_randomeventchainchoice_choice_key" field="ChoiceTab.choice_key" type="text" sort="true" filter="true" />
+                    <column id="entity_randomeventchainchoice_is_default" field="ChoiceTab.is_default" type="boolean" sort="true" />
+                    <column id="entity_randomeventchainchoice_keep_open" field="ChoiceTab.keep_open" type="boolean" sort="true" />
+                    <column id="entity_randomeventchainchoice_sort_order" field="ChoiceTab.sort_order" type="number" sort="true" />
+                    <join type="LEFT" jointable="randomevent_chain AS ChainTab" joincondition="ChoiceTab.chain_id = ChainTab.id" />
+                </overview>
+
+                <editform>
+                    <field id="chain_id" type="foreign_key" entity="randomeventchain" jointable="randomevent_chain" labelcolumns="title" required="true" />
+                    <field id="choice_key" type="text" required="true" />
+                    <field id="label" type="text" required="true" />
+                    <field id="description" type="text" required="false" />
+                    <field id="effect_money_amount" type="number" required="false" default="0" />
+                    <field id="effect_player_happiness" type="number" required="false" default="0" />
+                    <field id="effect_player_fitness" type="number" required="false" default="0" />
+                    <field id="effect_player_stamina" type="number" required="false" default="0" />
+                    <field id="effect_blocked_matches" type="number" required="false" default="0" />
+                    <field id="effect_injured_matches" type="number" required="false" default="0" />
+                    <field id="effect_board_satisfaction" type="number" required="false" default="0" />
+                    <field id="effect_fanpopularity" type="number" required="false" default="0" />
+                    <field id="effect_stadium_attendance" type="number" required="false" default="0" />
+                    <field id="set_player_transfermarket" type="boolean" required="false" default="0" />
+                    <field id="create_youthplayer" type="boolean" required="false" default="0" />
+                    <field id="keep_open" type="boolean" required="false" default="0" />
+                    <field id="is_default" type="boolean" required="false" default="0" />
+                    <field id="sort_order" type="number" required="true" default="1" />
                 </editform>
             </entity>
         </adminpage>
     </admin>
-    
+
+    <pages>
+        <page
+            id="random-events"
+            template="random-event-chains"
+            model="RandomEventChainsModel"
+            parentItem="office"
+            navitem="true"
+            navweight="9"
+            role="user"
+            navitemOnlyForConfigEnabled="randomevent_chain_enabled">
+        </page>
+    </pages>
+
+    <actions>
+        <action id="resolve-random-event-chain" controller="ResolveRandomEventChainController" role="user" log="true">
+            <param id="id" type="number" required="true" min="1" max="2000000000" />
+            <param id="choice_id" type="number" required="true" min="1" max="2000000000" />
+        </action>
+    </actions>
+
+    <plugins>
+        <eventlistener event="TicketsComputedEvent" class="RandomEventChainsPlugin" method="applyStadiumDamageAttendancePenalty" />
+    </plugins>
+
 </module>

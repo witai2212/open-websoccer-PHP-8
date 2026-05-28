@@ -64,6 +64,7 @@
 					<field id="effect_fanpopularity" type="number" required="true" default="0" />
 					<field id="effect_injury" type="number" required="true" default="0" />
 					<field id="effect_income" type="number" required="true" default="0" />
+					<field id="effect_merchandising" type="number" required="true" default="0" />
                 </editform>
             </entity>
         </adminpage>
@@ -93,6 +94,7 @@
 		<eventlistener event="YouthPlayerScoutedEvent" class="StadiumEnvironmentPlugin" method="addYouthPlayerSkillBonus" />
 		<eventlistener event="TicketsComputedEvent" class="StadiumEnvironmentPlugin" method="addTicketsBonus" />
 		<eventlistener event="MatchCompletedEvent" class="StadiumEnvironmentPlugin" method="creditAndDebitAfterHomeMatch" />
+		<eventlistener event="MatchCompletedEvent" class="StadiumEnvironmentPlugin" method="applyFanPopularityAfterConstruction" />
 		<eventlistener event="MatchCompletedEvent" class="StadiumEnvironmentPlugin" method="handleInjuriesAfterMatch" />
 	</plugins>
 </module>

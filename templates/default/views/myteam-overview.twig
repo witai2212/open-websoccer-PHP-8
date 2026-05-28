@@ -9,6 +9,12 @@
 
 {% block page_content %}
 
+<p>
+	<a class="btn btn-primary" href="{{ env.getInternalUrl("teamchemistry") }}">
+		<i class="icon-group icon-white"></i> {{ i18n.getMessage("teamchemistry_navlabel") }}
+	</a>
+</p>
+
 {% if players is defined and players|length > 0 %}
 
 	<table class="table table-striped">

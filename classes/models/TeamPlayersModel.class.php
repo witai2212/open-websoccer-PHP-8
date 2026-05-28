@@ -52,8 +52,12 @@ class TeamPlayersModel implements IModel {
 		
 		$isNationalTeam = ($this->_websoccer->getRequestParameter("nationalteam")) ? TRUE : FALSE;
 		$players = PlayersDataService::getPlayersOfTeamById($this->_websoccer, $this->_db, $this->_teamid, $isNationalTeam);
+		$userTeamId = 0;
+		if ($this->_websoccer->getUser()) {
+			$userTeamId = (int) $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		}
 		
-		return array("players" => $players);
+		return array("players" => $players, "show_personality" => ($userTeamId > 0 && $userTeamId === $this->_teamid));
 	}
 	
 }

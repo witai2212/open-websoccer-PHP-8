@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="managercareer_tab">Managerkarriere</message>
+    <message id="managercareer_reputation">Manager-Reputation</message>
+    <message id="managercareer_reputation_help">Berechnet aus Benutzer-Highscore, Fanbeliebtheit und aktueller Vorstandszufriedenheit.</message>
+    <message id="managercareer_board_average">Ø Vorstand</message>
+    <message id="managercareer_board_satisfaction">Vorstandszufriedenheit</message>
+    <message id="managercareer_current_teams">Aktuelle Vereine</message>
+    <message id="managercareer_no_current_team">Dieser Manager hat aktuell keinen Verein.</message>
+    <message id="managercareer_offers_title">Aktive Jobangebote</message>
+    <message id="managercareer_no_open_offers">Derzeit liegen keine aktiven Jobangebote vor.</message>
+    <message id="managercareer_offers_disabled">Automatische Jobangebote sind derzeit deaktiviert.</message>
+    <message id="managercareer_freeclubs_title">Freie Vereine nach Reputation</message>
+    <message id="managercareer_freeclubs_help">Hier siehst du eine kurze Auswahl freier Vereine und ob deine Manager-Reputation für eine Übernahme reicht.</message>
+    <message id="managercareer_show_all_freeclubs">Alle freien Vereine anzeigen</message>
+    <message id="managercareer_club_score">Vereins-Prestige</message>
+    <message id="managercareer_required_score">Benötigt</message>
+    <message id="managercareer_status">Status</message>
+    <message id="managercareer_available">verfügbar</message>
+    <message id="managercareer_locked">gesperrt</message>
+    <message id="managercareer_offer_until">Gültig bis</message>
+    <message id="managercareer_button_accept">Annehmen</message>
+    <message id="managercareer_button_decline">Ablehnen</message>
+    <message id="managercareer_history_title">Karriereverlauf</message>
+    <message id="managercareer_no_history">Noch keine Karrierewechsel vorhanden.</message>
+    <message id="managercareer_date">Datum</message>
+    <message id="managercareer_old_club">Alter Verein</message>
+    <message id="managercareer_new_club">Neuer Verein</message>
+    <message id="managercareer_origin">Art</message>
+    <message id="managercareer_bonus">Bonus</message>
+    <message id="managercareer_origin_job_offer">Jobangebot</message>
+    <message id="managercareer_origin_free_club">Freier Verein</message>
+    <message id="managercareer_origin_additional_club">Weiterer Verein</message>
+    <message id="managercareer_msg_accept_success">Jobangebot angenommen. Du hast den Verein gewechselt.</message>
+    <message id="managercareer_msg_accept_bonus">Reputationsbonus: +{bonus} Highscore.</message>
+    <message id="managercareer_msg_decline_success">Jobangebot abgelehnt.</message>
+    <message id="managercareer_error_disabled">Die Managerkarriere ist derzeit deaktiviert.</message>
+    <message id="managercareer_error_offer_invalid">Dieses Jobangebot ist nicht mehr verfügbar.</message>
+    <message id="managercareer_error_offer_expired">Dieses Jobangebot ist bereits abgelaufen.</message>
+    <message id="managercareer_notification_new_offer">Neues Jobangebot von {team}</message>
+    <message id="managercareer_message_sender">Managerkarriere</message>
+    <message id="managercareer_message_offer_subject">Jobangebot von {team}</message>
+    <message id="managercareer_message_offer_body">Du hast ein neues Jobangebot erhalten.
+
+Verein: {team}
+Liga: {league}
+Vereins-Prestige: {clubscore}
+Deine Manager-Reputation: {managerscore}
+Gültig bis: {expires}
+
+Du kannst das Angebot in deiner Managerkarriere aufrufen und dort annehmen oder ablehnen:
+{url}</message>
+    <message id="managercareer_notification_job_accepted">Du bist jetzt Manager von {team}.</message>
+    <message id="managercareer_history_moved">Wechsel von {old} zu {new}</message>
+    <message id="managercareer_history_joined">Amtsantritt bei {new}</message>
+    <message id="managercareer_history_bonus">Reputationsbonus: +{bonus} Highscore.</message>
+    <message id="managercareer_news_title">{manager} übernimmt {team}</message>
+    <message id="managercareer_news_message_move">{manager} wechselt von {old} zu {new}.</message>
+    <message id="managercareer_news_message_join">{manager} übernimmt den freien Verein {new}.</message>
+    <message id="managercareer_news_message_bonus">Der Wechsel zu einem größeren Klub bringt +{bonus} Highscore.</message>
+    <message id="managercareer_news_link">Zur Managerkarriere</message>
+    <message id="managercareer_confirm_accept">Jobangebot wirklich annehmen und den Verein wechseln?</message>
+    <message id="managercareer_confirm_switch">Wirklich zu diesem freien Verein wechseln?</message>
+</messages>

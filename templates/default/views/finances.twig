@@ -15,6 +15,8 @@
   
   <li><a href="#account_statement" data-toggle="tab" class="ajaxLink"
 			data-ajaxtarget="account_statementlist" data-ajaxblock="account_statement">{{ i18n.getMessage("finance_account_statement") }}</a></li>
+
+  <li><a href="#finance_development" data-toggle="tab">{{ i18n.getMessage("finance_cash_development") }}</a></li>
 </ul>
 
 <!-- ---------------------------------------------------------------
@@ -34,13 +36,58 @@
 	<hr>
 	<div class="tab-pane active" id="grouped_values">
 
+		{% set penalty = transfer_penalty_summary %}
+		<div class="well">
+			<h4><i class="icon-warning-sign"></i> {{ i18n.getMessage("finance_transfer_penalties_title") }}</h4>
+			<div class="row-fluid">
+				<div class="span3">
+					<strong>{{ i18n.getMessage("finance_transfer_penalties_season") }}</strong><br>
+					{% if penalty.season_total > 0 %}
+						<span class="text-error">{{ penalty.season_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+					{% else %}
+						{{ penalty.season_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+					{% endif %}
+				</div>
+				<div class="span3">
+					<strong>{{ i18n.getMessage("finance_transfer_penalties_last") }}</strong><br>
+					{% if penalty.last_date > 0 %}
+						{{ env.getFormattedDate(penalty.last_date) }} / <span class="text-error">{{ penalty.last_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+					{% else %}
+						{{ i18n.getMessage("finance_transfer_penalties_none") }}
+					{% endif %}
+				</div>
+				<div class="span3">
+					<strong>{{ i18n.getMessage("finance_transfer_penalties_distribution") }}</strong><br>
+					{% if penalty.last_distribution_date > 0 %}
+						{{ env.getFormattedDate(penalty.last_distribution_date) }} / {{ penalty.last_distribution_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+					{% else %}
+						{{ i18n.getMessage("finance_transfer_penalties_distribution_none") }}
+					{% endif %}
+				</div>
+				<div class="span3">
+					<strong>{{ i18n.getMessage("finance_transfer_penalties_pot") }}</strong><br>
+					{{ penalty.penalty_pot|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+				</div>
+			</div>
+			<p class="muted" style="margin-top: 10px; margin-bottom: 0;">
+				{{ i18n.getMessage("finance_transfer_penalties_hint") }}
+			</p>
+		</div>
+
 		{% if grouped_costs|length>0 %}
 			<table class="table table-striped">
 				
 				<tr>
-					<th>&nbsp;</th><th>&nbsp;</th>
-					<th><span style="color: black"><b>{{ total_revenues|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</b></span></th>
-					<th><span style="color: red"><b>{{ total_expenses|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</b></span></th>
+					<th>&nbsp;</th>
+					<th><b>{{ i18n.getMessage("entity_club_finanz_bilanz_summe") }}:&nbsp;
+					{% if total_expenses + total_revenues > 0 %}
+						<span style="color: black">{{ (total_expenses + total_revenues)|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+					{% else %}
+						<span style="color: red">{{ (total_expenses + total_revenues)|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+					{% endif %}</b>
+					</th>
+					<th><span style="color: black">{{ total_revenues|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></th>
+					<th><span style="color: red">{{ total_expenses|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></th>
 				</tr>
 					
 			{% for grouped_cost in grouped_costs %}
@@ -53,8 +100,10 @@
 				{% else %}
 					<tr>
 						<td>{{ i18n.getMessage(grouped_cost.verwendung) }}<td>
-						<td>{{ grouped_cost.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-						<td align="right">&nbsp;</td>
+						<td class="text-right">
+    						{{ grouped_cost.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+						</td>
+						<td>&nbsp;</td>
 					</tr>
 				{% endif %}
 			{% endfor %}
@@ -113,6 +162,60 @@
 		{{ pagination.paginator(paginator) }}
 		</div>
 	</div>
+	
+	<div class="tab-pane" id="finance_development">
+
+	<h4>{{ i18n.getMessage("finance_cash_chart_title") }}</h4>
+
+	{% if cash_chart_values|length > 0 %}
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<canvas id="financeCashLineChart" width="900" height="400"></canvas>
+
+		<script>
+		const financeCashCtx = document.getElementById('financeCashLineChart').getContext('2d');
+
+		new Chart(financeCashCtx, {
+			type: 'line',
+			data: {
+				labels: [
+					{% for label in cash_chart_labels %}
+						{% if not loop.first %}, {% endif %}'{{ label }}'
+					{% endfor %}
+				],
+				datasets: [{
+					label: '{{ i18n.getMessage("entity_club_finanz_budget") }}',
+					data: [
+						{% for value in cash_chart_values %}
+							{% if not loop.first %}, {% endif %}{{ value }}
+						{% endfor %}
+					],
+					fill: false,
+					borderColor: 'rgba(75, 192, 192, 1)',
+					tension: 0.1
+				}]
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: false
+					}
+				}
+			}
+		});
+		</script>
+
+	{% else %}
+
+		<p>
+			<i class="icon-info-sign"></i>
+			{{ i18n.getMessage("finance_cash_chart_no_data") }}
+		</p>
+
+	{% endif %}
+
+</div>
 	
 </div>
 {% endblock %}

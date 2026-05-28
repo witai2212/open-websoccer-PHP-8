@@ -47,6 +47,7 @@ class TrainingCampsModel implements IModel {
 		
 		$camps = array();
 		$bookedCamp = array();
+		$completedCampReport = array();
 		
 		$bookedCamps = TrainingcampsDataService::getCampBookingsByTeam($this->_websoccer, $this->_db, $teamId);
 		
@@ -55,7 +56,7 @@ class TrainingCampsModel implements IModel {
 			
 			$bookedCamp = $bookedCamps[0];
 			if ($bookedCamp["date_end"] < $this->_websoccer->getNowAsTimestamp()) {
-				TrainingcampsDataService::executeCamp($this->_websoccer, $this->_db, $teamId, $bookedCamp);
+				$completedCampReport = TrainingcampsDataService::executeCamp($this->_websoccer, $this->_db, $teamId, $bookedCamp);
 				$bookedCamp = array();
 			} else {
 				$listCamps = FALSE;
@@ -68,7 +69,14 @@ class TrainingCampsModel implements IModel {
 			$camps = TrainingcampsDataService::getCamps($this->_websoccer, $this->_db);
 		}
 		
-		return array("bookedCamp" => $bookedCamp, "camps" => $camps);
+		$lastCampReport = TrainingcampsDataService::getLastCampReportByTeam($this->_websoccer, $this->_db, $teamId);
+
+		return array(
+			"bookedCamp" => $bookedCamp,
+			"camps" => $camps,
+			"completedCampReport" => $completedCampReport,
+			"lastCampReport" => $lastCampReport
+		);
 	}
 	
 }

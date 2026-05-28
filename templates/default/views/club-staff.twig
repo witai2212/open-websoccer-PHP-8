@@ -1,0 +1,139 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("clubstaff_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("clubstaff_title") }}</h3>
+<p>{{ i18n.getMessage("clubstaff_intro") }}</p>
+
+{% if not enabled %}
+    <div class="alert alert-warning">{{ i18n.getMessage("clubstaff_disabled") }}</div>
+{% elseif not human_team %}
+    <div class="alert alert-warning">{{ i18n.getMessage("clubstaff_only_human") }}</div>
+{% else %}
+
+<p>
+    <strong>{{ i18n.getMessage("clubstaff_budget") }}:</strong>
+    {{ team.finanz_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+</p>
+
+<div class="alert alert-info">
+    <i class="icon-info-sign"></i>
+    {{ i18n.getMessage("clubstaff_info_simple") }}<br>
+    {{ i18n.getMessage("clubstaff_info_costs") }}
+</div>
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="well">
+            <h4>{{ i18n.getMessage("clubstaff_total_salary") }}</h4>
+            <p><strong>{{ total_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong></p>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="well">
+            <h4>{{ i18n.getMessage("clubstaff_effects") }}</h4>
+            {% if effects|length == 0 %}
+                <p>{{ i18n.getMessage("clubstaff_no_staff_hired") }}</p>
+            {% else %}
+                <ul>
+                    {% for effect in effects %}
+                        <li>
+                            <strong>{{ i18n.getMessage("clubstaff_role_" ~ effect.role) }}</strong>
+                            (+{{ effect.bonus }}%): {{ i18n.getMessage(effect.message_key) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h4>{{ i18n.getMessage("clubstaff_current_staff") }}</h4>
+
+{% if hired_staff|length == 0 %}
+    <p>{{ i18n.getMessage("clubstaff_no_staff_hired") }}</p>
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("clubstaff_role") }}</th>
+                <th>{{ i18n.getMessage("clubstaff_name") }}</th>
+                <th>{{ i18n.getMessage("clubstaff_level") }}</th>
+                <th>{{ i18n.getMessage("clubstaff_bonus") }}</th>
+                <th>{{ i18n.getMessage("clubstaff_salary") }}</th>
+                <th>{{ i18n.getMessage("clubstaff_hired_since") }}</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for staff in hired_staff %}
+            <tr>
+                <td>{{ i18n.getMessage("clubstaff_role_" ~ staff.role) }}</td>
+                <td>
+                    <strong>{{ staff.name }}</strong>
+                    {% if staff.description|length > 0 %}<br><small>{{ staff.description }}</small>{% endif %}
+                </td>
+                <td>{{ staff.level }}</td>
+                <td>+{{ staff.bonus }}%</td>
+                <td>{{ staff.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                <td>{{ staff.hired_date|date(env.getConfig("date_format")) }}</td>
+                <td>
+                    <a class="btn btn-mini" href="{{ env.getInternalActionUrl("fire-club-staff", "role=" ~ staff.role) }}">
+                        <i class="icon-remove"></i> {{ i18n.getMessage("fire-club-staff") }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<hr>
+
+<h4>{{ i18n.getMessage("clubstaff_available_staff") }}</h4>
+
+{% if available_staff|length == 0 %}
+    <p>{{ i18n.getMessage("clubstaff_no_staff_available") }}</p>
+{% else %}
+    {% for role, stafflist in available_staff %}
+        <h5>{{ i18n.getMessage("clubstaff_role_" ~ role) }}</h5>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ i18n.getMessage("clubstaff_name") }}</th>
+                    <th>{{ i18n.getMessage("clubstaff_level") }}</th>
+                    <th>{{ i18n.getMessage("clubstaff_bonus") }}</th>
+                    <th>{{ i18n.getMessage("clubstaff_salary") }}</th>
+                    <th>{{ i18n.getMessage("clubstaff_description") }}</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for staff in stafflist %}
+                <tr>
+                    <td><strong>{{ staff.name }}</strong></td>
+                    <td>{{ staff.level }}</td>
+                    <td>+{{ staff.bonus }}%</td>
+                    <td>{{ staff.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td>{{ staff.description }}</td>
+                    <td>
+                        <a class="btn btn-mini btn-primary" href="{{ env.getInternalActionUrl("hire-club-staff", "id=" ~ staff.id) }}">
+                            <i class="icon-plus icon-white"></i> {{ i18n.getMessage("hire-club-staff") }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

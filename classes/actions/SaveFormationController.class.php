@@ -76,23 +76,27 @@ class SaveFormationController implements IActionController {
 		// get team players and check whether provided IDs are valid players (in team and not blocked)
 		$players = PlayersDataService::getPlayersOfTeamById($this->_websoccer, $this->_db, $teamId, $this->_isNationalTeam, $matchinfo['match_type'] == 'cup', $matchinfo['match_type'] != 'friendly');
 
-		$this->validatePlayer($parameters['player1'], $players);
-		$this->validatePlayer($parameters['player2'], $players);
-		$this->validatePlayer($parameters['player3'], $players);
-		$this->validatePlayer($parameters['player4'], $players);
-		$this->validatePlayer($parameters['player5'], $players);
-		$this->validatePlayer($parameters['player6'], $players);
-		$this->validatePlayer($parameters['player7'], $players);
-		$this->validatePlayer($parameters['player8'], $players);
-		$this->validatePlayer($parameters['player9'], $players);
-		$this->validatePlayer($parameters['player10'], $players);
-		$this->validatePlayer($parameters['player11'], $players);
+		$this->validatePlayer($parameters['player1'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player2'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player3'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player4'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player5'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player6'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player7'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player8'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player9'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player10'], $players, FALSE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['player11'], $players, FALSE, $teamId, $matchinfo['match_id']);
 		
-		$this->validatePlayer($parameters['bench1'], $players, TRUE);
-		$this->validatePlayer($parameters['bench2'], $players, TRUE);
-		$this->validatePlayer($parameters['bench3'], $players, TRUE);
-		$this->validatePlayer($parameters['bench4'], $players, TRUE);
-		$this->validatePlayer($parameters['bench5'], $players, TRUE);
+		$this->validatePlayer($parameters['bench1'], $players, TRUE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['bench2'], $players, TRUE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['bench3'], $players, TRUE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['bench4'], $players, TRUE, $teamId, $matchinfo['match_id']);
+		$this->validatePlayer($parameters['bench5'], $players, TRUE, $teamId, $matchinfo['match_id']);
+		
+		// validate set-piece takers: only starting lineup players are allowed.
+		$this->validateSetPiecePlayer($parameters['freekickplayer'], $players);
+		$this->validateSetPiecePlayer($parameters['cornerplayer'], $players);
 		
 		// validate substitutions
 		$validSubstitutions = array();
@@ -109,6 +113,11 @@ class SaveFormationController implements IActionController {
 		// save formation
 		$this->saveFormation($teamId, $matchinfo['match_id'], $parameters, $validSubstitutions);
 		
+		// save persistent tactical identity for human clubs
+		if (!$this->_isNationalTeam && class_exists('TacticalStyleDataService') && isset($parameters['tacticalstyle'])) {
+			TacticalStyleDataService::saveHumanStyle($this->_websoccer, $this->_db, $this->_i18n, $teamId, $user->id, $parameters['tacticalstyle']);
+		}
+		
 		// create success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 				$this->_i18n->getMessage('saved_message_title'),
@@ -117,7 +126,7 @@ class SaveFormationController implements IActionController {
 		return null;
 	}
 	
-	private function validatePlayer($playerId, $players, $bench = FALSE) {
+	private function validatePlayer($playerId, $players, $bench = FALSE, $teamId = 0, $matchId = 0) {
 		if ($playerId == null || $playerId == 0) {
 			return;
 		}
@@ -132,11 +141,33 @@ class SaveFormationController implements IActionController {
 			throw new Exception($this->_i18n->getMessage('formation_err_duplicateplayer'));
 		}
 		
-		if ($players[$playerId]['matches_injured'] > 0 || $players[$playerId]['matches_blocked'] > 0) {
+		$matchesInjured = isset($players[$playerId]['matches_injured']) ? (int) $players[$playerId]['matches_injured'] : 0;
+		$matchesBlocked = isset($players[$playerId]['matches_blocked']) ? (int) $players[$playerId]['matches_blocked'] : 0;
+		$clearedByMedicalCenter = FALSE;
+		if (!$this->_isNationalTeam && $matchesInjured === 1 && class_exists('MedicalCenterDataService')) {
+			$clearedByMedicalCenter = MedicalCenterDataService::isPlayerClearedForMatch($this->_websoccer, $this->_db, $teamId, $playerId, $matchId);
+		}
+		
+		if ($matchesBlocked > 0 || ($matchesInjured > 0 && !$clearedByMedicalCenter)) {
 			throw new Exception($this->_i18n->getMessage('formation_err_blockedplayer'));
 		}
 		
 		$this->_addedPlayers[$position][$playerId] = TRUE;
+	}
+	
+	private function validateSetPiecePlayer($playerId, $players) {
+		if ($playerId == null || $playerId == 0) {
+			return;
+		}
+		
+		if (!isset($players[$playerId])) {
+			throw new Exception($this->_i18n->getMessage('formation_err_invalidplayer'));
+		}
+		
+		$position = $players[$playerId]['position'];
+		if (!isset($this->_addedPlayers[$position][$playerId])) {
+			throw new Exception($this->_i18n->getMessage('formation_err_invalidplayer'));
+		}
 	}
 	
 	private function validateSubstitution($playerIn, $playerOut, $minute, $players) {
@@ -163,6 +194,7 @@ class SaveFormationController implements IActionController {
 		$columns['longpasses'] = $parameters['longpasses'];
 		$columns['counterattacks'] = $parameters['counterattacks'];
 		$columns['freekickplayer'] = $parameters['freekickplayer'];
+		$columns['cornerplayer'] = $parameters['cornerplayer'];
 		
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
 			$columns['spieler' . $playerNo] = $parameters['player' . $playerNo];

@@ -16,4 +16,19 @@
 	<message id="entity_news_c_br">Zeilenumbrüche darstellen</message>
 	<message id="entity_news_c_links">URLs in HTML-Links umwandeln</message>
 	<message id="entity_news_status">Aktiviert</message>
+
+    <message id="entity_bankloans">Bankkredite</message>
+    <message id="bankloans_navlabel">Bankkredite</message>
+    <message id="entity_bankloans_id">ID</message>
+    <message id="entity_bankloans_verein_id">Verein-ID</message>
+    <message id="entity_bankloans_original_amount">Kreditsumme</message>
+    <message id="entity_bankloans_remaining_principal">Rest-Tilgung</message>
+    <message id="entity_bankloans_interest_rate">Zinssatz</message>
+    <message id="entity_bankloans_remaining_interest">Rest-Zinsen</message>
+    <message id="entity_bankloans_remaining_amount">Restschuld</message>
+    <message id="entity_bankloans_matches_left">Restspiele</message>
+    <message id="entity_bankloans_status">Status</message>
+    <message id="entity_bankloans_credit_rating">Kreditrating</message>
+    <message id="entity_bankloans_created_date">Aufgenommen am</message>
+    <message id="entity_bankloans_board_warning_sent">Vorstandswarnung gesendet</message>
 </messages>

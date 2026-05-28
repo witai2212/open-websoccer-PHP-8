@@ -25,4 +25,23 @@
 	
 	<message id="stadiumenvironment_matchincome_subject">Einkommen Stadionumfeld</message>
 	<message id="stadiumenvironment_costs_per_match_subject">Kosten Stadionumfeld</message>
+
+	<message id="stadiumenvironment_effect_injury_unit">Spiel(e)</message>
+	
+	<message id="stadiumfacility_youthacademy_name">Jugendakademie</message>
+	<message id="stadiumfacility_youthacademy_desc">Verbessert die Qualität der Jugendarbeit und erhöht die Chance auf stärkere Nachwuchsspieler.</message>
+	<message id="stadiumfacility_medicalcenter_name">Medizinzentrum</message>
+	<message id="stadiumfacility_medicalcenter_desc">Bessere Diagnostik und Reha verkürzen Verletzungen der Spieler.</message>
+	<message id="stadiumfacility_trainingcenter_name">Trainingszentrum</message>
+	<message id="stadiumfacility_trainingcenter_desc">Moderne Trainingsplätze und Analysebereiche verbessern die Trainingswirkung.</message>
+	<message id="stadiumfacility_fanshop_name">Fanshop</message>
+	<message id="stadiumfacility_fanshop_desc">Steigert Merchandising-Verkäufe an Heimspieltagen und bringt zusätzliche Einnahmen.</message>
+	<message id="stadiumfacility_mediacenter_name">Medienzentrum</message>
+	<message id="stadiumfacility_mediacenter_desc">Professionellere Medienarbeit steigert Fanbeliebtheit und Sponsoren-nahe Heimspieleinnahmen.</message>
+	<message id="stadiumfacility_viplounge_name">VIP-Lounge</message>
+	<message id="stadiumfacility_viplounge_desc">Verbessert Hospitality-Angebote, Ticketnachfrage und Einnahmen bei Heimspielen.</message>
+	<message id="stadiumfacility_pitchheating_name">Rasenheizung</message>
+	<message id="stadiumfacility_pitchheating_desc">Sorgt für bessere Platzbedingungen, stabilere Zuschauerzahlen und weniger Verletzungsfolgen.</message>
+	<message id="stadiumfacility_scoutingoffice_name">Scoutingbüro</message>
+	<message id="stadiumfacility_scoutingoffice_desc">Verbessert Jugendscouting und die Qualität der neuen Scouting-Vorschläge.</message>
 </messages>

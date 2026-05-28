@@ -169,10 +169,14 @@ class SaveMatchChangesController implements IActionController {
 			$this->_createMatchReportMessage($user, $matchId, $matchinfo['match_minutes'], ($teamPrefix == 'home'));
 		}
 		
-		// free kick taker
+		// free kick and corner takers
 		$prevFreekickPlayer = $matchinfo['match_'. $teamPrefix .'_freekickplayer'];
 		if ($parameters['freekickplayer'] && $parameters['freekickplayer'] != $prevFreekickPlayer) {
 			$columns[$teamPrefixDb .'_freekickplayer'] = $parameters['freekickplayer'];
+		}
+		$prevCornerPlayer = $matchinfo['match_'. $teamPrefix .'_cornerplayer'];
+		if ($parameters['cornerplayer'] && $parameters['cornerplayer'] != $prevCornerPlayer) {
+			$columns[$teamPrefixDb .'_cornerplayer'] = $parameters['cornerplayer'];
 		}
 		
 		// execute update

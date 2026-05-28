@@ -1,0 +1,118 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("fanpressure_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("fanpressure_title") }}</h3>
+<p>{{ i18n.getMessage("fanpressure_intro") }}</p>
+
+<div class="row-fluid">
+    <div class="span4">
+        <div class="well">
+            <h4>{{ i18n.getMessage("fanpressure_fan_mood") }}</h4>
+            <div class="progress">
+                <div class="bar" style="width: {{ fan_mood }}%;"></div>
+            </div>
+            <p><strong>{{ fan_mood }}%</strong> · {{ i18n.getMessage(mood_label) }}</p>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="well">
+            <h4>{{ i18n.getMessage("fanpressure_media_pressure") }}</h4>
+            <div class="progress">
+                <div class="bar" style="width: {{ media_pressure }}%;"></div>
+            </div>
+            <p><strong>{{ media_pressure }}%</strong></p>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="well">
+            <h4>{{ i18n.getMessage("fanpressure_board_satisfaction") }}</h4>
+            <div class="progress">
+                <div class="bar" style="width: {{ board_satisfaction }}%;"></div>
+            </div>
+            <p><strong>{{ board_satisfaction }}%</strong></p>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <i class="icon-info-sign"></i>
+    {{ i18n.getMessage(hint_key) }}
+</div>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td><strong>{{ i18n.getMessage("fanpressure_attendance_effect") }}</strong></td>
+            <td style="text-align: right;">{{ attendance_effect > 0 ? '+' : '' }}{{ attendance_effect }}%</td>
+        </tr>
+        <tr>
+            <td><strong>{{ i18n.getMessage("fanpressure_sponsor_effect") }}</strong></td>
+            <td style="text-align: right;">{{ sponsor_effect > 0 ? '+' : '' }}{{ sponsor_effect }}%</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h3>{{ i18n.getMessage("fanpressure_recent_development") }}</h3>
+
+{% if log|length == 0 %}
+    <div class="alert alert-warning">
+        {{ i18n.getMessage("fanpressure_no_log") }}
+    </div>
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("fanpressure_date") }}</th>
+                <th>{{ i18n.getMessage("fanpressure_reason") }}</th>
+                <th style="text-align: right;">{{ i18n.getMessage("fanpressure_change") }}</th>
+                <th>{{ i18n.getMessage("fanpressure_old_new") }}</th>
+                <th>{{ i18n.getMessage("fanpressure_media_old_new") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in log %}
+                <tr>
+                    <td>{{ item.event_date|date(env.getConfig("date_format")) }}</td>
+                    <td>
+                        {{ item.reason_label }}
+                        {% if item.context.player is defined %}
+                            <br><small>{{ item.context.player }}</small>
+                        {% elseif item.context.mission is defined %}
+                            <br><small>{{ item.context.mission }}</small>
+                        {% elseif item.context.score is defined %}
+                            <br><small>{{ item.context.score }}</small>
+                        {% endif %}
+                        {% if item.match_id > 0 %}
+                            <br><small><a href="{{ env.getInternalUrl("match", "id=" ~ item.match_id) }}">{{ i18n.getMessage("fanpressure_match_link") }}</a></small>
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">
+                        {% if item.mood_change > 0 %}
+                            <span style="color: green;">{{ item.mood_change_signed }}</span>
+                        {% elseif item.mood_change < 0 %}
+                            <span style="color: red;">{{ item.mood_change_signed }}</span>
+                        {% else %}
+                            {{ item.mood_change_signed }}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.old_mood }}% / {{ item.new_mood }}%</td>
+                    <td>
+                        {{ item.old_pressure }}% / {{ item.new_pressure }}%
+                        {% if item.pressure_change != 0 %}
+                            <small>({{ item.pressure_change_signed }})</small>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

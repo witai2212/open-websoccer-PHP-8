@@ -10,6 +10,7 @@
     <settings>
       <setting id="formation_max_next_matches" category="game" type="number" default="3" />
       <setting id="formation_max_templates" category="game" type="number" default="10" />
+      <setting id="tactical_style" category="game" type="boolean" default="1" />
     </settings>
     
     <pages>
@@ -23,8 +24,9 @@
             parentItem="office">
             
             <script file="jquery-ui-1.10.2.custom.min.js" debugonly="true"/>
-            <script file="formationws4.js?v=5" debugonly="true"/>
-            <script file="formation.min.js?v=5" productiononly="true"/>
+            <script file="formationws4.js?v=8" debugonly="true"/>
+            <script file="formation.min.js?v=8" productiononly="true"/>
+            <script file="formation-setpieces.js?v=1"/>
             
             <script file="bootstrap-slider.js" />
             <script file="bootstrap-switch.js" />
@@ -67,6 +69,8 @@
 		<param id="longpasses" type="boolean" />
 		<param id="counterattacks" type="boolean" />
 		<param id="freekickplayer" type="number" />
+		<param id="cornerplayer" type="number" />
+		<param id="tacticalstyle" type="text" max="32" />
 		
 		<param id="player1" type="number" required="true" />
 		<param id="player2" type="number" required="true" />

@@ -44,35 +44,15 @@ class ChooseTeamController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("freeclubs_msg_error_user_is_already_manager"));
 		}
 		
-		$teamId = $parameters["teamId"];
+		$teamId = (int) $parameters["teamId"];
 		
-		// check whether club still has no manager
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_verein";
-		$whereCondition = "id = %d AND status = 1 AND (user_id = 0 OR user_id IS NULL OR interimmanager = '1')";
-		$result = $this->_db->querySelect("id", $fromTable, $whereCondition, $teamId);
-		$club = $result->fetch_array();
-		$result->free();
-		
-		if (!isset($club["id"])) {
-			throw new Exception($this->_i18n->getMessage("freeclubs_msg_error"));
-		}
-		
-		$columns = array();
-		$columns["user_id"] = $user->id;
-		$columns["interimmanager"] = "0";
-		
-		// update record
-		if (count($columns)) {
-			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $teamId);
-		}
+		ManagerCareerDataService::assignFreeClub($this->_websoccer, $this->_db, $this->_i18n, $user->id, $teamId, ManagerCareerDataService::ORIGIN_FREE_CLUB);
+		$user->setClubId($teamId);
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
 				$this->_i18n->getMessage("freeclubs_msg_success"),
 				""));
-				
-		//reset stadium levels
-		StadiumsDataService::resetStadiumLevels($this->_websoccer, $this->_db, $teamId);
 		
 		return "office";
 	}

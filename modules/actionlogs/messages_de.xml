@@ -20,4 +20,14 @@
 	<message id="activitylog_directtransfer-offer">%s hat ein Spielerkaufangebot eingereicht.</message>
 	<message id="activitylog_report-absence">%s hat sich als abwesend gemeldet.</message>
 	<message id="activitylog_return-from-absence">%s ist wieder zurück.</message>
+	<message id="activitylog_save-training-plan">%s hat seinen Trainingsplan angepasst.</message>
+	<message id="activitylog_save-individual-training">%s hat das Einzeltraining angepasst.</message>
+	<message id="activitylog_hire-club-staff">%s hat einen Mitarbeiter eingestellt.</message>
+	<message id="activitylog_fire-club-staff">%s hat einen Mitarbeiter entlassen.</message>
+	<message id="activitylog_managercareer_job_change">%s hat einen neuen Managerjob angenommen.</message>
+	<message id="activitylog_apply-medical-treatment">%s hat eine medizinische Behandlung angewendet.</message>
+	<message id="activitylog_clear-player-risk">%s hat einen Spieler riskant freigegeben.</message>
+	
+	<message id="activitylog_sign-stadium-naming-contract">%s hat einen Vertrag über die Stadionnamensrechte abgeschlossen.</message>
+	
 </messages>

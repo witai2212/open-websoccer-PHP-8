@@ -166,7 +166,17 @@ class MatchChangesModel extends FormationModel {
 			}
 		}
 		
-		return array('setup' => $setup, 'players' => $players, 'formation' => $formation, 'minute' => $match['match_minutes']);
+		$setPiecePlayers = $playersOnField;
+		usort($setPiecePlayers, function($playerA, $playerB) {
+			$freekickA = isset($playerA['strength_freekick']) ? (float) $playerA['strength_freekick'] : 0;
+			$freekickB = isset($playerB['strength_freekick']) ? (float) $playerB['strength_freekick'] : 0;
+			if ($freekickA == $freekickB) {
+				return 0;
+			}
+			return ($freekickA < $freekickB) ? 1 : -1;
+		});
+		
+		return array('setup' => $setup, 'players' => $players, 'setpiece_players' => $setPiecePlayers, 'formation' => $formation, 'minute' => $match['match_minutes']);
 	}
 	
 }

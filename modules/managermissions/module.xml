@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="clubs" version="1.0.0"/>
+        <dependency module="office" version="1.0.0"/>
+        <dependency module="notifications" version="1.0.0"/>
+        <dependency module="news" version="1.0.0"/>
+    </dependencies>
+
+    <settings>
+        <setting id="manager_missions_enabled" category="game" type="boolean" default="1" />
+        <setting id="manager_missions_reward_board" category="game" type="number" default="3" />
+        <setting id="manager_missions_reward_highscore" category="game" type="number" default="25" />
+        <setting id="manager_missions_penalty_board" category="game" type="number" default="4" />
+        <setting id="manager_missions_salary_reduce_percent" category="game" type="number" default="5" />
+    </settings>
+
+    <pages>
+        <page
+            id="manager-missions"
+            template="manager-missions"
+            model="ManagerMissionsModel"
+            parentItem="office"
+            navitem="true"
+            navweight="8"
+            role="user"
+            navitemOnlyForConfigEnabled="manager_missions_enabled">
+        </page>
+    </pages>
+
+    <plugins>
+        <eventlistener event="MatchCompletedEvent" class="ManagerMissionsPlugin" method="handleMatchCompleted" />
+    </plugins>
+
+</module>

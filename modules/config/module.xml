@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+  
+  <admin>
+	<adminpage id="config" permissionrole="r_user" navcategory="website" entity="config">
+		<entity dbtable="config AS ConfigTab">
+		    <overview edit="true" delete="true">
+		    	<column id="entity_config_name" type="text" field="ConfigTab.name" filter="true" sort="true" />
+		    	<column id="entity_config_timestamp" type="number" field="ConfigTab.zeitstempel" sort="true"/>    
+		    	<column id="entity_config_descr" type="text" field="ConfigTab.descr" sort="true" />  
+
+		    </overview>
+		    <editform>
+		        <field id="name" type="text" readonly="true"/>
+		        <field id="zeitstempel" type="text" required="false" />
+		        <field id="descr" type="text" required="false" />
+		    </editform>
+		    
+		</entity>    
+	</adminpage>
+  </admin>
+
+</module>

@@ -54,4 +54,8 @@
 	<message id="groupmatchesgenerator_label_matchesperteam">Spiele pro Team</message>
 
 	
+	<message id="seasonrollover_navlabel">Saisonwechsel-Assistent</message>
+	<message id="seasonrollover_title">Saisonwechsel-Assistent</message>
+	<message id="seasonrollover_intro">Dieser Assistent führt Saisonende, UEFA-Temp, neue Saisons, Pokale und Spielpläne kontrolliert in einem Ablauf zusammen.</message>
+
 </messages>

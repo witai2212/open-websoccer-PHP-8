@@ -24,40 +24,56 @@
  * Lists all possible badges
  */
 class BadgesModel implements IModel {
-	private $_db;
-	private $_i18n;
-	private $_websoccer;
-	
-	public function __construct($db, $i18n, $websoccer) {
-		$this->_db = $db;
-		$this->_i18n = $i18n;
-		$this->_websoccer = $websoccer;
-	}
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see IModel::renderView()
-	 */
-	public function renderView() {
-		return TRUE;
-	}
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see IModel::getTemplateParameters()
-	 */
-	public function getTemplateParameters() {
-		
-		$result = $this->_db->querySelect('*', $this->_websoccer->getConfig('db_prefix') . '_badge', '1 ORDER BY event ASC, level ASC');
-		$badges = array();
-		while ($badge = $result->fetch_array()) {
-			$badges[] = $badge;
-		}
-		$result->free();
-		
-		return array("badges" => $badges);
-	}
-	
+    private $_db;
+    private $_i18n;
+    private $_websoccer;
+    
+    public function __construct($db, $i18n, $websoccer) {
+        $this->_db = $db;
+        $this->_i18n = $i18n;
+        $this->_websoccer = $websoccer;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see IModel::renderView()
+     */
+    public function renderView() {
+        return TRUE;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see IModel::getTemplateParameters()
+     */
+    public function getTemplateParameters() {
+        $requestedUserId = (int) $this->_websoccer->getRequestParameter('id');
+        $user = $this->_websoccer->getUser();
+        $userId = ($requestedUserId > 0) ? $requestedUserId : (($user && isset($user->id)) ? (int) $user->id : 0);
+
+        $badgeTable = $this->_websoccer->getConfig('db_prefix') . '_badge';
+        $badgeUserTable = $this->_websoccer->getConfig('db_prefix') . '_badge_user';
+
+        if ($userId > 0) {
+            $columns = 'B.*, COUNT(BU.id) AS earned_count, MAX(BU.date_rewarded) AS last_rewarded';
+            $fromTable = $badgeTable . ' AS B LEFT JOIN ' . $badgeUserTable . ' AS BU ON BU.badge_id = B.id AND BU.user_id = ' . $userId;
+            $whereCondition = '1 GROUP BY B.id ORDER BY B.event ASC, B.event_benchmark ASC, B.level ASC';
+        } else {
+            $columns = 'B.*, 0 AS earned_count, 0 AS last_rewarded';
+            $fromTable = $badgeTable . ' AS B';
+            $whereCondition = '1 ORDER BY B.event ASC, B.event_benchmark ASC, B.level ASC';
+        }
+
+        $result = $this->_db->querySelect($columns, $fromTable, $whereCondition);
+        $badges = array();
+        while ($badge = $result->fetch_array()) {
+            $badges[] = $badge;
+        }
+        $result->free();
+        
+        return array('badges' => $badges);
+    }
+    
 }
 
 ?>

@@ -9,6 +9,14 @@
 	<message id="mywatchlist_position_main">Position</message>
 	<message id="mywatchlist_position_second">Pos. 2</message>
 	<message id="mywatchlist_marktwert">Marktwert</message>
+	<message id="mywatchlist_scout_recommendation">Scout-Empfehlung</message>
+	<message id="mywatchlist_scout_score">Score</message>
+	<message id="mywatchlist_scout_recommend_yes">Empfohlen</message>
+	<message id="mywatchlist_scout_recommend_watch">Beobachten</message>
+	<message id="mywatchlist_scout_recommend_no">Nicht empfohlen</message>
+	<message id="mywatchlist_scout_no_data">Keine Scout-Daten</message>
+	<message id="mywatchlist_scout_no_data_short">-</message>
+	<message id="mywatchlist_scout_no_matching_position">Kein passender Scout</message>
 	<message id="mywatchlist_noten_druchschnitt">Noten</message>
 	<message id="no_items">Keine Spieler auf der Beobachtungsliste</message>
 	<message id="mywatchlist_delete">Löschen</message>

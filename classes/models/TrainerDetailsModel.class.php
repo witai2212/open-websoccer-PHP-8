@@ -48,7 +48,7 @@ class TrainerDetailsModel implements IModel {
 			throw new Exception(MSG_KEY_ERROR_PAGENOTFOUND);
 		}
 		
-		return array("trainer" => $trainer);
+		return array("trainer" => $trainer, "trainerSpecializations" => TrainingDataService::getTrainerSpecializations());
 	}
 	
 }

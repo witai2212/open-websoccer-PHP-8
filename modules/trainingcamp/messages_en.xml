@@ -35,4 +35,25 @@
     <message id="trainingcamp_booking_costs_subject">Training Camp</message>
     
     <message id="trainingcamp_booking_success">The training camp has been successfully booked!</message>
+    <message id="trainingcamp_type_balanced">Balanced</message>
+    <message id="trainingcamp_type_fitness">Fitness</message>
+    <message id="trainingcamp_type_recovery">Recovery</message>
+    <message id="trainingcamp_type_technique">Technique</message>
+    <message id="trainingcamp_type_teambuilding">Team building</message>
+    <message id="trainingcamp_type_tactics">Tactics</message>
+    <message id="trainingcamp_type_youth">Youth development</message>
+    <message id="trainingcamp_type_mental">Mental</message>
+    <message id="trainingcamp_players_included">Players in camp</message>
+    <message id="trainingcamp_total_costs">Total costs</message>
+    <message id="trainingcamp_estimated_min_costs">Costs at minimum duration</message>
+    <message id="trainingcamp_all_players_note">The training camp applies to all active squad players. Effects are applied only after the team returns.</message>
+    <message id="trainingcamp_last_report">Latest training camp report</message>
+    <message id="trainingcamp_report_completed_title">Training camp completed</message>
+    <message id="trainingcamp_report_completed_text">The effects have been applied to the squad and a report has been created.</message>
+    <message id="trainingcamp_report_period">Period</message>
+    <message id="trainingcamp_report_players_costs">Players / costs</message>
+    <message id="trainingcamp_report_effects">Total effects</message>
+    <message id="trainingcamp_special_effects">Additional attributes</message>
+    <message id="trainingcamp_report_special_effects">Additional attributes total</message>
+    <message id="trainingcamp_report_injuries">New injuries</message>
 </messages>

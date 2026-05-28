@@ -1,0 +1,239 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("financialforecast_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<h3>{{ i18n.getMessage("financialforecast_title") }}</h3>
+<p class="muted">
+    {{ i18n.getMessage("financialforecast_intro") }}
+    {% if season.season_name %}{{ i18n.getMessage("financialforecast_season") }}: {{ season.season_name }}{% endif %}
+    {% if season_end_date > 0 %} &ndash; {{ i18n.getMessage("financialforecast_until") }} {{ env.getFormattedDate(season_end_date) }}{% endif %}
+</p>
+
+{% if projected_balance < 0 %}
+    <div class="alert alert-error">
+        <strong>{{ i18n.getMessage("financialforecast_warning_negative_title") }}</strong><br>
+        {{ i18n.getMessage("financialforecast_warning_negative_text") }}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        {{ i18n.getMessage("financialforecast_info_conservative") }}
+    </div>
+{% endif %}
+
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("financialforecast_current_budget") }}</strong><br>
+            {{ current_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+        </div>
+    </div>
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("financialforecast_projected_change") }}</strong><br>
+            {% if projected_change < 0 %}<span style="color: red">{% endif %}
+            {{ projected_change|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+            {% if projected_change < 0 %}</span>{% endif %}
+        </div>
+    </div>
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("financialforecast_projected_balance") }}</strong><br>
+            {% if projected_balance < 0 %}<span style="color: red">{% endif %}
+            {{ projected_balance|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+            {% if projected_balance < 0 %}</span>{% endif %}
+        </div>
+    </div>
+    <div class="span3">
+        <div class="well">
+            <strong>{{ i18n.getMessage("financialforecast_matches") }}</strong><br>
+            {{ matches_count }}
+        </div>
+    </div>
+</div>
+
+{% if forecast_rows|length > 0 %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="financialForecastChart" width="900" height="300"></canvas>
+    <script>
+        var financialForecastCanvas = document.getElementById('financialForecastChart');
+        if (financialForecastCanvas) {
+            new Chart(financialForecastCanvas.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: [{{ chart_labels|raw }}],
+                    datasets: [{
+                        label: '{{ i18n.getMessage("financialforecast_projected_balance") }}',
+                        data: [{{ chart_data }}],
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+    <hr>
+{% endif %}
+
+<h4>{{ i18n.getMessage("financialforecast_summary") }}</h4>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_salary_costs") }} ({{ non_friendly_matches_count }} x {{ salary_per_match|number_format(0, ',', ' ') }})</td>
+            <td align="right"><span style="color: red">{{ salary_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></td>
+        </tr>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_sponsor_income") }}</td>
+            <td align="right">{{ sponsor_income_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+        </tr>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_stadium_income") }} ({{ home_matches_count }} x {{ stadium_income_per_home_match|number_format(0, ',', ' ') }})</td>
+            <td align="right">{{ stadium_income_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+        </tr>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_transfer_income") }}</td>
+            <td align="right">{{ transfer_income_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+        </tr>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_transfer_expenses") }}</td>
+            <td align="right"><span style="color: red">{{ transfer_expense_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></td>
+        </tr>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_loan_repayments") }}</td>
+            <td align="right"><span style="color: red">{{ loan_repayment_total|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></td>
+        </tr>
+        <tr>
+            <td><strong>{{ i18n.getMessage("financialforecast_projected_change") }}</strong></td>
+            <td align="right">
+                <strong>
+                {% if projected_change < 0 %}<span style="color: red">{% endif %}
+                {{ projected_change|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                {% if projected_change < 0 %}</span>{% endif %}
+                </strong>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p class="muted">
+    {{ i18n.getMessage("financialforecast_not_counted_winbonus") }}:
+    {{ sponsor_win_bonus_potential|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+</p>
+
+<h4>{{ i18n.getMessage("financialforecast_prepaid_costs") }}</h4>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_active_scouts") }} ({{ prepaid_costs.scouting_count }})</td>
+            <td align="right">{{ prepaid_costs.scouting_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+        </tr>
+        <tr>
+            <td>{{ i18n.getMessage("financialforecast_open_training_units") }} ({{ prepaid_costs.training_count }})</td>
+            <td align="right">{{ prepaid_costs.training_amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+        </tr>
+    </tbody>
+</table>
+<p class="muted">{{ i18n.getMessage("financialforecast_prepaid_note") }}</p>
+
+{% if transfer_items|length > 0 %}
+    <h4>{{ i18n.getMessage("financialforecast_pending_transfers") }}</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("financialforecast_transfer_direction") }}</th>
+                <th>{{ i18n.getMessage("entity_player") }}</th>
+                <th>{{ i18n.getMessage("entity_club") }}</th>
+                <th>{{ i18n.getMessage("financialforecast_transfer_type") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("financialforecast_amount") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in transfer_items %}
+                <tr>
+                    <td>
+                        {% if item.direction == 'in' %}
+                            {{ i18n.getMessage("financialforecast_transfer_in") }}
+                        {% else %}
+                            {{ i18n.getMessage("financialforecast_transfer_out") }}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.player_name }}</td>
+                    <td>{{ item.club_name }}</td>
+                    <td>{{ item.type }}</td>
+                    <td align="right">
+                        {% if item.direction == 'out' %}<span style="color: red">-{% endif %}
+                        {{ item.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                        {% if item.direction == 'out' %}</span>{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<h4>{{ i18n.getMessage("financialforecast_matchday_projection") }}</h4>
+{% if forecast_rows|length > 0 %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("account_statement_date") }}</th>
+                <th>{{ i18n.getMessage("financialforecast_event") }}</th>
+                <th>{{ i18n.getMessage("financialforecast_match_type") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("financialforecast_salary") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("financialforecast_sponsor") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("financialforecast_stadium") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("financialforecast_loan_repayments") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("financialforecast_transfers") }}</th>
+                <th style="text-align: right">{{ i18n.getMessage("financialforecast_balance") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in forecast_rows %}
+                <tr>
+                    <td>{% if row.date > 0 %}{{ env.getFormattedDate(row.date) }}{% else %}&ndash;{% endif %}</td>
+                    <td>
+                        {% if i18n.hasMessage(row.label) %}
+                            {{ i18n.getMessage(row.label) }}
+                        {% else %}
+                            {{ row.label }}
+                        {% endif %}
+                        {% if row.home_match %}<span class="label">{{ i18n.getMessage("financialforecast_home") }}</span>{% endif %}
+                    </td>
+                    <td>{{ row.match_type }}</td>
+                    <td align="right">{% if row.salary_cost != 0 %}<span style="color: red">{{ row.salary_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>{% endif %}</td>
+                    <td align="right">{% if row.sponsor_income != 0 %}{{ row.sponsor_income|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
+                    <td align="right">{% if row.stadium_income != 0 %}{{ row.stadium_income|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
+                    <td align="right">{% if row.loan_repayment != 0 %}<span style="color: red">{{ row.loan_repayment|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>{% endif %}</td>
+                    <td align="right">
+                        {% if row.transfer_cashflow != 0 %}
+                            {% if row.transfer_cashflow < 0 %}<span style="color: red">{% endif %}
+                            {{ row.transfer_cashflow|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                            {% if row.transfer_cashflow < 0 %}</span>{% endif %}
+                        {% endif %}
+                    </td>
+                    <td align="right">
+                        {% if row.balance < 0 %}<span style="color: red">{% endif %}
+                        <strong>{{ row.balance|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong>
+                        {% if row.balance < 0 %}</span>{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{{ i18n.getMessage("financialforecast_no_matches") }}</p>
+{% endif %}
+
+{% endblock %}

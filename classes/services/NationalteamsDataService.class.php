@@ -68,6 +68,7 @@ class NationalteamsDataService {
 				"w_kondition" => "strength_stamina",
 				"w_frische" => "strength_freshness",
 				"w_zufriedenheit" => "strength_satisfaction",
+				"w_freekick" => "strength_freekick",
 				"transfermarkt" => "transfermarket",
 				"nation" => "player_nationality",
 				"picture" => "picture",

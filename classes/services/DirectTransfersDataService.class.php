@@ -167,6 +167,31 @@ class DirectTransfersDataService {
 				"directtransfer_player1" => $exchangePlayer1,
 				"directtransfer_player2" => $exchangePlayer2
 				), $websoccer->getConfig("db_prefix") . "_transfer");
+		$transferId = (int) $db->getLastInsertedId();
+
+		if (class_exists('BadgeAwardService') && (int) $amount > 0 && (int) $currentUserId > 0) {
+			BadgeAwardService::processTransferSale(
+				$websoccer,
+				$db,
+				(int) $currentUserId,
+				(int) $currentClubId,
+				(int) $playerId,
+				(int) $amount,
+				$transferId
+			);
+		}
+
+		if (class_exists('FanPressureDataService')) {
+			FanPressureDataService::processTransfer(
+				$websoccer,
+				$db,
+				I18n::getInstance($websoccer->getConfig('supported_languages')),
+				$playerId,
+				$currentClubId,
+				$targetClubId,
+				$amount
+			);
+		}
 	}
 	
 	/**
@@ -313,12 +338,10 @@ class DirectTransfersDataService {
 		$offers = array();
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 		while ($offer = $result->fetch_array()) {
-			$offer["player_marketvalue"] = PlayersDataService::getMarketValue($websoccer, $db, $offer['P.id']);
+			$offer["player_marketvalue"] = PlayersDataService::getMarketValue($websoccer, $db, $offer);
 			$offers[] = $offer;
 		}
 		$result->free();
-		
-		print_r($offers);
 		
 		return $offers;
 	}

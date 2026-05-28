@@ -39,5 +39,7 @@
 	<message id="schedulegenerator_err_invalidrounds">Die Anzahl an Runden muss zwischen 1 und 10 liegen.</message>
 	<message id="schedulegenerator_err_invalidtimebreak">Die Anzahl an Tagen zwischen zwei Runden muss zwischen 1 und 50 liegen.</message>
 	
+	<message id="new-season_navlabel">Neue Saison erstellen</message>
+	
 	
 </messages>

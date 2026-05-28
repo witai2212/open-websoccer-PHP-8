@@ -53,4 +53,7 @@
 	<message id="entity_club_captain_id">Kapitän</message>
 	<message id="entity_club_interimmanager">Wird von Interims-Manager betreut</message>
 	<message id="entity_club_highscore">Highscore</message>
+	
+	<message id="entity_club_finanz_bilanz_summe">Bilanzsumme</message>
+	
 </messages>

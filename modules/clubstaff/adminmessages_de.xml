@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_clubstaff">Mitarbeiterstab</message>
+    <message id="settings_label_club_staff_enabled">Mitarbeiterstab aktivieren</message>
+    <message id="settings_label_club_staff_enabled_help">Aktiviert die Seite Mitarbeiterstab. Menschlich geführte Vereine können pro Rolle einen Mitarbeiter einstellen.</message>
+</messages>

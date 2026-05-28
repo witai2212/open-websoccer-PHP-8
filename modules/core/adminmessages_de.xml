@@ -172,6 +172,8 @@
 	<message id="settings_label_privacypolicy_url">URL zur Datenschutzerklärung</message> 
 	<message id="settings_label_privacypolicy_url_help">Interne oder externe URL (Internetadresse) zu einer Datenschutzerklärung.</message> 
 	
+	<message id="settings_label_fix_term_deposit_interest">Zinssatz</message>
+	
 	<message id="settings_label_game_currency">Spielgeldwährung</message> 
 	
 	<message id="settings_label_offline_help">Website an- oder ausschalten. Wenn Sie den Modus "Offline" wählen, erscheint bei den Besuchern bei allen Seitenaufrufen nur die Meldung, die Sie unten eingeben.</message>

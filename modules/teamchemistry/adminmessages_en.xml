@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_team_chemistry_enabled">Enable team chemistry</message>
+    <message id="settings_label_team_chemistry_enabled_help">Enables the chemistry score, chemistry page and small simulation effects.</message>
+    <message id="settings_label_team_chemistry_max_match_effect">Maximum team chemistry simulation effect</message>
+    <message id="settings_label_team_chemistry_max_match_effect_help">Default: 3. Used as a small percent/point effect on passing, morale and stability.</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days">Recent transfer window</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days_help">Transfers in this period slightly reduce chemistry so too many new players do not harmonize immediately.</message>
+    <message id="settings_label_team_chemistry_formation_history_count">Formation history count</message>
+    <message id="settings_label_team_chemistry_formation_history_count_help">Number of recent formations checked for formation familiarity.</message>
+</messages>

@@ -2,9 +2,15 @@
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_trainer">Trainer</message>
-	<message id="entity_trainer_name">Name</message>
-	<message id="entity_trainer_salary">Gehalt pro Einheit</message>
-	<message id="entity_trainer_p_technique">Effektivität Techniktraining</message>
-	<message id="entity_trainer_p_stamina">Effektivität Konditionstraining</message>
-	<message id="entity_trainer_premiumfee">Premiumgebühr</message>
+    <message id="entity_trainer_name">Name</message>
+    <message id="entity_trainer_salary">Gehalt pro Einheit</message>
+    <message id="entity_trainer_specialization">Spezialisierung</message>
+    <message id="entity_trainer_p_technique">Effektivität Techniktraining</message>
+    <message id="entity_trainer_p_stamina">Effektivität Konditionstraining</message>
+    <message id="entity_trainer_p_offense">Offensive</message>
+    <message id="entity_trainer_p_defense">Defensive</message>
+    <message id="entity_trainer_p_tactics">Taktik</message>
+    <message id="entity_trainer_p_goalkeeping">Torwarttraining</message>
+    <message id="entity_trainer_p_mental">Mentalität</message>
+    <message id="entity_trainer_premiumfee">Premiumgebühr</message>
 </messages>

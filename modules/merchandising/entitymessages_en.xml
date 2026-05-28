@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+	<message id="entity_merchandisingproduct">Merchandising products</message>
+
+	<message id="entity_merchandisingproduct_name">Product name</message>
+	<message id="entity_merchandisingproduct_name_help">
+		May also be a messages key.
+	</message>
+
+	<message id="entity_merchandisingproduct_description">Description</message>
+	<message id="entity_merchandisingproduct_description_help">
+		May also be a messages key.
+	</message>
+
+	<message id="entity_merchandisingproduct_purchase_price">Purchase price</message>
+	<message id="entity_merchandisingproduct_purchase_price_help">
+		Production or purchase costs per sold item.
+	</message>
+
+	<message id="entity_merchandisingproduct_sales_price">Base sales price</message>
+	<message id="entity_merchandisingproduct_sales_price_help">
+		Default sales price before the club-specific pricing strategy is applied.
+	</message>
+
+	<message id="entity_merchandisingproduct_base_demand">Base demand</message>
+	<message id="entity_merchandisingproduct_base_demand_help">
+		Share of spectators who generally buy this product. Example: 0.0100 equals 1.00 percent.
+	</message>
+
+	<message id="entity_merchandisingproduct_active">Active</message>
+	<message id="entity_merchandisingproduct_active_help">
+		Only active products are available to managers.
+	</message>
+
+</messages>

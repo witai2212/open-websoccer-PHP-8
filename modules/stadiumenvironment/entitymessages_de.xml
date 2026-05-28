@@ -21,10 +21,12 @@
 	<message id="entity_stadiumbuilding_effect_youthscouting_help">Stärkebonus bei gefundenen Jugendspielern.</message>
 	<message id="entity_stadiumbuilding_effect_tickets">Auswirkung: Zuschauer</message>
 	<message id="entity_stadiumbuilding_effect_tickets_help">Um wieviel Prozentpunkte mehr Tickets verkauft werden bei Heimspielen. Bonus verfällt wenn ohne Gebäudebonus gar keine Tickets verkauft würden.</message>
-	<message id="entity_stadiumbuilding_effect_fanpopularity">Auswirkung: Fanbeliebtheit (einmalig)</message>
-	<message id="entity_stadiumbuilding_effect_fanpopularity_help">Um wieviel Prozentpunkte die Fanbeliebtheit des Benutzers einmalig geändert wird. <strong>Achtung:</strong> Die Auswirkung wird sofort bei Bauerteilung gutgeschrieben. Die Bauzeit wird hier nicht berücksichtigt.</message>
+	<message id="entity_stadiumbuilding_effect_fanpopularity">Auswirkung: Fanbeliebtheit (nach Bauabschluss)</message>
+	<message id="entity_stadiumbuilding_effect_fanpopularity_help">Um wieviel Prozentpunkte die Fanbeliebtheit des Benutzers einmalig geändert wird. Die Auswirkung wird erst nach Abschluss der Bauzeit gutgeschrieben.</message>
     <message id="entity_stadiumbuilding_effect_injury">Auswirkung: Verletzungen</message>
     <message id="entity_stadiumbuilding_effect_injury_help">Um wieviele Spiele die Verletzung von Spielern nach jedem Spiel zusätzlich zur normalen Genesung reduziert werden soll. Beispiel: Wert 1 halbiert die Genesungszeit.</message>
     <message id="entity_stadiumbuilding_effect_income">Einnahmen/Kosten pro Heimspiel</message>
     <message id="entity_stadiumbuilding_effect_income_help">Betrag wird bei jedem Heimspiel dem Verein gutgeschrieben (falls Betrag positiv) bzw. abgebucht (falls Betrag negativ).</message>
+    <message id="entity_stadiumbuilding_effect_merchandising">Auswirkung: Merchandising</message>
+    <message id="entity_stadiumbuilding_effect_merchandising_help">Prozentualer Bonus auf die Merchandising-Nachfrage bei Heimspielen.</message>
 </messages>

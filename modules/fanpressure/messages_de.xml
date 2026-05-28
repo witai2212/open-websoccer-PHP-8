@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="fanpressure_navlabel">Fanstimmung und Medien</message>
+    <message id="fanpressure_title">Fanstimmung und Medien</message>
+    <message id="fanpressure_intro">Hier siehst du, wie Fans und Medien aktuell auf deine Arbeit reagieren. Die Werte beeinflussen Zuschauer, fanbasierte Sponsoren und indirekt die Zufriedenheit des Vorstands.</message>
+
+    <message id="fanpressure_fan_mood">Fanstimmung</message>
+    <message id="fanpressure_media_pressure">Mediendruck</message>
+    <message id="fanpressure_board_satisfaction">Vorstandszufriedenheit</message>
+    <message id="fanpressure_attendance_effect">Zuschauerwirkung</message>
+    <message id="fanpressure_sponsor_effect">Fan-Sponsor-Wirkung</message>
+    <message id="fanpressure_recent_development">Letzte Entwicklung</message>
+    <message id="fanpressure_no_log">Noch keine Stimmungsereignisse vorhanden.</message>
+    <message id="fanpressure_value_good">positiv</message>
+    <message id="fanpressure_value_neutral">neutral</message>
+    <message id="fanpressure_value_bad">kritisch</message>
+    <message id="fanpressure_points">Punkte</message>
+    <message id="fanpressure_change">Änderung</message>
+    <message id="fanpressure_date">Datum</message>
+    <message id="fanpressure_reason">Grund</message>
+    <message id="fanpressure_old_new">Alt / Neu</message>
+    <message id="fanpressure_media_old_new">Mediendruck alt / neu</message>
+    <message id="fanpressure_match_link">Zum Spiel</message>
+    <message id="fanpressure_low_hint">Die Stimmung ist angespannt. Hohe Ticketpreise, Niederlagen und Verkäufe wichtiger Spieler können den Druck weiter erhöhen.</message>
+    <message id="fanpressure_high_hint">Die Fans stehen hinter dem Verein. Das kann Zuschauerzahlen und fanbasierte Sponsorboni verbessern.</message>
+    <message id="fanpressure_neutral_hint">Die Lage ist ruhig. Ergebnisse, Transfers und Ticketpreise können die Stimmung schnell verändern.</message>
+
+    <message id="fanpressure_reason_match_win">Sieg</message>
+    <message id="fanpressure_reason_match_draw">Unentschieden</message>
+    <message id="fanpressure_reason_match_loss">Niederlage</message>
+    <message id="fanpressure_reason_big_win">Deutlicher Sieg</message>
+    <message id="fanpressure_reason_big_loss">Deutliche Niederlage</message>
+    <message id="fanpressure_reason_derby_win">Derbysieg</message>
+    <message id="fanpressure_reason_derby_draw">Derby-Unentschieden</message>
+    <message id="fanpressure_reason_derby_loss">Derbyniederlage</message>
+    <message id="fanpressure_reason_youth_used">Junge Spieler eingesetzt</message>
+    <message id="fanpressure_reason_ticket_prices_high">Hohe Eintrittspreise</message>
+    <message id="fanpressure_reason_ticket_prices_low">Fanfreundliche Eintrittspreise</message>
+    <message id="fanpressure_reason_transfer_signing">Neuzugang</message>
+    <message id="fanpressure_reason_transfer_sale">Spielerverkauf</message>
+    <message id="fanpressure_reason_mission_completed">Vorstandsziel erreicht</message>
+    <message id="fanpressure_reason_mission_failed">Vorstandsziel verfehlt</message>
+    <message id="fanpressure_reason_board_mood_bonus">Sehr gute Fanlage</message>
+    <message id="fanpressure_reason_board_mood_penalty">Kritische Fanlage</message>
+
+    <message id="fanpressure_notification_big_change">Die Fanstimmung hat sich deutlich verändert: {reason} ({change} Punkte, aktuell {mood}%).</message>
+    <message id="fanpressure_news_low_title">Fan-Krise bei {team}</message>
+    <message id="fanpressure_news_low_message">Bei {team} ist die Stimmung unter den Fans kritisch. Der aktuelle Stimmungswert liegt nur noch bei {mood} Prozent.</message>
+    <message id="fanpressure_news_high_title">Euphorie bei {team}</message>
+    <message id="fanpressure_news_high_message">Die Fans von {team} sind begeistert. Der aktuelle Stimmungswert liegt bei starken {mood} Prozent.</message>
+</messages>

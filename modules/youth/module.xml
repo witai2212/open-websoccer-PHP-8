@@ -3,36 +3,98 @@
 <module version="1.0.0">
     
 	<settings>
+		<!-- General youth module -->
 		<setting id="youth_enabled" category="youth" type="boolean" default="1" />
 		<setting id="youth_scouting_enabled" category="youth" type="boolean" default="1" />
 		<setting id="youth_matchrequests_enabled" category="youth" type="boolean" default="1" />
-		<setting id="youth_min_age_professional" category="youth" type="number" default="16" />
+	
+		<!-- Youth players may only be promoted from age 18 -->
+		<setting id="youth_min_age_professional" category="youth" type="number" default="18" />
+	
 		<setting id="youth_salary_per_strength" category="youth" type="number" default="50" />
-		
+	
+		<!-- Youth scouting -->
 		<setting id="youth_scouting_break_hours" category="youth" type="number" default="24" />
 		<setting id="youth_scouting_success_probability" category="youth" type="number" default="75" />
 		<setting id="youth_scouting_min_strength" category="youth" type="number" default="5" />
 		<setting id="youth_scouting_max_strength" category="youth" type="number" default="70" />
 		<setting id="youth_scouting_standard_deviation" category="youth" type="number" default="5" />
 		<setting id="youth_scouting_min_age" category="youth" type="number" default="14" />
-		
+	
+		<!-- Move youth player to professional team -->
 		<setting id="youth_professionalmove_matches" category="youth" type="number" default="30" />
 		<setting id="youth_professionalmove_technique" category="youth" type="number" default="50" />
 		<setting id="youth_professionalmove_stamina" category="youth" type="number" default="60" />
 		<setting id="youth_professionalmove_freshness" category="youth" type="number" default="100" />
 		<setting id="youth_professionalmove_satisfaction" category="youth" type="number" default="100" />
-		
+	
+		<!-- Youth match requests -->
 		<setting id="youth_matchrequest_max_open_requests" category="youth" type="number" default="2" />
 		<setting id="youth_matchrequest_max_futuredays" category="youth" type="number" default="14" />
 		<setting id="youth_matchrequest_allowedtimes" category="youth" type="tags" default="14:00,15:00" />
 		<setting id="youth_matchrequest_accept_hours_in_advance" category="youth" type="number" default="2" />
-		
+	
+		<!-- Youth matches -->
 		<setting id="youth_match_maxperday" category="youth" type="number" default="1" />
-		
+	
+		<!-- Youth strength changes after matches -->
 		<setting id="youth_strengthchange_verygood" category="youth" type="number" default="2" />
 		<setting id="youth_strengthchange_good" category="youth" type="number" default="1" />
 		<setting id="youth_strengthchange_bad" category="youth" type="number" default="-1" />
 		<setting id="youth_strengthchange_verybad" category="youth" type="number" default="-2" />
+	
+	
+		<!-- Computer youth teams -->
+		<setting id="computer_youth_enabled" category="youth" type="boolean" default="1" />
+	
+		<!-- Computer youth squad sizes -->
+		<setting id="computer_youth_min_players" category="youth" type="number" default="16" />
+		<setting id="computer_youth_target_players" category="youth" type="number" default="20" />
+		<setting id="computer_youth_max_players" category="youth" type="number" default="25" />
+	
+		<!-- Random youth player generation for computer teams -->
+		<setting id="computer_youth_generation_min_age" category="youth" type="number" default="14" />
+		<setting id="computer_youth_generation_max_age" category="youth" type="number" default="17" />
+		<setting id="computer_youth_generation_min_strength" category="youth" type="number" default="5" />
+		<setting id="computer_youth_generation_max_strength" category="youth" type="number" default="65" />
+	
+		<!-- Computer promotion to professional team -->
+		<setting id="computer_youth_promote_enabled" category="youth" type="boolean" default="1" />
+		<setting id="computer_youth_promotion_min_strength" category="youth" type="number" default="45" />
+	
+		<!-- Computer youth selling and buying -->
+		<setting id="computer_youth_sell_enabled" category="youth" type="boolean" default="1" />
+		<setting id="computer_youth_buy_enabled" category="youth" type="boolean" default="1" />
+		<setting id="computer_youth_min_budget_after_buy" category="youth" type="number" default="1000000" />
+		<setting id="computer_youth_max_buy_fee" category="youth" type="number" default="5000000" />
+		<setting id="computer_youth_max_buys_per_run" category="youth" type="number" default="10" />
+		<setting id="computer_youth_max_buys_per_club" category="youth" type="number" default="2" />
+	
+		<!-- 120 means: computer may pay max. 120% of calculated fair youth player value -->
+		<setting id="computer_youth_max_price_factor" category="youth" type="number" default="120" />
+	
+		<!-- Computer youth friendly matches -->
+		<setting id="computer_youth_matches_enabled" category="youth" type="boolean" default="1" />
+	
+		<!-- Computer clubs accept manager-created requests first -->
+		<setting id="computer_youth_accept_manager_requests" category="youth" type="boolean" default="1" />
+	
+		<!-- Computer clubs accept computer-created requests only after managers had a chance -->
+		<setting id="computer_youth_accept_computer_requests" category="youth" type="boolean" default="1" />
+		<setting id="computer_youth_max_computer_request_acceptances_per_run" category="youth" type="number" default="10" />
+		<setting id="computer_youth_accept_computer_requests_min_age_hours" category="youth" type="number" default="12" />
+		<setting id="computer_youth_max_request_acceptances_per_club_per_run" category="youth" type="number" default="2" />
+	
+		<!-- Computer-created open youth match requests -->
+		<setting id="computer_youth_max_open_requests_total" category="youth" type="number" default="20" />
+		<setting id="computer_youth_max_open_requests_per_club" category="youth" type="number" default="1" />
+		<setting id="computer_youth_max_new_requests_per_run" category="youth" type="number" default="5" />
+	
+		<!-- Direct computer-vs-computer youth matches, lowest priority -->
+		<setting id="computer_youth_direct_matches_enabled" category="youth" type="boolean" default="1" />
+		<setting id="computer_youth_max_direct_matches_per_run" category="youth" type="number" default="2" />
+		<setting id="computer_youth_max_future_direct_matches_total" category="youth" type="number" default="50" />
+		<setting id="computer_youth_max_future_direct_matches_per_club" category="youth" type="number" default="3" />
 	</settings>
 	
     <admin>

@@ -2,21 +2,54 @@
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_randomevent">Random Events</message>
-	<message id="entity_randomevent_message">Message</message>
-	<message id="entity_randomevent_message_help">Can also be a Messages Key. Message can contain "{playername}" for player related events.</message>
-	<message id="entity_randomevent_effect">Effect</message>
-	<message id="entity_randomevent_effect_money_amount">Effect: Money</message>
-	<message id="entity_randomevent_effect_money_amount_help">Positive or negative amount which will be credited or debited to/from the team account.</message>
-	<message id="entity_randomevent_effect_blocked_matches">Effect: Number of suspended matches</message>
-	<message id="entity_randomevent_effect_skillchange">Effect: Skill change</message>
-	<message id="entity_randomevent_effect_skillchange_help">Positive or negative effect on the appropriate player attribute.</message>
-	<message id="entity_randomevent_weight">Weight</message>
-	<message id="entity_randomevent_weight_help">Influences probability. 1 means standard probability; 5 means that probability of occuring is five times higher. 0 disables the event.</message>
+    <message id="entity_randomevent_message">Message</message>
+    <message id="entity_randomevent_message_help">Can also be a Messages Key. Message can contain "{playername}" for player related events.</message>
+    <message id="entity_randomevent_effect">Effect</message>
+    <message id="entity_randomevent_effect_money_amount">Effect: Money</message>
+    <message id="entity_randomevent_effect_money_amount_help">Positive or negative amount which will be credited or debited to/from the team account.</message>
+    <message id="entity_randomevent_effect_blocked_matches">Effect: Number of suspended matches</message>
+    <message id="entity_randomevent_effect_skillchange">Effect: Skill change</message>
+    <message id="entity_randomevent_effect_skillchange_help">Positive or negative effect on the appropriate player attribute.</message>
+    <message id="entity_randomevent_weight">Weight</message>
+    <message id="entity_randomevent_weight_help">Influences probability. 1 means standard probability; 5 means probability is five times higher. 0 disables the event.</message>
 
-	<message id="option_money">Team budget will be changed</message>
-	<message id="option_player_injured">A random player will get injured</message>
-	<message id="option_player_blocked">A random player will get blocked</message>
-	<message id="option_player_happiness">A random player's happiness will be changed</message>
-	<message id="option_player_fitness">A random player's fitness will be changed</message>
-	<message id="option_player_stamina">A random player's stamina will be changed</message>
+    <message id="entity_randomeventchain">Event Chains</message>
+    <message id="entity_randomeventchain_event_key">Key</message>
+    <message id="entity_randomeventchain_title">Title</message>
+    <message id="entity_randomeventchain_message">Message</message>
+    <message id="entity_randomeventchain_event_type">Event type</message>
+    <message id="entity_randomeventchain_weight">Weight</message>
+    <message id="entity_randomeventchain_active">Active</message>
+
+    <message id="entity_randomeventchainchoice">Event Chain Choices</message>
+    <message id="entity_randomeventchainchoice_chain_id">Event chain</message>
+    <message id="entity_randomeventchainchoice_choice_key">Key</message>
+    <message id="entity_randomeventchainchoice_label">Label</message>
+    <message id="entity_randomeventchainchoice_description">Description</message>
+    <message id="entity_randomeventchainchoice_effect_money_amount">Money effect</message>
+    <message id="entity_randomeventchainchoice_effect_player_happiness">Player happiness</message>
+    <message id="entity_randomeventchainchoice_effect_player_fitness">Player freshness</message>
+    <message id="entity_randomeventchainchoice_effect_player_stamina">Player stamina</message>
+    <message id="entity_randomeventchainchoice_effect_blocked_matches">Suspended matches</message>
+    <message id="entity_randomeventchainchoice_effect_injured_matches">Injured matches</message>
+    <message id="entity_randomeventchainchoice_effect_board_satisfaction">Board satisfaction</message>
+    <message id="entity_randomeventchainchoice_effect_fanpopularity">Fan popularity</message>
+    <message id="entity_randomeventchainchoice_effect_stadium_attendance">Attendance effect %</message>
+    <message id="entity_randomeventchainchoice_set_player_transfermarket">Put player on transfer market</message>
+    <message id="entity_randomeventchainchoice_create_youthplayer">Create youth player</message>
+    <message id="entity_randomeventchainchoice_keep_open">Keep open</message>
+    <message id="entity_randomeventchainchoice_is_default">Default on expiry</message>
+    <message id="entity_randomeventchainchoice_sort_order">Sort order</message>
+
+    <message id="option_money">Team account is changed</message>
+    <message id="option_player_injured">A player is injured</message>
+    <message id="option_player_blocked">A player is suspended</message>
+    <message id="option_player_happiness">A player's happiness is changed</message>
+    <message id="option_player_fitness">A player's freshness is changed</message>
+    <message id="option_player_stamina">A player's stamina is changed</message>
+
+    <message id="option_player_unhappy">Unhappy player</message>
+    <message id="option_sponsor_scandal">Sponsor scandal</message>
+    <message id="option_youth_discovered">Youth player discovered</message>
+    <message id="option_stadium_damage">Stadium damage</message>
 </messages>

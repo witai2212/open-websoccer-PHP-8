@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="wiki_navlabel">Wiki</message>
+    <message id="wiki_title">CM23 Wiki</message>
+</messages>

@@ -10,12 +10,35 @@
 {% block page_content %}
 
 {{ profile.infofield(i18n.getMessage("entity_trainingcamp_name"), camp.name) }}
+{{ profile.infofield(i18n.getMessage("entity_trainingcamp_camp_type"), i18n.getMessage("trainingcamp_type_" ~ camp.camp_type)) }}
 {{ profile.infofield(i18n.getMessage("entity_trainingcamp_preis_spieler_tag"), camp.costs|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+{{ profile.infofield(i18n.getMessage("trainingcamp_players_included"), playerCount) }}
+{{ profile.infofield(i18n.getMessage("trainingcamp_estimated_min_costs"), estimatedTotalCosts|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 {{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_staerke"), camp.effect_strength) }}
 {{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_technik"), camp.effect_strength_technique) }}
 {{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_kondition"), camp.effect_strength_stamina) }}
 {{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_frische"), camp.effect_strength_freshness) }}
 {{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_zufriedenheit"), camp.effect_strength_satisfaction) }}
+{{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_team_chemistry"), camp.effect_team_chemistry) }}
+{{ profile.infofield(i18n.getMessage("entity_trainingcamp_injury_risk"), camp.injury_risk ~ "%") }}
+
+{% if camp.special_effects|length > 0 %}
+	<h4>{{ i18n.getMessage("trainingcamp_special_effects") }}</h4>
+	<table class="table table-condensed table-striped">
+		<tbody>
+		{% for effect in camp.special_effects %}
+			<tr>
+				<th>{{ i18n.getMessage(effect.label_key) }}</th>
+				<td>{{ effect.signed }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endif %}
+
+<div class="alert alert-info">
+	<i class="icon-info-sign"></i> {{ i18n.getMessage("trainingcamp_all_players_note") }}
+</div>
 
 <form class="form-horizontal" method="post">
 	<fieldset>

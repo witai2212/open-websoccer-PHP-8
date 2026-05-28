@@ -21,19 +21,23 @@
 ******************************************************/
 
 /**
- * Process open transfers.
- * 
+ * Correct player values and update calculated strength/market value.
+ *
+ * This job keeps the legacy safety correction (w_staerke must not exceed
+ * w_staerke_max) but uses the current incremental player value service for
+ * calculated strength and market value updates.
+ *
  * @author Ingo Hofmann
  */
 class CorrectPlayerValuesJob extends AbstractJob {
-	
-	/**
-	 * @see AbstractJob::execute()
-	 */
-	function execute() {
-	    PlayersDataService::playerStrengthCorrection($this->_websoccer, $this->_db);
-	    PlayersDataService::updateMarketValue($this->_websoccer, $this->_db);
-	}
+
+    /**
+     * @see AbstractJob::execute()
+     */
+    function execute() {
+        PlayersDataService::playerStrengthCorrection($this->_websoccer, $this->_db);
+        PlayersStrengthDataService::updateAllPlayersMarketAndStrength($this->_websoccer, $this->_db);
+    }
 }
 
 ?>

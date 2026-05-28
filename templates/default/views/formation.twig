@@ -120,13 +120,42 @@
 
 
 {% block form_footer %}
+{% if tactical_style.enabled is defined and tactical_style.enabled and tactical_style.human_team %}
+<h4>{{ i18n.getMessage("formation_tacticalstyle_title") }}</h4>
+
+<div class="form-horizontal" style="margin-top: 10px">
+	<div class="control-group">
+		<label class="control-label" for="tacticalstyle">{{ i18n.getMessage("formation_tacticalstyle_select") }}</label>
+		<div class="controls">
+			<select name="tacticalstyle" id="tacticalstyle" class="span4">
+				{% for style in tactical_style.styles %}
+					<option value="{{ style.key }}"{% if style.selected %} selected{% endif %}>{{ style.label }} ({{ style.fit }}%)</option>
+				{% endfor %}
+			</select>
+			<span class="help-block">
+				<span class="label {{ tactical_style.current.fit_class }}">{{ i18n.getMessage("formation_tacticalstyle_fit") }}: {{ tactical_style.current.fit }}%</span>
+				{{ i18n.getMessage(tactical_style.current.hint_key) }}
+			</span>
+			<p class="help-block">{{ tactical_style.current.description }}</p>
+			<p class="help-block">{{ i18n.getMessage("formation_tacticalstyle_effect_help") }}</p>
+		</div>
+	</div>
+</div>
+{% endif %}
+
 <h4>{{ i18n.getMessage("formation_freekickplayer") }}</h4>
 
-<select name="freekickplayer" id="freekickplayer" class="span4" data-preselect="{{ formation.freekickplayer }}">
-	<option value=""></option>
-</select>
+	<select name="freekickplayer" id="freekickplayer" class="span4" data-preselect="{{ formation.freekickplayer }}">
+		<option value=""></option>
+	</select>
 
-<h4>{{ i18n.getMessage("formation_offensive_title") }}</h4>
+	<h4>{{ i18n.getMessage("formation_cornerplayer") }}</h4>
+
+	<select name="cornerplayer" id="cornerplayer" class="span4" data-preselect="{{ formation.cornerplayer }}">
+		<option value=""></option>
+	</select>
+
+	<h4>{{ i18n.getMessage("formation_offensive_title") }}</h4>
 
 {{ formelements.slider("offensive", formation.offensive) }}
 

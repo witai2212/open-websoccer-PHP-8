@@ -8,312 +8,202 @@
   as published by the Free Software Foundation, either version 3 of
   the License, or any later version.
 
-  OpenWebSoccer-Sim is distributed in the hope that it will be
-  useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public 
-  License along with OpenWebSoccer-Sim.  
-  If not, see <http://www.gnu.org/licenses/>.
-
 ******************************************************/
 $(function() {
-	
+
 	var stadiumGraph = {
 		CONFIG: {
-			GRAND_WIDTH: 380,
-			GRAND_HEIGHT: 90,
-			SIDE_WIDTH: 110,
-			SIDE_HEIGHT: 300,
-			VIP_HEIGHT: 40,
-			MAX_SIZE_STYLE: "#F5F5F5",
-			LABEL_BACKGROUND: "red",
-			FONT_COLOR: "white",
-			IMG_SEAT: "img/seat.png",
-			IMG_VIP: "img/seat_vip.png",
-			IMG_STANDING: "img/standing.png"
+			BACKGROUND: '#f7f7f7',
+			BOWL_MAX: '#e5e5e5',
+			SEATS: '#4f8db3',
+			STANDING: '#6db36d',
+			VIP: '#c99832',
+			PITCH: '#72a66a',
+			PITCH_LINE: 'rgba(255,255,255,0.75)',
+			TEXT: '#333333',
+			TEXT_MUTED: '#777777',
+			LABEL_BG: 'rgba(255,255,255,0.88)',
+			MAX_SIDE_DEPTH: 85,
+			MAX_GRAND_DEPTH: 78,
+			MAX_VIP_HEIGHT: 28
 		},
-		
-		stadiumCanvas: null,
-		
-		canvasContext: null,
-		
-		/**
-		 * draws the whole stadium
-		 */
-		drawStadium: function(elementId) {
-			this.stadiumCanvas = document.getElementById(elementId);
-			this.canvasContext = this.stadiumCanvas.getContext("2d");
-			this.canvasContext.font = "normal 12px Arial";
-			
-			this.canvasContext.fillStyle = this.CONFIG.MAX_SIZE_STYLE;
-			
-			// show maximum size
-			this._drawGrandTop(100);
-			this._drawGrandBottom(100);
-			this._drawSideLeft(100);
-			this._drawSideRight(100);
-			
-			var graphInstance = this;
-			var ratioGrand = $(this.stadiumCanvas).data("ratiogrand");
-			var ratioSide = $(this.stadiumCanvas).data("ratioside");
-			
-			// show actual size
-			var imageObj = new Image();
-			imageObj.onload = function() {
-				var pattern = graphInstance.canvasContext.createPattern(
-						imageObj, "repeat");
-				graphInstance.canvasContext.fillStyle = pattern;
-				
-				graphInstance._drawGrandTop(ratioGrand);
-				graphInstance._drawGrandBottom(ratioGrand, true);
-				
-				graphInstance._drawSideRight(ratioSide, true);
-				
-				graphInstance._drawSideLeft(ratioSide, true);
-				
-				// show VIP
-				var ratioVip = $(graphInstance.stadiumCanvas).data("ratiovip");
-				graphInstance._drawVip(ratioVip);
-			};
-			imageObj.src = this.CONFIG.IMG_SEAT;
-			
-		},
-	
-		_drawGrandTop: function(perCent) {
-			var targetY = this.CONFIG.GRAND_HEIGHT - perCent / 100 * this.CONFIG.GRAND_HEIGHT;
-			
-			this.canvasContext.fillRect(this.CONFIG.SIDE_WIDTH, targetY, this.CONFIG.GRAND_WIDTH, this.CONFIG.GRAND_HEIGHT - targetY);
-		},
-		
-		_drawGrandBottom: function(perCent, drawStanding) {
-			var targetY = this.CONFIG.GRAND_HEIGHT - perCent / 100 * this.CONFIG.GRAND_HEIGHT;
-			
-			var startX = this.CONFIG.SIDE_WIDTH;
-			var startY = this.stadiumCanvas.height - this.CONFIG.GRAND_HEIGHT;
-			
-			this.canvasContext.fillRect(startX, 
-					startY, 
-					this.CONFIG.GRAND_WIDTH, this.CONFIG.GRAND_HEIGHT - targetY);
-			
-			// draw standings
-			if (drawStanding) {
-				var graphInstance = this;
-				var imageObj = new Image();
-				imageObj.onload = function() {
-					var pattern = graphInstance.canvasContext.createPattern(
-							imageObj, "repeat");
-					graphInstance.canvasContext.fillStyle = pattern;
-					
-					var standingWidth = $(graphInstance.stadiumCanvas).data("standingratiogrand") / 100 * graphInstance.CONFIG.GRAND_WIDTH;
-					startX = startX + graphInstance.CONFIG.GRAND_WIDTH / 2 - standingWidth / 2;
-					graphInstance.canvasContext.fillRect(startX, 
-							startY, 
-							standingWidth, graphInstance.CONFIG.GRAND_HEIGHT - targetY);
-					
-					graphInstance._drawGrandLabel();
-					
-				};
-				imageObj.src = this.CONFIG.IMG_STANDING;
-			}
-			
-		},
-		
-		_drawVip: function(perCent) {
-			this.canvasContext.fillStyle = this.CONFIG.ACTUAL_SIZE_VIP_STYLE;
-			
-			var maxWidth = 0.9 * this.CONFIG.GRAND_WIDTH;
-			var actualWidth = maxWidth * perCent / 100;
-			var startX = this.CONFIG.SIDE_WIDTH + this.CONFIG.GRAND_WIDTH / 2 - actualWidth / 2;
-			var startY = this.CONFIG.GRAND_HEIGHT - this.CONFIG.VIP_HEIGHT;
-			
-			var graphInstance = this;
-			var imageObj = new Image();
-			imageObj.onload = function() {
-				var pattern = graphInstance.canvasContext.createPattern(
-						imageObj, "repeat");
-				graphInstance.canvasContext.fillStyle = pattern;
-				graphInstance.canvasContext.fillRect(startX, startY, actualWidth, graphInstance.CONFIG.VIP_HEIGHT);
-				
-				graphInstance._drawVipLabel();
-			};
-			imageObj.src = this.CONFIG.IMG_VIP;
-			
-		},
-		
-		_drawSideLeft: function(perCent, drawStanding) {
-			
-			this.canvasContext.beginPath();
-			
-			// left top
-			var targetY = this.CONFIG.SIDE_WIDTH - perCent / 100 * this.CONFIG.SIDE_WIDTH;
-			this.canvasContext.moveTo(this.CONFIG.SIDE_WIDTH, targetY);
-			
-			var targetX = this.CONFIG.SIDE_WIDTH - perCent / 100 * this.CONFIG.SIDE_WIDTH;
-			this.canvasContext.quadraticCurveTo(targetX + 10, targetY, targetX, this.CONFIG.GRAND_HEIGHT);
-			
-			// go down
-			this.canvasContext.lineTo(targetX, this.stadiumCanvas.height - this.CONFIG.GRAND_HEIGHT);
-			
-			// left bottom
-			this.canvasContext.quadraticCurveTo(targetX + 10, this.stadiumCanvas.height - targetY, this.CONFIG.SIDE_WIDTH, this.stadiumCanvas.height - targetY);
-			
-			//draw
-			this.canvasContext.closePath();
-			this.canvasContext.lineWidth = 1;
-			this.canvasContext.fill();
-			
-			// draw standings
-			if (drawStanding) {
-				var graphInstance = this;
-				var imageObj = new Image();
-				imageObj.onload = function() {
-					var pattern = graphInstance.canvasContext.createPattern(
-							imageObj, "repeat");
-					graphInstance.canvasContext.fillStyle = pattern;
-					
-					var standingWidth = graphInstance.CONFIG.SIDE_WIDTH - targetX;
-					var standingHeight = $(graphInstance.stadiumCanvas).data("standingratioside") / 100 * (graphInstance.stadiumCanvas.height - graphInstance.CONFIG.GRAND_HEIGHT - targetY);
-					var startY = graphInstance.stadiumCanvas.height / 2 - standingHeight / 2;
-						
-					graphInstance.canvasContext.fillRect(targetX, 
-							startY, 
-							standingWidth, standingHeight);
-					
-					graphInstance._drawSideLabel();
-					
-				};
-				imageObj.src = this.CONFIG.IMG_STANDING;
-			}
-		},
-		
-		_drawSideRight: function(perCent, drawStanding) {
-			
-			this.canvasContext.beginPath();
-			
-			// right top
-			var targetY = this.CONFIG.SIDE_WIDTH - perCent / 100 * this.CONFIG.SIDE_WIDTH;
-			this.canvasContext.moveTo(this.CONFIG.SIDE_WIDTH + this.CONFIG.GRAND_WIDTH, targetY);
-			
-			var targetX = this.CONFIG.SIDE_WIDTH - perCent / 100 * this.CONFIG.SIDE_WIDTH;
-			this.canvasContext.quadraticCurveTo(this.stadiumCanvas.width - targetX - 10, targetX, this.stadiumCanvas.width - targetX, this.CONFIG.GRAND_HEIGHT);
-			
-			// go down
-			this.canvasContext.lineTo(this.stadiumCanvas.width - targetX, this.stadiumCanvas.height - this.CONFIG.GRAND_HEIGHT);
-			
-			// left bottom
-			this.canvasContext.quadraticCurveTo(this.stadiumCanvas.width - targetX - 10, this.stadiumCanvas.height - targetY, this.CONFIG.SIDE_WIDTH + this.CONFIG.GRAND_WIDTH, this.stadiumCanvas.height - targetY);
-			
-			//draw
-			this.canvasContext.closePath();
-			this.canvasContext.lineWidth = 1;
-			this.canvasContext.fill();
-			
-			// draw standings
-			if (drawStanding) {
-				var graphInstance = this;
-				var imageObj = new Image();
-				imageObj.onload = function() {
-					var pattern = graphInstance.canvasContext.createPattern(
-							imageObj, "repeat");
-					graphInstance.canvasContext.fillStyle = pattern;
-					
-					var standingWidth = graphInstance.CONFIG.SIDE_WIDTH - targetX;
-					var standingHeight = $(graphInstance.stadiumCanvas).data("standingratioside") / 100 * (graphInstance.stadiumCanvas.height - graphInstance.CONFIG.GRAND_HEIGHT - targetY);
-					var startY = graphInstance.stadiumCanvas.height / 2 - standingHeight / 2;
-					var startX = graphInstance.CONFIG.SIDE_WIDTH + 	graphInstance.CONFIG.GRAND_WIDTH;
-					
-					graphInstance.canvasContext.fillRect(startX, 
-							startY, 
-							standingWidth, standingHeight);
-					
-				};
-				imageObj.src = this.CONFIG.IMG_STANDING;
-			}
-		},
-		
-		_drawGrandLabel: function() {
-			var label = $(this.stadiumCanvas).data("labelgrand");
-			var textSize = this.canvasContext.measureText(label);
-			
-			// box
-			this.canvasContext.globalAlpha = 0.8;
-			this.canvasContext.fillStyle = this.CONFIG.LABEL_BACKGROUND;
-			this.canvasContext.fillRect(this.CONFIG.SIDE_WIDTH + 5, 
-					this.stadiumCanvas.height - this.CONFIG.GRAND_HEIGHT, textSize.width + 10, 20);
-			this.canvasContext.globalAlpha = 1;
-			
-			// text
-			this.canvasContext.fillStyle = this.CONFIG.FONT_COLOR;
-			this.canvasContext.fillText(label, this.CONFIG.SIDE_WIDTH + 10, 
-					this.stadiumCanvas.height - this.CONFIG.GRAND_HEIGHT + 15);
-			
-		},
-		
-		_drawSideLabel: function() {
-			var label = $(this.stadiumCanvas).data("labelside");
-			
-			// box
-			this.canvasContext.globalAlpha = 0.8;
-			this.canvasContext.fillStyle = this.CONFIG.LABEL_BACKGROUND;
-			this.canvasContext.fillRect(5, 
-					this.stadiumCanvas.height / 2 - 15, this.CONFIG.SIDE_WIDTH, 40);
-			this.canvasContext.globalAlpha = 1;
-			
-			// text
-			this.canvasContext.fillStyle = this.CONFIG.FONT_COLOR;
-			this._wrapText(this.canvasContext, label, 10, this.stadiumCanvas.height / 2, this.CONFIG.SIDE_WIDTH, 20);
-		},
-		
-		_drawVipLabel: function() {
-			var label = $(this.stadiumCanvas).data("labelvip");
-			var textSize = this.canvasContext.measureText(label);
-			
-			var startX = this.CONFIG.SIDE_WIDTH + this.CONFIG.GRAND_WIDTH / 2 - textSize.width / 2;
-			
-			// box
-			this.canvasContext.globalAlpha = 0.8;
-			this.canvasContext.fillStyle = this.CONFIG.LABEL_BACKGROUND;
-			this.canvasContext.fillRect(startX, 
-					this.CONFIG.GRAND_HEIGHT - 30, textSize.width + 10, 20);
-			this.canvasContext.globalAlpha = 1;
-			
-			// text
-			this.canvasContext.fillStyle = this.CONFIG.FONT_COLOR;
-			this.canvasContext.fillText(label, startX + 5, 
-					this.CONFIG.GRAND_HEIGHT - 15);
-			
-		},
-		
-		_wrapText: function(context, text, x, y, maxWidth, lineHeight) {
-	        var words = text.split(' ');
-	        var line = '';
 
-	        for(var n = 0; n < words.length; n++) {
-	          var testLine = line + words[n] + ' ';
-	          var metrics = context.measureText(testLine);
-	          var testWidth = metrics.width;
-	          if(testWidth > maxWidth) {
-	            context.fillText(line, x, y);
-	            line = words[n] + ' ';
-	            y += lineHeight;
-	          } else {
-	            line = testLine;
-	          }
-	        }
-	        context.fillText(line, x, y);
-	      }
-			
+		canvas: null,
+		ctx: null,
+
+		drawStadium: function(elementId) {
+			this.canvas = document.getElementById(elementId);
+			if (!this.canvas || !this.canvas.getContext) {
+				return;
+			}
+
+			this.ctx = this.canvas.getContext('2d');
+			this._clear();
+			this._drawBackground();
+			this._drawMaximumBowl();
+			this._drawActualBowl();
+			this._drawPitch();
+			this._drawLabels();
+		},
+
+		_clear: function() {
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		},
+
+		_drawBackground: function() {
+			var ctx = this.ctx;
+			ctx.fillStyle = this.CONFIG.BACKGROUND;
+			ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		},
+
+		_drawMaximumBowl: function() {
+			this._drawBowlParts(100, 100, 100, this.CONFIG.BOWL_MAX, this.CONFIG.BOWL_MAX, this.CONFIG.BOWL_MAX, false);
+		},
+
+		_drawActualBowl: function() {
+			var ratioSide = this._boundedNumber($(this.canvas).data('ratioside'));
+			var ratioGrand = this._boundedNumber($(this.canvas).data('ratiogrand'));
+			var ratioVip = this._boundedNumber($(this.canvas).data('ratiovip'));
+
+			this._drawBowlParts(ratioSide, ratioGrand, ratioVip, this.CONFIG.SEATS, this.CONFIG.STANDING, this.CONFIG.VIP, true);
+		},
+
+		_drawBowlParts: function(ratioSide, ratioGrand, ratioVip, seatColor, standingColor, vipColor, actual) {
+			var ctx = this.ctx;
+			var width = this.canvas.width;
+			var height = this.canvas.height;
+			var padding = 26;
+			var sideDepth = Math.max(4, this.CONFIG.MAX_SIDE_DEPTH * ratioSide / 100);
+			var grandDepth = Math.max(4, this.CONFIG.MAX_GRAND_DEPTH * ratioGrand / 100);
+			var vipHeight = Math.max(0, this.CONFIG.MAX_VIP_HEIGHT * ratioVip / 100);
+			var xLeft = padding + this.CONFIG.MAX_SIDE_DEPTH - sideDepth;
+			var xRight = width - padding - this.CONFIG.MAX_SIDE_DEPTH;
+			var yTop = padding + this.CONFIG.MAX_GRAND_DEPTH - grandDepth;
+			var yBottom = height - padding - this.CONFIG.MAX_GRAND_DEPTH;
+			var innerLeft = padding + this.CONFIG.MAX_SIDE_DEPTH;
+			var innerRight = width - padding - this.CONFIG.MAX_SIDE_DEPTH;
+			var innerTop = padding + this.CONFIG.MAX_GRAND_DEPTH;
+			var innerBottom = height - padding - this.CONFIG.MAX_GRAND_DEPTH;
+
+			ctx.save();
+			ctx.fillStyle = seatColor;
+
+			this._roundedRect(innerLeft, yTop, innerRight - innerLeft, grandDepth, 14, true, false);
+			this._roundedRect(innerLeft, yBottom, innerRight - innerLeft, grandDepth, 14, true, false);
+			this._roundedRect(xLeft, innerTop, sideDepth, innerBottom - innerTop, 14, true, false);
+			this._roundedRect(xRight, innerTop, sideDepth, innerBottom - innerTop, 14, true, false);
+
+			if (actual) {
+				var standingGrandRatio = this._boundedNumber($(this.canvas).data('standingratiogrand'));
+				var standingSideRatio = this._boundedNumber($(this.canvas).data('standingratioside'));
+				var standingGrandWidth = (innerRight - innerLeft) * standingGrandRatio / 100;
+				var standingSideHeight = (innerBottom - innerTop) * standingSideRatio / 100;
+
+				ctx.fillStyle = standingColor;
+				this._roundedRect(innerLeft + ((innerRight - innerLeft) - standingGrandWidth) / 2, yBottom, standingGrandWidth, grandDepth, 10, true, false);
+				this._roundedRect(xLeft, innerTop + ((innerBottom - innerTop) - standingSideHeight) / 2, sideDepth, standingSideHeight, 10, true, false);
+				this._roundedRect(xRight, innerTop + ((innerBottom - innerTop) - standingSideHeight) / 2, sideDepth, standingSideHeight, 10, true, false);
+
+				if (vipHeight > 1) {
+					ctx.fillStyle = vipColor;
+					this._roundedRect(innerLeft + 54, innerTop - vipHeight - 7, (innerRight - innerLeft) - 108, vipHeight, 10, true, false);
+				}
+			}
+			ctx.restore();
+		},
+
+		_drawPitch: function() {
+			var ctx = this.ctx;
+			var pitch = {
+				x: 190,
+				y: 132,
+				w: this.canvas.width - 380,
+				h: this.canvas.height - 264
+			};
+
+			ctx.save();
+			ctx.fillStyle = this.CONFIG.PITCH;
+			this._roundedRect(pitch.x, pitch.y, pitch.w, pitch.h, 24, true, false);
+			ctx.strokeStyle = this.CONFIG.PITCH_LINE;
+			ctx.lineWidth = 2;
+			this._roundedRect(pitch.x + 12, pitch.y + 12, pitch.w - 24, pitch.h - 24, 12, false, true);
+			ctx.beginPath();
+			ctx.moveTo(pitch.x + pitch.w / 2, pitch.y + 12);
+			ctx.lineTo(pitch.x + pitch.w / 2, pitch.y + pitch.h - 12);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(pitch.x + pitch.w / 2, pitch.y + pitch.h / 2, 32, 0, Math.PI * 2, false);
+			ctx.stroke();
+			ctx.restore();
+		},
+
+		_drawLabels: function() {
+			var sideLabel = $(this.canvas).data('labelside') + ' · ' + $(this.canvas).data('sidecapacity');
+			var grandLabel = $(this.canvas).data('labelgrand') + ' · ' + $(this.canvas).data('grandcapacity');
+			var vipLabel = $(this.canvas).data('labelvip') + ' · ' + $(this.canvas).data('vipcapacity');
+
+			this._drawLabel(grandLabel, this.canvas.width / 2, 64, 'center');
+			this._drawLabel(sideLabel, 105, this.canvas.height / 2, 'center');
+			this._drawLabel(vipLabel, this.canvas.width / 2, 108, 'center');
+		},
+
+		_drawLabel: function(text, x, y, align) {
+			var ctx = this.ctx;
+			ctx.save();
+			ctx.font = 'bold 12px Arial';
+			var metrics = ctx.measureText(text);
+			var boxWidth = metrics.width + 18;
+			var boxHeight = 24;
+			var startX = align == 'center' ? x - boxWidth / 2 : x;
+			var startY = y - boxHeight / 2;
+
+			ctx.fillStyle = this.CONFIG.LABEL_BG;
+			this._roundedRect(startX, startY, boxWidth, boxHeight, 12, true, false);
+			ctx.fillStyle = this.CONFIG.TEXT;
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.fillText(text, x, y + 1);
+			ctx.restore();
+		},
+
+		_roundedRect: function(x, y, width, height, radius, fill, stroke) {
+			var ctx = this.ctx;
+			if (width < 0) {
+				x += width;
+				width = Math.abs(width);
+			}
+			if (height < 0) {
+				y += height;
+				height = Math.abs(height);
+			}
+			radius = Math.min(radius, width / 2, height / 2);
+			ctx.beginPath();
+			ctx.moveTo(x + radius, y);
+			ctx.lineTo(x + width - radius, y);
+			ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+			ctx.lineTo(x + width, y + height - radius);
+			ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+			ctx.lineTo(x + radius, y + height);
+			ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+			ctx.lineTo(x, y + radius);
+			ctx.quadraticCurveTo(x, y, x + radius, y);
+			ctx.closePath();
+			if (fill) {
+				ctx.fill();
+			}
+			if (stroke) {
+				ctx.stroke();
+			}
+		},
+
+		_boundedNumber: function(value) {
+			value = parseFloat(value);
+			if (isNaN(value)) {
+				value = 0;
+			}
+			return Math.max(0, Math.min(100, value));
+		}
 	};
-	
-	stadiumGraph.drawStadium("stadium");	
-	
-	/**
-	 * fix resizing on this page (prevent overlapping of stadium with right boxes)
-	 */
-	$("#contentArea").css("min-width", 670);
-	$(window).resize(function() {
-		$("#contentArea").css("min-width", 670);
-	});
+
+	stadiumGraph.drawStadium('stadium');
 });

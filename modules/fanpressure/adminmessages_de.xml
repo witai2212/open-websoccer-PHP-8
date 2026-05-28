@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_fanpressure_enabled">Fanstimmung &amp; Mediendruck aktivieren</message>
+    <message id="settings_label_fanpressure_attendance_max_effect">Maximale Zuschauerwirkung der Fanstimmung in Prozent</message>
+    <message id="settings_label_fanpressure_sponsor_max_effect">Maximale Wirkung auf fanbasierte Sponsoren in Prozent</message>
+    <message id="settings_label_fanpressure_notification_threshold">Benachrichtigung ab Stimmungsänderung von X Punkten</message>
+    <message id="settings_label_fanpressure_create_extreme_news">News bei extremer Fanstimmung erstellen</message>
+</messages>

@@ -7,12 +7,23 @@
 
 {% block page_content %}
 
-<p style="font-size: 20px; margin-top: -15px">
+<p style="font-size: 20px; margin-top: -15px; margin-bottom: 3px">
 
-{% for strengthlevel in 1..5 %}
-	<i class="icon-star{% if (30 + strengthlevel * 10) > team.team_strength %}-empty{% endif %}"></i>
+{% set displayedStrengthStars = team.team_strength_stars|default(0) %}
+{% for strengthlevel in 1..10 %}
+	<i class="icon-star{% if strengthlevel > displayedStrengthStars %}-empty{% endif %}"></i>
 {% endfor %}
 </p>
+
+{% if not team.is_nationalteam and team.team_strength_global_count > 0 %}
+<p class="muted" style="margin-top: 0; font-size: 12px">
+	{{ i18n.getMessage("team_details_strength_raw")|format(team.team_strength|number_format(1, ',', ' ')) }}
+	&middot; {{ i18n.getMessage("team_details_strength_global_rank")|format(team.team_strength_global_rank, team.team_strength_global_count, team.team_strength_global_top_percent) }}
+	{% if team.team_strength_league_count > 0 %}
+		&middot; {{ i18n.getMessage("team_details_strength_league_rank")|format(team.team_strength_league_rank, team.team_strength_league_count) }}
+	{% endif %}
+</p>
+{% endif %}
 
 {% if team.team_logo|length > 0 %}
 <div style="text-align: center; margin-bottom: 10px;">
@@ -42,6 +53,8 @@
   {% endif %}
   <li><a href="#victories" data-toggle="tab" class="ajaxLink"
   	data-ajaxtarget="historycontent" data-ajaxblock="team-history" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("team_details_tab_victories") }}</a></li>
+  <li><a href="#halloffame" data-toggle="tab" class="ajaxLink"
+  	data-ajaxtarget="halloffamecontent" data-ajaxblock="club-hall-of-fame" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("team_details_tab_halloffame") }}</a></li>
 </ul>
  
 <div class="tab-content">
@@ -220,6 +233,10 @@
 			{{ team.team_history|nl2br }}
 	{% endif %}
   
+  </div>
+  
+  <div class="tab-pane" id="halloffame">
+  	<div id="halloffamecontent">...</div>
   </div>
   
   <div class="tab-pane" id="results">

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="what-changed_navlabel">Was ist passiert?</message>
+    <message id="whatchanged_navlabel">Was ist passiert?</message>
+    <message id="whatchanged_title">Was ist passiert?</message>
+    <message id="whatchanged_office_block_title">Was ist passiert?</message>
+    <message id="whatchanged_office_latest">Letzte Spieltags-Zusammenfassung</message>
+    <message id="whatchanged_open_latest">Zusammenfassung ansehen</message>
+    <message id="whatchanged_intro">Die Spieltags-Zusammenfassung zeigt dir kompakt, was sich nach deinem letzten Spiel verändert hat.</message>
+    <message id="whatchanged_disabled">Die Spieltags-Zusammenfassung ist derzeit deaktiviert.</message>
+    <message id="whatchanged_only_human">Diese Übersicht steht nur menschlich geführten Vereinen zur Verfügung.</message>
+    <message id="whatchanged_no_summary">Noch keine Zusammenfassung vorhanden. Nach dem nächsten berechneten Spiel deines Vereins wird hier automatisch ein Eintrag erstellt.</message>
+    <message id="whatchanged_recent_summaries">Letzte Zusammenfassungen</message>
+    <message id="whatchanged_current_summary">Aktuelle Zusammenfassung</message>
+    <message id="whatchanged_match_result">Spielergebnis</message>
+    <message id="whatchanged_budget">Budget</message>
+    <message id="whatchanged_training">Training</message>
+    <message id="whatchanged_scouting">Scouting</message>
+    <message id="whatchanged_fan_mood">Fanstimmung</message>
+    <message id="whatchanged_chemistry">Teamchemie</message>
+    <message id="whatchanged_board">Vorstand</message>
+    <message id="whatchanged_injuries_suspensions">Verletzungen und Sperren</message>
+
+    <message id="whatchanged_tactical_style">Taktische Identität</message>
+    <message id="formation_tacticalstyle_fit">Passung</message>
+    <message id="tacticalstyle_possession">Ballbesitz</message>
+    <message id="tacticalstyle_counterattack">Konter</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_defensive_block">Defensivblock</message>
+    <message id="tacticalstyle_wing_play">Flügelspiel</message>
+    <message id="tacticalstyle_set_pieces">Standards</message>
+    <message id="tacticalstyle_youth_focused">Jugendfokus</message>
+    <message id="tacticalstyle_physical">Körperbetont</message>
+    <message id="whatchanged_messages_news">Nachrichten und News</message>
+    <message id="whatchanged_missions">Saisonziele</message>
+    <message id="whatchanged_match_link">Zum Spielbericht</message>
+    <message id="whatchanged_created_at">Erstellt am</message>
+    <message id="whatchanged_previous_match">Vorheriges Spiel</message>
+    <message id="whatchanged_no_previous_match">Kein vorheriges Spiel gefunden.</message>
+    <message id="whatchanged_win">Sieg</message>
+    <message id="whatchanged_draw">Unentschieden</message>
+    <message id="whatchanged_loss">Niederlage</message>
+    <message id="whatchanged_budget_before">Vorher</message>
+    <message id="whatchanged_budget_after">Nachher</message>
+    <message id="whatchanged_budget_change">Änderung</message>
+    <message id="whatchanged_budget_no_entries">Keine Buchungen seit dem letzten Spiel.</message>
+    <message id="whatchanged_training_none">Keine Trainingseinheit zum Spieltag erfasst.</message>
+    <message id="whatchanged_training_players">Spieler trainiert</message>
+    <message id="whatchanged_training_best_player">Bester Trainingseffekt</message>
+    <message id="whatchanged_training_injuries">Trainingsverletzungen</message>
+    <message id="whatchanged_training_chemistry">Chemieeffekt</message>
+    <message id="whatchanged_scouting_none">Keine neuen Scouting-Vorschläge seit dem letzten Spiel.</message>
+    <message id="whatchanged_scouting_new">Neue Vorschläge</message>
+    <message id="whatchanged_open_proposal">offen</message>
+    <message id="whatchanged_fan_no_change">Keine gespeicherte Änderung der Fanstimmung zu diesem Spiel.</message>
+    <message id="whatchanged_chemistry_no_change">Keine gespeicherte Chemieänderung zu diesem Spiel.</message>
+    <message id="whatchanged_old_new">Alt / Neu</message>
+    <message id="whatchanged_effect">Effekt</message>
+    <message id="whatchanged_board_no_change">Keine eigene Vorstandsänderung gefunden.</message>
+    <message id="whatchanged_injuries_none">Keine neuen Verletzungen oder Sperren erfasst.</message>
+    <message id="whatchanged_messages_new">Neue private Nachrichten</message>
+    <message id="whatchanged_news_new">Neue News</message>
+    <message id="whatchanged_no_messages_news">Keine neuen Nachrichten oder News seit dem letzten Spiel.</message>
+    <message id="whatchanged_missions_none">Keine Saisonziele gefunden.</message>
+    <message id="whatchanged_missions_summary">Fortschritt</message>
+    <message id="whatchanged_notification">Neue Spieltags-Zusammenfassung verfügbar: {match}</message>
+    <message id="whatchanged_news_title">Was hat sich bei {team} verändert?</message>
+    <message id="whatchanged_news_message">Nach dem Spiel {match} gibt es eine neue Zusammenfassung für {team}: Ergebnis, Budget, Training, Scouting, Stimmung, Teamchemie, taktische Identität, Vorstand, Verletzungen und Saisonziele wurden aktualisiert.</message>
+    <message id="whatchanged_news_link">Zur Zusammenfassung</message>
+    <message id="settings_label_what_changed_enabled">Was-ist-passiert-Dashboard aktivieren</message>
+    <message id="settings_label_what_changed_enabled_help">Erstellt nach jedem Spiel eines menschlich geführten Vereins eine kompakte Zusammenfassung mit News und Benachrichtigung.</message>
+    
+    <message id="whatchanged_news_title">Was hat sich bei {team} verändert?</message>
+    <message id="whatchanged_news_message">Nach dem Spiel {match} gibt es eine neue Zusammenfassung für {team}: Ergebnis, Budget, Training, Scouting, Stimmung, Teamchemie, taktische Identität, Vorstand, Verletzungen und Saisonziele wurden aktualisiert.</message>
+    <message id="whatchanged_news_link">Zur Zusammenfassung</message>
+</messages>

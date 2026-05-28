@@ -17,7 +17,7 @@
             model="NationalPlayersModel"
             role="user"
             navitem="true"
-            navweight="3"
+            navweight="998"
             navitemOnlyForConfigEnabled="nationalteams_enabled">
             <page
 	            id="nominate-national-players"

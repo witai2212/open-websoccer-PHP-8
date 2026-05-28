@@ -40,6 +40,8 @@ class ChooseTrainerController implements IActionController {
 	 */
 	public function executeAction($parameters) {
 		
+		TrainingDataService::ensureAdvancedTrainingSchema($this->_websoccer, $this->_db);
+
 		$user = $this->_websoccer->getUser();
 		$teamId = $user->getClubId($this->_websoccer, $this->_db);
 		if ($teamId < 1) {
@@ -86,6 +88,9 @@ class ChooseTrainerController implements IActionController {
 			$this->_db->queryInsert($columns, $fromTable);
 		}
 		
+		// create default automatic training plan if missing
+		TrainingDataService::getOrCreateTrainingPlan($this->_websoccer, $this->_db, $teamId);
+
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
 				$this->_i18n->getMessage("saved_message_title"),

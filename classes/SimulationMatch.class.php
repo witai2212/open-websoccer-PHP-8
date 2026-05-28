@@ -53,6 +53,11 @@ class SimulationMatch {
 	public $minute;
 	
 	/**
+	 * @var int|null fixed minute when a regular match ends, including stoppage time.
+	 */
+	public $regularEndMinute;
+	
+	/**
 	 * @var boolean TRUE if penaly shooting shall be simulated in case there is no winner.
 	 */
 	public $penaltyShootingEnabled;
@@ -96,6 +101,11 @@ class SimulationMatch {
 	 * @var boolean TRUE if stadium is not home team's one.
 	 */
 	public $isAtForeignStadium;
+
+	/**
+	 * @var boolean TRUE if this is a derby, cup or top-table match.
+	 */
+	public $isBigGame;
     
 	/**
 	 * Creates new match model with defaul values.
@@ -112,12 +122,14 @@ class SimulationMatch {
     	$this->homeTeam = $homeTeam;
     	$this->guestTeam = $guestTeam;
     	$this->minute = $minute;
+    	$this->regularEndMinute = null;
     	$this->playerWithBall = $playerWithBall;
     	$this->previousPlayerWithBall = $previousPlayerWithBall;
     	
     	$this->isCompleted = FALSE;
     	$this->penaltyShootingEnabled = FALSE;
     	$this->isSoldOut = FALSE;
+    	$this->isBigGame = FALSE;
     }
     
     /**

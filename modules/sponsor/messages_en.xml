@@ -3,14 +3,36 @@
 <messages>
     
     <message id="sponsor_navlabel">Sponsor</message>
-    <message id="sponsor_contractduraction_info">Choose a sponsor for the next %d matches.</message>
+    <message id="sponsor_contractduraction_info">Choose a sponsor contract until the end of the season. You can negotiate offers, but the sponsor may withdraw if the risk becomes too high.</message>
     <message id="sponsor_no_offers">There is currently no company interested in sponsoring your team.</message>
     
     <message id="sponsor_choose_tooearly">You may choose a new sponsor only after the %dth match day.</message>
     
-    <message id="sponsor_choose_novalidsponsor">The selected sponsor does not want to collaborate any more. Probably another team was faster than you.</message>
-    <message id="sponsor_choose_stillcontract">You still have a contract with a sponsor. This contract must end first.</message>
+    <message id="sponsor_choose_novalidsponsor">The selected sponsor does not want to collaborate any more. Probably another team was faster or the offer is no longer valid.</message>
+    <message id="sponsor_choose_stillcontract">You still have a contract with a sponsor. This contract runs until the end of the season.</message>
     <message id="sponsor_choose_success">Congratulations, you have a new sponsor now!</message>
     
     <message id="sponsor_championship_bonus_subject">Sponsor premium for won championship</message>
+    <message id="sponsor_cup_bonus_subject">Sponsor premium for cup round</message>
+
+    <message id="sponsor_offer_type">Contract type</message>
+    <message id="sponsor_offer_type_safe">Safe</message>
+    <message id="sponsor_offer_type_risky">Risky</message>
+    <message id="sponsor_offer_type_fan">Fan-based</message>
+    <message id="sponsor_offer_type_cup">Cup</message>
+    <message id="sponsor_offer_type_legacy">Legacy contract</message>
+
+    <message id="sponsor_offer_description_safe">High fixed income, but lower success bonuses.</message>
+    <message id="sponsor_offer_description_risky">Low fixed income, but high win and title bonuses.</message>
+    <message id="sponsor_offer_description_fan">Additional bonus based on stadium occupancy for home matches.</message>
+    <message id="sponsor_offer_description_cup">Stronger focus on cup matches and reached cup rounds.</message>
+
+    <message id="sponsor_attendance_bonus_percent">Attendance bonus</message>
+    <message id="sponsor_contract_duration">Duration</message>
+    <message id="sponsor_contract_duration_season">until season end</message>
+    <message id="sponsor_negotiate_button">Negotiate</message>
+    <message id="sponsor_negotiation_level">Negotiation level %d</message>
+    <message id="sponsor_withdraw_chance">Withdrawal risk when negotiating again: %d %%</message>
+    <message id="sponsor_negotiation_success">The negotiation was successful. The offer was improved.</message>
+    <message id="sponsor_negotiation_withdrawn">The sponsor withdrew. This offer is no longer available.</message>
 </messages>

@@ -45,39 +45,86 @@ class TransfermarketOverviewModel implements IModel {
 			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
 		}
 		
-		$positionFilter = null;
 		$positionInput = $this->_websoccer->getRequestParameter("position");
 		$positionFilter = $positionInput;
 		
-		/*
-		if ($positionInput == "goaly") {
-			$positionFilter = "Torwart";
-		} else if ($positionInput == "defense") {
-			$positionFilter = "Abwehr";
-		} else if ($positionInput == "midfield") {
-			$positionFilter = "Mittelfeld";
-		} else if ($positionInput == "striker") {
-			$positionFilter = "Sturm";
-		}*/
+		$filterDefinitions = PlayersDataService::getTransfermarketFilterDefinitions($this->_websoccer);
+		$advancedFilters = array();
+		$advancedFiltersActive = false;
 		
+		foreach ($filterDefinitions as $filterKey => $filterDefinition) {
+			$minValue = $this->_getNumericRequestParameter($filterKey . "_min");
+			$maxValue = $this->_getNumericRequestParameter($filterKey . "_max");
+			
+			if ($minValue !== null && $maxValue !== null && $minValue > $maxValue) {
+				$tmpValue = $minValue;
+				$minValue = $maxValue;
+				$maxValue = $tmpValue;
+			}
+			
+			$advancedFilters[$filterKey] = array(
+				"min" => $minValue,
+				"max" => $maxValue
+			);
+			
+			if ($minValue !== null || $maxValue !== null) {
+				$advancedFiltersActive = true;
+			}
+		}
 		
-		$count = PlayersDataService::countPlayersOnTransferList($this->_websoccer, $this->_db, $positionFilter);
+		$count = PlayersDataService::countPlayersOnTransferList($this->_websoccer, $this->_db, $positionFilter, $advancedFilters);
 		$countOffers = PlayersDataService::countPlayerOffers($this->_websoccer, $this->_db);
 		
 		$eps = $this->_websoccer->getConfig("entries_per_page");
 		$paginator = new Paginator($count, $eps, $this->_websoccer);
 		
-		if ($positionFilter != null) {
+		if ($positionFilter != null && strlen(trim($positionFilter)) > 0) {
 		    $paginator->addParameter("position", $positionInput);
 		}
 		
+		foreach ($advancedFilters as $filterKey => $values) {
+			if ($values["min"] !== null) {
+				$paginator->addParameter($filterKey . "_min", $values["min"]);
+			}
+			if ($values["max"] !== null) {
+				$paginator->addParameter($filterKey . "_max", $values["max"]);
+			}
+		}
+		
 		if ($count > 0) {
-			$players = PlayersDataService::getPlayersOnTransferList($this->_websoccer, $this->_db, $paginator->getFirstIndex(), $eps, $positionFilter);
+			$players = PlayersDataService::getPlayersOnTransferList($this->_websoccer, $this->_db, $paginator->getFirstIndex(), $eps, $positionFilter, $advancedFilters);
 		} else {
 			$players = array();
 		}
 		
-		return array("transferplayers" => $players, "playerscount" => $count, "playeroffers" => $countOffers, "paginator" => $paginator);
+		return array(
+			"transferplayers" => $players,
+			"playerscount" => $count,
+			"playeroffers" => $countOffers,
+			"paginator" => $paginator,
+			"transfermarket_filter_definitions" => $filterDefinitions,
+			"transfermarket_advancedfilters_active" => $advancedFiltersActive
+		);
+	}
+	
+	private function _getNumericRequestParameter($parameterName) {
+		$value = $this->_websoccer->getRequestParameter($parameterName);
+		
+		if ($value === null) {
+			return null;
+		}
+		
+		$value = trim($value);
+		if ($value === '') {
+			return null;
+		}
+		
+		$value = str_replace(',', '.', $value);
+		if (!is_numeric($value)) {
+			return null;
+		}
+		
+		return round((float) $value, 2);
 	}
 	
 }

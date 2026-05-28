@@ -31,6 +31,12 @@
                         sort="true" />
                     
                     <column
+                        id="entity_trainer_specialization"
+                        field="specialization"
+                        type="text"
+                        sort="true" />
+                    
+                    <column
                         id="entity_trainer_p_technique"
                         field="p_technique"
                         type="percent"
@@ -39,6 +45,36 @@
                     <column
                         id="entity_trainer_p_stamina"
                         field="p_stamina"
+                        type="percent"
+                        sort="true" />
+                    
+                    <column
+                        id="entity_trainer_p_offense"
+                        field="p_offense"
+                        type="percent"
+                        sort="true" />
+                    
+                    <column
+                        id="entity_trainer_p_defense"
+                        field="p_defense"
+                        type="percent"
+                        sort="true" />
+                    
+                    <column
+                        id="entity_trainer_p_tactics"
+                        field="p_tactics"
+                        type="percent"
+                        sort="true" />
+                    
+                    <column
+                        id="entity_trainer_p_goalkeeping"
+                        field="p_goalkeeping"
+                        type="percent"
+                        sort="true" />
+                    
+                    <column
+                        id="entity_trainer_p_mental"
+                        field="p_mental"
                         type="percent"
                         sort="true" />
                     
@@ -53,18 +89,25 @@
                 <editform>
                     
                     <field id="name" type="text" required="true" />
-					<field id="salary" type="number" required="true" />
-					<field id="p_technique" type="percent" required="true" />
-					<field id="p_stamina" type="percent" required="true" />
-					<field id="premiumfee" type="number" required="false" />
+                    <field id="salary" type="number" required="true" />
+                    <field id="specialization" type="select" required="true" selection="balanced|technique|fitness|offense|defense|setpieces|goalkeeper|mental|tactics" />
+                    <field id="p_technique" type="percent" required="true" />
+                    <field id="p_stamina" type="percent" required="true" />
+                    <field id="p_offense" type="percent" required="true" />
+                    <field id="p_defense" type="percent" required="true" />
+                    <field id="p_tactics" type="percent" required="true" />
+                    <field id="p_goalkeeping" type="percent" required="true" />
+                    <field id="p_mental" type="percent" required="true" />
+                    <field id="premiumfee" type="number" required="false" />
                 </editform>
             </entity>
         </adminpage>
     </admin>
     
     <settings>
-      <setting id="training_min_hours_between_execution" category="game" type="number" default="24" />
-  </settings>
+        <setting id="training_min_hours_between_execution" category="game" type="number" default="24" />
+        <setting id="advanced_training_enabled" category="game" type="boolean" default="1" />
+    </settings>
     
     <pages>
         <page
@@ -75,30 +118,56 @@
             navitem="true"
             navweight="4"
             role="user">
-	        <page
-	            id="trainer-details"
-	            template="training-trainerdetails"
-	            model="TrainerDetailsModel"
-	            role="user" />
-	        
-	        <script file="bootstrap-slider.js" />
-	        <css file="slider.css"/>
+            <page
+                id="trainer-details"
+                template="training-trainerdetails"
+                model="TrainerDetailsModel"
+                role="user" />
+            
+            <script file="bootstrap-slider.js" />
+            <css file="slider.css"/>
         </page>
+
+        <page
+            id="individual-training"
+            template="individual-training"
+            model="IndividualTrainingModel"
+            parentItem="office"
+            navitem="true"
+            navweight="5"
+            role="user" />
 
     </pages> 
     
-  <actions>
-	<action id="choose-trainer" controller="ChooseTrainerController" role="user">
-	    <param id="id" type="number" required="true" min="1" max="2000000000" />
-		<param id="units" type="number" required="true" min="5" max="20" />
-	</action>
-	
-	<action id="execute-training" controller="ExecuteTrainingController" role="user" log="true">
-	    <param id="id" type="number" required="true" min="1" max="2000000000" />
-		<param id="focus" type="text" required="true" min="2" max="3" />
-		<param id="intensity" type="number" required="true" min="1" max="100" />
-	</action>
-	
-  </actions>
+    <actions>
+        <action id="choose-trainer" controller="ChooseTrainerController" role="user">
+            <param id="id" type="number" required="true" min="1" max="2000000000" />
+            <param id="units" type="number" required="true" min="5" max="20" />
+        </action>
+        
+        <action id="save-training-plan" controller="SaveTrainingPlanController" role="user" log="true">
+            <param id="type_1" type="text" required="true" min="3" max="32" />
+            <param id="intensity_1" type="number" required="true" min="1" max="100" />
+            <param id="type_2" type="text" required="true" min="3" max="32" />
+            <param id="intensity_2" type="number" required="true" min="1" max="100" />
+            <param id="type_3" type="text" required="true" min="3" max="32" />
+            <param id="intensity_3" type="number" required="true" min="1" max="100" />
+            <param id="type_4" type="text" required="true" min="3" max="32" />
+            <param id="intensity_4" type="number" required="true" min="1" max="100" />
+            <param id="type_5" type="text" required="true" min="3" max="32" />
+            <param id="intensity_5" type="number" required="true" min="1" max="100" />
+        </action>
+
+        <action id="save-individual-training" controller="SaveIndividualTrainingController" role="user" log="true">
+            <param id="player_id" type="number" required="true" min="1" max="2000000000" />
+            <param id="attribute" type="text" required="false" min="0" max="32" />
+        </action>
+        
+        <action id="execute-training" controller="ExecuteTrainingController" role="user" log="true">
+            <param id="id" type="number" required="true" min="1" max="2000000000" />
+            <param id="focus" type="text" required="true" min="2" max="32" />
+            <param id="intensity" type="number" required="true" min="1" max="100" />
+        </action>
+    </actions>
     
 </module>

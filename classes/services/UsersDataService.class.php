@@ -190,6 +190,11 @@ class UsersDataService {
 			$user["picture"] = self::getUserProfilePicture($websoccer, $user["picture"], $user["email"], 120);
 		}
 		
+		$reputation = ManagerCareerDataService::getManagerScoreForUser($websoccer, $db, $userId);
+		if ($reputation) {
+			$user["reputation"] = $reputation;
+		}
+		
 		return $user;
 	}
 	

@@ -4,6 +4,13 @@
     <message id="playerssearch_navlabel">Spielersuche</message>
     <message id="playerssearch_submit">Spieler finden</message>
     <message id="playerssearch_hits">%d Spieler gefunden</message>
+    <message id="playerssearch_no_players">Keine Spieler gefunden.</message>
+    <message id="playerssearch_transfer_status">Transferstatus</message>
+    <message id="playerssearch_status_on_transferlist">Auf Transferliste</message>
+    <message id="playerssearch_status_not_on_transferlist">Nicht auf Transferliste</message>
+    <message id="playerssearch_actions">Aktionen</message>
+    <message id="playerssearch_profile">Profil</message>
+    <message id="playerssearch_add_to_watchlist">Beobachten</message>
+    <message id="playerssearch_already_on_watchlist">Bereits auf Beobachtungsliste</message>
     <message id="contract_unit_matches">Vertragsspiele</message>
-    
 </messages>

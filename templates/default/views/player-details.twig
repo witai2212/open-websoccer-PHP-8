@@ -79,6 +79,9 @@
 					{% endif %}
 				  <dd>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% else %}{{ countryLabel }}{% endif %}</dd>
 				  
+				  <dt>{{ i18n.getMessage("entity_player_personality") }}</dt>
+				  <dd>{% if show_personality %}{{ i18n.getMessage("player_personality_" ~ player.player_personality) }}{% else %}{{ i18n.getMessage("player_personality_unknown") }}{% endif %}</dd>
+				  
 				  <dt>{{ i18n.getMessage("entity_player_verletzt") }}</dt>
 				  <dd>{{ player.player_matches_injured  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 				  

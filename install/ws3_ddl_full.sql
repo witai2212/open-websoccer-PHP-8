@@ -923,15 +923,37 @@ CREATE TABLE ws3_badge (
   name VARCHAR(128) NOT NULL,
   description VARCHAR(255) NULL,
   level ENUM('bronze', 'silver', 'gold') NOT NULL DEFAULT 'bronze',
-  event ENUM('membership_since_x_days', 'win_with_x_goals_difference', 'completed_season_at_x', 'x_trades', 'cupwinner', 'stadium_construction_by_x') NOT NULL,
+  event ENUM('membership_since_x_days', 'win_with_x_goals_difference', 'completed_season_at_x', 'x_trades', 'cupwinner', 'stadium_construction_by_x', 'derby_wins', 'youth_developer', 'giant_killer', 'comeback_king', 'financial_genius', 'transfer_master') NOT NULL,
   event_benchmark INT(10) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_badge_user (
+  id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL REFERENCES ws3_user(id) ON DELETE CASCADE,
+  team_id INT(10) NULL REFERENCES ws3_verein(id) ON DELETE SET NULL,
+  season_id INT(10) NULL REFERENCES ws3_saison(id) ON DELETE SET NULL,
   badge_id INT(10) NOT NULL REFERENCES ws3_badge(id) ON DELETE CASCADE,
   date_rewarded INT(10) NOT NULL,
-  PRIMARY KEY(user_id, badge_id)
+  award_key VARCHAR(128) NULL,
+  context_data TEXT NULL,
+  KEY idx_badge_user_user_badge (user_id, badge_id),
+  KEY idx_badge_user_team (team_id),
+  UNIQUE KEY uniq_badge_user_award (user_id, badge_id, award_key)
+) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
+
+CREATE TABLE ws3_badge_event_log (
+  id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INT(10) NOT NULL REFERENCES ws3_user(id) ON DELETE CASCADE,
+  team_id INT(10) NULL REFERENCES ws3_verein(id) ON DELETE SET NULL,
+  season_id INT(10) NULL REFERENCES ws3_saison(id) ON DELETE SET NULL,
+  event VARCHAR(64) NOT NULL,
+  event_value INT(10) NOT NULL DEFAULT 1,
+  reference_key VARCHAR(128) NOT NULL,
+  event_date INT(11) NOT NULL DEFAULT 0,
+  UNIQUE KEY uniq_badge_event_log_reference (user_id, event, reference_key),
+  KEY idx_badge_event_log_user_event (user_id, event),
+  KEY idx_badge_event_log_team (team_id),
+  KEY idx_badge_event_log_season (season_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_achievement (

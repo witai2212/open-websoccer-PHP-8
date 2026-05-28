@@ -55,6 +55,9 @@ class StadiumEnvironmentModel implements IModel {
 		
 		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
 		
+		// Apply completed one-time fan popularity effects when the manager opens this page.
+		StadiumEnvironmentPlugin::applyCompletedFanPopularityBuildings($this->_websoccer, $this->_db, $teamId);
+		
 		// get existing buildings
 		$existingBuildings = array();
 		$result = $this->_db->querySelect('*', $dbPrefix . '_buildings_of_team INNER JOIN '. $dbPrefix . '_stadiumbuilding ON id = building_id',

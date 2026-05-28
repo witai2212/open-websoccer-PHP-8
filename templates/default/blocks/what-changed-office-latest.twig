@@ -1,0 +1,28 @@
+{% if what_changed_block.enabled is defined and what_changed_block.enabled and what_changed_block.human_team %}
+<h4>{{ i18n.getMessage("whatchanged_office_block_title") }}</h4>
+
+{% if what_changed_block.summary is defined and what_changed_block.summary %}
+    {% set summary = what_changed_block.summary %}
+    <div class="well well-small">
+        <p style="margin-bottom: 5px;">
+            <strong>{{ i18n.getMessage("whatchanged_office_latest") }}</strong><br>
+            <em>{{ env.getFormattedDatetime(summary.match_date) }}{% if summary.data.match.type is defined %} | {{ i18n.getMessage("matchtype_" ~ summary.data.match.type) }}{% endif %}</em>
+        </p>
+        <p>
+            {{ summary.summary_title }}
+            {% if summary.data.match.outcome is defined %}
+                <span class="label {% if summary.data.match.outcome == 'win' %}label-success{% elseif summary.data.match.outcome == 'loss' %}label-important{% else %}label-info{% endif %}">
+                    {{ i18n.getMessage("whatchanged_" ~ summary.data.match.outcome) }}
+                </span>
+            {% endif %}
+        </p>
+        <p style="margin-bottom: 0;">
+            <a class="btn btn-small" href="{{ summary.link }}">
+                <i class="icon-list-alt"></i> {{ i18n.getMessage("whatchanged_open_latest") }}
+            </a>
+        </p>
+    </div>
+{% else %}
+    <p>{{ i18n.getMessage("whatchanged_no_summary") }}</p>
+{% endif %}
+{% endif %}

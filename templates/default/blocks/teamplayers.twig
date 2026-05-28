@@ -7,6 +7,9 @@
 			<tr>
 				<th><abbr title="{{ i18n.getMessage("playertable_head_position") }}">{{ i18n.getMessage("playertable_head_position_abbr") }}</abbr></th>
 				<th>{{ i18n.getMessage("playertable_head_name") }}</th>
+				{% if show_personality %}
+					<th>{{ i18n.getMessage("playertable_head_personality") }}</th>
+				{% endif %}
 				
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 					<th><abbr title="{{ i18n.getMessage("playertable_head_strength") }}">{{ i18n.getMessage("playertable_head_strength_abbr") }}</abbr></th>
@@ -23,7 +26,7 @@
 		<tbody>
 		
 			{% for player in players %}
-				{{ playerlists.teamlistItem(player)  }}
+				{{ playerlists.teamlistItem(player, show_personality)  }}
 			{% endfor %}
 		
 		</tbody>

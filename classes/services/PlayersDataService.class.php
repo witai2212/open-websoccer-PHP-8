@@ -51,6 +51,7 @@ class PlayersDataService {
 				'w_frische' => 'strength_freshness', 
 				'w_zufriedenheit' => 'strength_satisfaction',
                 'w_talent' => "strength_talent",
+                'personality' => 'personality',
                 'w_passing' => 'strength_passing',
                 'w_shooting' => 'strength_shooting',
                 'w_heading' => 'strength_heading',
@@ -128,6 +129,7 @@ class PlayersDataService {
 				'w_frische' => 'strength_freshness',
 		        'w_zufriedenheit' => 'strength_satisfaction',
                 'w_talent' => 'strength_talent',
+                'personality' => 'personality',
                 'w_passing' => 'strength_passing',
                 'w_shooting' => 'strength_shooting',
                 'w_heading' => 'strength_heading',
@@ -201,16 +203,62 @@ class PlayersDataService {
 	}
 	
 	/**
+	 * Provides transfer market filter definitions.
+	 * Hidden attributes such as talent or potential are intentionally excluded.
+	 *
+	 * @param WebSoccer $websoccer Application context.
+	 * @return array filter definitions with label keys and SQL columns.
+	 */
+	public static function getTransfermarketFilterDefinitions(WebSoccer $websoccer) {
+		$filters = array();
+
+		$filters['age'] = array(
+			'label_key' => 'entity_player_age',
+			'column' => self::_getAgeSqlColumn($websoccer, 'P')
+		);
+		$filters['marketvalue'] = array(
+			'label_key' => 'entity_player_marktwert',
+			'column' => 'CAST(P.marktwert AS UNSIGNED)'
+		);
+		$filters['salary'] = array(
+			'label_key' => 'entity_player_vertrag_gehalt',
+			'column' => 'P.vertrag_gehalt'
+		);
+
+		if ($websoccer->getConfig('hide_strength_attributes') !== '1') {
+			$filters['strength'] = array('label_key' => 'entity_player_w_staerke', 'column' => 'P.w_staerke');
+			$filters['technique'] = array('label_key' => 'entity_player_w_technik', 'column' => 'CAST(P.w_technik AS DECIMAL(5,2))');
+			$filters['stamina'] = array('label_key' => 'entity_player_w_kondition', 'column' => 'CAST(P.w_kondition AS DECIMAL(5,2))');
+			$filters['freshness'] = array('label_key' => 'entity_player_w_frische', 'column' => 'CAST(P.w_frische AS DECIMAL(5,2))');
+			$filters['satisfaction'] = array('label_key' => 'entity_player_w_zufriedenheit', 'column' => 'CAST(P.w_zufriedenheit AS DECIMAL(5,2))');
+			$filters['passing'] = array('label_key' => 'entity_player_w_passing', 'column' => 'CAST(P.w_passing AS DECIMAL(5,2))');
+			$filters['shooting'] = array('label_key' => 'entity_player_w_shooting', 'column' => 'CAST(P.w_shooting AS DECIMAL(5,2))');
+			$filters['heading'] = array('label_key' => 'entity_player_w_heading', 'column' => 'CAST(P.w_heading AS DECIMAL(5,2))');
+			$filters['tackling'] = array('label_key' => 'entity_player_w_tackling', 'column' => 'CAST(P.w_tackling AS DECIMAL(5,2))');
+			$filters['freekick'] = array('label_key' => 'entity_player_w_freekick', 'column' => 'CAST(P.w_freekick AS DECIMAL(5,2))');
+			$filters['pace'] = array('label_key' => 'entity_player_w_pace', 'column' => 'CAST(P.w_pace AS DECIMAL(5,2))');
+			$filters['creativity'] = array('label_key' => 'entity_player_w_creativity', 'column' => 'CAST(P.w_creativity AS DECIMAL(5,2))');
+			$filters['influence'] = array('label_key' => 'entity_player_w_influence', 'column' => 'CAST(P.w_influence AS DECIMAL(5,2))');
+			$filters['flair'] = array('label_key' => 'entity_player_w_flair', 'column' => 'CAST(P.w_flair AS DECIMAL(5,2))');
+			$filters['penalty'] = array('label_key' => 'entity_player_w_penalty', 'column' => 'CAST(P.w_penalty AS DECIMAL(5,2))');
+			$filters['penalty_killing'] = array('label_key' => 'entity_player_w_penalty_killing', 'column' => 'CAST(P.w_penalty_killing AS DECIMAL(5,2))');
+		}
+
+		return $filters;
+	}
+
+	/**
 	 * Provides players who are currently available on the transfer market.
 	 * 
 	 * @param WebSoccer $websoccer Application context.
 	 * @param DbConnection $db DB connection.
-	 * @param string $positionFilter position ID as in DB table.
 	 * @param int $startIndex fetch start index.
 	 * @param int $entries_per_page number of items to fetch.
+	 * @param string $positionFilter position ID as in DB table.
+	 * @param array $advancedFilters min/max filters by filter key.
 	 * @return array list of found players or empty array.
 	 */
-	public static function getPlayersOnTransferList(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $positionFilter) {
+	public static function getPlayersOnTransferList(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $positionFilter, $advancedFilters = array()) {
 		
 		$columns['P.id'] = 'id';
 		$columns['P.vorname'] = 'firstname';
@@ -240,15 +288,7 @@ class PlayersDataService {
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
 		
-		//$whereCondition = 'P.status = 1 AND P.transfermarkt = 1 AND P.transfer_ende > %d';
-		$whereCondition = 'P.status = 1 AND P.transfermarkt = 1';
-		$parameters[] = $websoccer->getNowAsTimestamp();
-		
-		if ($positionFilter != null) {
-			$whereCondition .= " AND P.position_main = '$positionFilter'";
-			$parameters[] = $positionFilter;
-		}
-		
+		$whereCondition = self::_buildTransfermarketWhereCondition($websoccer, $positionFilter, $advancedFilters, $parameters);
 		$whereCondition .= ' ORDER BY P.transfer_ende ASC, P.nachname ASC, P.vorname ASC';
 		
 		$limit = $startIndex .','. $entries_per_page;
@@ -256,12 +296,9 @@ class PlayersDataService {
 	
 		$players = array();
 		while ($player = $result->fetch_array()) {
-				
 			$player['position'] = self::_convertPosition($player['position']);
 			$player['highestbid'] = TransfermarketDataService::getHighestBidForPlayer($websoccer, $db, $player['id'], $player['transfer_start'], $player['transfer_deadline']);
 			$players[] = $player;
-
-			
 		}
 		$result->free();
 	
@@ -274,52 +311,189 @@ class PlayersDataService {
 	 * @param WebSoccer $websoccer Application context.
 	 * @param DbConnection $db DB connection.
 	 * @param string $positionFilter position ID as in DB table.
+	 * @param array $advancedFilters min/max filters by filter key.
 	 * @return int number of found players. 0 if no players found.
 	 */
-	public static function countPlayersOnTransferList(WebSoccer $websoccer, DbConnection $db, $positionFilter) {
-	
-		/*$columns = 'COUNT(*) AS hits';
-	
+	public static function countPlayersOnTransferList(WebSoccer $websoccer, DbConnection $db, $positionFilter, $advancedFilters = array()) {
+		$columns = 'COUNT(*) AS hits';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
-	
-		//$whereCondition = 'P.status = 1 AND P.transfermarkt = 1 AND P.transfer_ende > %d';
-		$whereCondition = 'P.status = 1 AND P.transfermarkt = 1';
-		$parameters[] = $websoccer->getNowAsTimestamp();
+		$whereCondition = self::_buildTransfermarketWhereCondition($websoccer, $positionFilter, $advancedFilters, $parameters);
+
+		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$count = $result->fetch_array();
+		$result->free();
 		
-		if ($positionFilter != null) {
+		return (isset($count['hits'])) ? (int) $count['hits'] : 0;
+	}
+
+
+	/**
+	 * Provides player search results for the transfer section.
+	 * Includes players on and off the transfer list, but excludes players owned by
+	 * the current user's club. Hidden attributes are only selected when they are
+	 * visible according to the global configuration.
+	 *
+	 * @param WebSoccer $websoccer Application context.
+	 * @param DbConnection $db DB connection.
+	 * @param int $ownTeamId ID of current user's team.
+	 * @param string $positionFilter main position filter.
+	 * @param array $advancedFilters min/max filters by filter key.
+	 * @param int $startIndex fetch start index.
+	 * @param int $entries_per_page number of items to fetch.
+	 * @return array list of found players or empty array.
+	 */
+	public static function findTransferSectionPlayerSearch(WebSoccer $websoccer, DbConnection $db, $ownTeamId, $positionFilter, $advancedFilters, $startIndex, $entries_per_page) {
+		$columns['P.id'] = 'id';
+		$columns['P.vorname'] = 'firstname';
+		$columns['P.nachname'] = 'lastname';
+		$columns['P.kunstname'] = 'pseudonym';
+		$columns['P.position'] = 'position';
+		$columns['P.position_main'] = 'position_main';
+		$columns['P.position_second'] = 'position_second';
+		$columns[self::_getAgeSqlColumn($websoccer, 'P')] = 'age';
+		
+		$columns['P.transfermarkt'] = 'transfermarket';
+		$columns['P.transfer_start'] = 'transfer_start';
+		$columns['P.transfer_ende'] = 'transfer_deadline';
+		$columns['P.transfer_mindestgebot'] = 'min_bid';
+		$columns['P.marktwert'] = 'marketvalue';
+		$columns['P.vertrag_gehalt'] = 'contract_salary';
+		$columns['P.vertrag_spiele'] = 'contract_matches';
+		$columns['P.lending_owner_id'] = 'lending_owner_id';
+		
+		if ($websoccer->getConfig('hide_strength_attributes') !== '1') {
+			$columns['P.w_staerke'] = 'strength';
+			$columns['P.w_technik'] = 'strength_technique';
+			$columns['P.w_kondition'] = 'strength_stamina';
+			$columns['P.w_frische'] = 'strength_freshness';
+			$columns['P.w_zufriedenheit'] = 'strength_satisfaction';
+		}
+		
+		$columns['C.id'] = 'team_id';
+		$columns['C.name'] = 'team_name';
+		$columns['IF(WL.spieler_id IS NULL, 0, 1)'] = 'on_watchlist';
+		
+		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
+		$fromTable .= ' LEFT JOIN (SELECT DISTINCT spieler_id FROM ' . $websoccer->getConfig('db_prefix') . '_watchlist WHERE verein_id = ' . (int) $ownTeamId . ') AS WL ON WL.spieler_id = P.id';
+		
+		$whereCondition = self::_buildTransferSectionPlayerSearchWhereCondition($websoccer, $ownTeamId, $positionFilter, $advancedFilters, $parameters);
+		$whereCondition .= ' ORDER BY P.transfermarkt DESC, CAST(P.marktwert AS UNSIGNED) DESC, P.nachname ASC, P.vorname ASC';
+		
+		$limit = $startIndex .','. $entries_per_page;
+		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		
+		$players = array();
+		while ($player = $result->fetch_array()) {
+			$player['position'] = self::_convertPosition($player['position']);
+			if ($player['transfermarket']) {
+				$player['highestbid'] = TransfermarketDataService::getHighestBidForPlayer($websoccer, $db, $player['id'], $player['transfer_start'], $player['transfer_deadline']);
+			}
+			$players[] = $player;
+		}
+		$result->free();
+		
+		return $players;
+	}
+	
+	/**
+	 * Counts player search results for the transfer section.
+	 *
+	 * @param WebSoccer $websoccer Application context.
+	 * @param DbConnection $db DB connection.
+	 * @param int $ownTeamId ID of current user's team.
+	 * @param string $positionFilter main position filter.
+	 * @param array $advancedFilters min/max filters by filter key.
+	 * @return int number of found players.
+	 */
+	public static function countTransferSectionPlayerSearch(WebSoccer $websoccer, DbConnection $db, $ownTeamId, $positionFilter, $advancedFilters) {
+		$columns = 'COUNT(*) AS hits';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
+		$whereCondition = self::_buildTransferSectionPlayerSearchWhereCondition($websoccer, $ownTeamId, $positionFilter, $advancedFilters, $parameters);
+		
+		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$count = $result->fetch_array();
+		$result->free();
+		
+		return (isset($count['hits'])) ? (int) $count['hits'] : 0;
+	}
+	
+	private static function _buildTransferSectionPlayerSearchWhereCondition(WebSoccer $websoccer, $ownTeamId, $positionFilter, $advancedFilters, &$parameters) {
+		$parameters = array();
+		$whereCondition = 'P.status = 1';
+		$whereCondition .= ' AND (P.verein_id IS NULL OR P.verein_id <> %d)';
+		$parameters[] = (int) $ownTeamId;
+		$whereCondition .= ' AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0 OR P.lending_owner_id <> %d)';
+		$parameters[] = (int) $ownTeamId;
+		
+		$allowedPositions = array('T', 'LV', 'IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS');
+		if ($positionFilter != null && strlen(trim($positionFilter)) > 0 && in_array($positionFilter, $allowedPositions)) {
 			$whereCondition .= ' AND P.position_main = \'%s\'';
 			$parameters[] = $positionFilter;
 		}
 		
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
-		$players = $result->fetch_array();
-		$result->free();
-		
-		if (isset($players['hits'])) {
-		    echo"hits: ". $hits ."<br>";
-			return $players['hits'];
+		$filterDefinitions = self::getTransfermarketFilterDefinitions($websoccer);
+		foreach ($filterDefinitions as $filterKey => $filterDefinition) {
+			if (!isset($advancedFilters[$filterKey]) || !is_array($advancedFilters[$filterKey])) {
+				continue;
+			}
+			
+			$minValue = isset($advancedFilters[$filterKey]['min']) ? $advancedFilters[$filterKey]['min'] : null;
+			$maxValue = isset($advancedFilters[$filterKey]['max']) ? $advancedFilters[$filterKey]['max'] : null;
+			
+			if ($minValue !== null) {
+				$whereCondition .= ' AND ' . $filterDefinition['column'] . ' >= %s';
+				$parameters[] = $minValue;
+			}
+			if ($maxValue !== null) {
+				$whereCondition .= ' AND ' . $filterDefinition['column'] . ' <= %s';
+				$parameters[] = $maxValue;
+			}
 		}
-	
-		return 0;*/
-	    
-	    $hit = 0;
-	    
-	    if(isset($positionFilter)) {
-	        $sqlStr = "SELECT COUNT(*) AS hits FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS P
-                    WHERE P.status='1' AND P.transfermarkt='1' AND P.position_main='".$positionFilter."'";
-	    } else {
-	        $sqlStr = "SELECT COUNT(*) AS hits FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS P
-                    WHERE P.status='1' AND P.transfermarkt='1'";
-	    }
-	    $result = $db->executeQuery($sqlStr);
-	    $count = $result->fetch_array();
-	    $result->free();
-	    
-	    $hits = $count['hits'];
-	    
-	    return $hits;
+		
+		return $whereCondition;
 	}
 	
+	private static function _buildTransfermarketWhereCondition(WebSoccer $websoccer, $positionFilter, $advancedFilters, &$parameters) {
+		$parameters = array();
+		$whereCondition = 'P.status = 1 AND P.transfermarkt = 1';
+
+		$allowedPositions = array('T', 'LV', 'IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS');
+		if ($positionFilter != null && strlen(trim($positionFilter)) > 0 && in_array($positionFilter, $allowedPositions)) {
+			$whereCondition .= ' AND P.position_main = \'%s\'';
+			$parameters[] = $positionFilter;
+		}
+
+		$filterDefinitions = self::getTransfermarketFilterDefinitions($websoccer);
+		foreach ($filterDefinitions as $filterKey => $filterDefinition) {
+			if (!isset($advancedFilters[$filterKey]) || !is_array($advancedFilters[$filterKey])) {
+				continue;
+			}
+
+			$minValue = isset($advancedFilters[$filterKey]['min']) ? $advancedFilters[$filterKey]['min'] : null;
+			$maxValue = isset($advancedFilters[$filterKey]['max']) ? $advancedFilters[$filterKey]['max'] : null;
+
+			if ($minValue !== null) {
+				$whereCondition .= ' AND ' . $filterDefinition['column'] . ' >= %s';
+				$parameters[] = $minValue;
+			}
+			if ($maxValue !== null) {
+				$whereCondition .= ' AND ' . $filterDefinition['column'] . ' <= %s';
+				$parameters[] = $maxValue;
+			}
+		}
+
+		return $whereCondition;
+	}
+
+	private static function _getAgeSqlColumn(WebSoccer $websoccer, $tableAlias = '') {
+		$prefix = (strlen($tableAlias)) ? $tableAlias . '.' : '';
+		if ($websoccer->getConfig('players_aging') == 'birthday') {
+			return 'TIMESTAMPDIFF(YEAR,' . $prefix . 'geburtstag,CURDATE())';
+		}
+		return $prefix . 'age';
+	}
+
 	/**
 	 * Provides info about player, its team and lender.
 	 * 
@@ -364,6 +538,7 @@ class PlayersDataService {
 		$columns['P.w_frische'] = 'player_strength_freshness';
 		$columns['P.w_zufriedenheit'] = 'player_strength_satisfaction';
 		$columns['P.w_talent'] = 'player_strength_talent';
+		$columns['P.personality'] = 'player_personality';
 		
 		$columns['P.w_passing'] = 'player_strength_passing';
 		$columns['P.w_shooting'] = 'player_strength_shooting';
@@ -560,7 +735,19 @@ class PlayersDataService {
 	 * @return array list of found players or empty array.
 	 */
 	public static function findPlayers(WebSoccer $websoccer, DbConnection $db, 
-			$firstName, $lastName, $playerName, $position, $strengthMax, $lendableOnly, $startIndex, $entries_per_page) {
+			$firstName, $lastName, $playerName, $position, $strengthMax,
+			$passing,
+			$shooting,
+			$heading,
+			$tackling,
+			$freekick,
+			$creativity,
+			$pace,
+			$influence,
+			$flair,
+			$penalty,
+			$penalty_killing,
+			$lendableOnly, $startIndex, $entries_per_page) {
 		
 		$columns['P.id'] = 'id';
 		$columns['P.vorname'] = 'firstname';
@@ -591,7 +778,20 @@ class PlayersDataService {
 		$columns['C.name'] = 'team_name';	
 		
 		$limit = $startIndex .','. $entries_per_page;
-		$result = self::executeFindQuery($websoccer, $db, $columns, $limit, $firstName, $lastName, $playerName, $position, $strengthMax, $lendableOnly);
+		$result = self::executeFindQuery($websoccer, $db, $columns, $limit,
+				$firstName, $lastName, $playerName, $position, $strengthMax,
+				$passing,
+				$shooting,
+				$heading,
+				$tackling,
+				$freekick,
+				$creativity,
+				$pace,
+				$influence,
+				$flair,
+				$penalty,
+				$penalty_killing,
+				$lendableOnly);
 		
 		$players = array();
 		while ($player = $result->fetch_array()) {
@@ -633,8 +833,6 @@ class PlayersDataService {
     	    $penalty_killing, 
 	    $lendableOnly) {
 	        
-	        echo"findPlayersCount<br>";
-    	        
 		$columns = 'COUNT(*) AS hits';
 		
 		$result = self::executeFindQuery($websoccer, $db, $columns, 1, 
@@ -676,8 +874,6 @@ class PlayersDataService {
     	    $penalty_killing,
 	    $lendableOnly) {
 	        
-	    echo"findPlayersCount<br>";
-	    
 		$whereCondition = 'P.status = 1';
 		
 		$parameters = array();
@@ -866,20 +1062,27 @@ class PlayersDataService {
 	public static function getMarketValue(WebSoccer $websoccer, DbConnection $db, $player, $columnPrefix = 'player_') {
 
 		if (!$websoccer->getConfig('transfermarket_computed_marketvalue')) {
-			return $player[$columnPrefix . 'marketvalue'];
+			return (isset($player[$columnPrefix . 'marketvalue'])) ? $player[$columnPrefix . 'marketvalue'] : 0;
 		}
 		
-		$playerId = $player['player_id'];
-
-		// get marketvalue
-		//PlayersStrengthDataService::calculateMarketValue2($websoccer, $db, $playerId);
-		$pl_mw = PlayersStrengthDataService::calculatePlayerStats($websoccer, $db, $playerId);
-		$marketvalue = $pl_mw['market_value'];
+		if (isset($player['player_id'])) {
+			$playerId = (int) $player['player_id'];
+		} elseif (isset($player[$columnPrefix . 'id'])) {
+			$playerId = (int) $player[$columnPrefix . 'id'];
+		} elseif (isset($player['id'])) {
+			$playerId = (int) $player['id'];
+		} else {
+			return (isset($player[$columnPrefix . 'marketvalue'])) ? $player[$columnPrefix . 'marketvalue'] : 0;
+		}
 		
-		// update marketvalue in DB
-		self::setPlayerMarketValue($websoccer, $db, $playerId, $marketvalue);
-			
-		return $marketvalue;
+		if ($playerId < 1) {
+			return (isset($player[$columnPrefix . 'marketvalue'])) ? $player[$columnPrefix . 'marketvalue'] : 0;
+		}
+
+		// calculatePlayerStats() is the single source of truth: it recalculates
+		// w_staerke_calc and marktwert and writes both values back to the DB.
+		$pl_mw = PlayersStrengthDataService::calculatePlayerStats($websoccer, $db, $playerId);
+		return $pl_mw['market_value'];
 	}
 	
 	/**
@@ -920,7 +1123,7 @@ class PlayersDataService {
 	    
 	    $queryString = "SELECT S.*, (S.w_staerke/S.w_talent) AS strength
                             FROM ". $websoccer->getConfig('db_prefix') ."_spieler AS S
-                            ORDER BY w_staerke DESC, w_staerke_calc DESC, marktwert DESC, w_talent LIMIT 20";
+                            ORDER BY w_staerke DESC, w_staerke_calc DESC, CAST(marktwert AS UNSIGNED) DESC, w_talent DESC LIMIT 20";
 	    $result = $db->executeQuery($queryString);
 	    
 	    $players = array();
@@ -948,7 +1151,7 @@ class PlayersDataService {
 	public static function getMostValuablePlayers(WebSoccer $websoccer, DbConnection $db) {
 	    
 	    $queryString = "SELECT * FROM ". $websoccer->getConfig('db_prefix') ."_spieler
-                            ORDER BY marktwert DESC LIMIT 20";
+                            ORDER BY CAST(marktwert AS UNSIGNED) DESC LIMIT 20";
 	    $result = $db->executeQuery($queryString);
 	    
 	    $players = array();
@@ -1072,31 +1275,29 @@ class PlayersDataService {
 	 * generate Marketvalue
 	 */
 	public static function updateMarketValue(WebSoccer $websoccer, DbConnection $db) {
-	    session_start(); // Ensure sessions are started
-	    
-	    $sqlStr = "SELECT id AS player_id, TIMESTAMPDIFF(YEAR, geburtstag, CURDATE()) AS player_age,
-                      position, w_staerke, w_staerke_max, w_technik, w_kondition, w_frische,
-                      w_zufriedenheit, w_talent, w_passing, w_shooting, w_heading, w_tackling,
-                      w_freekick, w_pace, w_creativity, w_influence, w_flair, w_penalty, w_penalty_killing
-               FROM ". $websoccer->getConfig('db_prefix') ."_spieler
-               ORDER BY id";
+	    $sqlStr = "SELECT id AS player_id
+	               FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+	               WHERE status = '1'
+	               ORDER BY id";
 	    
 	    $result = $db->executeQuery($sqlStr);
 	    
 	    while ($player_data = $result->fetch_array()) {
-	        $playerId = $player_data['player_id'];
-	        
-	        // get marketvalue
-	        //$marketvalue = PlayersStrengthDataService::updateAllPlayersMarketAndStrength($websoccer, $db, $playerId);
-	        $pl_mw = self::calculatePlayerStats($websoccer, $db, $playerId);
-	        $marketvalue = $pl_mw['market_value'];
-	        
-	        // update marketvalue in DB
-	        self::setPlayerMarketValue($websoccer, $db, $playerId, $marketvalue);
+	        PlayersStrengthDataService::calculatePlayerStats($websoccer, $db, (int) $player_data['player_id']);
 	    }
 	    
 	    $result->free();
-	    $_SESSION['market_value_calculated'] = '1';
+	    if (session_status() === PHP_SESSION_ACTIVE) {
+	        $_SESSION['market_value_calculated'] = '1';
+	    }
+	}
+	
+	public static function updateMarketValueById(WebSoccer $websoccer, DbConnection $db, $playerId) {
+	    $playerId = (int) $playerId;
+	    if ($playerId < 1) {
+	        return;
+	    }
+	    PlayersStrengthDataService::calculatePlayerStats($websoccer, $db, $playerId);
 	}
 	
 	/*

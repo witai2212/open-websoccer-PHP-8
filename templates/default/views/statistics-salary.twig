@@ -37,6 +37,7 @@
 }
 
 </style>
+<!--
 <table class="charts-css column show-heading show-labels show-primary-axis  show-data-axes data-spacing-20 show-data">
 
   <tbody>
@@ -70,6 +71,32 @@
     </tr>
   </tbody>
 </table>
+-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="myLineChart" width="600" height="300"></canvas>
 
+<script>
+const ctx = document.getElementById('myLineChart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+	labels: ['1', '2', '3', '4', '5', '6', '7'], // X-axis labels
+	datasets: [{
+	  label: '{{ i18n.getMessage("stats_salary_title") }}',
+	  data: [{{salaries.0}}, {{salaries.1}}, {{salaries.2}}, {{salaries.3}}, {{salaries.4}}, {{salaries.5}}, {{salaries.6}}], // Y-axis data
+	  fill: false,
+	  borderColor: 'rgba(75, 192, 192, 1)',
+	  tension: 0.1
+	}]
+  },
+  options: {
+	scales: {
+	  y: {
+		beginAtZero: true
+	  }
+	}
+  }
+});
+</script>
 {% endif %}
 {% endblock %}

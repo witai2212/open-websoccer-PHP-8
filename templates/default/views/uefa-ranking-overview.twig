@@ -16,6 +16,11 @@
 			<tr>
 				<th></th>
 				<th>{{ i18n.getMessage("uefatable_land") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_s1") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_s2") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_s3") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_s4") }}</th>
+				<th>{{ i18n.getMessage("uefatable_uefa_s5") }}</th>
 				<th>{{ i18n.getMessage("uefatable_uefa_total") }}</th>
 				<th>{{ i18n.getMessage("uefatable_uefa_cl") }}</th>
 				<th>{{ i18n.getMessage("uefatable_uefa_ul") }}</th>
@@ -36,6 +41,11 @@
 				{% endif %}
 				
 				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}&nbsp;{{ uefa.name }}</td>
+				<td>{{ uefa.uefa_s5 }}</td>
+				<td>{{ uefa.uefa_s4 }}</td>
+				<td>{{ uefa.uefa_s3 }}</td>
+				<td>{{ uefa.uefa_s2 }}</td>
+				<td>{{ uefa.uefa_s1 }}</td>
 				<td>{{ uefa.total }}</td>
 				<td>{{ uefa.uefa_cl }}</td>
 				<td>{{ uefa.uefa_ul }}</td>

@@ -23,6 +23,10 @@ use Twig\Cache\NullCache;
 ******************************************************/
 
 /**
+ * Player search for the transfer section.
+ * Lists all visible players except own players. Hidden player attributes are
+ * neither displayed nor available as filters when hide_strength_attributes is active.
+ *
  * @author Ingo Hofmann
  */
 class PlayersSearchModel implements IModel {
@@ -30,25 +34,9 @@ class PlayersSearchModel implements IModel {
 	private $_i18n;
 	private $_websoccer;
 	
-	private $_firstName;
-	private $_lastName;
-	private $_club;
-	private $_position;
-	private $_strength;
-	
-	private $_passing;
-	private $_shooting;
-	private $_tackling;
-	private $_heading;
-	private $_freekick;
-	private $_creativity;
-	private $_pace;
-	private $_influence;
-	private $_flair;
-	private $_penalty;
-	private $_penalty_killing;
-	
-	private $_lendableOnly;
+	private $_positionFilter;
+	private $_advancedFilters = array();
+	private $_advancedFiltersActive = false;
 	
 	public function __construct($db, $i18n, $websoccer) {
 		$this->_db = $db;
@@ -57,106 +45,110 @@ class PlayersSearchModel implements IModel {
 	}
 	
 	public function renderView() {
-	    
-		$this->_firstName = $this->_websoccer->getRequestParameter("fname");
-		$this->_lastName = $this->_websoccer->getRequestParameter("lname");
-		$this->_club = $this->_websoccer->getRequestParameter("club");
-		$this->_position = $this->_websoccer->getRequestParameter("position");
-		$this->_strength = $this->_websoccer->getRequestParameter("strength");
+		$this->_positionFilter = $this->_websoccer->getRequestParameter("position");
+		$this->_readAdvancedFilters();
 		
-		$this->_passing = $this->_websoccer->getRequestParameter("passing");
-		$this->_shooting = $this->_websoccer->getRequestParameter("shooting");
-		$this->_heading = $this->_websoccer->getRequestParameter("heading");
-		$this->_tackling = $this->_websoccer->getRequestParameter("tackling");
-		$this->_freekick = $this->_websoccer->getRequestParameter("freekick");
-		$this->_creativity = $this->_websoccer->getRequestParameter("creativity");
-		$this->_pace = $this->_websoccer->getRequestParameter("pace");
-		$this->_influence = $this->_websoccer->getRequestParameter("influence");
-		$this->_flair = $this->_websoccer->getRequestParameter("flair");
-		$this->_penalty = $this->_websoccer->getRequestParameter("penalty");
-		$this->_penalty_killing = $this->_websoccer->getRequestParameter("penalty_killing");
-		
-		$this->_lendableOnly = ($this->_websoccer->getRequestParameter("lendable") == "1") ? TRUE : FALSE;
-		
-		// display content only if user entered any filter
-		return ($this->_firstName !== null || $this->_lastName !== null
-				|| $this->_club !== null || $this->_position !== null
-				|| $this->_strength !== null || $this->_lendableOnly
-    		    || $this->_passing !== null || $this->_shooting !== null 
-    		    || $this->_heading !== null || $this->_tackling !== null 
-    		    || $this->_freekick !== null || $this->_creativity !== null 
-    		    || $this->_pace !== null || $this->_influence !== null
-		        || $this->_flair !== null || $this->_penalty !== null
-		        || $this->_penalty_killing !== null);
+		return ($this->_websoccer->getConfig("transfermarket_enabled") == 1);
 	}
 	
 	public function getTemplateParameters() {
+		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		if ($teamId < 1) {
+			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
+		}
 		
-		$playersCount = PlayersDataService::findPlayersCount($this->_websoccer, $this->_db, 
-		    $this->_firstName, $this->_lastName, $this->_club, $this->_position, $this->_strength, 
-		    $this->_passing,
-		    $this->_shooting,
-		    $this->_heading,
-		    $this->_tackling,
-		    $this->_freekick,
-		    $this->_creativity,
-		    $this->_pace,
-		    $this->_influence,
-		    $this->_flair,
-		    $this->_penalty,
-		    $this->_penalty_killing,
-		    
-		    $this->_lendableOnly);
+		$playersCount = PlayersDataService::countTransferSectionPlayerSearch(
+			$this->_websoccer,
+			$this->_db,
+			$teamId,
+			$this->_positionFilter,
+			$this->_advancedFilters
+		);
 		
-		// setup paginator
 		$eps = $this->_websoccer->getConfig("entries_per_page");
 		$paginator = new Paginator($playersCount, $eps, $this->_websoccer);
-		$paginator->addParameter("block", "playerssearch-results");
-		$paginator->addParameter("fname", $this->_firstName);
-		$paginator->addParameter("lname", $this->_lastName);
-		$paginator->addParameter("club", $this->_club);
-		$paginator->addParameter("position", $this->_position);
-		$paginator->addParameter("strength", $this->_strength);
 		
-		$paginator->addParameter("passing", $this->_passing);
-		$paginator->addParameter("shooting", $this->_shooting);
-		$paginator->addParameter("heading", $this->_heading);
-		$paginator->addParameter("tackling", $this->_tackling);
-		$paginator->addParameter("freekick", $this->_freekick);
-		$paginator->addParameter("creativity", $this->_creativity);
-		$paginator->addParameter("pace", $this->_pace);
-		$paginator->addParameter("influence", $this->_influence);
-		$paginator->addParameter("flair", $this->_flair);
-		$paginator->addParameter("penalty", $this->_penalty);
-		$paginator->addParameter("penalty_killing", $this->_penalty_killingh);
+		if ($this->_positionFilter != null && strlen(trim($this->_positionFilter)) > 0) {
+			$paginator->addParameter("position", $this->_positionFilter);
+		}
 		
-		$paginator->addParameter("lendable", $this->_lendableOnly);
+		foreach ($this->_advancedFilters as $filterKey => $values) {
+			if ($values["min"] !== null) {
+				$paginator->addParameter($filterKey . "_min", $values["min"]);
+			}
+			if ($values["max"] !== null) {
+				$paginator->addParameter($filterKey . "_max", $values["max"]);
+			}
+		}
 		
-		// get players records
 		if ($playersCount > 0) {
-			$players = PlayersDataService::findPlayers($this->_websoccer, $this->_db,
-			    $this->_firstName, $this->_lastName, $this->_club, $this->_position, $this->_strength,
-			    $this->_passing,
-			    $this->_shooting,
-			    $this->_heading,
-			    $this->_tackling,
-			    $this->_freekick,
-			    $this->_creativity,
-			    $this->_pace,
-			    $this->_influence,
-			    $this->_flair,
-			    $this->_penalty,
-			    $this->_penalty_killing,
-			    $this->_lendableOnly,
-				$paginator->getFirstIndex(), $eps);
-			
+			$players = PlayersDataService::findTransferSectionPlayerSearch(
+				$this->_websoccer,
+				$this->_db,
+				$teamId,
+				$this->_positionFilter,
+				$this->_advancedFilters,
+				$paginator->getFirstIndex(),
+				$eps
+			);
 		} else {
 			$players = array();
 		}
 		
-		return array("playersCount" => $playersCount, "players" => $players, "paginator" => $paginator);
+		return array(
+			"playersCount" => $playersCount,
+			"players" => $players,
+			"paginator" => $paginator,
+			"playerssearch_filter_definitions" => PlayersDataService::getTransfermarketFilterDefinitions($this->_websoccer),
+			"playerssearch_advancedfilters_active" => $this->_advancedFiltersActive
+		);
 	}
 	
+	private function _readAdvancedFilters() {
+		$filterDefinitions = PlayersDataService::getTransfermarketFilterDefinitions($this->_websoccer);
+		$this->_advancedFilters = array();
+		$this->_advancedFiltersActive = false;
+		
+		foreach ($filterDefinitions as $filterKey => $filterDefinition) {
+			$minValue = $this->_getNumericRequestParameter($filterKey . "_min");
+			$maxValue = $this->_getNumericRequestParameter($filterKey . "_max");
+			
+			if ($minValue !== null && $maxValue !== null && $minValue > $maxValue) {
+				$tmpValue = $minValue;
+				$minValue = $maxValue;
+				$maxValue = $tmpValue;
+			}
+			
+			$this->_advancedFilters[$filterKey] = array(
+				"min" => $minValue,
+				"max" => $maxValue
+			);
+			
+			if ($minValue !== null || $maxValue !== null) {
+				$this->_advancedFiltersActive = true;
+			}
+		}
+	}
+	
+	private function _getNumericRequestParameter($parameterName) {
+		$value = $this->_websoccer->getRequestParameter($parameterName);
+		
+		if ($value === null) {
+			return null;
+		}
+		
+		$value = trim($value);
+		if ($value === '') {
+			return null;
+		}
+		
+		$value = str_replace(',', '.', $value);
+		if (!is_numeric($value)) {
+			return null;
+		}
+		
+		return round((float) $value, 2);
+	}
 	
 }
 

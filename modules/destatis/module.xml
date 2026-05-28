@@ -87,6 +87,13 @@
 	            model="MostValuableTeamsModel"
 	            navweight="3"
 	            role="user"/>
+        	<page
+	            id="highscore_teams"
+	            template="highscore_teams"
+	            navitem="true"
+	            model="HighscoreTeamsModel"
+	            navweight="3"
+	            role="user"/>
 
         </page>
         

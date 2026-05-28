@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="manager-missions_navlabel">Vorstand</message>
+    <message id="manager-missions_title">Vorstand / Saisonziele</message>
+    <message id="manager-missions_intro">Der Vorstand bewertet deine Saison nicht nur nach der Tabelle. Hier siehst du alle aktuellen Ziele, den Fortschritt und die möglichen Auswirkungen auf Vorstandszufriedenheit und Highscore.</message>
+
+    <message id="manager_mission_no_active_season">Für deinen Verein gibt es aktuell keine aktive Saison. Sobald eine Saison aktiv ist, werden die Ziele automatisch angelegt.</message>
+    <message id="manager_mission_no_missions">Für diese Saison wurden noch keine Ziele angelegt.</message>
+    <message id="manager_mission_season">Saison</message>
+    <message id="manager_mission_summary">Fortschritt</message>
+    <message id="manager_mission_completed_short">erfüllt</message>
+    <message id="manager_mission_board_satisfaction">Vorstandszufriedenheit</message>
+    <message id="manager_mission_highscore">Highscore</message>
+    <message id="manager_mission_rewards_hint">Belohnung je erfülltem Ziel:</message>
+    <message id="manager_mission_penalty_hint">Strafe je verfehltem Ziel am Saisonende:</message>
+    <message id="manager_mission_baseline">Startwert</message>
+    <message id="manager_mission_target">Ziel</message>
+    <message id="manager_mission_current">Aktuell</message>
+
+    <message id="manager_mission_status_open">Offen</message>
+    <message id="manager_mission_status_completed">Erfüllt</message>
+    <message id="manager_mission_status_failed">Verfehlt</message>
+    <message id="manager_mission_status_cancelled">Beendet durch Vereinswechsel</message>
+
+    <message id="manager_mission_title_league_rank">Tabellenplatz {rank} erreichen</message>
+    <message id="manager_mission_desc_league_rank">Der Vorstand erwartet, dass dein Verein die Saison mindestens auf Platz {rank} abschließt.</message>
+
+    <message id="manager_mission_title_highscore">Highscore auf {target} steigern</message>
+    <message id="manager_mission_desc_highscore">Verbessere den Vereins-Highscore von {baseline} auf mindestens {target} Punkte.</message>
+
+    <message id="manager_mission_title_salary_reduce">Spielergehälter auf {target} senken</message>
+    <message id="manager_mission_desc_salary_reduce">Reduziere die Summe der Spielergehälter von {baseline} auf maximal {target}.</message>
+    <message id="manager_mission_salary_missing_detail">Noch {amount} Gehalt einsparen.</message>
+
+    <message id="manager_mission_title_youth_promotion_played">Jugendspieler hochziehen und einsetzen</message>
+    <message id="manager_mission_desc_youth_promotion_played">Befördere einen Jugendspieler in den Profikader und setze ihn anschließend mindestens einmal in einem Pflichtspiel ein.</message>
+    <message id="manager_mission_youth_open_detail">Noch kein Jugendspieler wurde für dieses Ziel hochgezogen.</message>
+    <message id="manager_mission_youth_promoted_detail">{player} wurde hochgezogen. Es fehlt noch ein Pflichtspieleinsatz.</message>
+    <message id="manager_mission_youth_done_detail">{player} wurde hochgezogen und eingesetzt.</message>
+
+    <message id="manager_mission_title_cup_round">Pokalrunde {round} erreichen</message>
+    <message id="manager_mission_desc_cup_round">Erreiche in irgendeinem Pokalwettbewerb mindestens die {round}. Runde.</message>
+
+    <message id="manager_mission_title_board_satisfaction">Vorstand über {target}% halten</message>
+    <message id="manager_mission_desc_board_satisfaction">Halte die Vorstandszufriedenheit während der Saison bei mindestens {target}%.</message>
+
+    <message id="manager_mission_value_rank">Platz {rank}</message>
+    <message id="manager_mission_value_cup_round">Runde {round}</message>
+    <message id="manager_mission_value_done">Erledigt</message>
+    <message id="manager_mission_value_open">Offen</message>
+
+    <message id="manager_mission_completed_notification">Saisonziel erfüllt: {mission}</message>
+    <message id="manager_mission_failed_notification">Saisonziel verfehlt: {mission}</message>
+    <message id="manager_mission_news_completed_title">Saisonziel erfüllt bei {team}</message>
+    <message id="manager_mission_news_completed_message">{manager} hat mit {team} ein Vorstandsziel erfüllt: {mission}. Der Vorstand zeigt sich zufrieden und belohnt die Entwicklung des Vereins.</message>
+    <message id="manager_mission_news_link">Zu den Saisonzielen</message>
+	
+	<message id="manager_mission_news_completed_title">Saisonziel erfüllt bei {team}</message>
+	<message id="manager_mission_news_completed_message">{manager} hat mit {team} ein Vorstandsziel erfüllt: {mission}. Der Vorstand zeigt sich zufrieden und belohnt die Entwicklung des Vereins.</message>
+	<message id="manager_mission_news_link">Zu den Saisonzielen</message>
+</messages>

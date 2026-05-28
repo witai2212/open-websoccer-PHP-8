@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Mitarbeiterstab</message>
+    <message id="club-staff_navlabel">Mitarbeiterstab</message>
+    <message id="clubstaff_title">Mitarbeiterstab</message>
+    <message id="clubstaff_intro">Stelle einfache Spezialisten ein, die deinem Verein kleine Boni geben. Jeder Verein kann pro Rolle genau einen Mitarbeiter beschäftigen.</message>
+    <message id="clubstaff_only_human">Der Mitarbeiterstab steht nur menschlich geführten Vereinen zur Verfügung.</message>
+    <message id="clubstaff_disabled">Der Mitarbeiterstab ist derzeit deaktiviert.</message>
+
+    <message id="clubstaff_current_staff">Aktueller Mitarbeiterstab</message>
+    <message id="clubstaff_available_staff">Verfügbare Mitarbeiter</message>
+    <message id="clubstaff_effects">Aktive Boni</message>
+    <message id="clubstaff_no_staff_hired">Du hast noch keine zusätzlichen Mitarbeiter eingestellt.</message>
+    <message id="clubstaff_no_staff_available">Zurzeit sind keine passenden Mitarbeiter verfügbar.</message>
+    <message id="clubstaff_total_salary">Gesamtkosten pro Spieltag</message>
+    <message id="clubstaff_salary">Gehalt pro Spieltag</message>
+    <message id="clubstaff_bonus">Bonus</message>
+    <message id="clubstaff_level">Stufe</message>
+    <message id="clubstaff_role">Rolle</message>
+    <message id="clubstaff_name">Name</message>
+    <message id="clubstaff_description">Beschreibung</message>
+    <message id="clubstaff_action">Aktion</message>
+    <message id="clubstaff_hired_since">Eingestellt seit</message>
+    <message id="clubstaff_budget">Vereinsbudget</message>
+    <message id="clubstaff_info_costs">Die Gehälter werden automatisch nach neuen absolvierten Spielen gebucht und erscheinen in den Finanzen.</message>
+    <message id="clubstaff_info_simple">Die Boni sind bewusst klein gehalten, damit der Mitarbeiterstab eine Ergänzung bleibt und kein Verwaltungsmonster wird.</message>
+
+    <message id="clubstaff_role_assistant_manager">Co-Trainer</message>
+    <message id="clubstaff_role_goalkeeping_coach">Torwarttrainer</message>
+    <message id="clubstaff_role_fitness_coach">Fitnesstrainer</message>
+    <message id="clubstaff_role_youth_coach">Jugendtrainer</message>
+    <message id="clubstaff_role_physio">Physio</message>
+    <message id="clubstaff_role_marketing_manager">Marketingmanager</message>
+    <message id="clubstaff_role_financial_advisor">Finanzberater</message>
+
+    <message id="clubstaff_effect_assistant_manager">Verbessert Teamchemie und taktische Trainingswirkung leicht.</message>
+    <message id="clubstaff_effect_goalkeeping_coach">Verbessert Torwarttraining und Elfmeterabwehr leicht.</message>
+    <message id="clubstaff_effect_fitness_coach">Verbessert Kondition, Schnelligkeit und Frische im Training leicht.</message>
+    <message id="clubstaff_effect_youth_coach">Verbessert Jugendspielerentwicklung und Jugend-Scouting leicht.</message>
+    <message id="clubstaff_effect_physio">Reduziert Verletzungsfolgen und unterstützt die Regeneration leicht.</message>
+    <message id="clubstaff_effect_marketing_manager">Verbessert Zuschauerinteresse und Merchandising leicht.</message>
+    <message id="clubstaff_effect_financial_advisor">Verbessert Kreditwürdigkeit und Finanzierungskonditionen leicht.</message>
+
+    <message id="hire-club-staff">Einstellen</message>
+    <message id="fire-club-staff">Entlassen</message>
+    <message id="hire_club_staff_message">Mitarbeiter wurde eingestellt.</message>
+    <message id="fire_club_staff_message">Mitarbeiter wurde entlassen.</message>
+
+    <message id="clubstaff_error_disabled">Der Mitarbeiterstab ist derzeit deaktiviert.</message>
+    <message id="clubstaff_error_no_team">Du hast keinen Verein.</message>
+    <message id="clubstaff_error_human_only">Nur menschlich geführte Vereine können Mitarbeiter einstellen.</message>
+    <message id="clubstaff_error_staff_not_found">Dieser Mitarbeiter wurde nicht gefunden.</message>
+    <message id="clubstaff_error_staff_inactive">Dieser Mitarbeiter ist nicht verfügbar.</message>
+    <message id="clubstaff_error_role_taken">Diese Rolle ist bereits besetzt.</message>
+    <message id="clubstaff_error_not_hired">Diese Rolle ist in deinem Verein nicht besetzt.</message>
+    <message id="clubstaff_error_invalid_role">Ungültige Mitarbeiterrolle.</message>
+
+    <message id="clubstaff_account_salary_subject">Mitarbeitergehälter</message>
+    <message id="clubstaff_account_sender">Mitarbeiterstab</message>
+
+    <message id="teamchemistry_factor_staff">Mitarbeiterstab</message>
+    <message id="teamchemistry_source_staff">Mitarbeiterstab</message>
+
+</messages>

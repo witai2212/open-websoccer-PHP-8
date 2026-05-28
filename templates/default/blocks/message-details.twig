@@ -17,7 +17,7 @@
 	</colgroup>
 	<tr>
 		<td><strong>{{ i18n.getMessage("messages_sender") }}</strong></td>
-		<td><a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a></td>
+		<td>{% if message.sender_id > 0 %}<a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a>{% else %}{{ message.sender_name }}{% endif %}</td>
 	</tr>
 	<tr>
 		<td><strong>{{ i18n.getMessage("messages_recipient") }}</strong></td>

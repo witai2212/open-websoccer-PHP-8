@@ -8,6 +8,7 @@
     <message id="playertable_head_position_abbr">Pos</message>
     <message id="playertable_head_position">Position</message>
     <message id="playertable_head_name">Name</message>
+    <message id="playertable_head_personality">Personality</message>
     <message id="playertable_head_strength_abbr">Ski</message>
     <message id="playertable_head_strength">Skill</message>
     <message id="playertable_head_strength_technic_abbr">Tec</message>
@@ -79,4 +80,14 @@
     
     <message id="topscorers_navlabel">Top Scorers</message>
     <message id="topscorers_head_score">Score</message>
+
+    <message id="player_personality_unknown">Unknown</message>
+    <message id="player_personality_leader">Leader</message>
+    <message id="player_personality_professional">Professional</message>
+    <message id="player_personality_injury_prone">Injury-prone</message>
+    <message id="player_personality_inconsistent">Inconsistent</message>
+    <message id="player_personality_loyal">Loyal</message>
+    <message id="player_personality_ambitious">Ambitious</message>
+    <message id="player_personality_big_game_player">Big-game player</message>
+    <message id="player_personality_troublemaker">Troublemaker</message>
 </messages>

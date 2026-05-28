@@ -82,8 +82,10 @@ class PlayerDetailsWithDependenciesModel implements IModel {
     		}
 		}
 
+		$showPersonality = PlayerPersonalityDataService::isVisibleForUser($this->_websoccer, $this->_db, $player['team_id'], $scouting);
+
 		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers, "watchlist" => $watchlist,
-		              "onmywatchlist" => $onMyWhatchlist, "scouting" => $scouting);
+		              "onmywatchlist" => $onMyWhatchlist, "scouting" => $scouting, "show_personality" => $showPersonality);
 	}
 	
 	private function _getGrades($playerId) {

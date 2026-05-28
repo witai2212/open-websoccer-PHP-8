@@ -10,18 +10,92 @@
 
 {% block page_content %}
 
+{% if completedCampReport is defined and completedCampReport|length > 0 %}
+	<div class="alert alert-success">
+		<h4>{{ i18n.getMessage("trainingcamp_report_completed_title") }}</h4>
+		<p>{{ i18n.getMessage("trainingcamp_report_completed_text") }}</p>
+	</div>
+{% endif %}
+
+{% set report = {} %}
+{% if completedCampReport is defined and completedCampReport|length > 0 %}
+	{% set report = completedCampReport %}
+{% elseif lastCampReport is defined and lastCampReport|length > 0 %}
+	{% set report = lastCampReport %}
+{% endif %}
+
+{% if report|length > 0 %}
+	<h3>{{ i18n.getMessage("trainingcamp_last_report") }}</h3>
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<th>{{ i18n.getMessage("entity_trainingcamp_name") }}</th>
+				<td>{{ report.camp_name }}</td>
+			</tr>
+			<tr>
+				<th>{{ i18n.getMessage("entity_trainingcamp_camp_type") }}</th>
+				<td>{{ i18n.getMessage("trainingcamp_type_" ~ report.camp_type) }}</td>
+			</tr>
+			<tr>
+				<th>{{ i18n.getMessage("trainingcamp_report_period") }}</th>
+				<td>{{ env.getFormattedDate(report.date_start) }} - {{ env.getFormattedDate(report.date_end) }}</td>
+			</tr>
+			<tr>
+				<th>{{ i18n.getMessage("trainingcamp_report_players_costs") }}</th>
+				<td>{{ report.player_count }} / {{ report.total_costs|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+			</tr>
+			<tr>
+				<th>{{ i18n.getMessage("trainingcamp_report_effects") }}</th>
+				<td>
+					{{ i18n.getMessage("entity_trainingcamp_p_staerke") }}: {{ report.effect_strength_signed }},
+					{{ i18n.getMessage("entity_trainingcamp_p_technik") }}: {{ report.effect_technique_signed }},
+					{{ i18n.getMessage("entity_trainingcamp_p_kondition") }}: {{ report.effect_stamina_signed }},
+					{{ i18n.getMessage("entity_trainingcamp_p_frische") }}: {{ report.effect_freshness_signed }},
+					{{ i18n.getMessage("entity_trainingcamp_p_zufriedenheit") }}: {{ report.effect_satisfaction_signed }},
+					{{ i18n.getMessage("entity_trainingcamp_p_team_chemistry") }}: {{ report.effect_chemistry_signed }}
+				</td>
+			</tr>
+			{% if report.special_effects|length > 0 %}
+			<tr>
+				<th>{{ i18n.getMessage("trainingcamp_report_special_effects") }}</th>
+				<td>
+					{% for effect in report.special_effects %}{% if loop.index > 1 %}, {% endif %}{{ i18n.getMessage(effect.label_key) }}: {{ effect.signed }}{% endfor %}
+				</td>
+			</tr>
+			{% endif %}
+			<tr>
+				<th>{{ i18n.getMessage("trainingcamp_report_injuries") }}</th>
+				<td>{{ report.injuries }}</td>
+			</tr>
+		</tbody>
+	</table>
+{% endif %}
+
 {% if bookedCamp is defined and bookedCamp|length > 0 %}
 
 	<h3>{{ i18n.getMessage("trainingcamp_bookedcamp") }}</h3>
 	
 	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_name"), bookedCamp.name) }}
+	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_camp_type"), i18n.getMessage("trainingcamp_type_" ~ bookedCamp.camp_type)) }}
 	{{ profile.infofield(i18n.getMessage("trainingcamp_startdate"), env.getFormattedDate(bookedCamp.date_start)) }}
 	{{ profile.infofield(i18n.getMessage("trainingcamp_enddate"), env.getFormattedDate(bookedCamp.date_end)) }}
+	{% if bookedCamp.player_count > 0 %}
+		{{ profile.infofield(i18n.getMessage("trainingcamp_players_included"), bookedCamp.player_count) }}
+	{% endif %}
+	{% if bookedCamp.total_costs > 0 %}
+		{{ profile.infofield(i18n.getMessage("trainingcamp_total_costs"), bookedCamp.total_costs|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+	{% endif %}
 	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_staerke"), bookedCamp.effect_strength) }}
 	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_technik"), bookedCamp.effect_strength_technique) }}
 	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_kondition"), bookedCamp.effect_strength_stamina) }}
 	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_frische"), bookedCamp.effect_strength_freshness) }}
 	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_zufriedenheit"), bookedCamp.effect_strength_satisfaction) }}
+	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_p_team_chemistry"), bookedCamp.effect_team_chemistry) }}
+	{{ profile.infofield(i18n.getMessage("entity_trainingcamp_injury_risk"), bookedCamp.injury_risk ~ "%") }}
+	{% if bookedCamp.special_effects|length > 0 %}
+		<h4>{{ i18n.getMessage("trainingcamp_special_effects") }}</h4>
+		<p>{% for effect in bookedCamp.special_effects %}{% if loop.index > 1 %}, {% endif %}{{ i18n.getMessage(effect.label_key) }}: {{ effect.signed }}{% endfor %}</p>
+	{% endif %}
 	
 	<p style="margin-top: 10px; margin-bottom: 20px;"><i class="icon-warning-sign"></i> {{ i18n.getMessage('trainingcamp_delete_note') }}</p>
 	
@@ -43,12 +117,15 @@
 			<thead>
 				<tr>
 					<th>{{ i18n.getMessage("entity_trainingcamp_name") }}</th>
+					<th>{{ i18n.getMessage("entity_trainingcamp_camp_type") }}</th>
 					<th>{{ i18n.getMessage("entity_trainingcamp_preis_spieler_tag") }}</th>
 					<th>{{ i18n.getMessage("entity_trainingcamp_p_staerke") }}</th>
 					<th>{{ i18n.getMessage("entity_trainingcamp_p_technik") }}</th>
 					<th>{{ i18n.getMessage("entity_trainingcamp_p_kondition") }}</th>
 					<th>{{ i18n.getMessage("entity_trainingcamp_p_frische") }}</th>
 					<th>{{ i18n.getMessage("entity_trainingcamp_p_zufriedenheit") }}</th>
+					<th>{{ i18n.getMessage("entity_trainingcamp_p_team_chemistry") }}</th>
+					<th>{{ i18n.getMessage("trainingcamp_special_effects") }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -56,12 +133,15 @@
 				<tr>
 					<td><p>{{ camp.name }} ({{ camp.country }})</p>
 					<p><a href="{{ env.getInternalUrl("camp-details", "id=" ~ camp.id) }}" class="btn"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></p></td>
+					<td>{{ i18n.getMessage("trainingcamp_type_" ~ camp.camp_type) }}</td>
 					<td>{{ camp.costs|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 					<td>{{ camp.effect_strength }}</td>
 					<td>{{ camp.effect_strength_technique }}</td>
 					<td>{{ camp.effect_strength_stamina }}</td>
 					<td>{{ camp.effect_strength_freshness }}</td>
 					<td>{{ camp.effect_strength_satisfaction }}</td>
+					<td>{{ camp.effect_team_chemistry }}</td>
+					<td>{% if camp.special_effects|length > 0 %}{% for effect in camp.special_effects %}{% if loop.index > 1 %}, {% endif %}{{ i18n.getMessage(effect.label_key) }}: {{ effect.signed }}{% endfor %}{% else %}-{% endif %}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

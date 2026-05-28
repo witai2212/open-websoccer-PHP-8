@@ -3,10 +3,12 @@
 <messages>
     
     <message id="badge_notification">Glückwunsch! Sie haben eine neue Auszeichnung gewonnen.</message>
+    <message id="badge_notification_named">Glückwunsch! Sie haben die Auszeichnung {badge} gewonnen.</message>
     
     <message id="badge_level_gold">Goldene Auszeichnung</message>
     <message id="badge_level_silver">Silberne Auszeichnung</message>
     <message id="badge_level_bronze">Bronzene Auszeichnung</message>
     
     <message id="badges_navlabel">Auszeichnungen</message>
+    <message id="badge_earned_count">Erhalten</message>
 </messages>

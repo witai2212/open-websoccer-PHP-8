@@ -38,7 +38,11 @@ class MatchSimulationExecutor {
     public static function simulateOpenMatches(WebSoccer $websoccer, DbConnection $db) {
         
         // correct blocked matches
-        $db->executeQuery("UPDATE cm23_spiel SET blocked='0' WHERE berechnet='0'");
+        $db->executeQuery(
+            "UPDATE " . $websoccer->getConfig('db_prefix') . "_spiel
+                 SET blocked='0'
+                 WHERE berechnet='0'"
+            );
         
         // count open matches
         $now = $websoccer->getNowAsTimestamp();
@@ -48,8 +52,8 @@ class MatchSimulationExecutor {
         $result = $db->executeQuery($matchesStr);
         $open_matches = $result->fetch_assoc();
         $result->free();
-        //echo $matchesStr ."<br>";
-        echo"open m's: ". $open_matches['matches'] ."\n__________________________________\n";
+
+        echo "open m's: ". $open_matches['matches'] ."\n__________________________________\n";
         
         $simulator = new Simulator($db, $websoccer);
         
@@ -83,6 +87,7 @@ class MatchSimulationExecutor {
         $columns['M.home_verein'] = 'home_id';
         $columns['M.gast_verein'] = 'guest_id';
         $columns['M.minutes'] = 'minutes';
+        $columns['M.regular_end_minute'] = 'regular_end_minute';
         $columns['M.soldout'] = 'soldout';
         $columns['M.elfmeter'] = 'penaltyshooting';
         $columns['M.pokalname'] = 'cup_name';
@@ -102,6 +107,7 @@ class MatchSimulationExecutor {
         $columns['M.home_counterattacks'] = 'home_counterattacks';
         $columns['M.home_morale'] = 'home_morale';
         $columns['M.home_freekickplayer'] = 'home_freekickplayer';
+        $columns['M.home_cornerplayer'] = 'home_cornerplayer';
         $columns['M.gast_offensive'] = 'guest_offensive';
         $columns['M.guest_noformation'] = 'guest_noformation';
         $columns['M.gast_setup'] = 'guest_setup';
@@ -109,6 +115,7 @@ class MatchSimulationExecutor {
         $columns['M.gast_counterattacks'] = 'guest_counterattacks';
         $columns['M.gast_morale'] = 'guest_morale';
         $columns['M.gast_freekickplayer'] = 'guest_freekickplayer';
+        $columns['M.gast_cornerplayer'] = 'guest_cornerplayer';
         
         $columns['HOME_F.id'] = 'home_formation_id';
         $columns['HOME_F.offensive'] = 'home_formation_offensive';
@@ -116,6 +123,7 @@ class MatchSimulationExecutor {
         $columns['HOME_F.longpasses'] = 'home_formation_longpasses';
         $columns['HOME_F.counterattacks'] = 'home_formation_counterattacks';
         $columns['HOME_F.freekickplayer'] = 'home_formation_freekickplayer';
+        $columns['HOME_F.cornerplayer'] = 'home_formation_cornerplayer';
         
         $columns['HOME_T.name'] = 'home_name';
         $columns['HOME_T.nationalteam'] = 'home_nationalteam';
@@ -176,25 +184,32 @@ class MatchSimulationExecutor {
         $columns['GUEST_F.longpasses'] = 'guest_formation_longpasses';
         $columns['GUEST_F.counterattacks'] = 'guest_formation_counterattacks';
         $columns['GUEST_F.freekickplayer'] = 'guest_formation_freekickplayer';
+        $columns['GUEST_F.cornerplayer'] = 'guest_formation_cornerplayer';
         
         $whereCondition = 'M.berechnet != \'1\' AND M.blocked != \'1\' AND M.datum <= %d ORDER BY M.datum ASC, M.liga_id, M.id';
         $parameters = $websoccer->getNowAsTimestamp();
         
         $interval = (int) $websoccer->getConfig('sim_interval');
-        //$maxMatches = (int) $websoccer->getConfig('sim_max_matches_per_run');
-        $maxMatches = 15;
+        
+        $maxMatches = (int) $websoccer->getConfig('sim_max_matches_per_run');
+        // safety fallback
+        if ($maxMatches < 1) {
+            $maxMatches = 15;
+        }
         
         $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $maxMatches);
         $matchesSimulated = 0;
         $lockArray = array('blocked' => '1');
         $unlockArray = array('blocked' => '0');
         $matchTable = $websoccer->getConfig('db_prefix') . '_spiel';
+
         while ($matchinfo = $result->fetch_array()) {
             
             // lock record
             $db->queryUpdate($lockArray, $matchTable, 'id = %d', $matchinfo['match_id']);
             
             $match = null;
+
             if ($matchinfo['minutes'] < 1) {
                 $match = self::createInitialMatchData($websoccer, $db, $matchinfo);
             } else {
@@ -202,60 +217,74 @@ class MatchSimulationExecutor {
             }
             
             if ($match != null) {
+                if (class_exists('TeamChemistryDataService')) {
+                    TeamChemistryDataService::applyRuntimeMatchEffects($websoccer, $db, $match);
+                }
+
                 $simulator->simulateMatch($match, $interval);
-                
                 SimulationStateHelper::updateState($websoccer, $db, $match);
+
+                /*
+                 * IMPORTANT:
+                 * Use the simulated score from the $match object.
+                 * $matchinfo['home_goals'] and $matchinfo['guest_goals'] are the OLD DB values
+                 * from before this simulation run.
+                 */
+                $homeGoals = (int) $match->homeTeam->getGoals();
+                $guestGoals = (int) $match->guestTeam->getGoals();
+
+                // update UEFA value only when the match is actually completed
+                if (
+                    $match->isCompleted
+                    && (
+                        $matchinfo['cup_name'] == 'Champions League'
+                        || $matchinfo['cup_name'] == 'UEFA Euro League'
+                        || $matchinfo['cup_name'] == 'UEFA Conference League'
+                        || $matchinfo['cup_name'] == 'Conference League'
+                    )
+                ) {
+                    
+                    $homeUefa = 0;
+                    $guestUefa = 0;
+                    
+                    $homeTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['home_id']);
+                    $guestTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['guest_id']);
+                    
+                    $homeTeamCountry = $homeTeam['team_country'];
+                    $guestTeamCountry = $guestTeam['team_country'];
+                    
+                    if ($homeGoals > $guestGoals) {
+                        $homeUefa = 1;
+                        $guestUefa = 0.5;
+                    } else if ($homeGoals < $guestGoals) {
+                        $homeUefa = 0.5;
+                        $guestUefa = 1;
+                    } else {
+                        $homeUefa = 0.5;
+                        $guestUefa = 0.5;
+                    }
+                    
+                    $updStr1 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$homeUefa' WHERE name='$homeTeamCountry'";
+                    $db->executeQuery($updStr1);
+
+                    $updStr2 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$guestUefa' WHERE name='$guestTeamCountry'";
+                    $db->executeQuery($updStr2);
+                }
+            
+                // let garbage collector free memory before script execution by removing all references to objects
+                $match->cleanReferences();
+                unset($match);
             }
             
-            // let garbage collector free memory before script execution by removing all references to objects
-            $match->cleanReferences();
-            unset($match);
-            
-            echo"m_id: ". $matchinfo['match_id'] ." min.: ". $matchinfo['minutes']."\n";
+            echo "m_id: ". $matchinfo['match_id'] ." min.: ". $matchinfo['minutes']."\n";
             $db->executeQuery("UPDATE ". $websoccer->getConfig('db_prefix') . "_config SET zeitstempel='1' WHERE name='match_simulation'");
             
             // unlock record
             $db->queryUpdate($unlockArray, $matchTable, 'id = %d', $matchinfo['match_id']);
             
             $matchesSimulated++;
-            
-            // update UEFA value
-            //$matchinfo['cup_name'];
-            //$matchinfo['home_goals'];
-            //$matchinfo['guest_goals'];
-            if($matchinfo['cup_name']=='Champions League' || $matchinfo['cup_name']=='UEFA Euro League' || $matchinfo['cup_name']=='UEFA Conference League' || $matchinfo['cup_name']=='Conference League') {
-                
-                $homeUefa = 0;
-                $guestUefa = 0;
-                
-                $homeTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['home_id']);
-                $guestTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['guest_id']);
-                
-                $homeTeamCountry = $homeTeam['team_country'];
-                $guestTeamCountry = $guestTeam['team_country'];
-                
-                if($matchinfo['home_goals']>$matchinfo['guest_goals']) {
-                    $homeUefa = 1;
-                    $guestUefa = 0.5;
-                } else if($matchinfo['home_goals']<$matchinfo['guest_goals']) {
-                    $homeUefa = 0.5;
-                    $guestUefa = 1;
-                } else if($matchinfo['home_goals']==$matchinfo['guest_goals']) {
-                    $homeUefa = 0.5;
-                    $guestUefa = 0.5;
-                } else {
-                    $homeUefa = 0;
-                    $guestUefa = 0;
-                }
-                
-                $updStr1 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$homeUefa' WHERE name='$homeTeamCountry'";
-                $db->executeQuery($updStr1);
-                $updStr2 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$guestUefa' WHERE name='$guestTeamCountry'";
-                $db->executeQuery($updStr2);
-                
-            }
-            
         }
+
         $result->free();
         
         // Simulate youth matches
@@ -275,7 +304,6 @@ class MatchSimulationExecutor {
         } else {
             $match->isCompleted = TRUE;
         }
-        
     }
     
     public static function handleOneTeamHasNoFormation(WebSoccer $websoccer, DbConnection $db, $team, SimulationMatch $match) {
@@ -294,7 +322,6 @@ class MatchSimulationExecutor {
                 SimulationFormationHelper::generateNewFormationForTeam($websoccer, $db, $team, $match->id);
             }
         }
-        
     }
     
     public static function createInitialMatchData(WebSoccer $websoccer, DbConnection $db, $matchinfo) {
@@ -324,12 +351,14 @@ class MatchSimulationExecutor {
         $guestTeam->counterattacks = $matchinfo['guest_formation_counterattacks'];
         
         $match = new SimulationMatch($matchinfo['match_id'], $homeTeam, $guestTeam, 0);
+        $match->regularEndMinute = 90 + SimulationHelper::getMagicNumber(1, 5);
         $match->type = $matchinfo['type'];
         $match->penaltyShootingEnabled = $matchinfo['penaltyshooting'];
         $match->cupName = $matchinfo['cup_name'];
         $match->cupRoundName = $matchinfo['cup_roundname'];
         $match->cupRoundGroup = $matchinfo['cup_groupname'];
         $match->isAtForeignStadium = ($matchinfo['custom_stadium_id']) ? TRUE : FALSE;
+        $match->isBigGame = PlayerPersonalityDataService::isBigGameMatch($websoccer, $db, $match);
         
         if (!$matchinfo['home_formation_id'] && !$matchinfo['guest_formation_id']) {
             self::handleBothTeamsHaveNoFormation($websoccer, $db, $homeTeam, $guestTeam, $match);
@@ -344,12 +373,24 @@ class MatchSimulationExecutor {
             self::addPlayers($websoccer, $db, $match->homeTeam, $matchinfo, 'home');
             self::addSubstitution($websoccer, $db, $match->homeTeam, $matchinfo, 'home');
         } else {
-            
             self::addPlayers($websoccer, $db, $match->homeTeam, $matchinfo, 'home');
             self::addPlayers($websoccer, $db, $match->guestTeam, $matchinfo, 'guest');
             
             self::addSubstitution($websoccer, $db, $match->homeTeam, $matchinfo, 'home');
             self::addSubstitution($websoccer, $db, $match->guestTeam, $matchinfo, 'guest');
+        }
+
+        // Derby/rivalry matches create extra tension before kickoff.
+        RivalriesDataService::applyPreMatchMoraleBonus($websoccer, $db, $match);
+
+        // Team chemistry gives only a small extra morale/runtime effect before kickoff.
+        if (class_exists('TeamChemistryDataService')) {
+            TeamChemistryDataService::applyInitialMatchEffects($websoccer, $db, $match);
+        }
+
+        // Tactical style identity adds a deliberately small runtime effect.
+        if (class_exists('TacticalStyleDataService')) {
+            TacticalStyleDataService::applyMatchEffects($websoccer, $db, $match);
         }
         
         return $match;
@@ -373,17 +414,19 @@ class MatchSimulationExecutor {
         $columns['w_frische'] = 'freshness';
         $columns['w_zufriedenheit'] = 'satisfaction';
         $columns['w_talent'] = 'talent';
+        $columns['personality'] = 'personality';
         
-        $columns['w_passing'] = 'passing';
-        $columns['w_shooting'] = 'shooting';
-        $columns['w_tackling'] = 'tackling';
-        $columns['w_heading'] = 'heading';
-        $columns['w_freekick'] = 'freekick';
-        $columns['w_creativity'] = 'creativity';
-        $columns['w_influence'] = 'influence';
-        $columns['w_flair'] = 'flair';
-        $columns['w_penalty'] = 'penalty';
-        $columns['w_penalty_killing'] = 'penalty_killing';
+        $columns['w_passing'] = 'strength_passing';
+        $columns['w_shooting'] = 'strength_shooting';
+        $columns['w_tackling'] = 'strength_tackling';
+        $columns['w_heading'] = 'strength_heading';
+        $columns['w_pace'] = 'strength_pace';
+        $columns['w_freekick'] = 'strength_freekick';
+        $columns['w_creativity'] = 'strength_creativity';
+        $columns['w_influence'] = 'strength_influence';
+        $columns['w_flair'] = 'strength_flair';
+        $columns['w_penalty'] = 'strength_penalty';
+        $columns['w_penalty_killing'] = 'strength_penalty_killing';
         
         $columns['st_spiele'] = 'matches_played';
         
@@ -392,9 +435,14 @@ class MatchSimulationExecutor {
         } else {
             $ageColumn = 'age';
         }
+
         $columns[$ageColumn] = 'age';
         
         $whereCondition = 'id = %d AND verletzt = 0';
+        if (!$team->isNationalTeam && class_exists('MedicalCenterDataService')) {
+            MedicalCenterDataService::ensureSchema($websoccer, $db);
+            $whereCondition = 'id = %d AND (verletzt = 0 OR (verletzt = 1 AND id IN (SELECT player_id FROM ' . $websoccer->getConfig('db_prefix') . "_injury_clearance WHERE match_id = " . (int) $matchinfo['match_id'] . " AND status = 'open')))";
+        }
         
         // player must not be blocked
         if ($team->isNationalTeam) {
@@ -408,6 +456,7 @@ class MatchSimulationExecutor {
         $positionMapping = SimulationHelper::getPositionsMapping();
         
         $addedPlayers = 0;
+
         for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
             $playerId = $matchinfo[$columnPrefix . '_formation_player' . $playerNo];
             $mainPosition =  $matchinfo[$columnPrefix . '_formation_player_pos_' . $playerNo];
@@ -417,124 +466,170 @@ class MatchSimulationExecutor {
             $result->free();
             
             // is player still in team?
-            if (isset($playerinfo['team_id']) && $playerinfo['team_id'] == $team->id
-                || $team->isNationalTeam && $playerinfo['nation'] == $team->name) {
-                    
-                    $position = $positionMapping[$mainPosition];
-                    
-                    // add strength if player has no user
-                    $playerTeam = TeamsDataService::getTeamById($websoccer, $db, $playerinfo['team_id']);
-                    if($playerTeam['team_user_id']<=0) {
-                        //$computerFactor = 1.2;
-                        $computerFactor = 1;
-                    } else {
-                        $computerFactor = 1;
-                        
-                    }
-                    
-                    echo "ComputerFactor: ". $computerFactor ." userId: ". $playerinfo['team_id'] ."<br>\n";
-                    
-                    // add strength if team is 'superclub'
-                    if($playerTeam['team_superclub']=='1') {
-                        $superTeamFactor = 1.2;
-                    } else {
-                        $superTeamFactor = 1;
-                    }
-                    
-                    echo "superTeamFactor: ". $superTeamFactor ."<br>\n";
-                    
-                    //Stärke = Stärke x (Talent/5) * computerFactor;
-                    $strength = ($playerinfo['strength'] * ($playerinfo['talent']/5)) * $computerFactor * $superTeamFactor;
-                    
-                    // player becomes weaker: wrong position
-                    if ($playerinfo['position'] != $position
-                        && $playerinfo['mainPosition'] != $mainPosition
-                        && $playerinfo['secondPosition'] != $mainPosition) {
-                            $strength = round($strength * (1 - $websoccer->getConfig('sim_strength_reduction_wrongposition') / 100));
-                            
-                            // player becomes weaker: secondary position
-                        } elseif (strlen($playerinfo['mainPosition']) && $playerinfo['mainPosition'] != $mainPosition &&
-                            ($playerinfo['position'] == $position || $playerinfo['secondPosition'] == $mainPosition)) {
-                                $strength = round($strength * (1 - $websoccer->getConfig('sim_strength_reduction_secondary') / 100));
-                        }
-                        
-                        $player = new SimulationPlayer($playerId, $team, $position, $mainPosition,
-                            3.0, $playerinfo['age'], $strength, $playerinfo['technique'], $playerinfo['stamina'],
-                            $playerinfo['freshness'], $playerinfo['satisfaction'],
-                            
-                            $playerinfo['strength_passing'], $playerinfo['strength_shooting'],$playerinfo['strength_tackling'], $playerinfo['strength_heading'], $playerinfo['strength_influence'],
-                            $playerinfo['strength_creativity'], $playerinfo['strength_flair'], $playerinfo['strength_pace'], $playerinfo['strength_freekick'], $playerinfo['strength_penalty'],
-                            $playerinfo['strength_penalty_killing']);
-                        
-                        if (strlen($playerinfo['pseudonym'])) {
-                            $player->name = $playerinfo['pseudonym'];
-                        } else {
-                            $player->name = $playerinfo['firstName'] . ' ' . $playerinfo['lastName'];
-                        }
-                        
-                        $team->positionsAndPlayers[$player->position][] = $player;
-                        
-                        SimulationStateHelper::createSimulationRecord($websoccer, $db, $matchinfo['match_id'], $player);
-                        
-                        $addedPlayers++;
-                        
-                        // is player the team captain?
-                        if ($matchinfo[$columnPrefix . '_captain_id'] == $playerId) {
-                            self::computeMorale($player, $playerinfo['matches_played']);
-                        }
-                        
-                        // is player free kick taker?
-                        if ($matchinfo[$columnPrefix . '_formation_freekickplayer'] == $playerId) {
-                            $team->freeKickPlayer = $player;
-                        }
+            if (
+                (isset($playerinfo['team_id']) && $playerinfo['team_id'] == $team->id)
+                || ($team->isNationalTeam && isset($playerinfo['nation']) && $playerinfo['nation'] == $team->name)
+            ) {
+                $position = $positionMapping[$mainPosition];
+                
+                // add strength if player has no user
+                $playerTeam = TeamsDataService::getTeamById($websoccer, $db, $playerinfo['team_id']);
+                if ($playerTeam['team_user_id'] <= 0) {
+                    //$computerFactor = 1.2;
+                    $computerFactor = 1;
+                } else {
+                    $computerFactor = 1;
                 }
+                
+                echo "ComputerFactor: ". $computerFactor ." userId: ". $playerinfo['team_id'] ."<br>\n";
+                
+                // add strength if team is 'superclub'
+                if ($playerTeam['team_superclub'] == '1') {
+                    $superTeamFactor = 1.2;
+                } else {
+                    $superTeamFactor = 1;
+                }
+                
+                echo "superTeamFactor: ". $superTeamFactor ."<br>\n";
+                
+                // Stärke = Stärke x (Talent/5) * computerFactor;
+                $strength = ($playerinfo['strength'] * ($playerinfo['talent'] / 5)) * $computerFactor * $superTeamFactor;
+                
+                // player becomes weaker: wrong position
+                if (
+                    $playerinfo['position'] != $position
+                    && $playerinfo['mainPosition'] != $mainPosition
+                    && $playerinfo['secondPosition'] != $mainPosition
+                ) {
+                    $strength = round($strength * (1 - $websoccer->getConfig('sim_strength_reduction_wrongposition') / 100));
+                    
+                // player becomes weaker: secondary position
+                } elseif (
+                    strlen($playerinfo['mainPosition'])
+                    && $playerinfo['mainPosition'] != $mainPosition
+                    && ($playerinfo['position'] == $position || $playerinfo['secondPosition'] == $mainPosition)
+                ) {
+                    $strength = round($strength * (1 - $websoccer->getConfig('sim_strength_reduction_secondary') / 100));
+                }
+                    
+                $player = new SimulationPlayer(
+                    $playerId,
+                    $team,
+                    $position,
+                    $mainPosition,
+                    3.0,
+                    $playerinfo['age'],
+                    $strength,
+                    $playerinfo['technique'],
+                    $playerinfo['stamina'],
+                    $playerinfo['freshness'],
+                    $playerinfo['satisfaction'],
+                    $playerinfo['strength_passing'],
+                    $playerinfo['strength_shooting'],
+                    $playerinfo['strength_tackling'],
+                    $playerinfo['strength_heading'],
+                    $playerinfo['strength_influence'],
+                    $playerinfo['strength_creativity'],
+                    $playerinfo['strength_flair'],
+                    $playerinfo['strength_pace'],
+                    $playerinfo['strength_freekick'],
+                    $playerinfo['strength_penalty'],
+                    $playerinfo['strength_penalty_killing'],
+                    $playerinfo['personality']
+                );
+                    
+                if (strlen($playerinfo['pseudonym'])) {
+                    $player->name = $playerinfo['pseudonym'];
+                } else {
+                    $player->name = $playerinfo['firstName'] . ' ' . $playerinfo['lastName'];
+                }
+                
+                $team->positionsAndPlayers[$player->position][] = $player;
+                
+                SimulationStateHelper::createSimulationRecord($websoccer, $db, $matchinfo['match_id'], $player);
+                
+                $addedPlayers++;
+                
+                // is player the team captain?
+                if ($matchinfo[$columnPrefix . '_captain_id'] == $playerId) {
+                    self::computeMorale($player, $playerinfo['matches_played']);
+                }
+                
+                // is player free kick or corner taker?
+                if ($matchinfo[$columnPrefix . '_formation_freekickplayer'] == $playerId) {
+                    $team->freeKickPlayer = $player;
+                }
+                if ($matchinfo[$columnPrefix . '_formation_cornerplayer'] == $playerId) {
+                    $team->cornerPlayer = $player;
+                }
+            }
         }
         
         // generate new formation if formation is invalid
-        if ($addedPlayers < 11
-            && $websoccer->getConfig('sim_createformation_on_invalidsubmission')) {
-                
-                // delete existing invalid formation
-                $db->queryDelete($websoccer->getConfig('db_prefix') . '_spiel_berechnung', 'spiel_id = %d AND team_id = %d', array($matchinfo['match_id'], $team->id));
-                $team->positionsAndPlayers = array();
-                
-                // generate a new one
-                SimulationFormationHelper::generateNewFormationForTeam($websoccer, $db, $team, $matchinfo['match_id']);
-                $team->noFormationSet = TRUE;
-                return;
-            }
+        if (
+            $addedPlayers < 11
+            && $websoccer->getConfig('sim_createformation_on_invalidsubmission')
+        ) {
+            // delete existing invalid formation
+            $db->queryDelete($websoccer->getConfig('db_prefix') . '_spiel_berechnung', 'spiel_id = %d AND team_id = %d', array($matchinfo['match_id'], $team->id));
+            $team->positionsAndPlayers = array();
             
-            // bench
-            for ($playerNo = 1; $playerNo <= 5; $playerNo++) {
-                $playerId = $matchinfo[$columnPrefix . '_formation_bench' . $playerNo];
-                
-                $result = $db->querySelect($columns, $fromTable, $whereCondition, $playerId);
-                $playerinfo = $result->fetch_array();
-                $result->free();
-                
-                // is player still in team?
-                if (isset($playerinfo['team_id']) && $playerinfo['team_id'] == $team->id
-                    || $team->isNationalTeam && $playerinfo['nation'] == $team->name) {
-                        $player = new SimulationPlayer($playerId, $team, $playerinfo['position'], $playerinfo['mainPosition'],
-                            3.0, $playerinfo['age'], $playerinfo['strength'], $playerinfo['technique'], $playerinfo['stamina'],
-                            $playerinfo['freshness'], $playerinfo['satisfaction'],
-                            
-                            $playerinfo['strength_passing'], $playerinfo['strength_shooting'],$playerinfo['strength_tackling'], $playerinfo['strength_heading'], $playerinfo['strength_influence'],
-                            $playerinfo['strength_creativity'], $playerinfo['strength_flair'], $playerinfo['strength_pace'], $playerinfo['strength_freekick'], $playerinfo['strength_penalty'],
-                            $playerinfo['strength_penalty_killing']);
-                        
-                        if (strlen($playerinfo['pseudonym'])) {
-                            $player->name = $playerinfo['pseudonym'];
-                        } else {
-                            $player->name = $playerinfo['firstName'] . ' ' . $playerinfo['lastName'];
-                        }
-                        
-                        $team->playersOnBench[$playerId] = $player;
-                        
-                        SimulationStateHelper::createSimulationRecord($websoccer, $db, $matchinfo['match_id'], $player, TRUE);
-                    }
-            }
+            // generate a new one
+            SimulationFormationHelper::generateNewFormationForTeam($websoccer, $db, $team, $matchinfo['match_id']);
+            $team->noFormationSet = TRUE;
+            return;
+        }
             
+        // bench
+        for ($playerNo = 1; $playerNo <= 5; $playerNo++) {
+            $playerId = $matchinfo[$columnPrefix . '_formation_bench' . $playerNo];
+            
+            $result = $db->querySelect($columns, $fromTable, $whereCondition, $playerId);
+            $playerinfo = $result->fetch_array();
+            $result->free();
+            
+            // is player still in team?
+            if (
+                (isset($playerinfo['team_id']) && $playerinfo['team_id'] == $team->id)
+                || ($team->isNationalTeam && isset($playerinfo['nation']) && $playerinfo['nation'] == $team->name)
+            ) {
+                $player = new SimulationPlayer(
+                    $playerId,
+                    $team,
+                    $playerinfo['position'],
+                    $playerinfo['mainPosition'],
+                    3.0,
+                    $playerinfo['age'],
+                    $playerinfo['strength'],
+                    $playerinfo['technique'],
+                    $playerinfo['stamina'],
+                    $playerinfo['freshness'],
+                    $playerinfo['satisfaction'],
+                    $playerinfo['strength_passing'],
+                    $playerinfo['strength_shooting'],
+                    $playerinfo['strength_tackling'],
+                    $playerinfo['strength_heading'],
+                    $playerinfo['strength_influence'],
+                    $playerinfo['strength_creativity'],
+                    $playerinfo['strength_flair'],
+                    $playerinfo['strength_pace'],
+                    $playerinfo['strength_freekick'],
+                    $playerinfo['strength_penalty'],
+                    $playerinfo['strength_penalty_killing'],
+                    $playerinfo['personality']
+                );
+                
+                if (strlen($playerinfo['pseudonym'])) {
+                    $player->name = $playerinfo['pseudonym'];
+                } else {
+                    $player->name = $playerinfo['firstName'] . ' ' . $playerinfo['lastName'];
+                }
+                
+                $team->playersOnBench[$playerId] = $player;
+                
+                SimulationStateHelper::createSimulationRecord($websoccer, $db, $matchinfo['match_id'], $player, TRUE);
+            }
+        }
     }
     
     public static function addSubstitution(WebSoccer $websoccer, DbConnection $db, SimulationTeam $team, $matchinfo, $columnPrefix) {
@@ -557,11 +652,8 @@ class MatchSimulationExecutor {
                         $team->substitutions[] = $sub;
                     }
                 }
-                
             }
-            
         }
-        
     }
     
     public static function findPlayerOnField(SimulationTeam $team, $playerId) {
@@ -605,9 +697,9 @@ class MatchSimulationExecutor {
         $flair = $captain->strengthFlair / 100;
         
         // consider strength. Weak teams will be too strong otherwise.
-        $morale = $morale * (($captain->strength+$influence+$flair) / 300);
+        $morale = $morale * (($captain->strength + $influence + $flair) / 300);
         
-        
+        $morale = $morale * PlayerPersonalityDataService::getCaptainMoraleMultiplier($captain->personality);
         $morale = min(100, max(0, $morale));
         $captain->team->morale = $morale;
     }

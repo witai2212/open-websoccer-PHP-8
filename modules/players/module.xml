@@ -62,6 +62,13 @@
                         field="PlayerTab.position_second"
                         type="text"
                         sort="true" />
+
+                     <column
+                        id="entity_player_personality"
+                        field="PlayerTab.personality"
+                        type="text"
+                        sort="true"
+                        filter="true" />
                      
                      <column
                         id="entity_player_lending_owner_id"
@@ -90,6 +97,7 @@
 					<field id="position_main" type="select" selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS" required="false"  />
 					<field id="position_second" type="select" selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS" required="false"  />
 					<field id="nation" type="text" required="true"  />
+					<field id="personality" type="select" selection="leader,professional,injury_prone,inconsistent,loyal,ambitious,big_game_player,troublemaker" required="true"  />
 					
 					<field id="picture" type="file"  />
 					<field id="verletzt" type="number" default="0" />

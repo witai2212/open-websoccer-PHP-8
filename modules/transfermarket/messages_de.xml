@@ -23,6 +23,10 @@
     <message id="transfermarket_tab_lasttransfers">Neuste Transfers</message>
     
     <message id="transfermarket_filter_by_position">Nach Position filtern</message>
+    <message id="transfermarket_filter_advanced">Erweiterte Suche</message>
+    <message id="transfermarket_filter_attribute">Attribut</message>
+    <message id="transfermarket_filter_min">Min</message>
+    <message id="transfermarket_filter_max">Max</message>
     <message id="transfermarket_no_players">Keine Spieler auf dem Transfermarkt gefunden.</message>
 	<message id="transfermarket_playerscount">%d Spieler gefunden</message>
 	<message id="transfermarket_offerscount">%d Angebote für Spieler</message>

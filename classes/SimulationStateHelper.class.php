@@ -101,6 +101,14 @@ class SimulationStateHelper {
 		$guestTeam->morale = $matchinfo['guest_morale'];
 		
 		$match = new SimulationMatch($matchinfo['match_id'], $homeTeam, $guestTeam, $matchinfo['minutes']);
+		
+		$match->regularEndMinute = (int) $matchinfo['regular_end_minute'];
+		
+		// Safety fallback for older/incomplete match rows
+		if ($match->regularEndMinute < 91 || $match->regularEndMinute > 95) {
+		    $match->regularEndMinute = 90 + SimulationHelper::getMagicNumber(1, 5);
+		}
+		
 		$match->type = $matchinfo['type'];
 		$match->penaltyShootingEnabled = $matchinfo['penaltyshooting'];
 		$match->isSoldOut = $matchinfo['soldout'];
@@ -108,6 +116,7 @@ class SimulationStateHelper {
 		$match->cupRoundName = $matchinfo['cup_roundname'];
 		$match->cupRoundGroup = $matchinfo['cup_groupname'];
 		$match->isAtForeignStadium = ($matchinfo['custom_stadium_id']) ? TRUE : FALSE;
+		$match->isBigGame = PlayerPersonalityDataService::isBigGameMatch($websoccer, $db, $match);
 		
 		//get and set player with ball
 		if ($matchinfo['player_with_ball'] && isset(self::$_addedPlayers[$matchinfo['player_with_ball']])) {
@@ -122,8 +131,14 @@ class SimulationStateHelper {
 		if ($matchinfo['home_freekickplayer'] && isset(self::$_addedPlayers[$matchinfo['home_freekickplayer']])) {
 			$homeTeam->freeKickPlayer = self::$_addedPlayers[$matchinfo['home_freekickplayer']];
 		}
+		if ($matchinfo['home_cornerplayer'] && isset(self::$_addedPlayers[$matchinfo['home_cornerplayer']])) {
+			$homeTeam->cornerPlayer = self::$_addedPlayers[$matchinfo['home_cornerplayer']];
+		}
 		if ($matchinfo['guest_freekickplayer'] && isset(self::$_addedPlayers[$matchinfo['guest_freekickplayer']])) {
 			$guestTeam->freeKickPlayer = self::$_addedPlayers[$matchinfo['guest_freekickplayer']];
+		}
+		if ($matchinfo['guest_cornerplayer'] && isset(self::$_addedPlayers[$matchinfo['guest_cornerplayer']])) {
+			$guestTeam->cornerPlayer = self::$_addedPlayers[$matchinfo['guest_cornerplayer']];
 		}
 		
 		// substitutions
@@ -151,6 +166,11 @@ class SimulationStateHelper {
 			}
 		}
 		
+		// Re-apply non-cumulative tactical runtime data when a live match state is loaded again.
+		if (class_exists('TacticalStyleDataService')) {
+			TacticalStyleDataService::applyMatchEffects($websoccer, $db, $match);
+		}
+		
 		// reset cache
 		self::$_addedPlayers = null;
 		
@@ -164,6 +184,8 @@ class SimulationStateHelper {
 		}
 		
 		$columns['minutes'] = $match->minute;
+		$columns['regular_end_minute'] = $match->regularEndMinute;
+		
 		$columns['soldout'] = ($match->isSoldOut) ? '1' : '0';
 		$columns['home_tore'] = $match->homeTeam->getGoals();
 		$columns['gast_tore'] = $match->guestTeam->getGoals();
@@ -199,7 +221,9 @@ class SimulationStateHelper {
 		}
 	
 		$columns['home_freekickplayer'] = ($match->homeTeam->freeKickPlayer != NULL) ? $match->homeTeam->freeKickPlayer->id : '';
+		$columns['home_cornerplayer'] = ($match->homeTeam->cornerPlayer != NULL) ? $match->homeTeam->cornerPlayer->id : '';
 		$columns['gast_freekickplayer'] = ($match->guestTeam->freeKickPlayer != NULL) ? $match->guestTeam->freeKickPlayer->id : '';
+		$columns['gast_cornerplayer'] = ($match->guestTeam->cornerPlayer != NULL) ? $match->guestTeam->cornerPlayer->id : '';
 		
 		// substitutions
 		if (is_array($match->homeTeam->substitutions)) {
@@ -299,12 +323,13 @@ class SimulationStateHelper {
 		$columns['w_shooting'] = $player->strengthShooting;
 		$columns['w_tackling'] = $player->strengthTackling;
 		$columns['w_heading'] = $player->strengthHeading;
+		$columns['w_pace'] = $player->strengthPace;
 		$columns['w_creativity'] = $player->strengthCreativity;
 		$columns['w_freekick'] = $player->strengthFreekick;
 		$columns['w_influence'] = $player->strengthInfluence;
 		$columns['w_flair'] = $player->strengthFlair;
 		$columns['w_penalty'] = $player->strengthPenalty;
-		$columns['w_penalty_killing'] = $player->strengthPenalytKilling;
+		$columns['w_penalty_killing'] = $player->strengthPenaltyKilling;
 		
 		$columns['ballcontacts'] = $player->getBallContacts();
 		$columns['wontackles'] = $player->getWonTackles();
@@ -313,6 +338,10 @@ class SimulationStateHelper {
 		$columns['passes_successed'] = $player->getPassesSuccessed();
 		$columns['passes_failed'] = $player->getPassesFailed();
 		$columns['assists'] = $player->getAssists();
+		
+		$columns['freekicks'] = $player->getFreekicks();
+		$columns['freekicks_successed'] = $player->getFreekicksSuccessed();
+		$columns['freekicks_failed'] = $player->getFreekicksFailed();
 		
 		return $columns;
 	}
@@ -363,6 +392,7 @@ class SimulationStateHelper {
 		$columns['freekicks'] = 'freekicks';
 		$columns['freekicks_successed'] = 'freekicks_successed';
 		$columns['freekicks_failed'] = 'freekicks_failed';
+		$columns['(SELECT P.personality FROM ' . $websoccer->getConfig('db_prefix') . '_spieler AS P WHERE P.id = spieler_id)'] = 'personality';
 		
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung';
 		$whereCondition = 'spiel_id = %d AND team_id = %d ORDER BY id ASC';
@@ -377,7 +407,7 @@ class SimulationStateHelper {
 			    
 			    $playerinfo['strength_passing'], $playerinfo['strength_shooting'],$playerinfo['strength_tackling'], $playerinfo['strength_heading'], $playerinfo['strength_influence'], 
 			    $playerinfo['strength_creativity'], $playerinfo['strength_flair'], $playerinfo['strength_pace'], $playerinfo['strength_freekick'], $playerinfo['strength_penalty'], 
-			    $playerinfo['strength_penalty_killing']);
+			    $playerinfo['strength_penalty_killing'], $playerinfo['personality']);
 			
 			$player->name = $playerinfo['name'];
 			$player->setBallContacts($playerinfo['ballcontacts']);

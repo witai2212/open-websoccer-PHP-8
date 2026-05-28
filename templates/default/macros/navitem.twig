@@ -1,3 +1,3 @@
 {% macro item(pageId, label, isActive) %}
-<li role="menuitem"{% if isActive %} class="active"{% endif %}><a href="{{ env.getInternalUrl(pageId) }}">{{ label }}</a></li>
+<li role="menuitem"{% if isActive or pageId == "wiki" %} class="{% if isActive %}active{% endif %}{% if isActive and pageId == "wiki" %} {% endif %}{% if pageId == "wiki" %}pull-right{% endif %}"{% endif %}><a href="{{ env.getInternalUrl(pageId) }}">{% if pageId == "wiki" %}<i class="icon-question-sign"></i> {% endif %}{{ label }}</a></li>
 {% endmacro %}

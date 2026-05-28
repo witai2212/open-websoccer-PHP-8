@@ -300,6 +300,162 @@ class BankAccountDataService {
 		return $statements;
 	}
 	
+	/**
+	 * Provides the cash/budget development of a team based on all
+	 * currently available account statements.
+	 *
+	 * Calculation:
+	 * current budget - sum(all transactions) = reconstructed start budget
+	 *
+	 * Afterwards, all transactions are added chronologically so that
+	 * the last value equals the current team budget.
+	 *
+	 * @param WebSoccer $websoccer Application context.
+	 * @param DbConnection $db DB connection.
+	 * @param int $teamId ID of team.
+	 * @param int $currentBudget Current absolute team budget.
+	 * @return array
+	 */
+	public static function getCashDevelopmentOfCurrentSeason(WebSoccer $websoccer, DbConnection $db, $teamId, $currentBudget) {
+	    
+	    $currentBudget = (int) $currentBudget;
+	    
+	    // 1. Sum of all existing transactions of this team
+	    $result = $db->querySelect(
+	        "SUM(betrag) AS transaction_sum",
+	        $websoccer->getConfig("db_prefix") . "_konto",
+	        "verein_id = %d",
+	        $teamId,
+	        1
+	        );
+	    
+	    $sumRow = $result->fetch_array();
+	    $result->free();
+	    
+	    $transactionSum = 0;
+	    
+	    if (isset($sumRow["transaction_sum"]) && $sumRow["transaction_sum"] !== null) {
+	        $transactionSum = (int) $sumRow["transaction_sum"];
+	    }
+	    
+	    // 2. Reconstruct start budget
+	    $startBudget = $currentBudget - $transactionSum;
+	    
+	    $labels = array();
+	    $values = array();
+	    
+	    $labels[] = "Start";
+	    $values[] = $startBudget;
+	    
+	    // 3. Load all transactions chronologically
+	    $columns = array();
+	    $columns["datum"] = "date";
+	    $columns["betrag"] = "amount";
+	    
+	    $result = $db->querySelect(
+	        $columns,
+	        $websoccer->getConfig("db_prefix") . "_konto",
+	        "verein_id = %d ORDER BY datum ASC, id ASC",
+	        $teamId
+	        );
+	    
+	    $dailyTransactions = array();
+	    
+	    while ($statement = $result->fetch_array()) {
+	        
+	        $timestamp = (int) $statement["date"];
+	        $amount = (int) $statement["amount"];
+	        
+	        $dateKey = date("Y-m-d", $timestamp);
+	        
+	        if (!isset($dailyTransactions[$dateKey])) {
+	            $dailyTransactions[$dateKey] = array(
+	                "timestamp" => $timestamp,
+	                "amount" => 0
+	            );
+	        }
+	        
+	        $dailyTransactions[$dateKey]["amount"] += $amount;
+	    }
+	    
+	    $result->free();
+	    
+	    // 4. Build running cash balance day by day
+	    $runningBalance = $startBudget;
+	    
+	    foreach ($dailyTransactions as $dailyTransaction) {
+	        
+	        $runningBalance += (int) $dailyTransaction["amount"];
+	        
+	        $labels[] = date("d.m.Y", (int) $dailyTransaction["timestamp"]);
+	        $values[] = $runningBalance;
+	    }
+	    
+	    // 5. Ensure final point is the exact current budget
+	    $labels[] = "Heute";
+	    $values[] = $currentBudget;
+	    
+	    return array(
+	        "labels" => $labels,
+	        "values" => $values,
+	        "start_budget" => $startBudget,
+	        "current_budget" => $currentBudget
+	    );
+	}
+	
+	
+	/**
+	 * Returns the first scheduled league match date of the currently active season
+	 * of the team's league.
+	 *
+	 * @param WebSoccer $websoccer Application context.
+	 * @param DbConnection $db DB connection.
+	 * @param int $teamId ID of team.
+	 * @return int Unix timestamp or 0
+	 */
+	private static function getCurrentSeasonStartDateOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	    
+	    $team = TeamsDataService::getTeamSummaryById($websoccer, $db, $teamId);
+	    
+	    if (!isset($team["team_league_id"]) || (int) $team["team_league_id"] < 1) {
+	        return 0;
+	    }
+	    
+	    // Get currently active season of the team's league.
+	    $result = $db->querySelect(
+	        "id",
+	        $websoccer->getConfig("db_prefix") . "_saison",
+	        "liga_id = %d AND beendet = '0' ORDER BY name DESC",
+	        (int) $team["team_league_id"],
+	        1
+	        );
+	    
+	    $season = $result->fetch_array();
+	    $result->free();
+	    
+	    if (!isset($season["id"]) || (int) $season["id"] < 1) {
+	        return 0;
+	    }
+	    
+	    // First match date of this active season.
+	    $result = $db->querySelect(
+	        "MIN(datum) AS season_start",
+	        $websoccer->getConfig("db_prefix") . "_spiel",
+	        "saison_id = %d",
+	        (int) $season["id"],
+	        1
+	        );
+	    
+	    $seasonDate = $result->fetch_array();
+	    $result->free();
+	    
+	    if (isset($seasonDate["season_start"]) && (int) $seasonDate["season_start"] > 0) {
+	        return (int) $seasonDate["season_start"];
+	    }
+	    
+	    return 0;
+	}
+	
 	public static function payTaxes(WebSoccer $websoccer, DbConnection $db) {
 		
 		$tax_rate = '0.19';
@@ -337,21 +493,10 @@ class BankAccountDataService {
 
 	}
 	
-	/**
-	 * get data from fixed deposit account
-	 */
-	public static function getFixedDepositByTeamId(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	public static function clearAccount(WebSoccer $websoccer, DbConnection $db) {
 	    
-	    $deposit = array();
-	    
-	    $sqlStr = "SELECT * FROM " . $websoccer->getConfig("db_prefix") . "_bank
-					WHERE verein_id='".$teamId."'";
-	    $result = $db->executeQuery($sqlStr);
-	    while ($team = $result->fetch_array()) {
-	        $deposit[] = $team;
-	    }
-	    
-	    return $deposit;
+	    $sqlStr = "TRUNCATE TABLE " . $websoccer->getConfig("db_prefix") . "_konto";
+	    $db->executeQuery($sqlStr);
 	    
 	}
 }

@@ -66,4 +66,24 @@
 	<message id="stadium_upgrade_transaction_subject">Stadium maintenance</message>
 	<message id="stadium_upgrade_success">The maintenance work has been successfully completed!</message>
 	<message id="stadium_upgrade_success_details">Note that the quality might decrease over time. Hence, check the status from time to time.</message>
+
+	<message id="stadium_attendance_title">Attendance statistics</message>
+	<message id="stadium_attendance_intro">Recent home matches with spectators, utilization, average prices and revenue per category. New matches use stored values; older matches are estimated from current stadium/ticket data.</message>
+	<message id="stadium_attendance_average_title">Average of latest matches</message>
+	<message id="stadium_attendance_recent_title">Latest home matches</message>
+	<message id="stadium_attendance_no_matches">No home matches with attendance data yet.</message>
+	<message id="stadium_attendance_match">Match</message>
+	<message id="stadium_attendance_category">Category</message>
+	<message id="stadium_attendance_visitors">Visitors</message>
+	<message id="stadium_attendance_capacity">Capacity</message>
+	<message id="stadium_attendance_utilization">Utilization</message>
+	<message id="stadium_attendance_average_price">Avg. price</message>
+	<message id="stadium_attendance_revenue">Revenue</message>
+	<message id="stadium_attendance_standing">Standing</message>
+	<message id="stadium_attendance_seating">Seating</message>
+	<message id="stadium_attendance_vip">VIP</message>
+	<message id="stadium_attendance_total">Total</message>
+	<message id="stadium_attendance_against">against</message>
+	<message id="stadium_attendance_legacy_hint">Old match: categories and prices estimated from current stadium/ticket data. New matches are stored exactly.</message>
+	<message id="stadium-attendance_navlabel">Spectator numbers</message>
 </messages>

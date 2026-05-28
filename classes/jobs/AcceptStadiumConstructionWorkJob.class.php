@@ -111,6 +111,22 @@ class AcceptStadiumConstructionWorkJob extends AbstractJob {
 		$columns['C.p_kondition'] = 'effect_strength_stamina';
 		$columns['C.p_frische'] = 'effect_strength_freshness';
 		$columns['C.p_zufriedenheit'] = 'effect_strength_satisfaction';
+		$columns['C.p_passing'] = 'effect_passing';
+		$columns['C.p_shooting'] = 'effect_shooting';
+		$columns['C.p_heading'] = 'effect_heading';
+		$columns['C.p_tackling'] = 'effect_tackling';
+		$columns['C.p_freekick'] = 'effect_freekick';
+		$columns['C.p_pace'] = 'effect_pace';
+		$columns['C.p_creativity'] = 'effect_creativity';
+		$columns['C.p_influence'] = 'effect_influence';
+		$columns['C.p_flair'] = 'effect_flair';
+		$columns['C.p_penalty'] = 'effect_penalty';
+		$columns['C.p_penalty_killing'] = 'effect_penalty_killing';
+		$columns['C.camp_type'] = 'camp_type';
+		$columns['C.p_team_chemistry'] = 'effect_team_chemistry';
+		$columns['C.injury_risk'] = 'injury_risk';
+		$columns['B.player_count'] = 'player_count';
+		$columns['B.total_costs'] = 'total_costs';
 		
 		$whereCondition = 'B.datum_ende < %d';
 		

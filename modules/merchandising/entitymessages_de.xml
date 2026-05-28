@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+	<message id="entity_merchandisingproduct">Merchandising-Produkte</message>
+
+	<message id="entity_merchandisingproduct_name">Produktname</message>
+	<message id="entity_merchandisingproduct_name_help">
+		Kann auch ein Messages-Key sein.
+	</message>
+
+	<message id="entity_merchandisingproduct_description">Beschreibung</message>
+	<message id="entity_merchandisingproduct_description_help">
+		Kann auch ein Messages-Key sein.
+	</message>
+
+	<message id="entity_merchandisingproduct_purchase_price">Einkaufspreis</message>
+	<message id="entity_merchandisingproduct_purchase_price_help">
+		Herstellungskosten bzw. Einkaufskosten pro verkauftem Artikel.
+	</message>
+
+	<message id="entity_merchandisingproduct_sales_price">Grundverkaufspreis</message>
+	<message id="entity_merchandisingproduct_sales_price_help">
+		Normaler Verkaufspreis vor Anwendung der vereinsabhängigen Preisstrategie.
+	</message>
+
+	<message id="entity_merchandisingproduct_base_demand">Grundnachfrage</message>
+	<message id="entity_merchandisingproduct_base_demand_help">
+		Anteil der Zuschauer, der dieses Produkt grundsätzlich kauft. Beispiel: 0.0100 entspricht 1,00 Prozent.
+	</message>
+
+	<message id="entity_merchandisingproduct_active">Aktiv</message>
+	<message id="entity_merchandisingproduct_active_help">
+		Nur aktive Produkte stehen den Managern zur Auswahl.
+	</message>
+	
+	<message id="entity_stadiumbuilding_effect_merchandising">Auswirkung: Merchandising</message>
+	<message id="entity_stadiumbuilding_effect_merchandising_help">
+		Um wieviel Prozentpunkte die Merchandising-Verkäufe bei Heimspielen erhöht werden.
+	</message>
+
+</messages>

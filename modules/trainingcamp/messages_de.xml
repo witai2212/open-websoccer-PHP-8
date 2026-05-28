@@ -37,4 +37,25 @@
     
     <message id="trainingcamp_booking_success">Das Trainingslager wurde erfolgreich gebucht!</message>
     
+    <message id="trainingcamp_type_balanced">Ausgewogen</message>
+    <message id="trainingcamp_type_fitness">Fitness</message>
+    <message id="trainingcamp_type_recovery">Regeneration</message>
+    <message id="trainingcamp_type_technique">Technik</message>
+    <message id="trainingcamp_type_teambuilding">Teambuilding</message>
+    <message id="trainingcamp_type_tactics">Taktik</message>
+    <message id="trainingcamp_type_youth">Jugendentwicklung</message>
+    <message id="trainingcamp_type_mental">Mental</message>
+    <message id="trainingcamp_players_included">Spieler im Trainingslager</message>
+    <message id="trainingcamp_total_costs">Gesamtkosten</message>
+    <message id="trainingcamp_estimated_min_costs">Kosten bei Mindestdauer</message>
+    <message id="trainingcamp_all_players_note">Das Trainingslager gilt für alle aktiven Spieler des Kaders. Die Effekte werden erst nach der Rückkehr angewendet.</message>
+    <message id="trainingcamp_last_report">Letzter Trainingslager-Bericht</message>
+    <message id="trainingcamp_report_completed_title">Trainingslager abgeschlossen</message>
+    <message id="trainingcamp_report_completed_text">Die Effekte wurden auf den Kader angewendet und ein Bericht wurde erstellt.</message>
+    <message id="trainingcamp_report_period">Zeitraum</message>
+    <message id="trainingcamp_report_players_costs">Spieler / Kosten</message>
+    <message id="trainingcamp_report_effects">Effekte gesamt</message>
+    <message id="trainingcamp_special_effects">Weitere Attribute</message>
+    <message id="trainingcamp_report_special_effects">Weitere Attribute gesamt</message>
+    <message id="trainingcamp_report_injuries">Neue Verletzungen</message>
 </messages>

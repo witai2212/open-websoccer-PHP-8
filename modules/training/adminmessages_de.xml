@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../messages.dtd">
 <messages>
-	
-	<message id="settings_label_training_min_hours_between_execution">Ruhepause zwischen Trainingseinheiten</message> 
-	<message id="settings_label_training_min_hours_between_execution_help">in Stunden. Mindestanzahl an Stunden, die zwischen zwei Trainingseinheiten liegen müssen.</message> 
+    <message id="settings_label_training_min_hours_between_execution">Ruhepause zwischen Trainingseinheiten</message> 
+    <message id="settings_label_training_min_hours_between_execution_help">in Stunden. Mindestanzahl an Stunden, die zwischen zwei manuellen Trainingseinheiten liegen müssen.</message>
+    <message id="settings_label_advanced_training_enabled">Automatisches erweitertes Training aktivieren</message>
+    <message id="settings_label_advanced_training_enabled_help">Wenn aktiv, wird pro Human-Verein nach einem abgeschlossenen Spiel der nächste Slot aus dem gespeicherten Trainingsplan ausgeführt.</message>
 </messages>

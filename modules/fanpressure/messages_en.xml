@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="fanpressure_navlabel">Fan mood &amp; media</message>
+    <message id="fanpressure_title">Fan mood &amp; media</message>
+    <message id="fanpressure_intro">Shows how fans and media react to your work. These values influence attendance, fan-based sponsor bonuses and board satisfaction.</message>
+    <message id="fanpressure_fan_mood">Fan mood</message>
+    <message id="fanpressure_media_pressure">Media pressure</message>
+    <message id="fanpressure_board_satisfaction">Board satisfaction</message>
+    <message id="fanpressure_attendance_effect">Attendance effect</message>
+    <message id="fanpressure_sponsor_effect">Fan sponsor effect</message>
+    <message id="fanpressure_recent_development">Recent development</message>
+    <message id="fanpressure_no_log">No mood events yet.</message>
+    <message id="fanpressure_value_good">positive</message>
+    <message id="fanpressure_value_neutral">neutral</message>
+    <message id="fanpressure_value_bad">critical</message>
+    <message id="fanpressure_points">points</message>
+    <message id="fanpressure_change">Change</message>
+    <message id="fanpressure_date">Date</message>
+    <message id="fanpressure_reason">Reason</message>
+    <message id="fanpressure_old_new">Old / new</message>
+    <message id="fanpressure_media_old_new">Media old / new</message>
+    <message id="fanpressure_match_link">Match</message>
+    <message id="fanpressure_low_hint">Fan mood is tense.</message>
+    <message id="fanpressure_high_hint">The fans are behind the club.</message>
+    <message id="fanpressure_neutral_hint">The situation is calm.</message>
+    <message id="fanpressure_reason_match_win">Win</message>
+    <message id="fanpressure_reason_match_draw">Draw</message>
+    <message id="fanpressure_reason_match_loss">Loss</message>
+    <message id="fanpressure_reason_big_win">Big win</message>
+    <message id="fanpressure_reason_big_loss">Big loss</message>
+    <message id="fanpressure_reason_derby_win">Derby win</message>
+    <message id="fanpressure_reason_derby_draw">Derby draw</message>
+    <message id="fanpressure_reason_derby_loss">Derby loss</message>
+    <message id="fanpressure_reason_youth_used">Young players used</message>
+    <message id="fanpressure_reason_ticket_prices_high">High ticket prices</message>
+    <message id="fanpressure_reason_ticket_prices_low">Fan-friendly ticket prices</message>
+    <message id="fanpressure_reason_transfer_signing">Signing</message>
+    <message id="fanpressure_reason_transfer_sale">Player sale</message>
+    <message id="fanpressure_reason_mission_completed">Board objective completed</message>
+    <message id="fanpressure_reason_mission_failed">Board objective failed</message>
+    <message id="fanpressure_reason_board_mood_bonus">Very good fan mood</message>
+    <message id="fanpressure_reason_board_mood_penalty">Critical fan mood</message>
+    <message id="fanpressure_notification_big_change">Fan mood changed significantly: {reason} ({change} points, now {mood}%).</message>
+    <message id="fanpressure_news_low_title">Fan crisis at {team}</message>
+    <message id="fanpressure_news_low_message">Fan mood at {team} is critical. The current mood is only {mood} percent.</message>
+    <message id="fanpressure_news_high_title">Fan euphoria at {team}</message>
+    <message id="fanpressure_news_high_message">Fans at {team} are delighted. The current mood is a strong {mood} percent.</message>
+</messages>

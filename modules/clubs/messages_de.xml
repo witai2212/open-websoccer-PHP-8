@@ -9,6 +9,9 @@
     <message id="team_details_tab_players">Kader</message>
     
     <message id="team_details_manager">Manager</message>
+    <message id="team_details_strength_raw">Teamstärke: %s</message>
+    <message id="team_details_strength_global_rank">Teamstärke weltweit: %d/%d (Top %d%%)</message>
+    <message id="team_details_strength_league_rank">Teamstärke Liga: %d/%d</message>
     
     <message id="team_details_statistic_season">Diese Saison</message>
     <message id="team_details_statistic_total">Gesamt</message>
@@ -24,6 +27,41 @@
 	<message id="team_details_noleaguevictories">Es sind noch keine Erfolge in der Liga vorhanden.</message>
     
 	<message id="team_details_season_place">Platz %d</message>
+    <message id="team_details_tab_halloffame">Hall of Fame</message>
+    
+    <message id="club_hof_overview">Übersicht</message>
+    <message id="club_hof_titles">Titel</message>
+    <message id="club_hof_official_matches">Pflichtspiele</message>
+    <message id="club_hof_balance">Bilanz</message>
+    <message id="club_hof_wdl">S / U / N</message>
+    <message id="club_hof_goals">Tore</message>
+    <message id="club_hof_highest_win">Höchster Sieg</message>
+    <message id="club_hof_worst_defeat">Höchste Niederlage</message>
+    <message id="club_hof_competition">Wettbewerb</message>
+    <message id="club_hof_title_league_prefix">Meisterschaft</message>
+    <message id="club_hof_title_cup_prefix">Pokal</message>
+    <message id="club_hof_best_players">Beste Spieler aller Zeiten</message>
+    <message id="club_hof_best_players_min_matches">Sortiert nach Durchschnittsnote, mindestens %d Pflichtspiele.</message>
+    <message id="club_hof_matches">Spiele</message>
+    <message id="club_hof_goals_short">Tore</message>
+    <message id="club_hof_assists_short">Assists</message>
+    <message id="club_hof_avg_grade">Ø Note</message>
+    <message id="club_hof_most_goals">Meiste Tore</message>
+    <message id="club_hof_most_assists">Meiste Assists</message>
+    <message id="club_hof_most_appearances">Meiste Einsätze</message>
+    <message id="club_hof_record_transfers">Rekordtransfers</message>
+    <message id="club_hof_record_incoming">Teuerster Zugang</message>
+    <message id="club_hof_record_outgoing">Teuerster Abgang</message>
+    <message id="club_hof_from">von</message>
+    <message id="club_hof_to">zu</message>
+    <message id="club_hof_league_positions">Historische Ligaplatzierungen</message>
+    <message id="club_hof_matchday">Spieltag %d</message>
+    <message id="club_hof_no_data">Für diesen Verein liegen noch keine historischen Daten vor.</message>
+    <message id="club_hof_no_record">Noch kein Rekord vorhanden.</message>
+    <message id="club_hof_no_titles">Noch keine Titel vorhanden.</message>
+    <message id="club_hof_no_players">Noch keine Spielerdaten vorhanden.</message>
+    <message id="club_hof_no_league_positions">Noch keine Ligahistorie vorhanden.</message>
+
 	
 	
 	

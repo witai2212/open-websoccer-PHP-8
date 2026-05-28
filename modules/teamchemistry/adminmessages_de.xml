@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_team_chemistry_enabled">Teamchemie aktivieren</message>
+    <message id="settings_label_team_chemistry_enabled_help">Aktiviert den Teamchemie-Wert, die Chemie-Seite und die kleinen Simulationseffekte.</message>
+    <message id="settings_label_team_chemistry_max_match_effect">Maximaler Simulationseffekt der Teamchemie</message>
+    <message id="settings_label_team_chemistry_max_match_effect_help">Standard: 3. Der Wert wird als kleiner Prozent-/Punkte-Effekt auf Passspiel, Moral und Stabilität verwendet.</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days">Zeitraum für neue Transfers</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days_help">Transfers in diesem Zeitraum senken die Chemie leicht, damit zu viele neue Spieler nicht sofort perfekt harmonieren.</message>
+    <message id="settings_label_team_chemistry_formation_history_count">Anzahl Formationen für Eingespieltheit</message>
+    <message id="settings_label_team_chemistry_formation_history_count_help">So viele letzte Aufstellungen werden geprüft, um die Formations-Eingespieltheit zu bewerten.</message>
+</messages>

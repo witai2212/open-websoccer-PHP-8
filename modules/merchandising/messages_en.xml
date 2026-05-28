@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+	<message id="merchandising_navlabel">Merchandising</message>
+
+	<message id="merchandising_intro">
+		Manage your merchandising assortment. After every home match, merchandising sales are calculated based on attendance, fan popularity, match result, pricing strategy and fan shop expansion.
+	</message>
+
+	<message id="merchandising_summary_title">Overall summary</message>
+	<message id="merchandising_summary_units_sold">Items sold</message>
+	<message id="merchandising_summary_revenue">Revenue</message>
+	<message id="merchandising_summary_costs">Production costs</message>
+	<message id="merchandising_summary_profit">Profit</message>
+	<message id="merchandising_summary_matches_with_sales">Home matches with sales</message>
+	<message id="merchandising_summary_avg_profit_per_match">Average profit per home match</message>
+
+	<message id="merchandising_products_title">Assortment and pricing strategy</message>
+	<message id="merchandising_product_name">Product</message>
+	<message id="merchandising_product_purchase_price">Purchase price</message>
+	<message id="merchandising_product_base_sales_price">Base sales price</message>
+	<message id="merchandising_product_effective_sales_price">Current sales price</message>
+	<message id="merchandising_product_profit_per_item">Profit per item</message>
+	<message id="merchandising_product_base_demand">Base demand</message>
+	<message id="merchandising_product_settings">Settings</message>
+	<message id="merchandising_product_enabled">Offer product</message>
+	<message id="merchandising_product_price_factor">Price factor</message>
+
+	<message id="merchandising_no_products_available">
+		There are currently no active merchandising products available.
+	</message>
+
+	<message id="merchandising_product_statistics_title">Statistics by product</message>
+	<message id="merchandising_no_sales_statistics">
+		No merchandising sales statistics are available yet.
+	</message>
+
+	<message id="merchandising_recent_sales_title">Latest merchandising sales</message>
+	<message id="merchandising_recent_sales_date">Date</message>
+	<message id="merchandising_recent_sales_match">Match</message>
+	<message id="merchandising_no_recent_sales">
+		No merchandising sales have been recorded yet.
+	</message>
+
+	<message id="merchandising_matchday_profit_subject">Merchandising profit from home match</message>
+	<message id="merchandising_matchday_loss_subject">Merchandising loss from home match</message>
+
+</messages>

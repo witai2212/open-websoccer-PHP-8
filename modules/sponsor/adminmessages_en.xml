@@ -2,7 +2,7 @@
 <!DOCTYPE module SYSTEM "../messages.dtd">
 <messages>
 	<message id="settings_label_sponsor_matches">Sponsor Contracts: Match days</message>
-	<message id="settings_label_sponsor_matches_help">Sponsor contract duration in match days.</message>
+	<message id="settings_label_sponsor_matches_help">Only relevant for old match-based sponsor contracts. New dynamic sponsor contracts run until the end of the season.</message>
 
 	<message id="settings_label_sponsor_earliest_matchday">Sponsor offers: Earliest match day</message>
 	<message id="settings_label_sponsor_earliest_matchday_help">A manager can choose a new sponsor only from this match day of a season.</message>

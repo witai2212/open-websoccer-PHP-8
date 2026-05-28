@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_what_changed_enabled">Was-ist-passiert-Dashboard aktivieren</message>
+    <message id="settings_label_what_changed_enabled_help">Erstellt nach jedem Spiel eines menschlich geführten Vereins eine kompakte Zusammenfassung mit News und Benachrichtigung.</message>
+</messages>

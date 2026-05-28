@@ -56,16 +56,17 @@ class UnmarkLendableController implements IActionController {
 		
 		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spieler";
 		$whereCondition = "id = %d";
-		$parameters = $parameters["id"];
+		$playerId = $parameters["id"];
 		
-		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $parameters);
+		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $playerId);
+		LoanDataService::closeOffer($this->_websoccer, $this->_db, $playerId, 'closed');
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
 				$this->_i18n->getMessage("lending_lendable_unmark_success"),
 				""));
 		
-		return null;
+		return "loans";
 	}
 	
 }

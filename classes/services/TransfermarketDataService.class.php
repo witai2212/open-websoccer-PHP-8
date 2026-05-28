@@ -45,7 +45,7 @@ class TransfermarketDataService {
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_user AS U ON U.id = B.user_id';
 		
 		$whereCondition = 'B.spieler_id = %d ORDER BY (amount+hand_money+(contract_matches*contract_matches)) DESC';
-		$parameters = array($playerId, $transferStart, $transferEnd);
+		$parameters = array($playerId);
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 1);
 		$bid = $result->fetch_array();
@@ -110,7 +110,7 @@ class TransfermarketDataService {
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_spieler AS P ON P.id = B.spieler_id';
 	
 		$whereCondition = 'B.user_id = %d ORDER BY B.datum DESC';
-		$parameters = $userId;
+		$parameters = array($userId);
 	
 		$bids = array();
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 1);
@@ -285,19 +285,15 @@ class TransfermarketDataService {
 				
 			} else {
 				
-				$strLog = "___". $string ."___";
+				$strLog = "executeOpenTransfers: processing player " . $player['player_id'] . " with bid " . $bid['bid_id'];
 				self::transferLog($websoccer, $db, $strLog);
 				self::transferPlayer($websoccer, $db, $player, $bid);
-				
-				$updStr = "UPDATE " . $websoccer->getConfig('db_prefix') . "_spieler SET transfermarkt='0', transfer_start='0', transfer_ende='0' WHERE id='".$player['player_id']."'";
-				$db->executeQuery($updStr);
 				
 				// delete all other offers
 				ComputerTransfersDataService::deleteOfferByPlayerId($websoccer, $db, $player['player_id']);
 			}
 		}
 		$result->free();
-		
 		
 	}
 	
@@ -349,7 +345,7 @@ class TransfermarketDataService {
 		
 		$playerName = (strlen($player['pseudonym'])) ? $player['pseudonym'] : $player['first_name'] . ' ' . $player['last_name'];
 		
-		// trasnfer logging
+		// transfer logging
 		$txt = "transferPlayer ". $playerName ." - ". $player['player_id'];
 		self::transferLog($websoccer, $db, $txt);
 		
@@ -392,9 +388,7 @@ class TransfermarketDataService {
 		$whereCondition = 'id = %d';
 		$db->queryUpdate($columns, $fromTable, $whereCondition, $player['player_id']);
 		
-		$db->executeQuery("UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler SET last_transfer=".$websoccer->getNowAsTimestamp()." 
-                            WHERE id='".$player['player_id']."'");
-		
+
 		// create transfer log
 		$logcolumns['spieler_id'] = $player['player_id'];
 		$logcolumns['seller_user_id'] = $player['team_user_id'];
@@ -402,15 +396,44 @@ class TransfermarketDataService {
 		$logcolumns['buyer_user_id'] = $bid['user_id'];
 		$logcolumns['buyer_club_id'] = $bid['team_id'];
 		$logcolumns['datum'] = $websoccer->getNowAsTimestamp();
+		$logcolumns['bid_id'] = $bid['bid_id'];
 		$logcolumns['directtransfer_amount'] = $bid['amount'];
 		
 		$logTable = $websoccer->getConfig('db_prefix') . '_transfer';
 		
 		$db->queryInsert($logcolumns, $logTable);
+		$transferId = (int) $db->getLastInsertedId();
+
+		if (class_exists('BadgeAwardService') && !empty($player['team_user_id'])) {
+			BadgeAwardService::processTransferSale(
+				$websoccer,
+				$db,
+				(int) $player['team_user_id'],
+				(int) $player['team_id'],
+				(int) $player['player_id'],
+				(int) $bid['amount'],
+				$transferId
+			);
+		}
+
+		if (class_exists('FanPressureDataService')) {
+			FanPressureDataService::processTransfer(
+				$websoccer,
+				$db,
+				I18n::getInstance($websoccer->getConfig('supported_languages')),
+				$player['player_id'],
+				$player['team_id'],
+				$bid['team_id'],
+				$bid['amount']
+			);
+		}
 		
 		// notify user
 		NotificationsDataService::createNotification($websoccer, $db, $bid['user_id'],
 			'transfer_bid_notification_transfered', array('player' => $playerName), 'transfermarket', 'player', 'id=' . $player['player_id']);
+		
+		// transfer watchdog
+		self::transferWatchdog($websoccer, $db, $bid['bid_id'], $player['team_id']);
 		
 		// delete old bids
 		$db->queryDelete($websoccer->getConfig('db_prefix') . '_transfer_angebot', 'spieler_id = %d', $player['player_id']);
@@ -421,20 +444,6 @@ class TransfermarketDataService {
 			self::awardUserForTrades($websoccer, $db, $player['team_user_id']);
 		}
 		
-		//save in _transfer table
-		//id spieler_id seller_user_id seller_club_id buyer_user_id buyer_club_id datum bid_id directtransfer_amount directtransfer_player1 directtransfer_player2
-		if(isset($bid['id'])) {
-			$bidId = $bid['id'];
-		} else {
-			$bidId = 0;
-		}
-		
-		//$date = new DateTime();
-		$trStr = "INSERT INTO " . $websoccer->getConfig("db_prefix") . "_transfer (spieler_id, seller_club_id, buyer_club_id, datum, bid_id, directtransfer_amount)
-					VALUES ('".$player['player_id']."','".$player['team_id']."', '".$bid['team_id']."', 
-							'".$websoccer->getNowAsTimestamp()."', '".$bidId."',
-							'".$bid['amount']."')";
-		$db->executeQuery($trStr);
 	}
 	
 	public static function getTransferOffers(WebSoccer $websoccer, DbConnection $db, $teamId) {
@@ -442,7 +451,7 @@ class TransfermarketDataService {
 	    $offers = array();
 	    $bids = array();
 	    
-	    $sqlStr = "SELECT T.*, P.vorname, P.nachname, P.verein_id, P.position_main, P.position_second, P.marktwert
+	    $sqlStr = "SELECT T.*, P.vorname, P.nachname, P.verein_id, P.position_main, P.position_second, P.marktwert, P.transfer_ende
                     FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS P,
                                 ". $websoccer->getConfig("db_prefix") ."_transfer_angebot AS T
                     WHERE P.verein_id='$teamId'
@@ -453,7 +462,7 @@ class TransfermarketDataService {
 	        
 	        $offers[] = $offer;
 	        
-	        $bidderId = $offers[$i][2];
+	        $bidderId = $offer['verein_id'];
 	        $bidder = TeamsDataService::getTeamById($websoccer, $db, $bidderId);
 	        $offers[$i]['bidder'] = $bidder;
 	        
@@ -492,8 +501,8 @@ class TransfermarketDataService {
                         S.id AS player_club_id, S.name AS team_name
         	       FROM ". $websoccer->getConfig("db_prefix") ."_transfer_angebot AS A 
                         INNER JOIN ". $websoccer->getConfig("db_prefix") ."_spieler AS P ON P.id = A.spieler_id
-                        INNER JOIN ". $websoccer->getConfig("db_prefix") ."_verein AS S
-                   WHERE A.verein_id='$playerId' AND S.id=P.verein_id
+                        INNER JOIN ". $websoccer->getConfig("db_prefix") ."_verein AS S ON S.id = P.verein_id
+                   WHERE A.verein_id='$playerId'
                     ORDER BY A.datum";
                     
 	    $result = $db->executeQuery($sqlStr);
@@ -503,8 +512,8 @@ class TransfermarketDataService {
 	        $bids[] = $offer;
 	        $i++;
 			
-			//update if offer ishighest
-			self::updateHighestOffer($websoccer, $db, $bids['p_id']);
+			// update if offer is highest
+			self::updateHighestOffer($websoccer, $db, $offer['p_id']);
 	        
 	    }
 	    $result->free();
@@ -514,6 +523,7 @@ class TransfermarketDataService {
 	
 	public static function getPlayersOnTLByTeamId(WebSoccer $websoccer, DbConnection $db, $playerId) {
 		
+	    $players = array();
 	    $sqlStr = "SELECT P.*
 					FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS P
                     WHERE P.verein_id='$playerId' AND P.transfermarkt='1'
@@ -535,21 +545,189 @@ class TransfermarketDataService {
 	
 	}
 	
-	function updateHighestOffer(WebSoccer $websoccer, DbConnection $db, $spieler_id) {
+	public static function updateHighestOffer(WebSoccer $websoccer, DbConnection $db, $spieler_id) {
+		
+		$table = $websoccer->getConfig('db_prefix') . '_transfer_angebot';
 		
 		// Reset ishighest for all offers of the player
-		$db->queryUpdate(['ishighest' => '0'], '". $websoccer->getConfig("db_prefix") ."_transfer_angebot', 'spieler_id = %d', $spieler_id);
+		$db->queryUpdate(['ishighest' => '0'], $table, 'spieler_id = %d', $spieler_id);
 
 		// Find the highest offer (sorted by abloese, then handgeld)
-		$result = $db->querySelect('id', '". $websoccer->getConfig("db_prefix") ."_transfer_angebot', 'spieler_id = %d ORDER BY abloese DESC, handgeld DESC LIMIT 1', $spieler_id);
+		$result = $db->querySelect('id', $table, 'spieler_id = %d ORDER BY abloese DESC, handgeld DESC LIMIT 1', $spieler_id);
 
 		if ($result && $row = $result->fetch_assoc()) {
 			
 			$highestOfferId = $row['id'];
 
 			// Update ishighest for the highest offer
-			$db->queryUpdate(['ishighest' => '1'], '". $websoccer->getConfig("db_prefix") ."_transfer_angebot', 'id = %d', $highestOfferId);
+			$db->queryUpdate(['ishighest' => '1'], $table, 'id = %d', $highestOfferId);
 		}
 	}
+	
+	public static function transferWatchdog(WebSoccer $websoccer, DbConnection $db, $offerId, $sellerClubId = null) {
+	    
+	    if ($websoccer->getConfig("transferoffers_deviation_penalty") !== "1") {
+	        return 0;
+	    }
+	    
+	    $penaltyBuyer = 0;
+	    $penaltySeller = 0;
+	    $offerId = (int) $offerId;
+	    
+	    if ($offerId < 1) {
+	        return 0;
+	    }
+	    
+	    // get data from offer
+	    $result = $db->querySelect("*", $websoccer->getConfig("db_prefix") . "_transfer_angebot", "id = %d", $offerId, 1);
+	    $offer = $result->fetch_array();
+	    $result->free();
+	    
+	    if (!$offer) {
+	        return 0;
+	    }
+	    
+	    // get player data (market value and current club before transfer, if no seller was explicitly provided)
+	    $result = $db->querySelect("*", $websoccer->getConfig("db_prefix") . "_spieler", "id = %d", (int) $offer["spieler_id"], 1);
+	    $player = $result->fetch_array();
+	    $result->free();
+	    
+	    if (!$player) {
+	        return 0;
+	    }
+	    
+	    if ($sellerClubId === null) {
+	        $sellerClubId = (int) $player["verein_id"];
+	    } else {
+	        $sellerClubId = (int) $sellerClubId;
+	    }
+	    
+	    $marketValue = self::normalizeMoneyValue($player["marktwert"]);
+	    $amount = self::normalizeMoneyValue($offer["abloese"]);
+	    $salary = self::normalizeMoneyValue($offer["vertrag_gehalt"]);
+	    
+	    if ($marketValue <= 0) {
+	        return 0;
+	    }
+	    
+	    $maxDeviation = (float) $websoccer->getConfig("transferoffers_max_offer_deviation");
+	    if ($maxDeviation < 0) {
+	        $maxDeviation = 0;
+	    }
+	    
+	    $minAllowedAmount = $marketValue * (1 - ($maxDeviation / 100));
+	    $maxAllowedAmount = $marketValue * (1 + ($maxDeviation / 100));
+	    
+	    // Human buyer pays the penalty for overpaying.
+	    if ($amount > $maxAllowedAmount) {
+	        $penaltyBuyer += (int) round($amount - $maxAllowedAmount, 0);
+	    }
+	    
+	    // Human seller pays the penalty only for selling far below market value.
+	    // This keeps the anti-collusion rule without punishing the seller for a buyer's overpriced offer.
+	    if ($amount < $minAllowedAmount) {
+	        $penaltySeller += (int) round($minAllowedAmount - $amount, 0);
+	    }
+	    
+	    // Salary rule: compare with similar market-value players. If there is no useful average,
+	    // fall back to the player's old salary. Penalize only the excess above the allowed threshold.
+	    $avgSalary = self::getAverageSalaryForMarketRange($websoccer, $db, $minAllowedAmount, $maxAllowedAmount);
+	    if ($avgSalary <= 0) {
+	        $avgSalary = self::normalizeMoneyValue($player["vertrag_gehalt"]);
+	    }
+	    
+	    if ($avgSalary > 0) {
+	        $maxAllowedSalary = $avgSalary * 1.5;
+	        if ($salary > $maxAllowedSalary) {
+	            $penaltyBuyer += (int) round(($salary - $maxAllowedSalary) * 20, 0);
+	        }
+	    }
+	    
+	    $buyer = self::getPenaltyTeamRow($websoccer, $db, (int) $offer["verein_id"]);
+	    $seller = ($sellerClubId > 0) ? self::getPenaltyTeamRow($websoccer, $db, $sellerClubId) : null;
+	    
+	    $chargedPenalty = 0;
+	    
+	    if ($penaltyBuyer > 0 && $buyer && (int) $offer["user_id"] > 0) {
+	        self::chargeTransferPenalty($websoccer, $db, (int) $buyer["id"], (int) $buyer["user_id"], $penaltyBuyer, $buyer["name"]);
+	        $chargedPenalty += $penaltyBuyer;
+	    }
+	    
+	    if ($penaltySeller > 0 && $seller && (int) $seller["user_id"] > 0) {
+	        self::chargeTransferPenalty($websoccer, $db, (int) $seller["id"], (int) $seller["user_id"], $penaltySeller, $seller["name"]);
+	        $chargedPenalty += $penaltySeller;
+	    }
+	    
+	    if ($chargedPenalty > 0) {
+	        // Add only actually charged human penalties to the redistribution pot.
+	        $penaltyTable = $websoccer->getConfig("db_prefix") . "_penalty";
+	        $db->executeQuery("INSERT IGNORE INTO " . $penaltyTable . " (id, budget, penalty) VALUES (1, 0, 0)");
+	        $db->executeQuery("UPDATE " . $penaltyTable . " SET penalty = penalty + " . (int) $chargedPenalty . " WHERE id = 1");
+	    }
+	    
+	    self::transferLog($websoccer, $db, "penalty buyer: " . $penaltyBuyer . " seller: " . $penaltySeller . " charged: " . $chargedPenalty . " - buyerId: " . $offer["verein_id"] . " sellerId: " . $sellerClubId);
+	    
+	    return $chargedPenalty;
+	}
+	
+	private static function chargeTransferPenalty(WebSoccer $websoccer, DbConnection $db, $teamId, $userId, $penalty, $teamName) {
+	    $penalty = (int) $penalty;
+	    
+	    if ($penalty <= 0 || $teamId < 1 || $userId < 1) {
+	        return;
+	    }
+	    
+	    BankAccountDataService::debitAmount($websoccer, $db, $teamId, $penalty, "transfer_violation", $teamName);
+	    NotificationsDataService::createNotification(
+	        $websoccer,
+	        $db,
+	        $userId,
+	        "transfer_violation_notification",
+	        array("penalty" => $penalty),
+	        "transfermarket",
+	        "mybids",
+	        null,
+	        $teamId
+	    );
+	}
+	
+	private static function getPenaltyTeamRow(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	    $result = $db->querySelect("id, name, user_id", $websoccer->getConfig("db_prefix") . "_verein", "id = %d", (int) $teamId, 1);
+	    $team = $result->fetch_array();
+	    $result->free();
+	    
+	    return $team;
+	}
+	
+	private static function getAverageSalaryForMarketRange(WebSoccer $websoccer, DbConnection $db, $minMarketValue, $maxMarketValue) {
+	    $result = $db->querySelect(
+	        "AVG(vertrag_gehalt) AS avg_salary",
+	        $websoccer->getConfig("db_prefix") . "_spieler",
+	        "CAST(marktwert AS DECIMAL(15,2)) BETWEEN %d AND %d AND status = '1'",
+	        array((int) round($minMarketValue, 0), (int) round($maxMarketValue, 0)),
+	        1
+	    );
+	    $salary = $result->fetch_array();
+	    $result->free();
+	    
+	    if (!$salary || $salary["avg_salary"] === null) {
+	        return 0;
+	    }
+	    
+	    return (float) $salary["avg_salary"];
+	}
+	
+	private static function normalizeMoneyValue($value) {
+	    $value = str_replace(array(" ", "\xc2\xa0"), "", (string) $value);
+	    $value = str_replace(",", ".", $value);
+	    $value = preg_replace("/[^0-9.\-]/", "", $value);
+	    
+	    if ($value === "" || $value === "-" || !is_numeric($value)) {
+	        return 0;
+	    }
+	    
+	    return (float) $value;
+	}
+
 }
 ?>

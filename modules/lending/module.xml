@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
-<module version="1.0.0">
+<module version="1.1.0">
 
     <dependencies>
         <dependency module="players" version="1.0.0"/>
@@ -14,18 +14,28 @@
 	
     <pages>
         <page
+            id="loans"
+            template="loan-overview"
+            model="LoanOverviewModel"
+            role="user"
+            parentItem="transfermarket"
+            navitem="true"
+            navweight="20"
+            navitemOnlyForConfigEnabled="lending_enabled" />
+
+        <page
             id="lend-player"
             template="lend-player"
-            model="PlayerDetailsModel"
+            model="LoanPlayerDetailsModel"
             role="user"
-            parentItem="office"/>
+            parentItem="transfermarket" />
         
         <page
             id="borrow-player"
             template="borrow-player"
-            model="PlayerDetailsModel"
+            model="LoanPlayerDetailsModel"
             role="user"
-            parentItem="office"/>
+            parentItem="transfermarket" />
    
     </pages>
     
@@ -34,13 +44,16 @@
             template="lent_players"
             model="LentPlayersModel"
             role="user"
-            includepages="myteam"
-            area="content_bottom" />
+            includepages="none"
+            area="custom" />
     </blocks>
     
   <actions>
 	<action id="lend-player" controller="LendPlayerController" role="user">
 		<param id="fee" type="number" required="true" min="1" max="1000000000" />
+		<param id="salary_share_percent" type="number" required="false" min="50" max="100" />
+		<param id="option_type" type="text" required="false" />
+		<param id="buy_fee" type="number" required="false" min="0" max="1000000000" />
 		<param id="id" type="number" required="true" />
 	</action>
 	
@@ -50,6 +63,14 @@
 	
 	<action id="borrow-player" controller="BorrowPlayerController" role="user">
 		<param id="matches" type="number" required="true" min="1" max="100" />
+		<param id="id" type="number" required="true" />
+	</action>
+
+	<action id="recall-loan" controller="RecallLoanController" role="user">
+		<param id="id" type="number" required="true" />
+	</action>
+
+	<action id="buy-loan-player" controller="BuyLoanPlayerController" role="user">
 		<param id="id" type="number" required="true" />
 	</action>
 	

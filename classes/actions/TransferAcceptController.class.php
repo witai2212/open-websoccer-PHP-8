@@ -41,10 +41,12 @@ class TransferAcceptController implements IActionController {
 	 * @see IActionController::executeAction()
 	 */
 	public function executeAction($parameters) {
+	    
 		// check if feature is enabled
 		if (!$this->_websoccer->getConfig("transfermarket_enabled")) {
 			return NULL;
 		}
+		
 		
 		//old team data
 		$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
@@ -58,13 +60,15 @@ class TransferAcceptController implements IActionController {
 				"id = %d", array($parameters["id"]));
 		$offer = $result->fetch_array();
 		$result->free();
-		
-		//new team data
-		$newTeam = TeamsDataService::getTeamById($this->_websoccer, $this->_db, $offer['verein_id']);
-
-		if (!$offer) {
-			throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
-		}
+			if (!$offer) {
+				throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
+			}
+			
+			//new team data
+			$newTeam = TeamsDataService::getTeamById($this->_websoccer, $this->_db, $offer['verein_id']);
+			
+			//transfermarket watchdog, with explicit seller club before the player is moved
+			TransfermarketDataService::transferWatchdog($this->_websoccer, $this->_db, $offer['id'], $oldTeam['team_id']);
 		
 		// get player name for notification
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $offer["spieler_id"]);
@@ -114,6 +118,31 @@ class TransferAcceptController implements IActionController {
 							'".$offer['verein_id']."', '".$this->_websoccer->getNowAsTimestamp()."', '".$offer['id']."',
 							'".$offer['abloese']."')";
 		$this->_db->executeQuery($trStr);
+		$transferId = (int) $this->_db->getLastInsertedId();
+
+		if (class_exists('BadgeAwardService') && !empty($oldTeam['team_user_id'])) {
+			BadgeAwardService::processTransferSale(
+				$this->_websoccer,
+				$this->_db,
+				(int) $oldTeam['team_user_id'],
+				(int) $oldTeam['team_id'],
+				(int) $offer['spieler_id'],
+				(int) $offer['abloese'],
+				$transferId
+			);
+		}
+
+		if (class_exists('FanPressureDataService')) {
+			FanPressureDataService::processTransfer(
+				$this->_websoccer,
+				$this->_db,
+				$this->_i18n,
+				$offer['spieler_id'],
+				$oldTeam['team_id'],
+				$offer['verein_id'],
+				$offer['abloese']
+			);
+		}
 			
 		//delete offers from db
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_transfer_angebot";

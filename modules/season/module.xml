@@ -70,6 +70,12 @@
             filename="season-complete"
             navcategory="season"
             permissionrole="r_spiele" />
+        
+        <adminpage
+            id="new-season"
+            filename="season-new"
+            navcategory="season"
+            permissionrole="r_spiele" />
     </admin>
     
     <blocks>

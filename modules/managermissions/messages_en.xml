@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="manager-missions_navlabel">Board</message>
+    <message id="manager-missions_title">Board / Season Objectives</message>
+    <message id="manager-missions_intro">The board evaluates the season by several short-term objectives.</message>
+    <message id="manager_mission_no_active_season">There is currently no active season for your club.</message>
+    <message id="manager_mission_no_missions">No missions have been created for this season yet.</message>
+    <message id="manager_mission_season">Season</message>
+    <message id="manager_mission_summary">Progress</message>
+    <message id="manager_mission_completed_short">completed</message>
+    <message id="manager_mission_board_satisfaction">Board satisfaction</message>
+    <message id="manager_mission_highscore">Highscore</message>
+    <message id="manager_mission_rewards_hint">Reward per completed objective:</message>
+    <message id="manager_mission_penalty_hint">Penalty per failed objective at season end:</message>
+    <message id="manager_mission_baseline">Baseline</message>
+    <message id="manager_mission_target">Target</message>
+    <message id="manager_mission_current">Current</message>
+    <message id="manager_mission_status_open">Open</message>
+    <message id="manager_mission_status_completed">Completed</message>
+    <message id="manager_mission_status_failed">Failed</message>
+    <message id="manager_mission_title_league_rank">Reach league position {rank}</message>
+    <message id="manager_mission_desc_league_rank">The board expects at least position {rank}.</message>
+    <message id="manager_mission_title_highscore">Improve highscore to {target}</message>
+    <message id="manager_mission_desc_highscore">Increase the club highscore from {baseline} to at least {target}.</message>
+    <message id="manager_mission_title_salary_reduce">Reduce player salaries to {target}</message>
+    <message id="manager_mission_desc_salary_reduce">Reduce player salaries from {baseline} to at most {target}.</message>
+    <message id="manager_mission_salary_missing_detail">Still need to save {amount} salary.</message>
+    <message id="manager_mission_title_youth_promotion_played">Promote and play a youth player</message>
+    <message id="manager_mission_desc_youth_promotion_played">Promote one youth player and play him at least once in a competitive match.</message>
+    <message id="manager_mission_youth_open_detail">No youth player has been promoted for this objective yet.</message>
+    <message id="manager_mission_youth_promoted_detail">{player} was promoted. One competitive appearance is still missing.</message>
+    <message id="manager_mission_youth_done_detail">{player} was promoted and played.</message>
+    <message id="manager_mission_title_cup_round">Reach cup round {round}</message>
+    <message id="manager_mission_desc_cup_round">Reach at least round {round} in any cup competition.</message>
+    <message id="manager_mission_title_board_satisfaction">Keep board above {target}%</message>
+    <message id="manager_mission_desc_board_satisfaction">Keep board satisfaction at least at {target}%.</message>
+    <message id="manager_mission_value_rank">Rank {rank}</message>
+    <message id="manager_mission_value_cup_round">Round {round}</message>
+    <message id="manager_mission_value_done">Done</message>
+    <message id="manager_mission_value_open">Open</message>
+    <message id="manager_mission_completed_notification">Season objective completed: {mission}</message>
+    <message id="manager_mission_failed_notification">Season objective failed: {mission}</message>
+    <message id="manager_mission_news_completed_title">Season objective completed at {team}</message>
+    <message id="manager_mission_news_completed_message">{manager} completed a board objective with {team}: {mission}.</message>
+    <message id="manager_mission_news_link">Season objectives</message>
+</messages>

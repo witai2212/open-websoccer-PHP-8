@@ -4,6 +4,10 @@ class ComputerTransfersDataService {
     
     const MAX_SQUAD_SIZE = 23;
     const MAX_OFFERS = 3;
+    const MAX_LENDING_OFFERS_PER_TEAM = 2;
+    const MAX_BORROWED_PLAYERS_PER_TEAM = 2;
+    const MIN_SQUAD_SIZE_AFTER_LENDING = 20;
+    const MIN_SQUAD_SIZE_BEFORE_BORROWING = 20;
     const TRANSFER_DURATION_DAYS = 1;
     const MAX_PERCENTAGE_PLAYERS_ON_TL = 2;
     const MAX_PLAYERS_ON_TL = 800;
@@ -15,9 +19,11 @@ class ComputerTransfersDataService {
         self::$logger = $logger;
     }
 
-	public static function executeComputerBids(WebSoccer $websoccer, DbConnection $db) {
+	public static function executeComputerBids(WebSoccer $websoccer, DbConnection $db, $executeOpenTransfers = true) {
 	    
-	    TransfermarketDataService::executeOpenTransfers($websoccer, $db);
+	    if ($executeOpenTransfers) {
+	        TransfermarketDataService::executeOpenTransfers($websoccer, $db);
+	    }
 
 	    $MAX_PLAYERS_ON_TL = $websoccer->getConfig("transfermarket_max_players_on_tl");
 	    
@@ -33,7 +39,7 @@ class ComputerTransfersDataService {
 		// --- Managing Transfer List (only if condition is met) ---
 		$playersOnTL = self::getNumberOfPlayersOnTL($websoccer, $db);
 		
-		echo"- compTL ". $playersOnTL ." - ". $MAX_PLAYERS_ON_TL ."\n";
+		echo"[executeComputerBids]: ". $playersOnTL ." - ". $MAX_PLAYERS_ON_TL ."\n";
 
 		if($playersOnTL<$MAX_PLAYERS_ON_TL) {
 		//if ((($playersOnTL / $totalPlayers) < self::MAX_PERCENTAGE_PLAYERS_ON_TL) || ($playersOnTL < self::MAX_PLAYERS_ON_TL)) {
@@ -44,6 +50,15 @@ class ComputerTransfersDataService {
 				if (count($squad) > self::MAX_SQUAD_SIZE) {
 					self::manageTransferList($websoccer, $db, $teamId, $squad);
 				}
+			}
+		}
+
+		// --- Managing loans: all computer-controlled teams may offer and borrow players. ---
+		if ($websoccer->getConfig("lending_enabled")) {
+			$loanTeamIds = self::getComputerControlledTeamsForLoans($websoccer, $db);
+			foreach ($loanTeamIds as $teamId) {
+				self::manageLendingList($websoccer, $db, $teamId);
+				self::borrowLendablePlayer($websoccer, $db, $teamId);
 			}
 		}
 
@@ -88,6 +103,7 @@ class ComputerTransfersDataService {
 					$goalAmount = self::calculateGoal($player);
 
 					// Place bid if the team has enough budget
+					// $max_offer = $player['marktwert']*1.15;
 					if ($bidAmount <= $budget) {
 						
 						$offersForPlayerId = self::countOffersForPlayerId($websoccer, $db, $player['id']);
@@ -124,6 +140,22 @@ class ComputerTransfersDataService {
         return $teamIds;
     }
     
+    private static function getComputerControlledTeamsForLoans(WebSoccer $websoccer, DbConnection $db) {
+        $query = "
+            SELECT id
+            FROM ". $websoccer->getConfig('db_prefix') ."_verein
+            WHERE user_id IS NULL OR user_id <= '0'
+            ORDER BY RAND()";
+        $result = $db->executeQuery($query);
+
+        $teamIds = array();
+        while ($team = $result->fetch_array()) {
+            $teamIds[] = $team['id'];
+        }
+        $result->free();
+        return $teamIds;
+    }
+
     private static function getTeamBudget(WebSoccer $websoccer, DbConnection $db, $teamId) {
         
         $sqlStr = "SELECT finanz_budget
@@ -276,7 +308,7 @@ class ComputerTransfersDataService {
                     VALUES ('$playerId', '$teamId', '$bidAmount', '$handgeld', '60', '$now', '$salaryAmount', '$goalAmount')";
         $db->executeQuery($insStr);
         
-        echo"___BID: ". $playerId ."\n";
+        echo"- BID: ". $playerId ."\n";
 
 		// create notification for owner
 		$playerData = PlayersDataService::getPlayerById($websoccer, $db, $playerId);
@@ -368,7 +400,7 @@ class ComputerTransfersDataService {
                     WHERE id='$playerId'";
         $db->executeQuery($updStr);
 		
-        echo"___ON TL: ". $playerId ."\n";
+        echo"--- ON TL: ". $playerId ."\n";
         
 		/* check if player on watchlist
 		 *
@@ -399,6 +431,343 @@ class ComputerTransfersDataService {
     }
     
     
+    private static function manageLendingList(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $squad = self::getLoanRelevantTeamSquad($websoccer, $db, $teamId);
+        if (count($squad) <= self::MIN_SQUAD_SIZE_AFTER_LENDING) {
+            return;
+        }
+
+        $currentLoanOffers = self::getTeamLendingOfferCount($websoccer, $db, $teamId);
+        if ($currentLoanOffers >= self::MAX_LENDING_OFFERS_PER_TEAM) {
+            return;
+        }
+
+        $positionsCount = self::countPositions($squad);
+        $profile = self::getLoanProfile($websoccer, $db, $teamId, $squad);
+        $candidates = array();
+        foreach ($squad as $player) {
+            if (self::canOfferPlayerForLoan($websoccer, $player, $positionsCount)) {
+                $player['loan_score'] = self::scoreLoanOfferCandidate($player, $profile);
+                $candidates[] = $player;
+            }
+        }
+
+        usort($candidates, function($a, $b) {
+            if ($a['loan_score'] == $b['loan_score']) {
+                return 0;
+            }
+            return ($a['loan_score'] > $b['loan_score']) ? -1 : 1;
+        });
+
+        foreach ($candidates as $player) {
+            if ($currentLoanOffers >= self::MAX_LENDING_OFFERS_PER_TEAM) {
+                break;
+            }
+            if ($player['loan_score'] < 25) {
+                continue;
+            }
+
+            self::markPlayerForLoan($websoccer, $db, $teamId, $player, $profile);
+            $currentLoanOffers++;
+        }
+    }
+
+    private static function borrowLendablePlayer(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        if (self::getBorrowedPlayersCount($websoccer, $db, $teamId) >= self::MAX_BORROWED_PLAYERS_PER_TEAM) {
+            return;
+        }
+
+        $squad = self::getLoanRelevantTeamSquad($websoccer, $db, $teamId);
+        if (count($squad) >= self::MAX_SQUAD_SIZE) {
+            return;
+        }
+
+        $positionsCount = self::countPositions($squad);
+        $needs = self::getPositionNeeds($positionsCount);
+        if (count($squad) >= self::MIN_SQUAD_SIZE_BEFORE_BORROWING && count($needs) == 0) {
+            return;
+        }
+
+        $budget = self::getTeamBudgetRaw($websoccer, $db, $teamId);
+        if ($budget <= 0) {
+            return;
+        }
+
+        $teamStrength = self::calculateAverageStrength($squad);
+        $candidates = self::getLendablePlayersForComputerTeam($websoccer, $db, $teamId, $needs);
+        foreach ($candidates as $player) {
+            if (!self::computerLoanStrengthFits($teamStrength, $player)) {
+                continue;
+            }
+
+            $maxMatches = min((int) $websoccer->getConfig('lending_matches_max'), (int) $player['vertrag_spiele'] - 1);
+            $minMatches = (int) $websoccer->getConfig('lending_matches_min');
+            if ($maxMatches < $minMatches) {
+                continue;
+            }
+
+            $offer = LoanDataService::getOfferByPlayerId($websoccer, $db, $player['id']);
+            $salaryShare = isset($offer['salary_share_percent']) ? LoanDataService::normalizeSalaryShare($offer['salary_share_percent']) : 100;
+            $optionType = isset($offer['option_type']) ? LoanDataService::normalizeOptionType($offer['option_type']) : LoanDataService::OPTION_NONE;
+            $buyFee = isset($offer['buy_fee']) ? (int) $offer['buy_fee'] : 0;
+
+            $matches = rand($minMatches, $maxMatches);
+            $totalFee = $matches * (int) $player['lending_fee'];
+            $salaryPart = (int) round((int) $player['vertrag_gehalt'] * $salaryShare / 100);
+            $minimumRequiredBudget = $totalFee + (5 * $salaryPart);
+            if ($optionType == LoanDataService::OPTION_OBLIGATION) {
+                $minimumRequiredBudget += $buyFee;
+            }
+            if ($budget < $minimumRequiredBudget) {
+                continue;
+            }
+
+            self::executeComputerLoan($websoccer, $db, $teamId, $player, $matches, $totalFee, $salaryShare, $optionType, $buyFee);
+            break;
+        }
+    }
+
+    private static function getLoanRelevantTeamSquad(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $squad = array();
+        $query = "
+            SELECT id, position, age, w_talent, w_staerke, w_technik, w_kondition, w_frische, marktwert, vertrag_gehalt, vertrag_spiele,
+                   lending_fee, lending_matches, lending_owner_id, transfermarkt
+            FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+            WHERE verein_id = '". (int) $teamId ."'
+              AND status = '1'";
+        $result = $db->executeQuery($query);
+        while ($player = $result->fetch_assoc()) {
+            $squad[] = $player;
+        }
+        $result->free();
+
+        return $squad;
+    }
+
+    private static function getTeamLendingOfferCount(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $query = "
+            SELECT COUNT(*) AS loan_offers
+            FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+            WHERE verein_id = '". (int) $teamId ."'
+              AND status = '1'
+              AND lending_fee > 0
+              AND (lending_owner_id IS NULL OR lending_owner_id = 0)";
+        $result = $db->executeQuery($query);
+        $row = $result->fetch_assoc();
+        $result->free();
+
+        return (int) $row['loan_offers'];
+    }
+
+    private static function getBorrowedPlayersCount(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $query = "
+            SELECT COUNT(*) AS borrowed_players
+            FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+            WHERE verein_id = '". (int) $teamId ."'
+              AND status = '1'
+              AND lending_matches > 0
+              AND lending_owner_id > 0";
+        $result = $db->executeQuery($query);
+        $row = $result->fetch_assoc();
+        $result->free();
+
+        return (int) $row['borrowed_players'];
+    }
+
+    private static function canOfferPlayerForLoan(WebSoccer $websoccer, $player, $positionsCount) {
+        if ($player['transfermarkt'] == '1') {
+            return false;
+        }
+        if ((int) $player['lending_fee'] > 0 || (int) $player['lending_owner_id'] > 0 || (int) $player['lending_matches'] > 0) {
+            return false;
+        }
+        if ((int) $player['vertrag_spiele'] <= (int) $websoccer->getConfig('lending_matches_min')) {
+            return false;
+        }
+
+        return self::canListPlayerForTransfer($player, $positionsCount);
+    }
+
+    private static function markPlayerForLoan(WebSoccer $websoccer, DbConnection $db, $teamId, $player, $profile) {
+        $fee = self::calculateLendingFee($player);
+        $salaryShare = self::calculateComputerLoanSalaryShare($player, $profile);
+        $optionType = self::calculateComputerLoanOptionType($player, $profile);
+        $buyFee = 0;
+        if ($optionType != LoanDataService::OPTION_NONE) {
+            $buyFee = max(LoanDataService::getMinBuyFee($player), min(LoanDataService::getMaxBuyFee($player), (int) round((int) $player['marktwert'] * 0.95)));
+        }
+
+        $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') . "_spieler
+                    SET lending_fee = '". (int) $fee ."'
+                    WHERE id = '". (int) $player['id'] ."'";
+        $db->executeQuery($updStr);
+        LoanDataService::saveOffer($websoccer, $db, $player['id'], $teamId, $fee, $salaryShare, $optionType, $buyFee, true);
+
+        echo "--- ON LOAN LIST: ". $player['id'] ."\n";
+    }
+
+    private static function calculateLendingFee($player) {
+        $marketValue = max(0, (int) $player['marktwert']);
+        $salary = max(0, (int) $player['vertrag_gehalt']);
+        $fee = round(($marketValue * 0.01) + ($salary * 0.25));
+        $fee = max(1000, min(LoanDataService::getMaxLoanFee($player), $fee));
+
+        return round($fee / 100) * 100;
+    }
+
+    private static function getPositionNeeds($positionsCount) {
+        $minimum = array(
+            'Torwart' => 2,
+            'Abwehr' => 5,
+            'Mittelfeld' => 5,
+            'Sturm' => 4
+        );
+
+        $needs = array();
+        foreach ($minimum as $position => $minCount) {
+            $count = isset($positionsCount[$position]) ? $positionsCount[$position] : 0;
+            if ($count < $minCount) {
+                $needs[] = $position;
+            }
+        }
+
+        return $needs;
+    }
+
+    private static function getLendablePlayersForComputerTeam(WebSoccer $websoccer, DbConnection $db, $teamId, $needs) {
+        $wherePosition = '';
+        if (count($needs) > 0) {
+            $positionParts = array();
+            foreach ($needs as $position) {
+                $positionParts[] = "'" . str_replace("'", "''", $position) . "'";
+            }
+            $wherePosition = " AND P.position IN (" . implode(',', $positionParts) . ")";
+        }
+
+        $query = "
+            SELECT P.*, C.name AS lender_team_name, C.user_id AS lender_user_id
+            FROM ". $websoccer->getConfig('db_prefix') ."_spieler AS P
+            INNER JOIN ". $websoccer->getConfig('db_prefix') ."_verein AS C ON C.id = P.verein_id
+            WHERE P.status = '1'
+              AND P.verein_id <> '". (int) $teamId ."'
+              AND P.transfermarkt <> '1'
+              AND P.lending_fee > 0
+              AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)
+              AND P.vertrag_spiele > '". (int) $websoccer->getConfig('lending_matches_min') ."'
+              ". $wherePosition ."
+            ORDER BY RAND()
+            LIMIT 30";
+        $result = $db->executeQuery($query);
+
+        $players = array();
+        while ($player = $result->fetch_assoc()) {
+            $players[] = $player;
+        }
+        $result->free();
+
+        return $players;
+    }
+
+    private static function getTeamBudgetRaw(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $sqlStr = "SELECT finanz_budget
+                    FROM ". $websoccer->getConfig('db_prefix') ."_verein
+                    WHERE id='". (int) $teamId ."'";
+        $result = $db->executeQuery($sqlStr);
+        $budget = $result->fetch_array();
+        $result->free();
+
+        return (int) $budget['finanz_budget'];
+    }
+
+    private static function executeComputerLoan(WebSoccer $websoccer, DbConnection $db, $borrowerTeamId, $player, $matches, $totalFee, $salaryShare = 100, $optionType = 'none', $buyFee = 0) {
+        $borrowerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $borrowerTeamId);
+        $lenderTeamId = (int) $player['verein_id'];
+
+        BankAccountDataService::debitAmount($websoccer, $db, $borrowerTeamId, $totalFee, 'lending_fee_subject', $player['lender_team_name']);
+        BankAccountDataService::creditAmount($websoccer, $db, $lenderTeamId, $totalFee, 'lending_fee_subject', $borrowerTeam['team_name']);
+
+        $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') . "_spieler
+                    SET lending_matches = '". (int) $matches ."',
+                        lending_owner_id = '". $lenderTeamId ."',
+                        verein_id = '". (int) $borrowerTeamId ."'
+                    WHERE id = '". (int) $player['id'] ."'";
+        $db->executeQuery($updStr);
+        LoanDataService::createLoan($websoccer, $db, $player['id'], $lenderTeamId, $borrowerTeamId, $matches, $player['lending_fee'], $salaryShare, $optionType, $buyFee);
+        LoanDataService::closeOffer($websoccer, $db, $player['id'], 'accepted');
+
+        echo "--- BORROWED: ". $player['id'] ." -> ". $borrowerTeamId ."\n";
+
+        if ((int) $player['lender_user_id'] > 0) {
+            $playerName = (strlen($player['kunstname'])) ? $player['kunstname'] : $player['vorname'] . ' ' . $player['nachname'];
+            NotificationsDataService::createNotification($websoccer, $db, $player['lender_user_id'], 'lending_notification_lent',
+                array('player' => $playerName, 'matches' => $matches, 'newteam' => $borrowerTeam['team_name']),
+                'lending_lent', 'loans', '');
+        }
+    }
+
+    private static function getLoanProfile(WebSoccer $websoccer, DbConnection $db, $teamId, $squad) {
+        $result = $db->executeQuery("SELECT tactical_style, finanz_budget, strength FROM ". $websoccer->getConfig('db_prefix') ."_verein WHERE id = '". (int) $teamId ."'");
+        $team = $result->fetch_assoc();
+        $result->free();
+        return array(
+            'tactical_style' => isset($team['tactical_style']) ? $team['tactical_style'] : '',
+            'budget' => isset($team['finanz_budget']) ? (int) $team['finanz_budget'] : 0,
+            'strength' => isset($team['strength']) ? (int) $team['strength'] : 0,
+            'avg_strength' => self::calculateAverageStrength($squad)
+        );
+    }
+
+    private static function scoreLoanOfferCandidate($player, $profile) {
+        $score = 0;
+        $playerStrength = self::calculatePlayerStrengthX($player);
+        if ($playerStrength < $profile['avg_strength'] * 0.90) {
+            $score += 20;
+        }
+        if ((int) $player['age'] <= 22) {
+            $score += 25;
+        } elseif ((int) $player['age'] <= 25) {
+            $score += 10;
+        }
+        if ((int) $player['w_talent'] >= 4) {
+            $score += 15;
+        }
+        if ($profile['tactical_style'] == 'youth_focused' || $profile['tactical_style'] == 'youth-focused') {
+            $score += 10;
+        }
+        if ((int) $player['vertrag_gehalt'] > 0 && $profile['budget'] < ((int) $player['vertrag_gehalt'] * 20)) {
+            $score += 10;
+        }
+        return $score;
+    }
+
+    private static function calculateComputerLoanSalaryShare($player, $profile) {
+        if ((int) $player['vertrag_gehalt'] > 0 && $profile['budget'] < ((int) $player['vertrag_gehalt'] * 15)) {
+            return 70;
+        }
+        if ((int) $player['age'] <= 22 && (int) $player['w_talent'] >= 4) {
+            return 80;
+        }
+        return 100;
+    }
+
+    private static function calculateComputerLoanOptionType($player, $profile) {
+        if ((int) $player['age'] <= 22 && (int) $player['w_talent'] >= 4) {
+            return LoanDataService::OPTION_NONE;
+        }
+        if ((int) $player['vertrag_gehalt'] > 0 && $profile['budget'] < ((int) $player['vertrag_gehalt'] * 12)) {
+            return LoanDataService::OPTION_BUY;
+        }
+        return LoanDataService::OPTION_NONE;
+    }
+
+    private static function computerLoanStrengthFits($teamStrength, $candidate) {
+        if ($teamStrength <= 0) {
+            return true;
+        }
+        $playerStrength = self::calculatePlayerStrengthX($candidate);
+        return ($playerStrength >= $teamStrength * 0.75 && $playerStrength <= $teamStrength * 1.15);
+    }
+
     private static function countOffersForPlayerId(WebSoccer $websoccer, DbConnection $db, $playerId) {
         
 		$query = "SELECT COUNT(*) AS offers
@@ -450,7 +819,7 @@ class ComputerTransfersDataService {
         $result = $db->executeQuery($sqlStr);
         while ($player = $result->fetch_assoc()) {
             
-            echo"447: deleting offer if not on TL: ". $player['spieler_id'] ."<br>";
+            echo"447: deleting offer if not on TL: ". $player['spieler_id'] ."\n";
             ComputerTransfersDataService::deleteOfferByPlayerId($websoccer, $db, $player['spieler_id']);
         }
 	}

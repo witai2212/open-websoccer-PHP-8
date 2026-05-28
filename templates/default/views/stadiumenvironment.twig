@@ -38,10 +38,37 @@
 					{% if building.under_construction %}
 						<p><strong>{{ i18n.getMessage("stadiumenvironment_existingbuildings_underconstruction", env.getFormattedDatetime(building.construction_deadline, i18n)) }}</strong></p>
 					{% endif %}
-					{% if building.effect_income != 0 %}
-						<p><strong>{{ i18n.getMessage("entity_stadiumbuilding_effect_income") }}:</strong>
-						{{ building.effect_income|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</p>
-					{% endif %}
+
+					<dl class="dl-horizontal">
+						{% if building.effect_training != 0 %}
+							<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_training") }}</dt>
+							<dd>+{{ building.effect_training }}</dd>
+						{% endif %}
+						{% if building.effect_youthscouting != 0 %}
+							<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_youthscouting") }}</dt>
+							<dd>+{{ building.effect_youthscouting }}</dd>
+						{% endif %}
+						{% if building.effect_tickets != 0 %}
+							<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_tickets") }}</dt>
+							<dd>+{{ building.effect_tickets }} %</dd>
+						{% endif %}
+						{% if building.effect_fanpopularity != 0 %}
+							<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_fanpopularity") }}</dt>
+							<dd>+{{ building.effect_fanpopularity }}</dd>
+						{% endif %}
+						{% if building.effect_injury != 0 %}
+							<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_injury") }}</dt>
+							<dd>-{{ building.effect_injury }} {{ i18n.getMessage("stadiumenvironment_effect_injury_unit") }}</dd>
+						{% endif %}
+						{% if building.effect_income != 0 %}
+							<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_income") }}</dt>
+							<dd>{{ building.effect_income|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+						{% endif %}
+						{% if building.effect_merchandising != 0 %}
+							<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_merchandising") }}</dt>
+							<dd>+{{ building.effect_merchandising }} %</dd>
+						{% endif %}
+					</dl>
 				</td>
 			</tr>
 			{% endfor %}
@@ -93,11 +120,35 @@
 					</dd>
 					
 					<dt>{{ i18n.getMessage("entity_stadiumbuilding_construction_time_days") }}</dt>
-					<dd>{{ building.construction_time_days  }}</dd>
+					<dd>{{ building.construction_time_days }}</dd>
 					
+					{% if building.effect_training != 0 %}
+						<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_training") }}</dt>
+						<dd>+{{ building.effect_training }}</dd>
+					{% endif %}
+					{% if building.effect_youthscouting != 0 %}
+						<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_youthscouting") }}</dt>
+						<dd>+{{ building.effect_youthscouting }}</dd>
+					{% endif %}
+					{% if building.effect_tickets != 0 %}
+						<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_tickets") }}</dt>
+						<dd>+{{ building.effect_tickets }} %</dd>
+					{% endif %}
+					{% if building.effect_fanpopularity != 0 %}
+						<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_fanpopularity") }}</dt>
+						<dd>+{{ building.effect_fanpopularity }}</dd>
+					{% endif %}
+					{% if building.effect_injury != 0 %}
+						<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_injury") }}</dt>
+						<dd>-{{ building.effect_injury }} {{ i18n.getMessage("stadiumenvironment_effect_injury_unit") }}</dd>
+					{% endif %}
 					{% if building.effect_income != 0 %}
 						<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_income") }}</dt>
-						<dd>{{ building.effect_income|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
+						<dd>{{ building.effect_income|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+					{% endif %}
+					{% if building.effect_merchandising != 0 %}
+						<dt>{{ i18n.getMessage("entity_stadiumbuilding_effect_merchandising") }}</dt>
+						<dd>+{{ building.effect_merchandising }} %</dd>
 					{% endif %}
 				</dl>
 				

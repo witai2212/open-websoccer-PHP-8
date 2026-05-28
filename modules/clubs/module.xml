@@ -153,5 +153,14 @@
             area="custom"
             weight="0"
             role="user" />
+        
+        <block
+            id="club-hall-of-fame"
+            template="club_hall_of_fame"
+            model="ClubHallOfFameModel"
+            includepages="none"
+            area="custom"
+            weight="0"
+            role="user,guest" />
     </blocks>
 </module>

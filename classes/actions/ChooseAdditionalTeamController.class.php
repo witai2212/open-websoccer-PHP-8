@@ -68,7 +68,7 @@ class ChooseAdditionalTeamController implements IActionController {
 		while ($teamOfUser = $result->fetch_array()) {
 			$teamsOfUser[$teamOfUser['liga_id']][] = $teamOfUser['id'];
 		}
-		$result->free_result();
+		$result->free();
 		
 		if (count($teamsOfUser) >= $this->_websoccer->getConfig('max_number_teams_per_user')) {
 			throw new Exception($this->_i18n->getMessage('freeclubs_msg_error_max_number_of_teams', $maxTeams));
@@ -81,7 +81,7 @@ class ChooseAdditionalTeamController implements IActionController {
 		$club = $result->fetch_array();
 		$result->free();
 		
-		if ($club['user_id'] && !$club['interimmanager']) {
+		if (!isset($club['id']) || ($club['user_id'] && !$club['interimmanager'])) {
 			throw new Exception($this->_i18n->getMessage('freeclubs_msg_error'));
 		}
 		
@@ -90,9 +90,7 @@ class ChooseAdditionalTeamController implements IActionController {
 			throw new Exception($this->_i18n->getMessage('freeclubs_msg_error_no_club_from_same_league'));
 		}
 		
-		// update record
-		$this->_db->queryUpdate(array('user_id' => $user->id), $fromTable, "id = %d", $teamId);
-		
+		ManagerCareerDataService::assignFreeClub($this->_websoccer, $this->_db, $this->_i18n, $user->id, $teamId, ManagerCareerDataService::ORIGIN_ADDITIONAL_CLUB);
 		$user->setClubId($teamId);
 		
 		// success message

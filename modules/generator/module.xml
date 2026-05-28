@@ -3,6 +3,7 @@
 <module version="1.0.0">
     
     <admin>
+		<adminpage id="seasonrollover" permissionrole="r_daten" navcategory="league" filename="season-rollover"/>
 		<adminpage id="teamsgenerator" permissionrole="r_daten" navcategory="league" filename="teamsgenerator"/>
 		<adminpage id="playersgenerator" permissionrole="r_daten" navcategory="league" filename="playersgenerator"/>
 	</admin>

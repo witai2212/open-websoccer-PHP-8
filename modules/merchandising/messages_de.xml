@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+	<message id="merchandising_navlabel">Merchandising</message>
+
+	<message id="merchandising_intro">
+		Verwalten Sie Ihr Merchandising-Sortiment. Nach jedem Heimspiel werden abhängig von Zuschauerzahl, Fanbeliebtheit, Spielergebnis, Preisstrategie und Fanshop-Ausbau Merchandising-Verkäufe berechnet.
+	</message>
+
+	<message id="merchandising_summary_title">Gesamtübersicht</message>
+	<message id="merchandising_summary_units_sold">Verkaufte Artikel</message>
+	<message id="merchandising_summary_revenue">Umsatz</message>
+	<message id="merchandising_summary_costs">Herstellungskosten</message>
+	<message id="merchandising_summary_profit">Gewinn</message>
+	<message id="merchandising_summary_matches_with_sales">Heimspiele mit Verkäufen</message>
+	<message id="merchandising_summary_avg_profit_per_match">Durchschnittlicher Gewinn pro Heimspiel</message>
+
+	<message id="merchandising_products_title">Sortiment und Preisstrategie</message>
+	<message id="merchandising_product_name">Produkt</message>
+	<message id="merchandising_product_purchase_price">Einkaufspreis</message>
+	<message id="merchandising_product_base_sales_price">Grundverkaufspreis</message>
+	<message id="merchandising_product_effective_sales_price">Aktueller Verkaufspreis</message>
+	<message id="merchandising_product_profit_per_item">Gewinn je Artikel</message>
+	<message id="merchandising_product_base_demand">Grundnachfrage</message>
+	<message id="merchandising_product_settings">Einstellungen</message>
+	<message id="merchandising_product_enabled">Aktiv anbieten</message>
+	<message id="merchandising_product_price_factor">Preisfaktor</message>
+
+	<message id="merchandising_no_products_available">
+		Derzeit stehen keine aktiven Merchandising-Produkte zur Verfügung.
+	</message>
+
+	<message id="merchandising_product_statistics_title">Statistik nach Produkt</message>
+	<message id="merchandising_no_sales_statistics">
+		Es liegen bisher noch keine Merchandising-Verkaufsstatistiken vor.
+	</message>
+
+	<message id="merchandising_recent_sales_title">Letzte Merchandising-Verkäufe</message>
+	<message id="merchandising_recent_sales_date">Datum</message>
+	<message id="merchandising_recent_sales_match">Spiel</message>
+	<message id="merchandising_no_recent_sales">
+		Bisher wurden noch keine Merchandising-Verkäufe verbucht.
+	</message>
+
+	<message id="merchandising_matchday_profit_subject">Gewinn Merchandising Heimspiel</message>
+	<message id="merchandising_matchday_loss_subject">Verlust Merchandising Heimspiel</message>
+
+	<message id="activitylog_save-merchandising-product">%s hat seine Merchandising-Einstellungen geändert.</message>
+
+</messages>

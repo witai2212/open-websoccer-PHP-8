@@ -10,4 +10,18 @@
 	<message id="entity_trainingcamp_p_kondition">Effekt Kondition</message>
 	<message id="entity_trainingcamp_p_frische">Effekt Frische</message>
 	<message id="entity_trainingcamp_p_zufriedenheit">Effekt Zufriedenheit</message>
+	<message id="entity_trainingcamp_camp_type">Fokus</message>
+	<message id="entity_trainingcamp_p_passing">Effekt Passen</message>
+	<message id="entity_trainingcamp_p_shooting">Effekt Schuss</message>
+	<message id="entity_trainingcamp_p_heading">Effekt Kopfball</message>
+	<message id="entity_trainingcamp_p_tackling">Effekt Zweikampf</message>
+	<message id="entity_trainingcamp_p_freekick">Effekt Freistoß</message>
+	<message id="entity_trainingcamp_p_pace">Effekt Tempo</message>
+	<message id="entity_trainingcamp_p_creativity">Effekt Kreativität</message>
+	<message id="entity_trainingcamp_p_influence">Effekt Einfluss</message>
+	<message id="entity_trainingcamp_p_flair">Effekt Flair</message>
+	<message id="entity_trainingcamp_p_penalty">Effekt Elfmeter</message>
+	<message id="entity_trainingcamp_p_penalty_killing">Effekt Elfmeter halten</message>
+	<message id="entity_trainingcamp_p_team_chemistry">Effekt Teamchemie</message>
+	<message id="entity_trainingcamp_injury_risk">Verletzungsrisiko</message>
 </messages>

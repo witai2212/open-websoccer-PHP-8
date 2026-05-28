@@ -50,7 +50,7 @@
 					{% endif %}
 					<a href="?page=team&id={{ player.verein.team_id }}">{{ player.verein.team_name }}</a>
 				</td>
-				<td>{{ player.alter }}</td>
+				<td>{{ player.age }}</td>
 				<td>{{ player.position_main }}</td>
 				<td>{{ player.position_second }}</td>
 				<td>{{ player.marktwert|number_format(0, ',', ' ') }}{{ transfermarktLabel }}</td>

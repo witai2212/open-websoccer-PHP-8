@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="random-events_navlabel">Events</message>
+    <message id="random-events_title">Club Events</message>
+    <message id="random-events_intro">This page shows active events that need a manager decision. Some decisions apply immediately, others remain active until the event expires.</message>
+
+    <message id="randomevent_chain_notification">New club event: {event}</message>
+    <message id="randomevent_chain_no_open_events">There are currently no open club events.</message>
+    <message id="randomevent_chain_expires_matchday">Expires after matchday</message>
+    <message id="randomevent_chain_choice">Decision</message>
+    <message id="randomevent_chain_effect">Effect</message>
+    <message id="randomevent_chain_choose">Choose</message>
+    <message id="randomevent_chain_choice_selected">Selected reaction</message>
+    <message id="randomevent_chain_waiting_until_expiry">This reaction remains active until the event expires.</message>
+    <message id="randomevent_chain_resolved_success">The decision has been applied.</message>
+    <message id="randomevent_chain_already_resolved">This event has already been resolved.</message>
+    <message id="randomevent_chain_already_selected">A reaction has already been selected for this event.</message>
+
+    <message id="randomevent_chain_player_unhappy_title">Unhappy player</message>
+    <message id="randomevent_chain_player_unhappy_message">{playername} seems increasingly unhappy. The situation may affect his happiness and the club atmosphere.</message>
+    <message id="randomevent_chain_choice_talk">Talk to the player</message>
+    <message id="randomevent_chain_choice_talk_desc">Costs some money for a personal talk and support, but improves his happiness.</message>
+    <message id="randomevent_chain_choice_ignore">Ignore</message>
+    <message id="randomevent_chain_choice_ignore_desc">No direct cost, but happiness drops and the board is slightly irritated.</message>
+    <message id="randomevent_chain_choice_sell">Put on transfer list</message>
+    <message id="randomevent_chain_choice_sell_desc">The player is placed on the transfer market. His happiness drops slightly.</message>
+
+    <message id="randomevent_chain_sponsor_scandal_title">Sponsor scandal</message>
+    <message id="randomevent_chain_sponsor_scandal_message">Your sponsor {sponsorname} is facing public criticism. The club must decide how to react.</message>
+    <message id="randomevent_chain_choice_distance">Distance the club</message>
+    <message id="randomevent_chain_choice_distance_desc">Costs money, but protects fan and board satisfaction.</message>
+    <message id="randomevent_chain_choice_support">Support the sponsor</message>
+    <message id="randomevent_chain_choice_support_desc">Brings short-term money, but hurts fans and the board.</message>
+    <message id="randomevent_chain_choice_silent">No statement</message>
+    <message id="randomevent_chain_choice_silent_desc">No direct cost, but fans and board react negatively.</message>
+
+    <message id="randomevent_chain_youth_discovered_title">Youth player discovered</message>
+    <message id="randomevent_chain_youth_discovered_message">A local scout recommends {youthplayer}, age {youth_age}, position {youth_position}. The player could join your youth team.</message>
+    <message id="randomevent_chain_choice_sign_youth">Sign youth player</message>
+    <message id="randomevent_chain_choice_sign_youth_desc">The player joins your youth team. A small training compensation is due.</message>
+    <message id="randomevent_chain_choice_let_go">Let him go</message>
+    <message id="randomevent_chain_choice_let_go_desc">No effect.</message>
+
+    <message id="randomevent_chain_stadium_damage_title">Stadium damage</message>
+    <message id="randomevent_chain_stadium_damage_message">Damage has been detected at {teamname}'s stadium. You can repair it immediately or risk lower attendance.</message>
+    <message id="randomevent_chain_choice_repair_now">Repair now</message>
+    <message id="randomevent_chain_choice_repair_now_desc">High repair cost, but no further restriction.</message>
+    <message id="randomevent_chain_choice_risk_attendance">Postpone repair</message>
+    <message id="randomevent_chain_choice_risk_attendance_desc">No immediate cost, but attendance rate drops until the event expires.</message>
+    <message id="randomevent_chain_choice_emergency_repair">Emergency repair</message>
+    <message id="randomevent_chain_choice_emergency_repair_desc">If no decision is made in time, an expensive emergency repair is needed and the board is unhappy.</message>
+</messages>

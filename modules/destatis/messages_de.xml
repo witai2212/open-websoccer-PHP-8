@@ -93,4 +93,12 @@
 	<message id="most_valuable_team_values">Marktwert</message>
 	<message id="most_valuable_team_avg_values">Druchschn. Marktwert</message>
 	
+	<message id="highscore_teams_navlabel">Team-Highscore</message>
+	<message id="highscore_teams_title">Teams-Highscore</message>
+	<message id="highscore_teams_rank">Rang</message>
+	<message id="highscore_teams_team">Team</message>
+	<message id="highscore_teams_league">Liga</message>
+	<message id="highscore_teams_manager">Manager</message>
+	<message id="highscore_teams_score">Highscore</message>
+	
 </messages>

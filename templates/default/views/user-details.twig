@@ -9,14 +9,6 @@
 
 {% block page_content %}
 
-{% if badges|length > 0 %}
-<ul class="inline">
-	{% for badge in badges %}
-		<li>{{ badgesmacros.badge(badge.name, badge.level, badge.date_rewarded) }}</li>
-	{% endfor %}
-</ul>
-{% endif %}
-
 <div style="text-align: center; margin-bottom: 10px;">
 
 	{% if user.picture|length > 0 %}
@@ -62,6 +54,10 @@
   <li><a href="#transfers" data-toggle="tab" class="ajaxLink"
   	data-ajaxtarget="transferslist" data-ajaxblock="usertransfers" data-ajaxquerystr="userid={{ user.id }}">{{ i18n.getMessage("transfers_tab") }}</a></li>
   {% endif %}
+  <li><a href="#badges" data-toggle="tab">{{ i18n.getMessage("badges_navlabel") }}</a></li>
+  {% if career.enabled %}
+  <li><a href="#managercareer" data-toggle="tab">{{ i18n.getMessage("managercareer_tab") }}</a></li>
+  {% endif %}
   <li><a href="#history" data-toggle="tab" class="ajaxLink"
   	data-ajaxtarget="historycontent" data-ajaxblock="user-history" data-ajaxquerystr="userid={{ user.id }}">{{ i18n.getMessage("history_tab") }}</a></li>
   
@@ -96,6 +92,7 @@
 			{% endif %}
 			
 			{{ profile.infofield(i18n.getMessage("entity_users_highscore"), user.highscore) }}
+			{{ profile.infofield(i18n.getMessage("entity_users_reputation"), user.reputation) }}
 			{{ profile.infofield(i18n.getMessage("entity_users_fanbeliebtheit"), user.popularity ~ "%") }}
 			{{ profile.infofield(i18n.getMessage("entity_users_datum_anmeldung"), env.getFormattedDate(user.registration_date)) }}
 			{{ profile.infofield(i18n.getMessage("entity_users_lastonline"), env.getFormattedDate(user.lastonline)) }}
@@ -148,6 +145,180 @@
   </div>
   {% endif %}
   
+  <div class="tab-pane" id="badges">
+  	{% if badges|length > 0 %}
+  		<table class="table table-striped table-condensed">
+  			<thead>
+  				<tr>
+  					<th>Auszeichnung</th>
+  					<th>Beschreibung</th>
+  					<th>Status</th>
+  					<th>Erhalten</th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  			{% for badge in badges %}
+  				<tr{% if badge.earned_count < 1 %} class="muted"{% endif %}>
+  					<td>
+  						{% if badge.earned_count > 0 %}
+  							{{ badgesmacros.badge(badge.name, badge.level, badge.last_rewarded) }}
+  						{% else %}
+  							{{ badgesmacros.badge(badge.name, badge.level) }}
+  						{% endif %}
+  					</td>
+  					<td>
+  						{% if badge.description|length and i18n.hasMessage(badge.description) %}
+  							{{ i18n.getMessage(badge.description) }}
+  						{% else %}
+  							{{ badge.description }}
+  						{% endif %}
+  					</td>
+  					<td>
+  						{% if badge.event_benchmark > 0 %}
+  							{{ badge.current_status|default(0) }}{% if badge.event == 'transfer_master' %}%{% endif %} / {{ badge.event_benchmark }}{% if badge.event == 'transfer_master' %}%{% endif %}
+  						{% else %}
+  							{{ badge.current_status|default(0) }}
+  						{% endif %}
+  					</td>
+  					<td>{% if badge.earned_count > 0 %}{{ badge.earned_count }}x{% else %}-{% endif %}</td>
+  				</tr>
+  			{% endfor %}
+  			</tbody>
+  		</table>
+  	{% else %}
+  		<p class="muted">Keine Auszeichnungen konfiguriert.</p>
+  	{% endif %}
+  </div>
+  
+
+  {% if career.enabled %}
+  <div class="tab-pane" id="managercareer">
+   	<div class="row-fluid">
+   		<div class="span4">
+   			<div class="well">
+   				<h4>{{ i18n.getMessage("managercareer_reputation") }}</h4>
+   				<p style="font-size: 28px; line-height: 32px;"><strong>{{ career.manager_score }}</strong></p>
+   				<p class="muted">{{ i18n.getMessage("managercareer_reputation_help") }}</p>
+   				<ul class="unstyled">
+   					<li>{{ i18n.getMessage("entity_users_highscore") }}: {{ career.user_highscore }}</li>
+   					<li>{{ i18n.getMessage("managercareer_board_average") }}: {% if career.avg_board_satisfaction > 0 %}{{ career.avg_board_satisfaction }}%{% else %}-{% endif %}</li>
+   				</ul>
+   			</div>
+   		</div>
+   		<div class="span8">
+   			<h4>{{ i18n.getMessage("managercareer_current_teams") }}</h4>
+   			{% if career.teams|length > 0 %}
+   				<ul>
+   				{% for team in career.teams %}
+   					<li><a href="{{ env.getInternalUrl("team", "id=" ~ team.id) }}">{{ team.name }}</a> - {{ i18n.getMessage("managercareer_board_satisfaction") }}: {{ team.board_satisfaction }}%</li>
+   				{% endfor %}
+   				</ul>
+   			{% else %}
+   				<p class="muted">{{ i18n.getMessage("managercareer_no_current_team") }}</p>
+   			{% endif %}
+   		</div>
+   	</div>
+
+   	{% if career.is_own_profile %}
+   		<h4>{{ i18n.getMessage("managercareer_offers_title") }}</h4>
+   		{% if career.job_offers_enabled %}
+   			{% if career.open_offers|length > 0 %}
+   				<table class="table table-striped table-condensed">
+   					<thead>
+   						<tr>
+   							<th>{{ i18n.getMessage("entity_club_name") }}</th>
+   							<th>{{ i18n.getMessage("entity_club_liga_id") }}</th>
+   							<th>{{ i18n.getMessage("managercareer_club_score") }}</th>
+   							<th>{{ i18n.getMessage("managercareer_offer_until") }}</th>
+   							<th>&nbsp;</th>
+   						</tr>
+   					</thead>
+   					<tbody>
+   					{% for offer in career.open_offers %}
+   						<tr>
+   							<td>
+   								{% if offer.team_picture|length %}
+   									<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ offer.team_picture }}" style="max-width: 30px"/>
+   								{% endif %}
+   								<a href="{{ env.getInternalUrl("team", "id=" ~ offer.team_id) }}">{{ offer.team_name }}</a>
+   							</td>
+   							<td><a href="{{ env.getInternalUrl("league", "id=" ~ offer.league_id) }}">{{ offer.league_name }}</a></td>
+   							<td>{{ offer.club_score }}</td>
+   							<td>{{ env.getFormattedDate(offer.expires_date) }}</td>
+   							<td>
+   								<a href="{{ env.getInternalActionUrl("accept-manager-job", "offerId=" ~ offer.offer_id ~ "&id=" ~ user.id, "user") }}" class="btn btn-small btn-success" onclick="return confirm('{{ i18n.getMessage("managercareer_confirm_accept") }}');"><i class="icon-ok"></i> {{ i18n.getMessage("managercareer_button_accept") }}</a>
+   								<a href="{{ env.getInternalActionUrl("decline-manager-job", "offerId=" ~ offer.offer_id ~ "&id=" ~ user.id, "user") }}" class="btn btn-small"><i class="icon-remove"></i> {{ i18n.getMessage("managercareer_button_decline") }}</a>
+   							</td>
+   						</tr>
+   					{% endfor %}
+   					</tbody>
+   				</table>
+   			{% else %}
+   				<p class="muted">{{ i18n.getMessage("managercareer_no_open_offers") }}</p>
+   			{% endif %}
+   		{% else %}
+   			<p class="muted">{{ i18n.getMessage("managercareer_offers_disabled") }}</p>
+   		{% endif %}
+
+   		<h4>{{ i18n.getMessage("managercareer_freeclubs_title") }}</h4>
+   		<p class="muted">{{ i18n.getMessage("managercareer_freeclubs_help") }}</p>
+   		{% if career.free_clubs|length > 0 %}
+   			<table class="table table-striped table-condensed">
+   				<thead>
+   					<tr>
+   						<th>{{ i18n.getMessage("entity_club_name") }}</th>
+   						<th>{{ i18n.getMessage("entity_club_liga_id") }}</th>
+   						<th>{{ i18n.getMessage("managercareer_club_score") }}</th>
+   						<th>{{ i18n.getMessage("managercareer_required_score") }}</th>
+   						<th>{{ i18n.getMessage("managercareer_status") }}</th>
+   					</tr>
+   				</thead>
+   				<tbody>
+   				{% for club in career.free_clubs %}
+   					<tr{% if not club.eligible %} class="muted"{% endif %}>
+   						<td><a href="{{ env.getInternalUrl("team", "id=" ~ club.team_id) }}">{{ club.team_name }}</a></td>
+   						<td><a href="{{ env.getInternalUrl("league", "id=" ~ club.league_id) }}">{{ club.league_name }}</a></td>
+   						<td>{{ club.club_score }}</td>
+   						<td>{{ club.required_score }}</td>
+   						<td><span class="label {{ club.career_status_class }}">{% if club.eligible %}{{ i18n.getMessage("managercareer_available") }}{% else %}{{ i18n.getMessage("managercareer_locked") }}{% endif %}</span></td>
+   					</tr>
+   				{% endfor %}
+   				</tbody>
+   			</table>
+   		{% endif %}
+   		<p><a href="{{ env.getInternalUrl("freeclubs") }}" class="btn btn-small"><i class="icon-list"></i> {{ i18n.getMessage("managercareer_show_all_freeclubs") }}</a></p>
+   	{% endif %}
+
+   	<h4>{{ i18n.getMessage("managercareer_history_title") }}</h4>
+   	{% if career.history|length > 0 %}
+   		<table class="table table-striped table-condensed">
+   			<thead>
+   				<tr>
+   					<th>{{ i18n.getMessage("managercareer_date") }}</th>
+   					<th>{{ i18n.getMessage("managercareer_old_club") }}</th>
+   					<th>{{ i18n.getMessage("managercareer_new_club") }}</th>
+   					<th>{{ i18n.getMessage("managercareer_origin") }}</th>
+   					<th>{{ i18n.getMessage("managercareer_bonus") }}</th>
+   				</tr>
+   			</thead>
+   			<tbody>
+   			{% for item in career.history %}
+   				<tr>
+   					<td>{{ env.getFormattedDate(item.change_date) }}</td>
+   					<td>{% if item.old_team_id > 0 %}<a href="{{ env.getInternalUrl("team", "id=" ~ item.old_team_id) }}">{{ item.old_team_name }}</a>{% else %}-{% endif %}</td>
+   					<td><a href="{{ env.getInternalUrl("team", "id=" ~ item.new_team_id) }}">{{ item.new_team_name }}</a></td>
+   					<td>{{ i18n.getMessage("managercareer_origin_" ~ item.origin) }}</td>
+   					<td>{% if item.highscore_bonus > 0 %}+{{ item.highscore_bonus }}{% else %}-{% endif %}</td>
+   				</tr>
+   			{% endfor %}
+   			</tbody>
+   		</table>
+   	{% else %}
+   		<p class="muted">{{ i18n.getMessage("managercareer_no_history") }}</p>
+   	{% endif %}
+  </div>
+  {% endif %}
+
   <div class="tab-pane" id="history">
   	<div id="historycontent"></div>
   	

@@ -9,6 +9,7 @@
 	<message id="entity_sponsor_b_heimzuschlag">Zuschlag bei Heimspielen</message>
 	<message id="entity_sponsor_b_sieg">Zuschlag bei Sieg</message>
 	<message id="entity_sponsor_b_meisterschaft">Zuschlag bei Gewinn der Meisterschaft</message>
+	<message id="entity_sponsor_b_cup">Zuschlag pro Pokalrunde</message>
 	<message id="entity_sponsor_max_teams">Höchstanzahl an Teams</message>
 	<message id="entity_sponsor_min_platz">Mindestplatzierung</message>
 </messages>

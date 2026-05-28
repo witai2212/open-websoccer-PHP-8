@@ -38,6 +38,18 @@
   
 
 
+{% if medical_warnings is defined and medical_warnings|length > 0 %}
+<div class="alert alert-warning">
+    <strong><i class="icon-medkit"></i> {{ i18n.getMessage("formation_medical_warning_title") }}</strong><br>
+    {{ i18n.getMessage("formation_medical_warning_intro") }}
+    <ul>
+    {% for warning in medical_warnings %}
+        <li>{{ i18n.getMessage("formation_medical_warning_item", warning.name, warning.risk, warning.reasons) }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
 <h4>{{ i18n.getMessage("formation_playground_title") }}</h4> 
 
 
@@ -301,13 +313,15 @@
 									{% set playerName = player.firstname|slice(0, 1) ~ ". " ~ player.lastname %}
 								{% endif %}
 								
-								<div id="playerinfo{{ player.id }}" class="playerinfo{% if (player.matches_injured is not defined or player.matches_injured == 0) and (player.matches_blocked is not defined or player.matches_blocked == 0) %} playerDraggable{% else %} playerBlocked{% endif %}"
+								{% set medicalCleared = player.medical_cleared_to_play is defined and player.medical_cleared_to_play and player.matches_injured == 1 %}
+								<div id="playerinfo{{ player.id }}" class="playerinfo{% if ((player.matches_injured is not defined or player.matches_injured == 0) and (player.matches_blocked is not defined or player.matches_blocked == 0)) or (medicalCleared and (player.matches_blocked is not defined or player.matches_blocked == 0)) %} playerDraggable{% else %} playerBlocked{% endif %}"
 									data-playerid="{{ player.id }}"
 									data-pname="{{ playerName }}"
 									data-position="{{ player.position }}"
 									data-mainposition="{% if player.position_main is defined %}{{ player.position_main }}{% endif %}"
 									data-secondposition="{% if player.position_second is defined %}{{ player.position_second }}{% endif %}"
-									data-matchesblocked="{% if player.matches_injured is defined and player.matches_blocked is defined %}{{ player.matches_injured + player.matches_blocked }}{% else %}0{% endif %}"
+									data-matchesblocked="{% if medicalCleared %}{% if player.matches_blocked is defined %}{{ player.matches_blocked }}{% else %}0{% endif %}{% elseif player.matches_injured is defined and player.matches_blocked is defined %}{{ player.matches_injured + player.matches_blocked }}{% else %}0{% endif %}"
+									data-freekick="{% if player.strength_freekick is defined %}{{ player.strength_freekick }}{% else %}0{% endif %}"
 									{% if env.getConfig("hide_strength_attributes") != "1" or youthFormation is defined and youthFormation %}
 									data-strength="{{ player.strength }}"
 									data-strengthsecondary="{{ (player.strength * (1 - env.getConfig("sim_strength_reduction_secondary") / 100))|number_format }}"
@@ -319,7 +333,7 @@
 									>
 									<div class="playerinfoBar">
 									
-										{% if playerPosition != "bench" and (player.matches_injured is not defined or player.matches_injured == 0) and (player.matches_blocked is not defined or player.matches_blocked == 0) %}
+										{% if playerPosition != "bench" and (((player.matches_injured is not defined or player.matches_injured == 0) and (player.matches_blocked is not defined or player.matches_blocked == 0)) or (medicalCleared and (player.matches_blocked is not defined or player.matches_blocked == 0))) %}
 											<div class="playerinfoIcons text-right ">
 													<a id="addLink{{ player.id }}" href="#" data-toggle="dropdown" class="btn btn-mini dropdown-toggle playerAddToPitchLink"><i class="icon-plus-sign"></i> {{ i18n.getMessage("player_button_to_pitch") }}</a>
 													<ul class="dropdown-menu text-left" role="menu" aria-labelledby="addLink{{ player.id }}">
@@ -361,7 +375,7 @@
 											
 										{% if player.matches_injured is defined and player.matches_injured > 0 %}
 											<span class="playerBlockedLabel" title="{{ i18n.getMessage("formation_team_blocked_injured") }}">
-												<i class="icon-medkit"></i> {{ player.matches_injured }}
+												<i class="icon-medkit"></i> {{ player.matches_injured }}{% if medicalCleared %} - {{ i18n.getMessage("formation_medical_cleared_label") }}{% endif %}
 											</span>
 										{% elseif player.matches_blocked is defined and player.matches_blocked > 0 %}
 											<span class="playerBlockedLabel" title="{{ i18n.getMessage("formation_team_blocked_cards") }}">
@@ -380,9 +394,13 @@
 										| {{ i18n.getMessage("player_details_statistic_yellow") }}: {{ player.st_cards_yellow }}
 										{% if player.marketvalue is defined %}
 										| {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
-										{% endif %}lala {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
+										{% endif %}
 									</small>
 									
+									{% if player.medical_risk is defined and player.medical_risk >= 35 %}
+										<br><small class="text-warning"><i class="icon-warning-sign"></i> {{ i18n.getMessage("formation_medical_risk_label") }}: {{ player.medical_risk }}%{% if player.medical_risk_text|length > 0 %} ({{ player.medical_risk_text }}){% endif %}</small>
+									{% endif %}
+
 									{% if env.getConfig("hide_strength_attributes") != "1" or youthFormation is defined and youthFormation %}
 										<div class="playerinfoStrengthRow">
 											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_staerke") }}</div>

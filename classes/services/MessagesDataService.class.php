@@ -78,8 +78,8 @@ class MessagesDataService {
 		$columns["R.id"] = "recipient_id";
 		$columns["R.nick"] = "recipient_name";
 		
-		$columns["S.id"] = "sender_id";
-		$columns["S.nick"] = "sender_name";
+		$columns["COALESCE(S.id, 0)"] = "sender_id";
+		$columns["COALESCE(S.nick, L.absender_name)"] = "sender_name";
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_briefe AS L";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS R ON R.id = L.empfaenger_id";

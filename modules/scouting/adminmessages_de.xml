@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="settings_tab_scouting">Scouting</message>
+
+    <message id="settings_label_scouting_enabled">Scouting-System aktivieren</message>
+    <message id="settings_label_scouting_enabled_help">Aktiviert die neue Scouting-Seite im Transfermarkt. Benutzer können Scouting-Abteilungen aufbauen, Scouts einstellen, Camps eröffnen und Spielervorschläge erhalten.</message>
+
+    <message id="settings_label_max_scouts_per_team">Maximale Scouts pro Verein</message>
+    <message id="settings_label_max_scouts_per_team_help">Globale Obergrenze für gleichzeitig eingestellte Scouts pro Verein. Zusätzlich können die Stufen der Scouting-Abteilung eigene Grenzen setzen.</message>
+
+    <message id="settings_label_scouts_matches">Standardlaufzeit für Scouts</message>
+    <message id="settings_label_scouts_matches_help">Anzahl Spiele, für die ein Scout bei Einstellung standardmäßig verpflichtet wird. Nach jedem relevanten Spieltag wird diese Zahl reduziert.</message>
+
+    <message id="settings_label_scout_hire_matches">Scout-Einstellungsgebühr in Spieltagen</message>
+    <message id="settings_label_scout_hire_matches_help">Anzahl Scout-Honorare, die beim Einstellen sofort als nicht erstattbare Einstellungsgebühr berechnet werden. Standard: 3.</message>
+
+    <message id="settings_label_scouting_default_department_build_cost">Standard-Baukosten der Scouting-Abteilung</message>
+    <message id="settings_label_scouting_default_department_build_cost_help">Fallback-Wert, falls keine passende Stufe in der Tabelle scouting_department_level gefunden wird.</message>
+
+    <message id="settings_label_scouting_default_department_maintenance_fee">Standard-Unterhalt der Scouting-Abteilung</message>
+    <message id="settings_label_scouting_default_department_maintenance_fee_help">Fallback-Kosten pro Spieltag, falls keine passende Stufe in der Tabelle scouting_department_level gefunden wird.</message>
+
+    <message id="settings_label_scouting_proposal_min_matches">Minimale Wartezeit bis Spielervorschlag</message>
+    <message id="settings_label_scouting_proposal_min_matches_help">Mindestanzahl Spiele, bevor ein aktives Scouting-Camp einen neuen Spielervorschlag erzeugen kann.</message>
+
+    <message id="settings_label_scouting_proposal_max_matches">Maximale Wartezeit bis Spielervorschlag</message>
+    <message id="settings_label_scouting_proposal_max_matches_help">Maximale Anzahl Spiele, bevor ein aktives Scouting-Camp einen neuen Spielervorschlag erzeugen kann. Der tatsächliche Wert wird zufällig zwischen Minimum und Maximum gewählt.</message>
+
+    <message id="settings_label_scouting_proposal_expire_matches">Gültigkeit von Spielervorschlägen</message>
+    <message id="settings_label_scouting_proposal_expire_matches_help">Anzahl Spiele, für die ein vorgeschlagener Spieler verfügbar bleibt. Danach läuft der Vorschlag automatisch ab.</message>
+
+    <message id="settings_label_scouting_max_open_proposals_per_team">Maximale offene Spielervorschläge pro Verein</message>
+    <message id="settings_label_scouting_max_open_proposals_per_team_help">Wenn ein Verein diese Anzahl offener Vorschläge erreicht hat, erzeugen Camps vorerst keine weiteren Spieler.</message>
+
+    <message id="settings_label_scouting_same_country_cost_percent">Kostenfaktor Inland</message>
+    <message id="settings_label_scouting_same_country_cost_percent_help">Prozentwert für Scouting-Camps im eigenen Land. 100 bedeutet normale Kosten, 75 bedeutet 25 Prozent günstiger.</message>
+
+    <message id="settings_label_scouting_abroad_cost_percent">Kostenfaktor Ausland</message>
+    <message id="settings_label_scouting_abroad_cost_percent_help">Prozentwert für Scouting-Camps im Ausland. 100 bedeutet normale Kosten, 125 bedeutet 25 Prozent teurer.</message>
+
+</messages>

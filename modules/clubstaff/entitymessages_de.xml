@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Mitarbeiterstab</message>
+    <message id="entity_clubstaff">Mitarbeiter</message>
+    <message id="entity_clubstaff_name">Name</message>
+    <message id="entity_clubstaff_name_help">Name des Mitarbeiters, der Benutzern angezeigt wird.</message>
+    <message id="entity_clubstaff_role">Rolle</message>
+    <message id="entity_clubstaff_role_help">Legt fest, welchen kleinen Bonus dieser Mitarbeiter gibt.</message>
+    <message id="entity_clubstaff_level">Stufe</message>
+    <message id="entity_clubstaff_level_help">Interne Qualitätsstufe. Dient vor allem als Orientierung für Admins.</message>
+    <message id="entity_clubstaff_salary">Gehalt pro Spieltag</message>
+    <message id="entity_clubstaff_salary_help">Betrag, der pro relevantem Spieltag belastet wird, solange der Mitarbeiter beschäftigt ist.</message>
+    <message id="entity_clubstaff_bonus">Bonus</message>
+    <message id="entity_clubstaff_bonus_help">Kleiner Bonuswert in Prozentpunkten. Je nach Rolle wird er auf passende Systeme angewendet.</message>
+    <message id="entity_clubstaff_description">Beschreibung</message>
+    <message id="entity_clubstaff_description_help">Kurzer Hinweis, was dieser Mitarbeiter besonders gut kann.</message>
+    <message id="entity_clubstaff_active">Aktiv</message>
+    <message id="entity_clubstaff_active_help">Nur aktive Mitarbeiter können von Vereinen eingestellt werden.</message>
+
+</messages>

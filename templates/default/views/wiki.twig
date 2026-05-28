@@ -1,0 +1,270 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("wiki_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<div class="alert alert-info">
+    <i class="icon-question-sign"></i>
+    <strong>Willkommen im CM23 Wiki.</strong>
+    Diese Seite erklärt die wichtigsten Spielbereiche kurz und verständlich. Sie richtet sich an neue Manager und an erfahrene Benutzer, die einzelne Funktionen schnell nachschlagen möchten.
+</div>
+
+<div class="well">
+    <h3>Inhalt</h3>
+    <ol>
+        <li><a href="#schnellstart">Schnellstart</a></li>
+        <li><a href="#kader-aufstellung">Kader &amp; Aufstellung</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#transfers-scouting">Transfers &amp; Scouting</a></li>
+        <li><a href="#finanzen">Finanzen, Bank &amp; Börse</a></li>
+        <li><a href="#verein-umfeld">Verein, Umfeld &amp; Managerkarriere</a></li>
+        <li><a href="#spieltag">Spieltag</a></li>
+        <li><a href="#jugend">Jugend &amp; Entwicklung</a></li>
+        <li><a href="#spezialfeatures">Spezialfeatures</a></li>
+        <li><a href="#tipps">Kurze Tipps</a></li>
+    </ol>
+</div>
+
+<hr>
+
+<section id="schnellstart">
+    <h3>1. Schnellstart</h3>
+    <p>
+        In CM23 übernimmst du einen Fußballverein und entwickelst ihn sportlich, finanziell und organisatorisch weiter.
+        Am Anfang solltest du vor allem deinen Kader prüfen, eine Aufstellung setzen, die Finanzen beobachten und dein nächstes Spiel vorbereiten.
+    </p>
+    <p>
+        Die wichtigsten ersten Schritte sind:
+    </p>
+    <ul>
+        <li><strong>Verein auswählen:</strong> Wähle einen freien Verein oder übernimm einen angebotenen Club.</li>
+        <li><strong>Kader prüfen:</strong> Achte auf Stärke, Frische, Kondition, Verträge, Verletzungen und Sperren.</li>
+        <li><strong>Aufstellung setzen:</strong> Stelle elf Spieler, Ersatzspieler, Formation, Auswechslungen und Taktik ein.</li>
+        <li><strong>Finanzen prüfen:</strong> Behalte Budget, Gehälter, Sponsoren, Stadion und mögliche Kredite im Blick.</li>
+        <li><strong>Nach dem Spiel auswerten:</strong> Prüfe Ergebnis, Trainingseffekte, Nachrichten und Änderungen im Verein.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section id="kader-aufstellung">
+    <h3>2. Kader &amp; Aufstellung</h3>
+    <p>
+        Dein Kader ist die Grundlage deines Erfolgs. Jeder Spieler besitzt eine Position, eine Hauptposition, mehrere Leistungswerte und einen Vertrag.
+        Neben der allgemeinen Stärke sind auch Frische, Kondition, Zufriedenheit und Spezialattribute wichtig.
+    </p>
+    <p>
+        Auf der Seite <a href="{{ env.getInternalUrl("myteam") }}">Mein Team</a> siehst du deine Spieler, Verträge, Marktwerte und Statusmeldungen.
+        Auf der Seite <a href="{{ env.getInternalUrl("formation") }}">Aufstellung</a> legst du fest, wer im nächsten Spiel spielt.
+    </p>
+    <h4>Wichtige Werte</h4>
+    <ul>
+        <li><strong>Stärke:</strong> zeigt die aktuelle Gesamtqualität eines Spielers.</li>
+        <li><strong>Technik, Passing, Shooting, Tackling usw.:</strong> beeinflussen bestimmte Spielsituationen.</li>
+        <li><strong>Frische:</strong> sinkt durch Belastung und ist wichtig für die aktuelle Leistung.</li>
+        <li><strong>Kondition:</strong> beschreibt die körperliche Basis eines Spielers.</li>
+        <li><strong>Zufriedenheit:</strong> kann Entwicklung, Moral und Wechselbereitschaft beeinflussen.</li>
+        <li><strong>Verletzungen und Sperren:</strong> verhindern Einsätze oder machen sie riskant.</li>
+    </ul>
+    <h4>Taktische Identität</h4>
+    <p>
+        Zusätzlich zur Formation kann ein Verein eine taktische Identität besitzen, zum Beispiel Ballbesitz, Konter, Pressing, Defensivblock, Flügelspiel, Standards, Jugendfokus oder körperbetontes Spiel.
+        Die Wirkung ist bewusst klein, kann aber helfen, wenn die Spielweise gut zu den Spielern passt.
+    </p>
+</section>
+
+<hr>
+
+<section id="training">
+    <h3>3. Training</h3>
+    <p>
+        Training verbessert Spieler schrittweise. Je nach Trainingsart, Intensität, Trainerqualität und Spielerprofil können unterschiedliche Werte steigen.
+        Zu hohe Belastung kann Frische kosten oder Verletzungen wahrscheinlicher machen.
+    </p>
+    <p>
+        Wichtige Trainingsbereiche sind:
+    </p>
+    <ul>
+        <li><strong>Normales Teamtraining:</strong> verbessert mehrere Spieler abhängig vom Trainingsfokus.</li>
+        <li><strong>Einzeltraining:</strong> ein Spieler arbeitet gezielt an einem bestimmten Attribut, bis das Ziel erreicht ist.</li>
+        <li><strong>Trainingslager:</strong> kosten Geld, können aber mehrere Werte und die Teamchemie verbessern.</li>
+        <li><strong>Trainer und Staff:</strong> bessere Mitarbeiter erhöhen die Wirkung bestimmter Trainingsbereiche.</li>
+    </ul>
+    <p>
+        Einzeltraining ist besonders nützlich, wenn ein Spieler ein klares Defizit hat oder besser zu deiner taktischen Identität passen soll.
+    </p>
+</section>
+
+<hr>
+
+<section id="transfers-scouting">
+    <h3>4. Transfers &amp; Scouting</h3>
+    <p>
+        Auf dem Transfermarkt kannst du Spieler kaufen, verkaufen oder Angebote für Spieler anderer Vereine abgeben.
+        Dabei solltest du nicht nur auf Stärke achten, sondern auch auf Alter, Gehalt, Vertrag, Potenzial, Spezialwerte und dein Budget.
+    </p>
+    <p>
+        Die wichtigsten Bereiche sind:
+    </p>
+    <ul>
+        <li><strong>Transfermarkt:</strong> verfügbare Spieler suchen, filtern und beobachten.</li>
+        <li><strong>Transferangebote:</strong> direkte Angebote an andere Vereine senden oder erhalten.</li>
+        <li><strong>Scouting:</strong> Scouts einstellen, Scouting-Camps eröffnen und Spielervorschläge erhalten.</li>
+        <li><strong>Versteckte Werte:</strong> Talent und Maximalstärke sind nicht immer vollständig sichtbar.</li>
+    </ul>
+    <p>
+        Scouting ist langfristig wichtig, weil du damit Spieler finden kannst, die auf dem normalen Transfermarkt nicht sofort offensichtlich sind.
+        Gute Scouts liefern bessere Einschätzungen, kosten aber auch mehr Geld.
+    </p>
+</section>
+
+<hr>
+
+<section id="finanzen">
+    <h3>5. Finanzen, Bank &amp; Börse</h3>
+    <p>
+        Finanzen entscheiden, wie schnell du deinen Verein verbessern kannst. Ein teurer Kader kann sportlich helfen, aber dauerhaft zu hohe Gehälter können das Budget belasten.
+    </p>
+    <p>
+        Wichtige Einnahmen und Ausgaben:
+    </p>
+    <ul>
+        <li><strong>Spielergehälter:</strong> regelmäßige Kosten für deinen Kader.</li>
+        <li><strong>Transfers:</strong> Ablösen, Handgeld und Gehälter können schnell teuer werden.</li>
+        <li><strong>Sponsoren:</strong> bringen Prämien und können je nach Erfolg unterschiedlich attraktiv sein.</li>
+        <li><strong>Stadion:</strong> Zuschauer, Ticketpreise, Ausbau und Infrastruktur beeinflussen deine Einnahmen.</li>
+        <li><strong>Bank:</strong> Kredite können kurzfristig helfen, müssen aber mit Zinsen zurückgezahlt werden.</li>
+        <li><strong>Börse:</strong> über den Aktienmarkt kannst du Geld investieren, trägst aber auch Verlustrisiko.</li>
+        <li><strong>Merchandising:</strong> zusätzliche Einnahmen bei Heimspielen, abhängig von Nachfrage und Preisstrategie.</li>
+    </ul>
+    <p>
+        Ein gutes Budgetmanagement ist oft wichtiger als ein einzelner großer Transfer. Plane so, dass du auch nach mehreren Spieltagen noch handlungsfähig bist.
+    </p>
+</section>
+
+<hr>
+
+<section id="verein-umfeld">
+    <h3>6. Verein, Umfeld &amp; Managerkarriere</h3>
+    <p>
+        Dein Verein wird nicht nur über Ergebnisse bewertet. Fans, Medien, Vorstand und deine Managerkarriere reagieren auf sportliche und wirtschaftliche Entscheidungen.
+    </p>
+    <h4>Highscore, Reputation und bessere Vereine</h4>
+    <p>
+        Der Highscore deines Vereins und deine Manager-Reputation sind miteinander verbunden.
+        Wenn du bessere Vereine übernehmen möchtest, musst du deinen Ruf verbessern: gute Ergebnisse, erfüllte Saisonziele, solide Finanzen und sportliche Entwicklung helfen dabei.
+        Stärkere Clubs erwarten in der Regel auch ein stärkeres Managerprofil.
+    </p>
+    <h4>Vorstand und Saisonziele</h4>
+    <p>
+        Der Vorstand setzt Ziele wie Tabellenplatz, Highscore-Verbesserung, Gehaltsreduktion, Jugendförderung, Pokalrunden oder Mindestwerte bei der Vorstandszufriedenheit.
+        Erfüllte Ziele verbessern deine Bewertung, verfehlte Ziele können Konsequenzen haben.
+    </p>
+    <h4>Fans und Medien</h4>
+    <p>
+        Siege, Niederlagen, Derbys, Transfers, Ticketpreise, Jugendspieler und Zielerreichung können die Fanstimmung und den Mediendruck verändern.
+        Gute Stimmung kann Zuschauer und Sponsoren positiv beeinflussen, während hoher Druck den Verein unruhiger macht.
+    </p>
+    <h4>Managerkarriere</h4>
+    <p>
+        Mit wachsender Reputation können sich neue Karrierewege öffnen. Schwächere Vereine können eine Chance bieten, Reputation aufzubauen; stärkere Vereine stellen höhere Anforderungen.
+    </p>
+</section>
+
+<hr>
+
+<section id="spieltag">
+    <h3>7. Spieltag</h3>
+    <p>
+        Am Spieltag wird deine Vorbereitung sichtbar. Aufstellung, Frische, Kondition, Taktik, Teamchemie, Moral, Heimvorteil und Spielerqualität können Einfluss auf das Ergebnis haben.
+    </p>
+    <p>
+        Nach dem Spiel solltest du prüfen:
+    </p>
+    <ul>
+        <li><strong>Spielbericht:</strong> Tore, Karten, Verletzungen, Chancen und wichtige Szenen.</li>
+        <li><strong>Spielerleistungen:</strong> Noten und Statistiken einzelner Spieler.</li>
+        <li><strong>Budgetänderungen:</strong> Einnahmen, Ausgaben, Prämien und Buchungen.</li>
+        <li><strong>Trainingseffekte:</strong> Verbesserungen oder Verletzungen durch Training.</li>
+        <li><strong>Scoutingvorschläge:</strong> neue Spieler, die deine Scouts gefunden haben.</li>
+        <li><strong>Was ist passiert?</strong> kompakte Zusammenfassung der wichtigsten Änderungen nach dem Spieltag.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section id="jugend">
+    <h3>8. Jugend &amp; Entwicklung</h3>
+    <p>
+        Die Jugendabteilung hilft dir, langfristig Talente aufzubauen und günstige Alternativen zum Transfermarkt zu entwickeln.
+        Jugendspieler können beobachtet, eingesetzt und später in den Profikader übernommen werden.
+    </p>
+    <p>
+        Besonders wichtig sind:
+    </p>
+    <ul>
+        <li><strong>Jugendspieler:</strong> junge Talente mit Entwicklungspotenzial.</li>
+        <li><strong>Jugendspiele:</strong> Einsätze helfen bei Bewertung und Entwicklung.</li>
+        <li><strong>Jugendförderung:</strong> kann Teil der Saisonziele sein.</li>
+        <li><strong>Jugendtrainer und Staff:</strong> können die Entwicklung unterstützen.</li>
+    </ul>
+    <p>
+        Jugendspieler sind selten sofort perfekt. Sie lohnen sich vor allem, wenn du langfristig planst und ihnen passende Einsatzzeiten gibst.
+    </p>
+</section>
+
+<hr>
+
+<section id="spezialfeatures">
+    <h3>9. Spezialfeatures</h3>
+    <p>
+        CM23 enthält mehrere Zusatzsysteme, die dem Spiel mehr Tiefe geben, ohne dass du jeden Bereich täglich verwalten musst.
+    </p>
+    <h4>Teamchemie</h4>
+    <p>
+        Teamchemie beschreibt, wie gut dein Kader als Einheit funktioniert. Sie hängt unter anderem von Nationalität, Eingespieltheit, Formation, Kapitän, Transfers, Zufriedenheit und Charakter ab.
+        Eine gute Chemie kann kleine Vorteile bei Passspiel, Moral und Stabilität geben.
+    </p>
+    <h4>Club Staff</h4>
+    <p>
+        Mitarbeiter wie Co-Trainer, Torwarttrainer, Fitnesstrainer, Jugendtrainer, Physio, Marketingmanager oder Finanzberater geben kleine Boni in ihrem Bereich.
+        Sie kosten Gehalt, können aber langfristig helfen.
+    </p>
+    <h4>Medical Center</h4>
+    <p>
+        Im Medical Center siehst du Verletzungen, Behandlungsoptionen und Risiken. Manche Maßnahmen können die Ausfallzeit verkürzen, kosten aber Geld oder tragen Risiko.
+    </p>
+    <h4>Auszeichnungen</h4>
+    <p>
+        Für besondere Leistungen kannst du Auszeichnungen erhalten, zum Beispiel für Erfolge, Transfers, Jugendförderung, Derbys oder finanzielle Meilensteine.
+    </p>
+    <h4>Zufallsereignisse</h4>
+    <p>
+        Ereignisse können deinen Verein überraschend beeinflussen. Je nach Situation musst du Entscheidungen treffen, die Geld, Spieler, Stimmung oder Vorstand betreffen können.
+    </p>
+</section>
+
+<hr>
+
+<section id="tipps">
+    <h3>10. Kurze Tipps</h3>
+    <ul>
+        <li>Setze vor jedem Spiel eine vollständige Aufstellung.</li>
+        <li>Achte nicht nur auf Stärke, sondern auch auf Frische und Kondition.</li>
+        <li>Verlängere wichtige Verträge rechtzeitig.</li>
+        <li>Kaufe nicht zu viele teure Spieler auf einmal.</li>
+        <li>Nutze Scouting, um langfristig bessere Transferentscheidungen zu treffen.</li>
+        <li>Verbessere Highscore und Reputation, wenn du später bessere Vereine übernehmen möchtest.</li>
+        <li>Prüfe nach jedem Spiel die Zusammenfassung „Was ist passiert?“.</li>
+        <li>Plane Stadion, Sponsoren, Bank und Börse so, dass dein Verein finanziell stabil bleibt.</li>
+    </ul>
+</section>
+
+<p class="muted">
+    Hinweis: Diese Wiki-Seite ist bewusst kurz gehalten. Einzelne Spielbereiche können sich durch neue Features oder Balancing-Anpassungen weiterentwickeln.
+</p>
+
+{% endblock %}

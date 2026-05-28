@@ -1,34 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	
+
+    <!-- Navigation / page -->
     <message id="scouting_navlabel">Scouting</message>
     <message id="scouting_title">Scouting</message>
-    <message id="no_scouts">Zur Zeit keine Scouts verfügbar.</message>
-    
-    <message id="scouting_abteilung">Scouting Abt.</message>
-    
+    <message id="scouting_message">Scouting</message>
+    <message id="scouting_intro">Baue deine Scouting-Abteilung auf, stelle Scouts ein und betreibe weltweite Scouting-Camps, um neue Spieler zu entdecken.</message>
+
+    <!-- Sections -->
+    <message id="scouting_department">Scouting-Abteilung</message>
+    <message id="scouting_department_missing">Dein Verein besitzt noch keine Scouting-Abteilung.</message>
+    <message id="scouting_department_missing_info">Ohne Scouting-Abteilung kannst du keine Scouts einstellen und keine Scouting-Camps eröffnen.</message>
+    <message id="scouting_department_build">Scouting-Abteilung aufbauen</message>
+    <message id="scouting_department_upgrade">Scouting-Abteilung ausbauen</message>
+    <message id="scouting_department_level">Stufe</message>
+    <message id="scouting_department_status">Status</message>
+    <message id="scouting_department_active">Aktiv</message>
+    <message id="scouting_department_inactive">Inaktiv</message>
+    <message id="scouting_department_maintenance_fee">Unterhalt pro Spieltag</message>
+    <message id="scouting_department_maintenance_fee">Unterhalt Scouting-Abteilung</message>
+    <message id="scouting_scout_fee">Scout-Honorar</message>
+    <message id="scouting_scout_hire_fee">Einstellungsgebühr Scout</message>
+    <message id="scouting_camp_fee">Scouting-Camp-Kosten</message>
+    <message id="scouting_department_build_cost">Baukosten</message>
+    <message id="scouting_department_max_scouts">Max. Scouts</message>
+    <message id="scouting_department_max_camps">Max. Camps</message>
+    <message id="scouting_department_next_level">Nächste Ausbaustufe</message>
+    <message id="scouting_department_no_next_level">Die maximale Ausbaustufe ist erreicht.</message>
+
+    <!-- Scouts -->
+    <message id="scouting_team_scouts">Eingestellte Scouts</message>
+    <message id="scouting_free_scouts">Verfügbare Scouts</message>
+    <message id="scouting_scout">Scout</message>
+    <message id="scouting_name">Name</message>
     <message id="scouting_nation">Land</message>
-	<message id="scouting_name">Name</message>
-	<message id="scouting_expertise">Kompetenz</message>
-	<message id="scouting_speciality">Spezilität</message>
-	<message id="scouting_team_matches">Spiele</message>
-	<message id="scouting_fee">Kosten/Spiel</message>
-	
-	<message id="no_scouts_hired">Keine Scouts eingestellt</message>
-	<message id="no_free_scouts">Keine Scouts verfügbar</message>
-	
-	<message id="fire-scout">Entlassen</message>
-	<message id="fire_scout_message">Scout wurde entlassen.</message>
-	<message id="scouting_message">Scouting</message>
-	
-	<message id="hire-scout">Einstellen</message>
-	<message id="hire_scout_message">Scout wurde eingestellt.</message>
-	
-	<message id="scouting_team_scouts">Eingestellte Scouts</message>
-	<message id="scouting_free_scouts">Verfügbare Scouts</message>
-	
-	<message id="info">Info: Es können maximal 4 Scouts eingestellt werden. Bei Entlassung wird das Gehalt mal die restlichen Spiele fällig.</message>
-	<message id="info_fire_scout">Bitte beachte, wenn du einen Scout feuerst, bekommt der Scout die übrigen Spiele ausgezahlt.</message>
+    <message id="scouting_speciality">Spezialgebiet</message>
+    <message id="scouting_fee">Kosten pro Spieltag</message>
+    <message id="scouting_hire_fee">Einstellungsgebühr</message>
+    <message id="scouting_hire_fee_info">Beim Einstellen wird sofort eine nicht erstattbare Einstellungsgebühr fällig. Das Scout-Honorar pro Spieltag bleibt zusätzlich bestehen.</message>
+    <message id="scouting_team_matches">Restliche Spiele</message>
+    <message id="scouting_profile">Einschätzung</message>
+    <message id="scouting_profile_unknown">Unbekannt</message>
+    <message id="scouting_profile_junior">Nachwuchs-Scout</message>
+    <message id="scouting_profile_solid">Solider Scout</message>
+    <message id="scouting_profile_experienced">Erfahrener Scout</message>
+    <message id="scouting_profile_renowned">Renommierter Scout</message>
+    <message id="scouting_competence_hidden">Die tatsächliche Kompetenz eines Scouts ist nicht sichtbar. Du erkennst seine Qualität erst an seinen Ergebnissen.</message>
+    <message id="no_scouts">Zurzeit sind keine Scouts verfügbar.</message>
+    <message id="no_scouts_hired">Du hast keine Scouts eingestellt.</message>
+    <message id="no_free_scouts">Es sind keine freien Scouts verfügbar.</message>
+    <message id="scouting_scout_speciality_already_covered">Position bereits besetzt</message>
+    <message id="scouting_max_scouts_reached">Du hast bereits die maximale Anzahl an Scouts eingestellt.</message>
+
+    <!-- Camps -->
+    <message id="scouting_camps">Scouting-Camps</message>
+    <message id="scouting_create_camp">Scouting-Camp eröffnen</message>
+    <message id="scouting_active_camps">Aktive Scouting-Camps</message>
+    <message id="scouting_no_camps">Du betreibst derzeit kein Scouting-Camp.</message>
+    <message id="scouting_camp_location">Standort</message>
+    <message id="scouting_camp_country">Land</message>
+    <message id="scouting_camp_continent">Kontinent</message>
+    <message id="scouting_camp_scout">Zugewiesener Scout</message>
+    <message id="scouting_camp_position">Position</message>
+    <message id="scouting_camp_any_position">Alle Positionen</message>
+    <message id="scouting_camp_age_range">Alter</message>
+    <message id="scouting_camp_strength_range">Stärkebereich</message>
+    <message id="scouting_camp_budget_range">Transferbudget</message>
+    <message id="scouting_camp_fee_per_matchday">Kosten pro Spieltag</message>
+    <message id="scouting_camp_next_proposal">Nächster Vorschlag</message>
+    <message id="scouting_camp_matches">Spiele</message>
+    <message id="scouting_camp_status">Status</message>
+    <message id="scouting_camp_active">Aktiv</message>
+    <message id="scouting_camp_inactive">Inaktiv</message>
+    <message id="scouting_camp_no_locations">Es sind keine passenden Camp-Standorte verfügbar.</message>
+    <message id="scouting_camp_requires_department">Für Scouting-Camps benötigst du zuerst eine Scouting-Abteilung.</message>
+    <message id="scouting_camp_requires_scout">Für ein Scouting-Camp muss ein Scout zugewiesen werden.</message>
+    <message id="scouting_camp_limit_reached">Du hast die maximale Anzahl aktiver Scouting-Camps erreicht.</message>
+    <message id="scouting_camp_strength_hidden_info">Die tatsächliche Maximalstärke bleibt verborgen. Der gewählte Stärkebereich steuert nur, nach welchen Spielern gesucht wird.</message>
+
+    <!-- Proposals -->
+    <message id="scouting_proposals">Spielervorschläge</message>
+    <message id="scouting_open_proposals">Offene Spielervorschläge</message>
+    <message id="scouting_no_proposals">Aktuell liegen keine Spielervorschläge vor.</message>
+    <message id="scouting_proposal_player">Spieler</message>
+    <message id="scouting_proposal_age">Alter</message>
+    <message id="scouting_proposal_nation">Nation</message>
+    <message id="scouting_proposal_position">Position</message>
+    <message id="scouting_proposal_strength">Eingeschätzte Stärke</message>
+    <message id="scouting_proposal_potential">Eingeschätztes Potenzial</message>
+    <message id="scouting_proposal_talent">Eingeschätztes Talent</message>
+    <message id="scouting_proposal_summary">Scoutbericht</message>
+    <message id="scouting_proposal_transfer_fee">Ablöse</message>
+    <message id="scouting_proposal_salary">Gehalt</message>
+    <message id="scouting_proposal_contract_matches">Vertragslaufzeit</message>
+    <message id="scouting_proposal_expires_after_matches">Verfügbar für</message>
+    <message id="scouting_proposal_generated_by">Gefunden durch</message>
+    <message id="scouting_proposal_status">Status</message>
+    <message id="scouting_proposal_status_open">Offen</message>
+    <message id="scouting_proposal_status_accepted">Verpflichtet</message>
+    <message id="scouting_proposal_status_rejected">Abgelehnt</message>
+    <message id="scouting_proposal_status_expired">Abgelaufen</message>
+    <message id="scouting_proposal_report_uncertain">Dieser Bericht ist unsicher. Die tatsächlichen Werte können deutlich abweichen.</message>
+    <message id="scouting_proposal_report_reliable">Dieser Bericht gilt als relativ zuverlässig, bleibt aber eine Einschätzung.</message>
+
+    <!-- Talent / potential labels -->
+    <message id="scouting_unknown">Unbekannt</message>
+    <message id="scouting_low">Niedrig</message>
+    <message id="scouting_medium">Mittel</message>
+    <message id="scouting_high">Hoch</message>
+    <message id="scouting_very_high">Sehr hoch</message>
+    <message id="scouting_exceptional">Außergewöhnlich</message>
+    <message id="scouting_approx">ca.</message>
+    <message id="scouting_range_separator">bis</message>
+
+    <!-- Actions / buttons -->
+    <message id="build-scouting-department">Scouting-Abteilung aufbauen</message>
+    <message id="upgrade-scouting-department">Scouting-Abteilung ausbauen</message>
+    <message id="hire-scout">Einstellen</message>
+    <message id="fire-scout">Entlassen</message>
+    <message id="create-scouting-camp">Camp eröffnen</message>
+    <message id="close-scouting-camp">Camp schließen</message>
+    <message id="accept-scouting-proposal">Spieler verpflichten</message>
+    <message id="reject-scouting-proposal">Vorschlag ablehnen</message>
+
+    <!-- Success messages -->
+    <message id="build_scouting_department_message">Die Scouting-Abteilung wurde aufgebaut.</message>
+    <message id="upgrade_scouting_department_message">Die Scouting-Abteilung wurde ausgebaut.</message>
+    <message id="hire_scout_message">Scout wurde eingestellt.</message>
+    <message id="fire_scout_message">Scout wurde entlassen.</message>
+    <message id="create_scouting_camp_message">Scouting-Camp wurde eröffnet.</message>
+    <message id="close_scouting_camp_message">Scouting-Camp wurde geschlossen.</message>
+    <message id="accept_scouting_proposal_message">Der Spieler wurde verpflichtet.</message>
+    <message id="reject_scouting_proposal_message">Der Spielervorschlag wurde abgelehnt.</message>
+
+    <!-- Error messages -->
+    <message id="scouting_error_not_enabled">Scouting ist derzeit deaktiviert.</message>
+    <message id="scouting_error_no_team">Du hast keinen Verein.</message>
+    <message id="scouting_error_no_department">Du besitzt noch keine Scouting-Abteilung.</message>
+    <message id="scouting_error_department_exists">Dein Verein besitzt bereits eine Scouting-Abteilung.</message>
+    <message id="scouting_error_department_max_level">Die Scouting-Abteilung kann nicht weiter ausgebaut werden.</message>
+    <message id="scouting_error_not_enough_budget">Dein Verein hat nicht genügend Budget.</message>
+    <message id="scouting_error_scout_not_available">Dieser Scout ist nicht verfügbar.</message>
+    <message id="scouting_error_scout_limit_reached">Du kannst keine weiteren Scouts einstellen.</message>
+    <message id="scouting_error_scout_speciality_exists">Du hast bereits einen Scout für diese Position.</message>
+    <message id="scouting_error_scout_not_owned">Dieser Scout gehört nicht zu deinem Verein.</message>
+    <message id="scouting_error_location_not_available">Dieser Camp-Standort ist nicht verfügbar.</message>
+    <message id="scouting_error_location_level_required">Für diesen Standort muss die Scouting-Abteilung weiter ausgebaut werden.</message>
+    <message id="scouting_error_invalid_age_range">Der gewählte Altersbereich ist ungültig.</message>
+    <message id="scouting_error_invalid_strength_range">Der gewählte Stärkebereich ist ungültig.</message>
+    <message id="scouting_error_invalid_budget_range">Der gewählte Budgetbereich ist ungültig.</message>
+    <message id="scouting_error_camp_not_found">Scouting-Camp wurde nicht gefunden.</message>
+    <message id="scouting_error_camp_not_owned">Dieses Scouting-Camp gehört nicht zu deinem Verein.</message>
+    <message id="scouting_error_proposal_not_found">Spielervorschlag wurde nicht gefunden.</message>
+    <message id="scouting_error_proposal_not_owned">Dieser Spielervorschlag gehört nicht zu deinem Verein.</message>
+    <message id="scouting_error_proposal_not_open">Dieser Spielervorschlag ist nicht mehr offen.</message>
+    <message id="scouting_error_proposal_expired">Dieser Spielervorschlag ist abgelaufen.</message>
+    <message id="scouting_error_player_create_failed">Der Spieler konnte nicht erstellt werden.</message>
+
+    <!-- Info texts -->
+    <message id="info">Info: Die tatsächliche Kompetenz eines Scouts ist verborgen. Scouts kosten pro Spieltag Geld und stehen nur für eine begrenzte Anzahl Spiele zur Verfügung.</message>
+    <message id="info_fire_scout">Bitte beachte: Wenn du einen Scout entlässt, endet seine Tätigkeit sofort.</message>
+    <message id="scouting_info_hidden_values">Talent und Maximalstärke sind grundsätzlich verborgen und werden nur durch Scoutberichte grob eingeschätzt.</message>
+    <message id="scouting_info_matchday_costs">Scouting-Abteilung, Scouts und Camps verursachen laufende Kosten pro Spieltag.</message>
+    <message id="scouting_info_proposals">Scouting-Camps liefern in unregelmäßigen Abständen neue Spielervorschläge. Je nach Standort, Scout und Budget können Qualität und Genauigkeit stark schwanken.</message>
+
+
+
+    <!-- Additional page labels -->
+    <message id="scouting_current_budget">Aktuelles Vereinsbudget</message>
+    <message id="scouting_budget">Budget</message>
+    <message id="scouting_available_locations">Verfügbare Standorte</message>
+    <message id="scouting_filter">Suchfilter</message>
+    <message id="scouting_camp_open_count">Aktive Camps</message>
+    <message id="scouting_err_department_exists">Dein Verein besitzt bereits eine Scouting-Abteilung.</message>
+    <message id="scouting_err_department_missing">Du benötigst zuerst eine aktive Scouting-Abteilung.</message>
+    <message id="scouting_err_department_max_level">Die Scouting-Abteilung hat bereits die maximale Stufe erreicht.</message>
+    <message id="scouting_err_not_enough_budget">Das Vereinsbudget reicht für diese Aktion nicht aus.</message>
+    <message id="scouting_err_max_scouts_reached">Du hast bereits die maximale Anzahl an Scouts eingestellt.</message>
+    <message id="scouting_err_scout_not_available">Dieser Scout ist nicht mehr verfügbar.</message>
+    <message id="scouting_err_scout_speciality_exists">Du hast bereits einen Scout für diese Position.</message>
+    <message id="scouting_err_scout_not_owned">Dieser Scout gehört nicht zu deinem Verein.</message>
+    <message id="scouting_err_max_camps_reached">Du hast bereits die maximale Anzahl aktiver Scouting-Camps erreicht.</message>
+    <message id="scouting_err_location_not_available">Dieser Scouting-Standort ist für deine Abteilung nicht verfügbar.</message>
+    <message id="scouting_err_proposal_not_available">Dieser Spielervorschlag ist nicht mehr verfügbar.</message>
+    <message id="scouting_department_build_cost">Baukosten</message>
+    <message id="scouting_department_upgrade_cost">Ausbaukosten</message>
+    <message id="scouting_proposal_transfer_fee">Scouting-Spieler verpflichten</message>
+    <message id="option_Torwart">Torwart</message>
+    <message id="option_Abwehr">Abwehr</message>
+    <message id="option_Mittelfeld">Mittelfeld</message>
+    <message id="option_Sturm">Sturm</message>
+    
+    <message id="activitylog_build-scouting-department">%s hat eine Scouting-Abteilung aufgebaut.</message>
+    <message id="activitylog_upgrade-scouting-department">%s hat seine Scouting-Abteilung ausgebaut.</message>
+    <message id="activitylog_hire-scout">%s hat einen Scout eingestellt.</message>
+    <message id="activitylog_fire-scout">%s hat einen Scout entlassen.</message>
+    <message id="activitylog_create-scouting-camp">%s hat ein Scouting-Camp eröffnet.</message>
+    <message id="activitylog_close-scouting-camp">%s hat ein Scouting-Camp geschlossen.</message>
+    <message id="activitylog_accept-scouting-proposal">%s hat einen Scouting-Spieler verpflichtet.</message>
+    <message id="activitylog_reject-scouting-proposal">%s hat einen Scouting-Vorschlag abgelehnt.</message>
+    
+    <!-- Account statement texts -->
+    <message id="scouting_camp">Scouting-Camp</message>
+    <message id="scouting_camp_fee">Scouting-Camp-Kosten</message>
 
 </messages>

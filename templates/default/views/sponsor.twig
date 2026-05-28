@@ -21,11 +21,22 @@
 	{% endif %}
 
 	{{ profile.infofield(i18n.getMessage("entity_sponsor_name"), sponsor.name) }}
+	{% if sponsor.offer_type_message is defined %}
+		{{ profile.infofield(i18n.getMessage("sponsor_offer_type"), i18n.getMessage(sponsor.offer_type_message)) }}
+	{% endif %}
 	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_spiel"), sponsor.amount_match|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_heimzuschlag"), sponsor.amount_home_bonus|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_sieg"), sponsor.amount_win|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_meisterschaft"), sponsor.amount_championship|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
-	{{ profile.infofield(i18n.getMessage("entity_club_sponsor_spiele"), sponsor.matchdays) }}
+	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_cup"), sponsor.amount_cup|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+	{% if sponsor.amount_attendance_percent is defined and sponsor.amount_attendance_percent > 0 %}
+		{{ profile.infofield(i18n.getMessage("sponsor_attendance_bonus_percent"), sponsor.amount_attendance_percent ~ " %") }}
+	{% endif %}
+	{% if sponsor.contract_id is defined and sponsor.contract_id > 0 %}
+		{{ profile.infofield(i18n.getMessage("sponsor_contract_duration"), i18n.getMessage("sponsor_contract_duration_season")) }}
+	{% else %}
+		{{ profile.infofield(i18n.getMessage("entity_club_sponsor_spiele"), sponsor.matchdays) }}
+	{% endif %}
 
 {# choose sponsor #}
 {% else %}
@@ -34,30 +45,51 @@
 		{{ messagebox.box(i18n.getMessage("sponsor_choose_tooearly", env.getConfig("sponsor_earliest_matchday")), "", "warning") }}
 	{% else %}
 
-		<p style="margin-top: 10px; margin-bottom: 20px;">{{ i18n.getMessage('sponsor_contractduraction_info', env.getConfig("sponsor_matches")) }}</p>
+		<p style="margin-top: 10px; margin-bottom: 20px;">{{ i18n.getMessage('sponsor_contractduraction_info') }}</p>
 	
 		{% if sponsors|length > 0 %}
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>{{ i18n.getMessage("entity_sponsor_name") }}</th>
+					<th>{{ i18n.getMessage("sponsor_offer_type") }}</th>
 					<th>{{ i18n.getMessage("entity_sponsor_b_spiel") }}</th>
 					<th>{{ i18n.getMessage("entity_sponsor_b_heimzuschlag") }}</th>
 					<th>{{ i18n.getMessage("entity_sponsor_b_sieg") }}</th>
 					<th>{{ i18n.getMessage("entity_sponsor_b_meisterschaft") }}</th>
+					<th>{{ i18n.getMessage("entity_sponsor_b_cup") }}</th>
+					<th>{{ i18n.getMessage("sponsor_attendance_bonus_percent") }}</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for sponsor in sponsors %}
 			
 				<tr>
-					<td><p>{{ sponsor.name }}</p>
-					<p><a href="#" class="btn ajaxLink"
-						data-ajaxtarget="pagecontent" data-ajaxquerystr="page={{ env.getPageId() }}&amp;action=choose-sponsor&amp;id={{ sponsor.sponsor_id }}"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></p></td>
+					<td>
+						<p><strong>{{ sponsor.name }}</strong></p>
+						<p><small>{{ i18n.getMessage(sponsor.offer_description_message) }}</small></p>
+						{% if sponsor.negotiation_level > 0 %}
+							<p><span class="label label-info">{{ i18n.getMessage("sponsor_negotiation_level", sponsor.negotiation_level) }}</span></p>
+						{% endif %}
+						<p>
+							<a href="#" class="btn ajaxLink"
+								data-ajaxtarget="pagecontent" data-ajaxquerystr="page={{ env.getPageId() }}&amp;action=choose-sponsor&amp;id={{ sponsor.sponsor_id }}&amp;offer_type={{ sponsor.offer_type }}"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a>
+							{% if sponsor.negotiation_level < 3 %}
+							<a href="#" class="btn ajaxLink"
+								data-ajaxtarget="pagecontent" data-ajaxquerystr="page={{ env.getPageId() }}&amp;action=negotiate-sponsor&amp;id={{ sponsor.sponsor_id }}&amp;offer_type={{ sponsor.offer_type }}"><i class="icon-random"></i> {{ i18n.getMessage("sponsor_negotiate_button") }}</a>
+							{% endif %}
+						</p>
+						{% if sponsor.withdraw_chance > 0 and sponsor.negotiation_level < 3 %}
+							<p><small>{{ i18n.getMessage("sponsor_withdraw_chance", sponsor.withdraw_chance) }}</small></p>
+						{% endif %}
+					</td>
+					<td>{{ i18n.getMessage(sponsor.offer_type_message) }}</td>
 					<td>{{ sponsor.amount_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 					<td>{{ sponsor.amount_home_bonus|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 					<td>{{ sponsor.amount_win|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 					<td>{{ sponsor.amount_championship|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+					<td>{{ sponsor.amount_cup|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+					<td>{% if sponsor.amount_attendance_percent > 0 %}{{ sponsor.amount_attendance_percent }} %{% else %}-{% endif %}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

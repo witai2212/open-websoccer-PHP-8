@@ -1,5 +1,5 @@
 
-{% macro teamlistItem(player) %}
+{% macro teamlistItem(player, showPersonality) %}
 	{% import _self as playerlists %}
 
 			<tr>
@@ -21,6 +21,9 @@
 						<i class="icon-share-alt" title="{{ i18n.getMessage("lending_player_marker_lendable") }}"></i>
 					{% endif %}
 				</td>
+				{% if showPersonality %}
+				<td>{% if player.personality|length > 0 %}{{ i18n.getMessage("player_personality_" ~ player.personality) }}{% else %}{{ i18n.getMessage("player_personality_unknown") }}{% endif %}</td>
+				{% endif %}
 				
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 				<td {{ playerlists.strengthClass(player.strength) }} title="{{ i18n.getMessage("playertable_head_strength") }}"><strong>{{ player.strength }}</strong></td>

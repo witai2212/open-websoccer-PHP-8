@@ -3,10 +3,12 @@
 <messages>
     
     <message id="badge_notification">Congratulations! You have earned a new badge.</message>
+    <message id="badge_notification_named">Congratulations! You have earned the badge {badge}.</message>
     
     <message id="badge_level_gold">Golden Badge</message>
     <message id="badge_level_silver">Silver Badge</message>
     <message id="badge_level_bronze">Bronze Badge</message>
     
     <message id="badges_navlabel">Badges</message>
+    <message id="badge_earned_count">Earned</message>
 </messages>

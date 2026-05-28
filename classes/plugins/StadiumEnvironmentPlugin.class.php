@@ -114,9 +114,90 @@ class StadiumEnvironmentPlugin {
 		if ($sum > 0) {
 			BankAccountDataService::creditAmount($event->websoccer, $event->db, $homeTeamId, $sum, 
 				'stadiumenvironment_matchincome_subject', $event->websoccer->getConfig('projectname'));
-		} else {
+		} elseif ($sum < 0) {
 			BankAccountDataService::debitAmount($event->websoccer, $event->db, $homeTeamId, abs($sum),
 				'stadiumenvironment_costs_per_match_subject', $event->websoccer->getConfig('projectname'));
+		}
+	}
+	
+	/**
+	 * Applies one-time fan popularity effects only after construction finished.
+	 * This is triggered after matches for both teams. The model also calls the
+	 * public helper when a manager opens the stadium environment page.
+	 *
+	 * @param MatchCompletedEvent $event event.
+	 */
+	public static function applyFanPopularityAfterConstruction(MatchCompletedEvent $event) {
+		
+		if (!$event->match->homeTeam->isNationalTeam) {
+			self::applyCompletedFanPopularityBuildings($event->websoccer, $event->db, $event->match->homeTeam->id);
+		}
+		
+		if (!$event->match->guestTeam->isNationalTeam) {
+			self::applyCompletedFanPopularityBuildings($event->websoccer, $event->db, $event->match->guestTeam->id);
+		}
+	}
+	
+	/**
+	 * Applies completed, unprocessed one-time fan popularity building effects.
+	 *
+	 * @param WebSoccer $websoccer application context.
+	 * @param DbConnection $db DB connection.
+	 * @param int $teamId team ID.
+	 */
+	public static function applyCompletedFanPopularityBuildings(WebSoccer $websoccer, DbConnection $db, $teamId) {
+		
+		$teamId = (int) $teamId;
+		if ($teamId < 1) {
+			return;
+		}
+		
+		$dbPrefix = $websoccer->getConfig('db_prefix');
+		$teamTable = $dbPrefix . '_verein';
+		$userTable = $dbPrefix . '_user';
+		$buildingsOfTeamTable = $dbPrefix . '_buildings_of_team';
+		$buildingTable = $dbPrefix . '_stadiumbuilding';
+		
+		$result = $db->querySelect('user_id', $teamTable, 'id = %d', $teamId, 1);
+		$team = $result->fetch_array();
+		$result->free();
+		
+		if (!$team || (int) $team['user_id'] < 1) {
+			return;
+		}
+		
+		$userId = (int) $team['user_id'];
+		$fromTable = $buildingsOfTeamTable . ' AS BT INNER JOIN ' . $buildingTable . ' AS B ON B.id = BT.building_id';
+		$result = $db->querySelect(
+			'BT.building_id, B.effect_fanpopularity',
+			$fromTable,
+			'BT.team_id = %d AND BT.construction_deadline < %d AND BT.fanpopularity_applied = 0 AND B.effect_fanpopularity != 0',
+			array($teamId, $websoccer->getNowAsTimestamp())
+		);
+		
+		$buildingIds = array();
+		$sum = 0;
+		while ($building = $result->fetch_array()) {
+			$buildingIds[] = (int) $building['building_id'];
+			$sum += (int) $building['effect_fanpopularity'];
+		}
+		$result->free();
+		
+		if (!count($buildingIds)) {
+			return;
+		}
+		
+		$result = $db->querySelect('fanbeliebtheit', $userTable, 'id = %d', $userId, 1);
+		$userinfo = $result->fetch_array();
+		$result->free();
+		
+		if ($userinfo && isset($userinfo['fanbeliebtheit'])) {
+			$popularity = min(100, max(1, (int) $userinfo['fanbeliebtheit'] + $sum));
+			$db->queryUpdate(array('fanbeliebtheit' => $popularity), $userTable, 'id = %d', $userId);
+		}
+		
+		foreach ($buildingIds as $buildingId) {
+			$db->queryUpdate(array('fanpopularity_applied' => 1), $buildingsOfTeamTable, 'team_id = %d AND building_id = %d', array($teamId, $buildingId));
 		}
 	}
 	
@@ -165,6 +246,11 @@ class StadiumEnvironmentPlugin {
 	}
 	
 	private static function getBonusSumFromBuildings(WebSoccer $websoccer, DbConnection $db, $attributeName, $teamId) {
+		
+		$allowedAttributes = array('effect_training', 'effect_youthscouting', 'effect_tickets', 'effect_injury', 'effect_income', 'effect_merchandising');
+		if (!in_array($attributeName, $allowedAttributes, true)) {
+			return 0;
+		}
 		
 		$dbPrefix = $websoccer->getConfig('db_prefix');
 		$result = $db->querySelect('SUM(' . $attributeName . ') AS attrSum', $dbPrefix . '_buildings_of_team INNER JOIN '. $dbPrefix . '_stadiumbuilding ON id = building_id', 

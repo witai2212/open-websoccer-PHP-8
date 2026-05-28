@@ -45,9 +45,24 @@ class TrainingCampsDetailsModel implements IModel {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
 		
+		$user = $this->_websoccer->getUser();
+		$teamId = $user->getClubId($this->_websoccer, $this->_db);
+		if ($teamId < 1) {
+			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
+		}
+
 		$defaultDate = $this->_websoccer->getNowAsTimestamp() + 24 * 3600;
+		$playerCount = TrainingcampsDataService::countActivePlayersOfTeam($this->_websoccer, $this->_db, $teamId);
+		$defaultDays = (int) $this->_websoccer->getConfig("trainingcamp_min_days");
+		$estimatedTotalCosts = TrainingcampsDataService::calculateTotalCosts($camp, $defaultDays, $playerCount);
 		
-		return array("camp" => $camp, "defaultDate" => $defaultDate);
+		return array(
+			"camp" => $camp,
+			"defaultDate" => $defaultDate,
+			"playerCount" => $playerCount,
+			"defaultDays" => $defaultDays,
+			"estimatedTotalCosts" => $estimatedTotalCosts
+		);
 	}
 	
 }

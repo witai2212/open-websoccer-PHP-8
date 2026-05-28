@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+	<message id="settings_label_merchandising_enabled">Merchandising aktivieren</message>
+	<message id="settings_label_merchandising_enabled_help">
+		Legt fest, ob das Merchandising-Modul im Spiel verfügbar ist.
+	</message>
+
+</messages>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_bank_loans_enabled">Bank- und Kreditmodul aktivieren</message>
+    <message id="settings_label_bank_loans_enabled_help">Aktiviert Kreditangebote, automatische Raten nach Spielen, vorzeitige Rückzahlung, Kreditrating und Vorstandswarnungen.</message>
+</messages>

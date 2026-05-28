@@ -48,9 +48,33 @@ class SaveTicketsController implements IActionController {
 		
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_verein";
 		$whereCondition = "id = %d";
-		$parameters = $clubId;
+
+		$oldPricesResult = $this->_db->querySelect(
+			"preis_stehen, preis_sitz, preis_haupt_stehen, preis_haupt_sitze, preis_vip",
+			$fromTable,
+			$whereCondition,
+			$clubId,
+			1
+		);
+		$oldPrices = $oldPricesResult->fetch_array();
+		$oldPricesResult->free();
+
+		$pricesChanged = FALSE;
+		if ($oldPrices) {
+			foreach ($columns as $priceColumn => $priceValue) {
+				if ((int) $oldPrices[$priceColumn] !== (int) $priceValue) {
+					$pricesChanged = TRUE;
+					break;
+				}
+			}
+		}
 		
+		$parameters = $clubId;
 		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $parameters);
+
+		if ($pricesChanged && class_exists('FanPressureDataService')) {
+			FanPressureDataService::processTicketPriceChange($this->_websoccer, $this->_db, $this->_i18n, $clubId, $columns);
+		}
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,

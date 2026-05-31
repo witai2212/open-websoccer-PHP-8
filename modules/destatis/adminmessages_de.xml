@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="settings_label_assign_team_automatically">Automatische Teamzuordnung: Benutzer können selbst einen freien Verein auswählen.</message> 
-    <message id="settings_label_max_number_teams_per_user">Höchstanzahl Teams pro Benutzer</message> 
-    <message id="settings_label_max_number_teams_per_user_help">Wieviele Teams ein Benutzer mit einem Account managen darf.</message> 
-    <message id="settings_label_additional_team_min_highscore">Mindesthighscore für zusätzliche Teams</message>
-    <message id="settings_label_additional_team_min_highscore_help">Wieviel Highscore-Punkte ein Benutzer mindestens haben muss, um einen weiteren Verein übernehmen zu können.</message>
+
+    <message id="category_statistics_navlabel">Statistik</message>
+    <message id="financial_economy_stats_navlabel">Finanzstatistik</message>
+    <message id="financial_economy_stats_admin_title">Finanzstatistik / Marktregulierung</message>
+    <message id="financial_economy_stats_admin_intro">Diese Seite zeigt, ob die Spielwirtschaft insgesamt und besonders bei menschlich geführten Vereinen zu viel Gewinn oder Verlust erzeugt. Basis sind die Konto-Buchungen; Feature-Tabellen dienen als Gegenprüfung.</message>
+    <message id="financial_economy_stats_filter_season">Saison</message>
+    <message id="financial_economy_stats_filter_matchday">Spieltag</message>
+    <message id="financial_economy_stats_filter_all">Alle</message>
+    <message id="financial_economy_stats_humans">Menschlich geführte Vereine</message>
+    <message id="financial_economy_stats_all_clubs">Alle Vereine</message>
+    <message id="financial_economy_stats_all_clubs_intro">Vergleichswerte aller aktiven Vereine.</message>
+    <message id="financial_economy_stats_clubs">Vereine</message>
+    <message id="financial_economy_stats_bookings">Buchungen</message>
+    <message id="financial_economy_stats_income">Einnahmen</message>
+    <message id="financial_economy_stats_avg_income">Ø Einnahmen/Verein</message>
+    <message id="financial_economy_stats_expenses">Ausgaben</message>
+    <message id="financial_economy_stats_avg_expenses">Ø Ausgaben/Verein</message>
+    <message id="financial_economy_stats_net">Saldo</message>
+    <message id="financial_economy_stats_avg_net">Ø Saldo/Verein</message>
+    <message id="financial_economy_stats_categories">Kategorien</message>
+    <message id="financial_economy_stats_category">Kategorie</message>
+    <message id="financial_economy_stats_cross_checks">Gegenprüfung Feature-Tabellen</message>
+    <message id="financial_economy_stats_cross_checks_intro">Die Differenzen zeigen nicht automatisch einen Fehler, helfen aber dabei, fehlende oder falsch kategorisierte Konto-Buchungen zu finden.</message>
+    <message id="financial_economy_stats_feature">Feature</message>
+    <message id="financial_economy_stats_feature_amount">Feature-Tabelle</message>
+    <message id="financial_economy_stats_booked_amount">Gebucht in Konto</message>
+    <message id="financial_economy_stats_difference">Differenz</message>
+    <message id="financial_economy_stats_current_liabilities">Aktuelle Kosten pro Spieltag</message>
+    <message id="financial_economy_stats_amount_per_matchday">Betrag pro Spieltag</message>
+    <message id="financial_economy_stats_biggest_losses">Größte Verluste</message>
+    <message id="financial_economy_stats_biggest_profits">Größte Gewinne</message>
+
+    <message id="financial_economy_stats_recommendations">Empfehlungen zur Marktregulierung</message>
+    <message id="financial_economy_stats_recommendations_intro">Diese Empfehlungen werden aus dem Saldo menschlich geführter Vereine, den Einnahmen-/Ausgabenkategorien und den Gegenprüfungen abgeleitet. Aktionen ändern keine Vereinsbudgets direkt, sondern nur künftige Einnahme- oder Kostenhebel.</message>
+    <message id="financial_economy_stats_status">Status</message>
+    <message id="financial_economy_stats_recommendation">Empfehlung</message>
+    <message id="financial_economy_stats_effect">Auswirkung</message>
+    <message id="financial_economy_stats_action">Aktion</message>
+    <message id="financial_economy_stats_regulation_confirm">Diese Marktregulierung passt mehrere Geldwerte um 5 % an. Fortfahren?</message>
+    <message id="financial_economy_stats_regulation_success">Marktregulierung ausgeführt</message>
+    <message id="financial_economy_stats_table">Tabelle</message>
+    <message id="financial_economy_stats_columns">Spalten</message>
+    <message id="financial_economy_stats_affected_rows">Geänderte Datensätze</message>
 </messages>

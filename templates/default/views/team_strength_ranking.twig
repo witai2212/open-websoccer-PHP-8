@@ -1,0 +1,27 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("team_strength_ranking_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#world" data-toggle="tab">{{ i18n.getMessage("team_strength_world") }}</a></li>
+    <li><a href="#league" data-toggle="tab">{{ i18n.getMessage("team_strength_league") }}</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="world">
+        {% include "blocks/team_strength_table.twig" with { 'teams': teams_world } %}
+    </div>
+    <div class="tab-pane" id="league">
+        {% if teams_league|length > 0 %}
+            {% include "blocks/team_strength_table.twig" with { 'teams': teams_league } %}
+        {% else %}
+            <p>{{ i18n.getMessage("no_items") }}</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

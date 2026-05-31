@@ -1,0 +1,29 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{ i18n.getMessage("highscore_teams_rank") }}</th>
+            <th>{{ i18n.getMessage("entity_club") }}</th>
+            <th>{{ i18n.getMessage("entity_league") }}</th>
+            <th>{{ i18n.getMessage("entity_strength") }}</th>
+            <th>{{ i18n.getMessage("team_strength_avg_player") }}</th>
+            <th>{{ i18n.getMessage("team_strength_players") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for club in teams %}
+        <tr>
+            <td><strong>{{ loop.index }}</strong></td>
+            <td>
+                {% if club.bild|length > 0 %}
+                    <img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.bild }}" style="max-width: 20px"/>
+                {% endif %}
+                <a href="{{ env.getInternalUrl("team", "id=" ~ club.club_id) }}">{{ club.club_name }}</a>
+            </td>
+            <td>{% if club.league_id > 0 %}<a href="{{ env.getInternalUrl("league", "id=" ~ club.league_id) }}">{{ club.league_name }}</a>{% else %}-{% endif %}</td>
+            <td>{{ club.strength|number_format(0, ',', ' ') }}</td>
+            <td>{{ club.avg_player_strength|number_format(2, ',', ' ') }}</td>
+            <td>{{ club.player_count|number_format(0, ',', ' ') }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

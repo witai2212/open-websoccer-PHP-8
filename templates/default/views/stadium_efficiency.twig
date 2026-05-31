@@ -1,0 +1,45 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("stadium_efficiency_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if stadiums|length == 0 %}
+    {{ i18n.getMessage("no_items") }}
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("highscore_teams_rank") }}</th>
+                <th>{{ i18n.getMessage("avg_gates_team_name") }}</th>
+                <th>{{ i18n.getMessage("entity_stadium_name") }}</th>
+                <th>{{ i18n.getMessage("stadium_efficiency_occupancy") }}</th>
+                <th>{{ i18n.getMessage("avg_gates_team_viewers") }}</th>
+                <th>{{ i18n.getMessage("stadium_efficiency_revenue") }}</th>
+                <th>{{ i18n.getMessage("stadium_efficiency_avg_price") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stadium in stadiums %}
+            <tr>
+                <td><strong>{{ loop.index }}</strong></td>
+                <td>
+                    {% if stadium.club_bild|length > 0 %}
+                        <img src="{{ env.getConfig("context_root") }}/uploads/club/{{ stadium.club_bild }}" style="max-width: 20px"/>
+                    {% endif %}
+                    <a href="{{ env.getInternalUrl("team", "id=" ~ stadium.club_id) }}">{{ stadium.club_name }}</a>
+                </td>
+                <td>{% if stadium.stadium_id > 0 %}<a href="{{ env.getInternalUrl("stadium", "id=" ~ stadium.stadium_id) }}">{{ stadium.stadium_name }}</a>{% else %}-{% endif %}</td>
+                <td>{{ stadium.occupancy|number_format(2, ',', ' ') }}%</td>
+                <td>{{ stadium.avg_visitors|number_format(0, ',', ' ') }}</td>
+                <td>{% if stadium.total_revenue > 0 %}{{ stadium.total_revenue|number_format(0, ',', ' ') }} EUR{% else %}-{% endif %}</td>
+                <td>{% if stadium.avg_ticket_price > 0 %}{{ stadium.avg_ticket_price|number_format(2, ',', ' ') }} EUR{% else %}-{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

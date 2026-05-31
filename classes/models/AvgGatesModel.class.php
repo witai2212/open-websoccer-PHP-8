@@ -48,20 +48,23 @@ class AvgGatesModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $avgGates = null;
-		
-		$user = $this->_websoccer->getUser();
-	    $userId = $user->id;
-	    
-	    $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
-		$leagueId = $team['team_league_id'];
+	    $leagueId = (int) $this->_websoccer->getRequestParameter("id");
+	    if ($leagueId < 1) {
+	        $user = $this->_websoccer->getUser();
+	        if (isset($user->id)) {
+	            $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, (int) $user->id);
+	            if (isset($team['team_league_id'])) {
+	                $leagueId = (int) $team['team_league_id'];
+	            }
+	        }
+	    }
 	    
 	    $avgGates = DestatisDataService::getAvgGatesByLeagueId($this->_websoccer, $this->_db, $leagueId);
 		
 		$most_visitors_clubs = DestatisDataService::highestClubStadiumVisitorsByClub($this->_websoccer, $this->_db);
 		$most_visitors_leagues = DestatisDataService::highestClubStadiumVisitorsByLeague($this->_websoccer, $this->_db);
 		
-	    return array("avg_gates" => $avgGates, "most_visitors_clubs" => $most_visitors_clubs, "most_visitors_leagues" => $most_visitors_leagues);
+	    return array("avg_gates" => $avgGates, "league_id" => $leagueId, "leagues" => LeagueDataService::getLeaguesSortedByCountry($this->_websoccer, $this->_db), "most_visitors_clubs" => $most_visitors_clubs, "most_visitors_leagues" => $most_visitors_leagues);
 		
 	}
 	

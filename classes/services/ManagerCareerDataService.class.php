@@ -223,6 +223,9 @@ class ManagerCareerDataService {
         $switchResult = self::switchManagerToClub($websoccer, $db, $i18n, $userId, $targetTeamId, $currentTeamId, self::ORIGIN_JOB_OFFER, $offerId);
         self::setOfferStatus($websoccer, $db, $offerId, self::OFFER_ACCEPTED);
         self::closeOtherOffers($websoccer, $db, $userId, $offerId);
+        
+        //set vertrag_spiele = 50 for new manager
+        TeamsDataService::extendContractForNewManager($websoccer, $db, $targetTeamId);
 
         return $switchResult;
     }

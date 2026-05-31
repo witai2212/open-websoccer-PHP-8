@@ -10,6 +10,9 @@
 	    <setting id="lending_enabled" category="game" type="boolean" default="1" />
 	    <setting id="lending_matches_min" category="game" type="number" default="5" />
 	    <setting id="lending_matches_max" category="game" type="number" default="20" />
+	    <setting id="lending_cpu_offer_duration_days" category="game" type="number" default="10" />
+	    <setting id="lending_cpu_offer_cooldown_days" category="game" type="number" default="20" />
+	    <setting id="lending_cpu_request_expiry_days" category="game" type="number" default="10" />
 	</settings>
 	
     <pages>
@@ -63,6 +66,14 @@
 	
 	<action id="borrow-player" controller="BorrowPlayerController" role="user">
 		<param id="matches" type="number" required="true" min="1" max="100" />
+		<param id="id" type="number" required="true" />
+	</action>
+
+	<action id="accept-loan-request" controller="AcceptLoanRequestController" role="user">
+		<param id="id" type="number" required="true" />
+	</action>
+
+	<action id="reject-loan-request" controller="RejectLoanRequestController" role="user">
 		<param id="id" type="number" required="true" />
 	</action>
 

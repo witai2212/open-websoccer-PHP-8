@@ -35,7 +35,7 @@
 
 <p style="margin-top: 30px"><i class="icon-arrow-right"></i> <a href="{{ env.getInternalUrl("player", "id=" ~ player.player_id) }}">{{ i18n.getMessage("player_navlabel") }}</a></p>
 
-<p>{{ i18n.getMessage("borrow-player_intro") }}</p>
+<p>{% if player.team_user_id > 0 %}{{ i18n.getMessage("borrow-player_request_intro") }}{% else %}{{ i18n.getMessage("borrow-player_intro") }}{% endif %}</p>
 
 <form class="form-horizontal" method="post">
 
@@ -52,7 +52,7 @@
 		i18n.getMessage("lending_matches_durationhelp")|format(env.getConfig("lending_matches_min"), env.getConfig("lending_matches_max"))) }}
 	
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('lending_player_hire_button') }}</button>
+		<button type="submit" class="btn btn-primary">{% if player.team_user_id > 0 %}{{ i18n.getMessage('lending_player_request_button') }}{% else %}{{ i18n.getMessage('lending_player_hire_button') }}{% endif %}</button>
 		<a href="{{ env.getInternalUrl("loans") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
 	</div>
 	<input type="hidden" name="page" value="borrow-player"/>

@@ -47,11 +47,15 @@ class BuyStockController implements IActionController {
         $user = $this->_websoccer->getUser();
         $teamId = $user->getClubId($this->_websoccer, $this->_db);
         
-        StockMarketDataService::buyStock($this->_websoccer, $this->_db, $index, $qty, $teamId);
+        $bought = StockMarketDataService::buyStock($this->_websoccer, $this->_db, $index, $qty, $teamId);
         
-        // success message
-        $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
-            $this->_i18n->getMessage("saved_message_title"),""));
+        if ($bought) {
+            $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
+                $this->_i18n->getMessage("saved_message_title"), ""));
+        } else {
+            $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_WARNING,
+                $this->_i18n->getMessage("stockmarket_majority_limit_reached"), ""));
+        }
             
         return "stockmarket";
     }

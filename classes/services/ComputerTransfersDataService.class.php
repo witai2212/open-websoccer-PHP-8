@@ -8,6 +8,9 @@ class ComputerTransfersDataService {
     const MAX_BORROWED_PLAYERS_PER_TEAM = 2;
     const MIN_SQUAD_SIZE_AFTER_LENDING = 20;
     const MIN_SQUAD_SIZE_BEFORE_BORROWING = 20;
+    const CPU_LOAN_OFFER_DURATION_DAYS = 10;
+    const CPU_LOAN_OFFER_COOLDOWN_DAYS = 20;
+    const CPU_LOAN_REQUEST_EXPIRY_DAYS = 10;
     const TRANSFER_DURATION_DAYS = 1;
     const MAX_PERCENTAGE_PLAYERS_ON_TL = 2;
     const MAX_PLAYERS_ON_TL = 800;
@@ -55,6 +58,9 @@ class ComputerTransfersDataService {
 
 		// --- Managing loans: all computer-controlled teams may offer and borrow players. ---
 		if ($websoccer->getConfig("lending_enabled")) {
+			self::expireOldComputerLoanOffers($websoccer, $db);
+			self::expireOldComputerLoanRequests($websoccer, $db);
+
 			$loanTeamIds = self::getComputerControlledTeamsForLoans($websoccer, $db);
 			foreach ($loanTeamIds as $teamId) {
 				self::manageLendingList($websoccer, $db, $teamId);
@@ -304,8 +310,8 @@ class ComputerTransfersDataService {
         $handgeld = $bidAmount *  $rand;
         
         $insStr = "INSERT INTO ". $websoccer->getConfig('db_prefix') . "_transfer_angebot
-                    (spieler_id, verein_id, abloese, handgeld, vertrag_spiele, datum, vertrag_gehalt, vertrag_torpraemie)
-                    VALUES ('$playerId', '$teamId', '$bidAmount', '$handgeld', '60', '$now', '$salaryAmount', '$goalAmount')";
+                    (spieler_id, verein_id, user_id, abloese, handgeld, vertrag_spiele, datum, vertrag_gehalt, vertrag_torpraemie)
+                    VALUES ('$playerId', '$teamId', NULL, '$bidAmount', '$handgeld', '60', '$now', '$salaryAmount', '$goalAmount')";
         $db->executeQuery($insStr);
         
         echo"- BID: ". $playerId ."\n";
@@ -446,7 +452,7 @@ class ComputerTransfersDataService {
         $profile = self::getLoanProfile($websoccer, $db, $teamId, $squad);
         $candidates = array();
         foreach ($squad as $player) {
-            if (self::canOfferPlayerForLoan($websoccer, $player, $positionsCount)) {
+            if (self::canOfferPlayerForLoan($websoccer, $db, $player, $positionsCount)) {
                 $player['loan_score'] = self::scoreLoanOfferCandidate($player, $profile);
                 $candidates[] = $player;
             }
@@ -522,8 +528,117 @@ class ComputerTransfersDataService {
                 continue;
             }
 
-            self::executeComputerLoan($websoccer, $db, $teamId, $player, $matches, $totalFee, $salaryShare, $optionType, $buyFee);
+            if ((int) $player['lender_user_id'] > 0) {
+                self::createComputerLoanRequest($websoccer, $db, $teamId, $player, $matches, $salaryShare, $optionType, $buyFee);
+            } else {
+                self::executeComputerLoan($websoccer, $db, $teamId, $player, $matches, $totalFee, $salaryShare, $optionType, $buyFee);
+            }
             break;
+        }
+    }
+
+    private static function expireOldComputerLoanOffers(WebSoccer $websoccer, DbConnection $db) {
+        $durationDays = self::getOptionalConfigInt($websoccer, 'lending_cpu_offer_duration_days', self::CPU_LOAN_OFFER_DURATION_DAYS);
+        if ($durationDays <= 0) {
+            return;
+        }
+
+        $threshold = $websoccer->getNowAsTimestamp() - ($durationDays * 24 * 60 * 60);
+        $dbPrefix = $websoccer->getConfig('db_prefix');
+        $query = "
+            SELECT O.id AS offer_id, O.player_id
+            FROM ". $dbPrefix ."_loan_offer AS O
+            INNER JOIN ". $dbPrefix ."_spieler AS P ON P.id = O.player_id
+            INNER JOIN ". $dbPrefix ."_verein AS V ON V.id = O.lender_team_id
+            WHERE O.status = 'open'
+              AND O.created_by_computer = '1'
+              AND O.created_date > 0
+              AND O.created_date <= '". (int) $threshold ."'
+              AND P.verein_id = O.lender_team_id
+              AND P.lending_fee > 0
+              AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)
+              AND (V.user_id IS NULL OR V.user_id <= 0)";
+        $result = $db->executeQuery($query);
+
+        $expired = array();
+        while ($row = $result->fetch_assoc()) {
+            $expired[] = $row;
+        }
+        $result->free();
+
+        foreach ($expired as $row) {
+            $playerId = (int) $row['player_id'];
+            $offerId = (int) $row['offer_id'];
+
+            $db->queryUpdate(
+                array('lending_fee' => 0),
+                $dbPrefix . '_spieler',
+                "id = %d AND lending_fee > 0 AND (lending_owner_id IS NULL OR lending_owner_id = 0)",
+                $playerId
+            );
+            $db->queryUpdate(
+                array('status' => 'expired'),
+                $dbPrefix . '_loan_offer',
+                "id = %d AND status = 'open' AND created_by_computer = '1'",
+                $offerId
+            );
+            if (class_exists('LoanRequestDataService')) {
+                LoanRequestDataService::expireOpenRequestsForPlayer($websoccer, $db, $playerId);
+            }
+
+            echo "--- LOAN OFFER EXPIRED: ". $playerId ."\n";
+        }
+    }
+
+    private static function expireOldComputerLoanRequests(WebSoccer $websoccer, DbConnection $db) {
+        if (!class_exists('LoanRequestDataService')) {
+            return;
+        }
+
+        $expiryDays = self::getOptionalConfigInt($websoccer, 'lending_cpu_request_expiry_days', self::CPU_LOAN_REQUEST_EXPIRY_DAYS);
+        if ($expiryDays <= 0) {
+            return;
+        }
+
+        $threshold = $websoccer->getNowAsTimestamp() - ($expiryDays * 24 * 60 * 60);
+        $db->queryUpdate(
+            array('status' => LoanRequestDataService::STATUS_EXPIRED, 'answered_date' => $websoccer->getNowAsTimestamp()),
+            $websoccer->getConfig('db_prefix') . '_loan_request',
+            "status = 'open' AND created_by_computer = '1' AND created_date > 0 AND created_date <= %d",
+            (int) $threshold
+        );
+    }
+
+    private static function hasRecentComputerLoanOffer(WebSoccer $websoccer, DbConnection $db, $playerId) {
+        $cooldownDays = self::getOptionalConfigInt($websoccer, 'lending_cpu_offer_cooldown_days', self::CPU_LOAN_OFFER_COOLDOWN_DAYS);
+        if ($cooldownDays <= 0) {
+            return false;
+        }
+
+        $threshold = $websoccer->getNowAsTimestamp() - ($cooldownDays * 24 * 60 * 60);
+        $query = "
+            SELECT id
+            FROM ". $websoccer->getConfig('db_prefix') ."_loan_offer
+            WHERE player_id = '". (int) $playerId ."'
+              AND created_by_computer = '1'
+              AND created_date >= '". (int) $threshold ."'
+            LIMIT 1";
+        $result = $db->executeQuery($query);
+        $row = $result->fetch_assoc();
+        $result->free();
+
+        return (isset($row['id']));
+    }
+
+    private static function getOptionalConfigInt(WebSoccer $websoccer, $name, $default) {
+        try {
+            $value = $websoccer->getConfig($name);
+            if ($value === NULL || $value === '') {
+                return (int) $default;
+            }
+            return (int) $value;
+        } catch (Exception $e) {
+            return (int) $default;
         }
     }
 
@@ -574,7 +689,7 @@ class ComputerTransfersDataService {
         return (int) $row['borrowed_players'];
     }
 
-    private static function canOfferPlayerForLoan(WebSoccer $websoccer, $player, $positionsCount) {
+    private static function canOfferPlayerForLoan(WebSoccer $websoccer, DbConnection $db, $player, $positionsCount) {
         if ($player['transfermarkt'] == '1') {
             return false;
         }
@@ -582,6 +697,9 @@ class ComputerTransfersDataService {
             return false;
         }
         if ((int) $player['vertrag_spiele'] <= (int) $websoccer->getConfig('lending_matches_min')) {
+            return false;
+        }
+        if (self::hasRecentComputerLoanOffer($websoccer, $db, $player['id'])) {
             return false;
         }
 
@@ -677,6 +795,27 @@ class ComputerTransfersDataService {
         $result->free();
 
         return (int) $budget['finanz_budget'];
+    }
+
+    private static function createComputerLoanRequest(WebSoccer $websoccer, DbConnection $db, $borrowerTeamId, $player, $matches, $salaryShare = 100, $optionType = 'none', $buyFee = 0) {
+        $borrowerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $borrowerTeamId);
+        $borrowerUserId = isset($borrowerTeam['user_id']) ? (int) $borrowerTeam['user_id'] : 0;
+
+        LoanRequestDataService::createRequest(
+            $websoccer,
+            $db,
+            $player,
+            $borrowerTeamId,
+            $borrowerUserId,
+            $matches,
+            (int) $player['lending_fee'],
+            $salaryShare,
+            $optionType,
+            $buyFee,
+            true
+        );
+
+        echo "--- LOAN REQUEST: ". $player['id'] ." -> ". $borrowerTeamId ."\n";
     }
 
     private static function executeComputerLoan(WebSoccer $websoccer, DbConnection $db, $borrowerTeamId, $player, $matches, $totalFee, $salaryShare = 100, $optionType = 'none', $buyFee = 0) {
@@ -794,7 +933,7 @@ class ComputerTransfersDataService {
             
             $delStr = "DELETE FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot
                         WHERE spieler_id='".$offer['spieler_id']."'
-                            AND user_id<=0";
+                            AND (user_id IS NULL OR user_id<=0)";
             $db->executeQuery($delStr);
             
         }

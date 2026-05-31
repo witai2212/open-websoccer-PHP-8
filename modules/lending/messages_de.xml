@@ -90,4 +90,26 @@
     <message id="lending_notification_bought">Der geliehene Spieler <strong>{player}</strong> wurde von <strong>{borrower}</strong> fest verpflichtet. Stammverein war <strong>{lender}</strong>.</message>
     <message id="lending_notification_development">Der verliehene Spieler <strong>{player}</strong> hat sich durch Spielpraxis verbessert: +{bonus} auf {attribute}.</message>
     <message id="lending_notification_obligation_failed">Die Kaufpflicht für <strong>{player}</strong> konnte nicht ausgeführt werden. Das Budget des Leihvereins reicht nicht aus.</message>
+
+    <message id="borrow-player_request_intro">Geben Sie die gewünschte Anzahl an Spiele an. Da der Spieler einem von einem Manager geführten Verein gehört, wird zunächst eine Leihanfrage erstellt. Der Spieler wechselt erst, wenn der abgebende Manager die Anfrage akzeptiert.</message>
+    <message id="lending_player_request_button">Leihanfrage stellen</message>
+    <message id="lending_request_send_success">Die Leihanfrage wurde erstellt. Der abgebende Manager kann sie nun annehmen oder ablehnen.</message>
+    <message id="lending_request_accept_success">Die Leihanfrage wurde angenommen. Der Spieler wurde verliehen.</message>
+    <message id="lending_request_reject_success">Die Leihanfrage wurde abgelehnt.</message>
+    <message id="lending_request_accept_button">Annehmen</message>
+    <message id="lending_request_reject_button">Ablehnen</message>
+    <message id="lending_request_err_not_allowed">Diese Leihanfrage ist nicht mehr verfügbar oder gehört nicht zu Ihrem Verein.</message>
+    <message id="lending_request_err_no_longer_available">Der Spieler ist nicht mehr für diese Leihe verfügbar.</message>
+    <message id="lending_request_notification_received"><strong>{borrower}</strong> möchte <strong>{player}</strong> für <em>{matches}</em> Spiele ausleihen. Leihgebühr: <strong>{fee}</strong> pro Spieltag.</message>
+    <message id="lending_request_notification_accepted">Ihre Leihanfrage für <strong>{player}</strong> wurde angenommen. Der Spieler wird für <em>{matches}</em> Spiele an <strong>{newteam}</strong> ausgeliehen.</message>
+    <message id="lending_request_notification_rejected">Ihre Leihanfrage für <strong>{player}</strong> wurde abgelehnt.</message>
+    <message id="loans_tab_incoming_requests">Eingehende Leihanfragen</message>
+    <message id="loans_tab_outgoing_requests">Unsere offenen Leihanfragen</message>
+    <message id="loans_no_incoming_requests">Aktuell liegen keine offenen Leihanfragen für Ihre Spieler vor.</message>
+    <message id="loans_no_outgoing_requests">Aktuell haben Sie keine offenen Leihanfragen gestellt.</message>
+    <message id="loans_total_fee">Gesamt</message>
+    <message id="settings_label_lending_cpu_offer_duration_days">CPU-Leihangebote: Laufzeit in Tagen</message>
+    <message id="settings_label_lending_cpu_offer_cooldown_days">CPU-Leihangebote: Wiederanbietungs-Sperre in Tagen</message>
+    <message id="settings_label_lending_cpu_request_expiry_days">CPU-Leihanfragen: Ablauf nach Tagen</message>
+
 </messages>

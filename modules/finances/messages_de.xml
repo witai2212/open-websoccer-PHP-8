@@ -18,6 +18,17 @@
     <message id="indexes_sell">Verkaufen</message>
     <message id="indexes_action">Aktion</message>
     <message id="indexes_percent">%-Anteil</message>
+    <message id="indexes_ownership">Anteil</message>
+    <message id="stockmarket_majority_owner">Mehrheitsaktionär</message>
+    <message id="stockmarket_majority_limit_reached">Der Kauf wurde nicht ausgeführt. Du darfst nur bei einem börsennotierten Verein mindestens 51% der Anteile halten.</message>
+    <message id="stockmarket_fire_manager">Manager entlassen</message>
+    <message id="stockmarket_control_fire_success">Der Manager wurde durch Mehrheitsaktionär-Beschluss entlassen.</message>
+    <message id="stockmarket_control_err_not_allowed">Diese Aktion ist nicht erlaubt. Du benötigst mindestens 51% der Vereinsaktien und darfst nicht den eigenen Verein entlassen.</message>
+    <message id="stockmarket_control_err_no_manager">Dieser Verein hat aktuell keinen entlassbaren Manager.</message>
+    <message id="stockmarket_control_fired_subject">Entlassung durch Mehrheitsaktionär</message>
+    <message id="stockmarket_control_fired_message">Du wurdest beim Verein %s durch Beschluss des Mehrheitsaktionärs entlassen.</message>
+    <message id="stockmarket_dividend_payment">Dividendenausschüttung</message>
+    <message id="stockmarket_dividend_income">Dividendenertrag</message>
     
     <message id="buystock_navlabel">Aktien kaufen</message>
     <message id="buystock_max_qty">Die maximale Anzahl an Aktien die Du kaufen kannst beträgt: </message>
@@ -176,5 +187,21 @@
     <message id="bankloans_notification_high_debt">Der Vorstand warnt: Die Kreditlast nutzt bereits {ratio}% des Kreditrahmens aus.</message>
     <message id="financialforecast_loan_repayments">Kreditraten</message>
 
+    <message id="stockmarket_ipo_title">Börsengang</message>
+    <message id="stockmarket_ipo_already_listed">Dein Verein ist bereits an der Börse notiert.</message>
+    <message id="stockmarket_ipo_club_value">Vereinswert</message>
+    <message id="stockmarket_ipo_income">Emissionserlös</message>
+    <message id="stockmarket_ipo_initial_price">Startkurs</message>
+    <message id="stockmarket_ipo_shares">Aktien</message>
+    <message id="stockmarket_ipo_requirement">Voraussetzung</message>
+    <message id="stockmarket_ipo_current">Aktuell</message>
+    <message id="stockmarket_ipo_required">Benötigt</message>
+    <message id="stockmarket_ipo_req_met">erfüllt</message>
+    <message id="stockmarket_ipo_req_missing">fehlt</message>
+    <message id="stockmarket_ipo_req_not_listed">Noch nicht börsennotiert</message>
+    <message id="stockmarket_ipo_req_stadium_size">Stadiongröße</message>
+    <message id="stockmarket_ipo_req_team_value">Mannschaftswert</message>
+    <message id="stockmarket_ipo_req_titles_won">Titel</message>
+    <message id="stockmarket_ipo_not_available_hint">Der Börsengang ist noch nicht möglich. Sobald alle Voraussetzungen erfüllt sind, erscheint hier der Button zur Börsennotierung.</message>
 
 </messages>

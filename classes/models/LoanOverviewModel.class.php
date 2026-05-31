@@ -83,6 +83,40 @@ class LoanOverviewModel implements IModel {
 		return $this->fetchLoanRows($query, false);
 	}
 
+	private function getIncomingLoanRequests($teamId) {
+		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
+		$query = "
+			SELECT R.id AS request_id, R.requested_matches, R.loan_fee_per_match, R.total_fee,
+			       R.salary_share_percent, R.option_type, R.buy_fee, R.created_by_computer, R.created_date,
+			       P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main,
+			       B.name AS borrower_name
+			FROM ". $dbPrefix ."_loan_request AS R
+			INNER JOIN ". $dbPrefix ."_spieler AS P ON P.id = R.player_id
+			INNER JOIN ". $dbPrefix ."_verein AS B ON B.id = R.borrower_team_id
+			WHERE R.lender_team_id = '". (int) $teamId ."'
+			  AND R.status = 'open'
+			ORDER BY R.created_date ASC, P.position ASC, P.nachname ASC";
+
+		return $this->fetchRequestRows($query);
+	}
+
+	private function getOutgoingLoanRequests($teamId) {
+		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
+		$query = "
+			SELECT R.id AS request_id, R.requested_matches, R.loan_fee_per_match, R.total_fee,
+			       R.salary_share_percent, R.option_type, R.buy_fee, R.created_by_computer, R.created_date,
+			       P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main,
+			       L.name AS lender_name
+			FROM ". $dbPrefix ."_loan_request AS R
+			INNER JOIN ". $dbPrefix ."_spieler AS P ON P.id = R.player_id
+			INNER JOIN ". $dbPrefix ."_verein AS L ON L.id = R.lender_team_id
+			WHERE R.borrower_team_id = '". (int) $teamId ."'
+			  AND R.status = 'open'
+			ORDER BY R.created_date ASC, P.position ASC, P.nachname ASC";
+
+		return $this->fetchRequestRows($query);
+	}
+
 	private function getOwnLoanOffers($teamId) {
 		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
 		$query = "
@@ -103,7 +137,7 @@ class LoanOverviewModel implements IModel {
 		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
 		$query = "
 			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main, P.lending_fee, P.vertrag_gehalt,
-			       C.name AS team_name, O.salary_share_percent, O.option_type, O.buy_fee
+			       C.name AS team_name, C.user_id AS team_user_id, O.salary_share_percent, O.option_type, O.buy_fee
 			FROM ". $dbPrefix ."_spieler AS P
 			INNER JOIN ". $dbPrefix ."_verein AS C ON C.id = P.verein_id
 			LEFT JOIN ". $dbPrefix ."_loan_offer AS O ON O.player_id = P.id AND O.status = 'open'
@@ -126,6 +160,26 @@ class LoanOverviewModel implements IModel {
 			$row['can_recall'] = false;
 			if ($includeRecall && !empty($row['loan_id'])) {
 				$row['can_recall'] = LoanDataService::canRecallLoan($this->_websoccer, $this->_db, $row);
+			}
+			$rows[] = $row;
+		}
+		$result->free();
+		return $rows;
+	}
+
+	private function fetchRequestRows($query) {
+		$result = $this->_db->executeQuery($query);
+		$rows = array();
+		while ($row = $result->fetch_assoc()) {
+			$row['position'] = PlayersDataService::_convertPosition($row['position']);
+			if (!isset($row['salary_share_percent']) || $row['salary_share_percent'] === null || $row['salary_share_percent'] === '') {
+				$row['salary_share_percent'] = 100;
+			}
+			if (!isset($row['option_type']) || $row['option_type'] === null || $row['option_type'] === '') {
+				$row['option_type'] = LoanDataService::OPTION_NONE;
+			}
+			if (!isset($row['buy_fee']) || $row['buy_fee'] === null) {
+				$row['buy_fee'] = 0;
 			}
 			$rows[] = $row;
 		}

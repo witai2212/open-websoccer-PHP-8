@@ -72,6 +72,30 @@ class BorrowPlayerController implements IActionController {
 		if ($team['team_budget'] < $minBudget) {
 			throw new Exception($this->_i18n->getMessage('lending_hire_err_budget_too_low'));
 		}
+
+		// Human-owned loan players require approval from the lender.
+		// CPU-owned loan players can still be borrowed immediately.
+		if (!empty($player['team_user_id'])) {
+			LoanRequestDataService::createRequest(
+				$this->_websoccer,
+				$this->_db,
+				$player,
+				$clubId,
+				$user->id,
+				$parameters['matches'],
+				$player['lending_fee'],
+				$salaryShare,
+				$optionType,
+				$buyFee,
+				false
+			);
+
+			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
+				$this->_i18n->getMessage('lending_request_send_success'),
+				''));
+
+			return 'loans';
+		}
 		
 		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $clubId, $fee, 'lending_fee_subject', $player['team_name']);
 		BankAccountDataService::creditAmount($this->_websoccer, $this->_db, $player['team_id'], $fee, 'lending_fee_subject', $team['team_name']);

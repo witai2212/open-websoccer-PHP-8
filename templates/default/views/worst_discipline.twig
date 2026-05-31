@@ -1,4 +1,3 @@
-
 {% extends "base.twig" %}
 
 {% block page_title %}
@@ -6,6 +5,19 @@
 {% endblock %}
 
 {% block page_content %}
+
+<div class="well">
+    <form method="get" class="form-inline" style="margin: 0">
+        <input type="hidden" name="page" value="worst_discipline" />
+        <label for="id">{{ i18n.getMessage("entity_league") }}</label>
+        <select name="id" id="id">
+            {% for league in leagues %}
+                <option value="{{ league.league_id }}"{% if league.league_id == league_id %} selected="selected"{% endif %}>{{ league.league_country }} - {{ league.league_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn">{{ i18n.getMessage("button_display") }}</button>
+    </form>
+</div>
 
 {% if wDisciplines|length == 0 %}
 {{ i18n.getMessage("no_items") }}
@@ -16,6 +28,8 @@
 			<tr>
 				<th></th>
 				<th>{{ i18n.getMessage("avg_ratings_player_name") }}</th>
+                <th>{{ i18n.getMessage("bestplayers_verein") }}</th>
+                <th>{{ i18n.getMessage("worst_discipline_score") }}</th>
 				<th>{{ i18n.getMessage("worst_discipline_red_cards") }}</th>
 				<th>{{ i18n.getMessage("worst_discipline_yellow_red_cards") }}</th>
 				<th>{{ i18n.getMessage("worst_discipline_yellow_cards") }}</th>
@@ -27,7 +41,9 @@
 	
 			<tr>
 				<td><strong>{{ loop.index }}</strong></td>
-				<td><a href="?page=player&id={{ wd.id }}">{{ wd.vorname }}&nbsp;{{ wd.nachname }}</a></td>
+				<td><a href="?page=player&id={{ wd.id }}">{{ wd.vorname }} {% if wd.kunstname|default('')|length > 0 %}{{ wd.kunstname }} {% endif %}{{ wd.nachname }}</a></td>
+                <td>{% if wd.club_id > 0 %}<a href="{{ env.getInternalUrl("team", "id=" ~ wd.club_id) }}">{{ wd.club_name }}</a>{% else %}-{% endif %}</td>
+                <td>{{ wd.card_score|number_format(0, ',', ' ') }}</td>
 				<td>{{ wd.sa_karten_rot|number_format(0, ',', ' ') }}</td>
 				<td>{{ wd.sa_karten_gelb_rot|number_format(0, ',', ' ') }}</td>
 				<td>{{ wd.sa_karten_gelb|number_format(0, ',', ' ') }}</td>

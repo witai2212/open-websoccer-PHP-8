@@ -1,106 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
-<module version="1.0.0">
+<module version="1.1.0">
+
+    <admin>
+        <adminpage id="financial_economy_stats" permissionrole="r_admin" navcategory="statistics" filename="financial-economy-stats"/>
+    </admin>
+
 
     <pages>
         <page
             id="stats"
             template="destatis"
             navitem="true"
-            model="BestPlayersModel"
+            model="DestatisModel"
             navweight="11"
             role="user">
-	        <page
-	            id="bestplayers"
-	            template="bestplayers"
-	            navitem="true"
-	            model="BestPlayersModel"
-	            navweight="0"
-	            role="user"/>
-	        <page
-	            id="bestgoalscorers"
-	            template="bestgoalscorers"
-	            navitem="true"
-	            model="BestGoalscorersModel"
-	            navweight="0"
-	            role="user"/>
-	        <page
-	            id="avg_gates"
-	            template="avg_gates"
-	            navitem="true"
-	            model="AvgGatesModel"
-	            navweight="0"
-	            role="user"/>
-	        <page
-	            id="avg_ratings"
-	            template="avg_ratings"
-	            navitem="true"
-	            model="AvgRatingsModel"
-	            navweight="0"
-	            role="user"/>
-	        <page
-	            id="worst_discipline"
-	            template="worst_discipline"
-	            navitem="true"
-	            model="WorstDisciplineModel"
-	            navweight="0"
-	            role="user"/>
-	        <page
-	            id="richest_clubs"
-	            template="richest_clubs"
-	            navitem="true"
-	            model="RichestClubsModel"
-	            navweight="0"
-	            role="user"/>
-	        <page
-	            id="statistics_salary"
-	            template="statistics-salary"
-	            navitem="true"
-	            model="StatisticsSalaryModel"
-	            navweight="0"
-	            role="user"/>
-        	<page
-	            id="halloffame"
-	            template="halloffame"
-	            navitem="true"
-	            model="HallOfFameModel"
-	            navweight="0"
-	            role="user"/>
-        	<page
-	            id="largest_stadiums"
-	            template="largest_stadiums"
-	            navitem="true"
-	            model="LargestStadiumsModel"
-	            navweight="0"
-	            role="user"/>
-        	<page
-	            id="sales_stats"
-	            template="sales_stats"
-	            navitem="false"
-	            model="SalesStatsModel"
-	            navweight="0"
-	            role="user"/>
-        	<page
-	            id="most_valuable_teams"
-	            template="most_valuable_teams"
-	            navitem="true"
-	            model="MostValuableTeamsModel"
-	            navweight="3"
-	            role="user"/>
-        	<page
-	            id="highscore_teams"
-	            template="highscore_teams"
-	            navitem="true"
-	            model="HighscoreTeamsModel"
-	            navweight="3"
-	            role="user"/>
-
+            <page
+                id="bestplayers"
+                template="bestplayers"
+                navitem="true"
+                model="BestPlayersModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="bestgoalscorers"
+                template="bestgoalscorers"
+                navitem="true"
+                model="BestGoalscorersModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="avg_gates"
+                template="avg_gates"
+                navitem="true"
+                model="AvgGatesModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="avg_ratings"
+                template="avg_ratings"
+                navitem="true"
+                model="AvgRatingsModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="worst_discipline"
+                template="worst_discipline"
+                navitem="true"
+                model="WorstDisciplineModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="richest_clubs"
+                template="richest_clubs"
+                navitem="true"
+                model="RichestClubsModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="statistics_salary"
+                template="statistics-salary"
+                navitem="true"
+                model="StatisticsSalaryModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="halloffame"
+                template="halloffame"
+                navitem="true"
+                model="HallOfFameModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="largest_stadiums"
+                template="largest_stadiums"
+                navitem="true"
+                model="LargestStadiumsModel"
+                navweight="0"
+                role="user"/>
+            <page
+                id="most_valuable_teams"
+                template="most_valuable_teams"
+                navitem="true"
+                model="MostValuableTeamsModel"
+                navweight="3"
+                role="user"/>
+            <page
+                id="highscore_teams"
+                template="highscore_teams"
+                navitem="true"
+                model="HighscoreTeamsModel"
+                navweight="3"
+                role="user"/>
+            <page
+                id="team_strength_ranking"
+                template="team_strength_ranking"
+                navitem="true"
+                model="TeamStrengthRankingModel"
+                navweight="4"
+                role="user"/>
+            <page
+                id="player_attribute_ranking"
+                template="player_attribute_ranking"
+                navitem="true"
+                model="PlayerAttributeRankingModel"
+                navweight="5"
+                role="user"/>
+            <page
+                id="stadium_efficiency"
+                template="stadium_efficiency"
+                navitem="true"
+                model="StadiumEfficiencyModel"
+                navweight="6"
+                role="user"/>
+            <page
+                id="manager_rankings"
+                template="manager_rankings"
+                navitem="true"
+                model="ManagerRankingsModel"
+                navweight="7"
+                role="user"/>
+            <page
+                id="financial_economy_stats"
+                template="financial_economy_stats"
+                navitem="true"
+                model="FinancialEconomyStatsModel"
+                navweight="8"
+                role="user"
+                adminOnly="true"/>
         </page>
-        
     </pages>
-	
-	<blocks>
-		
+    
+    <blocks>
         <block
             id="club_gates"
             template="gates_clubs"
@@ -124,7 +155,6 @@
             includepages="none"
             area="custom"
             role="user" />
-	
-	</blocks>
+    </blocks>
      
 </module>

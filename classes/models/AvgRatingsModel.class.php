@@ -48,19 +48,20 @@ class AvgRatingsModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $avgRatings = null;
 	    $leagueId = (int) $this->_websoccer->getRequestParameter("id");
-	    
-	    $avgRatings = DestatisDataService::getAvgPlayerRatingsByLeagueId($this->_websoccer, $this->_db, $leagueId=1);
-	    
-	    if(!isset($_SESSION['avg_ratings'])) {
-	        $_SESSION['avg_ratings'] = $avgRatings;
-	        
-	    } else {
-	        $avgRatings = $_SESSION['avg_ratings'];
+	    if ($leagueId < 1) {
+	        $user = $this->_websoccer->getUser();
+	        if (isset($user->id)) {
+	            $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, (int) $user->id);
+	            if (isset($team['team_league_id'])) {
+	                $leagueId = (int) $team['team_league_id'];
+	            }
+	        }
 	    }
 	    
-	    return array("avg_ratings" => $avgRatings, "leagues" => LeagueDataService::getLeaguesSortedByCountry($this->_websoccer, $this->_db));
+	    $avgRatings = DestatisDataService::getAvgPlayerRatingsByLeagueId($this->_websoccer, $this->_db, $leagueId);
+	    
+	    return array("avg_ratings" => $avgRatings, "league_id" => $leagueId, "leagues" => LeagueDataService::getLeaguesSortedByCountry($this->_websoccer, $this->_db));
 	}
 	
 }

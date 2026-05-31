@@ -29,5 +29,6 @@
 	<message id="activitylog_clear-player-risk">%s hat einen Spieler riskant freigegeben.</message>
 	
 	<message id="activitylog_sign-stadium-naming-contract">%s hat einen Vertrag über die Stadionnamensrechte abgeschlossen.</message>
+	<message id="activitylog_rename-stadium">%s hat sein Stadion umbenannt.</message>
 	
 </messages>

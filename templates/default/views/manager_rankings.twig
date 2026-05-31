@@ -1,0 +1,40 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("manager_rankings_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if managers|length == 0 %}
+    {{ i18n.getMessage("no_items") }}
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("highscore_teams_rank") }}</th>
+                <th>{{ i18n.getMessage("highscore_teams_manager") }}</th>
+                <th>{{ i18n.getMessage("entity_club") }}</th>
+                <th>{{ i18n.getMessage("highscore_teams_score") }}</th>
+                <th>{{ i18n.getMessage("manager_rankings_fanpopularity") }}</th>
+                <th>{{ i18n.getMessage("manager_rankings_missions") }}</th>
+                <th>{{ i18n.getMessage("manager_rankings_club_changes") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for manager in managers %}
+            <tr>
+                <td><strong>{{ loop.index }}</strong></td>
+                <td><a href="{{ env.getInternalUrl("user", "id=" ~ manager.user_id) }}">{{ manager.manager_name }}</a></td>
+                <td>{% if manager.club_id > 0 %}<a href="{{ env.getInternalUrl("team", "id=" ~ manager.club_id) }}">{{ manager.club_name }}</a>{% else %}-{% endif %}</td>
+                <td>{{ manager.highscore|number_format(0, ',', ' ') }}</td>
+                <td>{{ manager.fanbeliebtheit|number_format(0, ',', ' ') }}%</td>
+                <td>{{ manager.completed_missions|number_format(0, ',', ' ') }}</td>
+                <td>{{ manager.club_changes|number_format(0, ',', ' ') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

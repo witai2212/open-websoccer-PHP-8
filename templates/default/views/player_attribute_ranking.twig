@@ -1,0 +1,49 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("player_attribute_ranking_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<div class="well">
+    <form method="get" class="form-inline" style="margin: 0">
+        <input type="hidden" name="page" value="player_attribute_ranking" />
+        <label for="attr">{{ i18n.getMessage("player_attribute_ranking_filter") }}</label>
+        <select name="attr" id="attr">
+            {% for key,messageKey in attribute_options %}
+                <option value="{{ key }}"{% if key == attribute %} selected="selected"{% endif %}>{{ i18n.getMessage(messageKey) }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn">{{ i18n.getMessage("button_display") }}</button>
+    </form>
+</div>
+
+{% if players|length == 0 %}
+    {{ i18n.getMessage("no_items") }}
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("highscore_teams_rank") }}</th>
+                <th>{{ i18n.getMessage("avg_ratings_player_name") }}</th>
+                <th>{{ i18n.getMessage("bestplayers_verein") }}</th>
+                <th>{{ i18n.getMessage("bestplayers_position_main") }}</th>
+                <th>{{ i18n.getMessage(attribute_options[attribute]) }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for player in players %}
+            <tr>
+                <td><strong>{{ loop.index }}</strong></td>
+                <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.player_id) }}">{{ player.vorname }} {% if player.kunstname|default('')|length > 0 %}{{ player.kunstname }} {% endif %}{{ player.nachname }}</a></td>
+                <td>{% if player.club_id > 0 %}<a href="{{ env.getInternalUrl("team", "id=" ~ player.club_id) }}">{{ player.club_name }}</a>{% else %}-{% endif %}</td>
+                <td>{{ player.position_main }}</td>
+                <td><strong>{{ player.attribute_value|number_format(2, ',', ' ') }}</strong></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

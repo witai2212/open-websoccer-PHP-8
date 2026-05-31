@@ -8,6 +8,18 @@
 
 {% block page_content %}
 
+<div class="well">
+    <form method="get" class="form-inline" style="margin: 0">
+        <input type="hidden" name="page" value="avg_gates" />
+        <label for="id">{{ i18n.getMessage("entity_league") }}</label>
+        <select name="id" id="id">
+            {% for league in leagues %}
+                <option value="{{ league.league_id }}"{% if league.league_id == league_id %} selected="selected"{% endif %}>{{ league.league_country }} - {{ league.league_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn">{{ i18n.getMessage("button_display") }}</button>
+    </form>
+</div>
 
 <ul class="nav nav-tabs" id="offersTab">
   <li class="active"><a href="#avarages" data-toggle="tab">{{ i18n.getMessage("avg_gates_title") }}</a></li>
@@ -105,7 +117,7 @@
 						{% endif %}
 						
 						<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}"/>
-								{% endif %}&nbsp;{{ visitor.league_country }}
+								{% endif %}&nbsp;<a href="{{ env.getInternalUrl("league", "id=" ~ visitor.league_id) }}">{{ visitor.league_name }}</a>
 							</td>
 						<td>{{ visitor.visitors|number_format(0, ',', ' ') }}</td>
 						<td>{{ visitor.avg_visitors|number_format(0, ',', ' ') }}</td>

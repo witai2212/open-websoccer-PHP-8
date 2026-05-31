@@ -58,6 +58,7 @@ class FinancesModel implements IModel {
 		}
 		
 		$stockmarketCriteria = StockMarketDataService::clubStockmarketCriteria($this->_websoccer, $this->_db, $teamId);
+		$stockmarketInfo = StockMarketDataService::getClubStockmarketListingInfo($this->_websoccer, $this->_db, $teamId);
 		$balance = BankAccountDataService::getAccountBalance($this->_websoccer, $this->_db, $teamId);
 		
 		$total_revenues = BankAccountDataService::getRevenuesBalance($this->_websoccer, $this->_db, $teamId);
@@ -79,8 +80,11 @@ class FinancesModel implements IModel {
 		
 		return array(
 		    "budget" => $team["team_budget"],
+		    "team_id" => $teamId,
 		    "statements" => $statements,
 		    "stockmarketCriteria" => $stockmarketCriteria,
+		    "stockmarket_info" => $stockmarketInfo,
+		    "club_value" => $stockmarketInfo["club_value"],
 		    "balance" => $balance,
 		    "total_revenues" => $total_revenues,
 		    "total_expenses" => $total_expenses,

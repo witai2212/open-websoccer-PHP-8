@@ -60,6 +60,7 @@ class UnmarkLendableController implements IActionController {
 		
 		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $playerId);
 		LoanDataService::closeOffer($this->_websoccer, $this->_db, $playerId, 'closed');
+		LoanRequestDataService::expireOpenRequestsForPlayer($this->_websoccer, $this->_db, $playerId);
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

@@ -21,7 +21,7 @@
 			{% endif %}
 			
 			<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}"/>
-					{% endif %}&nbsp;{{ visitor.league_country }}
+					{% endif %}&nbsp;<a href="{{ env.getInternalUrl("league", "id=" ~ visitor.league_id) }}">{{ visitor.league_name }}</a>
 				</td>
 			<td>{{ visitor.visitors|number_format(0, ',', ' ') }}</td>
 						<td>{{ visitor.avg_visitors|number_format(0, ',', ' ') }}</td>

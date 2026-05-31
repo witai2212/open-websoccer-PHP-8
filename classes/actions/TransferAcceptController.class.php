@@ -100,6 +100,9 @@ class TransferAcceptController implements IActionController {
 		
 		// move player to new team with offer contractual values
 		$columns["transfermarkt"] = 0;
+		$columns["transfer_start"] = 0;
+		$columns["transfer_ende"] = 0;
+		$columns["last_transfer"] = $this->_websoccer->getNowAsTimestamp();
 		$columns["vertrag_gehalt"] = $offer['vertrag_gehalt'];
 		$columns["vertrag_spiele"] = $offer['vertrag_spiele'];
 		$columns["vertrag_torpraemie"] = $offer['vertrag_torpraemie'];
@@ -113,11 +116,17 @@ class TransferAcceptController implements IActionController {
 		
 		//save in _transfer table
 		//id spieler_id seller_user_id seller_club_id buyer_user_id buyer_club_id datum bid_id directtransfer_amount directtransfer_player1 directtransfer_player2
-		$trStr = "INSERT INTO " . $this->_websoccer->getConfig("db_prefix") . "_transfer (spieler_id, seller_club_id, buyer_club_id, datum, bid_id, directtransfer_amount)
-					VALUES ('".$offer['spieler_id']."','".$oldTeam['team_id']."', 
-							'".$offer['verein_id']."', '".$this->_websoccer->getNowAsTimestamp()."', '".$offer['id']."',
-							'".$offer['abloese']."')";
-		$this->_db->executeQuery($trStr);
+		$transferColumns = array(
+			"spieler_id" => (int) $offer['spieler_id'],
+			"seller_user_id" => !empty($oldTeam['team_user_id']) ? (int) $oldTeam['team_user_id'] : 0,
+			"seller_club_id" => (int) $oldTeam['team_id'],
+			"buyer_user_id" => !empty($offer['user_id']) ? (int) $offer['user_id'] : 0,
+			"buyer_club_id" => (int) $offer['verein_id'],
+			"datum" => $this->_websoccer->getNowAsTimestamp(),
+			"bid_id" => (int) $offer['id'],
+			"directtransfer_amount" => (int) $offer['abloese']
+		);
+		$this->_db->queryInsert($transferColumns, $this->_websoccer->getConfig("db_prefix") . "_transfer");
 		$transferId = (int) $this->_db->getLastInsertedId();
 
 		if (class_exists('BadgeAwardService') && !empty($oldTeam['team_user_id'])) {

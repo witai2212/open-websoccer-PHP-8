@@ -139,6 +139,9 @@
 			<param id="qty" type="text" min="1" max="100000000" required="true" />
 			<param id="max_qty" type="text" min="1" max="100000000" required="true" />
 		</action>
+		<action id="fire_stockcontrolled_manager" controller="FireStockControlledManagerController" role="user">
+			<param id="stock_id" type="number" min="1" max="100000000" required="true" />
+		</action>
 		
         <action id="take-bank-loan" controller="TakeBankLoanController" role="user">
             <param id="offer_key" type="text" min="1" max="16" required="true" />
@@ -152,6 +155,8 @@
 
     <plugins>
         <eventlistener event="MatchCompletedEvent" class="BankLoansPlugin" method="handleMatchCompleted" />
+        <eventlistener event="MatchCompletedEvent" class="StockMarketControlPlugin" method="handleMatchCompleted" />
+        <eventlistener event="SeasonOfTeamCompletedEvent" class="StockMarketControlPlugin" method="handleSeasonCompleted" />
     </plugins>
 
 </module>

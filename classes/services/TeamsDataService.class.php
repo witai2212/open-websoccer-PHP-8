@@ -1098,5 +1098,21 @@ class TeamsDataService {
 	    
 	    return $teams;
 	}
+	
+	
+	/**
+	 * set contract duration = 50 when user changes club
+	 * 
+ 	*/
+ 	public static function extendContractForNewManager(WebSoccer $websoccer, DbConnection $db, $teamId) {
+ 	    
+	    $teamId = (int) $teamId;
+	    
+	    $whereLeague = ($leagueId > 0) ? " AND liga_id = " . $leagueId : "";
+	    $sqlStr = "UPDATE " . $websoccer->getConfig("db_prefix") . "_spieler SET vertrag_spiele='50' 
+	                WHERE verein = '" . $teamId . "'";
+	    $db->executeQuery($sqlStr);
+ 	    
+ 	}
 }
 ?>

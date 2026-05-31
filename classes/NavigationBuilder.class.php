@@ -92,6 +92,11 @@ class NavigationBuilder {
 		if (isset($pageConfig['navitemOnlyForConfigEnabled']) && !$website->getConfig($pageConfig['navitemOnlyForConfigEnabled'])) {
 			return;
 		}
+
+		// admin-only frontend page: hide it from normal users.
+		if (isset($pageConfig['adminOnly']) && $pageConfig['adminOnly'] == 'true' && !$website->getUser()->isAdmin()) {
+			return;
+		}
 		
 		$itemWeight = (isset($pageConfig['navweight']) && strlen($pageConfig['navweight'])) ? $pageConfig['navweight'] : 0;
 			

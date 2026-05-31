@@ -54,6 +54,9 @@
       <setting id="offline_times" category="offlinemode" type="tags" default="" />
       <setting id="finnhub_api" category="stockmarket" type="text" default="ABCDEFGHIJK" />
       <setting id="default_starting_value" category="stockmarket" type="number" default="50" />
+      <setting id="min_stadium_size" category="stockmarket" type="number" default="25000" />
+      <setting id="min_team_value" category="stockmarket" type="number" default="25000000" />
+      <setting id="min_team_titles_won" category="stockmarket" type="number" default="10" />
       <setting id="fix_term_deposit_interest" category="general" type="number" default="0.375" />
   </settings>
 </module>

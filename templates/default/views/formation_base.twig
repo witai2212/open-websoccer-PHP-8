@@ -392,8 +392,9 @@
 										{{ i18n.getMessage("player_details_statistic_matches") }}: {{ player.st_matches }}
 										| {{ i18n.getMessage("player_details_statistic_goals") }}: {{ player.st_goals }}
 										| {{ i18n.getMessage("player_details_statistic_yellow") }}: {{ player.st_cards_yellow }}
-										{% if player.marketvalue is defined %}
-										| {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
+										{% if (env.getConfig("hide_strength_attributes") != "1" or youthFormation is defined and youthFormation) and player.strength_technique is defined %}
+											{% set formationPlayerStrength = (player.strength * 0.50) + (player.strength_technique * 0.20) + (player.strength_stamina * 0.10) + (player.strength_freshness * 0.10) + (player.strength_satisfaction * 0.07) + ((player.strength_talent * 20) * 0.03) %}
+											| <span title="{{ i18n.getMessage("playertable_head_strength") }}: {{ player.strength|number_format(1, ',', ' ') }} / {{ i18n.getMessage("playertable_head_strength_technic") }}: {{ player.strength_technique|number_format(1, ',', ' ') }} / {{ i18n.getMessage("playertable_head_strength_stamina") }}: {{ player.strength_stamina|number_format(1, ',', ' ') }} / {{ i18n.getMessage("playertable_head_strength_freshness") }}: {{ player.strength_freshness|number_format(1, ',', ' ') }} / {{ i18n.getMessage("playertable_head_strength_satisfaction") }}: {{ player.strength_satisfaction|number_format(1, ',', ' ') }} / {{ i18n.getMessage("playertable_head_strength_talent") }}: {{ player.strength_talent|number_format(0, ',', ' ') }}">{{ i18n.getMessage("player_details_strength_title") }}: {{ formationPlayerStrength|number_format(1, ',', ' ') }}</span>
 										{% endif %}
 									</small>
 									

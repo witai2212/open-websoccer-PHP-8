@@ -77,6 +77,12 @@ class ViewHandler {
 		if (!in_array($this->_website->getUser()->getRole(), $requiredRoles)) {
 			throw new AccessDeniedException($this->_i18n->getMessage('error_access_denied'));
 		}
+
+		// Optional stricter check for frontend pages which should only be
+		// visible to users whose frontend account is linked to an admin account.
+		if (isset($pageConfig['adminOnly']) && $pageConfig['adminOnly'] == 'true' && !$this->_website->getUser()->isAdmin()) {
+			throw new AccessDeniedException($this->_i18n->getMessage('error_access_denied'));
+		}
 		
 		// check if premium page
 		if (isset($pageConfig['premiumBalanceMin'])) {

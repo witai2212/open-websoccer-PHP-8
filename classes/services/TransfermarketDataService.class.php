@@ -37,12 +37,12 @@ class TransfermarketDataService {
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
 		
-		$columns['U.id'] = 'user_id';
-		$columns['U.nick'] = 'user_name';
+		$columns['COALESCE(U.id, 0)'] = 'user_id';
+		$columns['COALESCE(U.nick, C.name)'] = 'user_name';
 		
 		$fromTable = $websoccer->getConfig('db_prefix') . '_transfer_angebot AS B';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = B.verein_id';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_user AS U ON U.id = B.user_id';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_user AS U ON U.id = B.user_id';
 		
 		$whereCondition = 'B.spieler_id = %d ORDER BY (amount+hand_money+(contract_matches*contract_matches)) DESC';
 		$parameters = array($playerId);
@@ -391,9 +391,9 @@ class TransfermarketDataService {
 
 		// create transfer log
 		$logcolumns['spieler_id'] = $player['player_id'];
-		$logcolumns['seller_user_id'] = $player['team_user_id'];
+		$logcolumns['seller_user_id'] = !empty($player['team_user_id']) ? (int) $player['team_user_id'] : 0;
 		$logcolumns['seller_club_id'] = $player['team_id'];
-		$logcolumns['buyer_user_id'] = $bid['user_id'];
+		$logcolumns['buyer_user_id'] = !empty($bid['user_id']) ? (int) $bid['user_id'] : 0;
 		$logcolumns['buyer_club_id'] = $bid['team_id'];
 		$logcolumns['datum'] = $websoccer->getNowAsTimestamp();
 		$logcolumns['bid_id'] = $bid['bid_id'];
@@ -428,9 +428,11 @@ class TransfermarketDataService {
 			);
 		}
 		
-		// notify user
-		NotificationsDataService::createNotification($websoccer, $db, $bid['user_id'],
-			'transfer_bid_notification_transfered', array('player' => $playerName), 'transfermarket', 'player', 'id=' . $player['player_id']);
+		// notify human buyer, if this was not a computer bid
+		if (!empty($bid['user_id'])) {
+			NotificationsDataService::createNotification($websoccer, $db, $bid['user_id'],
+				'transfer_bid_notification_transfered', array('player' => $playerName), 'transfermarket', 'player', 'id=' . $player['player_id']);
+		}
 		
 		// transfer watchdog
 		self::transferWatchdog($websoccer, $db, $bid['bid_id'], $player['team_id']);
@@ -438,9 +440,11 @@ class TransfermarketDataService {
 		// delete old bids
 		$db->queryDelete($websoccer->getConfig('db_prefix') . '_transfer_angebot', 'spieler_id = %d', $player['player_id']);
 		
-		// award badges
-		self::awardUserForTrades($websoccer, $db, $bid['user_id']);
-		if ($player['team_user_id']) {
+		// award badges only for human users
+		if (!empty($bid['user_id'])) {
+			self::awardUserForTrades($websoccer, $db, $bid['user_id']);
+		}
+		if (!empty($player['team_user_id'])) {
 			self::awardUserForTrades($websoccer, $db, $player['team_user_id']);
 		}
 		
@@ -451,7 +455,12 @@ class TransfermarketDataService {
 	    $offers = array();
 	    $bids = array();
 	    
-	    $sqlStr = "SELECT T.*, P.vorname, P.nachname, P.verein_id, P.position_main, P.position_second, P.marktwert, P.transfer_ende
+	    // Important: do not select P.verein_id without an alias here.
+	    // T.verein_id is the bidding club, while P.verein_id is the owning club.
+	    // Without aliases, mysqli overwrites the associative key "verein_id" with
+	    // the player's current club, so myoffers shows the seller as bidder.
+	    $sqlStr = "SELECT T.*, T.verein_id AS bidder_team_id, P.verein_id AS player_team_id,
+                        P.vorname, P.nachname, P.position_main, P.position_second, P.marktwert, P.transfer_ende
                     FROM ". $websoccer->getConfig("db_prefix") ."_spieler AS P,
                                 ". $websoccer->getConfig("db_prefix") ."_transfer_angebot AS T
                     WHERE P.verein_id='$teamId'
@@ -462,7 +471,7 @@ class TransfermarketDataService {
 	        
 	        $offers[] = $offer;
 	        
-	        $bidderId = $offer['verein_id'];
+	        $bidderId = (int) $offer['bidder_team_id'];
 	        $bidder = TeamsDataService::getTeamById($websoccer, $db, $bidderId);
 	        $offers[$i]['bidder'] = $bidder;
 	        

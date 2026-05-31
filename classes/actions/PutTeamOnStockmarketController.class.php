@@ -55,15 +55,20 @@ class PutTeamOnStockmarketController implements IActionController {
         }
 
         //GET STOCK DATA
-        $club_value = StockMarketDataService::clubValue($this->_websoccer, $this->_db, $teamId);
-        $stock_qty = round($club_value/50,0);
+        $listingInfo = StockMarketDataService::getClubStockmarketListingInfo($this->_websoccer, $this->_db, $teamId);
+        if (!$listingInfo['criteria_met']) {
+            throw new Exception($this->_i18n->getMessage("stockmarket_ipo_not_available_hint"));
+        }
+        $club_value = (int) $listingInfo['club_value'];
+        $ipo_income = (int) $listingInfo['ipo_income'];
+        $stock_qty = (int) $listingInfo['shares'];
+        $initial_price = (string) $listingInfo['initial_price'];
         
         //PUT TEAM ON STOCKMARKET
-        //echo $teamId." - ".$team_abbrev." - ".$team_name." - ".$stock_qty."<br>";
-        StockMarketDataService::putTeamOnStockmarket($this->_websoccer, $this->_db, $teamId, $team_abbrev, $team_name, $stock_qty, '50');
+        StockMarketDataService::putTeamOnStockmarket($this->_websoccer, $this->_db, $teamId, $team_abbrev, $team_name, $stock_qty, $initial_price);
           
         // credit / debit amount
-        BankAccountDataService::creditAmount($this->_websoccer, $this->_db, $teamId, $club_value, "team_on_stockmarket_message", "sender_name");
+        BankAccountDataService::creditAmount($this->_websoccer, $this->_db, $teamId, $ipo_income, "team_on_stockmarket_message", "sender_name");
         
         // success message
         $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,

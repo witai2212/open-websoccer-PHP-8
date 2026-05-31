@@ -1,0 +1,88 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("financial_economy_stats_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<form class="form-inline" method="get" action="{{ env.getConfig("context_root") }}/">
+    <input type="hidden" name="page" value="financial_economy_stats" />
+    <label>{{ i18n.getMessage("financial_economy_stats_filter_season") }}</label>
+    <select name="season_id" class="input-medium">
+        <option value="0">{{ i18n.getMessage("financial_economy_stats_filter_all") }}</option>
+        {% for season in seasons %}
+            <option value="{{ season.id }}"{% if selected_season_id == season.id %} selected="selected"{% endif %}>{{ season.name }} - {{ season.league_name }}</option>
+        {% endfor %}
+    </select>
+    <label>{{ i18n.getMessage("financial_economy_stats_filter_matchday") }}</label>
+    <select name="matchday" class="input-small">
+        <option value="0">{{ i18n.getMessage("financial_economy_stats_filter_all") }}</option>
+        {% for md in matchdays %}
+            <option value="{{ md }}"{% if selected_matchday == md %} selected="selected"{% endif %}>{{ md }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">{{ i18n.getMessage("button_display") }}</button>
+</form>
+
+<h3>{{ i18n.getMessage("financial_economy_stats_humans") }}</h3>
+<table class="table table-bordered table-striped">
+    <tbody>
+        <tr>
+            <th>{{ i18n.getMessage("financial_economy_stats_clubs") }}</th>
+            <td>{{ human_stats.summary.team_count }}</td>
+            <th>{{ i18n.getMessage("financial_economy_stats_bookings") }}</th>
+            <td>{{ human_stats.summary.booking_count }}</td>
+        </tr>
+        <tr>
+            <th>{{ i18n.getMessage("financial_economy_stats_income") }}</th>
+            <td>{{ human_stats.summary.income_total|number_format(0, ',', ' ') }} EUR</td>
+            <th>{{ i18n.getMessage("financial_economy_stats_avg_income") }}</th>
+            <td>{{ human_stats.summary.avg_income_per_club|number_format(0, ',', ' ') }} EUR</td>
+        </tr>
+        <tr>
+            <th>{{ i18n.getMessage("financial_economy_stats_expenses") }}</th>
+            <td>{{ human_stats.summary.expense_total|number_format(0, ',', ' ') }} EUR</td>
+            <th>{{ i18n.getMessage("financial_economy_stats_avg_expenses") }}</th>
+            <td>{{ human_stats.summary.avg_expense_per_club|number_format(0, ',', ' ') }} EUR</td>
+        </tr>
+        <tr>
+            <th>{{ i18n.getMessage("financial_economy_stats_net") }}</th>
+            <td><strong>{{ human_stats.summary.net_total|number_format(0, ',', ' ') }} EUR</strong></td>
+            <th>{{ i18n.getMessage("financial_economy_stats_avg_net") }}</th>
+            <td><strong>{{ human_stats.summary.avg_net_per_club|number_format(0, ',', ' ') }} EUR</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>{{ i18n.getMessage("financial_economy_stats_categories") }}</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{ i18n.getMessage("financial_economy_stats_category") }}</th>
+            <th>{{ i18n.getMessage("financial_economy_stats_income") }}</th>
+            <th>{{ i18n.getMessage("financial_economy_stats_expenses") }}</th>
+            <th>{{ i18n.getMessage("financial_economy_stats_net") }}</th>
+            <th>{{ i18n.getMessage("financial_economy_stats_avg_net") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in human_stats.categories %}
+            <tr>
+                <td>{{ category.category }}</td>
+                <td>{{ category.income_total|number_format(0, ',', ' ') }} EUR</td>
+                <td>{{ category.expense_total|number_format(0, ',', ' ') }} EUR</td>
+                <td>{{ category.net_total|number_format(0, ',', ' ') }} EUR</td>
+                <td>{{ category.avg_net_per_club|number_format(0, ',', ' ') }} EUR</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>{{ i18n.getMessage("financial_economy_stats_all_clubs") }}</h3>
+<p>
+    {{ i18n.getMessage("financial_economy_stats_all_clubs_intro") }}
+    {{ all_stats.summary.avg_net_per_club|number_format(0, ',', ' ') }} EUR
+</p>
+
+{% endblock %}

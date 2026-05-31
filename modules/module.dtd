@@ -77,6 +77,7 @@
 <!ATTLIST page navweight CDATA #IMPLIED>
 <!ATTLIST page navitem (true|false) "false">
 <!ATTLIST page navitemOnlyForConfigEnabled CDATA #IMPLIED>
+<!ATTLIST page adminOnly (true|false) "false">
 <!ATTLIST page premiumBalanceMin CDATA #IMPLIED>
 
 <!ELEMENT script EMPTY>

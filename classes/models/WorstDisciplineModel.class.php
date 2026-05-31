@@ -48,12 +48,20 @@ class WorstDisciplineModel implements IModel {
 	 */
 	public function getTemplateParameters() {
 	    
-	    $wDisciplines = null;
 	    $leagueId = (int) $this->_websoccer->getRequestParameter("id");
+	    if ($leagueId < 1) {
+	        $user = $this->_websoccer->getUser();
+	        if (isset($user->id)) {
+	            $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, (int) $user->id);
+	            if (isset($team['team_league_id'])) {
+	                $leagueId = (int) $team['team_league_id'];
+	            }
+	        }
+	    }
 	    
-	    $wDisciplines = DestatisDataService::getWorstDiscipinesByLeagueId($this->_websoccer, $this->_db, $leagueId=1);
+	    $wDisciplines = DestatisDataService::getWorstDiscipinesByLeagueId($this->_websoccer, $this->_db, $leagueId);
 	    
-	    return array("wDisciplines" => $wDisciplines);
+	    return array("wDisciplines" => $wDisciplines, "league_id" => $leagueId, "leagues" => LeagueDataService::getLeaguesSortedByCountry($this->_websoccer, $this->_db));
 	}
 	
 }

@@ -19,17 +19,7 @@
   <li><a href="#finance_development" data-toggle="tab">{{ i18n.getMessage("finance_cash_development") }}</a></li>
 </ul>
 
-<!-- ---------------------------------------------------------------
-{% if stockmarketCriteria<=0  %}
-	<p>
-		<i class="icon-info-sign"></i> {{ i18n.getMessage("can_put_club-on_stockmarket")}}&nbsp;{{ club_value|number_format(0, ',', ' ') }}
-	</p>
-	<p>
-		<a class="btn btn-mini" href="?page=stockmarket&id={{ team_data.team_id }}&action=put_team_on_stockmarket"><i class="icon-thumbs-up"></i>&nbsp;</i> {{ i18n.getMessage("put_team_on_stockmarket") }}</a>
-	</p>
-	<br>
-{% endif %}
---------------------------------------------------------------- -->
+
 
 <div class="tab-content">
 	<h3>{{ i18n.getMessage("entity_club_finanz_budget") }}: {{ budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</h3>
@@ -73,6 +63,77 @@
 				{{ i18n.getMessage("finance_transfer_penalties_hint") }}
 			</p>
 		</div>
+
+
+		{% if stockmarket_info is defined %}
+			<div class="well">
+				<h4><i class="icon-signal"></i> {{ i18n.getMessage("stockmarket_ipo_title") }}</h4>
+				{% if stockmarket_info.is_listed %}
+					<p class="text-success">
+						<i class="icon-ok"></i> {{ i18n.getMessage("stockmarket_ipo_already_listed") }}
+					</p>
+					<p>
+						<a class="btn btn-mini" href="?page=stockmarket"><i class="icon-signal"></i> {{ i18n.getMessage("stockmarket_navlabel") }}</a>
+					</p>
+				{% else %}
+					<div class="row-fluid">
+						<div class="span3">
+							<strong>{{ i18n.getMessage("stockmarket_ipo_club_value") }}</strong><br>
+							{{ stockmarket_info.club_value|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+						</div>
+						<div class="span3">
+							<strong>{{ i18n.getMessage("stockmarket_ipo_income") }}</strong><br>
+							{{ stockmarket_info.ipo_income|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+						</div>
+						<div class="span3">
+							<strong>{{ i18n.getMessage("stockmarket_ipo_initial_price") }}</strong><br>
+							{{ stockmarket_info.initial_price|number_format(2, ',', ' ') }} {{ env.getConfig("game_currency") }}
+						</div>
+						<div class="span3">
+							<strong>{{ i18n.getMessage("stockmarket_ipo_shares") }}</strong><br>
+							{{ stockmarket_info.shares|number_format(0, ',', ' ') }}
+						</div>
+					</div>
+
+					<table class="table table-condensed" style="margin-top: 10px;">
+						<thead>
+							<tr>
+								<th>{{ i18n.getMessage("stockmarket_ipo_requirement") }}</th>
+								<th>{{ i18n.getMessage("stockmarket_ipo_current") }}</th>
+								<th>{{ i18n.getMessage("stockmarket_ipo_required") }}</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for requirement in stockmarket_info.requirements %}
+							<tr>
+								<td>{{ i18n.getMessage(requirement.label_key) }}</td>
+								<td>{{ requirement.actual|number_format(0, ',', ' ') }}</td>
+								<td>{{ requirement.required|number_format(0, ',', ' ') }}</td>
+								<td>
+									{% if requirement.met %}
+										<span class="label label-success">{{ i18n.getMessage("stockmarket_ipo_req_met") }}</span>
+									{% else %}
+										<span class="label label-important">{{ i18n.getMessage("stockmarket_ipo_req_missing") }}</span>
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+
+					{% if stockmarket_info.criteria_met %}
+						<p>
+							<a class="btn btn-primary" href="?page=stockmarket&id={{ team_id }}&action=put_team_on_stockmarket">
+								<i class="icon-thumbs-up icon-white"></i> {{ i18n.getMessage("put_team_on_stockmarket") }}
+							</a>
+						</p>
+					{% else %}
+						<p class="muted" style="margin-bottom: 0;">{{ i18n.getMessage("stockmarket_ipo_not_available_hint") }}</p>
+					{% endif %}
+				{% endif %}
+			</div>
+		{% endif %}
 
 		{% if grouped_costs|length>0 %}
 			<table class="table table-striped">

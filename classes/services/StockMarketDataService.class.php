@@ -110,7 +110,7 @@ class StockMarketDataService {
     /**
      * getting stockdata from _stockmarket table
      */
-    public static function getStockMarketData(WebSoccer $websoccer, DbConnection $db) {
+    public static function getStockMarketData(WebSoccer $websoccer, DbConnection $db, $teamId = 0) {
         
         $indexes = array();
         $i=0;
@@ -121,12 +121,16 @@ class StockMarketDataService {
         {
             $usr_stockStr = "SELECT qty
                     FROM ". $websoccer->getConfig("db_prefix") ."_user_stock 
-                    WHERE stock_id=".$stockdata['id']." AND user_id='1' LIMIT 1";
+                    WHERE stock_id=".$stockdata['id']." AND user_id='".(int) $teamId."' LIMIT 1";
             $result2 = $db->executeQuery($usr_stockStr);
             $userstock = $result2->fetch_array();
             
             $indexes[$i] = $stockdata;
-            $indexes[$i]['user_qty'] = $userstock['qty'];
+            $indexes[$i]['user_qty'] = isset($userstock['qty']) ? (int) $userstock['qty'] : 0;
+            $indexes[$i]['total_qty'] = self::totalQtyByStockId($websoccer, $db, $stockdata['id']);
+            $indexes[$i]['owned_percent'] = self::getOwnershipPercent($websoccer, $db, $stockdata['id'], $teamId);
+            $indexes[$i]['is_majority_owner'] = ($indexes[$i]['owned_percent'] >= 51);
+            $indexes[$i]['can_fire_manager'] = self::canFireManagerByMajorityOwnership($websoccer, $db, $stockdata['id'], $teamId);
             $i++; 
         }
         $result->free();
@@ -213,20 +217,16 @@ class StockMarketDataService {
      * GET TOTAL AVAILABLE ON MARKET BY stock_id
      */
     static function totalQtyByStockId(WebSoccer $websoccer, DbConnection $db, $stockId) {
-        //SELECT sm.quantity+SUM(us.qty) AS total FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm, cm23_user_stock AS us WHERE us.stock_id=sm.id AND sm.id='$stockId';
-        $indexes = array();
-        
-        $sqlStr = "SELECT sm.quantity+SUM(us.qty) AS total
-                    FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm,
-                        ". $websoccer->getConfig("db_prefix") ."_user_stock AS us
-                    WHERE us.stock_id=sm.id AND sm.id='$stockId'";
+        $sqlStr = "SELECT (sm.quantity + COALESCE(SUM(us.qty), 0)) AS total
+                    FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm
+                    LEFT JOIN ". $websoccer->getConfig("db_prefix") ."_user_stock AS us ON us.stock_id = sm.id
+                    WHERE sm.id='".(int) $stockId."'
+                    GROUP BY sm.id, sm.quantity";
         $result = $db->executeQuery($sqlStr);
         $qty = $result->fetch_array();
         $result->free();
         
-        $qty = $qty['total'];
-        
-        return $qty;
+        return ($qty && isset($qty['total'])) ? (int) $qty['total'] : 0;
     }
 
     /**
@@ -265,9 +265,17 @@ class StockMarketDataService {
         
         $price = $price['v1'];
         
-        $max = round($cash/$price,0);
+        $price = self::normalizePrice($price);
+        if ($price <= 0) {
+            return 0;
+        }
+        $max = (int) floor($cash/$price);
+        $majorityLimitedMax = self::getMaxBuyQtyRespectingMajorityLimit($websoccer, $db, $index, $vereinId);
+        if ($majorityLimitedMax >= 0) {
+            $max = min($max, $majorityLimitedMax);
+        }
         
-        return $max;
+        return max(0, (int) $max);
         
     }
     
@@ -275,41 +283,48 @@ class StockMarketDataService {
      * buy stock
      */
     public static function buyStock(WebSoccer $websoccer, DbConnection $db, $index, $qty, $teamId) {
+        $index = (int) $index;
+        $qty = max(0, (int) $qty);
+        $teamId = (int) $teamId;
+        if ($index < 1 || $qty < 1 || $teamId < 1) {
+            return false;
+        }
+
+        $maxQty = self::getUsersMaxByIndex($websoccer, $db, $index, $teamId);
+        $availableQty = self::getAvailableQuantity($websoccer, $db, $index);
+        $qty = min($qty, $maxQty, $availableQty);
+        if ($qty < 1) {
+            return false;
+        }
         
         //get index price
         $indexPriceStr = "SELECT v1 FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket
                     WHERE id='".$index."'";
-					
-		//echo $indexPriceStr ."<br>";
         $indexPrice = $db->executeQuery($indexPriceStr);
         $price = $indexPrice->fetch_array();
-		//print_r($price);
-		//echo"<br>";
-        $price = $price['v1'];
-		$v1 = $price;
+        $price = self::normalizePrice($price['v1']);
+        $v1 = $price;
         
         //index price
-        $price = $price*$qty;
+        $totalPrice = $price*$qty;
         
-        //buy stock transactions			
-		$portfolioInsertStr = "INSERT ". $websoccer->getConfig("db_prefix") ."_user_stock
-								(user_id, stock_id, qty, price) VALUES ('$teamId','$index','$qty','$v1')";
-		//echo $portfolioInsertStr ."<br>";
-		$db->executeQuery($portfolioInsertStr);
-		
-		
+        //buy stock transactions
+        $portfolioInsertStr = "INSERT ". $websoccer->getConfig("db_prefix") ."_user_stock
+                                (user_id, stock_id, qty, price) VALUES ('$teamId','$index','$qty','$v1')";
+        $db->executeQuery($portfolioInsertStr);
+        
         // credit / debit amount
-        BankAccountDataService::debitAmount($websoccer, $db, $teamId, $price, "buy_stock_message", "sender_name");
+        BankAccountDataService::debitAmount($websoccer, $db, $teamId, $totalPrice, "buy_stock_message", "sender_name");
         
         //deduct from available stock on from stockmarket table
         $stockmarketUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket SET quantity=quantity-$qty WHERE id='$index'";
-        
-        //echo $portfolioUpdateStr ."<br>";
         $db->executeQuery($stockmarketUpdateStr);
+
+        self::applyMajorityBoardControl($websoccer, $db, $index);
         
-        return $portfolioUpdateStr;
+        return true;
     }
-    
+
     /**
      * sell stock
      */
@@ -327,7 +342,7 @@ class StockMarketDataService {
                             WHERE id='".$index."'";
         $indexPrice = $db->executeQuery($indexPriceStr);
         $price = $indexPrice->fetch_array();
-        $price = $price['v1'];
+        $price = self::normalizePrice($price['v1']);
         
         //index money - 5%
         $price = $price*$qty*0.95;
@@ -343,9 +358,176 @@ class StockMarketDataService {
         
         $db->executeQuery($stockmarketUpdateStr);
         $db->executeQuery($portfolioUpdateStr);
+        self::applyMajorityBoardControl($websoccer, $db, $index);
         
     }
     
+    private static function normalizePrice($price) {
+        return (float) str_replace(',', '.', (string) $price);
+    }
+
+    public static function getAvailableQuantity(WebSoccer $websoccer, DbConnection $db, $stockId) {
+        $sqlStr = "SELECT quantity FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket WHERE id='".(int) $stockId."'";
+        $result = $db->executeQuery($sqlStr);
+        $row = $result->fetch_array();
+        $result->free();
+        return ($row && isset($row['quantity'])) ? max(0, (int) $row['quantity']) : 0;
+    }
+
+    public static function getOwnershipPercent(WebSoccer $websoccer, DbConnection $db, $stockId, $teamId) {
+        $stockId = (int) $stockId;
+        $teamId = (int) $teamId;
+        if ($stockId < 1 || $teamId < 1) {
+            return 0;
+        }
+
+        $owned = (int) self::getQuantityFromUsersByIndex($websoccer, $db, $stockId, $teamId);
+        $total = self::totalQtyByStockId($websoccer, $db, $stockId);
+        if ($total < 1) {
+            return 0;
+        }
+        return round(($owned / $total) * 100, 2);
+    }
+
+    public static function getMajorityStockOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId, $excludeStockId = 0) {
+        $sqlStr = "SELECT sm.id, sm.team_id, sm.name, SUM(us.qty) AS owned_qty,
+                          (sm.quantity + COALESCE(total_owned.total_qty, 0)) AS total_qty
+                   FROM ". $websoccer->getConfig("db_prefix") ."_user_stock AS us
+                   INNER JOIN ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm ON sm.id = us.stock_id
+                   LEFT JOIN (
+                        SELECT stock_id, SUM(qty) AS total_qty
+                        FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
+                        GROUP BY stock_id
+                   ) AS total_owned ON total_owned.stock_id = sm.id
+                   WHERE us.user_id = '".(int) $teamId."'
+                     AND sm.team_id IS NOT NULL
+                     AND sm.team_id > 0
+                     AND sm.id != '".(int) $excludeStockId."'
+                   GROUP BY sm.id, sm.team_id, sm.name, sm.quantity, total_owned.total_qty
+                   HAVING total_qty > 0 AND (owned_qty / total_qty) >= 0.51
+                   LIMIT 1";
+        $result = $db->executeQuery($sqlStr);
+        $row = $result->fetch_array();
+        $result->free();
+        return ($row && isset($row['id'])) ? $row : false;
+    }
+
+    public static function getMaxBuyQtyRespectingMajorityLimit(WebSoccer $websoccer, DbConnection $db, $stockId, $teamId) {
+        $stockId = (int) $stockId;
+        $teamId = (int) $teamId;
+        if ($stockId < 1 || $teamId < 1) {
+            return 0;
+        }
+
+        $stock = self::getStockMarketDataById($websoccer, $db, $stockId);
+        if (!$stock || !isset($stock['id']) || empty($stock['team_id'])) {
+            return -1;
+        }
+
+        $alreadyHasOtherMajority = self::getMajorityStockOfTeam($websoccer, $db, $teamId, $stockId);
+        if (!$alreadyHasOtherMajority) {
+            return -1;
+        }
+
+        $owned = (int) self::getQuantityFromUsersByIndex($websoccer, $db, $stockId, $teamId);
+        $total = self::totalQtyByStockId($websoccer, $db, $stockId);
+        if ($total < 1) {
+            return 0;
+        }
+
+        // Keep this purchase below 51%, because this manager already controls another listed club.
+        $maxAllowedOwnedQty = (int) floor(($total * 51 - 1) / 100);
+        return max(0, $maxAllowedOwnedQty - $owned);
+    }
+
+    public static function canFireManagerByMajorityOwnership(WebSoccer $websoccer, DbConnection $db, $stockId, $ownerTeamId) {
+        $stock = self::getStockMarketDataById($websoccer, $db, $stockId);
+        if (!$stock || empty($stock['team_id'])) {
+            return false;
+        }
+
+        $targetTeamId = (int) $stock['team_id'];
+        $ownerTeamId = (int) $ownerTeamId;
+        if ($targetTeamId < 1 || $ownerTeamId < 1 || $targetTeamId === $ownerTeamId) {
+            return false;
+        }
+
+        if (self::getOwnershipPercent($websoccer, $db, $stockId, $ownerTeamId) < 51) {
+            return false;
+        }
+
+        $sqlStr = "SELECT user_id FROM ". $websoccer->getConfig("db_prefix") ."_verein WHERE id='".$targetTeamId."' LIMIT 1";
+        $result = $db->executeQuery($sqlStr);
+        $team = $result->fetch_array();
+        $result->free();
+
+        return ($team && isset($team['user_id']) && (int) $team['user_id'] > 0);
+    }
+
+    public static function applyMajorityBoardControl(WebSoccer $websoccer, DbConnection $db, $stockId = 0) {
+        $where = "sm.team_id IS NOT NULL AND sm.team_id > 0";
+        if ((int) $stockId > 0) {
+            $where .= " AND sm.id = '".(int) $stockId."'";
+        }
+
+        $sqlStr = "SELECT sm.id, sm.team_id, us.user_id AS owner_team_id, SUM(us.qty) AS owned_qty,
+                          (sm.quantity + COALESCE(total_owned.total_qty, 0)) AS total_qty
+                   FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm
+                   INNER JOIN ". $websoccer->getConfig("db_prefix") ."_user_stock AS us ON us.stock_id = sm.id
+                   LEFT JOIN (
+                        SELECT stock_id, SUM(qty) AS total_qty
+                        FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
+                        GROUP BY stock_id
+                   ) AS total_owned ON total_owned.stock_id = sm.id
+                   WHERE ".$where."
+                   GROUP BY sm.id, sm.team_id, us.user_id, sm.quantity, total_owned.total_qty
+                   HAVING total_qty > 0 AND (owned_qty / total_qty) >= 0.51";
+        $result = $db->executeQuery($sqlStr);
+        while ($row = $result->fetch_array()) {
+            if ((int) $row['owner_team_id'] === (int) $row['team_id']) {
+                $db->executeQuery("UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET board_satisfaction = 100 WHERE id='".(int) $row['team_id']."'");
+            }
+        }
+        $result->free();
+    }
+
+    public static function fireManagerByMajorityOwner(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $stockId, $ownerTeamId, $ownerUserId) {
+        $stockId = (int) $stockId;
+        $ownerTeamId = (int) $ownerTeamId;
+        $ownerUserId = (int) $ownerUserId;
+        if (!self::canFireManagerByMajorityOwnership($websoccer, $db, $stockId, $ownerTeamId)) {
+            throw new Exception($i18n->getMessage('stockmarket_control_err_not_allowed'));
+        }
+
+        $stock = self::getStockMarketDataById($websoccer, $db, $stockId);
+        $targetTeamId = (int) $stock['team_id'];
+
+        $sqlStr = "SELECT id, name, user_id FROM ". $websoccer->getConfig("db_prefix") ."_verein WHERE id='".$targetTeamId."' LIMIT 1";
+        $result = $db->executeQuery($sqlStr);
+        $targetTeam = $result->fetch_array();
+        $result->free();
+        if (!$targetTeam || (int) $targetTeam['user_id'] < 1) {
+            throw new Exception($i18n->getMessage('stockmarket_control_err_no_manager'));
+        }
+
+        $oldManagerUserId = (int) $targetTeam['user_id'];
+        $db->executeQuery("UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET user_id = 0, user_id_actual = NULL, interimmanager = '0', board_satisfaction = 50 WHERE id='".$targetTeamId."'");
+
+        $now = $websoccer->getNowAsTimestamp();
+        $db->queryInsert(array(
+            'empfaenger_id' => $oldManagerUserId,
+            'absender_id' => $ownerUserId,
+            'absender_name' => $i18n->getMessage('sender_name'),
+            'datum' => $now,
+            'betreff' => $i18n->getMessage('stockmarket_control_fired_subject'),
+            'nachricht' => $i18n->getMessage('stockmarket_control_fired_message', $targetTeam['name']),
+            'gelesen' => '0',
+            'typ' => 'eingang'
+        ), $websoccer->getConfig('db_prefix') . '_briefe');
+
+        return true;
+    }
+
     /*
      * Check if club is on stockmarket
      */
@@ -364,6 +546,152 @@ class StockMarketDataService {
         
     }
     
+
+    /**
+     * Returns stadium capacity from either the aliased StadiumsDataService result
+     * (places_stands, places_seats, ...) or a raw cm23_stadion row (p_steh, p_sitz, ...).
+     */
+    private static function getStadiumCapacity($stadium) {
+        if (!$stadium || !is_array($stadium)) {
+            return 0;
+        }
+
+        $keys = array(
+            array('places_stands', 'p_steh'),
+            array('places_seats', 'p_sitz'),
+            array('places_stands_grand', 'p_haupt_steh'),
+            array('places_seats_grand', 'p_haupt_sitz'),
+            array('places_vip', 'p_vip')
+        );
+
+        $capacity = 0;
+        foreach ($keys as $pair) {
+            $value = 0;
+            if (isset($stadium[$pair[0]])) {
+                $value = $stadium[$pair[0]];
+            } elseif (isset($stadium[$pair[1]])) {
+                $value = $stadium[$pair[1]];
+            }
+            $capacity += (int) $value;
+        }
+
+        return $capacity;
+    }
+
+
+    private static function normalizeTeamMarketValue($teamValue) {
+
+        if (is_array($teamValue)) {
+            if (isset($teamValue['team_marketvalue'])) {
+                return (int) $teamValue['team_marketvalue'];
+            }
+            if (isset($teamValue[0])) {
+                return (int) $teamValue[0];
+            }
+            return 0;
+        }
+
+        return (int) $teamValue;
+    }
+
+    private static function getTeamMarketValue(WebSoccer $websoccer, DbConnection $db, $teamId) {
+
+        return self::normalizeTeamMarketValue(TeamsDataService::getTeamValue($websoccer, $db, $teamId));
+    }
+
+    private static function getConfiguredStartingValue() {
+
+        global $conf;
+        $startingValue = isset($conf['default_starting_value']) ? (int) $conf['default_starting_value'] : 50;
+
+        if ($startingValue < 1) {
+            $startingValue = 50;
+        }
+
+        return $startingValue;
+    }
+
+    /**
+     * Returns display data for the IPO/listing box on the finances page.
+     * Existing clubStockmarketCriteria() is intentionally kept for backward compatibility:
+     * it returns TRUE if criteria are NOT met and FALSE if the club may be listed.
+     */
+    public static function getClubStockmarketListingInfo(WebSoccer $websoccer, DbConnection $db, $teamId) {
+
+        global $conf;
+        $teamId = (int) $teamId;
+        $clubValue = (int) round(self::clubValue($websoccer, $db, $teamId), 0);
+        $initialPrice = self::getConfiguredStartingValue();
+        $totalShares = ($initialPrice > 0) ? max(1, (int) round($clubValue / $initialPrice, 0)) : 0;
+
+        // Keep the old stockmarket mechanics: quantity is the amount of shares that can be bought.
+        // The IPO cash is intentionally equal to the old full club value unless changed later by balancing.
+        $ipoIncome = $clubValue;
+
+        $minStadiumSize = isset($conf['min_stadium_size']) ? (int) $conf['min_stadium_size'] : 0;
+        $minTeamValue = isset($conf['min_team_value']) ? (int) $conf['min_team_value'] : 0;
+        $minTitlesWon = isset($conf['min_team_titles_won']) ? (int) $conf['min_team_titles_won'] : 0;
+
+        $listedStock = self::checkClubOnStockmarket($websoccer, $db, $teamId);
+
+        $stadium = StadiumsDataService::getStadiumByTeamId($websoccer, $db, $teamId);
+        $stadiumSize = self::getStadiumCapacity($stadium);
+
+        $teamMarketValue = self::getTeamMarketValue($websoccer, $db, $teamId);
+        $titles = TeamsDataService::getNumberTeamTitlesWon($websoccer, $db, $teamId);
+        $titlesWon = is_array($titles) ? count($titles) : (int) $titles;
+
+        $requirements = array(
+            array(
+                'key' => 'not_listed',
+                'label_key' => 'stockmarket_ipo_req_not_listed',
+                'required' => 1,
+                'actual' => $listedStock ? 0 : 1,
+                'met' => !$listedStock
+            ),
+            array(
+                'key' => 'stadium_size',
+                'label_key' => 'stockmarket_ipo_req_stadium_size',
+                'required' => $minStadiumSize,
+                'actual' => $stadiumSize,
+                'met' => ($stadiumSize >= $minStadiumSize)
+            ),
+            array(
+                'key' => 'team_value',
+                'label_key' => 'stockmarket_ipo_req_team_value',
+                'required' => $minTeamValue,
+                'actual' => $teamMarketValue,
+                'met' => ($teamMarketValue >= $minTeamValue)
+            ),
+            array(
+                'key' => 'titles_won',
+                'label_key' => 'stockmarket_ipo_req_titles_won',
+                'required' => $minTitlesWon,
+                'actual' => $titlesWon,
+                'met' => ($titlesWon >= $minTitlesWon)
+            )
+        );
+
+        $criteriaMet = true;
+        foreach ($requirements as $requirement) {
+            if (!$requirement['met']) {
+                $criteriaMet = false;
+                break;
+            }
+        }
+
+        return array(
+            'is_listed' => ($listedStock ? true : false),
+            'stock_id' => ($listedStock && isset($listedStock['id'])) ? (int) $listedStock['id'] : 0,
+            'criteria_met' => $criteriaMet,
+            'requirements' => $requirements,
+            'club_value' => $clubValue,
+            'ipo_income' => $ipoIncome,
+            'initial_price' => $initialPrice,
+            'shares' => $totalShares
+        );
+    }
+
     /*
      * Check club stockmarket criteria
      */
@@ -373,10 +701,10 @@ class StockMarketDataService {
         $criteria_not_met = 0;
         
         //GET GLOBAL SETTINGS
-        $min_stadium_size = $conf["min_stadium_size"];
-        $min_team_value = $conf["min_team_value"];
-        $active_credits = $conf["active_credits"];
-        $min_team_titles_won = $conf["min_team_titles_won"];
+        $min_stadium_size = isset($conf["min_stadium_size"]) ? (int) $conf["min_stadium_size"] : 0;
+        $min_team_value = isset($conf["min_team_value"]) ? (int) $conf["min_team_value"] : 0;
+        $active_credits = isset($conf["active_credits"]) ? $conf["active_credits"] : 0;
+        $min_team_titles_won = isset($conf["min_team_titles_won"]) ? (int) $conf["min_team_titles_won"] : 0;
         
         //CHECK IF ALREADY ON STOCKMARKET
         $onStockmarket = self::checkClubOnStockmarket($websoccer, $db, $teamId);
@@ -389,21 +717,22 @@ class StockMarketDataService {
         
         //GET STADIUM SIZE >=25.000
         $stadium = StadiumsDataService::getStadiumByTeamId($websoccer, $db, $teamId);
-        $stadium_size = $stadium['p_steh']+$stadium['p_sitz']+$stadium['p_haupt_steh']+$stadium['p_haupt_sitz']+$stadium['p_vip'];
+        $stadium_size = self::getStadiumCapacity($stadium);
         
         if($stadium_size<$min_stadium_size) {
             $criteria_not_met++;
         }
         
         //GET TEAM VALUE >= 25.000.000
-        $team_marketvalue = TeamsDataService::getTeamValue($websoccer, $db, $teamId);
+        $team_marketvalue = self::getTeamMarketValue($websoccer, $db, $teamId);
         if($team_marketvalue<$min_team_value) {
             $criteria_not_met++;
         }
         
-        //GET HISTORY 10 Championships, Cups, etc. --> global config
+        //GET HISTORY Championships, Cups, etc. --> admin setting
         $titles = TeamsDataService::getNumberTeamTitlesWon($websoccer, $db, $teamId);
-        if($titles<$min_team_titles_won) {
+        $titles_count = is_array($titles) ? count($titles) : (int) $titles;
+        if($titles_count < $min_team_titles_won) {
             $criteria_not_met++;
         }
         
@@ -433,23 +762,23 @@ class StockMarketDataService {
         $finance_budget = $finance['finanz_budget']*0.1;
         
         //GET TEAM market value
-        $team_marketvalue = TeamsDataService::getTeamValueByTeamId($websoccer, $db, $teamId);
-        $team_marketvalue = $team_marketvalue['team_marketvalue'];
+        $team_marketvalue = self::normalizeTeamMarketValue(TeamsDataService::getTeamValueByTeamId($websoccer, $db, $teamId));
         
         //GET STADIUM SIZE + VALUE
         $stadium = StadiumsDataService::getStadiumByTeamId($websoccer, $db, $teamId);
-        $stadium_size = $stadium['p_steh']+$stadium['p_sitz']+$stadium['p_haupt_steh']+$stadium['p_haupt_sitz']+$stadium['p_vip'];
+        $stadium_size = self::getStadiumCapacity($stadium);
         $stadium_value = $stadium_size*100000;
         
         //GET CLUB TITLES WON
         $titles = TeamsDataService::getNumberTeamTitlesWon($websoccer, $db, $teamId);
-        $titles_value = count($titles)*1000000;
+        $titles_count = is_array($titles) ? count($titles) : (int) $titles;
+        $titles_value = $titles_count * 1000000;
         
         //GET PORTFOLIO VALUE
         $portfolio_value = self::getPortfolioValue($websoccer, $db, $teamId);
         $portfolio_value = $portfolio_value*0.5;
         
-        $total_club_value = $finance_budget+$team_marketvalue+$stadium_value+$titles_value+$portfolio_value;
+        $total_club_value = $finance_budget+$team_marketvalue+($stadium_value*0.1)+$titles_value+$portfolio_value;
         
         return $total_club_value;
         
@@ -495,6 +824,128 @@ class StockMarketDataService {
         
     }
     
+    public static function processSeasonDividends(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $teamId, $seasonId) {
+        $teamId = (int) $teamId;
+        $seasonId = (int) $seasonId;
+        if ($teamId < 1 || $seasonId < 1 || !self::tableExists($websoccer, $db, 'stockmarket_dividend')) {
+            return 0;
+        }
+
+        $stock = self::checkClubOnStockmarket($websoccer, $db, $teamId);
+        if (!$stock || !isset($stock['id'])) {
+            return 0;
+        }
+        $stockId = (int) $stock['id'];
+
+        $existing = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_stockmarket_dividend', 'stock_id = %d AND team_id = %d AND season_id = %d', array($stockId, $teamId, $seasonId), 1);
+        $existingRow = $existing->fetch_array();
+        $existing->free();
+        if ($existingRow) {
+            return 0;
+        }
+
+        $profit = self::getSeasonProfit($websoccer, $db, $teamId, $seasonId);
+        if ($profit <= 0) {
+            return 0;
+        }
+
+        $budgetResult = $db->querySelect('finanz_budget', $websoccer->getConfig('db_prefix') . '_verein', 'id = %d', $teamId, 1);
+        $budgetRow = $budgetResult->fetch_array();
+        $budgetResult->free();
+        $budget = ($budgetRow && isset($budgetRow['finanz_budget'])) ? (int) $budgetRow['finanz_budget'] : 0;
+        if ($budget <= 0) {
+            return 0;
+        }
+
+        $dividendPool = (int) floor($profit * 0.10);
+        $dividendPool = min($dividendPool, (int) floor($budget * 0.20));
+        if ($dividendPool < 1) {
+            return 0;
+        }
+
+        $totalShares = self::totalQtyByStockId($websoccer, $db, $stockId);
+        if ($totalShares < 1) {
+            return 0;
+        }
+
+        $dividendPerShare = $dividendPool / $totalShares;
+        $now = $websoccer->getNowAsTimestamp();
+
+        BankAccountDataService::debitAmount($websoccer, $db, $teamId, $dividendPool, 'stockmarket_dividend_payment', 'sender_name');
+
+        $db->queryInsert(array(
+            'stock_id' => $stockId,
+            'team_id' => $teamId,
+            'season_id' => $seasonId,
+            'dividend_pool' => $dividendPool,
+            'dividend_per_share' => $dividendPerShare,
+            'created_date' => $now
+        ), $websoccer->getConfig('db_prefix') . '_stockmarket_dividend');
+
+        $dividendIdResult = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_stockmarket_dividend', 'stock_id = %d AND team_id = %d AND season_id = %d', array($stockId, $teamId, $seasonId), 1);
+        $dividendRow = $dividendIdResult->fetch_array();
+        $dividendIdResult->free();
+        $dividendId = ($dividendRow && isset($dividendRow['id'])) ? (int) $dividendRow['id'] : 0;
+
+        $holdersSql = "SELECT user_id AS team_id, SUM(qty) AS shares
+                       FROM ". $websoccer->getConfig('db_prefix') ."_user_stock
+                       WHERE stock_id='".$stockId."'
+                       GROUP BY user_id
+                       HAVING shares > 0";
+        $holders = $db->executeQuery($holdersSql);
+        while ($holder = $holders->fetch_array()) {
+            $holderTeamId = (int) $holder['team_id'];
+            $shares = (int) $holder['shares'];
+            $amount = (int) floor($shares * $dividendPerShare);
+            if ($holderTeamId > 0 && $amount > 0) {
+                BankAccountDataService::creditAmount($websoccer, $db, $holderTeamId, $amount, 'stockmarket_dividend_income', 'sender_name');
+                if ($dividendId > 0 && self::tableExists($websoccer, $db, 'stockmarket_dividend_payment')) {
+                    $db->queryInsert(array(
+                        'dividend_id' => $dividendId,
+                        'user_id' => $holderTeamId,
+                        'shares' => $shares,
+                        'amount' => $amount,
+                        'created_date' => $now
+                    ), $websoccer->getConfig('db_prefix') . '_stockmarket_dividend_payment');
+                }
+            }
+        }
+        $holders->free();
+
+        return $dividendPool;
+    }
+
+    private static function getSeasonProfit(WebSoccer $websoccer, DbConnection $db, $teamId, $seasonId) {
+        $sqlStr = "SELECT MIN(datum) AS date_from, MAX(datum) AS date_to
+                   FROM ". $websoccer->getConfig('db_prefix') ."_spiel
+                   WHERE saison_id='".(int) $seasonId."'
+                     AND (home_verein='".(int) $teamId."' OR gast_verein='".(int) $teamId."')";
+        $result = $db->executeQuery($sqlStr);
+        $range = $result->fetch_array();
+        $result->free();
+        if (!$range || empty($range['date_from']) || empty($range['date_to'])) {
+            return 0;
+        }
+
+        $sqlStr = "SELECT COALESCE(SUM(betrag), 0) AS profit
+                   FROM ". $websoccer->getConfig('db_prefix') ."_konto
+                   WHERE verein_id='".(int) $teamId."'
+                     AND datum >= '".(int) $range['date_from']."'
+                     AND datum <= '".(int) $range['date_to']."'";
+        $result = $db->executeQuery($sqlStr);
+        $profit = $result->fetch_array();
+        $result->free();
+        return ($profit && isset($profit['profit'])) ? (int) $profit['profit'] : 0;
+    }
+
+    private static function tableExists(WebSoccer $websoccer, DbConnection $db, $tableNameWithoutPrefix) {
+        $tableName = str_replace('`', '', $websoccer->getConfig('db_prefix') . '_' . $tableNameWithoutPrefix);
+        $result = $db->executeQuery("SHOW TABLES LIKE '".$tableName."'");
+        $row = $result->fetch_array();
+        $result->free();
+        return ($row) ? true : false;
+    }
+
     /**
      * getting user quantity of own team
      */

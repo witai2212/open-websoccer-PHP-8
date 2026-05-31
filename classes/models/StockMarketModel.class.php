@@ -48,7 +48,9 @@ class StockMarketModel implements IModel {
         
         StockMarketDataService::updateStockDataFromAlphavantage($this->_websoccer, $this->_db);
         
-        $indexes = StockMarketDataService::getStockMarketData($this->_websoccer, $this->_db);
+        $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
+        $teamId = isset($team['team_id']) ? (int) $team['team_id'] : 0;
+        $indexes = StockMarketDataService::getStockMarketData($this->_websoccer, $this->_db, $teamId);
         
         return array("indexes" => $indexes);
     }

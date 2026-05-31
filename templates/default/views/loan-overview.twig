@@ -95,6 +95,73 @@
 	<p><em>{{ i18n.getMessage("loans_no_borrowed") }}</em></p>
 {% endif %}
 
+<h3>{{ i18n.getMessage("loans_tab_incoming_requests") }}</h3>
+{% if incoming_loan_requests|length > 0 %}
+<table class="table table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>{{ i18n.getMessage("entity_player") }}</th>
+			<th>{{ i18n.getMessage("entity_player_position") }}</th>
+			<th>{{ i18n.getMessage("loans_borrower") }}</th>
+			<th>{{ i18n.getMessage("entity_player_lending_matches") }}</th>
+			<th>{{ i18n.getMessage("entity_player_lending_fee") }}</th>
+			<th>{{ i18n.getMessage("loans_salary_share") }}</th>
+			<th>{{ i18n.getMessage("loans_buy_option") }}</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for request in incoming_loan_requests %}
+		<tr>
+			<td><a href="{{ env.getInternalUrl("player", "id=" ~ request.id) }}">{{ loanmacros.playerName(request) }}</a></td>
+			<td>{{ request.position }}{% if request.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ request.position_main) }}{% endif %}</td>
+			<td>{{ request.borrower_name }}</td>
+			<td>{{ request.requested_matches }}</td>
+			<td>{{ request.loan_fee_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br><small>{{ i18n.getMessage("loans_total_fee") }}: {{ request.total_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</small></td>
+			<td>{{ request.salary_share_percent }}%</td>
+			<td>{{ i18n.getMessage("loans_option_" ~ request.option_type) }}{% if request.buy_fee > 0 %}<br>{{ request.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
+			<td>
+				<a class="btn btn-small btn-primary" href="{{ env.getInternalActionUrl("accept-loan-request", "id=" ~ request.request_id) }}"><i class="icon-ok"></i> {{ i18n.getMessage("lending_request_accept_button") }}</a>
+				<a class="btn btn-small" href="{{ env.getInternalActionUrl("reject-loan-request", "id=" ~ request.request_id) }}"><i class="icon-remove"></i> {{ i18n.getMessage("lending_request_reject_button") }}</a>
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	<p><em>{{ i18n.getMessage("loans_no_incoming_requests") }}</em></p>
+{% endif %}
+
+<h3>{{ i18n.getMessage("loans_tab_outgoing_requests") }}</h3>
+{% if outgoing_loan_requests|length > 0 %}
+<table class="table table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>{{ i18n.getMessage("entity_player") }}</th>
+			<th>{{ i18n.getMessage("entity_player_position") }}</th>
+			<th>{{ i18n.getMessage("loans_lender") }}</th>
+			<th>{{ i18n.getMessage("entity_player_lending_matches") }}</th>
+			<th>{{ i18n.getMessage("entity_player_lending_fee") }}</th>
+			<th>{{ i18n.getMessage("loans_buy_option") }}</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for request in outgoing_loan_requests %}
+		<tr>
+			<td><a href="{{ env.getInternalUrl("player", "id=" ~ request.id) }}">{{ loanmacros.playerName(request) }}</a></td>
+			<td>{{ request.position }}{% if request.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ request.position_main) }}{% endif %}</td>
+			<td>{{ request.lender_name }}</td>
+			<td>{{ request.requested_matches }}</td>
+			<td>{{ request.loan_fee_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br><small>{{ i18n.getMessage("loans_total_fee") }}: {{ request.total_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</small></td>
+			<td>{{ i18n.getMessage("loans_option_" ~ request.option_type) }}{% if request.buy_fee > 0 %}<br>{{ request.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	<p><em>{{ i18n.getMessage("loans_no_outgoing_requests") }}</em></p>
+{% endif %}
+
 <h3>{{ i18n.getMessage("loans_tab_own_offers") }}</h3>
 {% if loan_offers|length > 0 %}
 <table class="table table-striped table-bordered">
@@ -148,7 +215,7 @@
 			<td>{{ player.lending_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 			<td>{{ player.salary_share_percent }}%</td>
 			<td>{{ i18n.getMessage("loans_option_" ~ player.option_type) }}{% if player.buy_fee > 0 %}<br>{{ player.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
-			<td><a class="btn btn-small btn-primary" href="{{ env.getInternalUrl("borrow-player", "id=" ~ player.id) }}"><i class="icon-signin"></i> {{ i18n.getMessage("lending_player_hire_button") }}</a></td>
+			<td><a class="btn btn-small btn-primary" href="{{ env.getInternalUrl("borrow-player", "id=" ~ player.id) }}"><i class="icon-signin"></i> {% if player.team_user_id > 0 %}{{ i18n.getMessage("lending_player_request_button") }}{% else %}{{ i18n.getMessage("lending_player_hire_button") }}{% endif %}</a></td>
 		</tr>
 	{% endfor %}
 	</tbody>

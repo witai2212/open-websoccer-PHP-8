@@ -1,54 +1,113 @@
-
 {% import "macros/messagebox.twig" as messagebox %}
 
-{% if leagues|length == 0 and cups|length == 0 %}
+{% if career_history|length == 0 and leagues|length == 0 and cups|length == 0 and user_history|length == 0 %}
 	{{ messagebox.box("", i18n.getMessage("history_no_records"), "info") }}
 {% else %}
 
-	{% for leagueName,seasons in leagues %}
-		<h4>{{ leagueName }}</h4>
-		
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>{{ i18n.getMessage("entity_season") }}</th>
-					<th>{{ i18n.getMessage("entity_club") }}</th>
-					<th>{{ i18n.getMessage("leaguetable_head_place") }}</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for season in seasons %}
-				<tr>
-					<td>{{ season.season_name }}</td>
-					<td><a href="{{ env.getInternalUrl("team", "id=" ~ season.team_id) }}">{{ season.team_name }}</a></td>
-					<td>{{ season.season_rank }}</td>
-				</tr>
+	<div class="row-fluid user-history-summary">
+		<div class="span4 user-history-summary-card">
+			<i class="icon-briefcase"></i>
+			<span class="user-history-summary-number">{{ career_history|length }}</span>
+			<span class="user-history-summary-label">{{ i18n.getMessage("user_history_career_moves") }}</span>
+		</div>
+		<div class="span4 user-history-summary-card">
+			<i class="icon-list-alt"></i>
+			<span class="user-history-summary-number">{{ season_count }}</span>
+			<span class="user-history-summary-label">{{ i18n.getMessage("user_history_seasons") }}</span>
+		</div>
+		<div class="span4 user-history-summary-card">
+			<i class="icon-trophy"></i>
+			<span class="user-history-summary-number">{{ cup_count }}</span>
+			<span class="user-history-summary-label">{{ i18n.getMessage("user_history_cups") }}</span>
+		</div>
+	</div>
+
+	{% if career_history|length > 0 %}
+		<div class="user-history-section">
+			<h4><i class="icon-briefcase"></i> {{ i18n.getMessage("user_history_manager_timeline") }}</h4>
+			<div class="user-history-timeline">
+			{% for item in career_history %}
+				<div class="user-history-timeline-item">
+					<div class="user-history-timeline-date">{{ env.getFormattedDate(item.change_date) }}</div>
+					<div class="user-history-timeline-card">
+						<div class="user-history-career-row">
+							<div class="user-history-club-cell muted">
+								{% if item.old_team_id > 0 %}
+									{% if item.old_team_picture|length %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ item.old_team_picture }}" alt="{{ item.old_team_name }}" />{% endif %}
+									<a href="{{ env.getInternalUrl("team", "id=" ~ item.old_team_id) }}">{{ item.old_team_name }}</a>
+									{% if item.old_league_name|length %}<small>{{ item.old_league_name }}</small>{% endif %}
+								{% else %}
+									<span class="user-history-empty-club">{{ i18n.getMessage("user_history_no_previous_club") }}</span>
+								{% endif %}
+							</div>
+							<div class="user-history-arrow"><i class="icon-arrow-right"></i></div>
+							<div class="user-history-club-cell">
+								{% if item.new_team_picture|length %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ item.new_team_picture }}" alt="{{ item.new_team_name }}" />{% endif %}
+								<a href="{{ env.getInternalUrl("team", "id=" ~ item.new_team_id) }}">{{ item.new_team_name }}</a>
+								{% if item.new_league_name|length %}<small>{{ item.new_league_name }}</small>{% endif %}
+							</div>
+						</div>
+						<div class="user-history-meta">
+							<span class="label label-info">{{ i18n.getMessage("managercareer_origin_" ~ item.origin) }}</span>
+							{% if item.new_club_score > 0 %}<span>{{ i18n.getMessage("managercareer_club_score") }}: {{ item.new_club_score }}</span>{% endif %}
+							{% if item.highscore_bonus > 0 %}<span class="text-success">+{{ item.highscore_bonus }} {{ i18n.getMessage("managercareer_bonus") }}</span>{% endif %}
+						</div>
+					</div>
+				</div>
 			{% endfor %}
-			</tbody>
-		</table>
-	{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+
+	{% if leagues|length > 0 %}
+		<div class="user-history-section">
+			<h4><i class="icon-list-alt"></i> {{ i18n.getMessage("user_history_competition_timeline") }}</h4>
+			{% for leagueName,seasons in leagues %}
+				<div class="user-history-competition-card">
+					<h5>{{ leagueName }}</h5>
+					<table class="table table-striped table-condensed">
+						<thead>
+							<tr>
+								<th>{{ i18n.getMessage("entity_season") }}</th>
+								<th>{{ i18n.getMessage("entity_club") }}</th>
+								<th>{{ i18n.getMessage("leaguetable_head_place") }}</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for season in seasons %}
+							<tr>
+								<td>{{ season.season_name }}</td>
+								<td><a href="{{ env.getInternalUrl("team", "id=" ~ season.team_id) }}">{{ season.team_name }}</a></td>
+								<td><span class="badge">{{ season.season_rank }}</span></td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
 	
 	{% if cups|length > 0 %}
-		<h4>{{ i18n.getMessage("entity_cup") }}</h4>
-		
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>{{ i18n.getMessage("entity_cup") }}</th>
-					<th>{{ i18n.getMessage("entity_club") }}</th>
-					<th>{{ i18n.getMessage("entity_cup_rounds") }}</th>
-				</tr>
-			</thead>
-			<tbody>
+		<div class="user-history-section">
+			<h4><i class="icon-trophy"></i> {{ i18n.getMessage("user_history_cup_results") }}</h4>
+			<div class="row-fluid user-history-cup-grid">
 			{% for cup in cups %}
-				<tr>
-					<td>{{ cup.cup_name }}</td>
-					<td><a href="{{ env.getInternalUrl("team", "id=" ~ cup.team_id) }}">{{ cup.team_name }}</a></td>
-					<td>{{ cup.cup_round_name }}<br>{{ env.getFormattedDate(cup.achievement_date) }}</td>
-				</tr>
+				<div class="span6 user-history-cup-card">
+					<strong>{{ cup.cup_name }}</strong>
+					<span><a href="{{ env.getInternalUrl("team", "id=" ~ cup.team_id) }}">{{ cup.team_name }}</a></span>
+					<small>{{ cup.cup_round_name }} &middot; {{ env.getFormattedDate(cup.achievement_date) }}</small>
+				</div>
 			{% endfor %}
-			</tbody>
-		</table>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if user_history|length > 0 %}
+		<div class="user-history-section user-history-manual">
+			<h4><i class="icon-file"></i> {{ i18n.getMessage("entity_users_history") }}</h4>
+			<div class="well well-small">{{ user_history|nl2br }}</div>
+		</div>
 	{% endif %}
 
 {% endif %}

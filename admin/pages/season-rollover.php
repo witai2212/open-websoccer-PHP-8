@@ -79,6 +79,7 @@ function seasonRolloverRenderOverview($overview, $openMatchSummary = array(), $p
         'Unberechnete Pflichtspiele gesamt' => (int) $overview['uncalculated_competitive_matches'],
         'Unberechnete Spiele gesamt' => (int) $overview['uncalculated_matches_total'],
         'Doppelte Team-Terminbuchungen am selben Tag' => (int) $overview['duplicate_team_bookings'],
+        'Aktive Mutterverein-Divisionskonflikte' => (int) $overview['parent_club_division_conflicts'],
         'Länder mit Teams' => (int) $overview['national_countries'],
         'UEFA-Länder' => (int) $overview['uefa_countries'],
         'Teams in UEFA-Temp' => (int) $overview['uefa_temp_teams']

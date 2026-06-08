@@ -6,6 +6,22 @@
 	<message id="entity_club_kurz">Kürzel</message>
 	<message id="entity_club_liga_id">Liga</message>
 	<message id="entity_club_user_id">Benutzer</message>
+	<message id="entity_club_parent_club_id">Mutterverein</message>
+	<message id="entity_club_parent_club_id_help">Optionaler, nur durch Admin definierter Mutterverein. Mutter- und Partnerverein dürfen nicht in derselben Division spielen.</message>
+	<message id="entity_club_parent_club_status">Mutterverein-Status</message>
+	<message id="entity_club_parent_club_status_help">Aktiv = Beziehung nutzbar. Pausiert = Beziehung bleibt gespeichert, ist aber wegen Regelkonflikt nicht nutzbar.</message>
+	<message id="entity_club_parent_club_suspended_reason">Pausierungsgrund</message>
+	<message id="option_active">Aktiv</message>
+	<message id="option_suspended">Pausiert</message>
+	<message id="parentclub_validation_invalid">Ungültiger Mutterverein.</message>
+	<message id="parentclub_validation_parent_missing">Der ausgewählte Mutterverein existiert nicht.</message>
+	<message id="parentclub_validation_child_missing">Der Verein existiert nicht.</message>
+	<message id="parentclub_validation_same_club">Ein Verein kann nicht sein eigener Mutterverein sein.</message>
+	<message id="parentclub_validation_cycle">Diese Auswahl würde eine zirkuläre Mutterverein-Beziehung erzeugen.</message>
+	<message id="parentclub_validation_parent_nationalteam">Nationalmannschaften können kein Mutterverein sein.</message>
+	<message id="parentclub_validation_child_nationalteam">Nationalmannschaften können keinen Mutterverein haben.</message>
+	<message id="parentclub_validation_same_division">Mutterverein und Partnerverein dürfen nicht in derselben Division spielen.</message>
+
 	<message id="entity_club_user_id_actual">Eigentlicher Manager</message>
 	<message id="entity_club_user_id_actual_help">Falls Benutzer nur Stellvertreter während einer Abwesenheit ist.</message>
 	<message id="entity_club_bild">Logo</message>

@@ -119,9 +119,10 @@ class StockMarketDataService {
         $result = $db->executeQuery($sqlStr);
         while ($stockdata = $result->fetch_array())
         {
-            $usr_stockStr = "SELECT qty
+            $usr_stockStr = "SELECT COALESCE(SUM(qty), 0) AS qty
                     FROM ". $websoccer->getConfig("db_prefix") ."_user_stock 
-                    WHERE stock_id=".$stockdata['id']." AND user_id='".(int) $teamId."' LIMIT 1";
+                    WHERE stock_id='". (int) $stockdata['id'] ."'
+                      AND user_id='". (int) $teamId ."'";
             $result2 = $db->executeQuery($usr_stockStr);
             $userstock = $result2->fetch_array();
             
@@ -233,16 +234,23 @@ class StockMarketDataService {
      * getting user quantity of stock_id
      */
     public static function getQuantityFromUsersByIndex(WebSoccer $websoccer, DbConnection $db, $index, $userId) {
-        
-        $sqlStr = "SELECT SUM(qty) AS qty FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
-                    WHERE stock_id='".$index."' AND user_id='".$userId."'";
+    
+        $index  = (int) $index;
+        $userId = (int) $userId;
+    
+        if ($index < 1 || $userId < 1) {
+            return 0;
+        }
+    
+        $sqlStr = "SELECT COALESCE(SUM(qty), 0) AS qty
+                     FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
+                    WHERE stock_id='". $index ."'
+                      AND user_id='". $userId ."'";
         $result = $db->executeQuery($sqlStr);
-        $qty = $result->fetch_array();
-        
-        $qty = $qty['qty'];
-        
-        return $qty;
-        
+        $row = $result->fetch_array();
+        $result->free();
+    
+        return ($row && isset($row['qty'])) ? (int) $row['qty'] : 0;
     }
     
     /**
@@ -329,37 +337,126 @@ class StockMarketDataService {
      * sell stock
      */
     public static function sellStock(WebSoccer $websoccer, DbConnection $db, $index, $qty, $teamId) {
-        
-        //check if index already in portfolio
-        $isInPortfolioStr = "SELECT id FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
-                    WHERE stock_id='".$index."' AND user_id='$teamId'";
-        $isInPortfolio = $db->executeQuery($isInPortfolioStr);
-        $indexIn = $isInPortfolio->fetch_array();
-        
-        //get index price
+    
+        $index  = (int) $index;
+        $qty    = (int) $qty;
+        $teamId = (int) $teamId;
+    
+        if ($index < 1 || $qty < 1 || $teamId < 1) {
+            return false;
+        }
+    
+        // Check real owned quantity server-side.
+        $ownedQty = (int) self::getQuantityFromUsersByIndex($websoccer, $db, $index, $teamId);
+    
+        if ($ownedQty < 1) {
+            return false;
+        }
+    
+        // Do not allow selling more than the user really owns.
+        $qty = min($qty, $ownedQty);
+    
+        if ($qty < 1) {
+            return false;
+        }
+    
+        // Get current stock price.
         $indexPriceStr = "SELECT v1
                             FROM ". $websoccer->getConfig("db_prefix") ."_stockmarket
-                            WHERE id='".$index."'";
+                           WHERE id='". $index ."'
+                           LIMIT 1";
         $indexPrice = $db->executeQuery($indexPriceStr);
-        $price = $indexPrice->fetch_array();
-        $price = self::normalizePrice($price['v1']);
-        
-        //index money - 5%
-        $price = $price*$qty*0.95;
-        
-        // credit / debit amount
-        BankAccountDataService::creditAmount($websoccer, $db, $teamId, $price, "sell_stock_message", "sender_name");
-        
-        //deduct from available stock on from stockmarket table
-        $stockmarketUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket SET quantity=quantity+$qty WHERE id='$index'";
-        
-        //portfolioUpdateQty
-        $portfolioUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_user_stock SET qty=qty-$qty WHERE user_id='$teamId' AND stock_id='$index'";
-        
+        $priceRow = $indexPrice->fetch_array();
+        $indexPrice->free();
+    
+        if (!$priceRow || !isset($priceRow['v1'])) {
+            return false;
+        }
+    
+        $unitPrice = self::normalizePrice($priceRow['v1']);
+    
+        if ($unitPrice <= 0) {
+            return false;
+        }
+    
+        // Sale revenue minus 5%.
+        $totalCredit = $unitPrice * $qty * 0.95;
+    
+        // Reduce portfolio rows correctly.
+        // buyStock() inserts one row per purchase, so we must consume rows one by one.
+        $remainingQty = $qty;
+    
+        $portfolioRowsStr = "SELECT id, qty
+                               FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
+                              WHERE user_id='". $teamId ."'
+                                AND stock_id='". $index ."'
+                                AND qty > 0
+                              ORDER BY id ASC";
+        $portfolioRows = $db->executeQuery($portfolioRowsStr);
+    
+        while ($row = $portfolioRows->fetch_array()) {
+            if ($remainingQty <= 0) {
+                break;
+            }
+    
+            $rowId  = (int) $row['id'];
+            $rowQty = (int) $row['qty'];
+    
+            if ($rowId < 1 || $rowQty < 1) {
+                continue;
+            }
+    
+            $deductQty = min($remainingQty, $rowQty);
+    
+            if ($deductQty >= $rowQty) {
+                $deleteRowStr = "DELETE FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
+                                  WHERE id='". $rowId ."'
+                                  LIMIT 1";
+                $db->executeQuery($deleteRowStr);
+            } else {
+                $updateRowStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_user_stock
+                                    SET qty = qty - ". $deductQty ."
+                                  WHERE id='". $rowId ."'
+                                  LIMIT 1";
+                $db->executeQuery($updateRowStr);
+            }
+    
+            $remainingQty -= $deductQty;
+        }
+    
+        $portfolioRows->free();
+    
+        // Safety check. Should not happen because ownedQty was checked above.
+        if ($remainingQty > 0) {
+            return false;
+        }
+    
+        // Return sold shares to market availability.
+        $stockmarketUpdateStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket
+                                    SET quantity = quantity + ". $qty ."
+                                  WHERE id='". $index ."'";
         $db->executeQuery($stockmarketUpdateStr);
-        $db->executeQuery($portfolioUpdateStr);
+    
+        // Credit money after successful portfolio update.
+        BankAccountDataService::creditAmount(
+            $websoccer,
+            $db,
+            $teamId,
+            $totalCredit,
+            "sell_stock_message",
+            "sender_name"
+        );
+    
+        // Extra cleanup, just in case older data already contains zero/negative rows.
+        $cleanupStr = "DELETE FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
+                        WHERE user_id='". $teamId ."'
+                          AND stock_id='". $index ."'
+                          AND qty <= 0";
+        $db->executeQuery($cleanupStr);
+    
         self::applyMajorityBoardControl($websoccer, $db, $index);
-        
+    
+        return true;
     }
     
     private static function normalizePrice($price) {

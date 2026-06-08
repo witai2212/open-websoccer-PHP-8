@@ -41,25 +41,63 @@ class SellStockController implements IActionController {
      */
     //public function executeAction($parameters) {
     public function executeAction($parameters) {
-        
-        $index = $parameters['index'];
-        
-		$max_qty = $parameters['max_qty'];
-		if($parameters['qty']>$max_qty) {
-			$qty = $max_qty;
-		} else {
-			$qty = $parameters['qty'];
-		}
-        $user = $this->_websoccer->getUser();
-        $teamId = $user->getClubId($this->_websoccer, $this->_db);
 
-        StockMarketDataService::sellStock($this->_websoccer, $this->_db, $index, $qty, $teamId);
-        
-        // success message
-        $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
-            $this->_i18n->getMessage("saved_message_title"),
-            ""));
-            
+        $index = isset($parameters['index']) ? (int) $parameters['index'] : 0;
+        $requestedQty = isset($parameters['qty']) ? (int) $parameters['qty'] : 0;
+    
+        $user = $this->_websoccer->getUser();
+        $teamId = (int) $user->getClubId($this->_websoccer, $this->_db);
+    
+        if ($index < 1 || $requestedQty < 1 || $teamId < 1) {
+            $this->_websoccer->addFrontMessage(new FrontMessage(
+                MESSAGE_TYPE_ERROR,
+                $this->_i18n->getMessage("errorpage_title"),
+                "Ungültige Verkaufsmenge."
+            ));
+            return "portfolio";
+        }
+    
+        // Server-side check. Do not trust max_qty from the form/request.
+        $ownedQty = (int) StockMarketDataService::getQuantityFromUsersByIndex(
+            $this->_websoccer,
+            $this->_db,
+            $index,
+            $teamId
+        );
+    
+        $qty = min($requestedQty, $ownedQty);
+    
+        if ($qty < 1) {
+            $this->_websoccer->addFrontMessage(new FrontMessage(
+                MESSAGE_TYPE_ERROR,
+                $this->_i18n->getMessage("errorpage_title"),
+                "Du besitzt keine Aktien dieses Werts."
+            ));
+            return "portfolio";
+        }
+    
+        $success = StockMarketDataService::sellStock(
+            $this->_websoccer,
+            $this->_db,
+            $index,
+            $qty,
+            $teamId
+        );
+    
+        if ($success) {
+            $this->_websoccer->addFrontMessage(new FrontMessage(
+                MESSAGE_TYPE_SUCCESS,
+                $this->_i18n->getMessage("saved_message_title"),
+                ""
+            ));
+        } else {
+            $this->_websoccer->addFrontMessage(new FrontMessage(
+                MESSAGE_TYPE_ERROR,
+                $this->_i18n->getMessage("errorpage_title"),
+                "Der Aktienverkauf konnte nicht durchgeführt werden."
+            ));
+        }
+    
         return "portfolio";
     }
     

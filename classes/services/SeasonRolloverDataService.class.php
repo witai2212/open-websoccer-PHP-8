@@ -432,16 +432,24 @@ class SeasonRolloverDataService {
         SalaryStatisticsDataService::updateSalaryStats($websoccer, $db);
         BankAccountDataService::payTaxes($websoccer, $db);
         $transferPenaltyDistribution = TransferPenaltyDataService::distributePenalties($websoccer, $db);
+        $parentClubConflictResolution = array();
+        if (class_exists('ParentClubDataService')) {
+            $parentClubConflictResolution = ParentClubDataService::resolveDivisionConflicts($websoccer, $db);
+        }
 
         return array(
             'salary_statistics_updated' => 1,
             'taxes_processed' => 1,
-            'transfer_penalty_distribution' => $transferPenaltyDistribution
+            'transfer_penalty_distribution' => $transferPenaltyDistribution,
+            'parent_club_conflict_resolution' => $parentClubConflictResolution
         );
     }
 
     public static function createNewSeasonsForAllLeagues(WebSoccer $websoccer, DbConnection $db, $year) {
         $prefix = $websoccer->getConfig('db_prefix');
+        if (class_exists('ParentClubDataService')) {
+            ParentClubDataService::resolveDivisionConflicts($websoccer, $db);
+        }
         $seasonName = SeasonNameGeneratorService::getNextSeasonName($websoccer, $db, (int) $year);
         $leagues = SeasonRolloverValidationService::getLeaguesWithoutOpenSeason($websoccer, $db);
 

@@ -48,6 +48,9 @@ class TeamsDataService {
 		$columns['C.strength'] = 'team_strength';
 		$columns['C.finanz_budget'] = 'team_budget';
 		$columns['C.min_target_rank'] = 'team_min_target_rank';
+		$columns['C.parent_club_id'] = 'parent_club_id';
+		$columns['C.parent_club_status'] = 'parent_club_status';
+		$columns['C.parent_club_suspended_reason'] = 'parent_club_suspended_reason';
 		$columns['C.nationalteam'] = 'is_nationalteam';
 		$columns['C.captain_id'] = 'captain_id';
 		$columns['C.interimmanager'] = 'interimmanager';

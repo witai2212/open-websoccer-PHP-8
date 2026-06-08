@@ -18,5 +18,22 @@
 	<message id="user_changepicture_button">Bild hochladen</message>
 	
 	<message id="history_tab">Historie</message>
-	<message id="history_no_records">Der Benutzer hat bisher noch keine Saison durchgespielt.</message>
+	<message id="history_no_records">Für diesen Benutzer sind bisher keine Karriere- oder Saisonhistorien vorhanden.</message>
+
+	<message id="user_profile_online">Online</message>
+	<message id="user_profile_clubs_title">Vereine</message>
+	<message id="user_profile_no_club">Aktuell keinem Verein zugeordnet.</message>
+	<message id="user_profile_activity_title">Aktivität</message>
+	<message id="user_profile_membership_days">Mitglied seit</message>
+	<message id="user_profile_profile_completed">Profil ausgefüllt</message>
+	<message id="user_profile_personal_title">Persönliche Informationen</message>
+	<message id="user_profile_no_personal_details">Keine persönlichen Angaben hinterlegt.</message>
+	<message id="unit_days">Tage</message>
+	<message id="user_history_career_moves">Vereinswechsel</message>
+	<message id="user_history_seasons">Saisons</message>
+	<message id="user_history_cups">Pokalstationen</message>
+	<message id="user_history_manager_timeline">Manager-Karriere</message>
+	<message id="user_history_no_previous_club">Kein vorheriger Verein</message>
+	<message id="user_history_competition_timeline">Liga-Historie</message>
+	<message id="user_history_cup_results">Pokal-Historie</message>
 </messages>

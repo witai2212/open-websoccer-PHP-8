@@ -23,6 +23,7 @@ class SeasonRolloverValidationService {
             'uncalculated_competitive_matches' => self::countOpenCompetitiveMatches($websoccer, $db),
             'uncalculated_matches_total' => self::countRows($db, $prefix . '_spiel', "berechnet = '0'"),
             'duplicate_team_bookings' => self::countDuplicateTeamBookings($websoccer, $db),
+            'parent_club_division_conflicts' => class_exists('ParentClubDataService') ? ParentClubDataService::countActiveDivisionConflicts($websoccer, $db) : 0,
             'national_countries' => self::countCountriesWithTeams($websoccer, $db),
             'uefa_countries' => self::countRows($db, $prefix . '_land', '1 = 1'),
             'uefa_temp_teams' => self::countRows($db, $prefix . '_uefa_temp', '1 = 1'),

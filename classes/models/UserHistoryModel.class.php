@@ -89,12 +89,77 @@ class UserHistoryModel implements IModel {
 			}
 			
 		}
-		$result->free();
+			$result->free();
+			
+			$seasonCount = 0;
+			foreach ($leagues as $seasons) {
+				$seasonCount += count($seasons);
+			}
+			
+			return array(
+				"leagues" => $leagues,
+				"cups" => $cups,
+				"career_history" => $this->getCareerHistory(),
+				"user_history" => $this->getUserHistoryText(),
+				"season_count" => $seasonCount,
+				"cup_count" => count($cups)
+			);
+		}
 		
+		private function getCareerHistory() {
+			$tablePrefix = $this->_websoccer->getConfig('db_prefix');
+			$fromTable = $tablePrefix . '_manager_career_history AS H';
+			$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_verein AS OLDTEAM ON OLDTEAM.id = H.old_team_id';
+			$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_liga AS OLDLEAGUE ON OLDLEAGUE.id = OLDTEAM.liga_id';
+			$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_verein AS NEWTEAM ON NEWTEAM.id = H.new_team_id';
+			$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_liga AS NEWLEAGUE ON NEWLEAGUE.id = NEWTEAM.liga_id';
+
+			$columns = array(
+				'H.id' => 'id',
+				'H.change_date' => 'change_date',
+				'H.origin' => 'origin',
+				'H.old_team_id' => 'old_team_id',
+				'H.new_team_id' => 'new_team_id',
+				'H.old_club_score' => 'old_club_score',
+				'H.new_club_score' => 'new_club_score',
+				'H.highscore_bonus' => 'highscore_bonus',
+				'OLDTEAM.name' => 'old_team_name',
+				'OLDTEAM.bild' => 'old_team_picture',
+				'OLDLEAGUE.name' => 'old_league_name',
+				'NEWTEAM.name' => 'new_team_name',
+				'NEWTEAM.bild' => 'new_team_picture',
+				'NEWLEAGUE.name' => 'new_league_name'
+			);
+
+			try {
+				$result = $this->_db->querySelect(
+					$columns,
+					$fromTable,
+					'H.user_id = %d ORDER BY H.change_date DESC, H.id DESC',
+					$this->_userId,
+					20
+				);
+			} catch (Exception $e) {
+				return array();
+			}
+
+			$history = array();
+			while ($item = $result->fetch_array()) {
+				$history[] = $item;
+			}
+			$result->free();
+
+			return $history;
+		}
+
+		private function getUserHistoryText() {
+			$table = $this->_websoccer->getConfig('db_prefix') . '_user';
+			$result = $this->_db->querySelect('history', $table, 'id = %d AND status = \'1\'', $this->_userId, 1);
+			$row = $result->fetch_array();
+			$result->free();
+			return ($row && isset($row['history'])) ? trim((string) $row['history']) : '';
+		}
 		
-		return array("leagues" => $leagues, "cups" => $cups);
 	}
-	
-}
 
 ?>

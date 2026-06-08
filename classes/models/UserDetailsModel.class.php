@@ -59,10 +59,16 @@ class UserDetailsModel implements IModel {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
 		
+		$user['reputation'] = isset($user['reputation']) ? (int) $user['reputation'] : 0;
+		$user['membership_days'] = $this->getMembershipDays($user);
+		$user['is_online'] = ((int) $user['lastonline'] >= ($this->_websoccer->getNowAsTimestamp() - 15 * 60)) ? TRUE : FALSE;
+		$user['profile_fields_filled'] = $this->countFilledProfileFields($user);
+		$user['profile_fields_total'] = 8;
+		
 		// get teams of user
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_verein';
 		$whereCondition = 'user_id = %d AND status = \'1\' AND nationalteam != \'1\' ORDER BY name ASC';
-		$result = $this->_db->querySelect('id,name', $fromTable, $whereCondition, $userId);		
+		$result = $this->_db->querySelect('id,name,bild', $fromTable, $whereCondition, $userId);		
 		
 		$teams = array();
 		while ($team = $result->fetch_array()) {
@@ -140,6 +146,25 @@ class UserDetailsModel implements IModel {
 				'career' => $career);
 	}
 	
+	private function countFilledProfileFields($user) {
+		$fields = array('name', 'place', 'country', 'birthday', 'occupation', 'interests', 'favorite_club', 'homepage');
+		$filled = 0;
+		foreach ($fields as $field) {
+			if (!isset($user[$field])) {
+				continue;
+			}
+			$value = $user[$field];
+			if ($field === 'birthday') {
+				if ($value && $value !== '0000-00-00') {
+					$filled++;
+				}
+			} else if (strlen(trim((string) $value))) {
+				$filled++;
+			}
+		}
+		return $filled;
+	}
+
 	private function getMembershipDays($user) {
 		if (!isset($user['registration_date']) || (int) $user['registration_date'] < 1) {
 			return 0;

@@ -99,6 +99,14 @@ class TeamDetailsModel implements IModel {
 			$playerfacts = array();
 		}
 		
+		if (!$team['is_nationalteam'] && class_exists('ParentClubDataService')) {
+			$team['parent_club'] = ParentClubDataService::getParentClubForTeam($this->_websoccer, $this->_db, $team['team_id']);
+			$team['affiliate_clubs'] = ParentClubDataService::getAffiliateClubsForTeam($this->_websoccer, $this->_db, $team['team_id']);
+		} else {
+			$team['parent_club'] = array();
+			$team['affiliate_clubs'] = array();
+		}
+
 		$team['victories'] = $this->getVictories($team['team_id'], $team['team_league_id']);
 		$team['cupvictories'] = $this->getCupVictories($team['team_id']);
 

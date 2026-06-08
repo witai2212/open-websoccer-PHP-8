@@ -9,38 +9,47 @@
 
 {% block page_content %}
 
-<div style="text-align: center; margin-bottom: 10px;">
-
-	{% if user.picture|length > 0 %}
-		<img src="{{ user.picture }}" class="img-rounded" style="width:120px;height:120px"/>
-	{% endif %}
-
-	{% if user.id == env.user.id %}
-		<p style="text-align: center; margin-top: 10px;">
-		
-		{% if env.getConfig("user_picture_upload_enabled") %}
-			<a href="{{ env.getInternalUrl("change-profile-picture") }}" class="btn btn-small">
-				<i class="icon-upload"></i> {{ i18n.getMessage("user_changepicture_button") }}
-			</a>
-			{% if user.picture_uploadfile|length > 0 %}
-				<a href="{{ env.getInternalActionUrl("delete-profile-picture") }}" class="btn btn-small">
-					<i class="icon-remove"></i> {{ i18n.getMessage("user_deletepicture_button") }}
-				</a>
+	<div class="user-profile-hero">
+		<div class="user-profile-hero-avatar">
+			{% if user.picture|length > 0 %}
+				<img src="{{ user.picture }}" alt="{{ user.nick }}" />
+			{% else %}
+				<i class="icon-user"></i>
 			{% endif %}
-		{% endif %}
-		
-		{% if env.getConfig("gravatar_enable") %}
-			<a href="http://{{ i18n.getCurrentLanguage() }}.gravatar.com" target="_blank" 
-				title="{{ i18n.getMessage("gravatar_edit_picture") }}" class="btn btn-small">
-				<i class="icon-external-link"></i> {{ i18n.getMessage("gravatar_edit_picture_button") }}
-			</a>
-		{% endif %}
-		
-		</p>
-	{% endif %}
-</div>
-
-{% if absence %}
+		</div>
+		<div class="user-profile-hero-main">
+			<div class="user-profile-title-row">
+				<h2>{{ user.nick }}</h2>
+				{% if user.is_online %}
+					<span class="label label-success"><i class="icon-ok-sign"></i> {{ i18n.getMessage("user_profile_online") }}</span>
+				{% else %}
+					<span class="label"><i class="icon-time"></i> {{ i18n.getMessage("entity_users_lastonline") }}: {{ env.getFormattedDate(user.lastonline) }}</span>
+				{% endif %}
+			</div>
+			<p class="user-profile-subline">
+				<i class="icon-calendar"></i> {{ i18n.getMessage("entity_users_datum_anmeldung") }}: {{ env.getFormattedDate(user.registration_date) }}
+				{% if userteams|length > 0 %}
+					<span class="user-profile-dot">&bull;</span> <i class="icon-flag"></i> {{ i18n.getMessage("entity_club") }}: {{ userteams[0].name }}{% if userteams|length > 1 %} +{{ userteams|length - 1 }}{% endif %}
+				{% endif %}
+			</p>
+			{% if user.id == env.user.id %}
+				<div class="user-profile-actions">
+					<a href="{{ env.getInternalUrl("profile") }}" class="btn"><i class="icon-edit"></i> {{ i18n.getMessage("button_edit") }}</a>
+					{% if env.getConfig("user_picture_upload_enabled") %}
+						<a href="{{ env.getInternalUrl("change-profile-picture") }}" class="btn btn-small"><i class="icon-upload"></i> {{ i18n.getMessage("user_changepicture_button") }}</a>
+						{% if user.picture_uploadfile|length > 0 %}
+							<a href="{{ env.getInternalActionUrl("delete-profile-picture") }}" class="btn btn-small"><i class="icon-remove"></i> {{ i18n.getMessage("user_deletepicture_button") }}</a>
+						{% endif %}
+					{% endif %}
+					{% if env.getConfig("gravatar_enable") %}
+						<a href="http://{{ i18n.getCurrentLanguage() }}.gravatar.com" target="_blank" title="{{ i18n.getMessage("gravatar_edit_picture") }}" class="btn btn-small"><i class="icon-external-link"></i> {{ i18n.getMessage("gravatar_edit_picture_button") }}</a>
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	
+	{% if absence %}
 	{{ messagebox.box("", i18n.getMessage("absence_profile_info", env.getFormattedDate(absence.to_date)), "warning") }}
 {% endif %}
 
@@ -66,68 +75,104 @@
 <div class="tab-content">
   <div class="tab-pane active" id="general">
   
-  	{% if user.id == env.user.id %}
-  	<p><a href="{{ env.getInternalUrl("profile") }}" class="btn"><i class="icon-edit"></i> {{ i18n.getMessage("button_edit") }}</a></p>
-  	{% endif %}
-  
-	<div class="row-fluid">
-		<div class="span6">
-			{% if userteams|length > 1 %}
-				{% set team = "<ul class=\"unstyled\">" %}
-				{% for userteam in userteams %}
-					{% set team = team ~ "<li><a href=\"" ~ env.getInternalUrl("team", "id=" ~ userteam.id) ~ "\">" ~ userteam.name|e ~ "</a></li>" %}
-				{% endfor %}
-				{% set team = team ~ "</ul>" %}
-			{% elseif userteams|length == 1 %}
-				{% set team = "<a href=\"" ~ env.getInternalUrl("team", "id=" ~ userteams[0].id) ~ "\">" ~ userteams[0].name|e ~ "</a>" %}
+		{% if userteams|length > 1 %}
+			{% set team = "<ul class=\"unstyled user-profile-link-list\">" %}
+			{% for userteam in userteams %}
+				{% set team = team ~ "<li><a href=\"" ~ env.getInternalUrl("team", "id=" ~ userteam.id) ~ "\">" ~ userteam.name|e ~ "</a></li>" %}
+			{% endfor %}
+			{% set team = team ~ "</ul>" %}
+		{% elseif userteams|length == 1 %}
+			{% set team = "<a href=\"" ~ env.getInternalUrl("team", "id=" ~ userteams[0].id) ~ "\">" ~ userteams[0].name|e ~ "</a>" %}
+		{% else %}
+			{% set team = "-" %}
+		{% endif %}
+
+		<div class="row-fluid user-profile-stat-row">
+			<div class="span3 user-profile-stat-card">
+				<span class="user-profile-stat-icon"><i class="icon-flag"></i></span>
+				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_club") }}</span>
+				<span class="user-profile-stat-value">{% if userteams|length > 0 %}{{ userteams|length }}{% else %}-{% endif %}</span>
+			</div>
+			<div class="span3 user-profile-stat-card">
+				<span class="user-profile-stat-icon"><i class="icon-star"></i></span>
+				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_users_highscore") }}</span>
+				<span class="user-profile-stat-value">{{ user.highscore }}</span>
+			</div>
+			<div class="span3 user-profile-stat-card">
+				<span class="user-profile-stat-icon"><i class="icon-trophy"></i></span>
+				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_users_reputation") }}</span>
+				<span class="user-profile-stat-value">{{ user.reputation|default(0) }}</span>
+			</div>
+			<div class="span3 user-profile-stat-card">
+				<span class="user-profile-stat-icon"><i class="icon-heart"></i></span>
+				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_users_fanbeliebtheit") }}</span>
+				<span class="user-profile-stat-value">{{ user.popularity }}%</span>
+			</div>
+		</div>
+
+		<div class="row-fluid user-profile-section-row">
+			<div class="span6">
+				<div class="user-profile-panel">
+					<h4><i class="icon-flag"></i> {{ i18n.getMessage("user_profile_clubs_title") }}</h4>
+					{% if userteams|length > 0 %}
+						<ul class="unstyled user-profile-club-list">
+						{% for userteam in userteams %}
+							<li>
+								{% if userteam.bild|length %}
+									<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ userteam.bild }}" alt="{{ userteam.name }}" />
+								{% else %}
+									<span class="user-profile-club-placeholder"><i class="icon-shield"></i></span>
+								{% endif %}
+								<a href="{{ env.getInternalUrl("team", "id=" ~ userteam.id) }}">{{ userteam.name }}</a>
+							</li>
+						{% endfor %}
+						</ul>
+					{% else %}
+						<p class="muted">{{ i18n.getMessage("user_profile_no_club") }}</p>
+					{% endif %}
+					{% if user.nationalteam is defined %}
+						<div class="user-profile-national-team">
+							<strong>{{ i18n.getMessage("nationalteams_team_label") }}:</strong>
+							<a href="{{ env.getInternalUrl("team", "id=" ~ user.nationalteam.id) }}">{{ user.nationalteam.name }}</a>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="span6">
+				<div class="user-profile-panel">
+					<h4><i class="icon-time"></i> {{ i18n.getMessage("user_profile_activity_title") }}</h4>
+					{{ profile.infofield(i18n.getMessage("entity_users_datum_anmeldung"), env.getFormattedDate(user.registration_date)) }}
+					{{ profile.infofield(i18n.getMessage("user_profile_membership_days"), user.membership_days ~ " " ~ i18n.getMessage("unit_days")) }}
+					{{ profile.infofield(i18n.getMessage("entity_users_lastonline"), env.getFormattedDate(user.lastonline)) }}
+					{{ profile.infofield(i18n.getMessage("user_profile_profile_completed"), user.profile_fields_filled ~ " / " ~ user.profile_fields_total) }}
+				</div>
+			</div>
+		</div>
+
+		<div class="user-profile-panel">
+			<h4><i class="icon-user"></i> {{ i18n.getMessage("user_profile_personal_title") }}</h4>
+			{% if user.name|length > 0 or user.place|length > 0 or user.country|length > 0 or user.birthday > 0 or user.occupation|length > 0 or user.interests|length > 0 or user.favorite_club|length > 0 or user.homepage|length > 0 %}
+				<div class="row-fluid">
+					<div class="span6">
+						{% if user.name|length > 0 %}{{ profile.infofield(i18n.getMessage("entity_users_name"), user.name) }}{% endif %}
+						{% if user.place|length > 0 %}{{ profile.infofield(i18n.getMessage("entity_users_wohnort"), user.place) }}{% endif %}
+						{% if user.country|length > 0 %}{{ profile.infofield(i18n.getMessage("entity_users_land"), user.country) }}{% endif %}
+						{% if user.birthday > 0 %}{{ profile.infofield(i18n.getMessage("entity_users_geburtstag"), user.birthday|date(env.getConfig("date_format"))) }}{% endif %}
+					</div>
+					<div class="span6">
+						{% if user.occupation|length > 0 %}{{ profile.infofield(i18n.getMessage("entity_users_beruf"), user.occupation) }}{% endif %}
+						{% if user.interests|length > 0 %}{{ profile.infofield(i18n.getMessage("entity_users_interessen"), user.interests) }}{% endif %}
+						{% if user.favorite_club|length > 0 %}{{ profile.infofield(i18n.getMessage("entity_users_lieblingsverein"), user.favorite_club) }}{% endif %}
+						{% if user.homepage|length > 0 %}
+							{% set websiteLink = "<a href=\"" ~ user.homepage ~ "\" target=\"_blank\">" ~ i18n.getMessage("user_visit_website") ~ "</a>" %}
+							{{ profile.infofield(i18n.getMessage("entity_users_homepage"), websiteLink, true) }}
+						{% endif %}
+					</div>
+				</div>
 			{% else %}
-				{% set team = "-" %}
+				<p class="muted">{{ i18n.getMessage("user_profile_no_personal_details") }}</p>
 			{% endif %}
-			
-			{{ profile.infofield(i18n.getMessage("entity_club"), team, true) }}
-			
-			{% if user.nationalteam is defined %}
-				{% set nationalteam = "<a href=\"" ~ env.getInternalUrl("team", "id=" ~ user.nationalteam.id) ~ "\">" ~ user.nationalteam.name|e ~ "</a>" %}
-				{{ profile.infofield(i18n.getMessage("nationalteams_team_label"), nationalteam, true) }}
-			{% endif %}
-			
-			{{ profile.infofield(i18n.getMessage("entity_users_highscore"), user.highscore) }}
-			{{ profile.infofield(i18n.getMessage("entity_users_reputation"), user.reputation) }}
-			{{ profile.infofield(i18n.getMessage("entity_users_fanbeliebtheit"), user.popularity ~ "%") }}
-			{{ profile.infofield(i18n.getMessage("entity_users_datum_anmeldung"), env.getFormattedDate(user.registration_date)) }}
-			{{ profile.infofield(i18n.getMessage("entity_users_lastonline"), env.getFormattedDate(user.lastonline)) }}
 		</div>
-		<div class="span6">
-		
-		{% if user.name|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_name"), user.name) }}
-		{% endif %}
-		{% if user.place|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_wohnort"), user.place) }}
-		{% endif %}
-		{% if user.country|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_land"), user.country) }}
-		{% endif %}
-		{% if user.birthday > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_geburtstag"), user.birthday|date(env.getConfig("date_format"))) }}
-		{% endif %}
-		{% if user.occupation|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_beruf"), user.occupation) }}
-		{% endif %}
-		{% if user.interests|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_interessen"), user.interests) }}
-		{% endif %}
-		{% if user.favorite_club|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_lieblingsverein"), user.favorite_club) }}
-		{% endif %}
-		{% if user.homepage|length > 0 %}
-		
-			{% set websiteLink = "<a href=\"" ~ user.homepage ~ "\" target=\"_blank\">" ~ i18n.getMessage("user_visit_website") ~ "</a>" %}
-		
-			{{ profile.infofield(i18n.getMessage("entity_users_homepage"), websiteLink, true) }}
-		{% endif %}
-		</div>
-	</div>
   
   </div>
   
@@ -321,11 +366,6 @@
 
   <div class="tab-pane" id="history">
   	<div id="historycontent"></div>
-  	
-  	{% if user.history|length > 0 %}
-  		<h4>{{ i18n.getMessage("entity_users_history") }}</h4>
-			{{ user.history|nl2br }}
-	{% endif %}
   </div>
 </div>
 

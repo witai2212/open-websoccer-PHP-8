@@ -697,6 +697,14 @@ if (!function_exists('seasonCompletionRunGlobalFinalization')) {
         
         // Distribute transfer penalties
         TransferPenaltyDataService::distributePenalties($website, $db);
+        
+        // Enforce parent-club division rule after all season movements.
+        if (class_exists('ParentClubDataService')) {
+            $parentClubActions = ParentClubDataService::resolveDivisionConflicts($website, $db);
+            if (!empty($parentClubActions)) {
+                echo '<div class="alert alert-info"><strong>Mutterverein-Regel:</strong> ' . count($parentClubActions) . ' Divisionskonflikt(e) wurden verarbeitet.</div>';
+            }
+        }
     }
 }
 

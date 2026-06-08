@@ -9,6 +9,12 @@
     <message id="team_details_tab_players">Kader</message>
     
     <message id="team_details_manager">Manager</message>
+    <message id="team_details_parent_club">Mutterverein</message>
+    <message id="team_details_affiliate_clubs">Partnervereine</message>
+    <message id="team_details_parent_club_suspended">pausiert</message>
+    <message id="parentclub_suspended_reason_same_division">Divisionskonflikt</message>
+    <message id="parentclub_suspended_reason_same_division_no_lower_league">Divisionskonflikt, keine tiefere Liga gefunden</message>
+
     <message id="team_details_strength_raw">Teamstärke: %s</message>
     <message id="team_details_strength_global_rank">Teamstärke weltweit: %d/%d (Top %d%%)</message>
     <message id="team_details_strength_league_rank">Teamstärke Liga: %d/%d</message>

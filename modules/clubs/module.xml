@@ -33,6 +33,13 @@
                         filter="true" />
                     
                     <column
+                        id="entity_club_parent_club_id"
+                        field="ParentClubTab.name"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+                    
+                    <column
                         id="entity_club_nationalteam"
                         field="ClubTab.nationalteam"
                         type="boolean"
@@ -64,6 +71,7 @@
                         type="boolean" />
                     
                 	<join type="LEFT" jointable="liga AS LeagueTab" joincondition="ClubTab.liga_id = LeagueTab.id" />
+		    		<join type="LEFT" jointable="verein AS ParentClubTab" joincondition="ClubTab.parent_club_id = ParentClubTab.id" />
 		    		<join type="LEFT" jointable="user AS UserTab" joincondition="ClubTab.user_id = UserTab.id" />
                 </overview>
 
@@ -72,6 +80,9 @@
 					<field id="kurz" type="text" required="true" />
 					<field id="nationalteam" type="boolean" required="false" />
 					<field id="liga_id" type="foreign_key" entity="league" jointable="liga" cascade="delete" labelcolumns="land, name" required="false" default="0" />
+					<field id="parent_club_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" required="false" default="0" validator="ParentClubValidator" />
+					<field id="parent_club_status" type="select" selection="active,suspended" default="active" />
+					<field id="parent_club_suspended_reason" type="text" readonly="true" editonly="true" />
 					<field id="user_id" type="foreign_key" entity="users" jointable="user" labelcolumns="nick" />
 					<field id="user_id_actual" type="foreign_key" entity="users" jointable="user" labelcolumns="nick" />
 					<field id="interimmanager" type="boolean" required="false" />

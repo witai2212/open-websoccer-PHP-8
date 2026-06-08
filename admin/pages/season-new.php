@@ -404,6 +404,9 @@ if (!$show) {
     } else {
 
         $seasonName = $input['seasonName'];
+        if (class_exists('ParentClubDataService')) {
+            ParentClubDataService::resolveDivisionConflicts($website, $db);
+        }
         $leagues = seasonNewGetAllLeagues($db, $conf);
 
         if (empty($leagues)) {

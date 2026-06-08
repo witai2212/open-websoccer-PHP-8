@@ -1,0 +1,75 @@
+{% import "macros/messagebox.twig" as messagebox %}
+
+{% if match_table_matches is defined and match_table_matches|length > 0 %}
+<table class="table table-striped table-condensed">
+	<thead>
+		<tr>
+			<th>{{ i18n.getMessage("entity_match_datum") }}</th>
+			{% if match_table_show_round is defined and match_table_show_round %}
+				<th>{{ i18n.getMessage("entity_match_cup_round") }}</th>
+			{% endif %}
+			<th>{{ i18n.getMessage("entity_match_home_verein") }}</th>
+			<th>{{ i18n.getMessage("entity_match_gast_verein") }}</th>
+			<th>{{ i18n.getMessage("match_result") }}</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for match in match_table_matches %}
+		<tr{% if user_team_id is defined and user_team_id > 0 and (match.home_id == user_team_id or match.guest_id == user_team_id) %} class="info"{% endif %}>
+			<td>
+				<i class="icon-trophy wstooltip" title="{{ i18n.getMessage("option_Pokalspiel") }}{% if match.cup_round|length > 0 %} ({{ match.cup_round }}){% endif %}"></i>
+				{{ env.getFormattedDatetime(match.date, i18n) }}
+			</td>
+			{% if match_table_show_round is defined and match_table_show_round %}
+				<td>{{ match.cup_round }}</td>
+			{% endif %}
+			<td>
+				{% if match.home_team_picture|length > 0 %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px" />
+				{% endif %}
+				<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a>
+				{% if match.home_noformation %}
+					<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.home_team) }}"></i>
+				{% endif %}
+				{% if match.home_user_id > 0 %}
+					<br />
+					{% if match.home_user_picture|length > 0 %}
+						<a href="{{ env.getInternalUrl("user", "id=" ~ match.home_user_id) }}"><img src="{{ match.home_user_picture }}" style="width: 20px; height: 20px" /></a>
+					{% endif %}
+					<small><a href="{{ env.getInternalUrl("user", "id=" ~ match.home_user_id) }}">{{ match.home_user_nick }}</a></small>
+				{% endif %}
+			</td>
+			<td>
+				{% if match.guest_team_picture|length > 0 %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px" />
+				{% endif %}
+				<a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
+				{% if match.guest_noformation %}
+					<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.guest_team) }}"></i>
+				{% endif %}
+				{% if match.guest_user_id > 0 %}
+					<br />
+					{% if match.guest_user_picture|length > 0 %}
+						<a href="{{ env.getInternalUrl("user", "id=" ~ match.guest_user_id) }}"><img src="{{ match.guest_user_picture }}" style="width: 20px; height: 20px" /></a>
+					{% endif %}
+					<small><a href="{{ env.getInternalUrl("user", "id=" ~ match.guest_user_id) }}">{{ match.guest_user_nick }}</a></small>
+				{% endif %}
+			</td>
+			<td>
+				<a href="{{ env.getInternalUrl("match", "id=" ~ match.id) }}" title="{{ i18n.getMessage("match_navlabel") }}">
+				{% if match.simulated == 1 %}
+					<strong>{{ match.home_goals }} - {{ match.guest_goals }}</strong>
+				{% elseif match.minutes > 0 %}
+					<span class="label label-important">{{ i18n.getMessage("match_live_label") }}</span> {{ match.home_goals }} - {{ match.guest_goals }}
+				{% else %}
+					{{ i18n.getMessage("match_navlabel") }}
+				{% endif %}
+				</a>
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	{{ messagebox.box(i18n.getMessage("results_no_matches_found"), "", "info") }}
+{% endif %}

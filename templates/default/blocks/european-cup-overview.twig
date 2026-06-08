@@ -1,0 +1,159 @@
+{% import "macros/messagebox.twig" as messagebox %}
+
+{% if not cup_found %}
+	{{ messagebox.box(i18n.getMessage(message_prefix ~ "_no_cup_found"), "", "warning") }}
+{% else %}
+	<div class="row-fluid">
+		<div class="span9">
+			<h1>{{ cup.name }}</h1>
+			<p class="muted">{{ i18n.getMessage(message_prefix ~ "_intro") }}</p>
+		</div>
+		{% if cup.logo|length > 0 %}
+			<div class="span3" style="text-align: right;">
+				<img src="{{ env.getConfig("context_root") }}/uploads/cup/{{ cup.logo }}" class="img-rounded" style="max-height: 90px;" />
+			</div>
+		{% endif %}
+	</div>
+
+	{% if phases|length > 0 %}
+		<ul class="nav nav-pills">
+		{% for phase in phases %}
+			<li{% if phase.key == selected_phase %} class="active"{% endif %}>
+				<a href="{{ env.getInternalUrl(page_id, "phase=" ~ phase.key) }}">{{ phase.label }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+	<div class="row-fluid">
+		<div class="span3 well">
+			<h4>{{ i18n.getMessage(message_prefix ~ "_current_phase") }}</h4>
+			<p><strong>{{ selected_phase_label }}</strong></p>
+			<p class="muted">{{ round_stats.played }} / {{ round_stats.total }} {{ i18n.getMessage(message_prefix ~ "_matches_played") }}</p>
+		</div>
+		<div class="span3 well">
+			<h4>{{ i18n.getMessage(message_prefix ~ "_participants") }}</h4>
+			<p><strong>{{ participant_count }}</strong></p>
+			<p class="muted">{{ i18n.getMessage(message_prefix ~ "_teams") }}</p>
+		</div>
+		<div class="span3 well">
+			<h4>{{ i18n.getMessage(message_prefix ~ "_rounds") }}</h4>
+			<p><strong>{{ round_count }}</strong></p>
+			<p class="muted">{{ i18n.getMessage(message_prefix ~ "_rounds_subtitle") }}</p>
+		</div>
+		<div class="span3 well">
+			<h4>{{ i18n.getMessage(message_prefix ~ "_winner") }}</h4>
+			{% if cup.winner_id > 0 and cup.winner_name|length > 0 %}
+				<p><strong><a href="{{ env.getInternalUrl("team", "id=" ~ cup.winner_id) }}">{{ cup.winner_name }}</a></strong></p>
+			{% else %}
+				<p><strong>{{ i18n.getMessage(message_prefix ~ "_winner_open") }}</strong></p>
+			{% endif %}
+			<p class="muted">{{ i18n.getMessage(message_prefix ~ "_prize_winner") }}: {{ cup.winner_award|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</p>
+		</div>
+	</div>
+
+	{% if my_team|length > 0 %}
+		<div class="well">
+			<h3>{{ i18n.getMessage(message_prefix ~ "_my_club") }}</h3>
+			<p>
+				{% if my_team.bild|length > 0 %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ my_team.bild }}" style="max-width: 24px" />
+				{% endif %}
+				<a href="{{ env.getInternalUrl("team", "id=" ~ my_team.id) }}"><strong>{{ my_team.name }}</strong></a>
+				{% if my_team.participating %}
+					<span class="label label-success">{{ i18n.getMessage(message_prefix ~ "_still_in_competition") }}</span>
+				{% else %}
+					<span class="label">{{ i18n.getMessage(message_prefix ~ "_not_participating") }}</span>
+				{% endif %}
+			</p>
+			{% if my_team.group_name|length > 0 %}
+				<p>{{ i18n.getMessage(message_prefix ~ "_my_group") }}: <strong>Gruppe {{ my_team.group_name }}</strong></p>
+			{% endif %}
+			{% if my_team.next_match|length > 0 %}
+				<p>{{ i18n.getMessage(message_prefix ~ "_my_next_match") }}:
+					<a href="{{ env.getInternalUrl("match", "id=" ~ my_team.next_match.id) }}">
+						{{ env.getFormattedDatetime(my_team.next_match.date, i18n) }} - {{ my_team.next_match.home_team }} vs. {{ my_team.next_match.guest_team }}
+					</a>
+				</p>
+			{% elseif my_team.last_match|length > 0 %}
+				<p>{{ i18n.getMessage(message_prefix ~ "_my_last_match") }}:
+					<a href="{{ env.getInternalUrl("match", "id=" ~ my_team.last_match.id) }}">
+						{{ my_team.last_match.home_team }} {{ my_team.last_match.home_goals }} - {{ my_team.last_match.guest_goals }} {{ my_team.last_match.guest_team }}
+					</a>
+				</p>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	{% if is_group_phase %}
+		<h3>{{ i18n.getMessage(message_prefix ~ "_standings") }} - {{ selected_phase_label }}</h3>
+		{% if group_table|length > 0 %}
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_team") }}</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_matches") }}</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_wins") }}</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_draws") }}</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_losses") }}</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_goals") }}</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_goaldiff") }}</th>
+						<th>{{ i18n.getMessage(message_prefix ~ "_grouptable_points") }}</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for team in group_table %}
+					<tr{% if user_team_id > 0 and team.id == user_team_id %} class="info"{% endif %}>
+						<td><strong>{{ loop.index }}</strong></td>
+						<td>
+							{% set nationImg = skin.getImage("flags/" ~ team.land ~ ".png") %}
+							{% if i18n.hasMessage("option_" ~ team.land) %}
+								{% set countryLabel = i18n.getMessage("option_" ~ team.land) %}
+							{% else %}
+								{% set countryLabel = team.land %}
+							{% endif %}
+							{% if nationImg|length < 1 %}
+								{% set nationImg = skin.getImage("flags/europeanunion.png") %}
+							{% endif %}
+							{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}
+							{% if team.picture|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ team.picture }}" style="max-width: 20px" />{% endif %}
+							<a href="{{ env.getInternalUrl("team", "id=" ~ team.id) }}">{{ team.name }}</a>
+							{% if team.user_id > 0 and team.user_name|length > 0 %}<br /><small><a href="{{ env.getInternalUrl("user", "id=" ~ team.user_id) }}">{{ team.user_name }}</a></small>{% endif %}
+						</td>
+						<td>{{ team.wins + team.draws + team.losses }}</td>
+						<td>{{ team.wins }}</td>
+						<td>{{ team.draws }}</td>
+						<td>{{ team.losses }}</td>
+						<td>{{ team.goals }}:{{ team.goals_received }}</td>
+						<td>{% if team.goal_diff > 0 %}+{% endif %}{{ team.goal_diff }}</td>
+						<td><strong>{{ team.points }}</strong></td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			{{ messagebox.box(i18n.getMessage(message_prefix ~ "_no_group_table"), "", "info") }}
+		{% endif %}
+	{% endif %}
+
+	<h3>{{ i18n.getMessage(message_prefix ~ "_fixtures") }} - {{ selected_phase_label }}</h3>
+	{% set match_table_matches = matches %}
+	{% set match_table_show_round = false %}
+	{% include 'blocks/european-cup-match-table.twig' %}
+
+	<div class="row-fluid">
+		<div class="span6">
+			<h3>{{ i18n.getMessage(message_prefix ~ "_latest_results") }}</h3>
+			{% set match_table_matches = latest_results %}
+			{% set match_table_show_round = true %}
+			{% include 'blocks/european-cup-match-table.twig' %}
+		</div>
+		<div class="span6">
+			<h3>{{ i18n.getMessage(message_prefix ~ "_next_matches") }}</h3>
+			{% set match_table_matches = next_matches %}
+			{% set match_table_show_round = true %}
+			{% include 'blocks/european-cup-match-table.twig' %}
+		</div>
+	</div>
+{% endif %}

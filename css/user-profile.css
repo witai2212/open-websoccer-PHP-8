@@ -1,0 +1,366 @@
+.user-profile-hero,
+.user-profile-panel,
+.user-profile-stat-card,
+.user-history-summary-card,
+.user-history-timeline-card,
+.user-history-competition-card,
+.user-history-cup-card {
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+	-moz-box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+	box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.user-profile-hero {
+	position: relative;
+	margin-bottom: 18px;
+	padding: 18px;
+	background: #f9fafb;
+	overflow: hidden;
+}
+
+.user-profile-hero:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: #4b8f29;
+}
+
+.user-profile-hero-avatar {
+	float: left;
+	width: 124px;
+	height: 124px;
+	margin-right: 18px;
+	background: #eef2f3;
+	border: 4px solid #fff;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	text-align: center;
+	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+	-moz-box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+	box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+.user-profile-hero-avatar img {
+	width: 124px;
+	height: 124px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.user-profile-hero-avatar i {
+	font-size: 58px;
+	line-height: 124px;
+	color: #9aa5a8;
+}
+
+.user-profile-hero-main {
+	overflow: hidden;
+	min-height: 124px;
+}
+
+.user-profile-title-row h2 {
+	margin: 4px 10px 4px 0;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 34px;
+}
+
+.user-profile-title-row .label {
+	vertical-align: middle;
+}
+
+.user-profile-subline {
+	margin: 0 0 12px 0;
+	color: #66727a;
+}
+
+.user-profile-dot {
+	margin: 0 7px;
+	color: #b4bdc1;
+}
+
+.user-profile-actions .btn {
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.user-profile-stat-row {
+	margin-bottom: 16px;
+}
+
+.user-profile-stat-card {
+	padding: 14px 12px;
+	min-height: 72px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.user-profile-stat-icon {
+	float: right;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	background: #eef7ed;
+	color: #4b8f29;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.user-profile-stat-label,
+.user-history-summary-label {
+	display: block;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	color: #7a858b;
+}
+
+.user-profile-stat-value,
+.user-history-summary-number {
+	display: block;
+	margin-top: 5px;
+	font-size: 24px;
+	line-height: 28px;
+	font-weight: bold;
+	color: #263238;
+}
+
+.user-profile-section-row {
+	margin-bottom: 16px;
+}
+
+.user-profile-panel {
+	padding: 14px 16px;
+	margin-bottom: 16px;
+}
+
+.user-profile-panel h4,
+.user-history-section h4 {
+	margin-top: 0;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #edf0f2;
+}
+
+.user-profile-club-list li {
+	padding: 8px 0;
+	border-bottom: 1px solid #edf0f2;
+}
+
+.user-profile-club-list li:last-child {
+	border-bottom: 0;
+}
+
+.user-profile-club-list img,
+.user-history-club-cell img {
+	width: 28px;
+	height: 28px;
+	margin-right: 8px;
+	vertical-align: middle;
+	object-fit: contain;
+}
+
+.user-profile-club-placeholder {
+	display: inline-block;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	margin-right: 8px;
+	text-align: center;
+	background: #eef2f3;
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 14px;
+	vertical-align: middle;
+}
+
+.user-profile-national-team {
+	margin-top: 8px;
+	padding-top: 10px;
+	border-top: 1px solid #edf0f2;
+}
+
+.user-profile-panel .inforow {
+	margin-top: 6px;
+}
+
+.user-profile-panel .infolabel {
+	background: #f8f9fa;
+}
+
+.user-history-summary {
+	margin-bottom: 16px;
+}
+
+.user-history-summary-card {
+	padding: 14px;
+	min-height: 74px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.user-history-summary-card i {
+	float: right;
+	font-size: 22px;
+	color: #4b8f29;
+}
+
+.user-history-section {
+	margin-bottom: 20px;
+}
+
+.user-history-timeline {
+	position: relative;
+	margin-left: 10px;
+	padding-left: 20px;
+	border-left: 2px solid #e1e6e8;
+}
+
+.user-history-timeline-item {
+	position: relative;
+	margin-bottom: 14px;
+}
+
+.user-history-timeline-item:before {
+	content: "";
+	position: absolute;
+	left: -27px;
+	top: 9px;
+	width: 12px;
+	height: 12px;
+	background: #4b8f29;
+	border: 3px solid #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0 0 0 1px #d6dcde;
+	-moz-box-shadow: 0 0 0 1px #d6dcde;
+	box-shadow: 0 0 0 1px #d6dcde;
+}
+
+.user-history-timeline-date {
+	font-size: 12px;
+	font-weight: bold;
+	color: #7a858b;
+	margin-bottom: 4px;
+}
+
+.user-history-timeline-card,
+.user-history-competition-card,
+.user-history-cup-card {
+	padding: 12px 14px;
+}
+
+.user-history-career-row {
+	display: table;
+	width: 100%;
+}
+
+.user-history-club-cell,
+.user-history-arrow {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.user-history-club-cell {
+	width: 45%;
+}
+
+.user-history-club-cell small {
+	display: block;
+	margin-left: 40px;
+	color: #88939a;
+}
+
+.user-history-arrow {
+	width: 10%;
+	text-align: center;
+	color: #9aa5a8;
+}
+
+.user-history-empty-club {
+	color: #88939a;
+}
+
+.user-history-meta {
+	margin-top: 10px;
+	padding-top: 8px;
+	border-top: 1px solid #edf0f2;
+	font-size: 12px;
+	color: #66727a;
+}
+
+.user-history-meta span {
+	margin-right: 8px;
+}
+
+.user-history-competition-card {
+	margin-bottom: 12px;
+}
+
+.user-history-competition-card h5 {
+	margin-top: 0;
+}
+
+.user-history-cup-card {
+	margin-bottom: 12px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.user-history-cup-card strong,
+.user-history-cup-card span,
+.user-history-cup-card small {
+	display: block;
+}
+
+.user-history-cup-card small {
+	color: #88939a;
+}
+
+.user-history-manual .well {
+	margin-bottom: 0;
+	line-height: 1.55;
+}
+
+@media (max-width: 767px) {
+	.user-profile-hero-avatar {
+		float: none;
+		margin: 0 auto 12px auto;
+	}
+	.user-profile-hero-main,
+	.user-profile-title-row,
+	.user-profile-subline,
+	.user-profile-actions {
+		text-align: center;
+	}
+	.user-profile-stat-card,
+	.user-history-summary-card,
+	.user-history-cup-card {
+		margin-bottom: 10px;
+	}
+	.user-history-career-row,
+	.user-history-club-cell,
+	.user-history-arrow {
+		display: block;
+		width: auto;
+		text-align: left;
+	}
+	.user-history-arrow {
+		padding: 8px 0;
+	}
+}

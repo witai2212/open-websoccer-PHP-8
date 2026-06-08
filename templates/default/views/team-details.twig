@@ -101,6 +101,36 @@
   
   {{ profile.infofield(i18n.getMessage("entity_club_kurz"), team.team_short) }}
   {{ profile.infofield(i18n.getMessage("entity_club_liga_id"), league, true) }}
+  
+  {% if team.parent_club is defined and team.parent_club.team_id is defined %}
+	{% set parentClubLabel = '<a href="' ~ env.getInternalUrl('team', 'id=' ~ team.parent_club.team_id) ~ '">' ~ team.parent_club.team_name|e ~ '</a>' %}
+	{% if team.parent_club.league_name|length > 0 %}
+		{% set parentClubLabel = parentClubLabel ~ ' <span class="muted">(' ~ team.parent_club.league_name|e ~ ')</span>' %}
+	{% endif %}
+	{% if team.parent_club.relationship_status == 'suspended' %}
+		{% set parentClubLabel = parentClubLabel ~ ' <span class="label label-warning">' ~ i18n.getMessage('team_details_parent_club_suspended') ~ '</span>' %}
+	{% endif %}
+	{{ profile.infofield(i18n.getMessage("team_details_parent_club"), parentClubLabel, true) }}
+  {% endif %}
+  
+  {% if team.affiliate_clubs is defined and team.affiliate_clubs|length > 0 %}
+	{% set affiliateClubLabels = "" %}
+	{% for affiliateClub in team.affiliate_clubs %}
+		{% set affiliateClubLabel = '<a href="' ~ env.getInternalUrl('team', 'id=' ~ affiliateClub.team_id) ~ '">' ~ affiliateClub.team_name|e ~ '</a>' %}
+		{% if affiliateClub.league_name|length > 0 %}
+			{% set affiliateClubLabel = affiliateClubLabel ~ ' <span class="muted">(' ~ affiliateClub.league_name|e ~ ')</span>' %}
+		{% endif %}
+		{% if affiliateClub.relationship_status == 'suspended' %}
+			{% set affiliateClubLabel = affiliateClubLabel ~ ' <span class="label label-warning">' ~ i18n.getMessage('team_details_parent_club_suspended') ~ '</span>' %}
+		{% endif %}
+		{% if affiliateClubLabels|length > 0 %}
+			{% set affiliateClubLabels = affiliateClubLabels ~ "<br>" %}
+		{% endif %}
+		{% set affiliateClubLabels = affiliateClubLabels ~ affiliateClubLabel %}
+	{% endfor %}
+	{{ profile.infofield(i18n.getMessage("team_details_affiliate_clubs"), affiliateClubLabels, true) }}
+  {% endif %}
+  
   {{ profile.infofield(i18n.getMessage("team_details_manager"), manager, true) }}
   
 <!-- {{ profile.infofield(i18n.getMessage("friendly_request"), friendly_request, true) }}-->

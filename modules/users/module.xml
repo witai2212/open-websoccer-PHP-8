@@ -72,7 +72,9 @@
 	            model="UserDetailsModel"
 	            navitem="false"
 	            template="user-details"
-	            role="user" />
+	            role="user">
+	            <css file="user-profile.css" />
+	        </page>
         </page>
     </pages>
     

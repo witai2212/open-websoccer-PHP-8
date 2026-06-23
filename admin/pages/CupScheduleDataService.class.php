@@ -7,95 +7,144 @@ class CupScheduleDataService {
      *
      ****************************************/
     public static function getCountryCups(WebSoccer $websoccer, DbConnection $db) {
-        
+        $prefix = $websoccer->getConfig("db_prefix");
         $cups = array();
-        
-        $sqlStr = "SELECT id, name FROM " . $websoccer->getConfig("db_prefix") . "_cup
-				   WHERE name NOT LIKE '%League%'
-				   ORDER BY name";
+
+        // National cups use the existing CM23 convention:
+        // cup.name equals liga.land / land.name. This avoids mixing them with
+        // international cups like UEFA Champions League or Copa Libertadores.
+        $sqlStr = "SELECT DISTINCT C.id, C.name
+            FROM " . $prefix . "_cup AS C
+            INNER JOIN " . $prefix . "_liga AS L ON L.land = C.name
+            WHERE C.archived = '0'
+            ORDER BY C.name";
+
         $result = $db->executeQuery($sqlStr);
-        if($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $cups[] = $row;
         }
         $result->free();
+
         return $cups;
     }
-    
+
     public static function getCupRoundsByCupId(WebSoccer $websoccer, DbConnection $db, $cupId) {
-        
-        $sqlStr = "SELECT COUNT(id) AS rounds FROM " . $websoccer->getConfig("db_prefix") . "_cup_round
-				   WHERE cup_id='$cupId'";
-        $result = $db->executeQuery($sqlStr);
+        $cupId = (int) $cupId;
+        $result = $db->querySelect(
+            'COUNT(id) AS rounds',
+            $websoccer->getConfig("db_prefix") . '_cup_round',
+            'cup_id = %d',
+            $cupId
+        );
         $round = $result->fetch_assoc();
         $result->free();
-        
-        return $round['rounds'];
-        
+
+        return isset($round['rounds']) ? (int) $round['rounds'] : 0;
     }
-    
+
     public static function getFirstMatchDayOfCup(WebSoccer $websoccer, DbConnection $db, $cupId) {
-        
-        $sqlStr = "SELECT firstround_date FROM " . $websoccer->getConfig("db_prefix") . "_cup_round
-				   WHERE cup_id='$cupId' AND name='Runde 1'";
-        $result = $db->executeQuery($sqlStr);
+        $cupId = (int) $cupId;
+        $result = $db->querySelect(
+            'firstround_date',
+            $websoccer->getConfig("db_prefix") . '_cup_round',
+            "cup_id = %d AND (name = 'Round 1' OR name = 'Runde 1') ORDER BY id ASC",
+            $cupId,
+            1
+        );
         $round = $result->fetch_assoc();
         $result->free();
-        
-        return $round['firstround_date'];
-        
+
+        return ($round && isset($round['firstround_date'])) ? (int) $round['firstround_date'] : 0;
     }
-    
+
     public static function getTeamsByCupName(WebSoccer $websoccer, DbConnection $db, $cupName, $limit) {
-        
         $teams = array();
-        
-        $sqlStr = "SELECT C.id AS club_id
-			FROM cm23_liga AS L
-			INNER JOIN cm23_verein AS C ON C.liga_id=L.id
-			WHERE L.land='$cupName'
-			ORDER BY L.division ASC, C.sa_siege ASC, C.sa_unentschieden ASC, C.sa_niederlagen DESC, sa_tore ASC, sa_gegentore DESC
-			LIMIT 0,$limit";
-        $result = $db->executeQuery($sqlStr);
-        if($row = $result->fetch_assoc()) {
+        $prefix = $websoccer->getConfig("db_prefix");
+        $limit = max(2, (int) $limit);
+
+        $fromTable = $prefix . '_liga AS L INNER JOIN ' . $prefix . '_verein AS C ON C.liga_id = L.id';
+        $whereCondition = "L.land = '%s' AND C.status = '1'
+            ORDER BY L.division ASC,
+                C.sa_punkte DESC,
+                (C.sa_tore - C.sa_gegentore) DESC,
+                C.sa_siege DESC,
+                C.sa_unentschieden DESC,
+                C.sa_tore DESC,
+                C.name ASC";
+
+        $result = $db->querySelect(
+            'C.id AS club_id',
+            $fromTable,
+            $whereCondition,
+            (string) $cupName,
+            '0,' . $limit
+        );
+
+        while ($row = $result->fetch_assoc()) {
             $teams[] = $row;
         }
         $result->free();
-        return $teams;
-        
-    }
-    
-    public static function createFirstCupMatch(WebSoccer $websoccer, DbConnection $db) {
-        
-        $cups = self::getCountryCups($websoccer, $db);
-        
-        foreach ($cups as $cup) {
-        
-        echo"in foreach<br>";
-        
-        $cupId = $cup['id'];
-        $cupName = $cup['name'];
-        
-        $cup_round_number = self::getCupRoundsByCupId($websoccer, $db, $cupId);
-        $team_limit = pow(2,$cup_round_number);
-        $firstmatch_date = self::getFirstMatchDayOfCup($websoccer, $db, $cupId);
-        $teams = self::getTeamsByCupName($websoccer, $db, $cupName, $team_limit);
-        
-        shuffle($teams);
-        
-            echo"<pre>";
-            print_r($teams);
-            echo"</pre>";
-        
-        } // foreach
-        
-    }
-    
-    public static function test() {
-        $hihi = "abc";
-        return $hihi;
-    }
-    
-    
-    
-}
 
+        return $teams;
+    }
+
+    public static function hasFirstRoundMatches(WebSoccer $websoccer, DbConnection $db, $cupName) {
+        $result = $db->querySelect(
+            'COUNT(id) AS matches_count',
+            $websoccer->getConfig("db_prefix") . '_spiel',
+            "spieltyp = 'Pokalspiel' AND pokalname = '%s' AND (pokalrunde = 'Round 1' OR pokalrunde = 'Runde 1')",
+            (string) $cupName
+        );
+        $row = $result->fetch_assoc();
+        $result->free();
+
+        return ($row && (int) $row['matches_count'] > 0);
+    }
+
+    public static function createFirstCupMatch(WebSoccer $websoccer, DbConnection $db) {
+        $created = 0;
+        $skipped = 0;
+        $cups = self::getCountryCups($websoccer, $db);
+
+        foreach ($cups as $cup) {
+            $cupId = (int) $cup['id'];
+            $cupName = (string) $cup['name'];
+
+            if ($cupId <= 0 || $cupName === '') {
+                $skipped++;
+                continue;
+            }
+
+            if (self::hasFirstRoundMatches($websoccer, $db, $cupName)) {
+                $skipped++;
+                continue;
+            }
+
+            $cupRoundNumber = self::getCupRoundsByCupId($websoccer, $db, $cupId);
+            $teamLimit = (int) pow(2, $cupRoundNumber);
+            $firstmatchDate = self::getFirstMatchDayOfCup($websoccer, $db, $cupId);
+
+            if ($cupRoundNumber < 1 || $teamLimit < 2 || $firstmatchDate <= 0) {
+                $skipped++;
+                continue;
+            }
+
+            $teams = self::getTeamsByCupName($websoccer, $db, $cupName, $teamLimit);
+
+            if (count($teams) < 2) {
+                $skipped++;
+                continue;
+            }
+
+            ScheduleGenerator::generateCupMatchSchedule($websoccer, $db, $teams, $firstmatchDate, $cupName);
+            $created++;
+        }
+
+        return array('created' => $created, 'skipped' => $skipped);
+    }
+
+    public static function test() {
+        return 'abc';
+    }
+}
+?>

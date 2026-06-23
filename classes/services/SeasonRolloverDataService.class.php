@@ -498,10 +498,20 @@ class SeasonRolloverDataService {
             UefaDataService::syncLegacyTempTablesFromUefaTemp($websoccer, $db);
         }
 
+        $conmebol = null;
+        if (class_exists('ConmebolDataService')) {
+            try {
+                $conmebol = ConmebolDataService::rebuildQualificationAndTempTables($websoccer, $db);
+            } catch (Exception $e) {
+                $conmebol = array('error' => $e->getMessage());
+            }
+        }
+
         return array(
             'allocation' => $allocation,
             'teams' => $teams,
-            'team_count' => count($teams)
+            'team_count' => count($teams),
+            'conmebol' => $conmebol
         );
     }
 

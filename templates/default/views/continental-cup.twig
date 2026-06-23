@@ -1,0 +1,9 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage(page_id ~ "_navlabel") }}
+{% endblock %}
+
+{% block page_content %}
+{% include 'blocks/european-cup-overview.twig' %}
+{% endblock %}

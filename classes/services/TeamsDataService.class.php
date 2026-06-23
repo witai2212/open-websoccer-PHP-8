@@ -711,11 +711,12 @@ class TeamsDataService {
 		$teams = null;
 		$i = 0;
 		
-		$sqlStr = "SELECT L.name, COUNT(C.id) AS teams
+		$sqlStr = "SELECT L.name, COALESCE(L.continent, 'UEFA') AS continent, COUNT(C.id) AS teams
 					FROM ". $websoccer->getConfig("db_prefix") ."_verein AS C, ". $websoccer->getConfig("db_prefix") ."_land AS L,
 								". $websoccer->getConfig("db_prefix") ."_liga AS LG
-					WHERE C.liga_id=LG.id AND LG.land=L.name
-					GROUP BY LG.land";
+					WHERE C.liga_id=LG.id AND LG.land=L.name AND C.status='1'
+					GROUP BY L.name, L.continent
+					ORDER BY L.continent, L.name";
 	    $result = $db->executeQuery($sqlStr);
 		while ($country = $result->fetch_array()) {
 			$teams[$i] = $country;

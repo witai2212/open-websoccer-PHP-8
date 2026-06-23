@@ -23,6 +23,13 @@
                         filter="true" />
 
                     <column
+                        id="entity_country_continent"
+                        field="continent"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
                         id="entity_country_uefa_s1"
                         field="uefa_s1"
                         type="text"
@@ -84,12 +91,25 @@
                         type="text"
                         sort="true"
                         filter="true" />
+
+                    <column id="entity_country_conmebol_s1" field="conmebol_s1" type="text" sort="true" filter="true" />
+                    <column id="entity_country_conmebol_s2" field="conmebol_s2" type="text" sort="true" filter="true" />
+                    <column id="entity_country_conmebol_s3" field="conmebol_s3" type="text" sort="true" filter="true" />
+                    <column id="entity_country_conmebol_s4" field="conmebol_s4" type="text" sort="true" filter="true" />
+                    <column id="entity_country_conmebol_s5" field="conmebol_s5" type="text" sort="true" filter="true" />
+                    <column id="entity_country_conmebol_lib" field="conmebol_lib" type="text" sort="true" filter="true" />
+                    <column id="entity_country_conmebol_sud" field="conmebol_sud" type="text" sort="true" filter="true" />
+                    <column id="entity_country_conmebol_coeff" field="conmebol_coeff" type="text" sort="true" filter="true" />
                 </overview>
 
                 <editform>
 
                     <field
                         id="name"
+                        type="text"
+                        required="true"  />
+                    <field
+                        id="continent"
                         type="text"
                         required="true"  />
                     <field
@@ -128,6 +148,14 @@
                         id="uefa_coeff"
                         type="number"
                         required="true"  />
+                    <field id="conmebol_s1" type="number" required="true" />
+                    <field id="conmebol_s2" type="number" required="true" />
+                    <field id="conmebol_s3" type="number" required="true" />
+                    <field id="conmebol_s4" type="number" required="true" />
+                    <field id="conmebol_s5" type="number" required="true" />
+                    <field id="conmebol_lib" type="number" required="true" />
+                    <field id="conmebol_sud" type="number" required="true" />
+                    <field id="conmebol_coeff" type="number" required="true" />
 
                 </editform>
             </entity>
@@ -139,8 +167,9 @@
             id="uefa"
             template="uefa-ranking-overview"
             navitem="true"
-            navweight="6"
+            navweight="1"
             model="UEFARankingModel"
+            parentItem="internationalcups"
             role="user">
         </page>
         

@@ -6,13 +6,65 @@
 
 {% block page_content %}
 
+<style type="text/css">
+    .scouting-page-tabs {
+        margin: 15px 0 0 0;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #fff;
+        padding-top: 8px;
+    }
+
+    #scouting-tabs-anchor {
+        position: relative;
+        top: -10px;
+    }
+
+    .scouting-tab-content {
+        padding-top: 15px;
+    }
+
+    .scouting-section {
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: #fff;
+    }
+
+    .scouting-section h4:first-child {
+        margin-top: 0;
+    }
+
+    .scouting-subsection {
+        margin-top: 20px;
+    }
+
+    .scouting-subsection h5 {
+        margin-bottom: 10px;
+    }
+
+    .scouting-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .scouting-section-actions {
+        margin-top: 10px;
+        text-align: right;
+    }
+</style>
+
+<a id="scouting-top"></a>
+
 <h3>{{ i18n.getMessage("scouting_title") }}</h3>
 <p>{{ i18n.getMessage("scouting_intro") }}</p>
 
-<p>
+<div class="well well-small">
     <strong>{{ i18n.getMessage("scouting_current_budget") }}:</strong>
     {{ team_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
-</p>
+</div>
 
 <div class="alert alert-info">
     <i class="icon-info-sign"></i>
@@ -20,374 +72,471 @@
     {{ i18n.getMessage("scouting_info_matchday_costs") }}
 </div>
 
-<hr>
+<div id="scouting-tabs-anchor"></div>
+<ul class="nav nav-tabs scouting-page-tabs">
+    <li class="active">
+        <a href="#scouting-department" data-toggle="tab"><i class="icon-home"></i> {{ i18n.getMessage("scouting_department") }}</a>
+    </li>
+    <li>
+        <a href="#scouting-scouts" data-toggle="tab"><i class="icon-user"></i> Scouts</a>
+    </li>
+    <li>
+        <a href="#scouting-camps" data-toggle="tab"><i class="icon-search"></i> Camps</a>
+    </li>
+</ul>
 
-<h4>{{ i18n.getMessage("scouting_department") }}</h4>
+<div class="tab-content scouting-tab-content">
+<div id="scouting-department" class="tab-pane active scouting-section">
+    <h4>{{ i18n.getMessage("scouting_department") }}</h4>
 
-{% if department.id is not defined %}
-    <p>{{ i18n.getMessage("scouting_department_missing") }}</p>
-    <p>{{ i18n.getMessage("scouting_department_missing_info") }}</p>
+    {% if department.id is not defined %}
+        <p>{{ i18n.getMessage("scouting_department_missing") }}</p>
+        <p>{{ i18n.getMessage("scouting_department_missing_info") }}</p>
 
-    {% if next_department_level.level is defined %}
-        <table class="table table-striped">
-            <tr>
-                <th>{{ i18n.getMessage("scouting_department_level") }}</th>
-                <td>{{ next_department_level.level }} - {{ next_department_level.name }}</td>
-            </tr>
-            <tr>
-                <th>{{ i18n.getMessage("scouting_department_build_cost") }}</th>
-                <td>{{ next_department_level.build_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-            </tr>
-            <tr>
-                <th>{{ i18n.getMessage("scouting_department_maintenance_fee") }}</th>
-                <td>{{ next_department_level.maintenance_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-            </tr>
-            <tr>
-                <th>{{ i18n.getMessage("scouting_department_max_scouts") }}</th>
-                <td>{{ next_department_level.max_scouts }}</td>
-            </tr>
-            <tr>
-                <th>{{ i18n.getMessage("scouting_department_max_camps") }}</th>
-                <td>{{ next_department_level.max_camps }}</td>
-            </tr>
-        </table>
-        <a class="btn btn-primary" href="?page=scouting&action=build-scouting-department">
-            <i class="icon-plus icon-white"></i> {{ i18n.getMessage("build-scouting-department") }}
-        </a>
-    {% endif %}
-{% else %}
-    <table class="table table-striped">
-        <tr>
-            <th>{{ i18n.getMessage("scouting_department_level") }}</th>
-            <td>{{ department.level }} - {{ department.level_name }}</td>
-        </tr>
-        <tr>
-            <th>{{ i18n.getMessage("scouting_department_status") }}</th>
-            <td>
-                {% if department.status == '1' %}
-                    <span class="label label-success">{{ i18n.getMessage("scouting_department_active") }}</span>
-                {% else %}
-                    <span class="label">{{ i18n.getMessage("scouting_department_inactive") }}</span>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>{{ i18n.getMessage("scouting_department_maintenance_fee") }}</th>
-            <td>{{ department.maintenance_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-        </tr>
-        <tr>
-            <th>{{ i18n.getMessage("scouting_department_max_scouts") }}</th>
-            <td>{{ team_scouts|length }} / {{ department.max_scouts }}</td>
-        </tr>
-        <tr>
-            <th>{{ i18n.getMessage("scouting_department_max_camps") }}</th>
-            <td>{{ active_camps_count }} / {{ max_camps }}</td>
-        </tr>
-    </table>
-
-    {% if next_department_level.level is defined %}
-        <p>
-            <strong>{{ i18n.getMessage("scouting_department_next_level") }}:</strong>
-            {{ next_department_level.level }} - {{ next_department_level.name }}
-            ({{ next_department_level.build_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }})
-        </p>
-        <a class="btn" href="?page=scouting&action=upgrade-scouting-department">
-            <i class="icon-arrow-up"></i> {{ i18n.getMessage("upgrade-scouting-department") }}
-        </a>
+        {% if next_department_level.level is defined %}
+            <div class="scouting-table-wrapper">
+                <table class="table table-striped">
+                    <tr>
+                        <th>{{ i18n.getMessage("scouting_department_level") }}</th>
+                        <td>{{ next_department_level.level }} - {{ next_department_level.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ i18n.getMessage("scouting_department_build_cost") }}</th>
+                        <td>{{ next_department_level.build_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ i18n.getMessage("scouting_department_maintenance_fee") }}</th>
+                        <td>{{ next_department_level.maintenance_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ i18n.getMessage("scouting_department_max_scouts") }}</th>
+                        <td>{{ next_department_level.max_scouts }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ i18n.getMessage("scouting_department_max_camps") }}</th>
+                        <td>{{ next_department_level.max_camps }}</td>
+                    </tr>
+                </table>
+            </div>
+            <a class="btn btn-primary" href="?page=scouting&action=build-scouting-department">
+                <i class="icon-plus icon-white"></i> {{ i18n.getMessage("build-scouting-department") }}
+            </a>
+        {% endif %}
     {% else %}
-        <p>{{ i18n.getMessage("scouting_department_no_next_level") }}</p>
-    {% endif %}
-{% endif %}
-
-<hr>
-
-<h4>{{ i18n.getMessage("scouting_team_scouts") }}</h4>
-
-{% if team_scouts|length == 0 %}
-    <p>{{ i18n.getMessage("no_scouts_hired") }}</p>
-{% else %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>{{ i18n.getMessage("scouting_name") }}</th>
-                <th>{{ i18n.getMessage("scouting_nation") }}</th>
-                <th>{{ i18n.getMessage("scouting_profile") }}</th>
-                <th>{{ i18n.getMessage("scouting_speciality") }}</th>
-                <th>{{ i18n.getMessage("scouting_team_matches") }}</th>
-                <th>{{ i18n.getMessage("scouting_fee") }}</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for scout in team_scouts %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ scout.name }}</td>
-                <td>{{ scout.nation }}</td>
-                <td>{{ i18n.getMessage(scout.profile) }}</td>
-                <td>{{ scout.speciality }}</td>
-                <td>{{ scout.team_matches }}</td>
-                <td>{{ scout.fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-                <td>
-                    <a class="btn btn-mini" href="?page=scouting&id={{ scout.id }}&action=fire-scout">
-                        <i class="icon-thumbs-down"></i> {{ i18n.getMessage("fire-scout") }}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
-
-<p><i class="icon-info-sign"></i> {{ i18n.getMessage("scouting_competence_hidden") }}</p>
-
-{% if department.id is defined %}
-    <h4>{{ i18n.getMessage("scouting_free_scouts") }}</h4>
-    <p><i class="icon-info-sign"></i> {{ i18n.getMessage("scouting_hire_fee_info") }}</p>
-
-    {% if free_scouts|length == 0 %}
-        <p>{{ i18n.getMessage("no_free_scouts") }}</p>
-    {% elseif can_hire == 0 %}
-        <p>{{ i18n.getMessage("scouting_max_scouts_reached") }}</p>
-    {% else %}
-        <table class="table table-striped">
-            <thead>
+        <div class="scouting-table-wrapper">
+            <table class="table table-striped">
                 <tr>
-                    <th>#</th>
-                    <th>{{ i18n.getMessage("scouting_name") }}</th>
-                    <th>{{ i18n.getMessage("scouting_nation") }}</th>
-                    <th>{{ i18n.getMessage("scouting_profile") }}</th>
-                    <th>{{ i18n.getMessage("scouting_speciality") }}</th>
-                    <th>{{ i18n.getMessage("scouting_fee") }}</th>
-                    <th>{{ i18n.getMessage("scouting_hire_fee") }}</th>
-                    <th>&nbsp;</th>
+                    <th>{{ i18n.getMessage("scouting_department_level") }}</th>
+                    <td>{{ department.level }} - {{ department.level_name }}</td>
                 </tr>
-            </thead>
-            <tbody>
-            {% for free in free_scouts %}
                 <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ free.name }}</td>
-                    <td>{{ free.nation }}</td>
-                    <td>{{ i18n.getMessage(free.profile) }}</td>
-                    <td>{{ free.speciality }}</td>
-                    <td>{{ free.fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-                    <td>{{ free.hire_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <th>{{ i18n.getMessage("scouting_department_status") }}</th>
                     <td>
-                        {% if free.speciality_taken %}
-                            <span class="muted">{{ i18n.getMessage("scouting_scout_speciality_already_covered") }}</span>
+                        {% if department.status == '1' %}
+                            <span class="label label-success">{{ i18n.getMessage("scouting_department_active") }}</span>
                         {% else %}
-                            <a class="btn btn-mini" href="?page=scouting&id={{ free.id }}&action=hire-scout">
-                                <i class="icon-thumbs-up"></i> {{ i18n.getMessage("hire-scout") }}
-                            </a>
+                            <span class="label">{{ i18n.getMessage("scouting_department_inactive") }}</span>
                         {% endif %}
                     </td>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-{% endif %}
-
-<hr>
-
-<h4>{{ i18n.getMessage("scouting_active_camps") }}</h4>
-
-{% if department.id is not defined %}
-    <p>{{ i18n.getMessage("scouting_camp_requires_department") }}</p>
-{% else %}
-    {% if team_camps|length == 0 %}
-        <p>{{ i18n.getMessage("scouting_no_camps") }}</p>
-    {% else %}
-        <table class="table table-striped">
-            <thead>
                 <tr>
-                    <th>{{ i18n.getMessage("scouting_camp_location") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_scout") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_position") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_age_range") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_strength_range") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_budget_range") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_fee_per_matchday") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_next_proposal") }}</th>
-                    <th>{{ i18n.getMessage("scouting_camp_status") }}</th>
-                    <th>&nbsp;</th>
+                    <th>{{ i18n.getMessage("scouting_department_maintenance_fee") }}</th>
+                    <td>{{ department.maintenance_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
                 </tr>
-            </thead>
-            <tbody>
-            {% for camp in team_camps %}
                 <tr>
-                    <td>{{ camp.location_name }}</td>
-                    <td>{{ camp.scout_name }}</td>
-                    <td>{% if camp.position %}{{ camp.position }}{% else %}{{ i18n.getMessage("scouting_camp_any_position") }}{% endif %}</td>
-                    <td>{{ camp.age_min }} - {{ camp.age_max }}</td>
-                    <td>{{ camp.strength_min }} - {{ camp.strength_max }}</td>
-                    <td>
-                        {% if camp.budget_max > 0 %}
-                            {{ camp.budget_min|number_format(0, ',', ' ') }} - {{ camp.budget_max|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
-                        {% else %}
-                            {{ i18n.getMessage("scouting_unknown") }}
-                        {% endif %}
-                    </td>
-                    <td>{{ camp.fee_per_matchday|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-                    <td>{{ camp.matches_until_next_proposal }} {{ i18n.getMessage("scouting_camp_matches") }}</td>
-                    <td>
-                        {% if camp.status == '1' %}
-                            <span class="label label-success">{{ i18n.getMessage("scouting_camp_active") }}</span>
-                        {% else %}
-                            <span class="label">{{ i18n.getMessage("scouting_camp_inactive") }}</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if camp.status == '1' %}
-                            <a class="btn btn-mini" href="?page=scouting&id={{ camp.id }}&action=close-scouting-camp">
-                                <i class="icon-remove"></i> {{ i18n.getMessage("close-scouting-camp") }}
-                            </a>
-                        {% endif %}
-                    </td>
+                    <th>{{ i18n.getMessage("scouting_department_max_scouts") }}</th>
+                    <td>{{ team_scouts|length }} / {{ department.max_scouts }}</td>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                <tr>
+                    <th>{{ i18n.getMessage("scouting_department_max_camps") }}</th>
+                    <td>{{ active_camps_count }} / {{ max_camps }}</td>
+                </tr>
+            </table>
+        </div>
+
+        {% if next_department_level.level is defined %}
+            <p>
+                <strong>{{ i18n.getMessage("scouting_department_next_level") }}:</strong>
+                {{ next_department_level.level }} - {{ next_department_level.name }}
+                ({{ next_department_level.build_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }})
+            </p>
+            <a class="btn" href="?page=scouting&action=upgrade-scouting-department">
+                <i class="icon-arrow-up"></i> {{ i18n.getMessage("upgrade-scouting-department") }}
+            </a>
+        {% else %}
+            <p>{{ i18n.getMessage("scouting_department_no_next_level") }}</p>
+        {% endif %}
     {% endif %}
 
-    <h4>{{ i18n.getMessage("scouting_create_camp") }}</h4>
+    <div class="scouting-section-actions">
+        <a href="#scouting-top">Nach oben</a>
+    </div>
+</div>
 
-    {% if team_scouts|length == 0 %}
-        <p>{{ i18n.getMessage("scouting_camp_requires_scout") }}</p>
-    {% elseif camp_locations|length == 0 %}
-        <p>{{ i18n.getMessage("scouting_camp_no_locations") }}</p>
-    {% elseif max_camps > 0 and active_camps_count >= max_camps %}
-        <p>{{ i18n.getMessage("scouting_camp_limit_reached") }}</p>
-    {% else %}
-        <form action="?page=scouting" method="post" class="form-horizontal">
-            <input type="hidden" name="action" value="create-scouting-camp" />
+<div id="scouting-scouts" class="tab-pane scouting-section">
+    <h4>Scouts</h4>
 
-            <div class="control-group">
-                <label class="control-label" for="location_id">{{ i18n.getMessage("scouting_camp_location") }}</label>
-                <div class="controls">
-                    <select id="location_id" name="location_id">
-                        {% for location in camp_locations %}
-                            <option value="{{ location.id }}">
-                                {{ location.name }} - {{ location.base_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
-                            </option>
+    <div class="scouting-subsection">
+        <h5>{{ i18n.getMessage("scouting_team_scouts") }}</h5>
+
+        {% if team_scouts|length == 0 %}
+            <p>{{ i18n.getMessage("no_scouts_hired") }}</p>
+        {% else %}
+            <div class="scouting-table-wrapper">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ i18n.getMessage("scouting_name") }}</th>
+                            <th>{{ i18n.getMessage("scouting_nation") }}</th>
+                            <th>{{ i18n.getMessage("scouting_profile") }}</th>
+                            <th>{{ i18n.getMessage("scouting_speciality") }}</th>
+                            <th>{{ i18n.getMessage("scouting_team_matches") }}</th>
+                            <th>{{ i18n.getMessage("scouting_fee") }}</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for scout in team_scouts %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ scout.name }}</td>
+                            <td>{{ scout.nation }}</td>
+                            <td>{{ i18n.getMessage(scout.profile) }}</td>
+                            <td>{{ scout.speciality }}</td>
+                            <td>{{ scout.team_matches }}</td>
+                            <td>{{ scout.fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>
+                                <a class="btn btn-mini" href="?page=scouting&id={{ scout.id }}&action=fire-scout">
+                                    <i class="icon-thumbs-down"></i> {{ i18n.getMessage("fire-scout") }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <p><i class="icon-info-sign"></i> {{ i18n.getMessage("scouting_competence_hidden") }}</p>
+    </div>
+
+    {% if department.id is defined %}
+        <div class="scouting-subsection">
+            <h5>{{ i18n.getMessage("scouting_free_scouts") }}</h5>
+            <p><i class="icon-info-sign"></i> {{ i18n.getMessage("scouting_hire_fee_info") }}</p>
+
+            {% if free_scouts|length == 0 %}
+                <p>{{ i18n.getMessage("no_free_scouts") }}</p>
+            {% elseif can_hire == 0 %}
+                <p>{{ i18n.getMessage("scouting_max_scouts_reached") }}</p>
+            {% else %}
+                <div class="scouting-table-wrapper">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ i18n.getMessage("scouting_name") }}</th>
+                                <th>{{ i18n.getMessage("scouting_nation") }}</th>
+                                <th>{{ i18n.getMessage("scouting_profile") }}</th>
+                                <th>{{ i18n.getMessage("scouting_speciality") }}</th>
+                                <th>{{ i18n.getMessage("scouting_fee") }}</th>
+                                <th>{{ i18n.getMessage("scouting_hire_fee") }}</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for free in free_scouts %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ free.name }}</td>
+                                <td>{{ free.nation }}</td>
+                                <td>{{ i18n.getMessage(free.profile) }}</td>
+                                <td>{{ free.speciality }}</td>
+                                <td>{{ free.fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                                <td>{{ free.hire_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                                <td>
+                                    {% if free.speciality_taken %}
+                                        <span class="muted">{{ i18n.getMessage("scouting_scout_speciality_already_covered") }}</span>
+                                    {% else %}
+                                        <a class="btn btn-mini" href="?page=scouting&id={{ free.id }}&action=hire-scout">
+                                            <i class="icon-thumbs-up"></i> {{ i18n.getMessage("hire-scout") }}
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
                         {% endfor %}
-                    </select>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="scout_id">{{ i18n.getMessage("scouting_camp_scout") }}</label>
-                <div class="controls">
-                    <select id="scout_id" name="scout_id">
-                        {% for scout in team_scouts %}
-                            <option value="{{ scout.id }}">{{ scout.name }} ({{ scout.speciality }})</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="position">{{ i18n.getMessage("scouting_camp_position") }}</label>
-                <div class="controls">
-                    <select id="position" name="position">
-                        {% for positionValue, positionLabel in position_options %}
-                            <option value="{{ positionValue }}">{{ i18n.getMessage(positionLabel) }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ i18n.getMessage("scouting_camp_age_range") }}</label>
-                <div class="controls">
-                    <input type="number" name="age_min" value="16" min="16" max="45" class="input-mini" />
-                    -
-                    <input type="number" name="age_max" value="30" min="16" max="45" class="input-mini" />
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ i18n.getMessage("scouting_camp_strength_range") }}</label>
-                <div class="controls">
-                    <input type="number" name="strength_min" value="20" min="1" max="99" class="input-mini" />
-                    -
-                    <input type="number" name="strength_max" value="80" min="1" max="99" class="input-mini" />
-                    <span class="help-inline">{{ i18n.getMessage("scouting_camp_strength_hidden_info") }}</span>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ i18n.getMessage("scouting_camp_budget_range") }}</label>
-                <div class="controls">
-                    <input type="number" name="budget_min" value="0" min="0" class="input-small" />
-                    -
-                    <input type="number" name="budget_max" value="0" min="0" class="input-small" />
-                    <span class="help-inline">0 = {{ i18n.getMessage("scouting_unknown") }}</span>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">
-                    <i class="icon-search icon-white"></i> {{ i18n.getMessage("create-scouting-camp") }}
-                </button>
-            </div>
-        </form>
+            {% endif %}
+        </div>
     {% endif %}
-{% endif %}
 
-<hr>
+    <div class="scouting-section-actions">
+        <a href="#scouting-top">Nach oben</a>
+    </div>
+</div>
 
-<h4>{{ i18n.getMessage("scouting_open_proposals") }}</h4>
+<div id="scouting-camps" class="tab-pane scouting-section">
+    <h4>Camps</h4>
 
-{% if open_proposals|length == 0 %}
-    <p>{{ i18n.getMessage("scouting_no_proposals") }}</p>
-{% else %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{{ i18n.getMessage("scouting_proposal_player") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_age") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_nation") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_position") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_strength") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_potential") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_talent") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_transfer_fee") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_salary") }}</th>
-                <th>{{ i18n.getMessage("scouting_proposal_expires_after_matches") }}</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for proposal in open_proposals %}
-            <tr>
-                <td>
-                    <strong>{{ proposal.firstname }} {{ proposal.lastname }}</strong><br>
-                    <small>{{ proposal.reported_summary }}</small>
-                </td>
-                <td>{{ proposal.age }}</td>
-                <td>{{ proposal.nation }}</td>
-                <td>{{ proposal.position }}{% if proposal.position_main %} / {{ proposal.position_main }}{% endif %}</td>
-                <td>{{ proposal.reported_strength }}</td>
-                <td>{{ proposal.reported_potential }}</td>
-                <td>{{ proposal.reported_talent }}</td>
-                <td>{{ proposal.transfer_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-                <td>{{ proposal.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-                <td>{{ proposal.expires_after_matches }} {{ i18n.getMessage("scouting_camp_matches") }}</td>
-                <td>
-                    <a class="btn btn-mini btn-success" href="?page=scouting&id={{ proposal.id }}&action=accept-scouting-proposal">
-                        <i class="icon-ok icon-white"></i> {{ i18n.getMessage("accept-scouting-proposal") }}
-                    </a>
-                    <a class="btn btn-mini" href="?page=scouting&id={{ proposal.id }}&action=reject-scouting-proposal">
-                        <i class="icon-remove"></i> {{ i18n.getMessage("reject-scouting-proposal") }}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
+    <div class="scouting-subsection">
+        <h5>{{ i18n.getMessage("scouting_active_camps") }}</h5>
+
+        {% if department.id is not defined %}
+            <p>{{ i18n.getMessage("scouting_camp_requires_department") }}</p>
+        {% else %}
+            {% if team_camps|length == 0 %}
+                <p>{{ i18n.getMessage("scouting_no_camps") }}</p>
+            {% else %}
+                <div class="scouting-table-wrapper">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ i18n.getMessage("scouting_camp_location") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_scout") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_position") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_age_range") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_strength_range") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_budget_range") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_fee_per_matchday") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_next_proposal") }}</th>
+                                <th>{{ i18n.getMessage("scouting_camp_status") }}</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for camp in team_camps %}
+                            <tr>
+                                <td>{{ camp.location_name }}</td>
+                                <td>{{ camp.scout_name }}</td>
+                                <td>{% if camp.position %}{{ camp.position }}{% else %}{{ i18n.getMessage("scouting_camp_any_position") }}{% endif %}</td>
+                                <td>{{ camp.age_min }} - {{ camp.age_max }}</td>
+                                <td>{{ camp.strength_min }} - {{ camp.strength_max }}</td>
+                                <td>
+                                    {% if camp.budget_max > 0 %}
+                                        {{ camp.budget_min|number_format(0, ',', ' ') }} - {{ camp.budget_max|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                                    {% else %}
+                                        {{ i18n.getMessage("scouting_unknown") }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ camp.fee_per_matchday|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                                <td>{{ camp.matches_until_next_proposal }} {{ i18n.getMessage("scouting_camp_matches") }}</td>
+                                <td>
+                                    {% if camp.status == '1' %}
+                                        <span class="label label-success">{{ i18n.getMessage("scouting_camp_active") }}</span>
+                                    {% else %}
+                                        <span class="label">{{ i18n.getMessage("scouting_camp_inactive") }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if camp.status == '1' %}
+                                        <a class="btn btn-mini" href="?page=scouting&id={{ camp.id }}&action=close-scouting-camp">
+                                            <i class="icon-remove"></i> {{ i18n.getMessage("close-scouting-camp") }}
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if department.id is defined %}
+        <div class="scouting-subsection">
+            <h5>{{ i18n.getMessage("scouting_create_camp") }}</h5>
+
+            {% if team_scouts|length == 0 %}
+                <p>{{ i18n.getMessage("scouting_camp_requires_scout") }}</p>
+            {% elseif camp_locations|length == 0 %}
+                <p>{{ i18n.getMessage("scouting_camp_no_locations") }}</p>
+            {% elseif max_camps > 0 and active_camps_count >= max_camps %}
+                <p>{{ i18n.getMessage("scouting_camp_limit_reached") }}</p>
+            {% else %}
+                <form action="?page=scouting" method="post" class="form-horizontal">
+                    <input type="hidden" name="action" value="create-scouting-camp" />
+
+                    <div class="control-group">
+                        <label class="control-label" for="location_id">{{ i18n.getMessage("scouting_camp_location") }}</label>
+                        <div class="controls">
+                            <select id="location_id" name="location_id">
+                                {% for location in camp_locations %}
+                                    <option value="{{ location.id }}">
+                                        {{ location.name }} - {{ location.base_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="scout_id">{{ i18n.getMessage("scouting_camp_scout") }}</label>
+                        <div class="controls">
+                            <select id="scout_id" name="scout_id">
+                                {% for scout in team_scouts %}
+                                    <option value="{{ scout.id }}">{{ scout.name }} ({{ scout.speciality }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="position">{{ i18n.getMessage("scouting_camp_position") }}</label>
+                        <div class="controls">
+                            <select id="position" name="position">
+                                {% for positionValue, positionLabel in position_options %}
+                                    <option value="{{ positionValue }}">{{ i18n.getMessage(positionLabel) }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">{{ i18n.getMessage("scouting_camp_age_range") }}</label>
+                        <div class="controls">
+                            <input type="number" name="age_min" value="16" min="16" max="45" class="input-mini" />
+                            -
+                            <input type="number" name="age_max" value="30" min="16" max="45" class="input-mini" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">{{ i18n.getMessage("scouting_camp_strength_range") }}</label>
+                        <div class="controls">
+                            <input type="number" name="strength_min" value="20" min="1" max="99" class="input-mini" />
+                            -
+                            <input type="number" name="strength_max" value="80" min="1" max="99" class="input-mini" />
+                            <span class="help-inline">{{ i18n.getMessage("scouting_camp_strength_hidden_info") }}</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">{{ i18n.getMessage("scouting_camp_budget_range") }}</label>
+                        <div class="controls">
+                            <input type="number" name="budget_min" value="0" min="0" class="input-small" />
+                            -
+                            <input type="number" name="budget_max" value="0" min="0" class="input-small" />
+                            <span class="help-inline">0 = {{ i18n.getMessage("scouting_unknown") }}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="icon-search icon-white"></i> {{ i18n.getMessage("create-scouting-camp") }}
+                        </button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="scouting-subsection">
+        <h5>{{ i18n.getMessage("scouting_open_proposals") }}</h5>
+
+        {% if open_proposals|length == 0 %}
+            <p>{{ i18n.getMessage("scouting_no_proposals") }}</p>
+        {% else %}
+            <div class="scouting-table-wrapper">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{ i18n.getMessage("scouting_proposal_player") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_age") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_nation") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_position") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_strength") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_potential") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_talent") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_transfer_fee") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_salary") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_expires_after_matches") }}</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for proposal in open_proposals %}
+                        <tr>
+                            <td>
+                                <strong>{{ proposal.firstname }} {{ proposal.lastname }}</strong><br>
+                                <small>{{ proposal.reported_summary }}</small>
+                            </td>
+                            <td>{{ proposal.age }}</td>
+                            <td>{{ proposal.nation }}</td>
+                            <td>{{ proposal.position }}{% if proposal.position_main %} / {{ proposal.position_main }}{% endif %}</td>
+                            <td>{{ proposal.reported_strength }}</td>
+                            <td>{{ proposal.reported_potential }}</td>
+                            <td>{{ proposal.reported_talent }}</td>
+                            <td>{{ proposal.transfer_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>{{ proposal.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>{{ proposal.expires_after_matches }} {{ i18n.getMessage("scouting_camp_matches") }}</td>
+                            <td>
+                                <a class="btn btn-mini btn-success" href="?page=scouting&id={{ proposal.id }}&action=accept-scouting-proposal">
+                                    <i class="icon-ok icon-white"></i> {{ i18n.getMessage("accept-scouting-proposal") }}
+                                </a>
+                                <a class="btn btn-mini" href="?page=scouting&id={{ proposal.id }}&action=reject-scouting-proposal">
+                                    <i class="icon-remove"></i> {{ i18n.getMessage("reject-scouting-proposal") }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="scouting-section-actions">
+        <a href="#scouting-top">Nach oben</a>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+    (function() {
+        if (typeof jQuery === 'undefined') {
+            return;
+        }
+
+        jQuery(function($) {
+            var $tabs = $('.scouting-page-tabs a[href^="#scouting-"]');
+
+            function scrollToScoutingTabs() {
+                var $anchor = $('#scouting-tabs-anchor');
+
+                if ($anchor.length === 0) {
+                    return;
+                }
+
+                $('html, body').stop(true).animate({
+                    scrollTop: Math.max(0, $anchor.offset().top)
+                }, 150);
+            }
+
+            $tabs.on('click', function(event) {
+                var target = $(this).attr('href');
+
+                if (!target || $(target).length === 0) {
+                    return;
+                }
+
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                $('.scouting-page-tabs li').removeClass('active');
+                $(this).parent('li').addClass('active');
+
+                $('.scouting-tab-content > .tab-pane').removeClass('active');
+                $(target).addClass('active');
+
+                scrollToScoutingTabs();
+            });
+        });
+    })();
+</script>
 
 {% endblock %}

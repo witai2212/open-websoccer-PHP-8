@@ -114,7 +114,10 @@
 	<message id="youthmarketplace_no_players">Derzeit werden keine Jugendspieler zum Kauf angeboten.</message>
 	
 	<message id="youth-formation_navlabel">Aufstellung</message>
+	<message id="youthformation_setup_balanced">Ausgeglichen automatisch aufstellen</message>
 	<message id="youthformation_err_matchexpired">Für das ausgewählte Spiel kann keine Aufstellung mehr abgegeben werden, da es bereits simuliert ist oder kurz vor der Simulation steht.</message>
+	<message id="youthformation_err_invalidplayer">Mindestens ein ausgewählter Jugendspieler gehört nicht zu Ihrem Jugendkader oder erfüllt das Mindestalter nicht.</message>
+	<message id="youthformation_err_invalidposition">Mindestens eine ausgewählte Position ist ungültig.</message>
 
 	<message id="youthteam_salarypayment_subject">Gehaltszahlung Jugendkader</message>
 	

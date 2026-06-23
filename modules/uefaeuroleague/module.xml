@@ -9,7 +9,7 @@
             navitem="true"
             navweight="3"
             model="UEFAEuroLeagueModel"
-            parentItem="uefa"
+            parentItem="internationalcups"
             role="user">
         </page>
     </pages>

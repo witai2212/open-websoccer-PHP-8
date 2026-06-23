@@ -1,1 +1,1 @@
-DB Error: Connection refused
+DB Error: php_network_getaddresses: getaddrinfo for moritzschneider.net.mysql.service.one.com failed: No address associated with hostname

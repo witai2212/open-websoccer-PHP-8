@@ -125,8 +125,12 @@ class YouthPlayersDataService {
 	public static function getYouthPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = "ASC") {
 		$columns = "*";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthplayer";
-		$whereCondition = "team_id = %d ORDER BY position ". $positionSort . ", lastname ASC, firstname ASC";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 50);
+		$minAge = (int) $websoccer->getConfig("youth_scouting_min_age");
+		if ($minAge <= 0) {
+			$minAge = 14;
+		}
+		$whereCondition = "team_id = %d AND age >= %d ORDER BY position ". $positionSort . ", lastname ASC, firstname ASC";
+		$result = $db->querySelect($columns, $fromTable, $whereCondition, array($clubId, $minAge), 50);
 
 		$players = array();
 		while ($player = $result->fetch_array()) {

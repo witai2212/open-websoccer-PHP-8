@@ -81,6 +81,45 @@ class YouthMatchFormationModel implements IModel {
 		
 		$setup = $this->getFormationSetup($formation);
 		
+		// select youth players by balanced automatic setup
+		$criteria = $this->_websoccer->getRequestParameter("preselect");
+		if ($criteria !== NULL && $criteria == "balanced") {
+			$proposal = YouthFormationDataService::getFormationProposalForTeamId($this->_websoccer, $this->_db, $clubId, $setup);
+			
+			for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
+				$playerIndex = $playerNo - 1;
+				if (isset($proposal["players"][$playerIndex])) {
+					$formation["player" . $playerNo] = $proposal["players"][$playerIndex]["id"];
+					$formation["player" . $playerNo . "_pos"] = $proposal["players"][$playerIndex]["position"];
+				} else {
+					$formation["player" . $playerNo] = "";
+					$formation["player" . $playerNo . "_pos"] = "";
+				}
+			}
+			
+			for ($benchNo = 1; $benchNo <= 5; $benchNo++) {
+				$benchIndex = $benchNo - 1;
+				$formation["bench" . $benchNo] = isset($proposal["bench"][$benchIndex]) ? $proposal["bench"][$benchIndex]["id"] : "";
+			}
+			
+			for ($subNo = 1; $subNo <= 3; $subNo++) {
+				$subIndex = $subNo - 1;
+				if (isset($proposal["substitutions"][$subIndex])) {
+					$formation["sub" . $subNo . "_out"] = $proposal["substitutions"][$subIndex]["out"];
+					$formation["sub" . $subNo . "_in"] = $proposal["substitutions"][$subIndex]["in"];
+					$formation["sub" . $subNo . "_minute"] = $proposal["substitutions"][$subIndex]["minute"];
+					$formation["sub" . $subNo . "_condition"] = $proposal["substitutions"][$subIndex]["condition"];
+					$formation["sub" . $subNo . "_position"] = $proposal["substitutions"][$subIndex]["position"];
+				} else {
+					$formation["sub" . $subNo . "_out"] = "";
+					$formation["sub" . $subNo . "_in"] = "";
+					$formation["sub" . $subNo . "_minute"] = "";
+					$formation["sub" . $subNo . "_condition"] = "";
+					$formation["sub" . $subNo . "_position"] = "";
+				}
+			}
+		}
+		
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
 			// set player from request
 			if ($this->_websoccer->getRequestParameter("player" . $playerNo)) {
@@ -101,11 +140,7 @@ class YouthMatchFormationModel implements IModel {
 	private function getFormationSetup($formation) {
 		
 		// default setup
-		$setup = array("defense" => 4,
-						"dm" => 1,
-						"midfield" => 3,
-						"om" => 1,
-						"striker" => 1);
+		$setup = YouthFormationDataService::getDefaultSetup();
 		
 		// override by user input
 		if ($this->_websoccer->getRequestParameter("formation_defense") !== NULL) {
@@ -114,6 +149,7 @@ class YouthMatchFormationModel implements IModel {
 			$setup["midfield"] = (int) $this->_websoccer->getRequestParameter("formation_midfield");
 			$setup["om"] = (int) $this->_websoccer->getRequestParameter("formation_offensivemidfield");
 			$setup["striker"] = (int) $this->_websoccer->getRequestParameter("formation_forward");
+			$setup["outsideforward"] = (int) $this->_websoccer->getRequestParameter("formation_outsideforward");
 			
 			// override by request when page is re-loaded after submitting the main form
 		} elseif ($this->_websoccer->getRequestParameter("setup") !== NULL) {
@@ -125,6 +161,7 @@ class YouthMatchFormationModel implements IModel {
 			$setup["midfield"] = (int) $setupParts[2];
 			$setup["om"] = (int) $setupParts[3];
 			$setup["striker"] = (int) $setupParts[4];
+			$setup["outsideforward"] = (count($setupParts) > 5) ? (int) $setupParts[5] : 0;
 			
 			// override by previously saved formation
 		} else if (isset($formation["setup"]) && strlen($formation["setup"])) {
@@ -135,45 +172,12 @@ class YouthMatchFormationModel implements IModel {
 			$setup["midfield"] = (int) $setupParts[2];
 			$setup["om"] = (int) $setupParts[3];
 			$setup["striker"] = (int) $setupParts[4];
+			$setup["outsideforward"] = (count($setupParts) > 5) ? (int) $setupParts[5] : 0;
 		}
 		
-		// alter setup if invalid
-		$altered = FALSE;
-		while (($noOfPlayers = $setup["defense"] + $setup["dm"] + $setup["midfield"] + $setup["om"] + $setup["striker"]) != 10) {
-			
-			// reduce players
-			if ($noOfPlayers > 10) {
-				
-				if ($setup["striker"] > 1) {
-					$setup["striker"] = $setup["striker"] - 1;
-				} elseif ($setup["om"] > 1) {
-					$setup["om"] = $setup["om"] - 1;
-				} elseif ($setup["dm"] > 1) {
-					$setup["dm"] = $setup["dm"] - 1;
-				} elseif ($setup["midfield"] > 2) {
-					$setup["midfield"] = $setup["midfield"] - 1;
-				} else {
-					$setup["defense"] = $setup["defense"] - 1;
-				}
-				
-				// increase
-			} else {
-				
-				if ($setup["defense"] < 4) {
-					$setup["defense"] = $setup["defense"] + 1;
-				} else if ($setup["midfield"] < 4) {
-					$setup["midfield"] = $setup["midfield"] + 1;
-				} else if ($setup["dm"] < 2) {
-					$setup["dm"] = $setup["dm"] + 1;
-				} else if ($setup["om"] < 2) {
-					$setup["om"] = $setup["om"] + 1;
-				} else {
-					$setup["striker"] = $setup["striker"] + 1;
-				}
-			}
-			
-			$altered = TRUE;
-		}
+		$setup = YouthFormationDataService::normalizeSetup($setup);
+		$altered = $setup["_altered"];
+		unset($setup["_altered"]);
 		
 		if ($altered) {
 			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_WARNING, 
@@ -209,7 +213,8 @@ class YouthMatchFormationModel implements IModel {
 				"dm" => 0,
 				"midfield" => 0,
 				"om" => 0,
-				"striker" => 0);
+				"striker" => 0,
+				"outsideforward" => 0);
 		$result = $this->_db->querySelect("*", $this->_websoccer->getConfig("db_prefix") . "_youthmatch_player", 
 				"match_id = %d AND team_id = %d", array($matchinfo["id"], $matchinfo[$teamPrefix . "_team_id"]));
 		while ($player = $result->fetch_array()) {
@@ -226,7 +231,11 @@ class YouthMatchFormationModel implements IModel {
 				if ($position == "Abwehr") {
 					$setup["defense"] = $setup["defense"] + 1;
 				} elseif ($position == "Sturm") {
-					$setup["striker"] = $setup["striker"] + 1;
+					if ($mainPosition == "LS" || $mainPosition == "RS") {
+						$setup["outsideforward"] = $setup["outsideforward"] + 1;
+					} else {
+						$setup["striker"] = $setup["striker"] + 1;
+					}
 				} elseif ($position == "Mittelfeld") {
 					if ($mainPosition == "DM") {
 						$setup["dm"] = $setup["dm"] + 1;
@@ -241,9 +250,9 @@ class YouthMatchFormationModel implements IModel {
 		}
 		$result->free();
 		
-		$setPlayers = $setup["defense"] + $setup["striker"] + $setup["dm"] + $setup["om"] + $setup["midfield"];
+		$setPlayers = $setup["defense"] + $setup["striker"] + $setup["dm"] + $setup["om"] + $setup["midfield"] + $setup["outsideforward"];
 		if ($setPlayers > 0) {
-			$formation["setup"] = $setup["defense"] . "-" . $setup["dm"] . "-" . $setup["midfield"] . "-" . $setup["om"] . "-" . $setup["striker"];
+			$formation["setup"] = YouthFormationDataService::setupToString($setup);
 		}
 		return $formation;
 	}

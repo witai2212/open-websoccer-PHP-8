@@ -233,19 +233,11 @@ class MatchSimulationExecutor {
                 $homeGoals = (int) $match->homeTeam->getGoals();
                 $guestGoals = (int) $match->guestTeam->getGoals();
 
-                // update UEFA value only when the match is actually completed
-                if (
-                    $match->isCompleted
-                    && (
-                        $matchinfo['cup_name'] == 'Champions League'
-                        || $matchinfo['cup_name'] == 'UEFA Euro League'
-                        || $matchinfo['cup_name'] == 'UEFA Conference League'
-                        || $matchinfo['cup_name'] == 'Conference League'
-                    )
-                ) {
+                // update continental coefficient value only when the match is actually completed
+                if ($match->isCompleted && class_exists('ContinentalAssociationDataService')) {
                     
-                    $homeUefa = 0;
-                    $guestUefa = 0;
+                    $homeCoefficient = 0;
+                    $guestCoefficient = 0;
                     
                     $homeTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['home_id']);
                     $guestTeam = TeamsDataService::getTeamById($websoccer, $db, $matchinfo['guest_id']);
@@ -254,21 +246,25 @@ class MatchSimulationExecutor {
                     $guestTeamCountry = $guestTeam['team_country'];
                     
                     if ($homeGoals > $guestGoals) {
-                        $homeUefa = 1;
-                        $guestUefa = 0.5;
+                        $homeCoefficient = 1;
+                        $guestCoefficient = 0.5;
                     } else if ($homeGoals < $guestGoals) {
-                        $homeUefa = 0.5;
-                        $guestUefa = 1;
+                        $homeCoefficient = 0.5;
+                        $guestCoefficient = 1;
                     } else {
-                        $homeUefa = 0.5;
-                        $guestUefa = 0.5;
+                        $homeCoefficient = 0.5;
+                        $guestCoefficient = 0.5;
                     }
                     
-                    $updStr1 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$homeUefa' WHERE name='$homeTeamCountry'";
-                    $db->executeQuery($updStr1);
-
-                    $updStr2 = "UPDATE ". $websoccer->getConfig('db_prefix') . "_land SET uefa_s1=uefa_s1+'$guestUefa' WHERE name='$guestTeamCountry'";
-                    $db->executeQuery($updStr2);
+                    ContinentalAssociationDataService::addCoefficientPointsForCupMatch(
+                        $websoccer,
+                        $db,
+                        $matchinfo['cup_name'],
+                        $homeTeamCountry,
+                        $guestTeamCountry,
+                        $homeCoefficient,
+                        $guestCoefficient
+                    );
                 }
             
                 // let garbage collector free memory before script execution by removing all references to objects

@@ -1,0 +1,54 @@
+{% import "macros/paginator.twig" as pagination %}
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("conmebol_ranking_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if conmebols|length == 0 %}
+{{ i18n.getMessage("news_no_items") }}
+{% endif %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ i18n.getMessage("conmeboltable_land") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_s1") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_s2") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_s3") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_s4") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_s5") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_total") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_lib") }}</th>
+            <th>{{ i18n.getMessage("conmeboltable_sud") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for conmebol in conmebols %}
+        <tr>
+            <td><strong>{{ loop.index }}</strong></td>
+            {% set nationImg = skin.getImage("flags/players/" ~ conmebol.name ~ ".png") %}
+            {% if i18n.hasMessage("option_" ~ conmebol.name) %}
+                {% set countryLabel = i18n.getMessage("option_" ~ conmebol.name) %}
+            {% else %}
+                {% set countryLabel = conmebol.name %}
+            {% endif %}
+            <td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}&nbsp;{{ conmebol.name }}</td>
+            <td>{{ conmebol.conmebol_s5 }}</td>
+            <td>{{ conmebol.conmebol_s4 }}</td>
+            <td>{{ conmebol.conmebol_s3 }}</td>
+            <td>{{ conmebol.conmebol_s2 }}</td>
+            <td>{{ conmebol.conmebol_s1 }}</td>
+            <td>{{ conmebol.total }}</td>
+            <td>{{ conmebol.conmebol_lib }}</td>
+            <td>{{ conmebol.conmebol_sud }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ pagination.paginator(paginator) }}
+
+{% endblock %}

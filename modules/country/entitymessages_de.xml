@@ -39,4 +39,14 @@
 	<message id="uefatable_uefa_ul">UL Plätze</message>
 	<message id="uefatable_uefa_conf">Conference Plätze</message>
 
+
+	<message id="entity_country_continent">Verband</message>
+	<message id="entity_country_conmebol_s1">CONMEBOL S1</message>
+	<message id="entity_country_conmebol_s2">CONMEBOL S2</message>
+	<message id="entity_country_conmebol_s3">CONMEBOL S3</message>
+	<message id="entity_country_conmebol_s4">CONMEBOL S4</message>
+	<message id="entity_country_conmebol_s5">CONMEBOL S5</message>
+	<message id="entity_country_conmebol_lib">Libertadores Plätze</message>
+	<message id="entity_country_conmebol_sud">Sudamericana Plätze</message>
+	<message id="entity_country_conmebol_coeff">CONMEBOL Koeffizient</message>
 </messages>

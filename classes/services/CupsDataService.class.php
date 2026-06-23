@@ -367,11 +367,14 @@ class CupsDataService {
             
             /*
              * ------------------------------------------------------------
-             * Get country UEFA coefficient.
+             * Get country coefficient.
+             * UEFA countries keep using uefa_coeff.
+             * CONMEBOL countries use conmebol_coeff so their national cups
+             * do not end up with 0 EUR awards.
              * ------------------------------------------------------------
              */
             $result = $db->querySelect(
-                "uefa_coeff",
+                "uefa_coeff, continent, conmebol_coeff",
                 $prefix . "_land",
                 "name = '%s'",
                 $land,
@@ -381,12 +384,21 @@ class CupsDataService {
             $country = $result->fetch_array();
             $result->free();
             
-            if (!$country || !isset($country["uefa_coeff"])) {
-                throw new Exception("Cup generation failed for '{$land}': UEFA coefficient not found.");
+            if (!$country) {
+                throw new Exception("Cup generation failed for '{$land}': country coefficient not found.");
             }
             
-            $coeffParts = explode(".", (string) $country["uefa_coeff"]);
-            $coeff      = isset($coeffParts[0]) ? (int) $coeffParts[0] : 0;
+            $continent = isset($country["continent"]) ? strtoupper(trim((string) $country["continent"])) : "UEFA";
+            $coeffValue = isset($country["uefa_coeff"]) ? (string) $country["uefa_coeff"] : "0";
+            
+            if ($continent === "CONMEBOL" && isset($country["conmebol_coeff"])) {
+                $coeffValue = (string) $country["conmebol_coeff"];
+            }
+            
+            $coeff = (int) floor((float) $coeffValue);
+            if ($coeff < 1) {
+                $coeff = 1;
+            }
             
             $winner_award   = round(7500 * $coeff, 0);
             $second_award   = round(5000 * $coeff, 0);

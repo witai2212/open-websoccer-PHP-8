@@ -157,11 +157,11 @@ class SeasonRolloverCupService {
             $deletedMatches += self::deleteCupMatches($websoccer, $db, $land);
 
             $cupTeams = self::getLargestPowerOfTwo($numberOfTeams);
-            if ($cupTeams < 16) {
+            if ($cupTeams < 8) {
                 $skippedCountries[] = array(
                     'country' => $land,
                     'teams' => $numberOfTeams,
-                    'reason' => 'Weniger als 16 gültige Teams.'
+                    'reason' => 'Weniger als 8 gültige Teams.'
                 );
                 continue;
             }

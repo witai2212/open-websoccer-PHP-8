@@ -374,8 +374,8 @@ elseif ($show === "generate") {
         $land = trim((string) $country['name']);
         $numberOfTeams = (int) $country['teams'];
 
-        // National cups are only generated for countries with at least 16 teams.
-        if ($land === '' || $numberOfTeams < 16) {
+        // National cups are generated for countries with at least 8 teams.
+        if ($land === '' || $numberOfTeams < 8) {
             continue;
         }
 
@@ -391,7 +391,7 @@ elseif ($show === "generate") {
          */
         $teams = nationalCupGeneratorGetLargestPowerOfTwo($numberOfTeams);
 
-        if ($teams < 16) {
+        if ($teams < 8) {
             continue;
         }
 

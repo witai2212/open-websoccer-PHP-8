@@ -107,6 +107,23 @@ elseif ($show == "generate") {
 	}
 	
 	
+	if (class_exists('ConmebolDataService')) {
+		try {
+			$conmebolSummary = ConmebolDataService::rebuildQualificationAndTempTables($website, $db);
+			$conmebolTeams = isset($conmebolSummary['team_count']) ? (int) $conmebolSummary['team_count'] : 0;
+			echo "<p>CONMEBOL generated teams: ". $conmebolTeams .".";
+			if (isset($conmebolSummary['allocation'])) {
+				echo "<br>Countries updated: ". (int) $conmebolSummary['allocation']['countries_updated'];
+				echo "<br>Libertadores places: ". (int) $conmebolSummary['allocation']['libertadores_total'];
+				echo "<br>Sudamericana places: ". (int) $conmebolSummary['allocation']['sudamericana_total'];
+			}
+			echo "</p>";
+		} catch (Exception $e) {
+			echo createErrorMessage('CONMEBOL: ' . $e->getMessage(), '');
+		}
+	}
+	
+	
 	echo "<p>&raquo; <a href=\"?site=". htmlspecialchars($site) ."\">";
 	echo $i18n->getMessage("back_label");
 	echo "</a></p>\n";

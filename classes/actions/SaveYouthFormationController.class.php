@@ -63,23 +63,23 @@ class SaveYouthFormationController implements IActionController {
 		}
 		
 		// get team players and check whether provided IDs are valid players (ceck for duplicate players only, for now)
-		$this->validatePlayer($parameters["player1"]);
-		$this->validatePlayer($parameters["player2"]);
-		$this->validatePlayer($parameters["player3"]);
-		$this->validatePlayer($parameters["player4"]);
-		$this->validatePlayer($parameters["player5"]);
-		$this->validatePlayer($parameters["player6"]);
-		$this->validatePlayer($parameters["player7"]);
-		$this->validatePlayer($parameters["player8"]);
-		$this->validatePlayer($parameters["player9"]);
-		$this->validatePlayer($parameters["player10"]);
-		$this->validatePlayer($parameters["player11"]);
+		$this->validatePlayer($parameters["player1"], $teamId);
+		$this->validatePlayer($parameters["player2"], $teamId);
+		$this->validatePlayer($parameters["player3"], $teamId);
+		$this->validatePlayer($parameters["player4"], $teamId);
+		$this->validatePlayer($parameters["player5"], $teamId);
+		$this->validatePlayer($parameters["player6"], $teamId);
+		$this->validatePlayer($parameters["player7"], $teamId);
+		$this->validatePlayer($parameters["player8"], $teamId);
+		$this->validatePlayer($parameters["player9"], $teamId);
+		$this->validatePlayer($parameters["player10"], $teamId);
+		$this->validatePlayer($parameters["player11"], $teamId);
 		
-		$this->validatePlayer($parameters["bench1"]);
-		$this->validatePlayer($parameters["bench2"]);
-		$this->validatePlayer($parameters["bench3"]);
-		$this->validatePlayer($parameters["bench4"]);
-		$this->validatePlayer($parameters["bench5"]);
+		$this->validatePlayer($parameters["bench1"], $teamId);
+		$this->validatePlayer($parameters["bench2"], $teamId);
+		$this->validatePlayer($parameters["bench3"], $teamId);
+		$this->validatePlayer($parameters["bench4"], $teamId);
+		$this->validatePlayer($parameters["bench5"], $teamId);
 		
 		// validate substitutions
 		$validSubstitutions = array();
@@ -104,13 +104,27 @@ class SaveYouthFormationController implements IActionController {
 		return null;
 	}
 	
-	private function validatePlayer($playerId) {
+	private function validatePlayer($playerId, $teamId) {
 		if ($playerId == null || $playerId == 0) {
 			return;
 		}
 		
 		if (isset($this->_addedPlayers[$playerId])) {
 			throw new Exception($this->_i18n->getMessage("formation_err_duplicateplayer"));
+		}
+		
+		$minAge = (int) $this->_websoccer->getConfig("youth_scouting_min_age");
+		if ($minAge <= 0) {
+			$minAge = 14;
+		}
+		
+		$result = $this->_db->querySelect("id", $this->_websoccer->getConfig("db_prefix") . "_youthplayer",
+				"id = %d AND team_id = %d AND age >= %d", array((int) $playerId, (int) $teamId, $minAge), 1);
+		$player = $result->fetch_array();
+		$result->free();
+		
+		if (!$player) {
+			throw new Exception($this->_i18n->getMessage("youthformation_err_invalidplayer"));
 		}
 		
 		$this->_addedPlayers[$playerId] = TRUE;
@@ -135,7 +149,7 @@ class SaveYouthFormationController implements IActionController {
 		
 		// define mapping of player number and actual main position on field
 		$setupParts = explode("-",  $parameters["setup"]);
-		if (count($setupParts) != 5) {
+		if (count($setupParts) < 5) {
 			throw new Exception("illegal formation setup");
 		}
 		
@@ -229,6 +243,9 @@ class SaveYouthFormationController implements IActionController {
 		// create field players
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
 			$mainPosition = $this->_websoccer->getRequestParameter("player" . $playerNo . "_pos");
+			if (!isset($positionMapping[$mainPosition])) {
+				throw new Exception($this->_i18n->getMessage("youthformation_err_invalidposition"));
+			}
 			$position = $positionMapping[$mainPosition];
 			$this->savePlayer($parameters["matchid"], $teamId, $parameters["player" . $playerNo], $playerNo, $position, $mainPosition, FALSE);
 		}
@@ -249,7 +266,7 @@ class SaveYouthFormationController implements IActionController {
 				$columns[$teamPrefix . "_s". $subNo . "_in"] = $parameters["sub" . $subNo ."_in"];
 				$columns[$teamPrefix . "_s". $subNo . "_minute"] = $parameters["sub" . $subNo ."_minute"];
 				$columns[$teamPrefix . "_s". $subNo . "_condition"] = $parameters["sub" . $subNo ."_condition"];
-				$columns[$teamPrefix . "_s". $subNo . "_position"] = $this->_websoccer->getRequestParameter("sub" . $subNo ."_position");
+				$columns[$teamPrefix . "_s". $subNo . "_position"] = isset($parameters["sub" . $subNo ."_position"]) ? $parameters["sub" . $subNo ."_position"] : $this->_websoccer->getRequestParameter("sub" . $subNo ."_position");
 			} else {
 				$columns[$teamPrefix . "_s". $subNo . "_out"] = "";
 				$columns[$teamPrefix . "_s". $subNo . "_in"] = "";

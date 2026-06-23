@@ -1,0 +1,1 @@
+Website Configuration Error: Could not create or open file /customers/0/4/a/cywcu8ykg/webroots/0d54a17a/admin/../cache/wsconfigfront.inc.php! Verify that the file or its folder is writable.

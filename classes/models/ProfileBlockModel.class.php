@@ -58,6 +58,18 @@ class ProfileBlockModel implements IModel {
 			$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
 		}
 		
+		$continentalAssociation = array();
+		$continentalAssociations = array();
+		if ($clubId > 0 && class_exists('ContinentalAssociationDataService')) {
+			try {
+				$continentalAssociation = ContinentalAssociationDataService::getTeamAssociation($this->_websoccer, $this->_db, (int) $clubId);
+				$continentalAssociations = ContinentalAssociationDataService::getUserManagedAssociations($this->_websoccer, $this->_db, (int) $user->id);
+			} catch (Exception $e) {
+				$continentalAssociation = array();
+				$continentalAssociations = array();
+			}
+		}
+
 		// unread messages
 		$unseenMessages = MessagesDataService::countUnseenInboxMessages($this->_websoccer, $this->_db);
 		
@@ -108,7 +120,9 @@ class ProfileBlockModel implements IModel {
 		return array("profile" => $userinfo, "userteam" => $team, "unseenMessages" => $unseenMessages,
 				"unseenNotifications" => $unseenNotifications,
 		        "boardsatisfaction" => $boardSatisfaction, "boardinfo" => $boardInfo, "boardmissions" => $boardMissions,
-				"managerReputation" => $managerReputation);
+				"managerReputation" => $managerReputation,
+				"continental_association" => $continentalAssociation,
+				"continental_associations" => $continentalAssociations);
 	}
 	
 	

@@ -1,0 +1,43 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("internationalcups_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<p>{{ i18n.getMessage("internationalcups_intro") }}</p>
+
+{% if current_association.code|default('')|length > 0 %}
+<div class="alert alert-info">
+    <strong>{{ i18n.getMessage("internationalcups_current_association") }}:</strong>
+    {{ current_association.label }}
+</div>
+{% endif %}
+
+{% if associations|length == 0 %}
+<p>{{ i18n.getMessage("internationalcups_no_competitions") }}</p>
+{% endif %}
+
+<div class="row-fluid">
+{% for association in associations %}
+    <div class="span6">
+        <div class="well">
+            <h3>{{ association.label }}</h3>
+            <p>
+                <a class="btn" href="{{ env.getInternalUrl(association.ranking_page) }}">
+                    {{ i18n.getMessage("internationalcups_ranking") }}
+                </a>
+            </p>
+            <h4>{{ i18n.getMessage("internationalcups_competitions") }}</h4>
+            <ul>
+                {% for cupPage in association.cup_pages %}
+                    <li><a href="{{ env.getInternalUrl(cupPage.page) }}">{{ cupPage.label }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

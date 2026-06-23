@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="internationalcups_navlabel">Int. Cups</message>
+    <message id="internationalcups_title">Internationale Wettbewerbe</message>
+    <message id="internationalcups_intro">Hier findest du die internationalen Wettbewerbe nach Verband.</message>
+    <message id="internationalcups_current_association">Aktueller Verband</message>
+    <message id="internationalcups_ranking">Ranking</message>
+    <message id="internationalcups_competitions">Wettbewerbe</message>
+    <message id="internationalcups_no_competitions">Keine Wettbewerbe verfügbar.</message>
+</messages>

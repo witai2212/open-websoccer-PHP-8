@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="conmebol_navlabel">CONMEBOL</message>
+    <message id="conmebol_ranking_navlabel">CONMEBOL Ranking</message>
+    <message id="conmebol_ranking_title">CONMEBOL Ranking</message>
+
+    <message id="conmeboltable_land">Land</message>
+    <message id="conmeboltable_s1">S1</message>
+    <message id="conmeboltable_s2">S2</message>
+    <message id="conmeboltable_s3">S3</message>
+    <message id="conmeboltable_s4">S4</message>
+    <message id="conmeboltable_s5">S5</message>
+    <message id="conmeboltable_total">CONMEBOL Gesamt</message>
+    <message id="conmeboltable_lib">Libertadores Plätze</message>
+    <message id="conmeboltable_sud">Sudamericana Plätze</message>
+
+    <message id="copalibertadores_navlabel">Copa Libertadores</message>
+    <message id="copalibertadores_title">Copa Libertadores</message>
+    <message id="copalibertadores_intro">Alle Gruppen, K.-o.-Runden, Ergebnisse und kommenden Spiele der Copa Libertadores auf einen Blick.</message>
+    <message id="copalibertadores_no_cup_found">Die Copa Libertadores wurde in der Pokal-Konfiguration nicht gefunden.</message>
+    <message id="copalibertadores_current_phase">Aktuelle Ansicht</message>
+    <message id="copalibertadores_matches_played">Spiele gespielt</message>
+    <message id="copalibertadores_participants">Teilnehmer</message>
+    <message id="copalibertadores_teams">Vereine</message>
+    <message id="copalibertadores_rounds">Runden</message>
+    <message id="copalibertadores_rounds_subtitle">inkl. Gruppenphase</message>
+    <message id="copalibertadores_winner">Titelträger</message>
+    <message id="copalibertadores_winner_open">noch offen</message>
+    <message id="copalibertadores_prize_winner">Siegerprämie</message>
+    <message id="copalibertadores_my_club">Mein Verein</message>
+    <message id="copalibertadores_still_in_competition">Teilnehmer</message>
+    <message id="copalibertadores_not_participating">nicht im Wettbewerb</message>
+    <message id="copalibertadores_my_group">Gruppe</message>
+    <message id="copalibertadores_my_next_match">Nächstes Spiel</message>
+    <message id="copalibertadores_my_last_match">Letztes Spiel</message>
+    <message id="copalibertadores_standings">Tabelle</message>
+    <message id="copalibertadores_fixtures">Spielplan</message>
+    <message id="copalibertadores_latest_results">Letzte Ergebnisse</message>
+    <message id="copalibertadores_next_matches">Nächste Spiele</message>
+    <message id="copalibertadores_no_group_table">Für diese Gruppe ist noch keine Tabelle vorhanden.</message>
+    <message id="copalibertadores_grouptable_team">Verein</message>
+    <message id="copalibertadores_grouptable_matches">Sp.</message>
+    <message id="copalibertadores_grouptable_points">Punkte</message>
+    <message id="copalibertadores_grouptable_wins">Siege</message>
+    <message id="copalibertadores_grouptable_draws">Unentsch.</message>
+    <message id="copalibertadores_grouptable_losses">Niederl.</message>
+    <message id="copalibertadores_grouptable_goals">Tore</message>
+    <message id="copalibertadores_grouptable_goalsreceived">kassierte Tore</message>
+    <message id="copalibertadores_grouptable_goaldiff">Diff.</message>
+
+    <message id="copasudamericana_navlabel">Copa Sudamericana</message>
+    <message id="copasudamericana_title">Copa Sudamericana</message>
+    <message id="copasudamericana_intro">Alle Gruppen, K.-o.-Runden, Ergebnisse und kommenden Spiele der Copa Sudamericana auf einen Blick.</message>
+    <message id="copasudamericana_no_cup_found">Die Copa Sudamericana wurde in der Pokal-Konfiguration nicht gefunden.</message>
+    <message id="copasudamericana_current_phase">Aktuelle Ansicht</message>
+    <message id="copasudamericana_matches_played">Spiele gespielt</message>
+    <message id="copasudamericana_participants">Teilnehmer</message>
+    <message id="copasudamericana_teams">Vereine</message>
+    <message id="copasudamericana_rounds">Runden</message>
+    <message id="copasudamericana_rounds_subtitle">inkl. Gruppenphase</message>
+    <message id="copasudamericana_winner">Titelträger</message>
+    <message id="copasudamericana_winner_open">noch offen</message>
+    <message id="copasudamericana_prize_winner">Siegerprämie</message>
+    <message id="copasudamericana_my_club">Mein Verein</message>
+    <message id="copasudamericana_still_in_competition">Teilnehmer</message>
+    <message id="copasudamericana_not_participating">nicht im Wettbewerb</message>
+    <message id="copasudamericana_my_group">Gruppe</message>
+    <message id="copasudamericana_my_next_match">Nächstes Spiel</message>
+    <message id="copasudamericana_my_last_match">Letztes Spiel</message>
+    <message id="copasudamericana_standings">Tabelle</message>
+    <message id="copasudamericana_fixtures">Spielplan</message>
+    <message id="copasudamericana_latest_results">Letzte Ergebnisse</message>
+    <message id="copasudamericana_next_matches">Nächste Spiele</message>
+    <message id="copasudamericana_no_group_table">Für diese Gruppe ist noch keine Tabelle vorhanden.</message>
+    <message id="copasudamericana_grouptable_team">Verein</message>
+    <message id="copasudamericana_grouptable_matches">Sp.</message>
+    <message id="copasudamericana_grouptable_points">Punkte</message>
+    <message id="copasudamericana_grouptable_wins">Siege</message>
+    <message id="copasudamericana_grouptable_draws">Unentsch.</message>
+    <message id="copasudamericana_grouptable_losses">Niederl.</message>
+    <message id="copasudamericana_grouptable_goals">Tore</message>
+    <message id="copasudamericana_grouptable_goalsreceived">kassierte Tore</message>
+    <message id="copasudamericana_grouptable_goaldiff">Diff.</message>
+</messages>

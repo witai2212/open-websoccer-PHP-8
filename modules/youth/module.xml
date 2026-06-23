@@ -464,16 +464,19 @@
 			<param id="sub1_in" type="number" />
 			<param id="sub1_minute" type="number" />
 			<param id="sub1_condition" type="text" />
+			<param id="sub1_position" type="text" />
 			
 			<param id="sub2_out" type="number" />
 			<param id="sub2_in" type="number" />
 			<param id="sub2_minute" type="number" />
 			<param id="sub2_condition" type="text" />
+			<param id="sub2_position" type="text" />
 			
 			<param id="sub3_out" type="number" />
 			<param id="sub3_in" type="number" />
 			<param id="sub3_minute" type="number" />
 			<param id="sub3_condition" type="text" />
+			<param id="sub3_position" type="text" />
 		</action>
 		
 	</actions>

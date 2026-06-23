@@ -10,6 +10,9 @@
     <message id="userprofile_block_highscore">Highscore</message>
     <message id="userprofile_block_reputation">Reputation</message>
     <message id="userprofile_block_link_table">Tabelle</message>
+
+    <message id="userprofile_block_current_association">Aktueller Verband</message>
+    <message id="userprofile_block_other_associations">Andere Verbände</message>
     
     <message id="userprofile_block_tooltip_popularity">Richtet sich nach Ihrem Erfolg und beeinflusst die Zuschauerzahlen bei Heimspielen.</message>
     <message id="userprofile_block_tooltip_reputation">Ihre Manager-Reputation basiert auf Highscore, Fanbeliebtheit und Vorstandszufriedenheit. Sie beeinflusst Jobangebote und verfügbare freie Vereine.</message>

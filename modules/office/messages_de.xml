@@ -46,6 +46,8 @@
     <message id="extend-contract_cannot_afford_offer">Mit ihrem aktuellen Budget können Sie sich dieses Gehalt nicht leisten.</message>
     
     <message id="extend-contract_goalbonus_too_low">Die Torprämie ist dem Spieler zu gering.</message>
+    <message id="extend-contract_matches_too_high">Der Vertrag darf maximal %d Spiele laufen.</message>
+    <message id="extend-contract_matches_max_help">Maximal %d Spiele.</message>
     
     <message id="finances_navlabel">Finanzen</message>
     
@@ -69,4 +71,92 @@
     <message id="tickets_info_homefieldadvantage"><strong>Tipp:</strong> Ihr Team ist bei Heimspielen besonders motiviert, wenn das Stadion ausverkauft ist. Berücksichtigen Sie dies bei der Festlegung der Eintrittspreise!</message>
     
     <message id="notification_soon_ending_playercontracts">Manche Spielerverträge laufen bald aus!</message>
+
+    <message id="dailybriefing_title">Heute im Verein</message>
+    <message id="dailybriefing_intro">Dein kompakter Tagesüberblick aus Vorstand, Fans, Medien, Scouting, Jugend, Leihen und den letzten Veränderungen.</message>
+    <message id="dailybriefing_generated">Aktualisiert:</message>
+    <message id="dailybriefing_items_title">Manager Inbox</message>
+    <message id="dailybriefing_no_items">Heute gibt es keine dringenden Hinweise.</message>
+
+    <message id="dailybriefing_card_board">Vorstand</message>
+    <message id="dailybriefing_card_fans">Fans</message>
+    <message id="dailybriefing_card_media">Medien</message>
+    <message id="dailybriefing_card_chemistry">Teamchemie</message>
+    <message id="dailybriefing_status_critical">kritisch</message>
+    <message id="dailybriefing_status_attention">beobachten</message>
+    <message id="dailybriefing_status_stable">stabil</message>
+    <message id="dailybriefing_status_positive">positiv</message>
+    <message id="dailybriefing_status_calm">ruhig</message>
+
+    <message id="dailybriefing_priority_critical">Kritisch</message>
+    <message id="dailybriefing_priority_important">Wichtig</message>
+    <message id="dailybriefing_priority_hint">Hinweis</message>
+    <message id="dailybriefing_priority_positive">Positiv</message>
+
+    <message id="dailybriefing_action_board">Zu den Zielen</message>
+    <message id="dailybriefing_action_fanpressure">Fans und Medien</message>
+    <message id="dailybriefing_action_interview">Interview beantworten</message>
+    <message id="dailybriefing_action_scouting">Zum Scouting</message>
+    <message id="dailybriefing_action_youth_academy">Zur Jugendakademie</message>
+    <message id="dailybriefing_action_loans">Zu den Leihen</message>
+    <message id="dailybriefing_action_transfers">Zum Transfermarkt</message>
+    <message id="dailybriefing_action_whatchanged">Was hat sich verändert?</message>
+    <message id="dailybriefing_action_formation">Zur Aufstellung</message>
+    <message id="dailybriefing_action_training">Zum Training</message>
+    <message id="dailybriefing_action_finances">Zu den Finanzen</message>
+
+    <message id="dailybriefing_item_board_low_title">Der Vorstand erwartet Antworten</message>
+    <message id="dailybriefing_item_board_low_text">Die Vorstandszufriedenheit ist kritisch. Ergebnisse, Ziele und wirtschaftliche Entwicklung sollten jetzt im Fokus stehen.</message>
+    <message id="dailybriefing_item_board_high_title">Der Vorstand ist zufrieden</message>
+    <message id="dailybriefing_item_board_high_text">Die Vereinsführung bewertet deine aktuelle Arbeit positiv.</message>
+    <message id="dailybriefing_item_fans_low_title">Die Stimmung bei den Fans kippt</message>
+    <message id="dailybriefing_item_fans_low_text">Die Fans erwarten sichtbare Signale: gute Ergebnisse, klare Kommunikation oder eine sportliche Reaktion.</message>
+    <message id="dailybriefing_item_fans_high_title">Die Fans stehen hinter dir</message>
+    <message id="dailybriefing_item_fans_high_text">Die Stimmung im Umfeld ist sehr positiv. Das kann Heimspiele und Sponsorenwirkung unterstützen.</message>
+    <message id="dailybriefing_item_media_high_title">Hoher Mediendruck</message>
+    <message id="dailybriefing_item_media_high_text">Die Medien erwarten eine Reaktion. Ein offenes Interview oder ein klares sportliches Signal kann helfen.</message>
+    <message id="dailybriefing_item_chemistry_low_title">Die Kabine braucht Stabilität</message>
+    <message id="dailybriefing_item_chemistry_low_text">Die Teamchemie ist niedrig. Training, Aufstellung und klare Rollen sollten überprüft werden.</message>
+    <message id="dailybriefing_item_chemistry_high_title">Die Mannschaft wirkt geschlossen</message>
+    <message id="dailybriefing_item_chemistry_high_text">Die Teamchemie ist stark. Das Umfeld in der Kabine unterstützt die sportliche Entwicklung.</message>
+
+    <message id="dailybriefing_item_interview_title">Offene Medienfrage</message>
+    <message id="dailybriefing_item_scouting_title">Neuer Scouting-Hinweis</message>
+    <message id="dailybriefing_item_scouting_text">Dein Scout hat %s vorgeschlagen.</message>
+    <message id="dailybriefing_strength_short">Stärke</message>
+    <message id="dailybriefing_talent_short">Talent</message>
+    <message id="dailybriefing_item_youth_payment_title">Jugendakademie unter Druck</message>
+    <message id="dailybriefing_item_youth_payment_text">Bei der Jugendakademie gibt es offene Zahlungen. Das kann Entwicklung und Reputation belasten.</message>
+    <message id="dailybriefing_item_youth_reputation_title">Gute Arbeit in der Jugend</message>
+    <message id="dailybriefing_item_youth_reputation_text">Die Reputation der Jugendakademie liegt bei %s%%. Der Vorstand bewertet die Nachwuchsarbeit positiv.</message>
+    <message id="dailybriefing_item_youth_log_positive_title">Positive Entwicklung im Nachwuchs</message>
+    <message id="dailybriefing_item_youth_log_warning_title">Hinweis aus der Jugendakademie</message>
+    <message id="dailybriefing_item_loan_unused_title">Leihspieler ohne Rhythmus</message>
+    <message id="dailybriefing_item_loan_unused_text">%s hat in mehreren Leihspielen kaum Einsatzzeit erhalten.</message>
+    <message id="dailybriefing_item_loan_borrower_suffix">Aktueller Leihverein: %s.</message>
+    <message id="dailybriefing_item_transfer_offer_title">Neues Transferangebot</message>
+    <message id="dailybriefing_item_transfer_offer_text">%s hat ein Angebot für %s abgegeben.</message>
+    <message id="dailybriefing_item_loan_request_title">Neue Leihanfrage</message>
+    <message id="dailybriefing_item_loan_request_text">%s möchte %s ausleihen.</message>
+    <message id="dailybriefing_item_whatchanged_title">Letzte Veränderungen</message>
+    <message id="dailybriefing_item_whatchanged_loss_title">Analyse nach der Niederlage</message>
+    <message id="dailybriefing_item_whatchanged_win_title">Positive Entwicklung nach dem Sieg</message>
+    <message id="dailybriefing_item_nextmatch_title">Nächstes Spiel im Blick</message>
+    <message id="dailybriefing_item_nextmatch_text">Das nächste Spiel gegen %s steht bevor. Prüfe Aufstellung, Frische und taktische Ausrichtung.</message>
+    <message id="dailybriefing_item_fallback_training_title">Training prüfen</message>
+    <message id="dailybriefing_item_fallback_training_text">Es gibt keine akuten Warnungen. Ein kurzer Blick auf Training und Frische kann trotzdem helfen.</message>
+    <message id="dailybriefing_item_fallback_scouting_title">Scouting beobachten</message>
+    <message id="dailybriefing_item_fallback_scouting_text">Der Markt bleibt in Bewegung. Prüfe, ob neue Suchprofile oder Camps sinnvoll sind.</message>
+    <message id="dailybriefing_item_fallback_finance_title">Finanzen kontrollieren</message>
+    <message id="dailybriefing_item_fallback_finance_text">Nutze ruhige Tage, um Budget, Gehälter und kommende Belastungen zu prüfen.</message>
+
+
+    <message id="dailybriefing_youthacademy_log_built">Jugendakademie wurde gebaut</message>
+    <message id="dailybriefing_youthacademy_log_upgraded">Jugendakademie wurde ausgebaut</message>
+    <message id="dailybriefing_youthacademy_log_downgraded">Jugendakademie wurde zurückgestuft</message>
+    <message id="dailybriefing_youthacademy_log_auto_downgraded">Jugendakademie wurde automatisch zurückgestuft</message>
+    <message id="dailybriefing_youthacademy_log_development_bonus">Entwicklungsbonus durch die Jugendakademie</message>
+    <message id="dailybriefing_youthacademy_log_scouting_bonus">Scoutingbonus durch die Jugendakademie</message>
+    <message id="dailybriefing_youthacademy_log_generic">Neue Meldung aus der Jugendakademie</message>
+
 </messages>

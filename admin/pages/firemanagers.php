@@ -392,6 +392,10 @@ elseif ($show == 'dismiss') {
 				$_POST['entity_player_vertrag_gehalt'], $_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST['playersgenerator_label_deviation']);
 		}
 	}
+
+	if (class_exists('ClubPartnershipDataService')) {
+		ClubPartnershipDataService::resolveAutomaticStopsAndConflicts($website, $db, $i18n);
+	}
     
 	echo createSuccessMessage($i18n->getMessage('firemanagers_dismiss_success'), '');
 

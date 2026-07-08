@@ -1,5 +1,16 @@
 {% import "macros/formelements.twig" as formelements %}
 
+{% if first_option_lock.id is defined %}
+	<div class="alert {% if first_option_lock.can_use == '1' %}alert-info{% else %}alert-warning{% endif %}">
+		<strong>{{ i18n.getMessage("clubpartnerships_first_option_title") }}:</strong>
+		{% if first_option_lock.can_use == '1' %}
+			{{ i18n.getMessage("clubpartnership_first_option_transfer_bid_hint") }} {{ i18n.getMessage("clubpartnerships_first_option_expires") }}: {{ first_option_lock.expires_label }}
+		{% else %}
+			{{ i18n.getMessage("clubpartnership_first_option_blocked")|replace({'{0}': first_option_lock.player_name, '{1}': first_option_lock.parent_name, '{2}': first_option_lock.expires_label}) }}
+		{% endif %}
+	</div>
+{% endif %}
+
 <h3 name="highestbid">{{ i18n.getMessage("transfer_bid_existing_max_bid") }}</h3>
 
 {% if highestbid is defined and highestbid|length > 0 %}
@@ -42,6 +53,10 @@
 <p><a href="#highestbid" style="margin-top: 30px" class="btn ajaxLink" data-ajaxtarget="transfer-bid_block" data-ajaxblock="transfer-bid"
 	data-ajaxquerystr="id={{ env.getRequestParameter("id") }}"><i class="icon-refresh"></i> {{ i18n.getMessage("button_refresh") }}</a></p>
 
+{% if first_option_lock.id is defined and first_option_lock.can_use != '1' %}
+	<p class="muted">{{ i18n.getMessage("clubpartnerships_first_option_reserved_for_parent") }}</p>
+{% else %}
+
 <h3>{{ i18n.getMessage("transfer_bid_yourbid") }}</h3>
 
 <form class="form-horizontal" method="post">
@@ -68,3 +83,4 @@
 	<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
 	<input type="hidden" name="action" value="transfer-bid"/>
 </form>
+{% endif %}

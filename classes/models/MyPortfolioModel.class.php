@@ -48,6 +48,7 @@ class MyPortfolioModel implements IModel {
         $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
         $teamId = $team['team_id'];
         
+        $advisorBonus = StockMarketDataService::getFinancialAdvisorStockBonus($this->_websoccer, $this->_db, $teamId);
         $indexes = StockMarketDataService::getUserPortfolio($this->_websoccer, $this->_db, $teamId);
 		
 		//echo str_replace("world","Peter","Hello world!");
@@ -58,7 +59,11 @@ class MyPortfolioModel implements IModel {
 		print_r($indexes);
 		echo"</pre>";*/
         
-        return array("indexes" => $indexes);
+        return array(
+            "indexes" => $indexes,
+            "stock_advisor_bonus" => $advisorBonus,
+            "has_stock_recommendations" => ($advisorBonus > 0)
+        );
     }
     
 }

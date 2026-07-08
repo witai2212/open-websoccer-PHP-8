@@ -51,6 +51,13 @@ class UserInactivityDataService {
 		// create new entry
 		if (!$inactivity) {
 			$newcolumns["user_id"] = $userId;
+			$newcolumns["login"] = 0;
+			$newcolumns["login_last"] = 0;
+			$newcolumns["login_check"] = 0;
+			$newcolumns["aufstellung"] = 0;
+			$newcolumns["transfer"] = 0;
+			$newcolumns["transfer_check"] = 0;
+			$newcolumns["vertragsauslauf"] = 0;
 			$db->queryInsert($newcolumns, $fromTable);
 			return self::getUserInactivity($websoccer, $db, $userId);
 		}

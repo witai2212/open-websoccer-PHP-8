@@ -8,12 +8,23 @@ class ComputerTransfersDataService {
     const MAX_BORROWED_PLAYERS_PER_TEAM = 2;
     const MIN_SQUAD_SIZE_AFTER_LENDING = 20;
     const MIN_SQUAD_SIZE_BEFORE_BORROWING = 20;
-    const CPU_LOAN_OFFER_DURATION_DAYS = 10;
+    const CPU_LOAN_OFFER_DURATION_DAYS = 21;
     const CPU_LOAN_OFFER_COOLDOWN_DAYS = 20;
     const CPU_LOAN_REQUEST_EXPIRY_DAYS = 10;
     const TRANSFER_DURATION_DAYS = 1;
     const MAX_PERCENTAGE_PLAYERS_ON_TL = 2;
     const MAX_PLAYERS_ON_TL = 800;
+
+    // Computer offers shall normally stay close to player market value.
+    // In a small number of cases the limits are widened a little to keep the market dynamic.
+    const CPU_MARKET_VALUE_MIN_RATIO = 0.70;
+    const CPU_MARKET_VALUE_MAX_RATIO = 1.15;
+    const CPU_MARKET_VALUE_EXCEPTION_CHANCE = 15;
+    const CPU_MARKET_VALUE_EXCEPTION_MIN_RATIO = 0.60;
+    const CPU_MARKET_VALUE_EXCEPTION_MAX_RATIO = 1.30;
+    const CPU_LOAN_FEE_MIN_MARKET_RATIO = 0.005;
+    const CPU_LOAN_FEE_MAX_MARKET_RATIO = 0.030;
+
     CONST MAX_OFFER_DEVIATION = 1.15;
     
     private static $logger;
@@ -73,15 +84,22 @@ class ComputerTransfersDataService {
 		    
 			$budget = self::getTeamBudget($websoccer, $db, $teamId);
 			$currentOffers = self::getTeamOfferCount($websoccer, $db, $teamId);
-			$squad = self::getTeamSquad($websoccer, $db, $teamId);
+			$squad = self::getLoanRelevantTeamSquad($websoccer, $db, $teamId);
 
-			// Skip bidding if the team already has MAX_OFFERS offers
+			// The squad planner logic starts with squad needs. Use the full active squad here,
+			// not only older players, so recent transfers do not create false shortages.
 
 			$teamStrength = self::calculateAverageStrength($squad);
+			$positionsCount = self::countPositions($squad);
+			$transferNeeds = self::getPositionNeeds($positionsCount);
+			$traitNeeds = self::getTraitNeedsForTeam($websoccer, $db, $teamId);
 			$playersOnMarket = self::getPlayersOnTransferMarket($websoccer, $db);
 
 			foreach ($playersOnMarket as $player) {
 				if ($player['transfermarkt'] == '1') {
+					if ($currentOffers >= self::MAX_OFFERS) break;
+					$traitNeedScore = self::scorePlayerForTraitNeeds($websoccer, $db, $player, $traitNeeds);
+					if (!self::positionFitsTransferNeeds($player, $transferNeeds, $squad, $traitNeedScore)) continue;
 				    
 				    $playerId = $player['id'];
 				    
@@ -103,13 +121,16 @@ class ComputerTransfersDataService {
 					// Check if player's strength is within the acceptable range
 					if (!self::isStrengthWithinRange($playerStrength, $teamStrength)) continue;
 
-					// Calculate bid amount and salary
-					$bidAmount = self::calculateBidAmount($player);
+					// Calculate bid amount and salary. Skip players whose minimum bid is outside
+					// the accepted computer-offer market value range.
+					$bidAmount = self::calculateBidAmount($player, $traitNeedScore);
+					if ($bidAmount <= 0) {
+						continue;
+					}
 					$salaryAmount = self::calculateSalary($player);
 					$goalAmount = self::calculateGoal($player);
 
 					// Place bid if the team has enough budget
-					// $max_offer = $player['marktwert']*1.15;
 					if ($bidAmount <= $budget) {
 						
 						$offersForPlayerId = self::countOffersForPlayerId($websoccer, $db, $player['id']);
@@ -266,24 +287,65 @@ class ComputerTransfersDataService {
         return $playerStrength >= $lowerBound && $playerStrength <= $upperBound;
     }
     
-    private static function calculateBidAmount($player) {
-        
-        //
-        /*if(isset($player['transfer_mindestgebot']) && isset($player['marktwert'])) {
-            $offer_ratio = ($player['transfer_mindestgebot']/$player['marktwert']);
-        } else {
-            $offer_ratio = $player['marktwert'];
-        }*/
-        
-        //offer
-        (float) $baseAmount = $player['transfer_mindestgebot'];
-        //if($baseAmount<1 || $offer_ratio>self::MAX_OFFER_DEVIATION) {
-        if($baseAmount<1) {
-            $baseAmount = $player['marktwert'];
-        }        
-        $adjustment = (float) $baseAmount * (rand(-10, 10) / 100);
-        
-        return (float) $baseAmount + (float) $adjustment;
+    private static function calculateBidAmount($player, $traitNeedScore = 0) {
+
+        $marketValue = isset($player['marktwert']) ? (float) $player['marktwert'] : 0;
+        $minimumBid = isset($player['transfer_mindestgebot']) ? (float) $player['transfer_mindestgebot'] : 0;
+
+        if ($marketValue <= 0) {
+            return ($minimumBid > 0) ? self::roundMoney($minimumBid) : 0;
+        }
+
+        $range = self::getComputerMarketValueRange($marketValue);
+
+        $traitNeedScore = max(0, min(12, (int) $traitNeedScore));
+        if ($traitNeedScore > 0) {
+            // Traits already increase the market value in Phase 2. Phase 4 only widens
+            // the CPU willingness slightly for players who solve a concrete squad need.
+            $range['max'] = $range['max'] * (1 + min(0.10, $traitNeedScore * 0.0125));
+        }
+
+        // Never let a CPU bid become silly. If the seller's minimum bid is above
+        // the maximum accepted CPU range, the computer club simply skips the player.
+        if ($minimumBid > $range['max']) {
+            return 0;
+        }
+
+        $minOffer = max($range['min'], $minimumBid);
+        $maxOffer = $range['max'];
+
+        if ($minOffer > $maxOffer) {
+            return 0;
+        }
+
+        return self::randomMoneyInRange($minOffer, $maxOffer);
+    }
+
+    private static function getComputerMarketValueRange($marketValue) {
+        $exceptionalCase = (rand(1, 100) <= self::CPU_MARKET_VALUE_EXCEPTION_CHANCE);
+
+        $minRatio = $exceptionalCase ? self::CPU_MARKET_VALUE_EXCEPTION_MIN_RATIO : self::CPU_MARKET_VALUE_MIN_RATIO;
+        $maxRatio = $exceptionalCase ? self::CPU_MARKET_VALUE_EXCEPTION_MAX_RATIO : self::CPU_MARKET_VALUE_MAX_RATIO;
+
+        return array(
+            'min' => max(0, (float) $marketValue * $minRatio),
+            'max' => max(0, (float) $marketValue * $maxRatio)
+        );
+    }
+
+    private static function randomMoneyInRange($minAmount, $maxAmount) {
+        $min = (int) ceil(max(0, $minAmount) / 100);
+        $max = (int) floor(max(0, $maxAmount) / 100);
+
+        if ($max < $min) {
+            return self::roundMoney($minAmount);
+        }
+
+        return (float) (rand($min, $max) * 100);
+    }
+
+    private static function roundMoney($amount) {
+        return (float) (round(max(0, (float) $amount) / 100) * 100);
     }
     
     private static function calculateSalary($player) {
@@ -306,6 +368,13 @@ class ComputerTransfersDataService {
     
     private static function placeBid(WebSoccer $websoccer, DbConnection $db, $teamId, $playerId, $bidAmount, $now, $salaryAmount, $goalAmount) {
         
+        if (class_exists('ClubPartnershipDataService')) {
+            $firstOptionLock = ClubPartnershipDataService::getProfessionalFirstOptionLock($websoccer, $db, $playerId, $teamId);
+            if ($firstOptionLock && (!isset($firstOptionLock['can_use']) || $firstOptionLock['can_use'] !== '1')) {
+                return;
+            }
+        }
+        
         $rand = rand(10, 50)/100;
         $handgeld = $bidAmount *  $rand;
         
@@ -313,7 +382,7 @@ class ComputerTransfersDataService {
                     (spieler_id, verein_id, user_id, abloese, handgeld, vertrag_spiele, datum, vertrag_gehalt, vertrag_torpraemie)
                     VALUES ('$playerId', '$teamId', NULL, '$bidAmount', '$handgeld', '60', '$now', '$salaryAmount', '$goalAmount')";
         $db->executeQuery($insStr);
-        
+                
         echo"- BID: ". $playerId ."\n";
 
 		// create notification for owner
@@ -328,13 +397,14 @@ class ComputerTransfersDataService {
     
     private static function manageTransferList(WebSoccer $websoccer, DbConnection $db, $teamId, $squad) {
         $positionsCount = self::countPositions($squad);
+        $traitNeeds = self::getTraitNeedsForTeam($websoccer, $db, $teamId);
         $currentTransferList = self::getTeamTransferList($websoccer, $db, $teamId);
         
         if (count($currentTransferList) >= 3) return;
         
         $transferCandidates = [];
         foreach ($squad as $player) {
-            if (self::canListPlayerForTransfer($player, $positionsCount)) {
+            if (self::canListPlayerForTransfer($player, $positionsCount, $traitNeeds, $websoccer, $db)) {
                 $transferCandidates[] = $player;
             }
         }
@@ -362,20 +432,18 @@ class ComputerTransfersDataService {
         return $counts;
     }
     
-    private static function canListPlayerForTransfer($player, $positionsCount) {
+    private static function canListPlayerForTransfer($player, $positionsCount, $traitNeeds = array(), WebSoccer $websoccer = null, DbConnection $db = null) {
         $position = $player['position'];
-        switch ($position) {
-            case 'Torwart':
-                return $positionsCount['Torwart'] > 2;
-            case 'Abwehr':
-                return $positionsCount['Abwehr'] > 5;
-            case 'Mittelfeld':
-                return $positionsCount['Mittelfeld'] > 5;
-            case 'Sturm':
-                return $positionsCount['Sturm'] > 5;
-            default:
-                return false;
+        $targets = self::getSquadDepthTargets();
+        if (!isset($targets[$position]) || !isset($positionsCount[$position]) || $positionsCount[$position] <= $targets[$position]) {
+            return false;
         }
+
+        // Do not list one of the few specialists if the squad planner says this trait is missing.
+        if ($websoccer && $db && self::scorePlayerForTraitNeeds($websoccer, $db, $player, $traitNeeds) > 0) {
+            return false;
+        }
+        return true;
     }
     
     private static function getTeamTransferList(WebSoccer $websoccer, DbConnection $db, $teamId) {
@@ -490,7 +558,8 @@ class ComputerTransfersDataService {
 
         $positionsCount = self::countPositions($squad);
         $needs = self::getPositionNeeds($positionsCount);
-        if (count($squad) >= self::MIN_SQUAD_SIZE_BEFORE_BORROWING && count($needs) == 0) {
+        $traitNeeds = self::getTraitNeedsForTeam($websoccer, $db, $teamId);
+        if (count($squad) >= self::MIN_SQUAD_SIZE_BEFORE_BORROWING && count($needs) == 0 && !count($traitNeeds)) {
             return;
         }
 
@@ -501,6 +570,10 @@ class ComputerTransfersDataService {
 
         $teamStrength = self::calculateAverageStrength($squad);
         $candidates = self::getLendablePlayersForComputerTeam($websoccer, $db, $teamId, $needs);
+        foreach ($candidates as $index => $candidate) {
+            $candidates[$index]['cpu_trait_need_score'] = self::scorePlayerForTraitNeeds($websoccer, $db, $candidate, $traitNeeds);
+        }
+        usort($candidates, array('ComputerTransfersDataService', 'sortByCpuTraitNeedScore'));
         foreach ($candidates as $player) {
             if (!self::computerLoanStrengthFits($teamStrength, $player)) {
                 continue;
@@ -645,7 +718,7 @@ class ComputerTransfersDataService {
     private static function getLoanRelevantTeamSquad(WebSoccer $websoccer, DbConnection $db, $teamId) {
         $squad = array();
         $query = "
-            SELECT id, position, age, w_talent, w_staerke, w_technik, w_kondition, w_frische, marktwert, vertrag_gehalt, vertrag_spiele,
+            SELECT id, verein_id, position, age, w_talent, w_staerke, w_technik, w_kondition, w_frische, marktwert, vertrag_gehalt, vertrag_spiele,
                    lending_fee, lending_matches, lending_owner_id, transfermarkt
             FROM ". $websoccer->getConfig('db_prefix') ."_spieler
             WHERE verein_id = '". (int) $teamId ."'
@@ -703,7 +776,8 @@ class ComputerTransfersDataService {
             return false;
         }
 
-        return self::canListPlayerForTransfer($player, $positionsCount);
+        $traitNeeds = self::getTraitNeedsForTeam($websoccer, $db, isset($player['verein_id']) ? (int) $player['verein_id'] : 0);
+        return self::canListPlayerForTransfer($player, $positionsCount, $traitNeeds, $websoccer, $db);
     }
 
     private static function markPlayerForLoan(WebSoccer $websoccer, DbConnection $db, $teamId, $player, $profile) {
@@ -712,7 +786,7 @@ class ComputerTransfersDataService {
         $optionType = self::calculateComputerLoanOptionType($player, $profile);
         $buyFee = 0;
         if ($optionType != LoanDataService::OPTION_NONE) {
-            $buyFee = max(LoanDataService::getMinBuyFee($player), min(LoanDataService::getMaxBuyFee($player), (int) round((int) $player['marktwert'] * 0.95)));
+            $buyFee = self::calculateComputerLoanBuyFee($player);
         }
 
         $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') . "_spieler
@@ -728,18 +802,69 @@ class ComputerTransfersDataService {
         $marketValue = max(0, (int) $player['marktwert']);
         $salary = max(0, (int) $player['vertrag_gehalt']);
         $fee = round(($marketValue * 0.01) + ($salary * 0.25));
-        $fee = max(1000, min(LoanDataService::getMaxLoanFee($player), $fee));
 
-        return round($fee / 100) * 100;
+        // Loan fees are per match, therefore not 70-115% of market value. Still,
+        // cap CPU-generated fees to a sane market-value-based corridor.
+        $minFee = max(1000, (int) round($marketValue * self::CPU_LOAN_FEE_MIN_MARKET_RATIO));
+        $maxFee = max($minFee, (int) round($marketValue * self::CPU_LOAN_FEE_MAX_MARKET_RATIO));
+        $maxFee = min($maxFee, LoanDataService::getMaxLoanFee($player));
+        $fee = max($minFee, min($maxFee, $fee));
+
+        return self::roundMoney($fee);
+    }
+
+    private static function calculateComputerLoanBuyFee($player) {
+        $marketValue = isset($player['marktwert']) ? (float) $player['marktwert'] : 0;
+        if ($marketValue <= 0) {
+            return 0;
+        }
+
+        $range = self::getComputerMarketValueRange($marketValue);
+        $minFee = max($range['min'], LoanDataService::getMinBuyFee($player));
+        $maxFee = min($range['max'], LoanDataService::getMaxBuyFee($player));
+
+        if ($minFee > $maxFee) {
+            return self::roundMoney($marketValue);
+        }
+
+        return self::randomMoneyInRange($minFee, $maxFee);
+    }
+
+
+    private static function getSquadDepthTargets() {
+        return array(
+            'Torwart' => 2,
+            'Abwehr' => 7,
+            'Mittelfeld' => 7,
+            'Sturm' => 4
+        );
+    }
+
+    private static function positionFitsTransferNeeds($player, $needs, $squad, $traitNeedScore = 0) {
+        $traitNeedScore = max(0, (int) $traitNeedScore);
+        if (!count($needs)) {
+            // No hard shortage: keep a small market-opportunity chance, but prefer
+            // players who solve a concrete trait gap.
+            if (count($squad) >= self::MAX_SQUAD_SIZE) {
+                return false;
+            }
+            if ($traitNeedScore > 0) {
+                return (rand(1, 100) <= min(65, 20 + ($traitNeedScore * 4)));
+            }
+            return (rand(1, 100) <= 10);
+        }
+
+        if (isset($player['position']) && in_array($player['position'], $needs)) {
+            return true;
+        }
+
+        // A very good specialist can still be interesting if the squad is not full,
+        // but hard positional shortages remain the main driver.
+        return (count($squad) < self::MAX_SQUAD_SIZE && $traitNeedScore >= 8 && rand(1, 100) <= 20);
     }
 
     private static function getPositionNeeds($positionsCount) {
-        $minimum = array(
-            'Torwart' => 2,
-            'Abwehr' => 5,
-            'Mittelfeld' => 5,
-            'Sturm' => 4
-        );
+        $minimum = self::getSquadDepthTargets();
 
         $needs = array();
         foreach ($minimum as $position => $minCount) {
@@ -905,6 +1030,51 @@ class ComputerTransfersDataService {
         }
         $playerStrength = self::calculatePlayerStrengthX($candidate);
         return ($playerStrength >= $teamStrength * 0.75 && $playerStrength <= $teamStrength * 1.15);
+    }
+
+    private static function getTraitNeedsForTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $teamId = (int) $teamId;
+        if ($teamId < 1 || !class_exists('SquadPlannerDataService') || !class_exists('PlayerTraitsDataService')) {
+            return array();
+        }
+        try {
+            return SquadPlannerDataService::getTraitNeedsForTeam($websoccer, $db, $teamId);
+        } catch (Exception $e) {
+            return array();
+        }
+    }
+
+    private static function scorePlayerForTraitNeeds(WebSoccer $websoccer, DbConnection $db, $player, $traitNeeds) {
+        if (!class_exists('PlayerTraitsDataService') || !is_array($traitNeeds) || !count($traitNeeds)) {
+            return 0;
+        }
+        if (!isset($player['id']) || (int) $player['id'] < 1) {
+            return 0;
+        }
+
+        $position = isset($player['position']) ? $player['position'] : '';
+        $filteredNeeds = array();
+        foreach ($traitNeeds as $need) {
+            if (isset($need['position']) && strlen($position) && $need['position'] != $position) {
+                continue;
+            }
+            $filteredNeeds[] = $need;
+        }
+        if (!count($filteredNeeds)) {
+            return 0;
+        }
+
+        $traitMap = PlayerTraitsDataService::getTraitMapFromPlayerArray($websoccer, $db, $player);
+        return PlayerTraitsDataService::getTraitNeedScore($traitMap, $filteredNeeds);
+    }
+
+    public static function sortByCpuTraitNeedScore($a, $b) {
+        $scoreA = isset($a['cpu_trait_need_score']) ? (int) $a['cpu_trait_need_score'] : 0;
+        $scoreB = isset($b['cpu_trait_need_score']) ? (int) $b['cpu_trait_need_score'] : 0;
+        if ($scoreA == $scoreB) {
+            return 0;
+        }
+        return ($scoreA > $scoreB) ? -1 : 1;
     }
 
     private static function countOffersForPlayerId(WebSoccer $websoccer, DbConnection $db, $playerId) {

@@ -19,9 +19,9 @@
 				<th>{{ i18n.getMessage("mywatchlist_verein") }}</th>
 				<th>{{ i18n.getMessage("mywatchlist_alter") }}</th>
 				<th>{{ i18n.getMessage("mywatchlist_position_main") }}</th>
-				<th>{{ i18n.getMessage("mywatchlist_position_second") }}</th>
+				<!--<th>{{ i18n.getMessage("mywatchlist_position_second") }}</th>-->
 				<th>{{ i18n.getMessage("mywatchlist_marktwert") }}</th>
-				<th>{{ i18n.getMessage("mywatchlist_scout_recommendation") }}</th>
+				<th width="30%">{{ i18n.getMessage("mywatchlist_scout_recommendation") }}</th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
@@ -62,8 +62,7 @@
 					<a href="?page=team&id={{ player.verein_id }}">{{ player.team_name }}</a>
 				</td>
 				<td>{{ player.age }}</td>
-				<td>{{ player.position_main }}</td>
-				<td>{{ player.position_second }}</td>
+				<td coslspan="2">{{ player.position_main }} {{ player.position_second }}</td>
 				<td>{{ player.marktwert|number_format(0, ',', ' ') }} <sub>{{ transfermarktLabel }}{{ hasOfferLabel }}</sub></td>
 				<td>
 					{% if player.scout_recommendation.available %}

@@ -49,8 +49,13 @@ class TransferBidModel implements IModel {
 	public function getTemplateParameters() {
 		
 		$highestBid = TransfermarketDataService::getHighestBidForPlayer($this->_websoccer, $this->_db, $this->_player["player_id"], $this->_player["transfer_start"], $this->_player["transfer_end"]);
+		$firstOptionLock = array();
+		if (class_exists('ClubPartnershipDataService')) {
+			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+			$firstOptionLock = ClubPartnershipDataService::getProfessionalFirstOptionLock($this->_websoccer, $this->_db, $this->_player["player_id"], $clubId);
+		}
 		
-		return array("player" => $this->_player, "highestbid" => $highestBid);
+		return array("player" => $this->_player, "highestbid" => $highestBid, "first_option_lock" => $firstOptionLock);
 	}
 	
 }

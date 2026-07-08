@@ -24,10 +24,12 @@
 
     <message id="whatchanged_tactical_style">Taktische Identität</message>
     <message id="formation_tacticalstyle_fit">Passung</message>
+    <message id="tacticalstyle_balanced">Ausgewogen</message>
     <message id="tacticalstyle_possession">Ballbesitz</message>
     <message id="tacticalstyle_counterattack">Konter</message>
     <message id="tacticalstyle_pressing">Pressing</message>
     <message id="tacticalstyle_defensive_block">Defensivblock</message>
+    <message id="tacticalstyle_defensive">Defensiv</message>
     <message id="tacticalstyle_wing_play">Flügelspiel</message>
     <message id="tacticalstyle_set_pieces">Standards</message>
     <message id="tacticalstyle_youth_focused">Jugendfokus</message>
@@ -74,4 +76,8 @@
     <message id="whatchanged_news_title">Was hat sich bei {team} verändert?</message>
     <message id="whatchanged_news_message">Nach dem Spiel {match} gibt es eine neue Zusammenfassung für {team}: Ergebnis, Budget, Training, Scouting, Stimmung, Teamchemie, taktische Identität, Vorstand, Verletzungen und Saisonziele wurden aktualisiert.</message>
     <message id="whatchanged_news_link">Zur Zusammenfassung</message>
+    <message id="whatchanged_trait_highlights">Spezialfähigkeiten im Spiel</message>
+    <message id="whatchanged_trait">Spezialfähigkeit</message>
+    <message id="whatchanged_trait_reason">Auffälligkeit</message>
+
 </messages>

@@ -53,6 +53,16 @@ class SellYouthPlayerController implements IActionController {
 		}
 		
 		$this->updatePlayer($parameters["id"], $parameters["transfer_fee"]);
+
+		if (class_exists("ClubPartnershipDataService")) {
+			ClubPartnershipDataService::notifyFirstOptionYouth(
+				$this->_websoccer,
+				$this->_db,
+				(int) $clubId,
+				(int) $parameters["id"],
+				trim($player["firstname"] . " " . $player["lastname"])
+			);
+		}
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

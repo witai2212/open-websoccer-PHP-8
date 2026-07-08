@@ -198,6 +198,8 @@ class PlayersDataService {
 			//$player['marketvalue'] = $marketvalue;
 		}
 		$result->free();
+		
+		$players = PlayerTraitsDataService::attachTraitsToPlayers($websoccer, $db, $players);
 	
 		return $players;
 	}
@@ -615,6 +617,9 @@ class PlayersDataService {
 			} else {
 				$player['player_assists'] = 0;
 			}
+			
+			$player['traits'] = PlayerTraitsDataService::getTraitsOfPlayer($websoccer, $db, (int) $player['player_id']);
+			$player['traits_count'] = count($player['traits']);
 			
 		} else {
 			$player = array();

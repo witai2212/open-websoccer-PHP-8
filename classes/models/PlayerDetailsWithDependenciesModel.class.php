@@ -48,7 +48,10 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
 		
-		$userTeam = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		$userTeam = 0;
+		if ($this->_websoccer->getUser()) {
+			$userTeam = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		}
 		
 		//strength + marketvalue update
 		//PlayersStrengthDataService::updateAllPlayersMarketAndStrengthByPlayerId($this->_websoccer, $this->_db, $playerId);
@@ -66,26 +69,15 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		
 		$transfers = TransfermarketDataService::getCompletedTransfersOfPlayer($this->_websoccer, $this->_db, $playerId);
 		
-		//check if player is on watchlist from this user
-		$onWL = WatchlistDataService::checkIfPlayerOnWatchlist($this->_websoccer, $this->_db, $playerId, $userTeam);
-		//check if scout has same spaciality as player's position
-		$correctScout = ScoutingDataService::getScoutByTeamSpeciality($this->_websoccer, $this->_db, $userTeam, $player['player_position_de']);
-
-		if($onWL>0 && $correctScout>0) {
-		  
-    		$scouting = ScoutingDataService::getTalentEvaluation($this->_websoccer, $this->_db, $userTeam, $playerId);
-    		
-    		if(!isset($_SESSION['scouting_result'])) {
-    		    $_SESSION['scouting_result'] = $scouting;
-    		} else {
-    		    $scouting = $_SESSION['scouting_result'];
-    		}
-		}
+		$talentVisibility = PlayerTalentVisibilityDataService::getVisibility($this->_websoccer, $this->_db, $player, $userTeam, $onMyWhatchlist);
+		$scouting = PlayerTalentVisibilityDataService::isAccessVisible($talentVisibility) ? $talentVisibility : null;
 
 		$showPersonality = PlayerPersonalityDataService::isVisibleForUser($this->_websoccer, $this->_db, $player['team_id'], $scouting);
+		$showTraits = PlayerTraitsDataService::isVisibleForUser($this->_websoccer, $this->_db, $player['team_id'], $scouting);
 
 		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers, "watchlist" => $watchlist,
-		              "onmywatchlist" => $onMyWhatchlist, "scouting" => $scouting, "show_personality" => $showPersonality);
+		              "onmywatchlist" => $onMyWhatchlist, "scouting" => $scouting, "show_personality" => $showPersonality,
+		              "show_traits" => $showTraits, "talent_visibility" => $talentVisibility);
 	}
 	
 	private function _getGrades($playerId) {

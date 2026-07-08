@@ -51,6 +51,9 @@ class RemoveYouthPlayerFromMarketController implements IActionController {
 		}
 		
 		$this->updatePlayer($parameters["id"]);
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::cancelYouthFirstOptions($this->_websoccer, $this->_db, $parameters["id"]);
+		}
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

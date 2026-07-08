@@ -62,6 +62,14 @@
 						<a href="{{ env.getInternalActionUrl("remove-youthplayer-from-market", "id=" ~ player.id) }}"
 							title="{{ i18n.getMessage("youthteam_action_removefrommarket") }}"><i class="icon-share darkIcon"></i></a>
 					{% endif %}</p>
+
+					{% if player.traits is defined and player.traits|length > 0 %}
+						<p>
+						{% for trait in player.traits %}
+							<span class="label label-info" title="{{ i18n.getMessage("player_traits_value") }} {{ trait.value }}">{{ i18n.getMessage(trait.label_key) }} {{ trait.value }}</span>
+						{% endfor %}
+						</p>
+					{% endif %}
 				
 					<div class="btn-group">
 						<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">{{ i18n.getMessage("myteam_action_button") }} <span class="caret"></span></a>

@@ -117,7 +117,7 @@
 	
 	<h4>{{ i18n.getMessage("formation_freekickplayer") }}</h4>
 		
-		<select name="freekickplayer" id="freekickplayer" class="span4">
+		<select name="freekickplayer" id="freekickplayer" class="span4" data-preselect="{{ formation.freekickplayer }}">
 			<option value=""></option>
 			{% for player in setpiece_players %}
 				{% if player.pseudonym is defined and player.pseudonym|length > 0 %}
@@ -125,21 +125,22 @@
 				{% else %}
 					{% set playerName = player.firstname|slice(0, 1) ~ ". " ~ player.lastname %}
 				{% endif %}
-				<option value="{{ player.id }}"{% if player.id == formation.freekickplayer %} selected{% endif %}>{{ playerName }} (FS {{ player.strength_freekick|default(0) }})</option>
+				<option value="{{ player.id }}" data-freekick="{{ player.strength_freekick|default(0) }}"{% if player.id == formation.freekickplayer %} selected{% endif %}>{{ playerName }} (FS {{ player.strength_freekick|default(0) }})</option>
 			{% endfor %}
 		</select>
 		
 		<h4>{{ i18n.getMessage("formation_cornerplayer") }}</h4>
 		
-		<select name="cornerplayer" id="cornerplayer" class="span4">
+		<select name="cornerplayer" id="cornerplayer" class="span4" data-preselect="{{ formation.cornerplayer }}">
 			<option value=""></option>
-			{% for player in setpiece_players %}
+			{% for player in corner_players %}
 				{% if player.pseudonym is defined and player.pseudonym|length > 0 %}
 					{% set playerName = player.pseudonym %}
 				{% else %}
 					{% set playerName = player.firstname|slice(0, 1) ~ ". " ~ player.lastname %}
 				{% endif %}
-				<option value="{{ player.id }}"{% if player.id == formation.cornerplayer %} selected{% endif %}>{{ playerName }} (FS {{ player.strength_freekick|default(0) }})</option>
+				{% set cornerStrength = ((player.strength_passing|default(0) * 0.45) + (player.strength_creativity|default(0) * 0.35) + (player.strength_freekick|default(0) * 0.20))|number_format(0, '.', '') %}
+				<option value="{{ player.id }}" data-corner="{{ cornerStrength }}"{% if player.id == formation.cornerplayer %} selected{% endif %}>{{ playerName }} (ECK {{ cornerStrength }})</option>
 			{% endfor %}
 		</select>
 		

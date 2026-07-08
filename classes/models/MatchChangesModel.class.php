@@ -72,6 +72,12 @@ class MatchChangesModel extends FormationModel {
 		} else {
 			$formation['freekickplayer'] = $match['match_' . $teamPrefix . '_freekickplayer'];
 		}
+
+		if ($this->_websoccer->getRequestParameter('cornerplayer')) {
+			$formation['cornerplayer'] = $this->_websoccer->getRequestParameter('cornerplayer');
+		} else {
+			$formation['cornerplayer'] = $match['match_' . $teamPrefix . '_cornerplayer'];
+		}
 			
 		if ($this->_websoccer->getRequestParameter('offensive')) {
 			$formation['offensive'] = $this->_websoccer->getRequestParameter('offensive');
@@ -176,7 +182,25 @@ class MatchChangesModel extends FormationModel {
 			return ($freekickA < $freekickB) ? 1 : -1;
 		});
 		
-		return array('setup' => $setup, 'players' => $players, 'setpiece_players' => $setPiecePlayers, 'formation' => $formation, 'minute' => $match['match_minutes']);
+		$cornerPlayers = $playersOnField;
+		usort($cornerPlayers, function($playerA, $playerB) {
+			$cornerA = self::getCornerStrength($playerA);
+			$cornerB = self::getCornerStrength($playerB);
+			if ($cornerA == $cornerB) {
+				return 0;
+			}
+			return ($cornerA < $cornerB) ? 1 : -1;
+		});
+		
+		return array('setup' => $setup, 'players' => $players, 'setpiece_players' => $setPiecePlayers, 'corner_players' => $cornerPlayers, 'formation' => $formation, 'minute' => $match['match_minutes']);
+	}
+
+	public static function getCornerStrength($player) {
+		$passing = isset($player['strength_passing']) ? (float) $player['strength_passing'] : 0;
+		$creativity = isset($player['strength_creativity']) ? (float) $player['strength_creativity'] : 0;
+		$freekick = isset($player['strength_freekick']) ? (float) $player['strength_freekick'] : 0;
+
+		return round(($passing * 0.45) + ($creativity * 0.35) + ($freekick * 0.20));
 	}
 	
 }

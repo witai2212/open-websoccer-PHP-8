@@ -136,7 +136,7 @@ class StockMarketDataService {
         }
         $result->free();
         
-        return $indexes;
+        return self::applyStockRecommendations($websoccer, $db, $teamId, $indexes, false);
         
     }
     
@@ -191,8 +191,10 @@ class StockMarketDataService {
         $sqlStr = "SELECT us.*, SUM(us.qty) index_qty, AVG(us.price) AS avg_price, 
                             SUM(us.qty)*AVG(us.price) AS value_bought, 
                             (REPLACE(sm.v1,',','.')*SUM(us.qty)) AS curr_value,
-                            sm.name, 
-                            REPLACE(sm.v1, ',', '.') AS v1, sm.v2
+                            sm.name,
+                            sm.team_id,
+                            sm.quantity,
+                            REPLACE(sm.v1, ',', '.') AS v1, sm.v2, sm.v3, sm.v4
                     FROM ". $websoccer->getConfig("db_prefix") ."_user_stock AS us,
                         ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm
                     WHERE us.user_id='".$teamId."' 
@@ -206,11 +208,12 @@ class StockMarketDataService {
             $totalQty = self::totalQtyByStockId($websoccer, $db, $stockdata['stock_id']);
             $indexes[$i] = $stockdata;
             $indexes[$i]['total_qty'] = $totalQty;
+            $indexes[$i]['owned_percent'] = self::getOwnershipPercent($websoccer, $db, $stockdata['stock_id'], $teamId);
             $i++;
         }
         $result->free();
         
-        return $indexes;
+        return self::applyStockRecommendations($websoccer, $db, $teamId, $indexes, true);
         
     }
     
@@ -459,6 +462,220 @@ class StockMarketDataService {
         return true;
     }
     
+
+    public static function hasFinancialAdvisorForStocks(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        return self::getFinancialAdvisorStockBonus($websoccer, $db, $teamId) > 0;
+    }
+
+    public static function getFinancialAdvisorStockBonus(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        if ((int) $teamId < 1 || !class_exists('ClubStaffDataService')) {
+            return 0;
+        }
+        return (int) ClubStaffDataService::getRoleBonus($websoccer, $db, $teamId, ClubStaffDataService::ROLE_FINANCIAL_ADVISOR);
+    }
+
+    public static function applyStockRecommendations(WebSoccer $websoccer, DbConnection $db, $teamId, $indexes, $portfolioMode = false) {
+        $teamId = (int) $teamId;
+        $advisorBonus = self::getFinancialAdvisorStockBonus($websoccer, $db, $teamId);
+        if ($advisorBonus <= 0 || !is_array($indexes)) {
+            return $indexes;
+        }
+
+        foreach ($indexes as $key => $index) {
+            $indexes[$key]['stock_recommendation'] = self::buildStockRecommendation($websoccer, $db, $teamId, $index, $advisorBonus, $portfolioMode);
+        }
+        return $indexes;
+    }
+
+    private static function buildStockRecommendation(WebSoccer $websoccer, DbConnection $db, $teamId, $index, $advisorBonus, $portfolioMode = false) {
+        $score = 50;
+        $reasons = array();
+        $risk = 'medium';
+
+        $v1 = self::normalizePrice(isset($index['v1']) ? $index['v1'] : 0);
+        $v2 = self::normalizePrice(isset($index['v2']) ? $index['v2'] : 0);
+        $v3 = self::normalizePrice(isset($index['v3']) ? $index['v3'] : 0);
+        $v4 = self::normalizePrice(isset($index['v4']) ? $index['v4'] : 0);
+        $trendScore = 0;
+
+        if ($v1 > 0 && $v2 > 0) {
+            if ($v1 > $v2) {
+                $trendScore += 14;
+                $reasons[] = 'stockmarket_recommend_reason_price_up';
+            } elseif ($v1 < $v2) {
+                $trendScore -= 14;
+                $reasons[] = 'stockmarket_recommend_reason_price_down';
+            } else {
+                $reasons[] = 'stockmarket_recommend_reason_price_stable';
+            }
+        }
+        if ($v2 > 0 && $v3 > 0) {
+            $trendScore += ($v2 > $v3) ? 7 : (($v2 < $v3) ? -7 : 0);
+        }
+        if ($v3 > 0 && $v4 > 0) {
+            $trendScore += ($v3 > $v4) ? 4 : (($v3 < $v4) ? -4 : 0);
+        }
+        $score += $trendScore;
+
+        $avgReference = self::averagePositive(array($v2, $v3, $v4));
+        if ($avgReference > 0 && $v1 > 0) {
+            if ($v1 < ($avgReference * 0.94) && $trendScore >= 0) {
+                $score += 6;
+                $reasons[] = 'stockmarket_recommend_reason_recovery_chance';
+            } elseif ($v1 > ($avgReference * 1.10)) {
+                $score -= 5;
+                $reasons[] = 'stockmarket_recommend_reason_price_high';
+            }
+        }
+
+        $availableQty = isset($index['quantity']) ? (int) $index['quantity'] : 0;
+        if ($availableQty > 0) {
+            $score += 4;
+        } else if (!$portfolioMode) {
+            $score -= 20;
+            $reasons[] = 'stockmarket_recommend_reason_no_available_shares';
+        }
+
+        $ownedPercent = isset($index['owned_percent']) ? (float) $index['owned_percent'] : 0.0;
+        if ($ownedPercent >= 45 && $ownedPercent < 51) {
+            $score += 7;
+            $reasons[] = 'stockmarket_recommend_reason_majority_close';
+        } elseif ($ownedPercent >= 51) {
+            $score += 4;
+            $reasons[] = 'stockmarket_recommend_reason_majority_control';
+        }
+
+        $club = self::getRecommendationClubData($websoccer, $db, isset($index['team_id']) ? (int) $index['team_id'] : 0);
+        if ($club) {
+            $clubBudget = isset($club['finanz_budget']) ? (int) $club['finanz_budget'] : 0;
+            $clubStrength = isset($club['strength']) ? (int) $club['strength'] : 0;
+            $board = isset($club['board_satisfaction']) ? (int) $club['board_satisfaction'] : 50;
+            $fans = isset($club['fan_mood']) ? (int) $club['fan_mood'] : 50;
+
+            if ($clubBudget > 5000000) {
+                $score += 8;
+                $reasons[] = 'stockmarket_recommend_reason_finance_strong';
+            } elseif ($clubBudget < 0) {
+                $score -= 12;
+                $reasons[] = 'stockmarket_recommend_reason_finance_weak';
+                $risk = 'high';
+            }
+
+            if ($clubStrength >= 82) {
+                $score += 7;
+                $reasons[] = 'stockmarket_recommend_reason_sport_strong';
+            } elseif ($clubStrength > 0 && $clubStrength < 68) {
+                $score -= 7;
+                $reasons[] = 'stockmarket_recommend_reason_sport_weak';
+                $risk = 'high';
+            }
+
+            if ($board >= 75 || $fans >= 75) {
+                $score += 3;
+            } elseif ($board <= 35 || $fans <= 35) {
+                $score -= 4;
+                $risk = 'high';
+            }
+        } else {
+            $risk = 'medium';
+        }
+
+        $profitPercent = 0;
+        if ($portfolioMode && isset($index['avg_price'])) {
+            $avgBuy = self::normalizePrice($index['avg_price']);
+            if ($avgBuy > 0 && $v1 > 0) {
+                $profitPercent = (($v1 - $avgBuy) / $avgBuy) * 100;
+                if ($profitPercent >= 15) {
+                    $score -= 6;
+                    $reasons[] = 'stockmarket_recommend_reason_profit_available';
+                } elseif ($profitPercent <= -10) {
+                    $score -= 4;
+                    $reasons[] = 'stockmarket_recommend_reason_loss_position';
+                    $risk = 'high';
+                }
+            }
+        }
+
+        if (count($reasons) < 1) {
+            $reasons[] = 'stockmarket_recommend_reason_mixed_signals';
+        }
+        $reasons = array_values(array_unique($reasons));
+        $reasons = array_slice($reasons, 0, min(3, max(1, (int) floor($advisorBonus / 2))));
+
+        if ($portfolioMode) {
+            if ($score >= 66 || ($ownedPercent >= 45 && $ownedPercent < 51)) {
+                $action = 'hold';
+                $css = 'success';
+            } elseif ($score <= 42 || ($profitPercent >= 15 && $trendScore < 0)) {
+                $action = 'sell';
+                $css = 'important';
+            } else {
+                $action = 'watch';
+                $css = 'warning';
+            }
+        } else {
+            if ($availableQty <= 0) {
+                $action = 'watch';
+                $css = 'warning';
+            } elseif ($score >= 68) {
+                $action = 'buy';
+                $css = 'success';
+            } elseif ($score <= 40) {
+                $action = 'avoid';
+                $css = 'important';
+            } else {
+                $action = 'watch';
+                $css = 'warning';
+            }
+        }
+
+        $advisorQuality = min(20, $advisorBonus * 2);
+        $confidence = (int) max(35, min(90, 50 + abs($score - 50) + $advisorQuality));
+        if ($advisorBonus < 4) {
+            $confidence = min($confidence, 65);
+        }
+
+        return array(
+            'action' => $action,
+            'action_key' => 'stockmarket_recommend_action_' . $action,
+            'label_class' => $css,
+            'confidence' => $confidence,
+            'risk' => $risk,
+            'risk_key' => 'stockmarket_recommend_risk_' . $risk,
+            'reasons' => $reasons,
+            'score' => (int) max(0, min(100, $score))
+        );
+    }
+
+    private static function averagePositive($values) {
+        $sum = 0;
+        $count = 0;
+        foreach ($values as $value) {
+            $value = (float) $value;
+            if ($value > 0) {
+                $sum += $value;
+                $count++;
+            }
+        }
+        return ($count > 0) ? ($sum / $count) : 0;
+    }
+
+    private static function getRecommendationClubData(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $teamId = (int) $teamId;
+        if ($teamId < 1) {
+            return false;
+        }
+
+        $sqlStr = "SELECT id, finanz_budget, strength, board_satisfaction, fan_mood, platz
+                     FROM ". $websoccer->getConfig("db_prefix") ."_verein
+                    WHERE id='". $teamId ."'
+                    LIMIT 1";
+        $result = $db->executeQuery($sqlStr);
+        $row = $result->fetch_array();
+        $result->free();
+        return ($row && isset($row['id'])) ? $row : false;
+    }
+
     private static function normalizePrice($price) {
         return (float) str_replace(',', '.', (string) $price);
     }

@@ -64,6 +64,10 @@ class TransferAcceptController implements IActionController {
 				throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
 			}
 			
+			if (class_exists('ClubPartnershipDataService')) {
+				ClubPartnershipDataService::assertProfessionalTransferAllowed($this->_websoccer, $this->_db, $this->_i18n, $offer['spieler_id'], $offer['verein_id']);
+			}
+			
 			//new team data
 			$newTeam = TeamsDataService::getTeamById($this->_websoccer, $this->_db, $offer['verein_id']);
 			
@@ -141,6 +145,10 @@ class TransferAcceptController implements IActionController {
 			);
 		}
 
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::markProfessionalFirstOptionUsed($this->_websoccer, $this->_db, $offer['spieler_id'], $offer['verein_id']);
+		}
+		
 		if (class_exists('FanPressureDataService')) {
 			FanPressureDataService::processTransfer(
 				$this->_websoccer,

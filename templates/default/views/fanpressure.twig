@@ -59,6 +59,50 @@
 
 <hr>
 
+<h3>{{ i18n.getMessage("fanpressure_open_interviews") }}</h3>
+<p class="muted">{{ i18n.getMessage("fanpressure_interview_intro") }}</p>
+
+{% if open_interviews|length == 0 %}
+    <div class="alert alert-success">{{ i18n.getMessage("fanpressure_no_open_interviews") }}</div>
+{% else %}
+    {% for interview in open_interviews %}
+        <div class="well">
+            <h4>{{ interview.question }}</h4>
+            <p>
+                <span class="label label-info">{{ i18n.getMessage("fanpressure_interview_context") }}: {{ interview.reason_label }}</span>
+                {% if interview.context.score is defined %}
+                    <span class="label">{{ interview.context.score }}</span>
+                {% endif %}
+                {% if interview.context.player is defined %}
+                    <span class="label">{{ interview.context.player }}</span>
+                {% endif %}
+            </p>
+            <div class="row-fluid">
+                {% for answer in interview.answers %}
+                    <div class="span4">
+                        <form action="?page=fanpressure" method="post" style="margin: 0 0 10px 0;">
+                            <input type="hidden" name="action" value="answer-fanpressure-interview">
+                            <input type="hidden" name="occurrence_id" value="{{ interview.id }}">
+                            <input type="hidden" name="answer" value="{{ answer.key }}">
+                            <p><strong>{{ answer.label }}</strong></p>
+                            <p class="muted">
+                                {{ i18n.getMessage("fanpressure_interview_effect_preview") }}:
+                                {{ i18n.getMessage("fanpressure_fan_mood") }} {{ answer.mood > 0 ? '+' : '' }}{{ answer.mood }},
+                                {{ i18n.getMessage("fanpressure_media_pressure") }} {{ answer.pressure > 0 ? '+' : '' }}{{ answer.pressure }},
+                                {{ i18n.getMessage("fanpressure_board_satisfaction") }} {{ answer.board > 0 ? '+' : '' }}{{ answer.board }},
+                                {{ i18n.getMessage("fanpressure_team_chemistry") }} {{ answer.chemistry > 0 ? '+' : '' }}{{ answer.chemistry }}
+                            </p>
+                            <button type="submit" class="btn btn-primary">{{ i18n.getMessage("fanpressure_answer") }}</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<hr>
+
 <h3>{{ i18n.getMessage("fanpressure_recent_development") }}</h3>
 
 {% if log|length == 0 %}
@@ -108,6 +152,46 @@
                         {% if item.pressure_change != 0 %}
                             <small>({{ item.pressure_change_signed }})</small>
                         {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<hr>
+
+<h3>{{ i18n.getMessage("fanpressure_story_events") }}</h3>
+
+{% if story_log|length == 0 %}
+    <div class="alert alert-warning">
+        {{ i18n.getMessage("fanpressure_no_story_events") }}
+    </div>
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("fanpressure_date") }}</th>
+                <th>{{ i18n.getMessage("fanpressure_story_title") }}</th>
+                <th>{{ i18n.getMessage("fanpressure_story_effects") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in story_log %}
+                <tr>
+                    <td>{{ item.event_date|date(env.getConfig("date_format")) }}</td>
+                    <td>
+                        <strong>{{ item.title }}</strong><br>
+                        <small>{{ item.message }}</small>
+                        {% if item.match_id > 0 %}
+                            <br><small><a href="{{ env.getInternalUrl("match", "id=" ~ item.match_id) }}">{{ i18n.getMessage("fanpressure_match_link") }}</a></small>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ i18n.getMessage("fanpressure_fan_mood") }} {{ item.mood_change_signed }}<br>
+                        {{ i18n.getMessage("fanpressure_media_pressure") }} {{ item.pressure_change_signed }}<br>
+                        {{ i18n.getMessage("fanpressure_board_satisfaction") }} {{ item.board_change_signed }}<br>
+                        {{ i18n.getMessage("fanpressure_team_chemistry") }} {{ item.chemistry_change_signed }}
                     </td>
                 </tr>
             {% endfor %}

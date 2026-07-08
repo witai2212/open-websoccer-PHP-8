@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="transfermarket" version="1.0.0" />
+        <dependency module="lending" version="1.0.0" />
+        <dependency module="scouting" version="1.0.0" />
+        <dependency module="squadplanner" version="1.0.0" />
+        <dependency module="mywatchlist" version="1.0.0" />
+    </dependencies>
+
+    <admin>
+        <adminpage id="transfermarketintelligence" permissionrole="r_daten" navcategory="league" filename="transfer-market-intelligence" />
+    </admin>
+
+    <settings>
+        <setting id="transfermarket_intelligence_enabled" category="transfermarket" type="boolean" default="1" />
+        <setting id="transfermarket_intelligence_contract_days" category="transfermarket" type="number" default="30" />
+        <setting id="transfermarket_intelligence_bargain_percent" category="transfermarket" type="number" default="15" />
+        <setting id="transfermarket_intelligence_overpriced_percent" category="transfermarket" type="number" default="25" />
+        <setting id="transfermarket_intelligence_cpu_min_percent" category="transfermarket" type="number" default="85" />
+        <setting id="transfermarket_intelligence_cpu_max_percent" category="transfermarket" type="number" default="115" />
+    </settings>
+
+    <pages>
+        <page
+            id="transfer-market-intelligence"
+            template="transfer-market-intelligence"
+            model="TransferMarketIntelligenceModel"
+            parentItem="transfermarket"
+            navitem="true"
+            navweight="6"
+            role="user"
+            navitemOnlyForConfigEnabled="transfermarket_intelligence_enabled" />
+    </pages>
+
+</module>

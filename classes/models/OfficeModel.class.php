@@ -55,7 +55,15 @@ class OfficeModel implements IModel {
 			RandomEventsDataService::createEventIfRequired($this->_websoccer, $this->_db, $user->id);
 		}
 
-		return array();
+		return array(
+			'daily_briefing' => DailyBriefingDataService::getOfficeData(
+				$this->_websoccer,
+				$this->_db,
+				$this->_i18n,
+				(int) $user->id,
+				(int) $clubId
+			)
+		);
 	}
 
 }

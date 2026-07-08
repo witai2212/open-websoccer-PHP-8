@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="youth" version="1.0.0"/>
+        <dependency module="clubstaff" version="1.0.0"/>
+        <dependency module="scouting" version="1.0.0"/>
+    </dependencies>
+
+    <admin>
+        <adminpage
+            id="youthacademylevel"
+            entity="youthacademylevel"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="youth_academy_level AS LevelTab" >
+                <overview delete="false" edit="true">
+                    <column id="entity_youthacademylevel_level" field="LevelTab.level" type="number" sort="true" />
+                    <column id="entity_youthacademylevel_name" field="LevelTab.name" type="text" sort="true" filter="true" />
+                    <column id="entity_youthacademylevel_build_cost" field="LevelTab.build_cost" type="number" sort="true" />
+                    <column id="entity_youthacademylevel_maintenance_fee" field="LevelTab.maintenance_fee" type="number" sort="true" />
+                    <column id="entity_youthacademylevel_development_bonus" field="LevelTab.development_bonus" type="number" sort="true" />
+                    <column id="entity_youthacademylevel_scouting_bonus" field="LevelTab.scouting_bonus" type="number" sort="true" />
+                    <column id="entity_youthacademylevel_status" field="LevelTab.status" type="boolean" sort="true" filter="true" />
+                </overview>
+                <editform>
+                    <field id="level" type="number" required="true" />
+                    <field id="name" type="text" required="true" />
+                    <field id="build_cost" type="number" required="true" default="0" />
+                    <field id="maintenance_fee" type="number" required="true" default="0" />
+                    <field id="development_bonus" type="number" required="true" default="0" />
+                    <field id="scouting_bonus" type="number" required="true" default="0" />
+                    <field id="stagnation_reduction" type="number" required="true" default="0" />
+                    <field id="reputation_bonus" type="number" required="true" default="0" />
+                    <field id="max_reputation" type="number" required="true" default="100" />
+                    <field id="status" type="boolean" required="false" default="1" />
+                </editform>
+            </entity>
+        </adminpage>
+    </admin>
+
+    <settings>
+        <setting id="youth_academy_enabled" category="youth" type="boolean" default="1" />
+        <setting id="youth_academy_report_days" category="youth" type="number" default="30" />
+        <setting id="youth_academy_captain_bonus" category="youth" type="number" default="3" />
+        <setting id="youth_academy_computer_manage_enabled" category="youth" type="boolean" default="1" />
+    </settings>
+
+    <pages>
+        <page
+            id="youth-academy"
+            template="youth_academy"
+            model="YouthAcademyModel"
+            parentItem="youth-team"
+            navitem="true"
+            navweight="1"
+            role="user"
+            navitemOnlyForConfigEnabled="youth_academy_enabled">
+        </page>
+    </pages>
+
+    <actions>
+        <action id="build-youth-academy" controller="BuildYouthAcademyController" role="user" log="true">
+        </action>
+
+        <action id="upgrade-youth-academy" controller="UpgradeYouthAcademyController" role="user" log="true">
+        </action>
+
+        <action id="downgrade-youth-academy" controller="DowngradeYouthAcademyController" role="user" log="true">
+        </action>
+
+        <action id="save-youth-academy-settings" controller="SaveYouthAcademySettingsController" role="user" log="true">
+            <param id="focus" type="text" required="true" min="3" max="32" />
+            <param id="captain_id" type="number" required="false" min="0" max="2000000000" />
+        </action>
+    </actions>
+
+    <plugins>
+        <eventlistener event="YouthPlayerPlayedEvent" class="YouthAcademyPlugin" method="handleYouthPlayerPlayed" />
+        <eventlistener event="YouthPlayerScoutedEvent" class="YouthAcademyPlugin" method="handleYouthPlayerScouted" />
+        <eventlistener event="MatchCompletedEvent" class="YouthAcademyPlugin" method="handleMatchCompleted" />
+    </plugins>
+
+</module>

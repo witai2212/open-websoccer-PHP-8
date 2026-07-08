@@ -27,6 +27,8 @@ class LoanOverviewModel implements IModel {
 		return array(
 			'loaned_out_players' => $this->getLoanedOutPlayers($teamId),
 			'borrowed_players' => $this->getBorrowedPlayers($teamId),
+			'incoming_loan_requests' => $this->getIncomingLoanRequests($teamId),
+			'outgoing_loan_requests' => $this->getOutgoingLoanRequests($teamId),
 			'loan_offers' => $this->getOwnLoanOffers($teamId),
 			'available_loan_players' => $this->getAvailableLoanPlayers($teamId)
 		);
@@ -135,18 +137,23 @@ class LoanOverviewModel implements IModel {
 
 	private function getAvailableLoanPlayers($teamId) {
 		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::ensureSchema($this->_websoccer, $this->_db);
+		}
 		$query = "
 			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main, P.lending_fee, P.vertrag_gehalt,
-			       C.name AS team_name, C.user_id AS team_user_id, O.salary_share_percent, O.option_type, O.buy_fee
+			       C.name AS team_name, C.user_id AS team_user_id, O.salary_share_percent, O.option_type, O.buy_fee,
+			       CP.id AS partnership_id, CP.development_bonus_percent AS partnership_development_bonus
 			FROM ". $dbPrefix ."_spieler AS P
 			INNER JOIN ". $dbPrefix ."_verein AS C ON C.id = P.verein_id
 			LEFT JOIN ". $dbPrefix ."_loan_offer AS O ON O.player_id = P.id AND O.status = 'open'
+			LEFT JOIN ". $dbPrefix ."_club_partnership AS CP ON CP.parent_team_id = C.id AND CP.partner_team_id = '". (int) $teamId ."' AND CP.status = 'active' AND CP.preferred_loans = '1'
 			WHERE P.status = '1'
 			  AND P.verein_id <> '". (int) $teamId ."'
 			  AND P.transfermarkt <> '1'
 			  AND P.lending_fee > 0
 			  AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)
-			ORDER BY P.position ASC, P.w_staerke DESC, P.nachname ASC
+			ORDER BY CASE WHEN CP.id IS NULL THEN 1 ELSE 0 END ASC, P.position ASC, P.w_staerke DESC, P.nachname ASC
 			LIMIT 100";
 
 		return $this->fetchSimpleRows($query);

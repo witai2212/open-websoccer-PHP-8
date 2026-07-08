@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <admin>
+        <adminpage id="admin_game_health" permissionrole="r_admin" navcategory="settings" filename="admin-game-health"/>
+    </admin>
+
+</module>

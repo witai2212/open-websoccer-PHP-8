@@ -50,9 +50,14 @@ class StockMarketModel implements IModel {
         
         $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
         $teamId = isset($team['team_id']) ? (int) $team['team_id'] : 0;
+        $advisorBonus = StockMarketDataService::getFinancialAdvisorStockBonus($this->_websoccer, $this->_db, $teamId);
         $indexes = StockMarketDataService::getStockMarketData($this->_websoccer, $this->_db, $teamId);
         
-        return array("indexes" => $indexes);
+        return array(
+            "indexes" => $indexes,
+            "stock_advisor_bonus" => $advisorBonus,
+            "has_stock_recommendations" => ($advisorBonus > 0)
+        );
     }
     
 }

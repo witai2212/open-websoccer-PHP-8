@@ -48,7 +48,8 @@ class YouthMatchesModel implements IModel {
 		
 		$matches = YouthMatchesDataService::getMatchesOfTeam($this->_websoccer, $this->_db, $clubId, $paginator->getFirstIndex(), $eps);
 		
-		return array("matches" => $matches, "paginator" => $paginator);
+		//return array("matches" => $matches, "paginator" => $paginator);
+		return array("matches" => $matches);
 	}
 	
 }

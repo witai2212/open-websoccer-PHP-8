@@ -20,6 +20,51 @@
 	{% endif %}
 	
 	{{ formelements.checkbox("c_hideinonlinelist", i18n.getMessage('entity_users_c_hideinonlinelist'), user.c_hideinonlinelist, true) }}
+
+	{% if manager_character.schema_ready is defined and manager_character.schema_ready %}
+	<hr>
+	<h4>{{ i18n.getMessage('manager_character_section_title') }}</h4>
+	<p class="muted">{{ i18n.getMessage('manager_character_intro') }}</p>
+
+	{% if manager_character.character|length > 0 %}
+		{{ formelements.readonly(i18n.getMessage('manager_character_current'), manager_character.character_label) }}
+	{% else %}
+		<div class="alert alert-info">{{ i18n.getMessage('manager_character_first_choice_hint') }}</div>
+	{% endif %}
+
+	{% if manager_character.change_status.allowed %}
+		<div class="control-group">
+			<label class="control-label" for="manager_character">{{ i18n.getMessage('manager_character_select_label') }}</label>
+			<div class="controls">
+				<select id="manager_character" name="manager_character">
+					<option value="">{{ i18n.getMessage('manager_character_select_empty') }}</option>
+					{% for option in manager_character.options %}
+						<option value="{{ option.key }}"{% if option.key == manager_character.character %} selected{% endif %}>{{ option.label }}</option>
+					{% endfor %}
+				</select>
+				<span class="help-inline">{{ i18n.getMessage('manager_character_change_penalty_hint') }}</span>
+			</div>
+		</div>
+	{% else %}
+		<div class="alert alert-warning">
+			{{ i18n.getMessage('manager_character_change_locked', manager_character.change_status.matches_until_change) }}
+		</div>
+	{% endif %}
+
+	<div class="row-fluid">
+	{% for option in manager_character.options %}
+		<div class="span4" style="min-height: 155px; margin-bottom: 12px;">
+			<strong>{{ option.label }}</strong><br>
+			<small>{{ option.summary }}</small>
+			<ul class="unstyled" style="margin-top: 6px;">
+				<li><span class="label label-success">+</span> {{ option.positive }}</li>
+				<li><span class="label label-important">-</span> {{ option.negative }}</li>
+			</ul>
+		</div>
+	{% endfor %}
+	</div>
+	{% endif %}
+
 	<hr>
 	
 	{{ formelements.textfield('realname', i18n.getMessage('entity_users_name'), user.realname, false, validationMsg) }}

@@ -83,7 +83,10 @@ class ScoutYouthPlayerController implements IActionController {
 		// has scout found someone?
 		$found = TRUE;
 		$succesProbability = (int) $this->_websoccer->getConfig("youth_scouting_success_probability");
-		if ($this->_websoccer->getConfig("youth_scouting_success_probability") < 100) {
+		if (class_exists('YouthAcademyDataService')) {
+			$succesProbability = YouthAcademyDataService::applyYouthScoutingSuccessBonus($this->_websoccer, $this->_db, $clubId, $succesProbability);
+		}
+		if ($succesProbability < 100) {
 			$found = SimulationHelper::selectItemFromProbabilities(array(
 						TRUE => $succesProbability,
 						FALSE => 100 - $succesProbability
@@ -123,7 +126,7 @@ class ScoutYouthPlayerController implements IActionController {
 		// consider random deviation
 		$deviation = (int) $this->_websoccer->getConfig("youth_scouting_standard_deviation");
 		$strength = $strength + SimulationHelper::getMagicNumber(0 - $deviation, $deviation);
-		$strength = max($minStrength, min($maxStrength, $strength)); // make sure that condigured boundaries are not violated
+		$strength = max($minStrength, min($maxStrength, $strength)); // make sure that configured boundaries are not violated
 		
 		// determine position
 		if ($scout["speciality"] == "Torwart") {

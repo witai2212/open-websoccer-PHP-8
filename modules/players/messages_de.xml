@@ -110,6 +110,36 @@
     <message id="player_scouting_talent_result">Talent (Scout)</message>
 	<message id="player_scounting_no_scout_no_watchlist">*) Du benötigst einen Scout und der Spieler muss auf deiner Beobachtungsliste sein.</message>
 
+
+    <message id="player_talent_unknown">Talent unbekannt</message>
+    <message id="player_talent_label_low">gering</message>
+    <message id="player_talent_label_fair">ordentlich</message>
+    <message id="player_talent_label_good">gut</message>
+    <message id="player_talent_label_high">hoch</message>
+    <message id="player_talent_label_exceptional">außergewöhnlich</message>
+    <message id="player_talent_source_own">Eigener Spieler</message>
+    <message id="player_talent_source_partnership">Sichtbar durch aktive Vereinspartnerschaft</message>
+    <message id="player_talent_source_scout">Scout-Einschätzung</message>
+    <message id="player_talent_source_watchlist">Beobachtungsliste</message>
+    <message id="player_talent_accuracy_label">Genauigkeit</message>
+    <message id="player_talent_accuracy_very_high">sehr hoch</message>
+    <message id="player_talent_accuracy_high">hoch</message>
+    <message id="player_talent_accuracy_medium">mittel</message>
+    <message id="player_talent_accuracy_low">gering</message>
+    <message id="player_talent_access_exact">exakt</message>
+    <message id="player_talent_hint_matching_scout_required">Für eine Einschätzung wird ein passender %s-Scout benötigt.</message>
+    <message id="player_talent_hint_scout_too_weak">Der passende Scout ist noch zu unerfahren für eine verlässliche Talenteinschätzung.</message>
+    <message id="player_talent_hint_add_watchlist">Setze den Spieler auf deine Beobachtungsliste, um Talentinformationen über Scout oder Partnerschaft sichtbar zu machen.</message>
+    <message id="player_partnership_active_title">Vereinspartnerschaft aktiv</message>
+    <message id="player_partnership_active_intro">Der Spielerverein</message>
+    <message id="player_partnership_active_with">ist verbunden mit deinem Verein als</message>
+    <message id="player_partnership_role_parent">Mutterverein</message>
+    <message id="player_partnership_role_partner">Partnerverein</message>
+    <message id="player_partnership_effect_shared_scouting">Gemeinsames Scouting: Talentdetails können sichtbar sein.</message>
+    <message id="player_partnership_effect_preferred_loans">Bevorzugte Leihen zwischen beiden Vereinen.</message>
+    <message id="player_partnership_effect_first_option">Erstzugriff bei passenden Transfers.</message>
+    <message id="player_partnership_effect_development_bonus">Entwicklungsbonus bei passenden Leihen: %s Prozent.</message>
+
     <message id="player_personality_unknown">Unbekannt</message>
     <message id="player_personality_leader">Anführer</message>
     <message id="player_personality_professional">Profi</message>
@@ -119,4 +149,23 @@
     <message id="player_personality_ambitious">Ehrgeizig</message>
     <message id="player_personality_big_game_player">Mann für große Spiele</message>
     <message id="player_personality_troublemaker">Unruhestifter</message>
+
+    <message id="playertable_head_traits">Spezialfähigkeiten</message>
+    <message id="player_traits_title">Spezialfähigkeiten</message>
+    <message id="player_traits_none">Keine Spezialfähigkeit hinterlegt.</message>
+    <message id="player_traits_none_short">keine</message>
+    <message id="player_traits_value">Ausprägung</message>
+    <message id="player_trait_level_tooltip">Ausprägung: %s von 3</message>
+    <message id="player_trait_torinstinkt">Torinstinkt</message>
+    <message id="player_trait_spielmacher">Spielmacher</message>
+    <message id="player_trait_ballzauberer">Ballzauberer</message>
+    <message id="player_trait_flankenspezialist">Flankenspezialist</message>
+    <message id="player_trait_kopfballstaerke">Kopfballstärke</message>
+    <message id="player_trait_viererkette">Viererkette</message>
+    <message id="player_trait_laufstaerke">Laufstärke</message>
+    <message id="player_trait_freistossspezialist">Freistoßspezialist</message>
+    <message id="player_trait_elfmeterschuetze">Elfmeterschütze</message>
+    <message id="player_trait_dribbler">Dribbler</message>
+    <message id="player_trait_elfmetertoeter">Elfmetertöter</message>
+    <message id="player_trait_reflexe">Reflexe</message>
 </messages>

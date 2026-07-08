@@ -37,13 +37,6 @@
                 navweight="0"
                 role="user"/>
             <page
-                id="avg_ratings"
-                template="avg_ratings"
-                navitem="true"
-                model="AvgRatingsModel"
-                navweight="0"
-                role="user"/>
-            <page
                 id="worst_discipline"
                 template="worst_discipline"
                 navitem="true"

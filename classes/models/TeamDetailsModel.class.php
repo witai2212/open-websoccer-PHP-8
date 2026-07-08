@@ -107,10 +107,20 @@ class TeamDetailsModel implements IModel {
 			$team['affiliate_clubs'] = array();
 		}
 
+		$tacticalDna = array('enabled' => FALSE);
+		if (!$team['is_nationalteam'] && class_exists('TacticalStyleDataService')) {
+			$tacticalDna = TacticalStyleDataService::getTeamIdentityData($this->_websoccer, $this->_db, $this->_i18n, $team['team_id'], $userId);
+		}
+
+		$team['manager_profile'] = array('exists' => FALSE);
+		if (!$team['is_nationalteam'] && class_exists('ManagerProfileDataService')) {
+			$team['manager_profile'] = ManagerProfileDataService::getVisibleManagerForTeam($this->_websoccer, $this->_db, $this->_i18n, $team);
+		}
+
 		$team['victories'] = $this->getVictories($team['team_id'], $team['team_league_id']);
 		$team['cupvictories'] = $this->getCupVictories($team['team_id']);
 
-		return array('team' => $team, 'stadium' => $stadium, 'playerfacts' => $playerfacts, 'user_id' => $userId);
+		return array('team' => $team, 'stadium' => $stadium, 'playerfacts' => $playerfacts, 'user_id' => $userId, 'tactical_dna' => $tacticalDna);
 	}
 	
 	private function getVictories($teamId, $leagueId) {

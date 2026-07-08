@@ -322,6 +322,7 @@
 									data-secondposition="{% if player.position_second is defined %}{{ player.position_second }}{% endif %}"
 									data-matchesblocked="{% if medicalCleared %}{% if player.matches_blocked is defined %}{{ player.matches_blocked }}{% else %}0{% endif %}{% elseif player.matches_injured is defined and player.matches_blocked is defined %}{{ player.matches_injured + player.matches_blocked }}{% else %}0{% endif %}"
 									data-freekick="{% if player.strength_freekick is defined %}{{ player.strength_freekick }}{% else %}0{% endif %}"
+									data-corner="{{ ((player.strength_passing|default(0) * 0.45) + (player.strength_creativity|default(0) * 0.35) + (player.strength_freekick|default(0) * 0.20))|number_format(0, '.', '') }}"
 									{% if env.getConfig("hide_strength_attributes") != "1" or youthFormation is defined and youthFormation %}
 									data-strength="{{ player.strength }}"
 									data-strengthsecondary="{{ (player.strength * (1 - env.getConfig("sim_strength_reduction_secondary") / 100))|number_format }}"

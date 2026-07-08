@@ -16,7 +16,7 @@
 	
 	{{ formelements.textfield('goal_bonus', i18n.getMessage('entity_player_vertrag_torpraemie'), env.getRequestParameter('goal_bonus'), false, validationMsg, 'number') }}
 	
-	{{ formelements.textfield('matches', i18n.getMessage('entity_player_vertrag_spiele'), env.getRequestParameter('matches'), true, validationMsg, 'number') }}
+	{{ formelements.textfield('matches', i18n.getMessage('entity_player_vertrag_spiele'), env.getRequestParameter('matches'), true, validationMsg, 'number', i18n.getMessage('extend-contract_matches_max_help', env.getConfig('max_number_of_contract_matches'))) }}
 	
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary ajaxSubmit" 

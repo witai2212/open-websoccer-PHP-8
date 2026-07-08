@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+  <dependencies>
+    <dependency module="users" version="1.0.0" />
+    <dependency module="office" version="1.0.0" />
+    <dependency module="clubs" version="1.0.0" />
+  </dependencies>
+
+  <settings>
+    <setting id="club_partnerships_enabled" category="game" type="boolean" default="1" />
+    <setting id="club_partnership_score_gap" category="game" type="number" default="10" />
+    <setting id="club_partnership_development_bonus_percent" category="game" type="number" default="5" />
+    <setting id="club_partnership_shared_scouting_bonus" category="game" type="number" default="5" />
+    <setting id="club_partnership_first_option_days" category="game" type="number" default="2" />
+  </settings>
+
+  <admin>
+    <adminpage id="club_partnerships" permissionrole="r_daten" navcategory="league" filename="club-partnerships" />
+  </admin>
+
+  <pages>
+    <page
+      id="clubpartnerships"
+      template="club-partnerships"
+      model="ClubPartnershipsModel"
+      parentItem="office"
+      navitem="true"
+      navweight="8"
+      role="user"
+      navitemOnlyForConfigEnabled="club_partnerships_enabled">
+    </page>
+  </pages>
+
+  <actions>
+    <action id="create-club-partnership-request" controller="CreateClubPartnershipRequestController" role="user" log="true">
+      <param id="parentTeamId" type="number" required="true" min="1" max="1000000000" />
+      <param id="partnerTeamId" type="number" required="true" min="1" max="1000000000" />
+    </action>
+
+    <action id="accept-club-partnership-request" controller="AcceptClubPartnershipRequestController" role="user" log="true">
+      <param id="id" type="number" required="true" min="1" max="1000000000" />
+    </action>
+
+    <action id="reject-club-partnership-request" controller="RejectClubPartnershipRequestController" role="user" log="true">
+      <param id="id" type="number" required="true" min="1" max="1000000000" />
+    </action>
+
+    <action id="stop-club-partnership" controller="StopClubPartnershipController" role="user" log="true">
+      <param id="id" type="number" required="true" min="1" max="1000000000" />
+    </action>
+
+    <action id="decline-club-partnership-first-option" controller="DeclineClubPartnershipFirstOptionController" role="user" log="true">
+      <param id="id" type="number" required="true" min="1" max="1000000000" />
+    </action>
+  </actions>
+
+</module>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="squadplanner_navlabel">Kaderanalyse</message>
+    <message id="squadplanner_title">Kaderanalyse</message>
+    <message id="squadplanner_intro">Die Kaderanalyse bewertet Tiefe, Altersstruktur, Vertragsrisiken, Verkaufs-/Leihkandidaten, Jugendspieler und Positionsbedarf. Die Automatik setzt nur empfohlene interne Maßnahmen um; sie kauft keine Spieler automatisch.</message>
+    <message id="squadplanner_not_enabled">Die Kaderanalyse ist deaktiviert.</message>
+    <message id="squadplanner_auto_button">Empfehlungen automatisch ausführen</message>
+    <message id="squadplanner_auto_confirm">Die Automatik setzt empfohlene Spieler auf die Transferliste, bietet Leihkandidaten an und kann passende Jugendspieler hochziehen. Fortfahren?</message>
+    <message id="squadplanner_manual_actions">Aktionen</message>
+    <message id="squadplanner_apply_sell">Auf Transferliste setzen</message>
+    <message id="squadplanner_apply_loan">Zur Leihe anbieten</message>
+    <message id="squadplanner_apply_youth">In Profikader übernehmen</message>
+    <message id="squadplanner_open_player">Spieler öffnen</message>
+    <message id="squadplanner_open_youth">Jugendspieler ansehen</message>
+
+    <message id="squadplanner_summary">Zusammenfassung</message>
+    <message id="squadplanner_team">Verein</message>
+    <message id="squadplanner_players">Profispieler</message>
+    <message id="squadplanner_avg_age">Ø Alter</message>
+    <message id="squadplanner_avg_strength">Ø Stärke</message>
+    <message id="squadplanner_contract_risk">Vertragsrisiko</message>
+    <message id="squadplanner_contract_risk_help">Spieler mit höchstens 30 verbleibenden Vertragsspielen.</message>
+    <message id="squadplanner_age_structure">Altersstruktur</message>
+    <message id="squadplanner_age_old">zu alt</message>
+    <message id="squadplanner_age_young">zu jung</message>
+    <message id="squadplanner_age_balanced">ausgewogen</message>
+    <message id="squadplanner_depth">Kaderbreite</message>
+    <message id="squadplanner_target">Ziel</message>
+    <message id="squadplanner_count">Anzahl</message>
+    <message id="squadplanner_status">Status</message>
+    <message id="squadplanner_ok">ok</message>
+    <message id="squadplanner_shortage">Bedarf</message>
+    <message id="squadplanner_surplus">Überbesetzt</message>
+
+    <message id="squadplanner_weaknesses">Schwachstellen</message>
+    <message id="squadplanner_no_weaknesses">Keine klaren strukturellen Schwächen gefunden.</message>
+    <message id="squadplanner_need_position">%d x %s benötigt.</message>
+    <message id="squadplanner_too_many_position">Zu viele Spieler in %s.</message>
+
+    <message id="squadplanner_sell_candidates">Verkaufskandidaten</message>
+    <message id="squadplanner_loan_candidates">Leihkandidaten</message>
+    <message id="squadplanner_youth_candidates">Jugendkandidaten</message>
+    <message id="squadplanner_no_candidates">Keine passenden Kandidaten gefunden.</message>
+    <message id="squadplanner_reason">Begründung</message>
+    <message id="squadplanner_strength">Stärke</message>
+    <message id="squadplanner_age">Alter</message>
+    <message id="squadplanner_contract">Vertrag</message>
+    <message id="squadplanner_salary">Gehalt</message>
+    <message id="squadplanner_marketvalue">Marktwert</message>
+    <message id="squadplanner_talent">Talent</message>
+    <message id="squadplanner_not_promotable_yet">Noch nicht alt genug für den Profikader.</message>
+
+    <message id="squadplanner_reason_old">älterer Spieler</message>
+    <message id="squadplanner_reason_contract">Vertrag läuft bald aus</message>
+    <message id="squadplanner_reason_weak">unter Kaderschnitt</message>
+    <message id="squadplanner_reason_surplus">Position überbesetzt</message>
+    <message id="squadplanner_reason_salary">hohes Gehalt im Verhältnis zur Rolle</message>
+    <message id="squadplanner_reason_young">jung und entwicklungsfähig</message>
+    <message id="squadplanner_reason_talent">gutes Talent</message>
+    <message id="squadplanner_reason_depth">geringe Einsatzchance wegen Kaderbreite</message>
+    <message id="squadplanner_reason_close">nahe am Profikader</message>
+    <message id="squadplanner_reason_need">passt zu einer Schwachstelle</message>
+
+    <message id="squadplanner_success_sell">Spieler wurde auf die Transferliste gesetzt.</message>
+    <message id="squadplanner_success_loan">Spieler wurde zur Leihe angeboten.</message>
+    <message id="squadplanner_success_youth">Jugendspieler wurde in den Profikader übernommen.</message>
+    <message id="squadplanner_auto_success">Automatik ausgeführt: %d Transferliste, %d Leihangebote, %d Jugendspieler.</message>
+    <message id="squadplanner_auto_noop">Keine automatische Maßnahme notwendig oder möglich.</message>
+    <message id="squadplanner_err_not_candidate">Diese automatische Maßnahme ist für diesen Spieler derzeit nicht empfohlen oder nicht möglich.</message>
+    <message id="squadplanner_err_min_team_size">Kader ist zu klein für weitere Abgänge.</message>
+    <message id="squadplanner_err_transfer_disabled">Transfermarkt ist deaktiviert.</message>
+    <message id="squadplanner_err_lending_disabled">Leihen sind deaktiviert.</message>
+
+    <message id="squadplanner_admin_title">Kaderanalyse</message>
+    <message id="squadplanner_admin_intro">Admin-Analyse für beliebige Vereine. Aktionen werden direkt auf den ausgewählten Verein angewendet.</message>
+    <message id="squadplanner_admin_select_club">Verein auswählen</message>
+    <message id="squadplanner_admin_search">Verein suchen</message>
+    <message id="squadplanner_admin_execute">Anzeigen</message>
+
+    <message id="squadplanner_trait_needs">Trait-Bedarfe</message>
+    <message id="squadplanner_no_trait_needs">Keine klaren Trait-Lücken gefunden.</message>
+    <message id="squadplanner_trait">Spezialfähigkeit</message>
+    <message id="squadplanner_recommended">Empfohlen</message>
+    <message id="squadplanner_priority">Priorität</message>
+    <message id="squadplanner_reason_trait_need">schließt eine Trait-Lücke im Kader</message>
+
+    <message id="player_trait_torinstinkt">Torinstinkt</message>
+    <message id="player_trait_spielmacher">Spielmacher</message>
+    <message id="player_trait_ballzauberer">Ballzauberer</message>
+    <message id="player_trait_flankenspezialist">Flankenspezialist</message>
+    <message id="player_trait_kopfballstaerke">Kopfballstärke</message>
+    <message id="player_trait_viererkette">Viererkette</message>
+    <message id="player_trait_laufstaerke">Laufstärke</message>
+    <message id="player_trait_freistossspezialist">Freistoßspezialist</message>
+    <message id="player_trait_elfmeterschuetze">Elfmeterschütze</message>
+    <message id="player_trait_dribbler">Dribbler</message>
+    <message id="player_trait_elfmetertoeter">Elfmetertöter</message>
+    <message id="player_trait_reflexe">Reflexe</message>
+
+    <!-- Fallbacks because the squadplanner module does not automatically load player-module table headers. -->
+    <message id="playertable_head_name">Name</message>
+    <message id="playertable_head_position">Position</message>
+
+</messages>

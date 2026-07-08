@@ -1,27 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
+    <message id="managercareer_navlabel">Managerkarriere</message>
+    <message id="alert_warning_title">Hinweis</message>
     <message id="managercareer_tab">Managerkarriere</message>
+    <message id="managercareer_page_title">Managerkarriere</message>
+    <message id="managercareer_page_intro">Verwalte deine Managerlaufbahn, Jobangebote, Bewerbungen, Reputation, Verträge und Saisonziele.</message>
+    <message id="managercareer_install_hint">Die erweiterten Karrieretabellen scheinen noch nicht installiert zu sein. Bitte zuerst die mitgelieferte SQL-Datei ausführen.</message>
+
+    <message id="managercareer_subtab_overview">Übersicht</message>
+    <message id="managercareer_subtab_history">Karriereverlauf</message>
+    <message id="managercareer_subtab_applications">Bewerbungen</message>
+    <message id="managercareer_subtab_offers">Jobangebote</message>
+    <message id="managercareer_subtab_objectives">Ziele</message>
+    <message id="managercareer_subtab_reputation">Reputation</message>
+    <message id="managercareer_subtab_awards">Auszeichnungen</message>
+
     <message id="managercareer_reputation">Manager-Reputation</message>
-    <message id="managercareer_reputation_help">Berechnet aus Benutzer-Highscore, Fanbeliebtheit und aktueller Vorstandszufriedenheit.</message>
+    <message id="managercareer_reputation_help">Berechnet aus Benutzer-Highscore, Fanbeliebtheit, Vorstandszufriedenheit und Karrieredaten.</message>
     <message id="managercareer_board_average">Ø Vorstand</message>
     <message id="managercareer_board_satisfaction">Vorstandszufriedenheit</message>
     <message id="managercareer_current_teams">Aktuelle Vereine</message>
     <message id="managercareer_no_current_team">Dieser Manager hat aktuell keinen Verein.</message>
+
+    <message id="managercareer_stat_matches">Spiele</message>
+    <message id="managercareer_stat_winrate">Siegquote</message>
+    <message id="managercareer_stat_titles">Titel</message>
+
+    <message id="managercareer_contracts_title">Managervertrag</message>
+    <message id="managercareer_contract_until">Vertrag bis</message>
+    <message id="managercareer_no_contracts">Noch kein Managervertrag gespeichert. Bestehende Manager erhalten beim nächsten Karriereprozess automatisch einen Vertrag.</message>
+    <message id="managercareer_contract_status_active">Aktiv</message>
+    <message id="managercareer_contract_status_ended">Beendet</message>
+    <message id="managercareer_contract_status_terminated">Aufgelöst</message>
+    <message id="managercareer_contract_status_sacked">Entlassen</message>
+
+    <message id="managercareer_sack_risk_title">Entlassungsrisiko</message>
+    <message id="managercareer_sack_risk">Entlassungsrisiko</message>
+    <message id="managercareer_low_board_checks">Krisenprüfungen</message>
+
     <message id="managercareer_offers_title">Aktive Jobangebote</message>
     <message id="managercareer_no_open_offers">Derzeit liegen keine aktiven Jobangebote vor.</message>
     <message id="managercareer_offers_disabled">Automatische Jobangebote sind derzeit deaktiviert.</message>
+    <message id="managercareer_offer_until">Gültig bis</message>
+    <message id="managercareer_button_accept">Annehmen</message>
+    <message id="managercareer_button_decline">Ablehnen</message>
+    <message id="managercareer_open_offer">Zum Jobangebot</message>
+
     <message id="managercareer_freeclubs_title">Freie Vereine nach Reputation</message>
-    <message id="managercareer_freeclubs_help">Hier siehst du eine kurze Auswahl freier Vereine und ob deine Manager-Reputation für eine Übernahme reicht.</message>
+    <message id="managercareer_freeclubs_help">Hier siehst du eine kurze Auswahl freier Vereine und ob deine Manager-Reputation für eine direkte Übernahme reicht.</message>
     <message id="managercareer_show_all_freeclubs">Alle freien Vereine anzeigen</message>
     <message id="managercareer_club_score">Vereins-Prestige</message>
     <message id="managercareer_required_score">Benötigt</message>
     <message id="managercareer_status">Status</message>
     <message id="managercareer_available">verfügbar</message>
     <message id="managercareer_locked">gesperrt</message>
-    <message id="managercareer_offer_until">Gültig bis</message>
-    <message id="managercareer_button_accept">Annehmen</message>
-    <message id="managercareer_button_decline">Ablehnen</message>
+
     <message id="managercareer_history_title">Karriereverlauf</message>
     <message id="managercareer_no_history">Noch keine Karrierewechsel vorhanden.</message>
     <message id="managercareer_date">Datum</message>
@@ -32,6 +66,84 @@
     <message id="managercareer_origin_job_offer">Jobangebot</message>
     <message id="managercareer_origin_free_club">Freier Verein</message>
     <message id="managercareer_origin_additional_club">Weiterer Verein</message>
+    <message id="managercareer_origin_manual_application">Bewerbung</message>
+    <message id="managercareer_origin_sacked">Entlassung</message>
+
+    <message id="managercareer_applications_title">Manuelle Bewerbungen</message>
+    <message id="managercareer_applications_help">Du kannst dich bei freien oder interimistisch geführten Vereinen bewerben, auch wenn deine Reputation für eine direkte Übernahme noch nicht ausreicht. Der Verein entscheidet nach einigen Tagen anhand von Reputation, Land, Liga, Vereinsniveau und Vorstandslage.</message>
+    <message id="managercareer_applications_disabled">Manuelle Bewerbungen sind derzeit deaktiviert.</message>
+    <message id="managercareer_applications_limit_hint">Offene Bewerbungen:</message>
+    <message id="managercareer_application_candidates_title">Mögliche Zielvereine</message>
+    <message id="managercareer_application_search_placeholder">Verein, Liga oder Land suchen</message>
+    <message id="button_search">Suchen</message>
+    <message id="managercareer_application_chance">Chance</message>
+    <message id="managercareer_decision_date">Entscheidung</message>
+    <message id="managercareer_no_applications">Noch keine Bewerbungen vorhanden.</message>
+    <message id="managercareer_no_application_candidates">Derzeit wurden keine passenden Zielvereine gefunden.</message>
+    <message id="managercareer_already_applied">Beworben</message>
+    <message id="managercareer_application_limit_reached">Limit erreicht</message>
+    <message id="managercareer_button_apply">Bewerben</message>
+    <message id="managercareer_button_withdraw">Zurückziehen</message>
+    <message id="managercareer_application_status_open">Offen</message>
+    <message id="managercareer_application_status_accepted">Angenommen</message>
+    <message id="managercareer_application_status_rejected">Abgelehnt</message>
+    <message id="managercareer_application_status_withdrawn">Zurückgezogen</message>
+    <message id="managercareer_application_status_expired">Abgelaufen</message>
+    <message id="managercareer_confirm_apply">Bewerbung bei diesem Verein wirklich absenden?</message>
+    <message id="managercareer_confirm_withdraw_application">Bewerbung wirklich zurückziehen?</message>
+    <message id="managercareer_application_msg_success">Bewerbung bei {team} abgesendet. Der Verein entscheidet voraussichtlich in {days} Tagen. Aktuelle Chance: {chance}%.</message>
+    <message id="managercareer_application_msg_withdrawn">Bewerbung zurückgezogen.</message>
+    <message id="managercareer_application_error_disabled">Manuelle Bewerbungen sind derzeit deaktiviert.</message>
+    <message id="managercareer_application_error_limit">Du kannst maximal {limit} offene Bewerbungen gleichzeitig haben.</message>
+    <message id="managercareer_application_error_duplicate">Bei diesem Verein liegt bereits eine offene Bewerbung vor.</message>
+    <message id="managercareer_application_error_club_not_available">Dieser Verein ist aktuell nicht für Bewerbungen verfügbar.</message>
+    <message id="managercareer_application_error_own_club">Bei deinem aktuellen Verein kannst du dich nicht bewerben.</message>
+    <message id="managercareer_application_error_invalid">Diese Bewerbung ist nicht mehr verfügbar.</message>
+    <message id="managercareer_application_message_sent_subject">Bewerbung an {team}</message>
+    <message id="managercareer_application_message_sent_body">Deine Bewerbung wurde eingereicht.
+
+Verein: {team}
+Liga: {league}
+Voraussichtliche Entscheidung: in {days} Tagen
+Aktuelle Einschätzung: {chance}%</message>
+    <message id="managercareer_application_accepted_subject">Bewerbung erfolgreich: {team}</message>
+    <message id="managercareer_application_accepted_body">Der Verein {team} hat deine Bewerbung positiv bewertet und dir ein offizielles Jobangebot vorgelegt.
+
+Liga: {league}
+Gültig bis: {expires}
+
+Du kannst das Angebot hier annehmen oder ablehnen:
+{url}</message>
+    <message id="managercareer_application_rejected_subject">Bewerbung abgelehnt: {team}</message>
+    <message id="managercareer_application_rejected_body">Der Verein {team} hat deine Bewerbung nach Prüfung abgelehnt. Eine stärkere Reputation, bessere Ergebnisse oder mehr Bekanntheit in diesem Land können deine Chancen später verbessern.</message>
+    <message id="managercareer_application_notification_accepted">{team} hat deine Bewerbung angenommen.</message>
+    <message id="managercareer_application_notification_rejected">{team} hat deine Bewerbung abgelehnt.</message>
+
+    <message id="managercareer_objectives_title">Neue Vereinsziele</message>
+    <message id="managercareer_objectives_help">Nach einem Vereinswechsel werden automatisch passende Saisonziele erstellt. Hier siehst du den aktuellen Überblick; Details findest du auf der Vorstandsseite.</message>
+    <message id="managercareer_no_objectives">Noch keine Ziele vorhanden.</message>
+    <message id="managercareer_objective_type">Zieltyp</message>
+    <message id="managercareer_open_objectives_page">Saisonziele öffnen</message>
+    <message id="manager_mission_type_league_rank">Tabellenziel</message>
+    <message id="manager_mission_type_highscore">Highscore-Ziel</message>
+    <message id="manager_mission_type_salary_reduce">Gehälter senken</message>
+    <message id="manager_mission_type_youth_promotion_played">Jugendspieler einsetzen</message>
+    <message id="manager_mission_type_cup_round">Pokalrunde erreichen</message>
+    <message id="manager_mission_type_board_satisfaction">Vorstandszufriedenheit halten</message>
+
+    <message id="managercareer_country_reputation_title">Reputation nach Ländern</message>
+    <message id="managercareer_country_reputation_help">Siege, gute Ergebnisse und Vereinswechsel erhöhen deine Bekanntheit im jeweiligen Land. Diese Reputation verbessert Bewerbungs- und Jobchancen in passenden Ligen.</message>
+    <message id="managercareer_no_country_reputation">Noch keine länderspezifische Reputation vorhanden.</message>
+    <message id="managercareer_last_change">Letzte Änderung</message>
+
+    <message id="managercareer_awards_title">Manager-Auszeichnungen</message>
+    <message id="managercareer_award">Auszeichnung</message>
+    <message id="managercareer_no_awards">Noch keine Manager-Auszeichnungen vorhanden.</message>
+    <message id="managercareer_award_month_title">Manager des Monats</message>
+    <message id="managercareer_award_month_description">Beste Punkteausbeute des Monats.</message>
+    <message id="managercareer_award_season_title">Manager der Saison</message>
+    <message id="managercareer_award_season_description">Meistertitel oder herausragende Saisonleistung.</message>
+
     <message id="managercareer_msg_accept_success">Jobangebot angenommen. Du hast den Verein gewechselt.</message>
     <message id="managercareer_msg_accept_bonus">Reputationsbonus: +{bonus} Highscore.</message>
     <message id="managercareer_msg_decline_success">Jobangebot abgelehnt.</message>
@@ -39,6 +151,8 @@
     <message id="managercareer_error_offer_invalid">Dieses Jobangebot ist nicht mehr verfügbar.</message>
     <message id="managercareer_error_offer_expired">Dieses Jobangebot ist bereits abgelaufen.</message>
     <message id="managercareer_notification_new_offer">Neues Jobangebot von {team}</message>
+    <message id="managercareer_notification_job_accepted">Du bist jetzt Manager von {team}.</message>
+    <message id="managercareer_notification_sacked">Du wurdest bei {team} entlassen.</message>
     <message id="managercareer_message_sender">Managerkarriere</message>
     <message id="managercareer_message_offer_subject">Jobangebot von {team}</message>
     <message id="managercareer_message_offer_body">Du hast ein neues Jobangebot erhalten.
@@ -51,7 +165,6 @@ Gültig bis: {expires}
 
 Du kannst das Angebot in deiner Managerkarriere aufrufen und dort annehmen oder ablehnen:
 {url}</message>
-    <message id="managercareer_notification_job_accepted">Du bist jetzt Manager von {team}.</message>
     <message id="managercareer_history_moved">Wechsel von {old} zu {new}</message>
     <message id="managercareer_history_joined">Amtsantritt bei {new}</message>
     <message id="managercareer_history_bonus">Reputationsbonus: +{bonus} Highscore.</message>
@@ -62,4 +175,12 @@ Du kannst das Angebot in deiner Managerkarriere aufrufen und dort annehmen oder 
     <message id="managercareer_news_link">Zur Managerkarriere</message>
     <message id="managercareer_confirm_accept">Jobangebot wirklich annehmen und den Verein wechseln?</message>
     <message id="managercareer_confirm_switch">Wirklich zu diesem freien Verein wechseln?</message>
+    <message id="managercareer_sack_warning_subject">Krisensitzung bei {team}</message>
+    <message id="managercareer_sack_warning_body">Der Vorstand von {team} ist sehr unzufrieden. Wenn keine sportliche Reaktion folgt, droht eine Entlassung. Kritische Prüfungen in Folge: {checks}</message>
+    <message id="managercareer_sacked_subject">Entlassung bei {team}</message>
+    <message id="managercareer_sacked_body">Der Vorstand von {team} hat dich aufgrund der sehr niedrigen Vorstandszufriedenheit entlassen.
+
+Vorstandszufriedenheit: {board}%
+
+Du bist nun vereinslos und kannst dich bei passenden Vereinen bewerben.</message>
 </messages>

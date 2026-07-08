@@ -42,10 +42,14 @@
     
     <message id="youthteam_buy_err_ownplayer">Der Spieler ist bereits in Ihrem Team.</message>
     <message id="youthteam_buy_err_ownplayer_otherteam">Sie dürfen keine Spieler aus einem Ihrer anderen Vereinen kaufen.</message>
-    <message id="youthteam_buy_err_notenoughbudget">Die Abslösesumme können Sie sich im Moment nicht leisten.</message>
+    <message id="youthteam_buy_err_notonmarket">Dieser Jugendspieler steht nicht mehr auf dem Marktplatz zur Verfügung.</message>
+    <message id="youthteam_buy_err_notenoughbudget">Die Ablösesumme können Sie sich im Moment nicht leisten.</message>
     
     <message id="youthteam_transferfee_subject">Ablöse für Jugendspieler</message>
     <message id="youthteam_transfer_notification">Der Jugendspieler <strong>{player}</strong> wechselt nach <strong>{newteam}</strong>.</message>
+    <message id="youth_transfer_violation">Verstoss gegen die Jugendtransferregeln</message>
+    <message id="youth_transfer_violation_notification">Die Transferaufsicht hat den Jugendtransfer von <strong>{player}</strong> geprüft. Ablöse: <strong>{amount}</strong>, Richtwert: <strong>{fairvalue}</strong>. Die Strafe beträgt: <strong>{penalty}</strong></message>
+    <message id="youth_transfer_violation_front">Die Transferaufsicht hat eine Strafe verbucht: %s.</message>
     
     <message id="youthplayer-makeprofessional_navlabel">Als Profi verpflichten</message>
     <message id="youthplayer-makeprofessional_formlabel">In die Profimannschaft aufnehmen</message>
@@ -114,7 +118,9 @@
 	<message id="youthmarketplace_no_players">Derzeit werden keine Jugendspieler zum Kauf angeboten.</message>
 	
 	<message id="youth-formation_navlabel">Aufstellung</message>
+	<message id="youthformation_setup_development">Entwicklung automatisch aufstellen</message>
 	<message id="youthformation_setup_balanced">Ausgeglichen automatisch aufstellen</message>
+	<message id="youthformation_setup_winning">Ergebnisorientiert automatisch aufstellen</message>
 	<message id="youthformation_err_matchexpired">Für das ausgewählte Spiel kann keine Aufstellung mehr abgegeben werden, da es bereits simuliert ist oder kurz vor der Simulation steht.</message>
 	<message id="youthformation_err_invalidplayer">Mindestens ein ausgewählter Jugendspieler gehört nicht zu Ihrem Jugendkader oder erfüllt das Mindestalter nicht.</message>
 	<message id="youthformation_err_invalidposition">Mindestens eine ausgewählte Position ist ungültig.</message>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<messages>
+    <message id="tacticaldna_navlabel">Taktische DNA</message>
+    <message id="tacticaldna_admin_title">Taktische DNA</message>
+    <message id="tacticaldna_admin_intro">Admin-Übersicht für Club Identity und bevorzugte Spielstile. Hier kannst du die Stilpassung prüfen, CPU-/Managervereine korrigieren und den empfohlenen Stil setzen.</message>
+    <message id="tacticaldna_admin_club_search">Verein suchen</message>
+    <message id="tacticaldna_admin_club_search_placeholder">Name, Liga oder Land eingeben...</message>
+    <message id="tacticaldna_admin_apply">Anzeigen</message>
+    <message id="tacticaldna_admin_selected_club">Ausgewählter Verein</message>
+    <message id="tacticaldna_admin_save_recommended">Empfohlenen Stil speichern</message>
+    <message id="tacticaldna_admin_saved">Taktische DNA gespeichert.</message>
+    <message id="tacticaldna_admin_recommended_saved">Empfohlener Stil gespeichert.</message>
+    <message id="tacticaldna_admin_overview">Übersicht schwächste Passungen</message>
+    <message id="tacticaldna_admin_overview_help">Die Liste zeigt bis zu 200 aktive Vereine, sortiert nach der aktuell niedrigsten Stilpassung. So findet der Admin schnell Vereine, deren Identität den Kader eher behindert.</message>
+
+    <message id="tacticaldna_current_style">Aktueller Stil</message>
+    <message id="tacticaldna_style_comparison">Stil-Vergleich</message>
+    <message id="tacticaldna_transition_effect">Chemie-Umstellung</message>
+    <message id="tacticaldna_change_preview">Chemie bei Wechsel</message>
+    <message id="tacticaldna_recommended">Empfohlen</message>
+
+    <message id="teamchemistry_score">Chemie</message>
+    <message id="teamchemistry_match_effect">Spiel-Effekt</message>
+    <message id="team_details_manager">Manager</message>
+    <message id="formation_tacticalstyle_select">Spielstil</message>
+    <message id="formation_tacticalstyle_fit">Passung</message>
+    <message id="tacticalstyle_balanced">Ausgewogen</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_possession">Ballbesitz</message>
+    <message id="tacticalstyle_defensive">Defensiv</message>
+    <message id="tacticalstyle_physical">Körperbetont</message>
+    <message id="tacticalstyle_counterattack">Konter</message>
+    <message id="tacticalstyle_balanced_help">Neutraler Stil ohne harte Spezialisierung.</message>
+    <message id="tacticalstyle_pressing_help">Kondition, Tempo, Zweikampf und Mentalität erhöhen die Wirkung.</message>
+    <message id="tacticalstyle_possession_help">Passspiel, Kreativität und Technik helfen, das Spiel zu kontrollieren.</message>
+    <message id="tacticalstyle_defensive_help">Zweikampf, Kopfball, Kondition und Führungsspieler stärken die Defensive.</message>
+    <message id="tacticalstyle_physical_help">Grundstärke, Kopfball, Kondition und Zweikampf machen diesen Stil wirksamer.</message>
+    <message id="tacticalstyle_counterattack_help">Tempo, Abschluss, Passspiel und Frische passen zum Umschaltspiel.</message>
+</messages>

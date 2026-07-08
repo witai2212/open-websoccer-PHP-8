@@ -56,7 +56,7 @@ class MyTeamModel implements IModel {
 			$players = PlayersDataService::getPlayersOfTeamById($this->_websoccer, $this->_db, $teamId);
 		}
 		
-		return array("players" => $players, "captain_id" => $captain_id);
+		return array("players" => $players, "captain_id" => $captain_id, "show_traits" => TRUE);
 	}
 	
 }

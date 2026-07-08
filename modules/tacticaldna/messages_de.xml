@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<messages>
+    <message id="tacticaldna_navlabel">Taktische DNA</message>
+    <message id="tacticaldna_team_tab">Taktische DNA</message>
+    <message id="tacticaldna_title">Taktische DNA</message>
+    <message id="tacticaldna_intro">Die taktische DNA beschreibt den bevorzugten Spielstil des Vereins. Sie bewertet, wie gut der Kader zu diesem Stil passt, beeinflusst die Teamchemie und wirkt klein auf die Matchsimulation.</message>
+    <message id="tacticaldna_schema_missing">Die Datenbankspalten für die taktische DNA fehlen noch. Bitte zuerst das SQL-Update ausführen.</message>
+    <message id="tacticaldna_current_style">Aktueller Stil</message>
+    <message id="tacticaldna_style_comparison">Stil-Vergleich</message>
+    <message id="tacticaldna_transition_effect">Chemie-Umstellung</message>
+    <message id="tacticaldna_change_preview">Chemie bei Wechsel</message>
+    <message id="tacticaldna_change_help">Ein Stilwechsel kann die Chemie verbessern, wenn der neue Stil besser zum Kader passt. Passt der Stil schlecht, sinkt die Chemie und erholt sich erst durch Spiele oder einen passenderen Stil.</message>
+    <message id="tacticaldna_recommended">Empfohlen</message>
+    <message id="tacticaldna_staff_advice_title">Staff-Empfehlung</message>
+    <message id="tacticaldna_staff_recommendation">Der Co-Trainer empfiehlt einen Wechsel auf {style}. Die Kaderpassung läge bei {fit}% und damit {diff} Punkte höher.</message>
+    <message id="tacticaldna_staff_no_change">Der Staff sieht aktuell keinen zwingenden Stilwechsel.</message>
+    <message id="tacticaldna_staff_missing">Ohne Co-Trainer gibt es keine Staff-Empfehlung zur taktischen DNA.</message>
+    <message id="tacticaldna_saved_positive">Taktische DNA gespeichert: {style}. Kaderpassung: {fit}%. Chemie-Effekt: {chemistry}.</message>
+    <message id="tacticaldna_saved_negative">Taktische DNA gespeichert: {style}. Kaderpassung: {fit}%. Die Umstellung belastet die Chemie zunächst ({chemistry}).</message>
+    <message id="tacticaldna_saved_no_change">Taktische DNA aktualisiert. Kein Stilwechsel notwendig.</message>
+    <message id="tacticaldna_invalid_style">Ungültiger Spielstil.</message>
+    <message id="tacticaldna_no_permission">Du darfst die taktische DNA dieses Vereins nicht ändern.</message>
+    <message id="tacticaldna_no_team">Verein nicht gefunden.</message>
+    <message id="tacticaldna_not_enabled">Taktische DNA ist deaktiviert.</message>
+
+    <message id="formation_tacticalstyle_title">Taktische DNA</message>
+    <message id="formation_tacticalstyle_select">Spielstil</message>
+    <message id="formation_tacticalstyle_fit">Passung</message>
+    <message id="formation_tacticalstyle_effect_help">Die taktische DNA wirkt nur leicht im Spiel und belohnt vor allem eine gute Passung zwischen Stil, Kader, Training und Staff.</message>
+    <message id="tacticalstyle_balanced">Ausgewogen</message>
+    <message id="tacticalstyle_balanced_help">Neutraler Stil ohne harte Spezialisierung. Grundstärke, Technik, Kondition, Passspiel, Zweikampf und Frische zählen gleichmäßig.</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_pressing_help">Kondition, Tempo, Zweikampf und Mentalität erhöhen die Wirkung dieses laufintensiven Stils.</message>
+    <message id="tacticalstyle_possession">Ballbesitz</message>
+    <message id="tacticalstyle_possession_help">Passspiel, Kreativität und Technik helfen, das Spiel zu kontrollieren.</message>
+    <message id="tacticalstyle_defensive">Defensiv</message>
+    <message id="tacticalstyle_defensive_help">Zweikampf, Kopfball, Kondition und Führungsspieler stärken einen kompakten Defensivstil.</message>
+    <message id="tacticalstyle_physical">Körperbetont</message>
+    <message id="tacticalstyle_physical_help">Grundstärke, Kopfball, Kondition und Zweikampf machen diesen Stil wirksamer.</message>
+    <message id="tacticalstyle_counterattack">Konter</message>
+    <message id="tacticalstyle_counterattack_help">Tempo, Abschluss, Passspiel und Frische passen besonders gut zu schnellen Umschaltmomenten.</message>
+    <message id="tacticalstyle_fit_good">Dein Kader passt sehr gut zu diesem Stil.</message>
+    <message id="tacticalstyle_fit_neutral">Dein Kader passt ordentlich zu diesem Stil.</message>
+    <message id="tacticalstyle_fit_bad">Dieser Stil passt aktuell nur bedingt zu deinem Kader.</message>
+    <message id="tacticalstyle_news_title">Neue taktische DNA</message>
+    <message id="tacticalstyle_news_message">{team} stellt die taktische DNA von {oldstyle} auf {newstyle} um. Die aktuelle Kaderpassung liegt bei {fit}%, der direkte Chemie-Effekt bei {chemistry}.</message>
+    <message id="tacticalstyle_news_link">Zum Verein</message>
+
+    <message id="teamchemistry_factor_tactical_style">Taktische DNA</message>
+    <message id="teamchemistry_source_tactical_style">Taktische DNA</message>
+</messages>

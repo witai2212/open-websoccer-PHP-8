@@ -85,11 +85,24 @@ class TransferBidController implements IActionController {
 		
 		// check if user has been already traded too often with the other user
 		if ($player['team_id'] > 0) {
-			$noOfTransactions = TransfermarketDataService::getTransactionsBetweenUsers($this->_websoccer, $this->_db, $player['team_user_id'], $user->id);
+			$noOfTransactions = TransfermarketDataService::getTransactionsBetweenUsersOrClubs(
+            	$this->_websoccer,
+            	$this->_db,
+            	$player['team_user_id'],
+            	$user->id,
+            	$player['team_id'],
+            	$clubId
+            );
+			
 			$maxTransactions = $this->_websoccer->getConfig('transfermarket_max_transactions_between_users');
 			if ($noOfTransactions >= $maxTransactions) {
 				throw new Exception($this->_i18n->getMessage('transfer_bid_too_many_transactions_with_user', $noOfTransactions));
 			}
+		}
+		
+		// partnership first-option: while reserved, only the mother club may bid
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::assertProfessionalTransferAllowed($this->_websoccer, $this->_db, $this->_i18n, $playerId, $clubId);
 		}
 		
 		// get existing highest bid
@@ -140,6 +153,7 @@ class TransferBidController implements IActionController {
 		
 		// save bid
 		$this->saveBid($playerId, $user->id, $clubId, $parameters);
+		
 		
 		// mark previous highest bid as outbidden
 		if (isset($highestBid['bid_id'])) {

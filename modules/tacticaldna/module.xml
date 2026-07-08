@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="formation" version="1.0.0" />
+        <dependency module="teamchemistry" version="1.0.0" />
+    </dependencies>
+
+    <admin>
+        <adminpage id="tacticaldna" permissionrole="r_daten" navcategory="league" filename="tactical-dna" />
+    </admin>
+
+    <actions>
+        <action id="save-tactical-style" controller="SaveTacticalStyleController" role="user" log="true">
+            <param id="teamid" type="number" required="false" />
+            <param id="style" type="text" max="32" required="true" />
+        </action>
+    </actions>
+
+</module>

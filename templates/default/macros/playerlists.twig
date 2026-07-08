@@ -1,5 +1,5 @@
 
-{% macro teamlistItem(player, showPersonality) %}
+{% macro teamlistItem(player, showPersonality, showTraits) %}
 	{% import _self as playerlists %}
 
 			<tr>
@@ -24,6 +24,9 @@
 				{% if showPersonality %}
 				<td>{% if player.personality|length > 0 %}{{ i18n.getMessage("player_personality_" ~ player.personality) }}{% else %}{{ i18n.getMessage("player_personality_unknown") }}{% endif %}</td>
 				{% endif %}
+				{% if showTraits %}
+				<td>{{ playerlists.traitBadges(player.traits) }}</td>
+				{% endif %}
 				
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 				<td {{ playerlists.strengthClass(player.strength) }} title="{{ i18n.getMessage("playertable_head_strength") }}"><strong>{{ player.strength }}</strong></td>
@@ -42,6 +45,16 @@
 				{% endif %}
 				</td>
 			</tr>
+{% endmacro %}
+
+{% macro traitBadges(traits) %}
+	{% if traits is defined and traits|length > 0 %}
+		{% for trait in traits %}
+			<span class="label label-info" title="{{ i18n.getMessage("player_trait_level_tooltip", trait.value) }}">{{ i18n.getMessage(trait.label_key) }} {{ trait.value }}/3</span>
+		{% endfor %}
+	{% else %}
+		<span class="muted">{{ i18n.getMessage("player_traits_none_short") }}</span>
+	{% endif %}
 {% endmacro %}
 
 {% macro matchResultPlayers(match, players) %}

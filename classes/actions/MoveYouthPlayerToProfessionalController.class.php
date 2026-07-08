@@ -283,6 +283,16 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
                 );
             
             $professionalPlayerId = (int) $this->_db->getLastInsertedId();
+
+            if (class_exists("PlayerTraitsDataService")) {
+                PlayerTraitsDataService::copyYouthTraitsToProfessionalPlayer(
+                    $this->_websoccer,
+                    $this->_db,
+                    (int) $player["id"],
+                    $professionalPlayerId
+                    );
+            }
+
             $playerName = trim($player["firstname"] . " " . $player["lastname"]);
             if (class_exists("ManagerMissionsDataService")) {
                 ManagerMissionsDataService::recordYouthPromotion(
@@ -303,6 +313,17 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
                     $userId,
                     (int) $player["team_id"],
                     $professionalPlayerId
+                    );
+            }
+
+            if (class_exists("ClubPartnershipDataService")) {
+                ClubPartnershipDataService::notifyFirstOptionProfessional(
+                    $this->_websoccer,
+                    $this->_db,
+                    (int) $player["team_id"],
+                    $professionalPlayerId,
+                    $playerName,
+                    $this->_i18n->getMessage("youthteam_makeprofessional")
                     );
             }
             

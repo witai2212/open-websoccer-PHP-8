@@ -71,6 +71,43 @@ class NotificationsDataService {
 	}
 	
 	/**
+	 * Resolves placeholder values before rendering notifications.
+	 *
+	 * Some services store translated labels in message_data. Others may store
+	 * message keys, e.g. fanpressure_reason_youth_used. Translating these keys
+	 * here prevents raw internal keys from being shown to users and also fixes
+	 * already existing notifications in the database.
+	 *
+	 * @param I18n $i18n I18n context.
+	 * @param mixed $value Placeholder value from decoded JSON.
+	 * @return string Resolved placeholder text.
+	 */
+	private static function resolvePlaceholderValue(I18n $i18n, $value) {
+		if (is_array($value)) {
+			$resolvedValues = array();
+			foreach ($value as $singleValue) {
+				$resolvedValues[] = self::resolvePlaceholderValue($i18n, $singleValue);
+			}
+			return implode(', ', $resolvedValues);
+		}
+
+		if ($value === null) {
+			return '';
+		}
+
+		if (is_bool($value)) {
+			return $value ? '1' : '0';
+		}
+
+		$value = (string) $value;
+		if ($value !== '' && preg_match('/^[A-Za-z0-9_.-]+$/', $value) && $i18n->hasMessage($value)) {
+			return $i18n->getMessage($value);
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Counts and returns number of unseen notifications of specified user.
 	 * 
 	 * @param WebSoccer $websoccer application context.
@@ -131,6 +168,7 @@ class NotificationsDataService {
 				
 				if ($messageData) {
 					foreach ($messageData as $placeholderName => $placeholderValue) {
+						$placeholderValue = self::resolvePlaceholderValue($i18n, $placeholderValue);
 						$message = str_replace('{' . $placeholderName . '}', 
 								htmlspecialchars($placeholderValue, ENT_COMPAT, 'UTF-8'), $message);
 					}

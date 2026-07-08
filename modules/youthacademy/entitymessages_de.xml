@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="youthacademylevel_navlabel">Jugendakademie-Level</message>
+
+    <message id="entity_youthacademylevel">Jugendakademie-Level</message>
+    <message id="entity_youthacademylevel_level">Level</message>
+    <message id="entity_youthacademylevel_level_help">Interne Ausbaustufe der Jugendakademie. Höhere Level verbessern Entwicklung, Scouting und Reputation.</message>
+    <message id="entity_youthacademylevel_name">Name</message>
+    <message id="entity_youthacademylevel_name_help">Anzeigename der Akademiestufe, z. B. Basis-Akademie oder Elite-Akademie.</message>
+    <message id="entity_youthacademylevel_build_cost">Baukosten</message>
+    <message id="entity_youthacademylevel_build_cost_help">Einmalige Kosten für Bau oder Ausbau auf diese Stufe.</message>
+    <message id="entity_youthacademylevel_maintenance_fee">Kosten pro Spieltag</message>
+    <message id="entity_youthacademylevel_maintenance_fee_help">Laufende Akademiekosten, die pro relevantem Spieltag beim Verein gebucht werden.</message>
+    <message id="entity_youthacademylevel_development_bonus">Entwicklungsbonus</message>
+    <message id="entity_youthacademylevel_development_bonus_help">Zusätzlicher Bonus für die Jugendentwicklung auf dieser Akademiestufe.</message>
+    <message id="entity_youthacademylevel_scouting_bonus">Scoutingbonus</message>
+    <message id="entity_youthacademylevel_scouting_bonus_help">Zusätzlicher Bonus für Jugendscouting und Akademie-Scouting.</message>
+    <message id="entity_youthacademylevel_stagnation_reduction">Stagnationsschutz</message>
+    <message id="entity_youthacademylevel_stagnation_reduction_help">Reduziert das Risiko, dass Jugendspieler ohne ausreichend Spielpraxis stagnieren.</message>
+    <message id="entity_youthacademylevel_reputation_bonus">Reputationsbonus</message>
+    <message id="entity_youthacademylevel_reputation_bonus_help">Zusätzlicher Beitrag zur Attraktivität und Reputation der Akademie.</message>
+    <message id="entity_youthacademylevel_max_reputation">Maximale Reputation</message>
+    <message id="entity_youthacademylevel_max_reputation_help">Obergrenze der Akademie-Reputation für diese Ausbaustufe.</message>
+    <message id="entity_youthacademylevel_status">Aktiv</message>
+    <message id="entity_youthacademylevel_status_help">Nur aktive Stufen können von Vereinen genutzt werden.</message>
+</messages>

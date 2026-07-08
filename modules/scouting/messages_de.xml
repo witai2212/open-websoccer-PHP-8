@@ -90,6 +90,8 @@
     <message id="scouting_proposal_strength">Eingeschätzte Stärke</message>
     <message id="scouting_proposal_potential">Eingeschätztes Potenzial</message>
     <message id="scouting_proposal_talent">Eingeschätztes Talent</message>
+    <message id="scouting_proposal_traits">Erkannte Spezialfähigkeiten</message>
+    <message id="scouting_proposal_no_traits_reported">keine erkannt</message>
     <message id="scouting_proposal_summary">Scoutbericht</message>
     <message id="scouting_proposal_transfer_fee">Ablöse</message>
     <message id="scouting_proposal_salary">Gehalt</message>

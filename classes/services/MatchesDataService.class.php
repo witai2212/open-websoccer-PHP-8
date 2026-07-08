@@ -490,6 +490,8 @@ class MatchesDataService {
 				'P.w_kondition' => 'strength_stamina',
 				'P.w_frische' => 'strength_freshness',
 				'P.w_zufriedenheit' => 'strength_satisfaction',
+				'P.w_passing' => 'strength_passing',
+				'P.w_creativity' => 'strength_creativity',
 				'P.w_freekick' => 'strength_freekick',
 				'P.nation' => 'player_nationality',
 				'P.picture' => 'picture',

@@ -190,6 +190,21 @@ class TeamChemistryDataService {
         $factors['trainingcamp'] = self::computeTrainingCampScore($websoccer, $db, $teamId);
         $factors['training'] = self::computeTrainingScore($websoccer, $db, $teamId);
         $factors['staff'] = self::computeStaffScore($websoccer, $db, $teamId);
+        if (class_exists('TacticalStyleDataService')) {
+            $factors['tactical_style'] = TacticalStyleDataService::getChemistryFactor($websoccer, $db, null, $teamId);
+        } else {
+            $factors['tactical_style'] = array('score' => 50, 'detail' => '');
+        }
+        if (class_exists('ManagerCharacterDataService')) {
+            $factors['manager_character'] = ManagerCharacterDataService::getChemistryFactor($websoccer, $db, $teamId);
+        } else {
+            $factors['manager_character'] = array('score' => 50, 'detail' => '');
+        }
+        if (class_exists('ManagerProfileDataService')) {
+            $factors['manager_profile'] = ManagerProfileDataService::getChemistryFactorForTeam($websoccer, $db, $teamId);
+        } else {
+            $factors['manager_profile'] = array('score' => 50, 'detail' => '');
+        }
 
         $weights = array(
             'nationality' => 15,
@@ -201,7 +216,10 @@ class TeamChemistryDataService {
             'personality' => 5,
             'trainingcamp' => 10,
             'training' => 10,
-            'staff' => 5
+            'staff' => 5,
+            'tactical_style' => 10,
+            'manager_character' => 5,
+            'manager_profile' => 5
         );
 
         $score = 0;
@@ -218,7 +236,7 @@ class TeamChemistryDataService {
     }
 
     private static function emptyFactors() {
-        $keys = array('nationality', 'settled', 'formation', 'captain', 'transfers', 'happiness', 'personality', 'trainingcamp', 'training', 'staff');
+        $keys = array('nationality', 'settled', 'formation', 'captain', 'transfers', 'happiness', 'personality', 'trainingcamp', 'training', 'staff', 'tactical_style', 'manager_character', 'manager_profile');
         $factors = array();
         foreach ($keys as $key) {
             $factors[$key] = array('score' => 50, 'detail' => '');

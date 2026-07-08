@@ -31,6 +31,11 @@
 <p><em>{{ i18n.getMessage('userprofile_block_highscore') }}</em><br/>
 <a href="{{ env.getInternalUrl("highscore") }}">{{ profile.user_highscore|number_format(0, ',', ' ') }}</a></p>
 
+{% if managerCharacterInfo is defined and managerCharacterInfo.label|length > 0 %}
+<p><em>{{ i18n.getMessage('manager_character_sidebar_title') }}</em><br/>
+<a href="{{ env.getInternalUrl("profile") }}">{{ managerCharacterInfo.label }}</a></p>
+{% endif %}
+
 {% if managerReputation is defined and managerReputation is not null %}
 <p><em>{{ i18n.getMessage('userprofile_block_reputation') }}</em> <i class="icon-question-sign wstooltip" data-toggle="tooltip" title="{{ i18n.getMessage('userprofile_block_tooltip_reputation') }}"></i><br/>
 <a href="{{ env.getInternalUrl("user", "id=" ~ env.user.id) }}#managercareer">{{ managerReputation|number_format(0, ',', ' ') }}</a></p>

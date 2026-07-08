@@ -57,7 +57,8 @@ class TeamPlayersModel implements IModel {
 			$userTeamId = (int) $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 		}
 		
-		return array("players" => $players, "show_personality" => ($userTeamId > 0 && $userTeamId === $this->_teamid));
+		return array("players" => $players, "show_personality" => ($userTeamId > 0 && $userTeamId === $this->_teamid),
+		             "show_traits" => ($userTeamId > 0 && $userTeamId === $this->_teamid));
 	}
 	
 }

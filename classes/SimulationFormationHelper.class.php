@@ -191,6 +191,9 @@ class SimulationFormationHelper {
 			    $playerinfo['freshness'], $playerinfo['satisfaction'], $playerinfo['passing'], $playerinfo['shooting'],
 			    $playerinfo['tackling'], $playerinfo['heading'], $playerinfo['influence'], $playerinfo['creativity'],
 			    $playerinfo['flair'], $playerinfo['pace'], $playerinfo['freekick'], $playerinfo['penalty'], $playerinfo['penalty_killing']);
+			if (class_exists('PlayerTraitsDataService')) {
+				PlayerTraitsDataService::applyTraitsToSimulationPlayer($websoccer, $db, $player);
+			}
 			
 			if (strlen($playerinfo['pseudonym'])) {
 				$player->name = $playerinfo['pseudonym'];

@@ -45,7 +45,13 @@ class YouthPlayersDataService {
 			throw new Exception($i18n->getMessage("error_page_not_found"));
 		}
 
-		return $players[0];
+		$player = $players[0];
+		if (class_exists("PlayerTraitsDataService")) {
+			$withTraits = PlayerTraitsDataService::attachTraitsToYouthPlayers($websoccer, $db, array($player));
+			$player = $withTraits[0];
+		}
+
+		return $player;
 	}
 
 	/**
@@ -63,6 +69,9 @@ class YouthPlayersDataService {
 		$whereCondition = "team_id = %d ORDER BY position ASC, lastname ASC, firstname ASC";
 
 		$players = $db->queryCachedSelect("*", $fromTable, $whereCondition, $teamId);
+		if (class_exists("PlayerTraitsDataService")) {
+			$players = PlayerTraitsDataService::attachTraitsToYouthPlayers($websoccer, $db, $players);
+		}
 
 		return $players;
 	}
@@ -235,6 +244,10 @@ class YouthPlayersDataService {
 			$players[] = $player;
 		}
 		$result->free();
+
+		if (class_exists("PlayerTraitsDataService")) {
+			$players = PlayerTraitsDataService::attachTraitsToYouthPlayers($websoccer, $db, $players);
+		}
 
 		return $players;
 	}

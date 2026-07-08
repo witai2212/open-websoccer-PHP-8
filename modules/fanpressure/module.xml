@@ -2,6 +2,10 @@
 <!DOCTYPE module SYSTEM "../module.dtd">
 <module version="1.0.0">
 
+    <admin>
+        <adminpage id="fanpressure_admin" permissionrole="r_daten" navcategory="league" filename="fanpressure-admin" />
+    </admin>
+
     <dependencies>
         <dependency module="clubs" version="1.0.0"/>
         <dependency module="office" version="1.0.0"/>
@@ -16,6 +20,7 @@
         <setting id="fanpressure_sponsor_max_effect" category="game" type="number" default="10" />
         <setting id="fanpressure_notification_threshold" category="game" type="number" default="6" />
         <setting id="fanpressure_create_extreme_news" category="game" type="boolean" default="1" />
+        <setting id="fanpressure_interview_expiry_days" category="game" type="number" default="7" />
     </settings>
 
     <pages>
@@ -30,6 +35,13 @@
             navitemOnlyForConfigEnabled="fanpressure_enabled">
         </page>
     </pages>
+
+    <actions>
+        <action id="answer-fanpressure-interview" controller="AnswerFanPressureInterviewController" role="user" log="true">
+            <param id="occurrence_id" type="number" required="true" />
+            <param id="answer" type="text" required="true" max="1" />
+        </action>
+    </actions>
 
     <plugins>
         <eventlistener event="MatchCompletedEvent" class="FanPressurePlugin" method="handleMatchCompleted" />

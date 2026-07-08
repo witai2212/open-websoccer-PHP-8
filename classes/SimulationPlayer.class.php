@@ -144,6 +144,11 @@ class SimulationPlayer {
 	public $personality;
 
 	/**
+	 * @var array player special abilities indexed by trait key.
+	 */
+	public $traits;
+
+	/**
 	 * @var int number of yellow cards got
 	 */
 	public $yellowCards;
@@ -215,6 +220,7 @@ class SimulationPlayer {
     	$this->strengthPenalty = $strengthPenalty;
     	$this->strengthPenaltyKilling = $strengthPenaltyKilling;
     	$this->personality = PlayerPersonalityDataService::normalizeTrait($personality);
+    	$this->traits = array();
     	
     	$this->injured = 0;
     	$this->blocked = 0;
@@ -238,6 +244,44 @@ class SimulationPlayer {
     	    $this->mainPosition = $this->position;
     	}
     	
+    }
+    
+    /**
+     * Sets player special abilities for match simulation.
+     *
+     * @param array $traits Trait map with key => value.
+     */
+    public function setTraits($traits) {
+    	$this->traits = array();
+    	if (!is_array($traits)) {
+    		return;
+    	}
+    	foreach ($traits as $key => $value) {
+    		$value = max(0, min(3, (int) $value));
+    		if ($value > 0) {
+    			$this->traits[$key] = $value;
+    		}
+    	}
+    }
+    
+    /**
+     * Returns one trait value.
+     *
+     * @param string $traitKey Trait key.
+     * @return int value 0-3.
+     */
+    public function getTraitValue($traitKey) {
+    	return (isset($this->traits[$traitKey])) ? (int) $this->traits[$traitKey] : 0;
+    }
+    
+    /**
+     * Checks whether player has a trait.
+     *
+     * @param string $traitKey Trait key.
+     * @return bool TRUE if value greater than 0.
+     */
+    public function hasTrait($traitKey) {
+    	return $this->getTraitValue($traitKey) > 0;
     }
     
     /**
@@ -581,6 +625,10 @@ class SimulationPlayer {
     }
     
     private function looseFreshness() {
+    	if (class_exists('PlayerTraitsDataService') && PlayerTraitsDataService::shouldSkipFreshnessLoss($this)) {
+    		return;
+    	}
+    	
     	$freshness = $this->strengthFreshness - 1;
     	
     	if ($this->age > 32 && $this->position != PLAYER_POSITION_GOALY) {

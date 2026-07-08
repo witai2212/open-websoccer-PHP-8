@@ -148,6 +148,48 @@
                 </editform>
             </entity>
         </adminpage>
+
+        <adminpage
+            id="player-traits"
+            entity="player_trait"
+            navcategory="league"
+            permissionrole="r_daten" >
+
+            <entity dbtable="player_trait AS TraitTab" >
+
+                <overview delete="true" edit="true" logging="true" loggingcolumns="player_id,trait_key,trait_value">
+
+                    <column
+                        id="entity_player_trait_player_id"
+                        field="CONCAT(PlayerTab.nachname, ', ', PlayerTab.vorname)"
+                        type="text"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_player_trait_trait_key"
+                        field="TraitTab.trait_key"
+                        type="select"
+                        selection="torinstinkt,spielmacher,ballzauberer,flankenspezialist,kopfballstaerke,viererkette,laufstaerke,freistossspezialist,elfmeterschuetze,dribbler,elfmetertoeter,reflexe"
+                        sort="true"
+                        filter="true" />
+
+                    <column
+                        id="entity_player_trait_trait_value"
+                        field="TraitTab.trait_value"
+                        type="number"
+                        sort="true" />
+
+                    <join type="LEFT" jointable="spieler AS PlayerTab" joincondition="TraitTab.player_id = PlayerTab.id" />
+                </overview>
+
+                <editform>
+                    <field id="player_id" type="foreign_key" entity="player" jointable="spieler" labelcolumns="nachname,vorname" required="true" />
+                    <field id="trait_key" type="select" selection="torinstinkt,spielmacher,ballzauberer,flankenspezialist,kopfballstaerke,viererkette,laufstaerke,freistossspezialist,elfmeterschuetze,dribbler,elfmetertoeter,reflexe" required="true" />
+                    <field id="trait_value" type="select" selection="0,1,2,3" required="true" default="1" />
+                </editform>
+            </entity>
+        </adminpage>
     </admin>
     
   <settings>

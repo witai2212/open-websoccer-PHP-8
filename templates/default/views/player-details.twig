@@ -1,6 +1,7 @@
 {% extends "base.twig" %}
 
 {% import "macros/statisticelements.twig" as statisticelements %}
+{% import "macros/playerlists.twig" as playerlists %}
 
 {% block page_title %}
 {{ player.player_firstname }} {% if player.player_pseudonym|length > 0 %}"{{ player.player_pseudonym }}" {% endif %}{{ player.player_lastname }}
@@ -13,6 +14,18 @@
 <img src="{{ env.getConfig("context_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
 </div>
 {% endif %}
+
+<style type="text/css">
+.cm23-talentbar { display: inline-block; white-space: nowrap; margin-right: 8px; vertical-align: middle; }
+.cm23-talentbar-segment { display: inline-block; width: 17px; height: 9px; margin-right: 2px; border: 1px solid #c9c9c9; background: #eeeeee; border-radius: 2px; }
+.cm23-talentbar-segment.is-filled { background: #4f8edc; border-color: #3675c5; }
+.cm23-talentbar-segment.is-estimate { background: #f4b350; border-color: #d7952c; }
+.cm23-talent-meta { display: block; margin-top: 3px; font-size: 12px; color: #777777; line-height: 1.35; }
+.cm23-talent-badge { display: inline-block; padding: 1px 6px; margin-right: 5px; border-radius: 9px; background: #f3f3f3; border: 1px solid #dddddd; font-size: 11px; color: #555555; }
+.cm23-partnership-box { margin-top: 10px; }
+.cm23-partnership-effects { margin: 5px 0 0 0; }
+.cm23-trait-label { display: inline-block; margin: 0 4px 4px 0; }
+</style>
 
 <ul class="nav nav-tabs" id="playerTab">
   <li class="active"><a href="#general" data-toggle="tab">{{ i18n.getMessage("player_details_tab_general") }}</a></li>
@@ -81,6 +94,19 @@
 				  
 				  <dt>{{ i18n.getMessage("entity_player_personality") }}</dt>
 				  <dd>{% if show_personality %}{{ i18n.getMessage("player_personality_" ~ player.player_personality) }}{% else %}{{ i18n.getMessage("player_personality_unknown") }}{% endif %}</dd>
+
+				  {% if show_traits is defined and show_traits %}
+				  <dt>{{ i18n.getMessage("player_traits_title") }}</dt>
+				  <dd>
+					{% if player.traits is defined and player.traits|length > 0 %}
+						{% for trait in player.traits %}
+							<span class="label label-info cm23-trait-label" title="{{ i18n.getMessage("player_trait_level_tooltip", trait.value) }}">{{ i18n.getMessage(trait.label_key) }} {{ trait.value }}/3</span>
+						{% endfor %}
+					{% else %}
+						<span class="muted">{{ i18n.getMessage("player_traits_none") }}</span>
+					{% endif %}
+				  </dd>
+				  {% endif %}
 				  
 				  <dt>{{ i18n.getMessage("entity_player_verletzt") }}</dt>
 				  <dd>{{ player.player_matches_injured  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
@@ -116,26 +142,65 @@
 				  
 				  <dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
 				  <dd>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
-				  
-				  <dt>{{ i18n.getMessage("player_scouting_talent_result") }}</dt>
-				  {% if scouting|length > 0 %}
-				  <dd>{% for i in 1..scouting %}
-						<i class="icon-star"></i>
-					{% endfor %}
-				  </dd>
-				  {% else %}
-				  <dd>*</dd>
-				  {% endif %}
-				  {% if env.getUser().getClubId() == player.team_id %}
+				  {% if talent_visibility.show %}
 					<dt>{{ i18n.getMessage("entity_player_talent") }}</dt>
-				  	<dd>{% for i in 1..player.player_strength_talent %}
-							<i class="icon-star"></i>
-						{% endfor %}</dd>
+					<dd>
+						{% if talent_visibility.mode == 'exact' or talent_visibility.mode == 'category' %}
+							<span class="cm23-talentbar" title="{{ i18n.getMessage(talent_visibility.label_key) }}">
+								{% for i in 1..5 %}
+									<span class="cm23-talentbar-segment{% if i <= talent_visibility.bar_value %} is-filled{% endif %}"></span>
+								{% endfor %}
+							</span>
+							<strong>{{ i18n.getMessage(talent_visibility.label_key) }}</strong>
+							{% if talent_visibility.mode == 'exact' %}<span class="muted">({{ talent_visibility.value }})</span>{% endif %}
+						{% elseif talent_visibility.mode == 'range' %}
+							<span class="cm23-talentbar" title="{{ talent_visibility.range_min }}–{{ talent_visibility.range_max }}">
+								{% for i in 1..5 %}
+									<span class="cm23-talentbar-segment{% if i >= talent_visibility.range_min_bar and i <= talent_visibility.range_max_bar %} is-estimate{% endif %}"></span>
+								{% endfor %}
+							</span>
+							<strong>{{ talent_visibility.range_min }}–{{ talent_visibility.range_max }}</strong>
+						{% else %}
+							<span class="cm23-talent-badge">{{ i18n.getMessage("player_talent_unknown") }}</span>
+						{% endif %}
+
+						<span class="cm23-talent-meta">
+							{% if talent_visibility.source_key|length > 0 %}
+								{{ i18n.getMessage(talent_visibility.source_key) }}
+							{% endif %}
+							{% if talent_visibility.scout_speciality|length > 0 %}
+								({{ i18n.getMessage("option_" ~ talent_visibility.scout_speciality) }})
+							{% endif %}
+							{% if talent_visibility.accuracy_key|length > 0 %}
+								<br>{{ i18n.getMessage("player_talent_accuracy_label") }}: {{ i18n.getMessage(talent_visibility.accuracy_key) }}
+							{% endif %}
+							{% if talent_visibility.hint_key|length > 0 %}
+								<br>{{ i18n.getMessage(talent_visibility.hint_key, i18n.getMessage("option_" ~ talent_visibility.required_position)) }}
+							{% endif %}
+						</span>
+					</dd>
 				  {% endif %}
 
 				</dl>
 			</div>
 		</div>  
+		
+		{% if talent_visibility.partnership|length > 0 %}
+			<div class="alert alert-info cm23-partnership-box">
+				<strong>{{ i18n.getMessage("player_partnership_active_title") }}</strong><br>
+				{{ i18n.getMessage("player_partnership_active_intro") }}
+				<strong>{{ talent_visibility.partnership.player_club_name }}</strong>
+				({{ i18n.getMessage(talent_visibility.partnership.player_club_role_key) }})
+				{{ i18n.getMessage("player_partnership_active_with") }}
+				{{ i18n.getMessage(talent_visibility.partnership.user_club_role_key) }}.
+				<ul class="cm23-partnership-effects">
+					{% if talent_visibility.partnership.shared_scouting == '1' %}<li>{{ i18n.getMessage("player_partnership_effect_shared_scouting") }}</li>{% endif %}
+					{% if talent_visibility.partnership.preferred_loans == '1' %}<li>{{ i18n.getMessage("player_partnership_effect_preferred_loans") }}</li>{% endif %}
+					{% if talent_visibility.partnership.first_option == '1' %}<li>{{ i18n.getMessage("player_partnership_effect_first_option") }}</li>{% endif %}
+					{% if talent_visibility.partnership.development_bonus_percent > 0 %}<li>{{ i18n.getMessage("player_partnership_effect_development_bonus", talent_visibility.partnership.development_bonus_percent) }}</li>{% endif %}
+				</ul>
+			</div>
+		{% endif %}
 		
 		{% if env.getConfig("transfermarket_enabled") and player.player_transfermarket > 0 %}
 			<div class="alert alert-info">
@@ -246,12 +311,11 @@
 		<input type="hidden" name="id" value="{{ player.player_id }}" />
 	</form>
   {% endif %}
-  
-  {% if scouting|length<=0 and watchlist.0|length <=0 and env.getUser().getClubId() != player.team_id %}
+  {% if talent_visibility.show == false and onmywatchlist <= 0 and env.getUser().getClubId() != player.team_id %}
     <hr>
-	<div>
-		{{ i18n.getMessage("player_scounting_no_scout_no_watchlist") }}
-	</div>
+		<div class="muted">
+			{{ i18n.getMessage("player_talent_hint_add_watchlist") }}
+		</div>
   {% endif %}
   
   <div class="tab-pane" id="statistic">

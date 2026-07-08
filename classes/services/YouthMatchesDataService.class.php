@@ -152,7 +152,7 @@ class YouthMatchesDataService {
 		$columns["M.matchdate"] = "date";
 		
 		$matches = array();
-		$limit = $startIndex . "," . $entries_per_page;
+		$limit = '15'; //$startIndex . "," . $entries_per_page;
 		$result = $db->querySelect($columns, $fromTable, "(home_team_id = %d OR guest_team_id = %d) ORDER BY M.matchdate DESC",
 				array($teamId, $teamId), $limit);
 		while ($matchinfo = $result->fetch_array()) {

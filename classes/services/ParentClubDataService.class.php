@@ -165,6 +165,10 @@ class ParentClubDataService {
     }
 
     public static function resolveDivisionConflicts(WebSoccer $websoccer, DbConnection $db) {
+        if (class_exists('ClubPartnershipDataService')) {
+            return ClubPartnershipDataService::resolveAutomaticStopsAndConflicts($websoccer, $db);
+        }
+
         $relationships = self::getRelationshipLeagueRows($websoccer, $db, false);
         $actions = array();
 

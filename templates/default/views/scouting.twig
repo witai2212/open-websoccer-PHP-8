@@ -451,6 +451,7 @@
                             <th>{{ i18n.getMessage("scouting_proposal_strength") }}</th>
                             <th>{{ i18n.getMessage("scouting_proposal_potential") }}</th>
                             <th>{{ i18n.getMessage("scouting_proposal_talent") }}</th>
+                            <th>{{ i18n.getMessage("scouting_proposal_traits") }}</th>
                             <th>{{ i18n.getMessage("scouting_proposal_transfer_fee") }}</th>
                             <th>{{ i18n.getMessage("scouting_proposal_salary") }}</th>
                             <th>{{ i18n.getMessage("scouting_proposal_expires_after_matches") }}</th>
@@ -462,7 +463,7 @@
                         <tr>
                             <td>
                                 <strong>{{ proposal.firstname }} {{ proposal.lastname }}</strong><br>
-                                <small>{{ proposal.reported_summary }}</small>
+                                <small>{% if i18n.hasMessage(proposal.reported_summary) %}{{ i18n.getMessage(proposal.reported_summary) }}{% else %}{{ proposal.reported_summary }}{% endif %}</small>
                             </td>
                             <td>{{ proposal.age }}</td>
                             <td>{{ proposal.nation }}</td>
@@ -470,6 +471,15 @@
                             <td>{{ proposal.reported_strength }}</td>
                             <td>{{ proposal.reported_potential }}</td>
                             <td>{{ proposal.reported_talent }}</td>
+                            <td>
+                                {% if proposal.reported_traits_display|length > 0 %}
+                                    {% for trait in proposal.reported_traits_display %}
+                                        <span class="label label-info" title="{{ i18n.getMessage("player_traits_value") }} {{ trait.value }}">{{ i18n.getMessage(trait.label_key) }} {{ trait.value }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="muted">{{ i18n.getMessage("scouting_proposal_no_traits_reported") }}</span>
+                                {% endif %}
+                            </td>
                             <td>{{ proposal.transfer_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
                             <td>{{ proposal.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
                             <td>{{ proposal.expires_after_matches }} {{ i18n.getMessage("scouting_camp_matches") }}</td>

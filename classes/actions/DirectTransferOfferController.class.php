@@ -67,6 +67,11 @@ class DirectTransferOfferController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("transferoffer_err_unsellable"));
 		}
 		
+		// partnership first-option: while reserved, only the mother club may negotiate
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::assertProfessionalTransferAllowed($this->_websoccer, $this->_db, $this->_i18n, $player['player_id'], $clubId);
+		}
+		
 		// check if there are open transfer offered by the user for manager of player
 		$this->checkIfThereAreAlreadyOpenOffersFromUser($player["team_id"]);
 		
@@ -117,7 +122,7 @@ class DirectTransferOfferController implements IActionController {
 		DirectTransfersDataService::createTransferOffer($this->_websoccer, $this->_db, 
 			$player["player_id"], $this->_websoccer->getUser()->id, $clubId, $player["team_user_id"], $player["team_id"], 
 				$parameters["amount"], $parameters["comment"], $parameters["exchangeplayer1"], $parameters["exchangeplayer2"]);
-		
+				
 		// show success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 				$this->_i18n->getMessage("transferoffer_submitted_title"),

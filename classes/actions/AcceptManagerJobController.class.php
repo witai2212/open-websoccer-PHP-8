@@ -29,7 +29,7 @@ class AcceptManagerJobController implements IActionController {
         }
 
         $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, $message, ''));
-        return 'user';
+        return 'managercareer';
     }
 }
 ?>

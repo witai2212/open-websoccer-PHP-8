@@ -43,6 +43,7 @@
     <message id="empty_list">Keine Einträge gefunden.</message>
     
     <message id="alert_error_title">Fehler.</message>
+    <message id="alert_success_title">Erfolgreich.</message>
     
     <message id="internetexplorer_warning_title">Lieber einen anderen Web Browser benutzen!</message>
     <message id="internetexplorer_warning_message">Die Seiten des AdminCenters funktionieren besser und schneller wenn Sie einen HTML5-fähigen Web Browser benutzen, zum Beispiel Google Chrome. Probieren Sie es aus!</message>

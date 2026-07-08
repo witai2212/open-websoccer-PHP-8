@@ -165,6 +165,12 @@ if ($active_session_id >= 1 && $active_session_id != $session_id) {
             $careerResult = ManagerCareerDataService::processJobOffersMatchday($website, $db, $i18n);
             echo "[ManagerCareerJob] users processed: " . getTrainingResultValue($careerResult, 'processed') . "\n";
             echo "[ManagerCareerJob] offers created: " . getTrainingResultValue($careerResult, 'created') . "\n";
+            echo "[ManagerCareerJob] applications processed: " . getTrainingResultValue($careerResult, 'applications_processed') . "\n";
+            echo "[ManagerCareerJob] applications accepted: " . getTrainingResultValue($careerResult, 'applications_accepted') . "\n";
+            echo "[ManagerCareerJob] applications rejected: " . getTrainingResultValue($careerResult, 'applications_rejected') . "\n";
+            echo "[ManagerCareerJob] sack checks: " . getTrainingResultValue($careerResult, 'sack_checks') . "\n";
+            echo "[ManagerCareerJob] sacked managers: " . getTrainingResultValue($careerResult, 'sacked') . "\n";
+            echo "[ManagerCareerJob] awards created: " . getTrainingResultValue($careerResult, 'awards_created') . "\n";
         });
         
         executeSafeOperation('[CorrectPlayerValuesJob] Correcting player values and updating market values...', function() use ($website, $db, $i18n) {

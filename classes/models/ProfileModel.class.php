@@ -79,7 +79,13 @@ class ProfileModel implements IModel {
 			}
 		}
 		
-		return array("user" => $userinfo);
+		$teamId = $user->getClubId($this->_websoccer, $this->_db);
+		$managerCharacter = array();
+		if (class_exists('ManagerCharacterDataService')) {
+			$managerCharacter = ManagerCharacterDataService::getProfileData($this->_websoccer, $this->_db, $this->_i18n, (int) $user->id, (int) $teamId);
+		}
+		
+		return array("user" => $userinfo, "manager_character" => $managerCharacter);
 	}
 	
 }

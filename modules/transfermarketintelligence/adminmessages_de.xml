@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="transfermarketintelligence_navlabel">Transfermarkt-Analyse</message>
+    <message id="transfermarket_intelligence_admin_title">Transfermarkt-Analyse</message>
+    <message id="transfermarket_intelligence_admin_intro">Überwacht Ablösen, Gehälter, aktive Angebote, CPU-Angebotsrealismus und mögliche Marktüberhitzung.</message>
+
+    <message id="settings_label_transfermarket_intelligence_enabled">Transfermarkt-Analyse aktivieren</message>
+    <message id="settings_label_transfermarket_intelligence_enabled_help">Schaltet die neue Analyse-Seite für Manager und Admins frei.</message>
+    <message id="settings_label_transfermarket_intelligence_contract_days">Auslaufende Verträge</message>
+    <message id="settings_label_transfermarket_intelligence_contract_days_help">Anzahl Spieltage, ab der ein Vertrag als bald auslaufend gilt.</message>
+    <message id="settings_label_transfermarket_intelligence_bargain_percent">Schnäppchen-Schwelle</message>
+    <message id="settings_label_transfermarket_intelligence_bargain_percent_help">Prozent unter Fair Value, ab der ein Spieler als Schnäppchen gilt.</message>
+    <message id="settings_label_transfermarket_intelligence_overpriced_percent">Überteuert-Schwelle</message>
+    <message id="settings_label_transfermarket_intelligence_overpriced_percent_help">Prozent über Fair Value, ab der ein Spieler als überteuert gilt.</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_min_percent">CPU-Angebote Mindestquote</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_min_percent_help">Untergrenze in Prozent des Marktwerts für realistische CPU-Angebote.</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_max_percent">CPU-Angebote Höchstquote</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_max_percent_help">Obergrenze in Prozent des Marktwerts für realistische CPU-Angebote.</message>
+
+    <message id="transfermarket_intelligence_admin_scope_global">Global</message>
+    <message id="transfermarket_intelligence_admin_scope_league">Liga</message>
+    <message id="transfermarket_intelligence_admin_scope_country">Land</message>
+    <message id="transfermarket_intelligence_admin_scope_club">Verein</message>
+    <message id="transfermarket_intelligence_admin_market_health">Marktgesundheit</message>
+    <message id="transfermarket_intelligence_admin_filter">Filter</message>
+    <message id="transfermarket_intelligence_admin_apply">Anzeigen</message>
+    <message id="transfermarket_intelligence_admin_club_search">Verein suchen</message>
+    <message id="transfermarket_intelligence_admin_club_search_placeholder">Vereinsname oder Liga eingeben...</message>
+    <message id="transfermarket_intelligence_admin_club_search_help">Die Suche filtert die Vereinsliste direkt im Browser. Danach gewünschten Verein auswählen und Anzeigen klicken.</message>
+    <message id="transfermarket_intelligence_admin_average_transfer_fee">Ø Transferablöse</message>
+    <message id="transfermarket_intelligence_admin_highest_fee">Höchste Ablöse</message>
+    <message id="transfermarket_intelligence_admin_average_salary">Ø Gehalt</message>
+    <message id="transfermarket_intelligence_admin_number_offers">Anzahl Angebote</message>
+    <message id="transfermarket_intelligence_admin_listed_players">Spieler auf Transferliste</message>
+    <message id="transfermarket_intelligence_admin_market_ratio">Ø Listenpreis / Marktwert</message>
+    <message id="transfermarket_intelligence_admin_cpu_realism">CPU-Angebotsrealismus</message>
+    <message id="transfermarket_intelligence_admin_cpu_ratio">Ø CPU-Angebot / Marktwert</message>
+    <message id="transfermarket_intelligence_admin_overheating">Marktüberhitzung</message>
+    <message id="transfermarket_intelligence_admin_overheating_ok">Keine deutliche Überhitzung erkennbar.</message>
+    <message id="transfermarket_intelligence_admin_overheating_warning">Warnung: Der Markt wirkt überhitzt. Prüfe Listenpreise, CPU-Angebote und Gehaltsniveau.</message>
+    <message id="transfermarket_intelligence_admin_cpu_within_range">im Zielkorridor</message>
+    <message id="transfermarket_intelligence_admin_cpu_below_range">unter Zielkorridor</message>
+    <message id="transfermarket_intelligence_admin_cpu_above_range">über Zielkorridor</message>
+
+</messages>

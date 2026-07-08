@@ -43,4 +43,8 @@
     <message id="teamchemistry_source_trainingcamp">Trainingslager</message>
     
     <message id="teamchemistry_factor_training">Training</message>
+    <message id="teamchemistry_factor_tactical_style">Taktische DNA</message>
+    <message id="teamchemistry_factor_manager_profile">Managerkompetenz</message>
+    <message id="teamchemistry_source_tactical_style">Taktische DNA</message>
+    <message id="teamchemistry_source_manager_character">Manager-Charakter</message>
 </messages>

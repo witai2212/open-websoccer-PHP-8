@@ -49,7 +49,8 @@ class NewsListModel implements IModel {
 	 * @see IModel::getTemplateParameters()
 	 */
 	public function getTemplateParameters() {
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_news";
+		$prefix = $this->_websoccer->getConfig("db_prefix");
+		$fromTable = $prefix . "_news";
 		$whereCondition = "status = %d";
 		$parameters = "1";
 		
@@ -63,23 +64,52 @@ class NewsListModel implements IModel {
 		$paginator = new Paginator($rows["hits"], $eps, $this->_websoccer);
 		
 		// select
-		$columns = "id, titel, datum, nachricht";
-		$whereCondition .= " ORDER BY datum DESC";
+		$fromTable = $prefix . "_news AS NewsTab LEFT JOIN " . $prefix . "_fanpressure_story_log AS FanStoryTab ON FanStoryTab.news_id = NewsTab.id LEFT JOIN " . $prefix . "_verein AS TeamTab ON TeamTab.id = FanStoryTab.team_id";
+		$columns = "NewsTab.id, NewsTab.titel, NewsTab.datum, NewsTab.nachricht, FanStoryTab.team_id, FanStoryTab.user_id, FanStoryTab.event_key, FanStoryTab.context_data, FanStoryTab.mood_change, FanStoryTab.pressure_change, FanStoryTab.board_change, FanStoryTab.chemistry_change, TeamTab.name AS team_name";
+		$whereCondition = "NewsTab.status = %d ORDER BY NewsTab.datum DESC";
 		$limit = $paginator->getFirstIndex() .",". $eps;
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 		
 		$articles = array();
 		while ($article = $result->fetch_array()) {
+			$display = $this->_getDisplayArticle($article);
 			$articles[] = array("id" => $article["id"],
-								"title" => $article["titel"],
+								"title" => $display["title"],
 								"date" => $this->_websoccer->getFormattedDate($article["datum"]),
-								"teaser" => $this->_shortenMessage($article["nachricht"]));
+								"teaser" => $this->_shortenMessage($display["message"]));
 		}
 		$result->free();
 		
 		return array("articles" => $articles, "paginator" => $paginator);
 	}
 	
+
+	private function _getDisplayArticle($article) {
+		$title = $article["titel"];
+		$message = $article["nachricht"];
+
+		if (isset($article["event_key"]) && strlen((string) $article["event_key"]) && class_exists("FanPressureDataService")) {
+			$storyRow = array(
+				"team_id" => isset($article["team_id"]) ? $article["team_id"] : 0,
+				"user_id" => isset($article["user_id"]) ? $article["user_id"] : 0,
+				"event_key" => $article["event_key"],
+				"title" => $article["titel"],
+				"message" => $article["nachricht"],
+				"context_data" => isset($article["context_data"]) ? $article["context_data"] : "",
+				"mood_change" => isset($article["mood_change"]) ? $article["mood_change"] : 0,
+				"pressure_change" => isset($article["pressure_change"]) ? $article["pressure_change"] : 0,
+				"board_change" => isset($article["board_change"]) ? $article["board_change"] : 0,
+				"chemistry_change" => isset($article["chemistry_change"]) ? $article["chemistry_change"] : 0,
+				"team_name" => isset($article["team_name"]) ? $article["team_name"] : ""
+			);
+			$storyRow = FanPressureDataService::normalizeStoryDisplayRow($this->_websoccer, $this->_i18n, $storyRow);
+			$title = $storyRow["title"];
+			$message = $storyRow["message"];
+		}
+
+		return array("title" => $title, "message" => $message);
+	}
+
 	private function _shortenMessage($message) {
 		if (strlen($message) > NEWS_TEASER_MAXLENGTH) {
 			$message = wordwrap($message, NEWS_TEASER_MAXLENGTH);

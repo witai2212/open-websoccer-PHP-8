@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../messages.dtd">
+<messages>
+  <message id="club_partnerships_navlabel">Vereinspartnerschaften</message>
+  <message id="clubpartnership_admin_title">Vereinspartnerschaften</message>
+  <message id="clubpartnership_admin_intro">Kontrollzentrum für aktive, offene, pausierte und beendete Vereinspartnerschaften.</message>
+  <message id="clubpartnership_admin_open">Aktive und offene Partnerschaften</message>
+  <message id="clubpartnership_admin_closed">Kürzlich beendet oder abgelehnt</message>
+  <message id="clubpartnership_admin_logs">Historie</message>
+  <message id="clubpartnership_admin_actions">Aktionen</message>
+  <message id="clubpartnership_admin_run_check">Automatikprüfung ausführen</message>
+  <message id="clubpartnership_admin_suspend">Pausieren</message>
+  <message id="clubpartnership_admin_reactivate">Reaktivieren</message>
+  <message id="clubpartnership_admin_stop">Beenden</message>
+  <message id="clubpartnership_admin_delete">Löschen</message>
+  <message id="clubpartnership_admin_delete_confirm">Diese Partnerschaft wirklich löschen?</message>
+  <message id="clubpartnership_admin_done">Die Aktion wurde ausgeführt.</message>
+  <message id="clubpartnership_admin_no_items">Keine Einträge vorhanden.</message>
+  <message id="clubpartnership_admin_conflict">Konflikt</message>
+  <message id="clubpartnership_admin_manager_left">Managerwechsel erkannt</message>
+  <message id="clubpartnerships_date">Datum</message>
+</messages>

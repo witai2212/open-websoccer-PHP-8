@@ -287,7 +287,15 @@ class PlayersStrengthDataService {
         $w_staerke_max_factor = $player_data['player_strength'] / $max_factor;
         
         $start_value = $websoccer->getConfig('transfermarket_value_per_strength');
-        $marketvalue = round($start_value * $position_factor * $w_staerke_max_factor * $talent_factor * $age_factor * $strength, 0);
+        $marketValueFactor = 1.0;
+        if (class_exists('FinanceRegulationDataService')) {
+            $marketValueFactor = FinanceRegulationDataService::getMarketValueFactor($websoccer, $db);
+        }
+        $traitMarketValueMultiplier = 1.0;
+        if (class_exists('PlayerTraitsDataService')) {
+            $traitMarketValueMultiplier = PlayerTraitsDataService::getMarketValueMultiplier($websoccer, $db, $player_data);
+        }
+        $marketvalue = round($start_value * $position_factor * $w_staerke_max_factor * $talent_factor * $age_factor * $strength * $marketValueFactor * $traitMarketValueMultiplier, 0);
         
         // Update database
         $now = $websoccer->getNowAsTimestamp();

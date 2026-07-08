@@ -24,7 +24,7 @@ class DeclineManagerJobController implements IActionController {
 
         $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
             $this->_i18n->getMessage('managercareer_msg_decline_success'), ''));
-        return 'user';
+        return 'managercareer';
     }
 }
 ?>

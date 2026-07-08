@@ -6,4 +6,31 @@
     <message id="settings_label_fanpressure_sponsor_max_effect">Maximale Wirkung auf fanbasierte Sponsoren in Prozent</message>
     <message id="settings_label_fanpressure_notification_threshold">Benachrichtigung ab Stimmungsänderung von X Punkten</message>
     <message id="settings_label_fanpressure_create_extreme_news">News bei extremer Fanstimmung erstellen</message>
+    <message id="fanpressure_admin_navlabel">Story Engine</message>
+    <message id="fanpressure_admin_title">Board, Fan &amp; Media Story Engine</message>
+    <message id="fanpressure_admin_intro">Hier konfigurierst du, wie Ereignisse auf Fans, Medien, Vorstand und Teamchemie wirken. Die Regeln greifen automatisch nach Spielen, Transfers, Zielen und Interviews.</message>
+    <message id="fanpressure_admin_rules">Ereignisregeln</message>
+    <message id="fanpressure_admin_questions">Interviewfragen</message>
+    <message id="fanpressure_admin_recent_logs">Letzte Story-Ereignisse</message>
+    <message id="fanpressure_admin_event">Ereignis</message>
+    <message id="fanpressure_admin_source">Quelle</message>
+    <message id="fanpressure_admin_active">Aktiv</message>
+    <message id="fanpressure_admin_fans">Fans</message>
+    <message id="fanpressure_admin_media">Medien</message>
+    <message id="fanpressure_admin_board">Vorstand</message>
+    <message id="fanpressure_admin_team">Team</message>
+    <message id="fanpressure_admin_notification">Mitteilung</message>
+    <message id="fanpressure_admin_news">News</message>
+    <message id="fanpressure_admin_interview_chance">Interview %</message>
+    <message id="fanpressure_admin_rules_saved">Ereignisregeln gespeichert.</message>
+    <message id="fanpressure_admin_question_saved">Interviewfrage gespeichert.</message>
+    <message id="fanpressure_admin_question_deleted">Interviewfrage gelöscht.</message>
+    <message id="fanpressure_admin_new_question">Neue Frage</message>
+    <message id="fanpressure_admin_question">Frage</message>
+    <message id="fanpressure_admin_answer_a">Antwort A</message>
+    <message id="fanpressure_admin_answer_b">Antwort B</message>
+    <message id="fanpressure_admin_answer_c">Antwort C</message>
+    <message id="fanpressure_admin_weight">Gewichtung</message>
+    <message id="settings_label_fanpressure_interview_expiry_days">Medienfragen laufen nach X Tagen ab</message>
+
 </messages>

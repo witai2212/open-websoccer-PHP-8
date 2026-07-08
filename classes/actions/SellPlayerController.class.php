@@ -69,6 +69,18 @@ class SellPlayerController implements IActionController {
 		}
 		
 		$this->updatePlayer($player["player_id"], $parameters["min_bid"]);
+
+		if (class_exists("ClubPartnershipDataService")) {
+			$playerName = strlen($player["player_pseudonym"]) ? $player["player_pseudonym"] : trim($player["player_firstname"] . " " . $player["player_lastname"]);
+			ClubPartnershipDataService::notifyFirstOptionProfessional(
+				$this->_websoccer,
+				$this->_db,
+				(int) $clubId,
+				(int) $player["player_id"],
+				$playerName,
+				$this->_i18n->getMessage("transfermarket_navlabel")
+			);
+		}
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

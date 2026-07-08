@@ -53,6 +53,10 @@ class BuyYouthPlayerController implements IActionController {
 		
 		// check if it is already own player
 		$player = YouthPlayersDataService::getYouthPlayerById($this->_websoccer, $this->_db, $this->_i18n, $parameters["id"]);
+		$transferFee = (int) $player["transfer_fee"];
+		if ($transferFee <= 0) {
+			throw new Exception($this->_i18n->getMessage("youthteam_buy_err_notonmarket"));
+		}
 		if ($clubId == $player["team_id"]) {
 			throw new Exception($this->_i18n->getMessage("youthteam_buy_err_ownplayer"));
 		}
@@ -65,32 +69,66 @@ class BuyYouthPlayerController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("youthteam_buy_err_ownplayer_otherteam"));
 		}
 		
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::assertYouthTransferAllowed($this->_websoccer, $this->_db, $this->_i18n, $parameters["id"], $clubId);
+		}
+		
 		// check if enough budget
 		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
-		if ($team["team_budget"] <= $player["transfer_fee"]) {
+		if ($team["team_budget"] <= $transferFee) {
 			throw new Exception($this->_i18n->getMessage("youthteam_buy_err_notenoughbudget"));
 		}
 		
-		// credit / debit amount
+		// credit / debit amount and run transfer watchdog atomically
 		$prevTeam = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $player["team_id"]);
-		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $clubId, $player["transfer_fee"], "youthteam_transferfee_subject", 
-			$prevTeam["team_name"]);
-		BankAccountDataService::creditAmount($this->_websoccer, $this->_db, $player["team_id"], $player["transfer_fee"], "youthteam_transferfee_subject",
-			$team["team_name"]);
+		$watchdogResult = array("charged_total" => 0);
 		
-		// update player
-		$this->_db->queryUpdate(array("team_id" => $clubId, "transfer_fee" => 0),
-				$this->_websoccer->getConfig("db_prefix") . "_youthplayer", "id = %d", $parameters["id"]);
-		
-		// create notification
-		NotificationsDataService::createNotification($this->_websoccer, $this->_db, $prevTeam["user_id"], "youthteam_transfer_notification",
-			array("player" => $player["firstname"] . " " . $player["lastname"],
-				"newteam" => $team["team_name"]), "youth_transfer", "team", "id=" . $clubId);
+		$this->_db->connection->begin_transaction();
+		try {
+			BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $clubId, $transferFee, "youthteam_transferfee_subject", 
+				$prevTeam["team_name"]);
+			BankAccountDataService::creditAmount($this->_websoccer, $this->_db, $player["team_id"], $transferFee, "youthteam_transferfee_subject",
+				$team["team_name"]);
+			
+			$watchdogResult = YouthTransferWatchdogDataService::watchTransfer(
+				$this->_websoccer,
+				$this->_db,
+				$player,
+				$clubId,
+				$player["team_id"],
+				$transferFee
+			);
+			
+			// update player
+			$this->_db->queryUpdate(array("team_id" => $clubId, "transfer_fee" => 0),
+					$this->_websoccer->getConfig("db_prefix") . "_youthplayer", "id = %d", $parameters["id"]);
+			
+			if (class_exists('ClubPartnershipDataService')) {
+				ClubPartnershipDataService::markYouthFirstOptionUsed($this->_websoccer, $this->_db, $parameters["id"], $clubId);
+			}
+			
+			// create notification
+			NotificationsDataService::createNotification($this->_websoccer, $this->_db, $prevTeam["user_id"], "youthteam_transfer_notification",
+				array("player" => $player["firstname"] . " " . $player["lastname"],
+					"newteam" => $team["team_name"]), "youth_transfer", "team", "id=" . $clubId);
+			
+			$this->_db->connection->commit();
+		} catch (Exception $e) {
+			$this->_db->connection->rollback();
+			throw $e;
+		}
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
 				$this->_i18n->getMessage("youthteam_buy_success"),
 				""));
+		
+		if (isset($watchdogResult["charged_total"]) && (int) $watchdogResult["charged_total"] > 0) {
+			$formattedPenalty = number_format((int) $watchdogResult["charged_total"], 0, ",", ".") . " EUR";
+			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_WARNING,
+					$this->_i18n->getMessage("youth_transfer_violation_front", $formattedPenalty),
+					""));
+		}
 		
 		return "youth-team";
 	}

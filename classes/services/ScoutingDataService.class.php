@@ -634,6 +634,13 @@ class ScoutingDataService {
                 $result = $db->executeQuery($sql);
                 $rows = array();
                 while ($row = $result->fetch_array()) {
+                    if (class_exists('PlayerTraitsDataService')) {
+                        $row['reported_traits_display'] = PlayerTraitsDataService::traitMapToDisplayRows(isset($row['reported_traits']) ? $row['reported_traits'] : '');
+                        $row['real_traits_display'] = PlayerTraitsDataService::traitMapToDisplayRows(isset($row['real_traits']) ? $row['real_traits'] : '');
+                    } else {
+                        $row['reported_traits_display'] = array();
+                        $row['real_traits_display'] = array();
+                    }
                     $rows[] = $row;
                 }
                 $result->free();
@@ -710,6 +717,11 @@ class ScoutingDataService {
             
             $db->queryInsert($columns, self::tablePrefix($websoccer) . 'spieler');
             $playerId = $db->getLastInsertedId();
+
+            if (class_exists('PlayerTraitsDataService') && isset($proposal['real_traits'])) {
+                $proposalTraits = PlayerTraitsDataService::decodeTraitMap($proposal['real_traits']);
+                PlayerTraitsDataService::assignTraitsToPlayer($websoccer, $db, (int) $playerId, $proposalTraits);
+            }
             
             $db->queryUpdate(array(
                 'status' => 'accepted',
@@ -1016,6 +1028,24 @@ class ScoutingDataService {
             $talentModifier += $stadiumScoutingBonus;
         }
         
+        if (class_exists('YouthAcademyDataService')) {
+            $academyScoutingBonus = YouthAcademyDataService::getScoutingModifier($websoccer, $db, (int) $camp['team_id']);
+            if ($academyScoutingBonus > 0) {
+                // Youth Academy 2.0 harmonizes the classic youth academy with the newer scouting department.
+                // The effect is deliberately small and goes into quality/reliability, not guaranteed stars.
+                $qualityModifier += $academyScoutingBonus;
+                $talentModifier += (int) round($academyScoutingBonus / 3);
+            }
+        }
+
+        if (class_exists('ClubPartnershipDataService')) {
+            $partnershipScoutingBonus = ClubPartnershipDataService::getSharedScoutingBonus($websoccer, $db, (int) $camp['team_id']);
+            if ($partnershipScoutingBonus > 0) {
+                $qualityModifier += $partnershipScoutingBonus;
+                $talentModifier += (int) max(1, round($partnershipScoutingBonus / 5));
+            }
+        }
+        
         $effectiveQuality = self::clamp($expertise + $qualityModifier, 1, 100);
         $baseStrength = mt_rand($strengthMin, $strengthMax);
         $qualityBonus = round(($effectiveQuality - 50) / 20);
@@ -1037,8 +1067,29 @@ class ScoutingDataService {
         $flair = self::skillAround($strength, $skillDeviation);
         $penalty = self::skillAround($strength, $skillDeviation);
         $penaltyKilling = self::skillAround($strength, $skillDeviation);
+
+        $realTraits = array();
+        $reportedTraits = array();
+        if (class_exists('PlayerTraitsDataService')) {
+            $realTraits = PlayerTraitsDataService::generateTraitsForCandidate($position, $positionMain, $age, $talent, array(
+                'technique' => $technique,
+                'passing' => $passing,
+                'shooting' => $shooting,
+                'heading' => $heading,
+                'tackling' => $tackling,
+                'freekick' => $freekick,
+                'pace' => $pace,
+                'creativity' => $creativity,
+                'influence' => $influence,
+                'flair' => $flair,
+                'penalty' => $penalty,
+                'penalty_killing' => $penaltyKilling
+            ), $effectiveQuality);
+            $reportedTraits = PlayerTraitsDataService::buildReportedTraits($realTraits, $effectiveQuality);
+        }
         
         $transferFee = self::calculateProposalTransferFee($strength, $strengthMaxReal, $talent, $age);
+        $transferFee = (int) round($transferFee * self::getTraitFeeMultiplier($realTraits) / 10000) * 10000;
         if ((int) $camp['budget_min'] > 0) {
             $transferFee = max($transferFee, (int) $camp['budget_min']);
         }
@@ -1052,7 +1103,7 @@ class ScoutingDataService {
         
         $reported = self::buildReport($strength, $strengthMaxReal, $talent, $effectiveQuality);
         
-        $db->queryInsert(array(
+        $insertColumns = array(
             'team_id' => (int) $camp['team_id'],
             'camp_id' => (int) $camp['id'],
             'scout_id' => (int) $camp['scout_id'],
@@ -1094,7 +1145,14 @@ class ScoutingDataService {
             'expires_date' => self::now($websoccer) + ($expireMatches * 86400),
             'expires_after_matches' => $expireMatches,
             'status' => 'open'
-        ), self::tablePrefix($websoccer) . 'scouting_proposal');
+        );
+
+        if (class_exists('PlayerTraitsDataService') && self::hasProposalTraitColumns($websoccer, $db)) {
+            $insertColumns['real_traits'] = PlayerTraitsDataService::encodeTraitMap($realTraits);
+            $insertColumns['reported_traits'] = PlayerTraitsDataService::encodeTraitMap($reportedTraits);
+        }
+
+        $db->queryInsert($insertColumns, self::tablePrefix($websoccer) . 'scouting_proposal');
     }
     
     /* ---------------------------------------------------------------------
@@ -1254,6 +1312,41 @@ class ScoutingDataService {
         return max(500, (int) round($salary / 100) * 100);
     }
     
+    private static function getTraitFeeMultiplier($traits) {
+        if (!is_array($traits) || !count($traits)) {
+            return 1.0;
+        }
+        $bonus = 0.0;
+        foreach ($traits as $value) {
+            $bonus += max(0, min(3, (int) $value)) * 0.03;
+        }
+        return 1.0 + min(0.15, $bonus);
+    }
+
+    private static function hasProposalTraitColumns(WebSoccer $websoccer, DbConnection $db) {
+        static $hasColumns = null;
+        if ($hasColumns !== null) {
+            return $hasColumns;
+        }
+        try {
+            $tableName = $websoccer->getConfig('db_prefix') . '_scouting_proposal';
+            $result = $db->executeQuery("SHOW COLUMNS FROM " . $tableName . " LIKE 'real_traits'");
+            $hasReal = ($result && $result->num_rows > 0);
+            if ($result) {
+                $result->free();
+            }
+            $result = $db->executeQuery("SHOW COLUMNS FROM " . $tableName . " LIKE 'reported_traits'");
+            $hasReported = ($result && $result->num_rows > 0);
+            if ($result) {
+                $result->free();
+            }
+            $hasColumns = ($hasReal && $hasReported);
+        } catch (Exception $e) {
+            $hasColumns = false;
+        }
+        return $hasColumns;
+    }
+
     private static function buildReport($strength, $potential, $talent, $expertise) {
         $expertise = (int) $expertise;
         

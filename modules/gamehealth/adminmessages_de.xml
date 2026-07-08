@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="admin_game_health_navlabel">Systemprüfung</message>
+    <message id="admin_game_health_title">Admin Game Health Check</message>
+    <message id="admin_game_health_intro">Live-Prüfung wichtiger Spiel- und Systemdaten. Die Reparaturen sind bewusst defensiv und ändern nur klar ungültige oder abgelaufene Datensätze.</message>
+</messages>

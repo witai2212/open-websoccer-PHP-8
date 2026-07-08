@@ -408,6 +408,9 @@ class SimulationStateHelper {
 			    $playerinfo['strength_passing'], $playerinfo['strength_shooting'],$playerinfo['strength_tackling'], $playerinfo['strength_heading'], $playerinfo['strength_influence'], 
 			    $playerinfo['strength_creativity'], $playerinfo['strength_flair'], $playerinfo['strength_pace'], $playerinfo['strength_freekick'], $playerinfo['strength_penalty'], 
 			    $playerinfo['strength_penalty_killing'], $playerinfo['personality']);
+			if (class_exists('PlayerTraitsDataService')) {
+				PlayerTraitsDataService::applyTraitsToSimulationPlayer($websoccer, $db, $player);
+			}
 			
 			$player->name = $playerinfo['name'];
 			$player->setBallContacts($playerinfo['ballcontacts']);

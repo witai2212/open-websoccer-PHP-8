@@ -7,6 +7,10 @@
 {% block page_content %}
 
 
+{% if has_stock_recommendations is defined and not has_stock_recommendations %}
+	{{ messagebox.box(i18n.getMessage("stockmarket_recommend_no_advisor"), "", "info") }}
+{% endif %}
+
 {% if indexes is defined and indexes|length > 0 %}
 
 	<table class="table table-striped">
@@ -20,6 +24,7 @@
 				<th>{{ i18n.getMessage("indexes_v4") }}</th>
 				<th>{{ i18n.getMessage("indexes_qty") }}</th>
 				<th>{{ i18n.getMessage("indexes_ownership") }}</th>
+				{% if has_stock_recommendations is defined and has_stock_recommendations %}<th>{{ i18n.getMessage("stockmarket_recommendation") }}</th>{% endif %}
 				<th>{{ i18n.getMessage("indexes_buy") }}</th>
 			</tr>
 		</thead>
@@ -49,6 +54,22 @@
 						<br><span class="label label-success">{{ i18n.getMessage("stockmarket_majority_owner") }}</span>
 					{% endif %}
 				</td>
+				{% if has_stock_recommendations is defined and has_stock_recommendations %}
+				<td>
+					{% if index.stock_recommendation is defined %}
+						<span class="label label-{{ index.stock_recommendation.label_class }}">{{ i18n.getMessage(index.stock_recommendation.action_key) }}</span><br>
+						<small>{{ i18n.getMessage("stockmarket_recommend_confidence") }}: {{ index.stock_recommendation.confidence }}%</small><br>
+						<small>{{ i18n.getMessage("stockmarket_recommend_risk") }}: {{ i18n.getMessage(index.stock_recommendation.risk_key) }}</small>
+						{% if index.stock_recommendation.reasons is defined and index.stock_recommendation.reasons|length > 0 %}
+							<ul class="unstyled" style="margin: 4px 0 0 0;">
+							{% for reason in index.stock_recommendation.reasons %}
+								<li><small>{{ i18n.getMessage(reason) }}</small></li>
+							{% endfor %}
+							</ul>
+						{% endif %}
+					{% endif %}
+				</td>
+				{% endif %}
 				<td>
 					<p><a class="btn btn-mini" href="?page=buystock&id={{ index.id }}"><i class="icon-shopping-cart"></i> {{ i18n.getMessage("indexes_buy") }}</a></p>
 					{% if index.can_fire_manager %}

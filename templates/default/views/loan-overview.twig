@@ -211,7 +211,13 @@
 		<tr>
 			<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ loanmacros.playerName(player) }}</a></td>
 			<td>{{ player.position }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
-			<td>{{ player.team_name }}</td>
+			<td>
+				{{ player.team_name }}
+				{% if player.partnership_id is defined and player.partnership_id > 0 %}
+					<br><span class="label label-info">{{ i18n.getMessage("loans_partner_preferred") }}</span>
+					{% if player.partnership_development_bonus > 0 %}<br><small>{{ i18n.getMessage("loans_partner_development_hint")|replace({'{0}': player.partnership_development_bonus}) }}</small>{% endif %}
+				{% endif %}
+			</td>
 			<td>{{ player.lending_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 			<td>{{ player.salary_share_percent }}%</td>
 			<td>{{ i18n.getMessage("loans_option_" ~ player.option_type) }}{% if player.buy_fee > 0 %}<br>{{ player.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>

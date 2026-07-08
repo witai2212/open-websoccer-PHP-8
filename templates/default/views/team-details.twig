@@ -34,6 +34,7 @@
 <ul class="nav nav-tabs" id="teamTab">
   <li class="active"><a href="#general" data-toggle="tab">{{ i18n.getMessage("team_details_tab_general") }}</a></li>
   {% if not team.is_nationalteam %}<li><a href="#statistic" data-toggle="tab">{{ i18n.getMessage("team_details_tab_statistic") }}</a></li>{% endif %}
+  {% if tactical_dna.enabled is defined and tactical_dna.enabled %}<li><a href="#tacticaldna" data-toggle="tab">{{ i18n.getMessage("tacticaldna_team_tab") }}</a></li>{% endif %}
   <li><a href="#results" data-toggle="tab" class="ajaxLink"
   	data-ajaxtarget="resultslist" data-ajaxblock="team-results" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("results_tab_latest_results") }}</a></li>
   
@@ -51,8 +52,8 @@
 	  	data-ajaxtarget="transferslist" data-ajaxblock="teamtransfers" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("transfers_tab") }}</a></li>
 	  {% endif %}
   {% endif %}
-  <li><a href="#victories" data-toggle="tab" class="ajaxLink"
-  	data-ajaxtarget="historycontent" data-ajaxblock="team-history" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("team_details_tab_victories") }}</a></li>
+  <!-- <li><a href="#victories" data-toggle="tab" class="ajaxLink"
+  	data-ajaxtarget="historycontent" data-ajaxblock="team-history" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("team_details_tab_victories") }}</a></li>-->
   <li><a href="#halloffame" data-toggle="tab" class="ajaxLink"
   	data-ajaxtarget="halloffamecontent" data-ajaxblock="club-hall-of-fame" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("team_details_tab_halloffame") }}</a></li>
 </ul>
@@ -82,6 +83,31 @@
 	{% endif %}
   {% else %}
   	{% set manager = "-" %}
+  {% endif %}
+
+  {% if team.manager_profile is defined and team.manager_profile.exists is defined and team.manager_profile.exists %}
+    {% if team.manager_profile.user_id > 0 %}
+      {% set managerProfileName = '<a href="' ~ env.getInternalUrl('user', 'id=' ~ team.manager_profile.user_id) ~ '">' ~ team.manager_profile.name|e ~ '</a>' %}
+    {% else %}
+      {% set managerProfileName = team.manager_profile.name|e %}
+    {% endif %}
+    {% set managerProfileSalary = team.manager_profile.salary_per_match|number_format(0, ',', ' ') ~ ' ' ~ env.getConfig('game_currency') %}
+    {% set managerProfileSince = team.manager_profile.start_date > 0 ? team.manager_profile.start_date|date(env.getConfig('date_format')) : '-' %}
+    {% set managerProfileImage = '' %}
+    {% if team.manager_profile.is_cpu and team.manager_profile.avatar_url|length > 0 %}
+      {% set managerProfileImage = '<img src="' ~ team.manager_profile.avatar_url ~ '" class="pull-left img-rounded" style="width: 42px; height: 42px; margin-right: 8px" alt="">' %}
+    {% elseif team.manager_profile.user_id > 0 and team.user_picture|length > 0 %}
+      {% set managerProfileImage = '<a href="' ~ env.getInternalUrl('user', 'id=' ~ team.manager_profile.user_id) ~ '"><img src="' ~ team.user_picture ~ '" class="pull-left img-rounded" style="width: 42px; height: 42px; margin-right: 8px" alt=""></a>' %}
+    {% endif %}
+    {% set manager = '<div class="media" style="margin: 0">' ~ managerProfileImage ~ '<div class="media-body"><strong>' ~ managerProfileName ~ '</strong>' %}
+    {% if team.manager_profile.is_cpu %}
+      {% set manager = manager ~ ' <span class="label label-info">' ~ i18n.getMessage('managerprofile_cpu_manager') ~ '</span>' %}
+    {% endif %}
+    {% set manager = manager ~ '<br><small>' ~ i18n.getMessage('managerprofile_competence') ~ ': <strong>' ~ team.manager_profile.competence ~ '/20</strong>' %}
+    {% if team.manager_profile.competence_peak > team.manager_profile.competence %}
+      {% set manager = manager ~ ' (' ~ i18n.getMessage('managerprofile_peak') ~ ': ' ~ team.manager_profile.competence_peak ~ '/20)' %}
+    {% endif %}
+    {% set manager = manager ~ '<br>' ~ i18n.getMessage('managerprofile_character') ~ ': ' ~ team.manager_profile.character_label|e ~ '<br>' ~ i18n.getMessage('managerprofile_salary') ~ ': ' ~ managerProfileSalary ~ ' / ' ~ i18n.getMessage('managerprofile_matchday') ~ '<br>' ~ i18n.getMessage('managerprofile_since') ~ ': ' ~ managerProfileSince ~ '</small></div></div>' %}
   {% endif %}
   
   {% if team.team_deputyuser_id > 0 %}
@@ -167,6 +193,88 @@
 		{{ profile.infofield('&empty; ' ~ i18n.getMessage("entity_player_marktwert"), playerfacts.avgMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}
   {% endif %}
   </div>
+
+  {% if tactical_dna.enabled is defined and tactical_dna.enabled %}
+  <div class="tab-pane" id="tacticaldna">
+    <h4>{{ i18n.getMessage("tacticaldna_title") }}</h4>
+    <p class="muted">{{ i18n.getMessage("tacticaldna_intro") }}</p>
+
+    {% if not tactical_dna.schema_ready %}
+      <div class="alert alert-warning">{{ i18n.getMessage("tacticaldna_schema_missing") }}</div>
+    {% else %}
+      <div class="row-fluid">
+        <div class="span5">
+          <h5>{{ i18n.getMessage("tacticaldna_current_style") }}</h5>
+          <p>
+            <strong>{{ tactical_dna.current.label }}</strong>
+            <span class="label {{ tactical_dna.current.fit_class }}">{{ i18n.getMessage("formation_tacticalstyle_fit") }}: {{ tactical_dna.current.fit }}%</span>
+            <span class="label label-info">{{ i18n.getMessage("teamchemistry_match_effect") }}: {{ tactical_dna.current.effect_signed }}</span>
+          </p>
+          <p>{{ tactical_dna.current.description }}</p>
+          <p class="muted">{{ i18n.getMessage(tactical_dna.current.hint_key) }}</p>
+          {% if tactical_dna.current.change_effect != 0 %}
+            <p><span class="label{% if tactical_dna.current.change_effect > 0 %} label-success{% else %} label-warning{% endif %}">{{ i18n.getMessage("tacticaldna_transition_effect") }}: {{ tactical_dna.current.change_effect_signed }}</span></p>
+          {% endif %}
+          {% if tactical_dna.staff_advice.show %}
+            <div class="alert alert-info">
+              <strong>{{ i18n.getMessage("tacticaldna_staff_advice_title") }}</strong><br>
+              {{ tactical_dna.staff_advice.message }}
+            </div>
+          {% elseif tactical_dna.staff_advice.available %}
+            <p class="muted">{{ i18n.getMessage("tacticaldna_staff_no_change") }}</p>
+          {% else %}
+            <p class="muted">{{ i18n.getMessage("tacticaldna_staff_missing") }}</p>
+          {% endif %}
+        </div>
+
+        <div class="span7">
+          <h5>{{ i18n.getMessage("tacticaldna_style_comparison") }}</h5>
+          <table class="table table-striped table-condensed">
+            <thead>
+              <tr>
+                <th>{{ i18n.getMessage("formation_tacticalstyle_select") }}</th>
+                <th>{{ i18n.getMessage("formation_tacticalstyle_fit") }}</th>
+                <th>{{ i18n.getMessage("teamchemistry_match_effect") }}</th>
+                {% if tactical_dna.can_change %}<th>{{ i18n.getMessage("tacticaldna_change_preview") }}</th>{% endif %}
+              </tr>
+            </thead>
+            <tbody>
+            {% for style in tactical_dna.styles %}
+              <tr{% if style.selected %} class="success"{% endif %}>
+                <td>
+                  <strong>{{ style.label }}</strong>
+                  {% if style.recommended %}<span class="label label-success">{{ i18n.getMessage("tacticaldna_recommended") }}</span>{% endif %}
+                  <br><span class="muted">{{ style.description }}</span>
+                </td>
+                <td><span class="label {{ style.fit_class }}">{{ style.fit }}%</span></td>
+                <td>{{ style.effect_signed }}</td>
+                {% if tactical_dna.can_change %}
+                  <td>{% if style.selected %}-{% else %}{% if style.change_effect_preview > 0 %}+{% endif %}{{ style.change_effect_preview }}{% endif %}</td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+
+          {% if tactical_dna.can_change %}
+            <form method="post" action="{{ env.getInternalUrl("team", "id=" ~ team.team_id) }}" class="form-inline">
+              <input type="hidden" name="action" value="save-tactical-style">
+              <input type="hidden" name="teamid" value="{{ team.team_id }}">
+              <label for="tacticalstyle-team">{{ i18n.getMessage("formation_tacticalstyle_select") }}</label>
+              <select name="style" id="tacticalstyle-team" class="input-large">
+                {% for style in tactical_dna.styles %}
+                  <option value="{{ style.key }}"{% if style.selected %} selected{% endif %}>{{ style.label }} ({{ style.fit }}%)</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-primary">{{ i18n.getMessage("button_save") }}</button>
+              <p class="help-block">{{ i18n.getMessage("tacticaldna_change_help") }}</p>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  {% endif %}
   
   <div class="tab-pane" id="statistic">
   

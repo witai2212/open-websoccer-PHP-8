@@ -62,6 +62,17 @@ class ExtendContractController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("extend-contract_lower_than_current_salary"));
 		}
 		
+		// validate contract duration
+		$newMatches = (int) $parameters["matches"];
+		$maxContractMatches = (int) $this->_websoccer->getConfig("max_number_of_contract_matches");
+		if ($maxContractMatches <= 0) {
+			$maxContractMatches = 60;
+		}
+		
+		if ($newMatches > $maxContractMatches) {
+			throw new Exception($this->_i18n->getMessage("extend-contract_matches_too_high", $maxContractMatches));
+		}
+		
 		$averageSalary = $this->getAverageSalary($player["player_strength"]);
 		
 		// if salary is already higher than average, then just expect 10% more
@@ -95,7 +106,7 @@ class ExtendContractController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("extend-contract_goalbonus_too_low"));
 		}
 		
-		$this->updatePlayer($player["player_id"], $player["player_strength_satisfaction"], $parameters["salary"], $parameters["goal_bonus"], $parameters["matches"]);
+		$this->updatePlayer($player["player_id"], $player["player_strength_satisfaction"], $parameters["salary"], $parameters["goal_bonus"], $newMatches);
 		
 		// reset inactivity
 		UserInactivityDataService::resetContractExtensionField($this->_websoccer, $this->_db, $user->id);

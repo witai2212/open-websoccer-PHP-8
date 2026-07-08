@@ -33,4 +33,4 @@
 	</tr>
 </table>
 
-<p>{{ message.content|nl2br }}</p>
+<p>{% if message.content_html is defined %}{{ message.content_html|raw }}{% else %}{{ message.content|nl2br }}{% endif %}</p>

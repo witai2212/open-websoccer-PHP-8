@@ -67,6 +67,10 @@ class RemovePlayerFromTransfermarketController implements IActionController {
 				'transfer_ende' => 0
 				), $this->_websoccer->getConfig('db_prefix') . '_spieler', 'id = %d', $parameters['id']);
 		
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::cancelProfessionalFirstOptions($this->_websoccer, $this->_db, $parameters['id']);
+		}
+		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
 				$this->_i18n->getMessage("transfermarket_remove_success"),

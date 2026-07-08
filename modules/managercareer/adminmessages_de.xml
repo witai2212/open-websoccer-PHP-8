@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
+    <message id="managercareer_admin_navlabel">Managerkarriere</message>
+    <message id="managercareer_admin_title">Managerkarriere</message>
+    <message id="managercareer_admin_intro">Überwache Bewerbungen, Entlassungsrisiken, Managerverträge und Auszeichnungen.</message>
+    <message id="managercareer_admin_tab_applications">Bewerbungen</message>
+    <message id="managercareer_admin_tab_sackrisk">Entlassungsrisiko</message>
+    <message id="managercareer_admin_tab_awards">Auszeichnungen</message>
+    <message id="managercareer_admin_tab_settings">Einstellungen</message>
+    <message id="managercareer_admin_open_applications">Offene Bewerbungen</message>
+    <message id="managercareer_admin_recent_applications">Letzte Entscheidungen</message>
+    <message id="managercareer_admin_no_open_applications">Derzeit gibt es keine offenen Bewerbungen.</message>
+    <message id="managercareer_admin_no_recent_applications">Noch keine entschiedenen Bewerbungen vorhanden.</message>
+    <message id="managercareer_admin_application_accepted">Bewerbung angenommen und Jobangebot erstellt.</message>
+    <message id="managercareer_admin_application_rejected">Bewerbung abgelehnt.</message>
+    <message id="managercareer_admin_reject">Ablehnen</message>
+    <message id="managercareer_admin_sackrisk_title">Entlassungsrisiko</message>
+    <message id="managercareer_admin_sackrisk_help">Manager mit sehr niedriger Vorstandszufriedenheit erhalten Warnungen und können automatisch entlassen werden, sofern die Einstellung aktiv ist.</message>
+    <message id="managercareer_admin_no_sackrisk">Keine aktiven Manager gefunden.</message>
+    <message id="managercareer_admin_awards_title">Letzte Manager-Auszeichnungen</message>
+    <message id="managercareer_admin_settings_title">Karriere-Einstellungen</message>
+    <message id="managercareer_admin_settings_help">Die Werte werden über die allgemeinen Einstellungen gepflegt. Diese Übersicht zeigt die aktuell aktiven Parameter.</message>
+    <message id="managercareer_admin_open_settings">Allgemeine Einstellungen öffnen</message>
+
     <message id="settings_label_mgr_career_enabled">Managerkarriere aktivieren</message>
     <message id="settings_label_mgr_job_offers">Automatische Jobangebote aktivieren</message>
     <message id="settings_label_freeclub_rep_check">Reputationsprüfung für freie Vereine aktivieren</message>
     <message id="settings_label_mgr_offer_limit">Maximale aktive Jobangebote pro Manager</message>
     <message id="settings_label_mgr_offer_exp_days">Gültigkeit von Jobangeboten in Tagen</message>
+    <message id="settings_label_mgr_applications_enabled">Manuelle Bewerbungen aktivieren</message>
+    <message id="settings_label_mgr_application_limit">Maximale offene Bewerbungen pro Manager</message>
+    <message id="settings_label_mgr_application_decision_min_days">Bewerbungsentscheidung frühestens nach Tagen</message>
+    <message id="settings_label_mgr_application_decision_max_days">Bewerbungsentscheidung spätestens nach Tagen</message>
+    <message id="settings_label_mgr_application_exp_days">Bewerbung verfällt nach Tagen</message>
+    <message id="settings_label_mgr_auto_sacking_enabled">Automatische Entlassungen aktivieren</message>
+    <message id="settings_label_mgr_contract_days">Standardlaufzeit Managervertrag in Tagen</message>
+
+    <message id="managercareer_application_chance">Chance</message>
+    <message id="managercareer_decision_date">Entscheidung</message>
+    <message id="managercareer_status">Status</message>
+    <message id="managercareer_date">Datum</message>
+    <message id="managercareer_board_satisfaction">Vorstandszufriedenheit</message>
+    <message id="managercareer_sack_risk">Entlassungsrisiko</message>
+    <message id="managercareer_low_board_checks">Krisenprüfungen</message>
+    <message id="managercareer_award">Auszeichnung</message>
+    <message id="managercareer_no_awards">Noch keine Manager-Auszeichnungen vorhanden.</message>
+    <message id="managercareer_button_accept">Annehmen</message>
+    <message id="managercareer_application_status_open">Offen</message>
+    <message id="managercareer_application_status_accepted">Angenommen</message>
+    <message id="managercareer_application_status_rejected">Abgelehnt</message>
+    <message id="managercareer_application_status_withdrawn">Zurückgezogen</message>
+    <message id="managercareer_application_status_expired">Abgelaufen</message>
+    <message id="managercareer_application_error_invalid">Diese Bewerbung ist nicht mehr verfügbar.</message>
+    <message id="managercareer_application_accepted_subject">Bewerbung erfolgreich: {team}</message>
+    <message id="managercareer_application_accepted_body">Der Verein {team} hat deine Bewerbung positiv bewertet und dir ein offizielles Jobangebot vorgelegt.
+
+Liga: {league}
+Gültig bis: {expires}
+
+Du kannst das Angebot hier annehmen oder ablehnen:
+{url}</message>
+    <message id="managercareer_application_rejected_subject">Bewerbung abgelehnt: {team}</message>
+    <message id="managercareer_application_rejected_body">Der Verein {team} hat deine Bewerbung nach Prüfung abgelehnt. Eine stärkere Reputation, bessere Ergebnisse oder mehr Bekanntheit in diesem Land können deine Chancen später verbessern.</message>
+    <message id="managercareer_application_notification_accepted">{team} hat deine Bewerbung angenommen.</message>
+    <message id="managercareer_application_notification_rejected">{team} hat deine Bewerbung abgelehnt.</message>
+    <message id="managercareer_message_sender">Managerkarriere</message>
 </messages>

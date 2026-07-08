@@ -45,6 +45,9 @@ class DisableAccountController implements IActionController {
 		if ($clubId) {
 			$this->_db->queryUpdate(array("user_id" => '', "captain_id" => ''), $this->_websoccer->getConfig("db_prefix") . "_verein", 
 					"user_id = %d", $this->_websoccer->getUser()->id);
+			if (class_exists("ClubPartnershipDataService")) {
+				ClubPartnershipDataService::resolveAutomaticStopsAndConflicts($this->_websoccer, $this->_db, $this->_i18n);
+			}
 		}
 		
 		// disable user but keep it active, just quit as manager of team

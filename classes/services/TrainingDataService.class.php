@@ -556,6 +556,7 @@ class TrainingDataService {
     private static function trainPlayers(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $teamId, $trainer, $trainingType, $intensity, $matchday, $matchId, &$reportId) {
         $players = PlayersDataService::getPlayersOfTeamById($websoccer, $db, $teamId);
         $definition = self::getTrainingDefinition($trainingType);
+        $managerTraining = class_exists('ManagerProfileDataService') ? ManagerProfileDataService::getTrainingEffectForTeam($websoccer, $db, $teamId, $trainingType) : array();
         $now = $websoccer->getNowAsTimestamp();
         $oldChemistry = self::getStoredTeamChemistry($websoccer, $db, $teamId);
 
@@ -586,9 +587,9 @@ class TrainingDataService {
 
         foreach ($players as $player) {
             $playerCount++;
-            $effects = self::computePlayerTrainingEffects($player, $trainer, $definition, $trainingType, $intensity);
+            $effects = self::computePlayerTrainingEffects($websoccer, $db, $teamId, $player, $trainer, $definition, $trainingType, $intensity, $managerTraining);
             self::dispatchPlayerTrainedEvent($websoccer, $db, $i18n, $player, $teamId, $trainer, $effects);
-            $injured = self::rollTrainingInjury($player, $definition, $intensity);
+            $injured = self::rollTrainingInjury($websoccer, $db, $teamId, $player, $definition, $intensity);
             if ($injured) {
                 $injuries++;
             }
@@ -619,10 +620,15 @@ class TrainingDataService {
             ), $websoccer->getConfig('db_prefix') . '_training_report_player');
         }
 
-        $chemistryDelta = self::computeChemistryDelta($definition, $trainer, $intensity, $injuries);
+        $chemistryDelta = self::computeChemistryDelta($definition, $trainer, $intensity, $injuries, $managerTraining);
         $summaryRounded = self::roundEffectsForDisplay($summary);
         $summaryRounded['chemistry_delta'] = $chemistryDelta;
         $summaryRounded['trainer_specialization'] = isset($trainer['specialization']) ? $trainer['specialization'] : 'balanced';
+        if (isset($managerTraining['manager_id']) && (int) $managerTraining['manager_id'] > 0) {
+            $summaryRounded['manager_competence'] = (int) $managerTraining['competence'];
+            $summaryRounded['manager_character'] = $managerTraining['character_key'];
+            $summaryRounded['manager_training_factor'] = round((float) $managerTraining['development_factor'], 3);
+        }
 
         // Store the chemistry delta before refreshing TeamChemistryDataService, because
         // the chemistry factor reads recent normal training reports.
@@ -652,7 +658,7 @@ class TrainingDataService {
         return $trainingEffects;
     }
 
-    private static function computePlayerTrainingEffects($player, $trainer, $definition, $trainingType, $intensity) {
+    private static function computePlayerTrainingEffects(WebSoccer $websoccer, DbConnection $db, $teamId, $player, $trainer, $definition, $trainingType, $intensity, $managerTraining = array()) {
         $effects = self::emptyEffectSummary();
 
         if ((int) $player['matches_injured'] > 0) {
@@ -699,6 +705,10 @@ class TrainingDataService {
                 $effects['influence'], $effects['flair'], $effects['penalty'], $effects['penalty_killing']
             );
         }
+        if (class_exists('ManagerCharacterDataService')) {
+            ManagerCharacterDataService::applyTrainingEffects($websoccer, $db, $teamId, $player, $trainingType, $effects);
+        }
+        self::applyManagerTrainingEffects($effects, $managerTraining);
 
         return $effects;
     }
@@ -925,6 +935,28 @@ class TrainingDataService {
         return 1.0;
     }
 
+
+    private static function applyManagerTrainingEffects(&$effects, $managerTraining) {
+        if (!is_array($managerTraining) || !isset($managerTraining['development_factor'])) {
+            return;
+        }
+
+        $factor = (float) $managerTraining['development_factor'];
+        $developmentKeys = array('technique', 'stamina', 'passing', 'shooting', 'heading', 'tackling', 'freekick', 'pace', 'creativity', 'influence', 'flair', 'penalty', 'penalty_killing');
+        foreach ($developmentKeys as $key) {
+            if (isset($effects[$key]) && $effects[$key] > 0) {
+                $effects[$key] *= $factor;
+            }
+        }
+
+        if (isset($managerTraining['satisfaction_bonus'])) {
+            $effects['satisfaction'] += (float) $managerTraining['satisfaction_bonus'];
+        }
+        if (isset($managerTraining['freshness_bonus'])) {
+            $effects['freshness'] += (float) $managerTraining['freshness_bonus'];
+        }
+    }
+
     private static function applyAdvancedPersonalityEffects($player, $trainingType, $intensity, &$effects) {
         $trait = isset($player['personality']) ? $player['personality'] : 'professional';
         if ($trait === 'leader') {
@@ -950,7 +982,7 @@ class TrainingDataService {
         }
     }
 
-    private static function rollTrainingInjury($player, $definition, $intensity) {
+    private static function rollTrainingInjury(WebSoccer $websoccer, DbConnection $db, $teamId, $player, $definition, $intensity) {
         if ((int) $player['matches_injured'] > 0 || (int) $intensity < 70 || (float) $definition['fatigue'] <= 0) {
             return false;
         }
@@ -965,17 +997,26 @@ class TrainingDataService {
         } elseif (isset($player['personality']) && $player['personality'] === 'professional') {
             $riskPercent *= 0.85;
         }
+        if (class_exists('ManagerCharacterDataService')) {
+            $riskPercent *= ManagerCharacterDataService::getTrainingInjuryMultiplier($websoccer, $db, $teamId);
+        }
+        if (class_exists('ManagerProfileDataService')) {
+            $riskPercent *= ManagerProfileDataService::getTrainingInjuryMultiplierForTeam($websoccer, $db, $teamId);
+        }
 
         return mt_rand(1, 10000) <= (int) round($riskPercent * 100);
     }
 
-    private static function computeChemistryDelta($definition, $trainer, $intensity, $injuries) {
+    private static function computeChemistryDelta($definition, $trainer, $intensity, $injuries, $managerTraining = array()) {
         $base = isset($definition['chemistry']) ? (float) $definition['chemistry'] : 0;
         if ($base <= 0 && (int) $injuries <= 0) {
             return 0;
         }
         $trainerFactor = self::getTrainerSkillFactor($trainer, 'tactics', 'matchprep');
         $delta = $base * (0.6 + ((int) $intensity / 100) * 0.5) * $trainerFactor;
+        if (isset($managerTraining['chemistry_delta_bonus'])) {
+            $delta += (float) $managerTraining['chemistry_delta_bonus'];
+        }
         if ((int) $injuries > 0) {
             $delta -= min(2, (int) $injuries);
         }

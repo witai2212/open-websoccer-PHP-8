@@ -82,7 +82,17 @@ class LoanDataService {
         $goals = $simPlayer ? (int)$simPlayer->getGoals() : 0;
         $assists = $simPlayer ? (int)$simPlayer->getAssists() : 0;
         $quality = self::calculateDestinationQuality($websoccer, $db, $loan['borrower_team_id'], $minutes);
+        $partnershipBonusPercent = 0;
+        if (class_exists('ClubPartnershipDataService')) {
+            $partnershipBonusPercent = ClubPartnershipDataService::getLoanDevelopmentBonusPercent($websoccer, $db, (int) $loan['lender_team_id'], (int) $loan['borrower_team_id']);
+            if ($partnershipBonusPercent > 0) {
+                $quality = min(100, $quality + $partnershipBonusPercent);
+            }
+        }
         $bonus = self::calculateDevelopmentBonus($info, $minutes, $grade, $quality);
+        if ($bonus > 0 && $partnershipBonusPercent > 0) {
+            $bonus = round($bonus * (1 + ($partnershipBonusPercent / 100)), 3);
+        }
         $attribute = '';
         if ($bonus > 0) $attribute = self::applyDevelopmentBonus($cols, $info, $bonus);
         $db->queryInsert(array('loan_id'=>(int)$loan['id'],'player_id'=>(int)$loan['player_id'],'match_id'=>(int)$match->id,'match_date'=>$websoccer->getNowAsTimestamp(),'minutes_played'=>$minutes,'grade'=>$grade,'goals'=>$goals,'assists'=>$assists,'destination_quality'=>$quality,'development_bonus'=>$bonus,'attribute_key'=>$attribute,'created_date'=>$websoccer->getNowAsTimestamp()), $websoccer->getConfig('db_prefix') . '_loan_report');

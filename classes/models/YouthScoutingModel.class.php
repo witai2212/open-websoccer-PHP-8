@@ -60,11 +60,23 @@ class YouthScoutingModel implements IModel {
 			
 		}
 		
+		$academyScoutingModifier = 0;
+		$academyStrengthBonus = 0;
+		if (class_exists('YouthAcademyDataService')) {
+			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+			if ($clubId > 0) {
+				$academyScoutingModifier = YouthAcademyDataService::getScoutingModifier($this->_websoccer, $this->_db, $clubId);
+				$academyStrengthBonus = YouthAcademyDataService::getYouthScoutingStrengthBonus($this->_websoccer, $this->_db, $clubId);
+			}
+		}
+		
 		return array("lastExecutionTimestamp" => $lastExecutionTimestamp, 
 				"nextPossibleExecutionTimestamp" => $nextPossibleExecutionTimestamp,
 				"scoutingPossible" => $scoutingPossible,
 				"scouts" => $scouts,
-				"countries" => $countries);
+				"countries" => $countries,
+				"academyScoutingModifier" => $academyScoutingModifier,
+				"academyStrengthBonus" => $academyStrengthBonus);
 	}
 	
 }

@@ -262,7 +262,9 @@ class FinancialForecastDataService {
         $row = $result->fetch_array();
         $result->free();
 
-        return (isset($row['salary_sum'])) ? (int) $row['salary_sum'] : 0;
+        $playerSalary = (isset($row['salary_sum'])) ? (int) $row['salary_sum'] : 0;
+        $managerSalary = class_exists('ManagerProfileDataService') ? ManagerProfileDataService::getSalaryPerMatchForTeam($websoccer, $db, $teamId) : 0;
+        return $playerSalary + (int) $managerSalary;
     }
 
     private static function getTicketForecastInfo(WebSoccer $websoccer, DbConnection $db, $teamId) {

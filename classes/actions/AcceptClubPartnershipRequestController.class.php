@@ -1,0 +1,26 @@
+<?php
+/******************************************************
+
+  Accepts a club partnership request.
+
+******************************************************/
+
+class AcceptClubPartnershipRequestController implements IActionController {
+    private $_i18n;
+    private $_websoccer;
+    private $_db;
+
+    public function __construct(I18n $i18n, WebSoccer $websoccer, DbConnection $db) {
+        $this->_i18n = $i18n;
+        $this->_websoccer = $websoccer;
+        $this->_db = $db;
+    }
+
+    public function executeAction($parameters) {
+        $user = $this->_websoccer->getUser();
+        ClubPartnershipDataService::acceptRequest($this->_websoccer, $this->_db, $this->_i18n, (int) $user->id, (int) $parameters['id']);
+        $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, $this->_i18n->getMessage('clubpartnership_request_accepted'), ''));
+        return 'clubpartnerships';
+    }
+}
+?>

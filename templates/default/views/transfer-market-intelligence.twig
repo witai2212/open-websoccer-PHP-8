@@ -1,0 +1,370 @@
+{% extends "base.twig" %}
+
+{% macro playerName(player) %}{% if player.name is defined and player.name|length > 0 %}{{ player.name }}{% elseif player.kunstname|length > 0 %}{{ player.kunstname }}{% else %}{{ player.vorname }} {{ player.nachname }}{% endif %}{% endmacro %}
+{% import _self as tmi %}
+
+{% block page_title %}
+{{ i18n.getMessage("transfermarket_intelligence_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% set adminTabActive = market_intelligence_is_admin and env.getRequestParameter("adminscope")|length > 0 %}
+
+<p>{{ i18n.getMessage("transfermarket_intelligence_intro") }}</p>
+
+<ul class="nav nav-tabs" id="transferMarketIntelligenceTabs">
+    <li{% if not adminTabActive %} class="active"{% endif %}><a href="#tmi-overview" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_overview") }}</a></li>
+    <li><a href="#tmi-recommendations" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_recommendations") }}</a></li>
+    <li><a href="#tmi-loans" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_loans") }}</a></li>
+    <li><a href="#tmi-contracts" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_contracts") }}</a></li>
+    <li><a href="#tmi-needs" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_needs") }}</a></li>
+    {% if market_intelligence_is_admin %}
+        <li{% if adminTabActive %} class="active"{% endif %}><a href="#tmi-admin" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_admin") }}</a></li>
+    {% endif %}
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane{% if not adminTabActive %} active{% endif %}" id="tmi-overview">
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_scouting") }}</h3>
+        {% if market_intelligence_scouting.has_coverage %}
+            <p>{{ i18n.getMessage("transfermarket_intelligence_covered_positions") }}:
+                {% for position, info in market_intelligence_scouting.covered_positions %}
+                    <span class="label label-info">{{ i18n.getMessage("player_position_" ~ info.key) }}</span>
+                {% endfor %}
+            </p>
+            <p class="muted">{{ i18n.getMessage("transfermarket_intelligence_scouting_help") }}</p>
+        {% else %}
+            <div class="alert alert-warning">
+                {{ i18n.getMessage("transfermarket_intelligence_no_scouts") }}
+                <p style="margin-top: 8px;"><a class="btn btn-small" href="{{ env.getInternalUrl("scouting") }}">{{ i18n.getMessage("transfermarket_intelligence_open_scouting") }}</a></p>
+            </div>
+        {% endif %}
+
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_best_players") }}</h3>
+        {% if market_intelligence_best_players|length > 0 %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_player") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_position") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_club") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_age") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_strength") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_price") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_action") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in market_intelligence_best_players|slice(0, 8) %}
+                        <tr>
+                            <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ tmi.playerName(player) }}</a></td>
+                            <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
+                            <td><a href="{{ env.getInternalUrl("team", "id=" ~ player.verein_id) }}">{{ player.team_name }}</a></td>
+                            <td>{{ player.age }}</td>
+                            <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                            <td>{{ player.listed_price|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td><a class="btn btn-small btn-primary" href="{{ env.getInternalUrl("transfer-bid", "id=" ~ player.id) }}">{{ i18n.getMessage("transfermarket_intelligence_bid") }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_data") }}</em></p>
+        {% endif %}
+    </div>
+
+    <div class="tab-pane" id="tmi-recommendations">
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_bargains") }}</h3>
+        {% if market_intelligence_bargains|length > 0 %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_player") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_position") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_club") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_strength") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_value") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_price") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_saving") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_action") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in market_intelligence_bargains %}
+                        <tr>
+                            <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ tmi.playerName(player) }}</a></td>
+                            <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}</td>
+                            <td><a href="{{ env.getInternalUrl("team", "id=" ~ player.verein_id) }}">{{ player.team_name }}</a></td>
+                            <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                            <td>{{ player.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>{{ player.listed_price|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td><span class="label label-success">{{ player.saving_percent|number_format(1, ',', ' ') }}%</span></td>
+                            <td>
+                                <a class="btn btn-small btn-primary" href="{{ env.getInternalUrl("transfer-bid", "id=" ~ player.id) }}">{{ i18n.getMessage("transfermarket_intelligence_bid") }}</a>
+                                {% if player.on_watchlist <= 0 %}
+                                    <form action="?page=mywatchlist" method="post" style="display:inline; margin:0;">
+                                        <input type="hidden" name="action" value="put-player-on-watchlist" />
+                                        <input type="hidden" name="id" value="{{ player.id }}" />
+                                        <button type="submit" class="btn btn-small">{{ i18n.getMessage("transfermarket_intelligence_watch") }}</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_data") }}</em></p>
+        {% endif %}
+
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_overpriced") }}</h3>
+        {% if market_intelligence_overpriced|length > 0 %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_player") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_position") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_club") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_value") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_price") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_overprice") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_action") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in market_intelligence_overpriced %}
+                        <tr>
+                            <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ tmi.playerName(player) }}</a></td>
+                            <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}</td>
+                            <td><a href="{{ env.getInternalUrl("team", "id=" ~ player.verein_id) }}">{{ player.team_name }}</a></td>
+                            <td>{{ player.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>{{ player.listed_price|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td><span class="label label-warning">+{{ player.overprice_percent|number_format(1, ',', ' ') }}%</span></td>
+                            <td><a class="btn btn-small" href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ i18n.getMessage("transfermarket_intelligence_open_player") }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_data") }}</em></p>
+        {% endif %}
+    </div>
+
+    <div class="tab-pane" id="tmi-loans">
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_loan_opportunities") }}</h3>
+        {% if market_intelligence_loans|length > 0 %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_player") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_position") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_club") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_age") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_strength") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_price") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_salary_share") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_buy_option") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_action") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in market_intelligence_loans %}
+                        <tr>
+                            <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ tmi.playerName(player) }}</a></td>
+                            <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
+                            <td><a href="{{ env.getInternalUrl("team", "id=" ~ player.verein_id) }}">{{ player.team_name }}</a></td>
+                            <td>{{ player.age }}</td>
+                            <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                            <td>{{ player.listed_price|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>{{ player.salary_share_percent }}%</td>
+                            <td>{{ i18n.getMessage("loans_option_" ~ player.option_type) }}{% if player.buy_fee > 0 %}<br>{{ player.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
+                            <td><a class="btn btn-small btn-primary" href="{{ env.getInternalUrl("borrow-player", "id=" ~ player.id) }}">{{ i18n.getMessage("transfermarket_intelligence_borrow") }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_data") }}</em></p>
+        {% endif %}
+    </div>
+
+    <div class="tab-pane" id="tmi-contracts">
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_expiring_contracts") }}</h3>
+        <p class="muted">{{ i18n.getMessage("squadplanner_contract_risk_help") }}</p>
+        {% if market_intelligence_expiring_contracts|length > 0 %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_player") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_position") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_club") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_contract") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_strength") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_price") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_action") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in market_intelligence_expiring_contracts %}
+                        <tr>
+                            <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ tmi.playerName(player) }}</a></td>
+                            <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}</td>
+                            <td><a href="{{ env.getInternalUrl("team", "id=" ~ player.verein_id) }}">{{ player.team_name }}</a></td>
+                            <td>{{ player.contract_matches }}</td>
+                            <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                            <td>{{ player.listed_price|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td><a class="btn btn-small btn-primary" href="{{ env.getInternalUrl("transfer-bid", "id=" ~ player.id) }}">{{ i18n.getMessage("transfermarket_intelligence_bid") }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_data") }}</em></p>
+        {% endif %}
+    </div>
+
+    <div class="tab-pane" id="tmi-needs">
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_club_needs") }}</h3>
+        <p class="muted">{{ i18n.getMessage("transfermarket_intelligence_squadplanner_hint") }}</p>
+        {% if market_intelligence_club_needs.available %}
+            {% if market_intelligence_club_needs.weaknesses|length > 0 %}
+                <ul>
+                    {% for weakness in market_intelligence_club_needs.weaknesses %}
+                        <li>{{ weakness.message }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{{ i18n.getMessage("squadplanner_no_weaknesses") }}</p>
+            {% endif %}
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_position") }}</th>
+                        <th>{{ i18n.getMessage("squadplanner_count") }}</th>
+                        <th>{{ i18n.getMessage("squadplanner_target") }}</th>
+                        <th>{{ i18n.getMessage("squadplanner_avg_strength") }}</th>
+                        <th>{{ i18n.getMessage("squadplanner_status") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in market_intelligence_club_needs.depth %}
+                        <tr>
+                            <td>{{ i18n.getMessage("player_position_" ~ row.key) }}</td>
+                            <td>{{ row.count }}</td>
+                            <td>{{ row.target }}</td>
+                            <td>{{ row.avg_strength|number_format(1, ',', ' ') }}</td>
+                            <td>
+                                {% if row.status == 'shortage' %}
+                                    <span class="label label-important">{{ i18n.getMessage("transfermarket_intelligence_need_shortage") }}</span>
+                                {% elseif row.status == 'surplus' %}
+                                    <span class="label label-warning">{{ i18n.getMessage("transfermarket_intelligence_need_surplus") }}</span>
+                                {% else %}
+                                    <span class="label label-success">{{ i18n.getMessage("transfermarket_intelligence_need_ok") }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_data") }}</em></p>
+        {% endif %}
+    </div>
+
+    {% if market_intelligence_is_admin %}
+    <div class="tab-pane{% if adminTabActive %} active{% endif %}" id="tmi-admin">
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_admin_market_health") }}</h3>
+
+        <ul class="nav nav-pills">
+            <li{% if market_admin_scope == 'global' %} class="active"{% endif %}><a href="{{ env.getInternalUrl("transfer-market-intelligence", "adminscope=global") }}#tmi-admin">{{ i18n.getMessage("transfermarket_intelligence_admin_scope_global") }}</a></li>
+            <li{% if market_admin_scope == 'league' %} class="active"{% endif %}><a href="{{ env.getInternalUrl("transfer-market-intelligence", "adminscope=league") }}#tmi-admin">{{ i18n.getMessage("transfermarket_intelligence_admin_scope_league") }}</a></li>
+            <li{% if market_admin_scope == 'country' %} class="active"{% endif %}><a href="{{ env.getInternalUrl("transfer-market-intelligence", "adminscope=country") }}#tmi-admin">{{ i18n.getMessage("transfermarket_intelligence_admin_scope_country") }}</a></li>
+            <li{% if market_admin_scope == 'club' %} class="active"{% endif %}><a href="{{ env.getInternalUrl("transfer-market-intelligence", "adminscope=club") }}#tmi-admin">{{ i18n.getMessage("transfermarket_intelligence_admin_scope_club") }}</a></li>
+        </ul>
+
+        {% if market_admin_scope != 'global' %}
+            <form class="form-inline" method="get">
+                <input type="hidden" name="page" value="transfer-market-intelligence" />
+                <input type="hidden" name="adminscope" value="{{ market_admin_scope }}" />
+                <label>{{ i18n.getMessage("transfermarket_intelligence_admin_filter") }}</label>
+                {% if market_admin_scope == 'league' %}
+                    <select name="league_id">
+                        {% for league in market_admin_filters.leagues %}
+                            <option value="{{ league.id }}"{% if league.id == market_admin_league_id %} selected{% endif %}>{{ league.country }} - {{ league.name }}</option>
+                        {% endfor %}
+                    </select>
+                {% elseif market_admin_scope == 'country' %}
+                    <select name="country">
+                        {% for countryRow in market_admin_filters.countries %}
+                            <option value="{{ countryRow.country }}"{% if countryRow.country == market_admin_country %} selected{% endif %}>{{ countryRow.country }}</option>
+                        {% endfor %}
+                    </select>
+                {% elseif market_admin_scope == 'club' %}
+                    <select name="club_id">
+                        {% for club in market_admin_filters.clubs %}
+                            <option value="{{ club.id }}"{% if club.id == market_admin_club_id %} selected{% endif %}>{{ club.name }}{% if club.league_name|length > 0 %} ({{ club.league_name }}){% endif %}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                <button type="submit" class="btn btn-primary">{{ i18n.getMessage("transfermarket_intelligence_admin_apply") }}</button>
+            </form>
+        {% endif %}
+
+        {% if market_admin_stats.overheating %}
+            <div class="alert alert-warning">{{ i18n.getMessage("transfermarket_intelligence_admin_overheating_warning") }}</div>
+        {% else %}
+            <div class="alert alert-success">{{ i18n.getMessage("transfermarket_intelligence_admin_overheating_ok") }}</div>
+        {% endif %}
+
+        <table class="table table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_average_transfer_fee") }}</th>
+                    <td>{{ market_admin_stats.average_transfer_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_highest_fee") }}</th>
+                    <td>{{ market_admin_stats.highest_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                </tr>
+                <tr>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_average_salary") }}</th>
+                    <td>{{ market_admin_stats.average_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_number_offers") }}</th>
+                    <td>{{ market_admin_stats.number_offers }}</td>
+                </tr>
+                <tr>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_listed_players") }}</th>
+                    <td>{{ market_admin_stats.listed_players }}</td>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_market_ratio") }}</th>
+                    <td>{{ (market_admin_stats.market_ratio * 100)|number_format(1, ',', ' ') }}%</td>
+                </tr>
+                <tr>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_cpu_realism") }}</th>
+                    <td>{{ market_admin_stats.cpu_realism|number_format(1, ',', ' ') }}%</td>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_cpu_ratio") }}</th>
+                    <td>{{ (market_admin_stats.cpu_avg_ratio * 100)|number_format(1, ',', ' ') }}%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_cpu_within_range") }}</th>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_cpu_below_range") }}</th>
+                    <th>{{ i18n.getMessage("transfermarket_intelligence_admin_cpu_above_range") }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ market_admin_stats.cpu_within }}</td>
+                    <td>{{ market_admin_stats.cpu_below }}</td>
+                    <td>{{ market_admin_stats.cpu_above }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

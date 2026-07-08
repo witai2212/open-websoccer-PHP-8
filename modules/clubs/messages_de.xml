@@ -71,4 +71,32 @@
 	
 	
 	
+    <message id="managerprofile_cpu_manager">CPU-Manager</message>
+    <message id="managerprofile_competence">Managerkompetenz</message>
+    <message id="managerprofile_peak">Bestwert</message>
+    <message id="managerprofile_character">Stil</message>
+    <message id="managerprofile_salary">Gehalt</message>
+    <message id="managerprofile_matchday">Spieltag</message>
+    <message id="managerprofile_since">Seit</message>
+    <message id="managerprofile_notification_competence_changed">Deine Managerkompetenz hat sich von {old}/20 auf {new}/20 geändert. Grund: {reason}.</message>
+    <message id="managerprofile_competence_log_message">Managerkompetenz geändert: {old}/20 -> {new}/20. Grund: {reason}.</message>
+    <message id="managerprofile_reason_team_view">Aktualisierung im Vereinsprofil</message>
+    <message id="managerprofile_reason_recalculation">Neuberechnung</message>
+    <message id="managerprofile_reason_sacked">Entlassung</message>
+    <message id="managerprofile_reason_joined">Neuer Verein</message>
+    <message id="managerprofile_reason_job_offer">Jobwechsel</message>
+    <message id="managerprofile_reason_free_club">Vereinsübernahme</message>
+    <message id="managerprofile_reason_additional_club">Zusätzlicher Verein</message>
+    <message id="managerprofile_reason_manual_application">Bewerbung</message>
+    <message id="managerprofile_account_salary_subject">Managergehalt</message>
+    <message id="managerprofile_account_sender">Vereinsmanagement</message>
+    <message id="managerprofile_cpu_news_title">Trainerwechsel bei {team}</message>
+    <message id="managerprofile_cpu_news_message">Nach anhaltender sportlicher Krise trennt sich {team} von {old}. Als Nachfolger übernimmt {new}. Grund: {reason}. Der neue Manager bringt eine Kompetenz von {competence}/20 und den Stil {character} mit.</message>
+    <message id="managerprofile_cpu_news_link">Zum Vereinsprofil</message>
+    <message id="managerprofile_cpu_reason_board_crisis">kritische Vorstandszufriedenheit</message>
+    <message id="managerprofile_cpu_reason_loss_streak_3">drei Niederlagen in Folge</message>
+    <message id="managerprofile_cpu_reason_loss_streak_5">fünf Niederlagen in Folge</message>
+    <message id="managerprofile_cpu_reason_media_pressure">hoher Mediendruck</message>
+    <message id="managerprofile_cpu_reason_poor_form">anhaltend schwache Form</message>
+
 </messages>

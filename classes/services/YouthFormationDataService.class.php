@@ -15,8 +15,8 @@
  * Data service for automatic youth match formations.
  *
  * Youth players only have a general position and strength. Therefore the
- * automatic setup uses a balanced score with correct-position priority,
- * strength and a small development bonus for younger players.
+ * automatic setup supports three manual strategies:
+ * development, balanced and winning.
  */
 class YouthFormationDataService {
 
@@ -29,6 +29,23 @@ class YouthFormationDataService {
 				'striker' => 1,
 				'outsideforward' => 0
 				);
+	}
+
+	public static function getAvailableStrategies() {
+		return array(
+				'development' => TRUE,
+				'balanced' => TRUE,
+				'winning' => TRUE
+				);
+	}
+
+	public static function isValidStrategy($strategy) {
+		$strategies = self::getAvailableStrategies();
+		return isset($strategies[$strategy]);
+	}
+
+	public static function normalizeStrategy($strategy) {
+		return self::isValidStrategy($strategy) ? $strategy : 'balanced';
 	}
 
 	public static function normalizeSetup($setup) {
@@ -157,7 +174,8 @@ class YouthFormationDataService {
 		return array_slice($positions, 0, 11);
 	}
 
-	public static function getFormationProposalForTeamId(WebSoccer $websoccer, DbConnection $db, $teamId, $setup) {
+	public static function getFormationProposalForTeamId(WebSoccer $websoccer, DbConnection $db, $teamId, $setup, $strategy = 'balanced') {
+		$strategy = self::normalizeStrategy($strategy);
 		$setup = self::normalizeSetup($setup);
 		$mainPositions = self::getMainPositionsForSetup($setup);
 		$positionMapping = self::getPositionMapping();
@@ -167,7 +185,7 @@ class YouthFormationDataService {
 			$minAge = 14;
 		}
 
-		$players = self::getEligibleYouthPlayers($websoccer, $db, $teamId, $minAge);
+		$players = self::getEligibleYouthPlayers($websoccer, $db, $teamId, $minAge, $strategy);
 		$usedPlayerIds = array();
 		$starters = array();
 
@@ -206,38 +224,58 @@ class YouthFormationDataService {
 
 		return array(
 				'setup' => $setup,
+				'strategy' => $strategy,
 				'players' => $starters,
 				'bench' => $bench,
-				'substitutions' => self::getAutomaticSubstitutions($starters, $bench)
+				'substitutions' => self::getAutomaticSubstitutions($starters, $bench, $strategy)
 				);
 	}
 
-	private static function getEligibleYouthPlayers(WebSoccer $websoccer, DbConnection $db, $teamId, $minAge) {
-		$columns = 'id, firstname, lastname, position, age, strength';
+	private static function getEligibleYouthPlayers(WebSoccer $websoccer, DbConnection $db, $teamId, $minAge, $strategy) {
+		$columns = 'id, firstname, lastname, position, age, strength, st_matches';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_youthplayer';
 		$whereCondition = 'team_id = %d AND age >= %d ORDER BY strength DESC, age ASC, lastname ASC, firstname ASC';
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, array((int) $teamId, (int) $minAge));
 
 		$players = array();
 		while ($player = $result->fetch_array()) {
-			$player['score'] = self::getBalancedScore($player);
+			$player['score'] = self::getStrategyScore($player, $strategy);
 			$players[] = $player;
 		}
 		$result->free();
 
-		usort($players, array('YouthFormationDataService', 'sortByBalancedScore'));
+		usort($players, array('YouthFormationDataService', 'sortByScore'));
 		return $players;
 	}
 
-	private static function getBalancedScore($player) {
+	private static function getStrategyScore($player, $strategy) {
 		$strength = isset($player['strength']) ? (int) $player['strength'] : 0;
 		$age = isset($player['age']) ? (int) $player['age'] : 18;
+		$matches = isset($player['st_matches']) ? (int) $player['st_matches'] : 0;
+
+		if ($strategy == 'development') {
+			$youngerBonus = max(0, 18 - $age) * 8;
+			$matchPracticeBonus = max(0, 10 - min(10, $matches)) * 2;
+			return $strength + $youngerBonus + $matchPracticeBonus;
+		}
+
+		if ($strategy == 'winning') {
+			$maturityBonus = max(0, min(5, $age - 14)) * 2;
+			return ($strength * 4) + $maturityBonus;
+		}
+
 		$developmentBonus = max(0, 18 - $age) * 3;
 		return ($strength * 2) + $developmentBonus;
 	}
 
-	private static function sortByBalancedScore($a, $b) {
+	private static function sortByScore($a, $b) {
 		if ($a['score'] == $b['score']) {
+			if ((int) $a['strength'] == (int) $b['strength']) {
+				if ((int) $a['age'] == (int) $b['age']) {
+					return strcmp($a['lastname'] . $a['firstname'], $b['lastname'] . $b['firstname']);
+				}
+				return (int) $a['age'] - (int) $b['age'];
+			}
 			return (int) $b['strength'] - (int) $a['strength'];
 		}
 		return (int) $b['score'] - (int) $a['score'];
@@ -259,16 +297,17 @@ class YouthFormationDataService {
 		return NULL;
 	}
 
-	public static function getAutomaticSubstitutions($starters, $bench) {
+	public static function getAutomaticSubstitutions($starters, $bench, $strategy = 'balanced') {
+		$strategy = self::normalizeStrategy($strategy);
 		$substitutions = array();
 		$usedOutPlayerIds = array();
-		$minutes = array(60, 70, 80);
+		$minutes = self::getSubstitutionMinutes($strategy);
 
 		for ($subNo = 0; $subNo < min(3, count($bench)); $subNo++) {
 			$benchPlayer = $bench[$subNo];
-			$outPlayer = self::findBestSubstitutionOutPlayer($starters, $usedOutPlayerIds, $benchPlayer['general_position']);
-			if (!$outPlayer) {
-				$outPlayer = self::findBestSubstitutionOutPlayer($starters, $usedOutPlayerIds, NULL);
+			$outPlayer = self::findBestSubstitutionOutPlayer($starters, $usedOutPlayerIds, $benchPlayer['general_position'], $strategy, $benchPlayer['player']);
+			if (!$outPlayer && $strategy != 'winning') {
+				$outPlayer = self::findBestSubstitutionOutPlayer($starters, $usedOutPlayerIds, NULL, $strategy, $benchPlayer['player']);
 			}
 
 			if (!$outPlayer) {
@@ -288,7 +327,19 @@ class YouthFormationDataService {
 		return $substitutions;
 	}
 
-	private static function findBestSubstitutionOutPlayer($starters, $usedOutPlayerIds, $generalPosition = NULL) {
+	private static function getSubstitutionMinutes($strategy) {
+		if ($strategy == 'development') {
+			return array(55, 65, 75);
+		}
+
+		if ($strategy == 'winning') {
+			return array(75, 82, 88);
+		}
+
+		return array(60, 70, 80);
+	}
+
+	private static function findBestSubstitutionOutPlayer($starters, $usedOutPlayerIds, $generalPosition = NULL, $strategy = 'balanced', $benchPlayer = NULL) {
 		$selected = NULL;
 		foreach ($starters as $starter) {
 			if (isset($usedOutPlayerIds[$starter['id']])) {
@@ -299,12 +350,27 @@ class YouthFormationDataService {
 				continue;
 			}
 
-			if ($selected === NULL || $starter['player']['score'] < $selected['player']['score']) {
+			if ($strategy == 'winning' && $benchPlayer !== NULL && (int) $starter['player']['strength'] > (int) $benchPlayer['strength']) {
+				continue;
+			}
+
+			if ($selected === NULL || self::isBetterOutPlayer($starter, $selected, $strategy)) {
 				$selected = $starter;
 			}
 		}
 
 		return $selected;
+	}
+
+	private static function isBetterOutPlayer($candidate, $selected, $strategy) {
+		if ($strategy == 'winning') {
+			if ((int) $candidate['player']['strength'] == (int) $selected['player']['strength']) {
+				return (int) $candidate['player']['score'] < (int) $selected['player']['score'];
+			}
+			return (int) $candidate['player']['strength'] < (int) $selected['player']['strength'];
+		}
+
+		return (int) $candidate['player']['score'] < (int) $selected['player']['score'];
 	}
 }
 

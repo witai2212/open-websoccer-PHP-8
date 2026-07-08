@@ -10,6 +10,17 @@
 
 {{ profile.infofield(i18n.getMessage("entity_youthplayer_strength"), player.strength ~ "%") }}
 
+{% if player.traits is defined and player.traits|length > 0 %}
+    <dl class="dl-horizontal">
+        <dt>{{ i18n.getMessage("player_traits_title") }}</dt>
+        <dd>
+            {% for trait in player.traits %}
+                <span class="label label-info" title="{{ i18n.getMessage("player_traits_value") }} {{ trait.value }}">{{ i18n.getMessage(trait.label_key) }} {{ trait.value }}</span>
+            {% endfor %}
+        </dd>
+    </dl>
+{% endif %}
+
 {{ profile.infofield(i18n.getMessage("entity_player_vertrag_gehalt"), (player.strength * env.getConfig("youth_salary_per_strength"))|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 
 {% if player.transfer_fee > 0 %}

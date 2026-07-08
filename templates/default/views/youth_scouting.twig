@@ -15,6 +15,16 @@
 		{% set lastScouting = env.getFormattedDatetime(lastExecutionTimestamp) %}
 	{% endif %}
 	{{ profile.infofield(i18n.getMessage("youthteam_scouting_lastexecution"), lastScouting) }}
+
+
+	{% if academyScoutingModifier is defined and academyScoutingModifier > 0 %}
+		<div class="alert alert-info">
+			<strong>{{ i18n.getMessage("youthacademy_youth_scouting_bonus_title") }}</strong><br>
+			{{ i18n.getMessage("youthacademy_youth_scouting_bonus_info") }}<br>
+			{{ i18n.getMessage("youthacademy_youth_scouting_combined_bonus") }}: +{{ academyScoutingModifier }}%
+			{% if academyStrengthBonus > 0 %}<br>{{ i18n.getMessage("youthacademy_youth_scouting_strength_bonus") }}: +{{ academyStrengthBonus }}{% endif %}
+		</div>
+	{% endif %}
 	
 	{% if not scoutingPossible %}
 		<hr>

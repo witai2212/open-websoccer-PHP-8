@@ -204,4 +204,34 @@
     <message id="stockmarket_ipo_req_titles_won">Titel</message>
     <message id="stockmarket_ipo_not_available_hint">Der Börsengang ist noch nicht möglich. Sobald alle Voraussetzungen erfüllt sind, erscheint hier der Button zur Börsennotierung.</message>
 
+    <message id="stockmarket_recommendation">Empfehlung</message>
+    <message id="stockmarket_sell_recommendation">Verkaufsempfehlung</message>
+    <message id="stockmarket_recommend_no_advisor">Hinweis: Kauf- und Verkaufsempfehlungen erscheinen, sobald Dein Verein einen Finanzberater beschäftigt.</message>
+    <message id="stockmarket_recommend_no_advisor_portfolio">Hinweis: Depot-Empfehlungen erscheinen, sobald Dein Verein einen Finanzberater beschäftigt.</message>
+    <message id="stockmarket_recommend_confidence">Vertrauen</message>
+    <message id="stockmarket_recommend_risk">Risiko</message>
+    <message id="stockmarket_recommend_risk_low">niedrig</message>
+    <message id="stockmarket_recommend_risk_medium">mittel</message>
+    <message id="stockmarket_recommend_risk_high">hoch</message>
+    <message id="stockmarket_recommend_action_buy">Kaufen</message>
+    <message id="stockmarket_recommend_action_hold">Halten</message>
+    <message id="stockmarket_recommend_action_sell">Verkaufen</message>
+    <message id="stockmarket_recommend_action_watch">Beobachten</message>
+    <message id="stockmarket_recommend_action_avoid">Meiden</message>
+    <message id="stockmarket_recommend_reason_price_up">Kursentwicklung positiv.</message>
+    <message id="stockmarket_recommend_reason_price_down">Kursentwicklung negativ.</message>
+    <message id="stockmarket_recommend_reason_price_stable">Kursentwicklung stabil.</message>
+    <message id="stockmarket_recommend_reason_recovery_chance">Erholungschance nach günstiger Bewertung.</message>
+    <message id="stockmarket_recommend_reason_price_high">Kurs wirkt bereits ambitioniert.</message>
+    <message id="stockmarket_recommend_reason_no_available_shares">Kaum freie Aktien verfügbar.</message>
+    <message id="stockmarket_recommend_reason_majority_close">Nähe zur Mehrheitsbeteiligung strategisch interessant.</message>
+    <message id="stockmarket_recommend_reason_majority_control">Mehrheitsbeteiligung bietet Kontrolle.</message>
+    <message id="stockmarket_recommend_reason_finance_strong">Verein finanziell solide.</message>
+    <message id="stockmarket_recommend_reason_finance_weak">Verein finanziell schwach.</message>
+    <message id="stockmarket_recommend_reason_sport_strong">Sportliche Basis stark.</message>
+    <message id="stockmarket_recommend_reason_sport_weak">Sportliche Basis schwach.</message>
+    <message id="stockmarket_recommend_reason_profit_available">Gewinnmitnahme möglich.</message>
+    <message id="stockmarket_recommend_reason_loss_position">Position liegt im Verlust.</message>
+    <message id="stockmarket_recommend_reason_mixed_signals">Gemischte Signale.</message>
+
 </messages>

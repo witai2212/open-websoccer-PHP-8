@@ -61,4 +61,65 @@
 	<message id="userprofile_block_board_no_active_season">Aktuell gibt es keine aktive Saison für deinen Verein.</message>
 	<message id="userprofile_block_club_highscore">Vereins-Highscore</message>
 	
+
+	<message id="manager_character_sidebar_title">Manager-Charakter</message>
+	<message id="manager_character_section_title">Manager-Charakter</message>
+	<message id="manager_character_intro">Dein Manager-Charakter beschreibt deine Führungsphilosophie. Jeder Stil hat klare Stärken und Schwächen.</message>
+	<message id="manager_character_current">Aktueller Charakter</message>
+	<message id="manager_character_not_set">Noch nicht gewählt</message>
+	<message id="manager_character_first_choice_hint">Du hast deinen Manager-Charakter noch nicht festgelegt. Die erste Wahl ist kostenlos und ohne Nachteile.</message>
+	<message id="manager_character_select_label">Manager-Charakter wählen</message>
+	<message id="manager_character_select_empty">Keine Änderung</message>
+	<message id="manager_character_change_penalty_hint">Spätere Änderungen gelten als Neuausrichtung und verursachen eine kurze Anpassungsphase.</message>
+	<message id="manager_character_change_locked">Eine erneute Änderung ist erst nach %d weiteren offiziellen Spielen oder in der nächsten Saison möglich.</message>
+	<message id="manager_character_saved_first_choice">Manager-Charakter wurde festgelegt.</message>
+	<message id="manager_character_saved_changed">Manager-Charakter wurde geändert. Mannschaft, Medien und Vorstand reagieren auf die Neuausrichtung.</message>
+	<message id="manager_character_error_schema_missing">Die Datenbankfelder für den Manager-Charakter fehlen noch. Bitte zuerst das SQL-Update ausführen.</message>
+	<message id="manager_character_error_change_not_allowed">Eine erneute Änderung ist aktuell noch nicht möglich. Es fehlen noch {matches} offizielle Spiele.</message>
+
+	<message id="manager_character_balanced">Ausgeglichen</message>
+	<message id="manager_character_balanced_summary">Solider Allrounder ohne klare Schwächen, aber auch ohne Spezialbonus.</message>
+	<message id="manager_character_balanced_positive">Keine Anpassungsrisiken und stabile Wirkung in allen Bereichen.</message>
+	<message id="manager_character_balanced_negative">Keine besondere Stärke in Krisen, Jugend, Taktik oder Finanzen.</message>
+
+	<message id="manager_character_motivator">Motivator</message>
+	<message id="manager_character_motivator_summary">Stark in Krisen, engen Spielen und nach Rückschlägen.</message>
+	<message id="manager_character_motivator_positive">Bessere Moral und stärkere Comeback-Wirkung.</message>
+	<message id="manager_character_motivator_negative">Weniger taktische Präzision und nicht immer die Lieblingwahl des Vorstands.</message>
+
+	<message id="manager_character_tactician">Taktiker</message>
+	<message id="manager_character_tactician_summary">Holt mehr aus einer passenden Spielidee und stabilen Formation heraus.</message>
+	<message id="manager_character_tactician_positive">Kleine Vorteile bei Passspiel, Matchplan und taktischem Fit.</message>
+	<message id="manager_character_tactician_negative">Weniger emotionaler Schub, Fans reagieren manchmal verhaltener.</message>
+
+	<message id="manager_character_disciplinarian">Disziplinfanatiker</message>
+	<message id="manager_character_disciplinarian_summary">Sorgt für Ordnung, Fitness und weniger unnötige Risiken.</message>
+	<message id="manager_character_disciplinarian_positive">Weniger Kartenrisiko und bessere Trainingsdisziplin.</message>
+	<message id="manager_character_disciplinarian_negative">Spielerzufriedenheit und Begeisterung können leiden.</message>
+
+	<message id="manager_character_developer">Talentförderer</message>
+	<message id="manager_character_developer_summary">Ideal für Jugend, junge Spieler und langfristigen Kaderaufbau.</message>
+	<message id="manager_character_developer_positive">Bessere Jugendentwicklung und Trainingseffekte für junge Spieler.</message>
+	<message id="manager_character_developer_negative">Kurzfristig weniger Effekt in großen Druckspielen und bei älteren Stars.</message>
+
+	<message id="manager_character_media_friendly">Medienprofi</message>
+	<message id="manager_character_media_friendly_summary">Kann Druck besser moderieren und Interviews besser nutzen.</message>
+	<message id="manager_character_media_friendly_positive">Medienpressure steigt langsamer und Intervieweffekte sind freundlicher.</message>
+	<message id="manager_character_media_friendly_negative">Vorstand und Kabine sehen den Stil manchmal als zu weich.</message>
+
+	<message id="manager_character_financial_strategist">Finanzstratege</message>
+	<message id="manager_character_financial_strategist_summary">Denkt wirtschaftlich und verbessert die Wahrnehmung finanzieller Stabilität.</message>
+	<message id="manager_character_financial_strategist_positive">Vorstand reagiert besser auf Transfers, Missionen und stabile Finanzen.</message>
+	<message id="manager_character_financial_strategist_negative">Fans reagieren sensibler auf Verkäufe und fehlende sportliche Ambition.</message>
+
+	<message id="manager_character_club_icon">Vereinsmensch</message>
+	<message id="manager_character_club_icon_summary">Lebt den Verein und genießt mehr Rückhalt bei Fans.</message>
+	<message id="manager_character_club_icon_positive">Stärkere Fanloyalität, Heimbonus und Derbywirkung.</message>
+	<message id="manager_character_club_icon_negative">Unpopuläre Verkäufe und fremde Umfelder sind schwieriger.</message>
+
+	<message id="manager_character_risk_taker">Risikomanager</message>
+	<message id="manager_character_risk_taker_summary">Mutig, offensiv und für Überraschungen gut.</message>
+	<message id="manager_character_risk_taker_positive">Mehr Upside bei offensiver Ausrichtung und positiven Ereignissen.</message>
+	<message id="manager_character_risk_taker_negative">Mehr Volatilität, höherer Druck und größere Strafe bei Fehlschlägen.</message>
+
 </messages>

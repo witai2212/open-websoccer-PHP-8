@@ -21,6 +21,9 @@ class TeamChemistryPlugin {
      * @param MatchCompletedEvent $event Event.
      */
     public static function handleMatchCompleted(MatchCompletedEvent $event) {
+        if (class_exists('TacticalStyleDataService')) {
+            TacticalStyleDataService::processCompletedMatch($event);
+        }
         TeamChemistryDataService::processCompletedMatch($event);
     }
 }

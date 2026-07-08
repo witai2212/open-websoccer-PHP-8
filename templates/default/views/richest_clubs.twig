@@ -1,4 +1,3 @@
-
 {% extends "base.twig" %}
 
 {% block page_title %}
@@ -20,29 +19,46 @@
 			</tr>
 		</thead>
 		<tbody>
-		
+
 		{% for club in clubs %}
-		
-						
-	
+
+			{% set countryLabel = club.country %}
+			{% if club.country|length > 0 and i18n.hasMessage("option_" ~ club.country) %}
+				{% set countryLabel = i18n.getMessage("option_" ~ club.country) %}
+			{% endif %}
+
 			<tr>
 				<td><strong>{{ loop.index }}</strong></td>
 				<td>
-				{% if club.bild|length > 0 %}
-					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.bild }}" style="max-width: 20px"/>
-				{% endif %}
-					<a href="?page=team&id={{ cub.id }}">{{ club.name }}</a>
+					{% if club.bild|length > 0 %}
+						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.bild }}"
+							alt="{{ club.name }}"
+							title="{{ club.name }}"
+							style="max-width: 20px"/>
+					{% else %}
+						{% if club.country|length > 0 %}
+							{% set nationImg = skin.getImage("flags/players/" ~ club.country ~ ".png") %}
+							{% if nationImg %}
+								<img src="{{ nationImg }}"
+									alt="{{ countryLabel }}"
+									title="{{ countryLabel }}"
+									style="max-width: 20px"/>
+							{% endif %}
+						{% endif %}
+					{% endif %}
+
+					<a href="{{ env.getInternalUrl("team", "id=" ~ club.id) }}">{{ club.name }}</a>
 				</td>
 				<td>
 					{% if club.finanz_budget > 0 %}
 						{{ club.finanz_budget|number_format(0, ',', ' ') }} EUR
 					{% endif %}
 				</td>
-			</tr>	
-		
+			</tr>
+
 		{% endfor %}
 		</tbody>
-		</table>
+	</table>
 
 {% endif %}
 {% endblock %}

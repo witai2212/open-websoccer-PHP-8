@@ -1,0 +1,287 @@
+{% extends "base.twig" %}
+{% import "macros/messagebox.twig" as messagebox %}
+{% import "macros/statisticelements.twig" as statisticelements %}
+
+{% block page_title %}
+{{ i18n.getMessage("youth-academy_navlabel") }}
+{% endblock %}
+
+{% block page_content %}
+
+<style type="text/css">
+    .youthacademy-tabs {
+        margin: 15px 0 0 0;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #fff;
+        padding-top: 8px;
+    }
+    .youthacademy-section {
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: #fff;
+    }
+    .youthacademy-section h4:first-child { margin-top: 0; }
+    .youthacademy-table-wrapper { overflow-x: auto; }
+    .youthacademy-actions { margin-top: 10px; }
+</style>
+
+<a id="youthacademy-top"></a>
+
+<h3>{{ i18n.getMessage("youthacademy_title") }}</h3>
+<p>{{ i18n.getMessage("youthacademy_intro") }}</p>
+
+{% if not human_team %}
+    {{ messagebox.box(i18n.getMessage("feature_requires_team"), "", "info") }}
+{% else %}
+
+<div class="well well-small">
+    <strong>{{ i18n.getMessage("youthacademy_current_budget") }}:</strong>
+    {{ team.finanz_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+    &nbsp; | &nbsp;
+    <strong>{{ i18n.getMessage("youthacademy_expected_income") }}:</strong>
+    {{ expected_income_per_matchday|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+    {% if advisor_tolerance_percent > 0 %}
+        <span class="label label-info">{{ i18n.getMessage("youthacademy_financial_advisor") }} +{{ advisor_tolerance_percent }}%</span>
+    {% endif %}
+</div>
+
+<ul class="nav nav-tabs youthacademy-tabs">
+    <li class="active"><a href="#academy-overview" data-toggle="tab"><i class="icon-home"></i> {{ i18n.getMessage("youthacademy_tab_overview") }}</a></li>
+    <li><a href="#academy-focus" data-toggle="tab"><i class="icon-cog"></i> {{ i18n.getMessage("youthacademy_tab_focus") }}</a></li>
+    <li><a href="#academy-report" data-toggle="tab"><i class="icon-list-alt"></i> {{ i18n.getMessage("youthacademy_tab_report") }}</a></li>
+    <li><a href="#academy-recommendations" data-toggle="tab"><i class="icon-info-sign"></i> {{ i18n.getMessage("youthacademy_tab_recommendations") }}</a></li>
+    <li><a href="#academy-upgrade" data-toggle="tab"><i class="icon-arrow-up"></i> {{ i18n.getMessage("youthacademy_tab_upgrade") }}</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="academy-overview" class="tab-pane active youthacademy-section">
+        <h4>{{ i18n.getMessage("youthacademy_tab_overview") }}</h4>
+
+        {% if academy.team_id is not defined %}
+            {{ messagebox.box(i18n.getMessage("youthacademy_missing"), i18n.getMessage("youthacademy_missing_help"), "info") }}
+            {% if next_level.level is defined %}
+                <div class="youthacademy-table-wrapper">
+                    <table class="table table-striped">
+                        <tr><th>{{ i18n.getMessage("youthacademy_level") }}</th><td>{{ next_level.level }} - {{ next_level.name }}</td></tr>
+                        <tr><th>{{ i18n.getMessage("youthacademy_build_cost") }}</th><td>{{ next_level.build_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+                        <tr><th>{{ i18n.getMessage("youthacademy_maintenance_fee") }}</th><td>{{ next_level.maintenance_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+                        <tr><th>{{ i18n.getMessage("youthacademy_budget_after") }}</th><td>{{ build_check.budget_after|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+                        <tr><th>{{ i18n.getMessage("youthacademy_effective_income") }}</th><td>{{ build_check.effective_income|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+                    </table>
+                </div>
+
+                {% if build_check.allowed %}
+                    <a class="btn btn-primary" href="{{ env.getInternalActionUrl("build-youth-academy") }}"><i class="icon-plus icon-white"></i> {{ i18n.getMessage("build-youth-academy") }}</a>
+                {% else %}
+                    {{ messagebox.box(i18n.getMessage(build_check.error_key), i18n.getMessage("youthacademy_affordability_help"), "warning") }}
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <div class="youthacademy-table-wrapper">
+                <table class="table table-striped">
+                    <tr><th>{{ i18n.getMessage("youthacademy_level") }}</th><td>{{ academy.level }} - {{ academy.level_name }}</td></tr>
+                    <tr><th>{{ i18n.getMessage("youthacademy_reputation") }}</th><td>{{ statisticelements.progressbar(academy.reputation, "noBottomMargin") }}</td></tr>
+                    <tr><th>{{ i18n.getMessage("youthacademy_focus") }}</th><td>{{ i18n.getMessage("youthacademy_focus_" ~ academy.focus) }}</td></tr>
+                    <tr><th>{{ i18n.getMessage("youthacademy_maintenance_fee") }}</th><td>{{ academy.maintenance_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+                    <tr><th>{{ i18n.getMessage("youthacademy_development_bonus") }}</th><td>+{{ academy.development_bonus }}%</td></tr>
+                    <tr><th>{{ i18n.getMessage("youthacademy_scouting_bonus") }}</th><td>+{{ academy.scouting_bonus }}%</td></tr>
+                    <tr><th>{{ i18n.getMessage("youthacademy_stagnation_reduction") }}</th><td>+{{ academy.stagnation_reduction }}%</td></tr>
+                </table>
+            </div>
+
+            <h5>{{ i18n.getMessage("youthacademy_integration") }}</h5>
+            <ul>
+                <li>{{ i18n.getMessage("youthacademy_integration_youthcoach") }}: +{{ integration.youth_coach_bonus }}%</li>
+                <li>{{ i18n.getMessage("youthacademy_integration_scouting_department") }}: Level {{ integration.scouting_department_level }}, zusätzlicher Bonus +{{ integration.scouting_department_bonus }}%</li>
+                <li>{{ i18n.getMessage("youthacademy_integration_combined_scouting") }}: +{{ integration.combined_scouting_modifier }}%</li>
+            </ul>
+        {% endif %}
+        <div class="youthacademy-actions"><a href="#youthacademy-top">{{ i18n.getMessage("youthacademy_top") }}</a></div>
+    </div>
+
+    <div id="academy-focus" class="tab-pane youthacademy-section">
+        <h4>{{ i18n.getMessage("youthacademy_tab_focus") }}</h4>
+        {% if academy.team_id is not defined %}
+            {{ messagebox.box(i18n.getMessage("youthacademy_settings_requires_academy"), "", "info") }}
+        {% else %}
+            <form method="post" class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="focus">{{ i18n.getMessage("youthacademy_focus") }}</label>
+                    <div class="controls">
+                        <select id="focus" name="focus">
+                            {% for focusId, focusLabel in focus_options %}
+                                <option value="{{ focusId }}"{% if academy.focus == focusId %} selected{% endif %}>{{ i18n.getMessage(focusLabel) }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="help-block">{{ i18n.getMessage("youthacademy_focus_help") }}</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="captain_id">{{ i18n.getMessage("youthacademy_captain") }}</label>
+                    <div class="controls">
+                        <select id="captain_id" name="captain_id">
+                            <option value="0">-</option>
+                            {% for player in players %}
+                                <option value="{{ player.id }}"{% if academy.youth_captain_id == player.id %} selected{% endif %}>{{ player.firstname }} {{ player.lastname }} ({{ i18n.getMessage("option_" ~ player.position) }}, {{ player.strength }})</option>
+                            {% endfor %}
+                        </select>
+                        <span class="help-block">{{ i18n.getMessage("youthacademy_captain_help") }}</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> {{ i18n.getMessage("button_save") }}</button>
+                </div>
+                <input type="hidden" name="page" value="youth-academy" />
+                <input type="hidden" name="action" value="save-youth-academy-settings" />
+            </form>
+
+            <h5>{{ i18n.getMessage("youthacademy_lineup_modes") }}</h5>
+            <p>{{ i18n.getMessage("youthacademy_lineup_modes_help") }}</p>
+            <ul>
+                {% for mode in lineup_modes %}
+                    <li><strong>{{ i18n.getMessage(mode.message_key) }}</strong></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="youthacademy-actions"><a href="#youthacademy-top">{{ i18n.getMessage("youthacademy_top") }}</a></div>
+    </div>
+
+    <div id="academy-report" class="tab-pane youthacademy-section">
+        <h4>{{ i18n.getMessage("youthacademy_tab_report") }}</h4>
+        {% if academy.team_id is not defined %}
+            {{ messagebox.box(i18n.getMessage("youthacademy_settings_requires_academy"), "", "info") }}
+        {% else %}
+            <div class="row-fluid">
+                <div class="span4"><div class="well"><strong>{{ report.development_changes }}</strong><br>{{ i18n.getMessage("youthacademy_report_development") }}</div></div>
+                <div class="span4"><div class="well"><strong>{{ report.scouting_hits }}</strong><br>{{ i18n.getMessage("youthacademy_report_scouting") }}</div></div>
+                <div class="span4"><div class="well"><strong>{{ report.period_days }}</strong><br>{{ i18n.getMessage("youthacademy_report_days") }}</div></div>
+            </div>
+
+            <h5>{{ i18n.getMessage("youthacademy_recent_events") }}</h5>
+            {% if recent_logs|length == 0 %}
+                <p>{{ i18n.getMessage("youthacademy_no_recent_events") }}</p>
+            {% else %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{ i18n.getMessage("youthacademy_date") }}</th>
+                            <th>{{ i18n.getMessage("playertable_head_name") }}</th>
+                            <th>{{ i18n.getMessage("youthacademy_event") }}</th>
+                            <th>{{ i18n.getMessage("youthacademy_change") }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for log in recent_logs %}
+                        <tr>
+                            <td>{{ env.getFormattedDatetime(log.created_date) }}</td>
+                            <td>{% if log.firstname|length %}{{ log.firstname }} {{ log.lastname }}{% else %}-{% endif %}</td>
+                            <td>{{ i18n.getMessage(log.message) }}</td>
+                            <td>{% if log.change_amount > 0 %}+{% endif %}{{ log.change_amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endif %}
+        <div class="youthacademy-actions"><a href="#youthacademy-top">{{ i18n.getMessage("youthacademy_top") }}</a></div>
+    </div>
+
+    <div id="academy-recommendations" class="tab-pane youthacademy-section">
+        <h4>{{ i18n.getMessage("youthacademy_tab_recommendations") }}</h4>
+        {% if academy.team_id is not defined %}
+            {{ messagebox.box(i18n.getMessage("youthacademy_settings_requires_academy"), "", "info") }}
+        {% elseif players|length == 0 %}
+            <p>{{ i18n.getMessage("youthteam_no_players") }}</p>
+        {% else %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("playertable_head_name") }}</th>
+                        <th>{{ i18n.getMessage("playertable_head_age") }}</th>
+                        <th>{{ i18n.getMessage("playertable_head_strength") }}</th>
+                        <th>{{ i18n.getMessage("youthacademy_talent_risk") }}</th>
+                        <th>{{ i18n.getMessage("youthacademy_loan_recommendation") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in players %}
+                        <tr{% if player.is_youth_captain %} class="success"{% endif %}>
+                            <td>{{ player.firstname }} {{ player.lastname }}{% if player.is_youth_captain %} <span class="label label-success">{{ i18n.getMessage("youthacademy_captain") }}</span>{% endif %}</td>
+                            <td>{{ player.age }}</td>
+                            <td>{{ player.strength }}</td>
+                            <td>
+                                {% if player.risk_level == 'high' %}<span class="label label-important">{{ i18n.getMessage(player.risk_message_key) }}</span>
+                                {% elseif player.risk_level == 'medium' %}<span class="label label-warning">{{ i18n.getMessage(player.risk_message_key) }}</span>
+                                {% else %}<span class="label label-success">{{ i18n.getMessage(player.risk_message_key) }}</span>{% endif %}
+                            </td>
+                            <td>{{ i18n.getMessage(player.loan_recommendation_key) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        <div class="youthacademy-actions"><a href="#youthacademy-top">{{ i18n.getMessage("youthacademy_top") }}</a></div>
+    </div>
+
+    <div id="academy-upgrade" class="tab-pane youthacademy-section">
+        <h4>{{ i18n.getMessage("youthacademy_tab_upgrade") }}</h4>
+
+        <h5>{{ i18n.getMessage("youthacademy_levels") }}</h5>
+        <div class="youthacademy-table-wrapper">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ i18n.getMessage("youthacademy_level") }}</th>
+                        <th>{{ i18n.getMessage("youthacademy_build_cost") }}</th>
+                        <th>{{ i18n.getMessage("youthacademy_maintenance_fee") }}</th>
+                        <th>{{ i18n.getMessage("youthacademy_development_bonus") }}</th>
+                        <th>{{ i18n.getMessage("youthacademy_scouting_bonus") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for level in levels %}
+                        <tr{% if academy.level is defined and academy.level == level.level %} class="info"{% endif %}>
+                            <td>{{ level.level }} - {{ level.name }}</td>
+                            <td>{{ level.build_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>{{ level.maintenance_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                            <td>+{{ level.development_bonus }}%</td>
+                            <td>+{{ level.scouting_bonus }}%</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if academy.team_id is defined %}
+            {% if next_level.level is defined %}
+                <h5>{{ i18n.getMessage("youthacademy_next_level") }}</h5>
+                <p>{{ next_level.level }} - {{ next_level.name }}</p>
+                {% if upgrade_check.allowed %}
+                    <a class="btn btn-primary" href="{{ env.getInternalActionUrl("upgrade-youth-academy") }}"><i class="icon-arrow-up icon-white"></i> {{ i18n.getMessage("upgrade-youth-academy") }}</a>
+                {% else %}
+                    {{ messagebox.box(i18n.getMessage(upgrade_check.error_key), i18n.getMessage("youthacademy_affordability_help"), "warning") }}
+                {% endif %}
+            {% else %}
+                <p>{{ i18n.getMessage("youthacademy_no_next_level") }}</p>
+            {% endif %}
+
+            {% if can_downgrade %}
+                <hr>
+                <a class="btn" href="{{ env.getInternalActionUrl("downgrade-youth-academy") }}"><i class="icon-arrow-down"></i> {{ i18n.getMessage("downgrade-youth-academy") }}</a>
+                <span class="help-inline">{{ i18n.getMessage("youthacademy_downgrade_help") }}</span>
+            {% endif %}
+        {% endif %}
+        <div class="youthacademy-actions"><a href="#youthacademy-top">{{ i18n.getMessage("youthacademy_top") }}</a></div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

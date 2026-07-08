@@ -9,4 +9,8 @@
     <message id="settings_label_team_chemistry_recent_transfer_days_help">Transfers in diesem Zeitraum senken die Chemie leicht, damit zu viele neue Spieler nicht sofort perfekt harmonieren.</message>
     <message id="settings_label_team_chemistry_formation_history_count">Anzahl Formationen für Eingespieltheit</message>
     <message id="settings_label_team_chemistry_formation_history_count_help">So viele letzte Aufstellungen werden geprüft, um die Formations-Eingespieltheit zu bewerten.</message>
+    <message id="teamchemistry_factor_tactical_style">Taktische DNA</message>
+    <message id="teamchemistry_source_tactical_style">Taktische DNA</message>
+    <message id="teamchemistry_score">Chemie</message>
+    <message id="teamchemistry_match_effect">Spiel-Effekt</message>
 </messages>

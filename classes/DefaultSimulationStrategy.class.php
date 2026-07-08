@@ -135,6 +135,12 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
         if (class_exists('TacticalStyleDataService')) {
             $styleShootInfluence = TacticalStyleDataService::getShootProbabilityEffect($player->team, $opponentTeam, $player);
         }
+        if (class_exists('ManagerCharacterDataService')) {
+            $styleShootInfluence += ManagerCharacterDataService::getShootProbabilityEffect($player->team, $opponentTeam, $match);
+        }
+        if (class_exists('PlayerTraitsDataService')) {
+            $styleShootInfluence += PlayerTraitsDataService::getShootProbabilityEffect($player);
+        }
         
         // forwards/midfielders have a minimum shoot probability of 5%
         if ($player->position == PLAYER_POSITION_STRIKER || $player->position == PLAYER_POSITION_MIDFIELD) {
@@ -170,9 +176,15 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
         if (class_exists('TeamChemistryDataService')) {
             $pFailed[FALSE] = max(1, min(99, $pFailed[FALSE] + TeamChemistryDataService::getTeamMatchEffect($player->team)));
         }
+        if (class_exists('ManagerCharacterDataService')) {
+            $pFailed[FALSE] = max(1, min(99, $pFailed[FALSE] + ManagerCharacterDataService::getPassSuccessEffect($player->team, $match)));
+        }
         
         if (class_exists('TacticalStyleDataService')) {
             $pFailed[FALSE] = max(1, min(99, $pFailed[FALSE] + TacticalStyleDataService::getPassSuccessEffect($player->team, SimulationHelper::getOpponentTeam($player, $match))));
+        }
+        if (class_exists('PlayerTraitsDataService')) {
+            $pFailed[FALSE] = max(1, min(99, $pFailed[FALSE] + PlayerTraitsDataService::getPassSuccessEffect($player)));
         }
         
         $pFailed[TRUE] = 100 - $pFailed[FALSE];
@@ -236,7 +248,11 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
         //$y = $opponent->getTotalStrength($this->_websoccer, $match);
         
         // can win?
-        $pWin[TRUE] = max(1, min(50 + $tacklingA - $opponentTackle, 99));
+        $traitDuelEffect = 0;
+        if (class_exists('PlayerTraitsDataService')) {
+            $traitDuelEffect = PlayerTraitsDataService::getTackleDuelEffect($player, $opponent);
+        }
+        $pWin[TRUE] = max(1, min(50 + $tacklingA - $opponentTackle + $traitDuelEffect, 99));
         $pWin[FALSE] = 100 - $pWin[TRUE];
         
         $result = SimulationHelper::selectItemFromProbabilities($pWin);
@@ -260,6 +276,12 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
             // if chances for yellow card is very high, then also chances for red card increased
             if ($pTackle['yellow']  > 15) {
                 $pTackle['red'] = 3;
+            }
+
+            if (class_exists('ManagerCharacterDataService')) {
+                $cardMultiplier = ManagerCharacterDataService::getCardProbabilityMultiplier($opponent->team);
+                $pTackle['yellow'] = max(1, (int) round($pTackle['yellow'] * $cardMultiplier));
+                $pTackle['red'] = max(1, (int) round($pTackle['red'] * $cardMultiplier));
             }
             
             $pTackle['fair'] = 100 - $pTackle['yellow'] - $pTackle['red'];
@@ -347,6 +369,9 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
                     if (class_exists('TacticalStyleDataService')) {
                         $pGoal[TRUE] = max(1, min(65, $pGoal[TRUE] + TacticalStyleDataService::getGoalChanceEffect($freeKickScorer->team, SimulationHelper::getOpponentTeam($freeKickScorer, $match), $freeKickScorer, 'freekick')));
                     }
+                    if (class_exists('PlayerTraitsDataService')) {
+                        $pGoal[TRUE] = max(1, min(70, $pGoal[TRUE] + PlayerTraitsDataService::getGoalChanceEffect($freeKickScorer, 'freekick') + PlayerTraitsDataService::getGoalChanceEffect($goaly, 'save_shot')));
+                    }
                     $pGoal[FALSE] = 100 - $pGoal[TRUE];
                     
                     $freeKickResult = SimulationHelper::selectItemFromProbabilities($pGoal);
@@ -421,6 +446,9 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
             if (class_exists('TacticalStyleDataService')) {
                 $pGoal[TRUE] = max(1, min(65, $pGoal[TRUE] + TacticalStyleDataService::getGoalChanceEffect($player->team, SimulationHelper::getOpponentTeam($player, $match), $player, 'shot')));
             }
+            if (class_exists('PlayerTraitsDataService')) {
+                $pGoal[TRUE] = max(1, min(70, $pGoal[TRUE] + PlayerTraitsDataService::getGoalChanceEffect($player, 'shot') + PlayerTraitsDataService::getGoalChanceEffect($goaly, 'save_shot')));
+            }
             $pGoal[FALSE] = 100 - $pGoal[TRUE];
             
             $result = SimulationHelper::selectItemFromProbabilities($pGoal);
@@ -452,7 +480,25 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
                     foreach ($this->_observers as $observer) {
                         $observer->onCorner($match, $passingPlayer, $targetPlayer);
                     }
-                    $match->setPlayerWithBall($targetPlayer);
+                    
+                    $cornerGoal = FALSE;
+                    if (class_exists('PlayerTraitsDataService')) {
+                        $headerStrength = round(($passingPlayer->strengthPassing + $targetPlayer->strengthHeading) / 7);
+                        $cornerGoalChance = max(1, min(22, $headerStrength + PlayerTraitsDataService::getCornerHeaderEffect($passingPlayer, $targetPlayer)));
+                        $cornerGoalProbabilities[TRUE] = $cornerGoalChance;
+                        $cornerGoalProbabilities[FALSE] = 100 - $cornerGoalChance;
+                        $cornerGoal = SimulationHelper::selectItemFromProbabilities($cornerGoalProbabilities);
+                    }
+                    
+                    if ($cornerGoal) {
+                        foreach ($this->_observers as $observer) {
+                            $observer->onGoal($match, $targetPlayer, $goaly);
+                        }
+                        $result = TRUE;
+                        $this->_kickoff($match, $targetPlayer);
+                    } else {
+                        $match->setPlayerWithBall($targetPlayer);
+                    }
                 }
                 
                 // scored
@@ -688,7 +734,11 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
         
         // Penalty probability is between 30 and 80%.
         // The shooter's dedicated penalty attribute now directly affects the chance to score.
-        $pGoal[TRUE] = max(30, min($player->strengthPenalty - $shootReduction, 80));
+        $penaltyTraitEffect = 0;
+        if (class_exists('PlayerTraitsDataService')) {
+            $penaltyTraitEffect = PlayerTraitsDataService::getGoalChanceEffect($player, 'penalty') + PlayerTraitsDataService::getGoalChanceEffect($goaly, 'save_penalty');
+        }
+        $pGoal[TRUE] = max(30, min($player->strengthPenalty - $shootReduction + $penaltyTraitEffect, 80));
         $pGoal[FALSE] = 100 - $pGoal[TRUE];
         
         $result = SimulationHelper::selectItemFromProbabilities($pGoal);

@@ -33,6 +33,8 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 	private $_db;
 	
 	private $_teamsWithSoonEndingContracts;
+	private $_teamHumanManagerCache;
+	private $_cpuContractRenewalMatches;
 	
 	/**
 	 * 
@@ -43,6 +45,8 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		$this->_websoccer = $websoccer;
 		$this->_db = $db;
 		$this->_teamsWithSoonEndingContracts = array();
+		$this->_teamHumanManagerCache = array();
+		$this->_cpuContractRenewalMatches = null;
 	}
 	
 	/**
@@ -294,10 +298,8 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		}
 		
 		if (!$player->team->isNationalTeam) {
-			$columns['vertrag_spiele'] = max(0, $playerinfo['vertrag_spiele'] - 1);
-			if ($columns['vertrag_spiele'] == 5) {
-				$this->_teamsWithSoonEndingContracts[$player->team->id] = TRUE;
-			}
+			$contractTeamId = $this->getContractOwningTeamId($playerinfo, $player->team->id);
+			$columns['vertrag_spiele'] = $this->computeContractMatchesAfterMatch($contractTeamId, $playerinfo['vertrag_spiele']);
 		}
 		
 		// update other fields
@@ -351,10 +353,8 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		
 		$columns['verletzt'] = max(0, $playerinfo['verletzt'] - 1);
 		if (!$isNationalTeam) {
-			$columns['vertrag_spiele'] = max(0, $playerinfo['vertrag_spiele'] - 1);
-			if ($columns['vertrag_spiele'] == 5) {
-				$this->_teamsWithSoonEndingContracts[$playerinfo['id']] = TRUE;
-			}
+			$contractTeamId = $this->getContractOwningTeamId($playerinfo, $playerinfo['verein_id']);
+			$columns['vertrag_spiele'] = $this->computeContractMatchesAfterMatch($contractTeamId, $playerinfo['vertrag_spiele']);
 		}
 		
 		if (!$isNationalTeam || $this->_websoccer->getConfig('sim_playerupdate_through_nationalteam')) {
@@ -370,6 +370,69 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $parameters);
 	}
 	
+	private function getContractOwningTeamId($playerinfo, $currentTeamId) {
+		if (isset($playerinfo['lending_owner_id']) && (int) $playerinfo['lending_owner_id'] > 0) {
+			return (int) $playerinfo['lending_owner_id'];
+		}
+
+		return (int) $currentTeamId;
+	}
+
+	private function computeContractMatchesAfterMatch($teamId, $currentMatches) {
+		$newMatches = max(0, (int) $currentMatches - 1);
+
+		if ($this->isTeamManagedByHuman($teamId)) {
+			if ($newMatches == 5) {
+				$this->_teamsWithSoonEndingContracts[$teamId] = TRUE;
+			}
+
+			return $newMatches;
+		}
+
+		// CPU/non-user clubs renew contracts automatically shortly before expiry.
+		// This prevents CPU squads from flooding the transfer market due to expired contracts.
+		if ($newMatches <= 5) {
+			return $this->getCpuContractRenewalMatches();
+		}
+
+		return $newMatches;
+	}
+
+	private function isTeamManagedByHuman($teamId) {
+		$teamId = (int) $teamId;
+		if ($teamId <= 0) {
+			return FALSE;
+		}
+
+		if (isset($this->_teamHumanManagerCache[$teamId])) {
+			return $this->_teamHumanManagerCache[$teamId];
+		}
+
+		$result = $this->_db->querySelect('user_id,interimmanager', $this->_websoccer->getConfig('db_prefix') . '_verein', 'id = %d', $teamId, 1);
+		$teaminfo = $result->fetch_array();
+		$result->free();
+
+		$this->_teamHumanManagerCache[$teamId] = ($teaminfo && (int) $teaminfo['user_id'] > 0 && $teaminfo['interimmanager'] != '1');
+
+		return $this->_teamHumanManagerCache[$teamId];
+	}
+
+	private function getCpuContractRenewalMatches() {
+		if ($this->_cpuContractRenewalMatches !== null) {
+			return $this->_cpuContractRenewalMatches;
+		}
+
+		try {
+			$matches = (int) $this->_websoccer->getConfig('max_number_of_contract_matches');
+		} catch (Exception $e) {
+			$matches = 60;
+		}
+
+		$this->_cpuContractRenewalMatches = max(1, $matches);
+
+		return $this->_cpuContractRenewalMatches;
+	}
+
 	private function deductSalary(SimulationTeam $team, $salary) {
 		
 		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $team->id,

@@ -130,4 +130,22 @@
     <message id="option_ambitious">Ehrgeizig</message>
     <message id="option_big_game_player">Mann für große Spiele</message>
     <message id="option_troublemaker">Unruhestifter</message>
+
+    <message id="entity_player_trait">Spieler-Spezialfähigkeit</message>
+    <message id="entity_player_trait_player_id">Spieler</message>
+    <message id="entity_player_trait_trait_key">Spezialfähigkeit</message>
+    <message id="entity_player_trait_trait_value">Ausprägung 0 bis 3</message>
+    <message id="entity_player_trait_trait_value_help">0 bedeutet nicht vorhanden. Werte 1 bis 3 werden angezeigt und wirken moderat auf Marktwert sowie passende Spielsituationen.</message>
+    <message id="option_torinstinkt">Torinstinkt</message>
+    <message id="option_spielmacher">Spielmacher</message>
+    <message id="option_ballzauberer">Ballzauberer</message>
+    <message id="option_flankenspezialist">Flankenspezialist</message>
+    <message id="option_kopfballstaerke">Kopfballstärke</message>
+    <message id="option_viererkette">Viererkette</message>
+    <message id="option_laufstaerke">Laufstärke</message>
+    <message id="option_freistossspezialist">Freistoßspezialist</message>
+    <message id="option_elfmeterschuetze">Elfmeterschütze</message>
+    <message id="option_dribbler">Dribbler</message>
+    <message id="option_elfmetertoeter">Elfmetertöter</message>
+    <message id="option_reflexe">Reflexe</message>
 </messages>

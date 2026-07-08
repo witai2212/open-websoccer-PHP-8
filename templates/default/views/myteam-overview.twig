@@ -13,6 +13,11 @@
 	<a class="btn btn-primary" href="{{ env.getInternalUrl("teamchemistry") }}">
 		<i class="icon-group icon-white"></i> {{ i18n.getMessage("teamchemistry_navlabel") }}
 	</a>
+	{% if env.getConfig("squadplanner_enabled") %}
+	<a class="btn" href="{{ env.getInternalUrl("squadplanner") }}">
+		<i class="icon-tasks"></i> {{ i18n.getMessage("squadplanner_navlabel") }}
+	</a>
+	{% endif %}
 </p>
 
 {% if players is defined and players|length > 0 %}

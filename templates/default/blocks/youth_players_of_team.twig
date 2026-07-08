@@ -36,7 +36,14 @@
 					<br>
 					<small>{{ i18n.getMessage("option_" ~ player.position) }}</small>
 				</td>
-				<td>{{ player.firstname }} {{ player.lastname }}</td>
+				<td>{{ player.firstname }} {{ player.lastname }}
+					{% if player.traits is defined and player.traits|length > 0 %}
+						<br>
+						{% for trait in player.traits %}
+							<span class="label label-info" title="{{ i18n.getMessage("player_traits_value") }} {{ trait.value }}">{{ i18n.getMessage(trait.label_key) }} {{ trait.value }}</span>
+						{% endfor %}
+					{% endif %}
+				</td>
 				<td>{{ player.age }}</td>
 				<td>{{ statisticelements.progressbar(player.strength, "noBottomMargin") }}</td>
 				<td>

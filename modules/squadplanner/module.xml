@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <dependencies>
+        <dependency module="myteam" version="1.0.0" />
+        <dependency module="transfermarket" version="1.0.0" />
+        <dependency module="lending" version="1.0.0" />
+        <dependency module="youth" version="1.0.0" />
+    </dependencies>
+
+    <settings>
+        <setting id="squadplanner_enabled" category="game" type="boolean" default="1" />
+        <setting id="squadplanner_contract_risk_matches" category="game" type="number" default="30" />
+        <setting id="squadplanner_auto_sell_limit" category="game" type="number" default="3" />
+        <setting id="squadplanner_auto_loan_limit" category="game" type="number" default="3" />
+        <setting id="squadplanner_auto_youth_limit" category="game" type="number" default="1" />
+    </settings>
+
+    <admin>
+        <adminpage id="squadplanner" permissionrole="r_daten" navcategory="league" filename="squadplanner" />
+    </admin>
+
+    <pages>
+        <page
+            id="squadplanner"
+            template="squadplanner"
+            model="SquadPlannerModel"
+            parentItem="myteam"
+            navitem="true"
+            navweight="7"
+            role="user"
+            navitemOnlyForConfigEnabled="squadplanner_enabled" />
+    </pages>
+
+    <actions>
+        <action id="squadplanner-action" controller="SquadPlannerActionController" role="user" log="true">
+            <param id="mode" type="text" required="true" />
+            <param id="id" type="number" required="false" />
+        </action>
+    </actions>
+
+</module>

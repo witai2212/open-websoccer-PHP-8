@@ -81,10 +81,10 @@ class YouthMatchFormationModel implements IModel {
 		
 		$setup = $this->getFormationSetup($formation);
 		
-		// select youth players by balanced automatic setup
+		// select youth players by selected automatic setup strategy
 		$criteria = $this->_websoccer->getRequestParameter("preselect");
-		if ($criteria !== NULL && $criteria == "balanced") {
-			$proposal = YouthFormationDataService::getFormationProposalForTeamId($this->_websoccer, $this->_db, $clubId, $setup);
+		if ($criteria !== NULL && YouthFormationDataService::isValidStrategy($criteria)) {
+			$proposal = YouthFormationDataService::getFormationProposalForTeamId($this->_websoccer, $this->_db, $clubId, $setup, $criteria);
 			
 			for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
 				$playerIndex = $playerNo - 1;

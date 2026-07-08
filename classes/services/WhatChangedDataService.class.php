@@ -147,6 +147,7 @@ class WhatChangedDataService {
 
         $summaryData = array(
             'match' => self::buildMatchSection($websoccer, $matchRow, $teamId),
+            'trait_highlights' => self::buildTraitHighlightsSection($websoccer, $db, $i18n, $matchId, $teamId),
             'previous_match' => self::buildPreviousMatchSection($previousMatch),
             'budget' => self::buildBudgetSection($websoccer, $db, $team, $sinceTimestamp),
             'training' => self::buildTrainingSection($websoccer, $db, $matchId, $teamId),
@@ -221,6 +222,24 @@ class WhatChangedDataService {
             'guest_goals' => (int) $match['gast_tore'],
             'outcome' => $outcome,
             'link' => $websoccer->getInternalUrl('match', 'id=' . (int) $match['id'])
+        );
+    }
+
+
+    private static function buildTraitHighlightsSection(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $matchId, $teamId) {
+        if (!class_exists('PlayerTraitsDataService')) {
+            return array('available' => FALSE, 'count' => 0, 'items' => array());
+        }
+
+        $items = PlayerTraitsDataService::getMatchTraitHighlights($websoccer, $db, $i18n, (int) $matchId, (int) $teamId, 3);
+        foreach ($items as $index => $item) {
+            $items[$index]['player_link'] = $websoccer->getInternalUrl('player', 'id=' . (int) $item['player_id']);
+        }
+
+        return array(
+            'available' => count($items) > 0,
+            'count' => count($items),
+            'items' => $items
         );
     }
 

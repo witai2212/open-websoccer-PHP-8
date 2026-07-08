@@ -1,0 +1,262 @@
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("squadplanner_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+<p>{{ i18n.getMessage("squadplanner_intro") }}</p>
+
+<p>
+    <a class="btn btn-primary" href="{{ env.getInternalActionUrl("squadplanner-action", "mode=auto", "squadplanner") }}" onclick="return confirm('{{ i18n.getMessage("squadplanner_auto_confirm") }}');">
+        <i class="icon-cogs icon-white"></i> {{ i18n.getMessage("squadplanner_auto_button") }}
+    </a>
+</p>
+
+<h3>{{ i18n.getMessage("squadplanner_summary") }}</h3>
+<table class="table table-bordered table-striped">
+    <tbody>
+        <tr>
+            <th>{{ i18n.getMessage("squadplanner_team") }}</th>
+            <td>{{ team.name }}{% if team.league_name|length > 0 %} <small class="muted">({{ team.league_name }})</small>{% endif %}</td>
+            <th>{{ i18n.getMessage("squadplanner_players") }}</th>
+            <td>{{ summary.player_count }}</td>
+        </tr>
+        <tr>
+            <th>{{ i18n.getMessage("squadplanner_avg_age") }}</th>
+            <td>{{ summary.avg_age|number_format(1, ',', ' ') }}</td>
+            <th>{{ i18n.getMessage("squadplanner_avg_strength") }}</th>
+            <td>{{ summary.avg_strength|number_format(1, ',', ' ') }}</td>
+        </tr>
+        <tr>
+            <th>{{ i18n.getMessage("squadplanner_age_structure") }}</th>
+            <td>{{ i18n.getMessage(age_structure.label_key) }}</td>
+            <th>{{ i18n.getMessage("squadplanner_contract_risk") }}</th>
+            <td>{{ summary.contract_risk_count }} <small class="muted">{{ i18n.getMessage("squadplanner_contract_risk_help") }}</small></td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>{{ i18n.getMessage("squadplanner_depth") }}</h3>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>{{ i18n.getMessage("playertable_head_position") }}</th>
+            <th>{{ i18n.getMessage("squadplanner_count") }}</th>
+            <th>{{ i18n.getMessage("squadplanner_target") }}</th>
+            <th>{{ i18n.getMessage("squadplanner_avg_strength") }}</th>
+            <th>{{ i18n.getMessage("squadplanner_status") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in depth %}
+            <tr>
+                <td>{{ i18n.getMessage("player_position_" ~ row.key) }}</td>
+                <td>{{ row.count }}</td>
+                <td>{{ row.target }}</td>
+                <td>{{ row.avg_strength|number_format(1, ',', ' ') }}</td>
+                <td>
+                    {% if row.status == 'shortage' %}
+                        <span class="label label-important">{{ i18n.getMessage("squadplanner_shortage") }}</span>
+                    {% elseif row.status == 'surplus' %}
+                        <span class="label label-warning">{{ i18n.getMessage("squadplanner_surplus") }}</span>
+                    {% else %}
+                        <span class="label label-success">{{ i18n.getMessage("squadplanner_ok") }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>{{ i18n.getMessage("squadplanner_weaknesses") }}</h3>
+{% if weaknesses|length > 0 %}
+    <ul>
+        {% for weakness in weaknesses %}
+            <li>{{ weakness.message }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>{{ i18n.getMessage("squadplanner_no_weaknesses") }}</p>
+{% endif %}
+
+<h3>{{ i18n.getMessage("squadplanner_trait_needs") }}</h3>
+{% if trait_needs|length > 0 %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("squadplanner_trait") }}</th>
+                <th>{{ i18n.getMessage("playertable_head_position") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_count") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_recommended") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_priority") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for need in trait_needs %}
+                <tr>
+                    <td>{{ i18n.getMessage(need.label_key) }}</td>
+                    <td>{{ i18n.getMessage("player_position_" ~ need.position_key) }}</td>
+                    <td>{{ need.current_count }}</td>
+                    <td>{{ need.needed_count }}</td>
+                    <td>{{ need.priority }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{{ i18n.getMessage("squadplanner_no_trait_needs") }}</p>
+{% endif %}
+
+<h3>{{ i18n.getMessage("squadplanner_contract_risk") }}</h3>
+{% if contract_risks|length > 0 %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("playertable_head_name") }}</th>
+                <th>{{ i18n.getMessage("playertable_head_position") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_contract") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_strength") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_manual_actions") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in contract_risks %}
+                <tr>
+                    <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.name }}</a></td>
+                    <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}</td>
+                    <td>{{ player.contract_matches }}</td>
+                    <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                    <td><a class="btn btn-small" href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ i18n.getMessage("squadplanner_open_player") }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{{ i18n.getMessage("squadplanner_no_candidates") }}</p>
+{% endif %}
+
+<h3>{{ i18n.getMessage("squadplanner_sell_candidates") }}</h3>
+{% if sell_candidates|length > 0 %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("playertable_head_name") }}</th>
+                <th>{{ i18n.getMessage("playertable_head_position") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_age") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_strength") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_marketvalue") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_reason") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_manual_actions") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in sell_candidates %}
+                <tr>
+                    <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.name }}</a></td>
+                    <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}</td>
+                    <td>{{ player.age }}</td>
+                    <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                    <td>{{ player.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td>
+                        <ul class="unstyled">
+                            {% for reason in player.reasons %}<li>{{ i18n.getMessage(reason) }}</li>{% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-small btn-warning" href="{{ env.getInternalActionUrl("squadplanner-action", "mode=sell&id=" ~ player.id, "squadplanner") }}" onclick="return confirm('{{ i18n.getMessage("squadplanner_apply_sell") }}?');">
+                            {{ i18n.getMessage("squadplanner_apply_sell") }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{{ i18n.getMessage("squadplanner_no_candidates") }}</p>
+{% endif %}
+
+<h3>{{ i18n.getMessage("squadplanner_loan_candidates") }}</h3>
+{% if loan_candidates|length > 0 %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("playertable_head_name") }}</th>
+                <th>{{ i18n.getMessage("playertable_head_position") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_age") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_strength") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_talent") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_reason") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_manual_actions") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in loan_candidates %}
+                <tr>
+                    <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.name }}</a></td>
+                    <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}</td>
+                    <td>{{ player.age }}</td>
+                    <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                    <td>{{ player.talent }}</td>
+                    <td>
+                        <ul class="unstyled">
+                            {% for reason in player.reasons %}<li>{{ i18n.getMessage(reason) }}</li>{% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-small btn-info" href="{{ env.getInternalActionUrl("squadplanner-action", "mode=loan&id=" ~ player.id, "squadplanner") }}" onclick="return confirm('{{ i18n.getMessage("squadplanner_apply_loan") }}?');">
+                            {{ i18n.getMessage("squadplanner_apply_loan") }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{{ i18n.getMessage("squadplanner_no_candidates") }}</p>
+{% endif %}
+
+<h3>{{ i18n.getMessage("squadplanner_youth_candidates") }}</h3>
+{% if youth_candidates|length > 0 %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("playertable_head_name") }}</th>
+                <th>{{ i18n.getMessage("playertable_head_position") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_age") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_strength") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_reason") }}</th>
+                <th>{{ i18n.getMessage("squadplanner_manual_actions") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in youth_candidates %}
+                <tr>
+                    <td>{{ player.name }}</td>
+                    <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}</td>
+                    <td>{{ player.age }}</td>
+                    <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
+                    <td>
+                        <ul class="unstyled">
+                            {% for reason in player.reasons %}<li>{{ i18n.getMessage(reason) }}</li>{% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        {% if player.promotable %}
+                            <a class="btn btn-small btn-success" href="{{ env.getInternalActionUrl("squadplanner-action", "mode=youth&id=" ~ player.id, "squadplanner") }}" onclick="return confirm('{{ i18n.getMessage("squadplanner_apply_youth") }}?');">
+                                {{ i18n.getMessage("squadplanner_apply_youth") }}
+                            </a>
+                        {% else %}
+                            <span class="muted">{{ i18n.getMessage("squadplanner_not_promotable_yet") }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{{ i18n.getMessage("squadplanner_no_candidates") }}</p>
+{% endif %}
+
+{% endblock %}

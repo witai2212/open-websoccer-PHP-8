@@ -42,6 +42,9 @@ class MessageDetailsModel implements IModel {
 		
 		$id = $this->_websoccer->getRequestParameter("id");
 		$message = MessagesDataService::getMessageById($this->_websoccer, $this->_db, $id);
+		if ($message) {
+			$message["content_html"] = $this->_formatMessageContent($message["content"]);
+		}
 		
 		// update "seen" state
 		if ($message && !$message["seen"]) {
@@ -53,6 +56,31 @@ class MessageDetailsModel implements IModel {
 		}
 		
 		return array("message" => $message);
+	}
+
+	private function _formatMessageContent($content) {
+		$content = htmlspecialchars((string) $content, ENT_QUOTES, "UTF-8");
+
+		$pattern = "~(https?://[^\s<]+|/\?page=[^\s<]+|\?page=[^\s<]+)~i";
+		$content = preg_replace_callback($pattern, array($this, "_replaceMessageLink"), $content);
+
+		return nl2br($content);
+	}
+
+	private function _replaceMessageLink($matches) {
+		$url = $matches[0];
+		$trailing = "";
+		while (strlen($url) && preg_match("/[\.,;:\)\]]$/", $url)) {
+			$trailing = substr($url, -1) . $trailing;
+			$url = substr($url, 0, -1);
+		}
+
+		$href = $url;
+		if (strpos($href, "?page=") === 0) {
+			$href = "/" . $href;
+		}
+
+		return "<a href=\"" . $href . "\">" . $url . "</a>" . $trailing;
 	}
 	
 }

@@ -220,6 +220,9 @@ class MatchSimulationExecutor {
                 if (class_exists('TeamChemistryDataService')) {
                     TeamChemistryDataService::applyRuntimeMatchEffects($websoccer, $db, $match);
                 }
+                if (class_exists('ManagerCharacterDataService')) {
+                    ManagerCharacterDataService::applyMatchEffects($websoccer, $db, $match, FALSE);
+                }
 
                 $simulator->simulateMatch($match, $interval);
                 SimulationStateHelper::updateState($websoccer, $db, $match);
@@ -388,6 +391,11 @@ class MatchSimulationExecutor {
         if (class_exists('TacticalStyleDataService')) {
             TacticalStyleDataService::applyMatchEffects($websoccer, $db, $match);
         }
+
+        // Manager character adds small situational leadership effects.
+        if (class_exists('ManagerCharacterDataService')) {
+            ManagerCharacterDataService::applyMatchEffects($websoccer, $db, $match, TRUE);
+        }
         
         return $match;
     }
@@ -533,6 +541,9 @@ class MatchSimulationExecutor {
                     $playerinfo['strength_penalty_killing'],
                     $playerinfo['personality']
                 );
+                if (class_exists('PlayerTraitsDataService')) {
+                    PlayerTraitsDataService::applyTraitsToSimulationPlayer($websoccer, $db, $player);
+                }
                     
                 if (strlen($playerinfo['pseudonym'])) {
                     $player->name = $playerinfo['pseudonym'];
@@ -614,6 +625,9 @@ class MatchSimulationExecutor {
                     $playerinfo['strength_penalty_killing'],
                     $playerinfo['personality']
                 );
+                if (class_exists('PlayerTraitsDataService')) {
+                    PlayerTraitsDataService::applyTraitsToSimulationPlayer($websoccer, $db, $player);
+                }
                 
                 if (strlen($playerinfo['pseudonym'])) {
                     $player->name = $playerinfo['pseudonym'];

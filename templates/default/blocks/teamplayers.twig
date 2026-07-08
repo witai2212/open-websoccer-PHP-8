@@ -10,6 +10,9 @@
 				{% if show_personality %}
 					<th>{{ i18n.getMessage("playertable_head_personality") }}</th>
 				{% endif %}
+				{% if show_traits is defined and show_traits %}
+					<th>{{ i18n.getMessage("playertable_head_traits") }}</th>
+				{% endif %}
 				
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 					<th><abbr title="{{ i18n.getMessage("playertable_head_strength") }}">{{ i18n.getMessage("playertable_head_strength_abbr") }}</abbr></th>
@@ -26,7 +29,7 @@
 		<tbody>
 		
 			{% for player in players %}
-				{{ playerlists.teamlistItem(player, show_personality)  }}
+				{{ playerlists.teamlistItem(player, show_personality, show_traits is defined and show_traits)  }}
 			{% endfor %}
 		
 		</tbody>

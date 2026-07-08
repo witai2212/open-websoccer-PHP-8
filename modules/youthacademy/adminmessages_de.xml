@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_youth">Jugend</message>
+    <message id="settings_label_youth_academy_enabled">Jugendakademie aktivieren</message>
+    <message id="settings_label_youth_academy_enabled_help">Aktiviert die Jugendakademie mit Akademie-Leveln, Entwicklungsfokus, Jugendkapitän und Fortschrittsberichten.</message>
+    <message id="settings_label_youth_academy_report_days">Berichtsintervall Jugendakademie</message>
+    <message id="settings_label_youth_academy_report_days_help">Anzahl Tage zwischen automatischen Akademieberichten an den Manager.</message>
+    <message id="settings_label_youth_academy_captain_bonus">Bonus Jugendkapitän</message>
+    <message id="settings_label_youth_academy_captain_bonus_help">Kleiner Bonus für den gewählten Jugendkapitän. Der Effekt bleibt bewusst begrenzt.</message>
+    <message id="settings_label_youth_academy_computer_manage_enabled">Computervereine verwalten Jugendakademien</message>
+    <message id="settings_label_youth_academy_computer_manage_enabled_help">Erlaubt Computervereinen, Akademien automatisch aufzubauen, auszubauen oder zurückzustufen.</message>
+</messages>

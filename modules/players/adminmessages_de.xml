@@ -7,4 +7,6 @@
 	
 	<message id="option_birthday">Nach Geburtstag des Spielers</message>
 	<message id="option_static">Beim Beenden der Saison</message>
+
+    <message id="player-traits_navlabel">Spezialfähigkeiten</message>
 </messages>

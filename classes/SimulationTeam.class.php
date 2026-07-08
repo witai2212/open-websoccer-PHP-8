@@ -126,6 +126,16 @@ class SimulationTeam {
 	 * @var int Small tactical style match effect, e.g. -3..+5.
 	 */
 	public $tacticalStyleEffect;
+
+	/**
+	 * @var string Manager character / leadership style.
+	 */
+	public $managerCharacter;
+
+	/**
+	 * @var int Small runtime effect created by manager character.
+	 */
+	public $managerCharacterMatchEffect;
 	
 	/**
 	 * @var SimulationPlayer Player who takes free kicks. Not always set.
@@ -158,6 +168,8 @@ class SimulationTeam {
     	$this->tacticalStyle = '';
     	$this->tacticalStyleFit = 50;
     	$this->tacticalStyleEffect = 0;
+    	$this->managerCharacter = '';
+    	$this->managerCharacterMatchEffect = 0;
     	
     	$this->noFormationSet = FALSE;
     	$this->longPasses = FALSE;

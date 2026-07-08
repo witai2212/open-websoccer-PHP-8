@@ -27,6 +27,10 @@
 	<message id="activitylog_managercareer_job_change">%s hat einen neuen Managerjob angenommen.</message>
 	<message id="activitylog_apply-medical-treatment">%s hat eine medizinische Behandlung angewendet.</message>
 	<message id="activitylog_clear-player-risk">%s hat einen Spieler riskant freigegeben.</message>
+	<message id="activitylog_build-youth-academy">%s hat eine Jugendakademie gebaut.</message>
+	<message id="activitylog_upgrade-youth-academy">%s hat seine Jugendakademie ausgebaut.</message>
+	<message id="activitylog_downgrade-youth-academy">%s hat seine Jugendakademie zurückgestuft.</message>
+	<message id="activitylog_save-youth-academy-settings">%s hat die Jugendakademie-Einstellungen angepasst.</message>
 	
 	<message id="activitylog_sign-stadium-naming-contract">%s hat einen Vertrag über die Stadionnamensrechte abgeschlossen.</message>
 	<message id="activitylog_rename-stadium">%s hat sein Stadion umbenannt.</message>

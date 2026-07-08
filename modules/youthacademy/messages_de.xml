@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="youth-academy_navlabel">Jugendakademie</message>
+    <message id="youthacademy_title">Jugendakademie</message>
+    <message id="youthacademy_intro">Die Jugendakademie verbindet Jugendentwicklung, Jugendscouting, Scouting-Abteilung und Mitarbeiterstab. Sie verstärkt vorhandene Systeme, ersetzt sie aber nicht.</message>
+
+    <message id="youthacademy_tab_overview">Übersicht</message>
+    <message id="youthacademy_tab_focus">Entwicklungsfokus</message>
+    <message id="youthacademy_tab_report">Fortschrittsbericht</message>
+    <message id="youthacademy_tab_recommendations">Empfehlungen</message>
+    <message id="youthacademy_tab_upgrade">Akademie-Ausbau</message>
+    <message id="youthacademy_top">Nach oben</message>
+    <message id="youthacademy_date">Datum</message>
+
+    <message id="youthacademy_current_budget">Aktuelles Budget</message>
+    <message id="youthacademy_expected_income">Erwartete Einnahmen pro Spieltag</message>
+    <message id="youthacademy_effective_income">Wirksame Einnahmen inkl. Finanzberater</message>
+    <message id="youthacademy_financial_advisor">Finanzberater</message>
+    <message id="youthacademy_budget_after">Budget nach Bau/Ausbau</message>
+
+    <message id="youthacademy_missing">Dieser Verein betreibt noch keine Jugendakademie.</message>
+    <message id="youthacademy_missing_help">Jugendspieler und Jugendscouting funktionieren weiterhin wie bisher. Die Akademie schaltet zusätzliche Entwicklungs-, Scouting- und Berichtsfunktionen frei.</message>
+    <message id="youthacademy_settings_requires_academy">Diese Funktion steht zur Verfügung, sobald der Verein eine Jugendakademie betreibt.</message>
+
+    <message id="youthacademy_level">Level</message>
+    <message id="youthacademy_levels">Akademie-Level</message>
+    <message id="youthacademy_next_level">Nächstes Level</message>
+    <message id="youthacademy_no_next_level">Die Akademie ist bereits auf dem höchsten aktiven Level.</message>
+    <message id="youthacademy_build_cost">Baukosten</message>
+    <message id="youthacademy_maintenance_fee">Kosten pro Spieltag</message>
+    <message id="youthacademy_development_bonus">Entwicklungsbonus</message>
+    <message id="youthacademy_scouting_bonus">Scoutingbonus</message>
+    <message id="youthacademy_stagnation_reduction">Stagnationsschutz</message>
+    <message id="youthacademy_reputation">Akademie-Reputation</message>
+    <message id="youthacademy_focus">Fokus</message>
+    <message id="youthacademy_captain">Jugendkapitän</message>
+    <message id="youthacademy_focus_help">Der Fokus beeinflusst die Ausrichtung der Akademie. Die Wirkung bleibt bewusst klein, damit Entwicklung nicht explodiert.</message>
+    <message id="youthacademy_captain_help">Der Jugendkapitän erhält einen kleinen Bonus auf Entwicklung und Stabilität. Geeignet sind ältere oder stärkere Jugendspieler.</message>
+
+    <message id="youthacademy_focus_balanced">Ausgewogen</message>
+    <message id="youthacademy_focus_technique">Technik</message>
+    <message id="youthacademy_focus_physical">Physis</message>
+    <message id="youthacademy_focus_mental">Mentalität</message>
+
+    <message id="youthacademy_integration">Zusammenspiel mit bestehenden Systemen</message>
+    <message id="youthacademy_integration_youthcoach">Jugendtrainer-Bonus</message>
+    <message id="youthacademy_integration_scouting_department">Scouting-Abteilung</message>
+    <message id="youthacademy_integration_combined_scouting">Kombinierter Jugendscouting-Modifikator</message>
+
+    <message id="youthacademy_report_development">Entwicklungsplus in den letzten 30 Tagen</message>
+    <message id="youthacademy_report_scouting">Scouting-Boni in den letzten 30 Tagen</message>
+    <message id="youthacademy_report_days">Berichtszeitraum in Tagen</message>
+    <message id="youthacademy_recent_events">Letzte Akademie-Ereignisse</message>
+    <message id="youthacademy_no_recent_events">Noch keine Akademie-Ereignisse vorhanden.</message>
+    <message id="youthacademy_event">Ereignis</message>
+    <message id="youthacademy_change">Änderung</message>
+
+    <message id="youthacademy_talent_risk">Talent-Risiko</message>
+    <message id="youthacademy_loan_recommendation">Leihempfehlung</message>
+    <message id="youthacademy_risk_high">Stagnationsrisiko</message>
+    <message id="youthacademy_risk_medium">Beobachten</message>
+    <message id="youthacademy_risk_low">In Ordnung</message>
+    <message id="youthacademy_loan_none_too_young">Noch zu jung für eine Leihe.</message>
+    <message id="youthacademy_loan_competitive_lower_league">Leihe zu einem kleineren Verein mit Stammplatzchance empfohlen.</message>
+    <message id="youthacademy_loan_regular_minutes">Leihe prüfen, wenn regelmäßige Minuten fehlen.</message>
+    <message id="youthacademy_loan_stay_academy">Zunächst in der Akademie weiterentwickeln.</message>
+
+    <message id="youthacademy_lineup_modes">Jugend-Aufstellungsmodi</message>
+    <message id="youthacademy_lineup_modes_help">Die bestehenden automatischen Jugendaufstellungen bleiben erhalten und werden nur in die Akademie-Empfehlungen eingeordnet.</message>
+
+    <message id="youthacademy_affordability_help">Bau und Ausbau sind nur möglich, wenn das Budget nach Zahlung nicht negativ wird und die erwarteten regelmäßigen Einnahmen die laufenden Akademiekosten tragen können. Ein Finanzberater verbessert diese Prognose leicht.</message>
+    <message id="youthacademy_downgrade_help">Beim Zurückstufen gibt es keine Erstattung. Die laufenden Kosten sinken ab dem nächsten Spieltag.</message>
+
+    <message id="build-youth-academy">Jugendakademie bauen</message>
+    <message id="upgrade-youth-academy">Jugendakademie ausbauen</message>
+    <message id="downgrade-youth-academy">Jugendakademie zurückstufen</message>
+    <message id="save-youth-academy-settings">Jugendakademie speichern</message>
+    <message id="youthacademy_build_success">Die Jugendakademie wurde gebaut.</message>
+    <message id="youthacademy_upgrade_success">Die Jugendakademie wurde ausgebaut.</message>
+    <message id="youthacademy_downgrade_success">Die Jugendakademie wurde zurückgestuft.</message>
+    <message id="youthacademy_settings_success">Die Jugendakademie-Einstellungen wurden gespeichert.</message>
+
+    <message id="youthacademy_err_disabled">Die Jugendakademie ist deaktiviert.</message>
+    <message id="youthacademy_err_exists">Dieser Verein besitzt bereits eine Jugendakademie.</message>
+    <message id="youthacademy_err_missing">Dieser Verein besitzt noch keine Jugendakademie.</message>
+    <message id="youthacademy_err_no_level">Es wurde kein gültiges Akademie-Level gefunden.</message>
+    <message id="youthacademy_err_max_level">Die Jugendakademie hat bereits das höchste Level erreicht.</message>
+    <message id="youthacademy_err_min_level">Die Jugendakademie kann nicht weiter zurückgestuft werden.</message>
+    <message id="youthacademy_err_invalid_focus">Ungültiger Entwicklungsfokus.</message>
+    <message id="youthacademy_err_invalid_captain">Der gewählte Jugendkapitän gehört nicht zu diesem Verein.</message>
+    <message id="youthacademy_err_not_enough_budget">Der Verein kann die Bau-/Ausbaukosten nicht tragen, ohne sofort ins Minus zu fallen.</message>
+    <message id="youthacademy_err_income_too_low">Die erwarteten regelmäßigen Einnahmen reichen nicht aus, um die laufenden Akademiekosten zu tragen.</message>
+
+    <message id="youthacademy_account_sender">Jugendakademie</message>
+    <message id="youthacademy_account_build_subject">Bau Jugendakademie</message>
+    <message id="youthacademy_account_upgrade_subject">Ausbau Jugendakademie</message>
+    <message id="youthacademy_account_maintenance_subject">Betrieb Jugendakademie</message>
+
+    <message id="youthacademy_log_built">Akademie gebaut</message>
+    <message id="youthacademy_log_upgraded">Akademie ausgebaut</message>
+    <message id="youthacademy_log_downgraded">Akademie zurückgestuft</message>
+    <message id="youthacademy_log_auto_downgraded">Akademie automatisch zurückgestuft</message>
+    <message id="youthacademy_log_development_bonus">Akademie-Entwicklungsbonus</message>
+    <message id="youthacademy_log_scouting_bonus">Akademie-Scoutingbonus</message>
+
+    <message id="youthacademy_message_sender">Jugendakademie</message>
+    <message id="youthacademy_message_report_subject">Jugendakademie-Bericht</message>
+    <message id="youthacademy_message_report_body">Dein monatlicher Jugendakademie-Bericht ist verfügbar. Entwicklung: {development}, Scouting: {scouting}, Risikotalente: {risk}. Zur Akademie: {url}</message>
+
+    <message id="youthacademy_youth_scouting_bonus_title">Akademie- und Scouting-Boni</message>
+    <message id="youthacademy_youth_scouting_bonus_info">Die klassische Jugendscouting-Seite berücksichtigt nun Akademie-Level, Akademie-Reputation, Jugendtrainer und die neue Scouting-Abteilung.</message>
+    <message id="youthacademy_youth_scouting_combined_bonus">Kombinierter Bonus</message>
+    <message id="youthacademy_youth_scouting_strength_bonus">Möglicher Stärkebonus</message>
+
+    <message id="entity_youthacademylevel_level">Level</message>
+    <message id="entity_youthacademylevel_name">Name</message>
+    <message id="entity_youthacademylevel_build_cost">Baukosten</message>
+    <message id="entity_youthacademylevel_maintenance_fee">Kosten pro Spieltag</message>
+    <message id="entity_youthacademylevel_development_bonus">Entwicklungsbonus</message>
+    <message id="entity_youthacademylevel_scouting_bonus">Scoutingbonus</message>
+    <message id="entity_youthacademylevel_status">Aktiv</message>
+    <message id="youthacademy_log_trait_discovered">Spezialfähigkeit im Nachwuchs erkannt</message>
+</messages>

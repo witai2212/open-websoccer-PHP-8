@@ -96,6 +96,28 @@ class SaveProfileController implements IActionController {
 			$columns["geburtstag"] = $dateObj->format("Y-m-d");
 		}
 		
+
+		// save manager character separately because it has cooldown and adaptation-penalty logic.
+		if (isset($parameters["manager_character"]) && strlen((string) $parameters["manager_character"]) && class_exists('ManagerCharacterDataService')) {
+			$teamId = (int) $user->getClubId($this->_websoccer, $this->_db);
+			$result = ManagerCharacterDataService::saveUserCharacter(
+				$this->_websoccer,
+				$this->_db,
+				$this->_i18n,
+				(int) $user->id,
+				$teamId,
+				$parameters["manager_character"]
+			);
+			if ($result['changed']) {
+				$messageKey = ($result['first_choice']) ? 'manager_character_saved_first_choice' : 'manager_character_saved_changed';
+				$this->_websoccer->addFrontMessage(new FrontMessage(
+					MESSAGE_TYPE_SUCCESS,
+					$this->_i18n->getMessage($messageKey),
+					''
+				));
+			}
+		}
+
 		// update record
 		if (count($columns)) {
 			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_user";

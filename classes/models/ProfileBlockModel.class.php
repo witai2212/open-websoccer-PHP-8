@@ -117,9 +117,17 @@ class ProfileBlockModel implements IModel {
 			}
 		}
 		
+		$managerCharacterInfo = array('character' => '', 'label' => '');
+		if (class_exists('ManagerCharacterDataService')) {
+			$character = ManagerCharacterDataService::getUserCharacter($this->_websoccer, $this->_db, (int) $user->id);
+			$managerCharacterInfo['character'] = $character;
+			$managerCharacterInfo['label'] = strlen($character) ? $this->_i18n->getMessage('manager_character_' . $character) : $this->_i18n->getMessage('manager_character_not_set');
+		}
+		
 		return array("profile" => $userinfo, "userteam" => $team, "unseenMessages" => $unseenMessages,
 				"unseenNotifications" => $unseenNotifications,
 		        "boardsatisfaction" => $boardSatisfaction, "boardinfo" => $boardInfo, "boardmissions" => $boardMissions,
+				"managerCharacterInfo" => $managerCharacterInfo,
 				"managerReputation" => $managerReputation,
 				"continental_association" => $continentalAssociation,
 				"continental_associations" => $continentalAssociations);

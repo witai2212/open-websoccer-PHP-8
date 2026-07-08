@@ -382,7 +382,7 @@ class TeamsDataService {
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON C.liga_id = L.id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON C.stadion_id = S.id';
 		
-		$whereCondition = 'nationalteam != \'1\' AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = \'1\') AND C.status = 1';
+		$whereCondition = 'nationalteam != \'1\' AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = \'1\') AND C.status = 1 AND NOT EXISTS (SELECT 1 FROM ' . $websoccer->getConfig('db_prefix') . '_manager_job_offer AS JO WHERE JO.target_team_id = C.id AND JO.status = \'open\' AND (JO.expires_date = 0 OR JO.expires_date >= ' . (int) $websoccer->getNowAsTimestamp() . '))';
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
@@ -767,6 +767,13 @@ class TeamsDataService {
 							AND C.nationalteam != '1' 
 							AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = '1') 
 							AND C.status = '1'
+							AND NOT EXISTS (
+								SELECT 1
+								FROM ". $websoccer->getConfig("db_prefix") ."_manager_job_offer AS JO
+								WHERE JO.target_team_id = C.id
+								  AND JO.status = 'open'
+								  AND (JO.expires_date = 0 OR JO.expires_date >= ". (int) $websoccer->getNowAsTimestamp() .")
+							)
 					ORDER BY C.highscore DESC, C.strength DESC, C.name ASC LIMIT 80";
 			$result = $db->executeQuery($sqlStr);
 			while($team = $result->fetch_array()) {
@@ -1109,14 +1116,19 @@ class TeamsDataService {
 	 * 
  	*/
  	public static function extendContractForNewManager(WebSoccer $websoccer, DbConnection $db, $teamId) {
- 	    
 	    $teamId = (int) $teamId;
-	    
-	    $whereLeague = ($leagueId > 0) ? " AND liga_id = " . $leagueId : "";
-	    $sqlStr = "UPDATE " . $websoccer->getConfig("db_prefix") . "_spieler SET vertrag_spiele='50' 
-	                WHERE verein = '" . $teamId . "'";
-	    $db->executeQuery($sqlStr);
- 	    
+	    if ($teamId <= 0) {
+	        return;
+	    }
+
+	    $db->queryUpdate(
+	        array(
+	            'vertrag_spiele' => '50'
+	        ),
+	        $websoccer->getConfig('db_prefix') . '_spieler',
+	        'verein_id = %d',
+	        $teamId
+	    );
  	}
 }
 ?>

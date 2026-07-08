@@ -18,6 +18,7 @@ class ManagerCareerDataService {
     const ORIGIN_JOB_OFFER = 'job_offer';
     const ORIGIN_FREE_CLUB = 'free_club';
     const ORIGIN_ADDITIONAL_CLUB = 'additional_club';
+    const ORIGIN_MANUAL_APPLICATION = 'manual_application';
 
     public static function isEnabled(WebSoccer $websoccer) {
         return self::getConfigBoolean($websoccer, 'mgr_career_enabled', TRUE);
@@ -63,6 +64,9 @@ class ManagerCareerDataService {
         if ($enabled && $isOwnProfile) {
             try {
                 self::expireOldOffers($websoccer, $db);
+                if (class_exists('ManagerCareerImprovementService')) {
+                    ManagerCareerImprovementService::processDueApplicationsNow($websoccer, $db, $i18n);
+                }
                 $openOffers = self::getOpenOffersOfUser($websoccer, $db, $profileUserId);
             } catch (Exception $e) {
                 $openOffers = array();
@@ -70,7 +74,7 @@ class ManagerCareerDataService {
             $freeClubs = self::getFreeClubsForManager($websoccer, $db, $profileUserId, 12, TRUE, TRUE);
         }
 
-        return array(
+        $data = array(
             'enabled' => $enabled,
             'is_own_profile' => $isOwnProfile,
             'manager_score' => $managerScore,
@@ -84,6 +88,12 @@ class ManagerCareerDataService {
             'job_offers_enabled' => self::isJobOffersEnabled($websoccer),
             'freeclub_rep_check_enabled' => self::isFreeClubReputationCheckEnabled($websoccer)
         );
+
+        if (class_exists('ManagerCareerImprovementService')) {
+            $data = ManagerCareerImprovementService::extendCareerPageData($websoccer, $db, $i18n, $data, $profileUserId, $viewerUserId);
+        }
+
+        return $data;
     }
 
     /**
@@ -98,14 +108,26 @@ class ManagerCareerDataService {
         self::ensureOfferMarker($websoccer, $db);
         self::expireOldOffers($websoccer, $db);
 
+        // Manual job applications are date-based. They must be decided even if no
+        // new matchday has advanced since the last manager-career marker.
+        $applicationExtended = array();
+        if (class_exists('ManagerCareerImprovementService')) {
+            $applicationResult = ManagerCareerImprovementService::processDueApplicationsNow($websoccer, $db, $i18n);
+            $applicationExtended = array(
+                'applications_processed' => (int) $applicationResult['processed'],
+                'applications_accepted' => (int) $applicationResult['accepted'],
+                'applications_rejected' => (int) $applicationResult['rejected']
+            );
+        }
+
         $matchId = self::getLatestComputedMatchId($websoccer, $db);
         if ($matchId < 1) {
-            return array('processed' => 0, 'created' => 0, 'skipped' => 'no_match');
+            return array_merge(array('processed' => 0, 'created' => 0, 'skipped' => 'no_match'), $applicationExtended);
         }
 
         $lastProcessed = self::getOfferMarker($websoccer, $db);
         if ($lastProcessed >= $matchId) {
-            return array('processed' => 0, 'created' => 0, 'skipped' => 'already_processed');
+            return array_merge(array('processed' => 0, 'created' => 0, 'skipped' => 'already_processed'), $applicationExtended);
         }
 
         $result = $db->querySelect('id', $prefix . '_user', "status = '1' ORDER BY id ASC");
@@ -117,8 +139,14 @@ class ManagerCareerDataService {
         }
         $result->free();
 
+        $extended = $applicationExtended;
+        if (class_exists('ManagerCareerImprovementService')) {
+            $matchdayExtended = ManagerCareerImprovementService::processMatchday($websoccer, $db, $i18n, $lastProcessed, $matchId, FALSE);
+            $extended = array_merge($matchdayExtended, $applicationExtended);
+        }
+
         self::setOfferMarker($websoccer, $db, $matchId);
-        return array('processed' => $processed, 'created' => $created, 'skipped' => '');
+        return array_merge(array('processed' => $processed, 'created' => $created, 'skipped' => ''), $extended);
     }
 
     public static function generateOffersForUser(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $userId, $matchId = 0) {
@@ -220,7 +248,15 @@ class ManagerCareerDataService {
             $currentTeamId = (int) $offer['source_team_id'];
         }
 
-        $switchResult = self::switchManagerToClub($websoccer, $db, $i18n, $userId, $targetTeamId, $currentTeamId, self::ORIGIN_JOB_OFFER, $offerId);
+        $origin = self::ORIGIN_JOB_OFFER;
+        if (isset($offer['context_data']) && strlen((string) $offer['context_data'])) {
+            $contextData = json_decode($offer['context_data'], TRUE);
+            if (is_array($contextData) && isset($contextData['manual_application_id']) && (int) $contextData['manual_application_id'] > 0) {
+                $origin = self::ORIGIN_MANUAL_APPLICATION;
+            }
+        }
+
+        $switchResult = self::switchManagerToClub($websoccer, $db, $i18n, $userId, $targetTeamId, $currentTeamId, $origin, $offerId);
         self::setOfferStatus($websoccer, $db, $offerId, self::OFFER_ACCEPTED);
         self::closeOtherOffers($websoccer, $db, $userId, $offerId);
         
@@ -242,6 +278,10 @@ class ManagerCareerDataService {
 
     public static function validateFreeClubEligibility(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $userId, $teamId) {
         self::validateTargetTeamIsFree($websoccer, $db, $i18n, $teamId);
+
+        if (self::isTeamReservedByOpenOffer($websoccer, $db, $teamId)) {
+            throw new Exception(self::message($i18n, 'freeclubs_msg_error'));
+        }
 
         if (!self::isFreeClubReputationCheckEnabled($websoccer)) {
             return TRUE;
@@ -347,12 +387,20 @@ class ManagerCareerDataService {
                 'id = %d',
                 (int) $oldTeamId
             );
+
+            if (class_exists('ManagerProfileDataService')) {
+                ManagerProfileDataService::handleUserLeftTeam($websoccer, $db, $oldTeamId, 'user_left');
+            }
         } else {
             $oldTeamId = 0;
         }
 
         // Remove orphan staff/scouting data from the target club before the new manager takes over.
         self::cleanupPersonnelAndScoutingForClub($websoccer, $db, $targetTeamId);
+
+        if (class_exists('ManagerProfileDataService')) {
+            ManagerProfileDataService::handleUserTakesOverTeam($websoccer, $db, $targetTeamId);
+        }
 
         $db->queryUpdate(
             array(
@@ -374,11 +422,16 @@ class ManagerCareerDataService {
             ManagerMissionsDataService::ensureMissionsForCurrentSeason($websoccer, $db, $userId, $targetTeamId);
         }
 
+
         $oldPrestige = ($old) ? self::getClubPrestigeFromRow($old) : 0;
         $targetPrestige = self::getClubPrestigeFromRow($target);
         $highscoreBonus = self::calculateMoveBonus($oldPrestige, $targetPrestige, $origin);
         if ($highscoreBonus > 0) {
             $db->executeQuery('UPDATE ' . $prefix . '_user SET highscore = highscore + ' . (int) $highscoreBonus . ' WHERE id = ' . (int) $userId);
+        }
+
+        if (class_exists('ManagerProfileDataService')) {
+            ManagerProfileDataService::assignHumanManagerToTeam($websoccer, $db, $i18n, $userId, $targetTeamId, $origin);
         }
 
         self::recordCareerHistory($websoccer, $db, $userId, $oldTeamId, $targetTeamId, $origin, $oldPrestige, $targetPrestige, $highscoreBonus, $offerId);
@@ -399,6 +452,10 @@ class ManagerCareerDataService {
 
         if (class_exists('ActionLogDataService')) {
             ActionLogDataService::createOrUpdateActionLog($websoccer, $db, $userId, 'managercareer_job_change');
+        }
+
+        if (class_exists('ManagerCareerImprovementService')) {
+            ManagerCareerImprovementService::handleManagerJoinedClub($websoccer, $db, $i18n, $userId, $targetTeamId, $oldTeamId, $origin);
         }
 
         return array(
@@ -478,14 +535,13 @@ class ManagerCareerDataService {
             'clubscore' => (int) $clubScore,
             'managerscore' => (int) $managerScore,
             'expires' => date('d.m.Y', (int) $expiresDate),
-            'url' => $websoccer->getInternalUrl('user', 'id=' . (int) $userId) . '#managercareer'
+            'url' => $websoccer->getInternalUrl('managercareer')
         ));
 
         $db->queryInsert(
             array(
                 'empfaenger_id' => (int) $userId,
-                'absender_id' => 0,
-                'absender_name' => self::message($i18n, 'managercareer_message_sender'),
+                    'absender_name' => self::message($i18n, 'managercareer_message_sender'),
                 'datum' => $websoccer->getNowAsTimestamp(),
                 'betreff' => $subject,
                 'nachricht' => $message,
@@ -601,6 +657,13 @@ class ManagerCareerDataService {
                 WHERE C.nationalteam != '1'
                   AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = '1')
                   AND C.status = '1'
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM " . $prefix . "_manager_job_offer AS JO
+                      WHERE JO.target_team_id = C.id
+                        AND JO.status = 'open'
+                        AND (JO.expires_date = 0 OR JO.expires_date >= " . $websoccer->getNowAsTimestamp() . ")
+                  )
                 ORDER BY " . $order . "
                 LIMIT " . (int) $limit;
 
@@ -638,6 +701,13 @@ class ManagerCareerDataService {
                   AND C.nationalteam != '1'
                   AND (C.user_id = 0 OR C.user_id IS NULL OR C.interimmanager = '1')
                   AND C.status = '1'
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM " . $prefix . "_manager_job_offer AS JO
+                      WHERE JO.target_team_id = C.id
+                        AND JO.status = 'open'
+                        AND (JO.expires_date = 0 OR JO.expires_date >= " . $websoccer->getNowAsTimestamp() . ")
+                  )
                 LIMIT 1";
         $result = $db->executeQuery($sql);
         $row = $result->fetch_array();
@@ -763,6 +833,21 @@ class ManagerCareerDataService {
         return ($row && isset($row['id']));
     }
 
+    public static function isTeamReservedByOpenOffer(WebSoccer $websoccer, DbConnection $db, $teamId, $ignoreOfferId = 0) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $where = "target_team_id = %d AND status = 'open' AND (expires_date = 0 OR expires_date >= %d)";
+        $params = array((int) $teamId, (int) $websoccer->getNowAsTimestamp());
+        if ((int) $ignoreOfferId > 0) {
+            $where .= " AND id != %d";
+            $params[] = (int) $ignoreOfferId;
+        }
+
+        $result = $db->querySelect('id', $prefix . '_manager_job_offer', $where, $params, 1);
+        $row = $result->fetch_array();
+        $result->free();
+        return ($row && isset($row['id']));
+    }
+
     private static function validateTargetTeamIsFree(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $teamId) {
         $prefix = $websoccer->getConfig('db_prefix');
         $result = $db->querySelect(
@@ -811,7 +896,7 @@ class ManagerCareerDataService {
     }
 
     private static function calculateMoveBonus($oldPrestige, $targetPrestige, $origin) {
-        if ($origin !== self::ORIGIN_JOB_OFFER || $targetPrestige <= $oldPrestige + 25) {
+        if (($origin !== self::ORIGIN_JOB_OFFER && $origin !== self::ORIGIN_MANUAL_APPLICATION) || $targetPrestige <= $oldPrestige + 25) {
             return 0;
         }
         return min(100, max(10, (int) floor(($targetPrestige - $oldPrestige) / 5)));

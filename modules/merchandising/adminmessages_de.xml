@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-
-	<message id="settings_label_merchandising_enabled">Merchandising aktivieren</message>
-	<message id="settings_label_merchandising_enabled_help">
-		Legt fest, ob das Merchandising-Modul im Spiel verfügbar ist.
-	</message>
-
+    <message id="settings_label_merchandising_enabled">Merchandising aktivieren</message>
+    <message id="settings_label_merchandising_enabled_help">Aktiviert das vollständige Merchandising-System für menschlich geführte Vereine.</message>
+    <message id="settings_label_merchandising_star_threshold">Mindestwert für Merchandising-Stars</message>
+    <message id="settings_label_merchandising_star_threshold_help">Mindest-Sternwert, ab dem ein Spieler grundsätzlich für ein eigenes Trikot infrage kommt.</message>
+    <message id="settings_label_merchandising_max_player_collections">Maximale Spielertrikots je Verein</message>
+    <message id="settings_label_merchandising_max_player_collections_help">Begrenzt die Anzahl gleichzeitig freigegebener Merchandising-Stars.</message>
 </messages>

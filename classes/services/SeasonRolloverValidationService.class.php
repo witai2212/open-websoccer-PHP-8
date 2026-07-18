@@ -26,11 +26,25 @@ class SeasonRolloverValidationService {
             'parent_club_division_conflicts' => class_exists('ParentClubDataService') ? ParentClubDataService::countActiveDivisionConflicts($websoccer, $db) : 0,
             'national_countries' => self::countCountriesWithTeams($websoccer, $db),
             'uefa_countries' => self::countRows($db, $prefix . '_land', '1 = 1'),
-            'uefa_temp_teams' => self::countRows($db, $prefix . '_uefa_temp', '1 = 1'),
+            'uefa_temp_teams' => self::tableExists($db, $prefix . '_uefa_temp') ? self::countRows($db, $prefix . '_uefa_temp', '1 = 1') : 0,
+            'conmebol_countries' => self::countRows($db, $prefix . '_land', "continent = 'CONMEBOL'"),
+            'conmebol_temp_teams' => self::tableExists($db, $prefix . '_conmebol_temp') ? self::countRows($db, $prefix . '_conmebol_temp', '1 = 1') : 0,
+            'concacaf_countries' => self::countRows($db, $prefix . '_land', "continent = 'CONCACAF'"),
+            'concacaf_leagues' => self::countConcacafLeagues($websoccer, $db),
+            'concacaf_teams' => self::countConcacafTeams($websoccer, $db),
+            'concacaf_players' => self::countConcacafPlayers($websoccer, $db),
+            'concacaf_youthplayers' => self::countConcacafYouthPlayers($websoccer, $db),
+            'concacaf_temp_teams' => self::tableExists($db, $prefix . '_concacaf_temp') ? self::countRows($db, $prefix . '_concacaf_temp', '1 = 1') : 0,
             'champions_league_exists' => self::cupExists($websoccer, $db, 'Champions League'),
             'uefa_league_exists' => self::cupExists($websoccer, $db, 'UEFA Euro League'),
+            'copa_libertadores_exists' => self::cupExists($websoccer, $db, 'Copa Libertadores'),
+            'copa_sudamericana_exists' => self::cupExists($websoccer, $db, 'Copa Sudamericana'),
+            'concacaf_champions_cup_exists' => self::cupExists($websoccer, $db, 'CONCACAF Champions Cup'),
             'champions_league_group_round' => self::cupGroupRoundExists($websoccer, $db, 'Champions League'),
-            'uefa_league_group_round' => self::cupGroupRoundExists($websoccer, $db, 'UEFA Euro League')
+            'uefa_league_group_round' => self::cupGroupRoundExists($websoccer, $db, 'UEFA Euro League'),
+            'copa_libertadores_group_round' => self::cupGroupRoundExists($websoccer, $db, 'Copa Libertadores'),
+            'copa_sudamericana_group_round' => self::cupGroupRoundExists($websoccer, $db, 'Copa Sudamericana'),
+            'concacaf_champions_cup_group_round' => self::cupGroupRoundExists($websoccer, $db, 'CONCACAF Champions Cup')
         );
     }
 
@@ -167,6 +181,87 @@ class SeasonRolloverValidationService {
         $row = $result->fetch_array();
         $result->free();
 
+        return $row ? (int) $row['hits'] : 0;
+    }
+
+
+    public static function tableExists(DbConnection $db, $tableName) {
+        try {
+            $result = $db->executeQuery('SHOW TABLES LIKE \'' . $db->connection->real_escape_string($tableName) . '\'');
+            $exists = ($result && $result->num_rows > 0);
+            if ($result) {
+                $result->free();
+            }
+            return $exists;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+
+    public static function countConcacafLeagues(WebSoccer $websoccer, DbConnection $db) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $sql = "
+            SELECT COUNT(*) AS hits
+            FROM {$prefix}_liga AS LG
+            INNER JOIN {$prefix}_land AS L ON L.name = LG.land
+            WHERE L.continent = 'CONCACAF'
+        ";
+
+        $result = $db->executeQuery($sql);
+        $row = $result->fetch_array();
+        $result->free();
+        return $row ? (int) $row['hits'] : 0;
+    }
+
+    public static function countConcacafTeams(WebSoccer $websoccer, DbConnection $db) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $sql = "
+            SELECT COUNT(*) AS hits
+            FROM {$prefix}_verein AS C
+            INNER JOIN {$prefix}_liga AS LG ON LG.id = C.liga_id
+            INNER JOIN {$prefix}_land AS L ON L.name = LG.land
+            WHERE L.continent = 'CONCACAF'
+        ";
+
+        $result = $db->executeQuery($sql);
+        $row = $result->fetch_array();
+        $result->free();
+        return $row ? (int) $row['hits'] : 0;
+    }
+
+    public static function countConcacafPlayers(WebSoccer $websoccer, DbConnection $db) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $sql = "
+            SELECT COUNT(*) AS hits
+            FROM {$prefix}_spieler AS P
+            INNER JOIN {$prefix}_verein AS C ON C.id = P.verein_id
+            INNER JOIN {$prefix}_liga AS LG ON LG.id = C.liga_id
+            INNER JOIN {$prefix}_land AS L ON L.name = LG.land
+            WHERE L.continent = 'CONCACAF'
+            AND P.status = '1'
+        ";
+
+        $result = $db->executeQuery($sql);
+        $row = $result->fetch_array();
+        $result->free();
+        return $row ? (int) $row['hits'] : 0;
+    }
+
+    public static function countConcacafYouthPlayers(WebSoccer $websoccer, DbConnection $db) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $sql = "
+            SELECT COUNT(*) AS hits
+            FROM {$prefix}_youthplayer AS YP
+            INNER JOIN {$prefix}_verein AS C ON C.id = YP.team_id
+            INNER JOIN {$prefix}_liga AS LG ON LG.id = C.liga_id
+            INNER JOIN {$prefix}_land AS L ON L.name = LG.land
+            WHERE L.continent = 'CONCACAF'
+        ";
+
+        $result = $db->executeQuery($sql);
+        $row = $result->fetch_array();
+        $result->free();
         return $row ? (int) $row['hits'] : 0;
     }
 

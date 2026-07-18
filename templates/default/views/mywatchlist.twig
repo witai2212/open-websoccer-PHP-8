@@ -53,7 +53,15 @@
 				{% endif %}
 				<td>
 					{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}
-					<a href="?page=player&id={{ player.spieler_id }}">{{ player.vorname }}&nbsp{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</a>
+					<a href="?page=player&id={{ player.spieler_id }}">{{ player.vorname }}&nbsp;{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</a>
+                    {% if player.accepted_precontract.id is defined %}
+                        <br><span class="label label-warning">{{ i18n.getMessage("precontract_watchlist_moving", player.accepted_precontract.destination_team_name) }}</span>
+                    {% elseif player.precontract_offer.id is defined and player.precontract_offer.status == 'open' %}
+                        <br><span class="label label-info">{{ i18n.getMessage("precontract_watchlist_own_offer") }}</span>
+                        <a href="{{ env.getInternalUrl("player-precontract", "id=" ~ player.spieler_id) }}">{{ i18n.getMessage("precontract_adjust_offer") }}</a>
+                    {% elseif player.precontract_open_offer_count > 0 %}
+                        <br><span class="label label-info">{{ i18n.getMessage("precontract_watchlist_negotiations") }}</span>
+                    {% endif %}
 				</td>
 				<td>
 					{% if player.bild|length > 0 %}

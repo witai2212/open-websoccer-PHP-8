@@ -49,4 +49,11 @@
 	<message id="entity_country_conmebol_lib">Libertadores Plätze</message>
 	<message id="entity_country_conmebol_sud">Sudamericana Plätze</message>
 	<message id="entity_country_conmebol_coeff">CONMEBOL Koeffizient</message>
+	<message id="entity_country_concacaf_s1">CONCACAF S1</message>
+	<message id="entity_country_concacaf_s2">CONCACAF S2</message>
+	<message id="entity_country_concacaf_s3">CONCACAF S3</message>
+	<message id="entity_country_concacaf_s4">CONCACAF S4</message>
+	<message id="entity_country_concacaf_s5">CONCACAF S5</message>
+	<message id="entity_country_concacaf_champions">Champions-Cup-Plätze</message>
+	<message id="entity_country_concacaf_coeff">CONCACAF Koeffizient</message>
 </messages>

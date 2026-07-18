@@ -44,7 +44,7 @@ class NewsDetailsModel implements IModel {
 		$fromTable .= " LEFT JOIN " . $tablePrefix . "admin AS AdminTab ON NewsTab.autor_id = AdminTab.id";
 		$fromTable .= " LEFT JOIN " . $tablePrefix . "fanpressure_story_log AS FanStoryTab ON FanStoryTab.news_id = NewsTab.id";
 		$fromTable .= " LEFT JOIN " . $tablePrefix . "verein AS TeamTab ON TeamTab.id = FanStoryTab.team_id";
-		$whereCondition = "NewsTab.id = %d AND status = 1";
+		$whereCondition = "NewsTab.id = %d AND NewsTab.status = 1 LIMIT 50";
 		$parameters = (int) $this->_websoccer->getRequestParameter("id");
 		
 		$columns = "NewsTab.*, AdminTab.name AS author_name, FanStoryTab.team_id, FanStoryTab.user_id, FanStoryTab.event_key, FanStoryTab.context_data, FanStoryTab.mood_change, FanStoryTab.pressure_change, FanStoryTab.board_change, FanStoryTab.chemistry_change, TeamTab.name AS team_name";

@@ -47,6 +47,10 @@ class SellPlayerController implements IActionController {
 			throw new Exception("nice try");
 		}
 		
+        if (PlayerPrecontractDataService::hasAcceptedAgreement($this->_websoccer, $this->_db, $player["player_id"])) {
+            throw new Exception($this->_i18n->getMessage("precontract_locked"));
+        }
+        
 		// check if player is already on market
 		if ($player["player_transfermarket"]) {
 			throw new Exception($this->_i18n->getMessage("sell_player_already_on_list"));

@@ -124,7 +124,7 @@ if ($active_session_id >= 1 && $active_session_id != $session_id) {
         include_once(sprintf(CONFIGCACHE_ENTITYMESSAGES, $i18n->getCurrentLanguage()));
         
         // Date-based jobs first: completed camps are removed before automatic training checks active camps.
-        executeSafeOperation('Executing stadium construction and training camp completion...', function() use ($website, $db, $i18n) {
+        executeSafeOperation('[AcceptStadiumConstructionWorkJob] Executing stadium const. and training camp...', function() use ($website, $db, $i18n) {
             executeConfiguredJobOnce($website, $db, $i18n, 'stadium', 'AcceptStadiumConstructionWorkJob');
         });
         
@@ -161,7 +161,7 @@ if ($active_session_id >= 1 && $active_session_id != $session_id) {
             echo "[TrainingMatchdayJob] skipped in training camp: " . getTrainingResultValue($trainingResult, 'skipped_camp') . "\n";
         });
         
-        executeSafeOperation('Executing manager career job offers...', function() use ($website, $db, $i18n) {
+        executeSafeOperation('[ManagerCareerDataService] Executing manager career job offers...', function() use ($website, $db, $i18n) {
             $careerResult = ManagerCareerDataService::processJobOffersMatchday($website, $db, $i18n);
             echo "[ManagerCareerJob] users processed: " . getTrainingResultValue($careerResult, 'processed') . "\n";
             echo "[ManagerCareerJob] offers created: " . getTrainingResultValue($careerResult, 'created') . "\n";

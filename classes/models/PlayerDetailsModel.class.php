@@ -52,7 +52,9 @@ class PlayerDetailsModel implements IModel {
 		}
 		//print_r($watchlist);
 		
-		return array("player" => $player);
+		$precontractEligible = PlayerPrecontractDataService::isEligible($this->_websoccer, $this->_db, $playerId);
+        $acceptedPrecontract = PlayerPrecontractDataService::getAcceptedByPlayer($this->_websoccer, $this->_db, $playerId);
+        return array("player" => $player, "precontract_eligible" => $precontractEligible, "accepted_precontract" => $acceptedPrecontract);
 	}
 	
 }

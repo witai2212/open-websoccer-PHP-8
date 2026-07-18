@@ -1,0 +1,20 @@
+{% extends "base.twig" %}
+{% import "macros/formelements.twig" as formelements %}
+{% block page_title %}{{ i18n.getMessage("precontract_title", player.player_firstname ~ " " ~ player.player_lastname) }}{% endblock %}
+{% block page_content %}
+<div class="alert alert-info">{{ i18n.getMessage("precontract_explanation") }}</div>
+{% if existing_offer.id is defined %}
+<div class="alert alert-success">{{ i18n.getMessage("precontract_existing_offer_hint") }}</div>
+{% endif %}
+<form class="form-horizontal" method="post">
+{% set handMoneyValue = env.getRequestParameter('handmoney')|length > 0 ? env.getRequestParameter('handmoney') : existing_offer.hand_money %}
+{% set salaryValue = env.getRequestParameter('contract_salary')|length > 0 ? env.getRequestParameter('contract_salary') : existing_offer.contract_salary %}
+{% set goalBonusValue = env.getRequestParameter('contract_goal_bonus')|length > 0 ? env.getRequestParameter('contract_goal_bonus') : existing_offer.contract_goal_bonus %}
+{% set matchesValue = env.getRequestParameter('contract_matches')|length > 0 ? env.getRequestParameter('contract_matches') : (existing_offer.contract_matches|default(env.getConfig('max_number_of_contract_matches'))) %}
+{{ formelements.textfield('handmoney', i18n.getMessage('transfer_bid_handmoney'), handMoneyValue, true, validationMsg, 'number') }}
+{{ formelements.textfield('contract_salary', i18n.getMessage('entity_player_vertrag_gehalt'), salaryValue, true, validationMsg, 'number') }}
+{{ formelements.textfield('contract_goal_bonus', i18n.getMessage('entity_player_vertrag_torpraemie'), goalBonusValue, true, validationMsg, 'number') }}
+{{ formelements.textfield('contract_matches', i18n.getMessage('entity_player_vertrag_spiele'), matchesValue, true, validationMsg, 'number') }}
+<div class="form-actions"><button type="submit" class="btn btn-primary">{% if existing_offer.id is defined %}{{ i18n.getMessage('precontract_update_submit') }}{% else %}{{ i18n.getMessage('precontract_submit') }}{% endif %}</button></div>
+<input type="hidden" name="page" value="player-precontract"><input type="hidden" name="action" value="player-precontract"><input type="hidden" name="id" value="{{ player.player_id }}">
+</form>{% endblock %}

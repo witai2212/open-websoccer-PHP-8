@@ -1,0 +1,52 @@
+{% import "macros/paginator.twig" as pagination %}
+{% extends "base.twig" %}
+
+{% block page_title %}
+{{ i18n.getMessage("concacaf_ranking_title") }}
+{% endblock %}
+
+{% block page_content %}
+
+{% if concacafs|length == 0 %}
+{{ i18n.getMessage("news_no_items") }}
+{% endif %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ i18n.getMessage("concacaftable_land") }}</th>
+            <th>{{ i18n.getMessage("concacaftable_s1") }}</th>
+            <th>{{ i18n.getMessage("concacaftable_s2") }}</th>
+            <th>{{ i18n.getMessage("concacaftable_s3") }}</th>
+            <th>{{ i18n.getMessage("concacaftable_s4") }}</th>
+            <th>{{ i18n.getMessage("concacaftable_s5") }}</th>
+            <th>{{ i18n.getMessage("concacaftable_total") }}</th>
+            <th>{{ i18n.getMessage("concacaftable_champions") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for concacaf in concacafs %}
+        <tr>
+            <td><strong>{{ loop.index }}</strong></td>
+            {% set nationImg = skin.getImage("flags/players/" ~ concacaf.name ~ ".png") %}
+            {% if i18n.hasMessage("option_" ~ concacaf.name) %}
+                {% set countryLabel = i18n.getMessage("option_" ~ concacaf.name) %}
+            {% else %}
+                {% set countryLabel = concacaf.name %}
+            {% endif %}
+            <td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}&nbsp;{{ concacaf.name }}</td>
+            <td>{{ concacaf.concacaf_s5 }}</td>
+            <td>{{ concacaf.concacaf_s4 }}</td>
+            <td>{{ concacaf.concacaf_s3 }}</td>
+            <td>{{ concacaf.concacaf_s2 }}</td>
+            <td>{{ concacaf.concacaf_s1 }}</td>
+            <td>{{ concacaf.total }}</td>
+            <td>{{ concacaf.concacaf_champions }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ pagination.paginator(paginator) }}
+
+{% endblock %}

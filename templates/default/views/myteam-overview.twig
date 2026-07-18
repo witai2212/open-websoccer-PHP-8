@@ -41,7 +41,7 @@
 			{% set salarySum = 0 %}
 			{% for player in players %}
 			{% set salarySum = salarySum + player.contract_salary %}
-			<tr{% if player.contract_matches < 10 %} class="error"{% endif %}>
+			<tr{% if player.accepted_precontract.id is defined %} class="warning"{% elseif player.contract_matches < 10 %} class="error"{% endif %}>
 				<td style="text-align: center"><img src="{{ skin.getImage("icons/playertype_" ~ player.position ~ ".png") }}"
 					alt="{{ i18n.getMessage("player_position_" ~ player.position) }}" title="{{ i18n.getMessage("player_position_" ~ player.position) }}" />
 					{% if (player.position_main|length > 0) %}
@@ -60,11 +60,15 @@
 				{% if player.transfermarket %}
 					<a class="wstooltip" href="{{ env.getInternalUrl("transfer-bid", "id=" ~ player.id) }}" title="{{ i18n.getMessage("entity_player_transfermarkt") }}"><i class="icon-hand-up darkIcon"></i></a>
 				{% endif %}
+                {% if player.accepted_precontract.id is defined %}
+                    <br><span class="label label-warning">{{ i18n.getMessage("precontract_outgoing_hint", player.accepted_precontract.destination_team_name) }}</span>
+                {% endif %}
 				{% if player.id == captain_id %}
 					<i class="icon-group wstooltip" title="{{ i18n.getMessage("myteam_captain_tooltip") }}"></i>
 				{% endif %}
 				</p>
 				
+                {% if player.accepted_precontract.id is not defined %}
 				{% if player.lending_owner_id == 0 and
 					(player.transfermarket == 0 
 					or env.getConfig("enable_player_resignation") 
@@ -124,6 +128,7 @@
 						</div>
 					{% endif %}
 				{% endif %}
+                {% endif %}
 
 				</td>
 				
@@ -209,4 +214,10 @@
 	<p>{{ i18n.getMessage("no_players_found") }}</p>
 {% endif %}
 
+
+{% if incoming_players is defined and incoming_players|length > 0 %}
+<h3>{{ i18n.getMessage("precontract_incoming_title") }}</h3>
+<table class="table table-striped"><thead><tr><th>{{ i18n.getMessage("playertable_head_position") }}</th><th>{{ i18n.getMessage("playertable_head_name") }}</th><th>{{ i18n.getMessage("transfer_from") }}</th><th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th></tr></thead><tbody>
+{% for player in incoming_players %}<tr class="success"><td>{{ i18n.getMessage("player_position_" ~ player.position) }}</td><td><a href="{{ env.getInternalUrl("player", "id=" ~ player.player_id) }}">{{ player.firstname }} {{ player.lastname }}</a></td><td>{{ player.current_team_name }}</td><td>{{ player.contract_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endfor %}
+</tbody></table>{% endif %}
 {% endblock %}

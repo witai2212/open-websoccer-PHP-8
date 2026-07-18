@@ -8,298 +8,286 @@
 
 {% block page_content %}
 
-<p>
-	{{ i18n.getMessage("merchandising_intro") }}
-</p>
+<p>{{ i18n.getMessage("merchandising_intro_v2") }}</p>
 
-<hr>
+<ul class="nav nav-tabs">
+    <li{% if activeTab == "overview" %} class="active"{% endif %}><a href="?page=merchandising&tab=overview"><i class="icon-home"></i> {{ i18n.getMessage("merchandising_tab_overview") }}</a></li>
+    <li{% if activeTab == "collections" %} class="active"{% endif %}><a href="?page=merchandising&tab=collections"><i class="icon-shopping-cart"></i> {{ i18n.getMessage("merchandising_tab_collections") }}</a></li>
+    <li{% if activeTab == "development" %} class="active"{% endif %}><a href="?page=merchandising&tab=development"><i class="icon-pencil"></i> {{ i18n.getMessage("merchandising_tab_development") }}</a></li>
+    <li{% if activeTab == "warehouse" %} class="active"{% endif %}><a href="?page=merchandising&tab=warehouse"><i class="icon-inbox"></i> {{ i18n.getMessage("merchandising_tab_warehouse") }}</a></li>
+    <li{% if activeTab == "players" %} class="active"{% endif %}><a href="?page=merchandising&tab=players"><i class="icon-user"></i> {{ i18n.getMessage("merchandising_tab_players") }}</a></li>
+    <li{% if activeTab == "marketing" %} class="active"{% endif %}><a href="?page=merchandising&tab=marketing"><i class="icon-bullhorn"></i> {{ i18n.getMessage("merchandising_tab_marketing") }}</a></li>
+    <li{% if activeTab == "statistics" %} class="active"{% endif %}><a href="?page=merchandising&tab=statistics"><i class="icon-signal"></i> {{ i18n.getMessage("merchandising_tab_statistics") }}</a></li>
+</ul>
 
-<h3>{{ i18n.getMessage("merchandising_summary_title") }}</h3>
+{% if activeTab == "overview" %}
+
+<div class="row-fluid">
+    <div class="span3"><div class="well well-small"><strong>{{ i18n.getMessage("merchandising_summary_revenue") }}</strong><br><span style="font-size: 20px;">{{ summary.revenue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></div></div>
+    <div class="span3"><div class="well well-small"><strong>{{ i18n.getMessage("merchandising_summary_profit") }}</strong><br><span style="font-size: 20px;">{{ summary.profit|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></div></div>
+    <div class="span3"><div class="well well-small"><strong>{{ i18n.getMessage("merchandising_summary_stock_value") }}</strong><br><span style="font-size: 20px;">{{ summary.stock_value|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></div></div>
+    <div class="span3"><div class="well well-small"><strong>{{ i18n.getMessage("merchandising_summary_fulfilment") }}</strong><br><span style="font-size: 20px;">{{ summary.fulfilment_percent|number_format(1, ',', ' ') }} %</span></div></div>
+</div>
 
 <table class="table table-striped">
-	<tbody>
-		<tr>
-			<td><strong>{{ i18n.getMessage("merchandising_summary_units_sold") }}</strong></td>
-			<td style="text-align: right;">
-				{{ salesSummary.units_sold|number_format(0, ',', ' ') }}
-			</td>
-		</tr>
-		<tr>
-			<td><strong>{{ i18n.getMessage("merchandising_summary_revenue") }}</strong></td>
-			<td style="text-align: right;">
-				{{ salesSummary.revenue|number_format(0, ',', ' ') }}
-				{{ env.getConfig("game_currency") }}
-			</td>
-		</tr>
-		<tr>
-			<td><strong>{{ i18n.getMessage("merchandising_summary_costs") }}</strong></td>
-			<td style="text-align: right;">
-				{{ salesSummary.costs|number_format(0, ',', ' ') }}
-				{{ env.getConfig("game_currency") }}
-			</td>
-		</tr>
-		<tr>
-			<td><strong>{{ i18n.getMessage("merchandising_summary_profit") }}</strong></td>
-			<td style="text-align: right;">
-				<strong>
-					{{ salesSummary.profit|number_format(0, ',', ' ') }}
-					{{ env.getConfig("game_currency") }}
-				</strong>
-			</td>
-		</tr>
-		<tr>
-			<td><strong>{{ i18n.getMessage("merchandising_summary_matches_with_sales") }}</strong></td>
-			<td style="text-align: right;">
-				{{ salesSummary.matches_with_sales|number_format(0, ',', ' ') }}
-			</td>
-		</tr>
-		<tr>
-			<td><strong>{{ i18n.getMessage("merchandising_summary_avg_profit_per_match") }}</strong></td>
-			<td style="text-align: right;">
-				{{ salesSummary.avg_profit_per_match|number_format(0, ',', ' ') }}
-				{{ env.getConfig("game_currency") }}
-			</td>
-		</tr>
-	</tbody>
+    <tbody>
+        <tr><th>{{ i18n.getMessage("merchandising_summary_units_sold") }}</th><td style="text-align:right;">{{ summary.units_sold|number_format(0, ',', ' ') }}</td></tr>
+        <tr><th>{{ i18n.getMessage("merchandising_summary_demand") }}</th><td style="text-align:right;">{{ summary.demand_units|number_format(0, ',', ' ') }}</td></tr>
+        <tr><th>{{ i18n.getMessage("merchandising_summary_missed") }}</th><td style="text-align:right;">{{ summary.missed_units|number_format(0, ',', ' ') }}</td></tr>
+        <tr><th>{{ i18n.getMessage("merchandising_summary_costs") }}</th><td style="text-align:right;">{{ summary.costs|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+        <tr><th>{{ i18n.getMessage("merchandising_summary_incoming_value") }}</th><td style="text-align:right;">{{ summary.incoming_value|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+        <tr><th>{{ i18n.getMessage("merchandising_summary_open_collections") }}</th><td style="text-align:right;">{{ summary.open_collections }}</td></tr>
+    </tbody>
 </table>
 
-<hr>
+<div class="row-fluid">
+    <div class="span6">
+        <h4>{{ i18n.getMessage("merchandising_management_status") }}</h4>
+        <table class="table table-striped">
+            <tr><th>{{ i18n.getMessage("merchandising_management_mode") }}</th><td>{{ i18n.getMessage("merchandising_mode_" ~ settings.management_mode) }}</td></tr>
+            <tr><th>{{ i18n.getMessage("merchandising_strategy") }}</th><td>{{ i18n.getMessage("merchandising_strategy_" ~ settings.strategy) }}</td></tr>
+            <tr><th>{{ i18n.getMessage("merchandising_marketing_manager") }}</th><td>{% if marketingManager.name is defined %}{{ marketingManager.name }} ({{ i18n.getMessage("merchandising_staff_level") }} {{ marketingManager.level }}){% else %}{{ i18n.getMessage("merchandising_no_marketing_manager") }}{% endif %}</td></tr>
+        </table>
+    </div>
+    <div class="span6">
+        <h4>{{ i18n.getMessage("merchandising_next_steps") }}</h4>
+        {% if collections|length == 0 %}
+            {{ messagebox.box(i18n.getMessage("merchandising_hint_start_development"), "", "info") }}
+        {% elseif summary.stock_value == 0 and summary.incoming_value == 0 %}
+            {{ messagebox.box(i18n.getMessage("merchandising_hint_order_stock"), "", "info") }}
+        {% elseif summary.missed_units > 0 %}
+            {{ messagebox.box(i18n.getMessage("merchandising_hint_missed_sales"), "", "warning") }}
+        {% else %}
+            {{ messagebox.box(i18n.getMessage("merchandising_hint_running"), "", "success") }}
+        {% endif %}
+    </div>
+</div>
 
-<h3>{{ i18n.getMessage("merchandising_products_title") }}</h3>
-
-{% if products is defined and products|length > 0 %}
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ i18n.getMessage("merchandising_product_name") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_product_purchase_price") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_product_base_sales_price") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_product_effective_sales_price") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_product_profit_per_item") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_product_base_demand") }}</th>
-				<th>{{ i18n.getMessage("merchandising_product_settings") }}</th>
-			</tr>
-		</thead>
-		<tbody>
-
-			{% for product in products %}
-				<tr>
-					<td>
-						<p><strong>{{ product.name }}</strong></p>
-
-						{% if product.description is defined and product.description|length > 0 %}
-							<p>{{ product.description }}</p>
-						{% endif %}
-					</td>
-
-					<td style="text-align: right;">
-						{{ product.purchase_price|number_format(0, ',', ' ') }}
-						{{ env.getConfig("game_currency") }}
-					</td>
-
-					<td style="text-align: right;">
-						{{ product.sales_price|number_format(0, ',', ' ') }}
-						{{ env.getConfig("game_currency") }}
-					</td>
-
-					<td style="text-align: right;">
-						{{ product.effective_sales_price|number_format(0, ',', ' ') }}
-						{{ env.getConfig("game_currency") }}
-					</td>
-
-					<td style="text-align: right;">
-						{% if product.profit_per_item > 0 %}
-							<span style="color: green;">
-								{{ product.profit_per_item|number_format(0, ',', ' ') }}
-								{{ env.getConfig("game_currency") }}
-							</span>
-						{% elseif product.profit_per_item < 0 %}
-							<span style="color: red;">
-								{{ product.profit_per_item|number_format(0, ',', ' ') }}
-								{{ env.getConfig("game_currency") }}
-							</span>
-						{% else %}
-							{{ product.profit_per_item|number_format(0, ',', ' ') }}
-							{{ env.getConfig("game_currency") }}
-						{% endif %}
-					</td>
-
-					<td style="text-align: right;">
-						{{ product.base_demand_percent|number_format(2, ',', ' ') }} %
-					</td>
-
-					<td>
-						<form method="post" class="form-inline">
-							<label class="checkbox" style="margin-bottom: 8px;">
-								<input
-									type="checkbox"
-									name="enabled"
-									value="1"
-									{% if product.enabled == "1" %}checked{% endif %}>
-								{{ i18n.getMessage("merchandising_product_enabled") }}
-							</label>
-
-							<br>
-
-							<label for="price_factor_{{ product.product_id }}">
-								{{ i18n.getMessage("merchandising_product_price_factor") }}
-							</label>
-
-							<select
-								id="price_factor_{{ product.product_id }}"
-								name="price_factor"
-								style="width: 90px;">
-								{% for factor in priceFactorOptions %}
-									<option
-										value="{{ factor }}"
-										{% if product.price_factor == factor %}selected{% endif %}>
-										{{ factor }}
-									</option>
-								{% endfor %}
-							</select>
-
-							<br>
-
-							<button
-								type="submit"
-								class="btn btn-mini btn-primary ajaxSubmit"
-								data-ajaxtarget="pagecontent"
-								style="margin-top: 8px;">
-								<i class="icon-ok icon-white"></i>
-								{{ i18n.getMessage("button_save") }}
-							</button>
-
-							<input type="hidden" name="page" value="merchandising">
-							<input type="hidden" name="action" value="save-merchandising-product">
-							<input type="hidden" name="productid" value="{{ product.product_id }}">
-						</form>
-					</td>
-				</tr>
-			{% endfor %}
-
-		</tbody>
-	</table>
-
+<h4>{{ i18n.getMessage("merchandising_recent_sales_title") }}</h4>
+{% if recentSales|length > 0 %}
+<table class="table table-striped">
+    <thead><tr><th>{{ i18n.getMessage("merchandising_recent_sales_date") }}</th><th>{{ i18n.getMessage("merchandising_product_name") }}</th><th>{{ i18n.getMessage("merchandising_channel") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_units_sold") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_profit") }}</th></tr></thead>
+    <tbody>
+    {% for sale in recentSales|slice(0, 8) %}
+        <tr><td>{{ env.getFormattedDate(sale.created_date) }}</td><td>{{ sale.display_name }}</td><td>{{ i18n.getMessage("merchandising_channel_" ~ sale.channel) }}</td><td style="text-align:right;">{{ sale.units_sold }}</td><td style="text-align:right;">{{ sale.profit|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% else %}
-
-	{{ messagebox.box(i18n.getMessage("merchandising_no_products_available"), "", "info") }}
-
+{{ messagebox.box(i18n.getMessage("merchandising_no_recent_sales"), "", "info") }}
 {% endif %}
 
-<hr>
+{% elseif activeTab == "collections" %}
 
-<h3>{{ i18n.getMessage("merchandising_product_statistics_title") }}</h3>
+<h3>{{ i18n.getMessage("merchandising_collections_title") }}</h3>
+<p>{{ i18n.getMessage("merchandising_collections_intro") }}</p>
 
-{% if productStatistics is defined and productStatistics|length > 0 %}
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ i18n.getMessage("merchandising_product_name") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_units_sold") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_revenue") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_costs") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_profit") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_matches_with_sales") }}</th>
-			</tr>
-		</thead>
-		<tbody>
-
-			{% for statistic in productStatistics %}
-				<tr>
-					<td><strong>{{ statistic.product_name }}</strong></td>
-					<td style="text-align: right;">
-						{{ statistic.units_sold|number_format(0, ',', ' ') }}
-					</td>
-					<td style="text-align: right;">
-						{{ statistic.revenue|number_format(0, ',', ' ') }}
-						{{ env.getConfig("game_currency") }}
-					</td>
-					<td style="text-align: right;">
-						{{ statistic.costs|number_format(0, ',', ' ') }}
-						{{ env.getConfig("game_currency") }}
-					</td>
-					<td style="text-align: right;">
-						<strong>
-							{{ statistic.profit|number_format(0, ',', ' ') }}
-							{{ env.getConfig("game_currency") }}
-						</strong>
-					</td>
-					<td style="text-align: right;">
-						{{ statistic.matches_with_sales|number_format(0, ',', ' ') }}
-					</td>
-				</tr>
-			{% endfor %}
-
-		</tbody>
-	</table>
-
+{% if collections|length > 0 %}
+{% for collection in collections %}
+<div class="well">
+    <div class="row-fluid">
+        <div class="span7">
+            <h4>{{ collection.display_name }}</h4>
+            <p>
+                <span class="label">{{ i18n.getMessage("merchandising_quality_" ~ collection.quality) }}</span>
+                <span class="label{% if collection.status == 'active' %} label-success{% elseif collection.status == 'development' %} label-info{% elseif collection.status == 'clearance' %} label-warning{% endif %}">{{ i18n.getMessage("merchandising_status_" ~ collection.status) }}</span>
+            </p>
+            {% if collection.product_description %}<p>{{ collection.product_description }}</p>{% endif %}
+            <table class="table table-condensed">
+                <tr><th>{{ i18n.getMessage("merchandising_stock") }}</th><td>{{ collection.stock }} + {{ collection.incoming_stock }} {{ i18n.getMessage("merchandising_incoming_short") }}</td></tr>
+                <tr><th>{{ i18n.getMessage("merchandising_stock_value") }}</th><td>{{ collection.stock_value|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>
+                <tr><th>{{ i18n.getMessage("merchandising_margin") }}</th><td>{{ collection.margin|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }} / {{ collection.margin_percent|number_format(1, ',', ' ') }} %</td></tr>
+                <tr><th>{{ i18n.getMessage("merchandising_forecast") }}</th><td>{{ collection.forecast.min }}–{{ collection.forecast.max }} {{ i18n.getMessage("merchandising_units_per_period") }}</td></tr>
+                {% if collection.development_ready_formatted %}<tr><th>{{ i18n.getMessage("merchandising_development_ready") }}</th><td>{{ collection.development_ready_formatted }}</td></tr>{% endif %}
+                {% if collection.active_until_formatted %}<tr><th>{{ i18n.getMessage("merchandising_sales_until") }}</th><td>{{ collection.active_until_formatted }}</td></tr>{% endif %}
+            </table>
+        </div>
+        <div class="span5">
+            {% if collection.status != "development" %}
+            <form method="post" class="form-horizontal">
+                <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_selling_price") }}</label><div class="controls"><input type="number" name="selling_price" min="{{ collection.minimum_price }}" max="{{ collection.maximum_price }}" value="{{ collection.selling_price }}" style="width:110px;"> {{ env.getConfig("game_currency") }}</div></div>
+                <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_reorder_point") }}</label><div class="controls"><input type="number" name="reorder_point" min="0" value="{{ collection.reorder_point }}" style="width:110px;"></div></div>
+                <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_collection_status") }}</label><div class="controls"><select name="collection_status" style="width:150px;">
+                    {% for status in ["ready","active","clearance","closed"] %}<option value="{{ status }}"{% if collection.status == status %} selected{% endif %}>{{ i18n.getMessage("merchandising_status_" ~ status) }}</option>{% endfor %}
+                </select></div></div>
+                <div class="controls"><button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i> {{ i18n.getMessage("button_save") }}</button></div>
+                <input type="hidden" name="page" value="merchandising"><input type="hidden" name="action" value="update-merchandising-collection"><input type="hidden" name="collectionid" value="{{ collection.id }}">
+            </form>
+            <hr>
+            {% if collection.status == "ready" or collection.status == "active" %}
+            <form method="post" class="form-inline">
+                <input type="number" name="quantity" min="{{ collection.minimum_order }}" value="{{ collection.minimum_order }}" style="width:100px;">
+                <button class="btn" type="submit"><i class="icon-shopping-cart"></i> {{ i18n.getMessage("merchandising_order_stock") }}</button>
+                <input type="hidden" name="page" value="merchandising"><input type="hidden" name="action" value="order-merchandising-stock"><input type="hidden" name="collectionid" value="{{ collection.id }}">
+            </form>
+            {% endif %}
+            {% else %}
+                {{ messagebox.box(i18n.getMessage("merchandising_development_in_progress"), "", "info") }}
+            {% endif %}
+            {% if collection.stock > 0 and collection.incoming_stock == 0 %}
+            <hr>
+            <form method="post">
+                <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> {{ i18n.getMessage("merchandising_liquidate") }}</button>
+                <input type="hidden" name="page" value="merchandising"><input type="hidden" name="action" value="liquidate-merchandising-collection"><input type="hidden" name="collectionid" value="{{ collection.id }}">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
 {% else %}
-
-	{{ messagebox.box(i18n.getMessage("merchandising_no_sales_statistics"), "", "info") }}
-
+{{ messagebox.box(i18n.getMessage("merchandising_no_collections"), "", "info") }}
 {% endif %}
 
-<hr>
+{% elseif activeTab == "development" %}
 
-<h3>{{ i18n.getMessage("merchandising_recent_sales_title") }}</h3>
+<h3>{{ i18n.getMessage("merchandising_development_title") }}</h3>
+<p>{{ i18n.getMessage("merchandising_development_intro") }}</p>
 
-{% if recentSales is defined and recentSales|length > 0 %}
+<table class="table table-striped">
+    <thead><tr><th>{{ i18n.getMessage("merchandising_product_name") }}</th><th>{{ i18n.getMessage("merchandising_sales_window") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_development_cost") }}</th><th>{{ i18n.getMessage("merchandising_forecast") }}</th><th>{{ i18n.getMessage("merchandising_action") }}</th></tr></thead>
+    <tbody>
+    {% for product in availableProducts %}
+    {% if product.player_product == "0" %}
+        <tr>
+            <td><strong>{{ product.name }}</strong>{% if product.description %}<br><span class="muted">{{ product.description }}</span>{% endif %}</td>
+            <td>{{ product.window_label }}</td>
+            <td style="text-align:right;">{{ product.development_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+            <td>{{ product.forecast.min }}–{{ product.forecast.max }}</td>
+            <td>
+                {% if not product.available_now %}
+                    <span class="label">{{ i18n.getMessage("merchandising_not_available_yet") }}</span>
+                {% elseif product.already_created %}
+                    <span class="label label-success">{{ i18n.getMessage("merchandising_already_developed") }}</span>
+                {% else %}
+                <form method="post" class="form-inline">
+                    <select name="quality" style="width:125px;">{% for quality in qualities %}<option value="{{ quality }}">{{ i18n.getMessage("merchandising_quality_" ~ quality) }}</option>{% endfor %}</select>
+                    <button class="btn btn-primary" type="submit"><i class="icon-play icon-white"></i> {{ i18n.getMessage("merchandising_start_development") }}</button>
+                    <input type="hidden" name="page" value="merchandising"><input type="hidden" name="action" value="start-merchandising-development"><input type="hidden" name="productid" value="{{ product.id }}"><input type="hidden" name="playerid" value="0">
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
 
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ i18n.getMessage("merchandising_recent_sales_date") }}</th>
-				<th>{{ i18n.getMessage("merchandising_recent_sales_match") }}</th>
-				<th>{{ i18n.getMessage("merchandising_product_name") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_units_sold") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_revenue") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_costs") }}</th>
-				<th style="text-align: right;">{{ i18n.getMessage("merchandising_summary_profit") }}</th>
-			</tr>
-		</thead>
-		<tbody>
+<div class="alert alert-info"><i class="icon-info-sign"></i> {{ i18n.getMessage("merchandising_quality_explanation") }}</div>
 
-			{% for sale in recentSales %}
-				<tr>
-					<td>
-						{{ env.getFormattedDatetime(sale.created_date, i18n) }}
-					</td>
-					<td>
-						<a href="{{ env.getInternalUrl("match", "id=" ~ sale.match_id) }}">
-							#{{ sale.match_id }}
-						</a>
-					</td>
-					<td>
-						{{ sale.product_name }}
-					</td>
-					<td style="text-align: right;">
-						{{ sale.units_sold|number_format(0, ',', ' ') }}
-					</td>
-					<td style="text-align: right;">
-						{{ sale.revenue|number_format(0, ',', ' ') }}
-						{{ env.getConfig("game_currency") }}
-					</td>
-					<td style="text-align: right;">
-						{{ sale.costs|number_format(0, ',', ' ') }}
-						{{ env.getConfig("game_currency") }}
-					</td>
-					<td style="text-align: right;">
-						<strong>
-							{{ sale.profit|number_format(0, ',', ' ') }}
-							{{ env.getConfig("game_currency") }}
-						</strong>
-					</td>
-				</tr>
-			{% endfor %}
+{% elseif activeTab == "warehouse" %}
 
-		</tbody>
-	</table>
+<h3>{{ i18n.getMessage("merchandising_warehouse_title") }}</h3>
+<p>{{ i18n.getMessage("merchandising_warehouse_intro") }}</p>
 
+<h4>{{ i18n.getMessage("merchandising_current_stock") }}</h4>
+<table class="table table-striped">
+    <thead><tr><th>{{ i18n.getMessage("merchandising_product_name") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_stock") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_incoming") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_unit_cost") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_stock_value") }}</th></tr></thead>
+    <tbody>{% for collection in collections %}<tr><td>{{ collection.display_name }}</td><td style="text-align:right;">{{ collection.stock }}</td><td style="text-align:right;">{{ collection.incoming_stock }}</td><td style="text-align:right;">{{ collection.unit_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td><td style="text-align:right;">{{ collection.stock_value|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endfor %}</tbody>
+</table>
+
+<h4>{{ i18n.getMessage("merchandising_order_history") }}</h4>
+{% if orders|length > 0 %}
+<table class="table table-striped">
+    <thead><tr><th>{{ i18n.getMessage("merchandising_order_date") }}</th><th>{{ i18n.getMessage("merchandising_product_name") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_quantity") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_total_cost") }}</th><th>{{ i18n.getMessage("merchandising_delivery") }}</th><th>{{ i18n.getMessage("merchandising_status") }}</th></tr></thead>
+    <tbody>{% for order in orders %}<tr><td>{{ env.getFormattedDate(order.order_date) }}</td><td>{{ order.display_name }}</td><td style="text-align:right;">{{ order.quantity }}</td><td style="text-align:right;">{{ order.total_cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td><td>{% if order.status == "delivered" %}{{ env.getFormattedDate(order.delivered_date) }}{% else %}{{ env.getFormattedDate(order.delivery_date) }}{% endif %}</td><td>{{ i18n.getMessage("merchandising_order_status_" ~ order.status) }}</td></tr>{% endfor %}</tbody>
+</table>
 {% else %}
+{{ messagebox.box(i18n.getMessage("merchandising_no_orders"), "", "info") }}
+{% endif %}
 
-	{{ messagebox.box(i18n.getMessage("merchandising_no_recent_sales"), "", "info") }}
+{% elseif activeTab == "players" %}
+
+<h3>{{ i18n.getMessage("merchandising_players_title") }}</h3>
+<p>{{ i18n.getMessage("merchandising_players_intro") }}</p>
+
+{% set playerProduct = null %}
+{% for product in availableProducts %}{% if product.player_product == "1" %}{% set playerProduct = product %}{% endif %}{% endfor %}
+
+{% if playerProduct %}
+<table class="table table-striped">
+    <thead><tr><th>{{ i18n.getMessage("playertable_head_name") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_star_score") }}</th><th style="text-align:right;">{{ i18n.getMessage("entity_player_w_staerke") }}</th><th>{{ i18n.getMessage("merchandising_star_status") }}</th><th>{{ i18n.getMessage("merchandising_action") }}</th></tr></thead>
+    <tbody>
+    {% for player in starPlayers %}
+        <tr>
+            <td><strong>{{ player.name }}</strong></td><td style="text-align:right;">{{ player.star_score }}</td><td style="text-align:right;">{{ player.strength|number_format(2, ',', ' ') }}</td>
+            <td>{% if player.eligible %}<span class="label label-success">{{ i18n.getMessage("merchandising_star_eligible") }}</span>{% else %}<span class="label">{{ i18n.getMessage("merchandising_star_not_eligible") }}</span>{% endif %}</td>
+            <td>
+            {% if player.has_collection %}
+                <span class="label label-success">{{ i18n.getMessage("merchandising_already_developed") }}</span>
+            {% elseif player.eligible %}
+                <form method="post" class="form-inline">
+                    <select name="quality" style="width:125px;">{% for quality in qualities %}<option value="{{ quality }}">{{ i18n.getMessage("merchandising_quality_" ~ quality) }}</option>{% endfor %}</select>
+                    <button class="btn btn-primary" type="submit"><i class="icon-play icon-white"></i> {{ i18n.getMessage("merchandising_launch_player_shirt") }}</button>
+                    <input type="hidden" name="page" value="merchandising"><input type="hidden" name="action" value="start-merchandising-development"><input type="hidden" name="productid" value="{{ playerProduct.id }}"><input type="hidden" name="playerid" value="{{ player.id }}">
+                </form>
+            {% else %}-{% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+{{ messagebox.box(i18n.getMessage("merchandising_no_player_product"), "", "warning") }}
+{% endif %}
+
+<h4>{{ i18n.getMessage("merchandising_player_ranking") }}</h4>
+{% if playerStatistics|length > 0 %}
+<table class="table table-striped"><thead><tr><th>{{ i18n.getMessage("playertable_head_name") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_units_sold") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_revenue") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_profit") }}</th></tr></thead><tbody>{% for row in playerStatistics %}<tr><td>{{ row.player_name }}</td><td style="text-align:right;">{{ row.units_sold }}</td><td style="text-align:right;">{{ row.revenue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td><td style="text-align:right;">{{ row.profit|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endfor %}</tbody></table>
+{% else %}
+{{ messagebox.box(i18n.getMessage("merchandising_no_player_sales"), "", "info") }}
+{% endif %}
+
+{% elseif activeTab == "marketing" %}
+
+<h3>{{ i18n.getMessage("merchandising_marketing_title") }}</h3>
+
+{% if marketingManager.name is defined %}
+<div class="alert alert-success"><strong>{{ marketingManager.name }}</strong> · {{ i18n.getMessage("merchandising_staff_level") }} {{ marketingManager.level }} · {{ i18n.getMessage("merchandising_forecast_accuracy") }} ±{{ marketingManager.forecast_error }} %</div>
+{% else %}
+<div class="alert alert-warning"><i class="icon-warning-sign"></i> {{ i18n.getMessage("merchandising_staff_missing_info") }} <a href="?page=club-staff">{{ i18n.getMessage("merchandising_open_staff_page") }}</a></div>
+{% endif %}
+
+<form method="post" class="form-horizontal well">
+    <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_management_mode") }}</label><div class="controls"><select name="management_mode">{% for mode in managementModes %}<option value="{{ mode }}"{% if settings.management_mode == mode %} selected{% endif %}{% if mode != "manual" and marketingManager.name is not defined %} disabled{% endif %}>{{ i18n.getMessage("merchandising_mode_" ~ mode) }}</option>{% endfor %}</select></div></div>
+    <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_strategy") }}</label><div class="controls"><select name="strategy">{% for strategy in strategies %}<option value="{{ strategy }}"{% if settings.strategy == strategy %} selected{% endif %}>{{ i18n.getMessage("merchandising_strategy_" ~ strategy) }}</option>{% endfor %}</select></div></div>
+    <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_budget_limit") }}</label><div class="controls"><input type="number" name="budget_limit" min="0" value="{{ settings.budget_limit }}"> {{ env.getConfig("game_currency") }} <span class="help-inline">{{ i18n.getMessage("merchandising_budget_limit_help") }}</span></div></div>
+    <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_max_stock_value") }}</label><div class="controls"><input type="number" name="max_stock_value" min="0" value="{{ settings.max_stock_value }}"> {{ env.getConfig("game_currency") }}</div></div>
+    <div class="control-group"><label class="control-label">{{ i18n.getMessage("merchandising_min_margin") }}</label><div class="controls"><input type="number" name="min_margin_percent" min="0" max="80" value="{{ settings.min_margin_percent }}" style="width:80px;"> %</div></div>
+    <div class="control-group"><div class="controls"><label class="checkbox"><input type="checkbox" name="auto_reorder" value="1"{% if settings.auto_reorder == "1" %} checked{% endif %}> {{ i18n.getMessage("merchandising_auto_reorder") }}</label></div></div>
+    <div class="controls"><button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i> {{ i18n.getMessage("button_save") }}</button></div>
+    <input type="hidden" name="page" value="merchandising"><input type="hidden" name="action" value="save-merchandising-settings">
+</form>
+
+<h4>{{ i18n.getMessage("merchandising_campaigns_title") }}</h4>
+<form method="post" class="form-inline well">
+    <select name="campaigntypeid">{% for type in campaignTypes %}<option value="{{ type.id }}">{{ type.name }} · {{ type.cost|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }} · +{{ type.demand_bonus }} %</option>{% endfor %}</select>
+    <select name="collectionid"><option value="0">{{ i18n.getMessage("merchandising_all_collections") }}</option>{% for collection in collections %}{% if collection.status == "active" or collection.status == "clearance" %}<option value="{{ collection.id }}">{{ collection.display_name }}</option>{% endif %}{% endfor %}</select>
+    <button class="btn btn-primary" type="submit"><i class="icon-bullhorn icon-white"></i> {{ i18n.getMessage("merchandising_start_campaign") }}</button>
+    <input type="hidden" name="page" value="merchandising"><input type="hidden" name="action" value="start-merchandising-campaign">
+</form>
+
+{% if campaigns|length > 0 %}
+<table class="table table-striped"><thead><tr><th>{{ i18n.getMessage("merchandising_campaign") }}</th><th>{{ i18n.getMessage("merchandising_campaign_target") }}</th><th>{{ i18n.getMessage("merchandising_duration") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_campaign_bonus") }}</th><th>{{ i18n.getMessage("merchandising_status") }}</th></tr></thead><tbody>{% for campaign in campaigns %}<tr><td>{{ campaign.campaign_name }}</td><td>{{ campaign.target_name }}</td><td>{{ env.getFormattedDate(campaign.start_date) }} – {{ env.getFormattedDate(campaign.end_date) }}</td><td style="text-align:right;">+{{ campaign.demand_bonus }} %</td><td>{{ i18n.getMessage("merchandising_campaign_status_" ~ campaign.status) }}</td></tr>{% endfor %}</tbody></table>
+{% endif %}
+
+{% elseif activeTab == "statistics" %}
+
+<h3>{{ i18n.getMessage("merchandising_statistics_title") }}</h3>
+
+{% if productStatistics|length > 0 %}
+<table class="table table-striped">
+    <thead><tr><th>{{ i18n.getMessage("merchandising_product_name") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_demand") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_units_sold") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_missed") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_revenue") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_profit") }}</th></tr></thead>
+    <tbody>{% for row in productStatistics %}<tr><td>{{ row.product_name }}</td><td style="text-align:right;">{{ row.demand_units }}</td><td style="text-align:right;">{{ row.units_sold }}</td><td style="text-align:right;">{{ row.missed_units }}</td><td style="text-align:right;">{{ row.revenue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td><td style="text-align:right;">{{ row.profit|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endfor %}</tbody>
+</table>
+{% else %}
+{{ messagebox.box(i18n.getMessage("merchandising_no_sales_statistics"), "", "info") }}
+{% endif %}
+
+<h4>{{ i18n.getMessage("merchandising_sales_details") }}</h4>
+{% if recentSales|length > 0 %}
+<table class="table table-striped"><thead><tr><th>{{ i18n.getMessage("merchandising_recent_sales_date") }}</th><th>{{ i18n.getMessage("merchandising_product_name") }}</th><th>{{ i18n.getMessage("merchandising_channel") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_demand") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_units_sold") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_missed") }}</th><th style="text-align:right;">{{ i18n.getMessage("merchandising_summary_profit") }}</th></tr></thead><tbody>{% for sale in recentSales %}<tr><td>{{ env.getFormattedDate(sale.created_date) }}</td><td>{{ sale.display_name }}</td><td>{{ i18n.getMessage("merchandising_channel_" ~ sale.channel) }}</td><td style="text-align:right;">{{ sale.demand_units }}</td><td style="text-align:right;">{{ sale.units_sold }}</td><td style="text-align:right;">{{ sale.missed_units }}</td><td style="text-align:right;">{{ sale.profit|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endfor %}</tbody></table>
+{% endif %}
 
 {% endif %}
 

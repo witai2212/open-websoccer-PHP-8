@@ -95,4 +95,22 @@
 	
 	<message id="received_offer_for_player">Du hast für den Spieler <strong>{player}</strong> ein Angebot erhalten.</message>
 	<message id="player_on_watchlist_notification">Der Spieler, <strong>{player}</strong>, ist jetzt auf den Transfermarkt</message>
+    <message id="player-precontract_navlabel">Vorvertrag</message>
+    <message id="precontract_title">Vorvertrag für %s</message>
+    <message id="precontract_explanation">Der Spieler entscheidet nach einigen weiteren Spieltagen. Gehalt, Handgeld, Vereinsqualität, Ligaqualität und sportliche Perspektive fließen in seine Entscheidung ein.</message>
+    <message id="precontract_submit">Angebot für nächste Saison abgeben</message>
+    <message id="precontract_offer_success">Das Vertragsangebot wurde abgegeben. Der Spieler prüft alle Angebote.</message>
+    <message id="precontract_not_eligible">Der Spieler kann noch nicht für die nächste Saison angesprochen werden.</message>
+    <message id="precontract_accepted">{player} hat Ihren Vertrag für die nächste Saison angenommen.</message>
+    <message id="precontract_locked">Der Spieler hat bereits bei einem anderen Verein für die nächste Saison unterschrieben.</message>
+    <message id="precontract_player_button">Für nächste Saison ansprechen</message>
+    <message id="precontract_outgoing_hint">Wechselt zur nächsten Saison zu %s</message>
+    <message id="precontract_incoming_title">Zugänge nächste Saison</message>
+    <message id="precontract_own_offer_open">Ihr Verein hat bereits ein Angebot abgegeben. Der Spieler prüft die laufenden Angebote.</message>
+    <message id="precontract_adjust_offer">Angebot anpassen</message>
+    <message id="precontract_existing_offer_hint">Sie bearbeiten das bereits abgegebene Angebot. Mit dem Speichern beginnt die Prüfungsfrist erneut.</message>
+    <message id="precontract_update_submit">Angebot aktualisieren</message>
+    <message id="precontract_watchlist_own_offer">Eigenes Angebot wird geprüft</message>
+    <message id="precontract_watchlist_negotiations">Verhandlungen für nächste Saison laufen</message>
+    <message id="precontract_watchlist_moving">Wechselt nächste Saison zu %s</message>
 </messages>

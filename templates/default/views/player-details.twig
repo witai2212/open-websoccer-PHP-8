@@ -202,6 +202,17 @@
 			</div>
 		{% endif %}
 		
+        {% if accepted_precontract.id is defined %}
+            <div class="alert alert-warning">{{ i18n.getMessage("precontract_outgoing_hint", accepted_precontract.destination_team_name) }}</div>
+        {% elseif my_precontract_offer.id is defined and my_precontract_offer.status == 'open' %}
+            <div class="alert alert-info">
+                {{ i18n.getMessage("precontract_own_offer_open") }}
+                <a class="btn btn-mini" href="{{ env.getInternalUrl("player-precontract", "id=" ~ player.player_id) }}">{{ i18n.getMessage("precontract_adjust_offer") }}</a>
+            </div>
+        {% elseif precontract_eligible and env.getUser().getClubId() > 0 and env.getUser().getClubId() != player.team_id %}
+            <p><a class="btn btn-primary" href="{{ env.getInternalUrl("player-precontract", "id=" ~ player.player_id) }}"><i class="icon-briefcase icon-white"></i> {{ i18n.getMessage("precontract_player_button") }}</a></p>
+        {% endif %}
+
 		{% if env.getConfig("transfermarket_enabled") and player.player_transfermarket > 0 %}
 			<div class="alert alert-info">
 			<p>{{ i18n.getMessage("player_details_avaiable_on_transfermarket") }}</p>

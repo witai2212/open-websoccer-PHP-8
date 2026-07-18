@@ -58,10 +58,19 @@ class ChooseTrainerController implements IActionController {
 			throw new Exception("invalid ID");
 		}
 		
-		// can team afford it?
-		$numberOfUnits = (int) $parameters["units"];
 		
-		$totalCosts = $numberOfUnits * $trainer["salary"];
+			$suitability = TrainingDataService::getTrainerSuitabilityForTeam($this->_websoccer, $this->_db, $trainer, $teamId);
+			if (empty($suitability['can_hire'])) {
+				$message = TrainingDataService::getTrainerHiringErrorMessage($this->_i18n, $suitability);
+				if (!strlen($message)) {
+					$message = $this->_i18n->getMessage('training_trainer_not_realistic_detail');
+				}
+				throw new Exception($message);
+			}
+// can team afford it?
+		$numberOfUnits = $this->normalizeNumberOfUnits($parameters["units"], $trainer);
+		
+		$totalCosts = ($numberOfUnits * (int) $trainer["salary"]) + (isset($trainer['signing_fee']) ? (int) $trainer['signing_fee'] : 0);
 		
 		$teamInfo = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $teamId);
 		if ($teamInfo["team_budget"] <= $totalCosts) {
@@ -100,6 +109,17 @@ class ChooseTrainerController implements IActionController {
 		return "training";
 	}
 	
+
+    private function normalizeNumberOfUnits($requestedUnits, $trainer) {
+        $requestedUnits = (int) $requestedUnits;
+        if ($requestedUnits < 5) {
+            $requestedUnits = 5;
+        }
+        if ($requestedUnits > 30) {
+            $requestedUnits = 30;
+        }
+		return $requestedUnits;
+    }
 }
 
 ?>

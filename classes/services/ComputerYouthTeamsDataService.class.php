@@ -26,7 +26,7 @@ class ComputerYouthTeamsDataService {
         echo "[ComputerYouthTeamsDataService] started.\n";
         
         self::createMissingYouthSquads($websoccer, $db);
-        self::promoteEligibleYouthPlayers($websoccer, $db);
+        self::promoteEligibleYouthPlayers($websoccer, $db, 0, false);
         self::sellSurplusYouthPlayers($websoccer, $db);
         self::buyUsefulYouthPlayers($websoccer, $db);
         self::acceptManagerYouthMatchRequests($websoccer, $db);
@@ -87,7 +87,7 @@ class ComputerYouthTeamsDataService {
      * @param DbConnection $db
      * @return array
      */
-    private static function getComputerControlledTeams(WebSoccer $websoccer, DbConnection $db) {
+    private static function getComputerControlledTeams(WebSoccer $websoccer, DbConnection $db, $leagueId = 0) {
         
         $teams = array();
         
@@ -101,9 +101,15 @@ class ComputerYouthTeamsDataService {
         $fromTable = $websoccer->getConfig("db_prefix") . "_verein AS C";
         $fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_liga AS L ON L.id = C.liga_id";
         
-        $whereCondition = "(C.user_id IS NULL OR C.user_id <= 0) AND C.nationalteam = '0' AND C.status = '1' ORDER BY RAND()";
+        $whereCondition = "(C.user_id IS NULL OR C.user_id <= 0) AND C.nationalteam = '0' AND C.status = '1'";
+        $parameters = array();
+        if ((int) $leagueId > 0) {
+            $whereCondition .= " AND C.liga_id = %d";
+            $parameters[] = (int) $leagueId;
+        }
+        $whereCondition .= " ORDER BY RAND()";
         
-        $result = $db->querySelect($columns, $fromTable, $whereCondition);
+        $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
         while ($team = $result->fetch_array()) {
             $teams[] = $team;
         }
@@ -381,17 +387,24 @@ class ComputerYouthTeamsDataService {
         return $keys[count($keys) - 1];
     }
     
+    public static function promoteEligibleYouthPlayersForLeague(WebSoccer $websoccer, DbConnection $db, $leagueId, $silent = true) {
+        return self::promoteEligibleYouthPlayers($websoccer, $db, (int) $leagueId, (bool) $silent);
+    }
+
+
     /**
      * Promotes eligible computer youth players into the professional team.
      *
      * @param WebSoccer $websoccer
      * @param DbConnection $db
      */
-    private static function promoteEligibleYouthPlayers(WebSoccer $websoccer, DbConnection $db) {
+    private static function promoteEligibleYouthPlayers(WebSoccer $websoccer, DbConnection $db, $leagueId = 0, $silent = false) {
         
         if ((int) $websoccer->getConfig("computer_youth_promote_enabled") !== 1) {
-            echo "[ComputerYouthTeamsDataService] youth promotion disabled.\n";
-            return;
+            if (!$silent) {
+                echo "[ComputerYouthTeamsDataService] youth promotion disabled.\n";
+            }
+            return 0;
         }
         
         $minimumAge = (int) $websoccer->getConfig("youth_min_age_professional");
@@ -406,7 +419,7 @@ class ComputerYouthTeamsDataService {
         }
         
         $promotedTotal = 0;
-        $teams = self::getComputerControlledTeams($websoccer, $db);
+        $teams = self::getComputerControlledTeams($websoccer, $db, (int) $leagueId);
         
         foreach ($teams as $team) {
             $teamId = (int) $team["id"];
@@ -427,11 +440,16 @@ class ComputerYouthTeamsDataService {
             
             if ($promotedForTeam > 0) {
                 TeamsDataService::updateTeamStrength($websoccer, $db, $teamId);
-                echo "[ComputerYouthTeamsDataService] promoted " . $promotedForTeam . " youth players for team #" . $teamId . ".\n";
+                if (!$silent) {
+                    echo "[ComputerYouthTeamsDataService] promoted " . $promotedForTeam . " youth players for team #" . $teamId . ".\n";
+                }
             }
         }
         
-        echo "[ComputerYouthTeamsDataService] youth players promoted total: " . $promotedTotal . ".\n";
+        if (!$silent) {
+            echo "[ComputerYouthTeamsDataService] youth players promoted total: " . $promotedTotal . ".\n";
+        }
+        return $promotedTotal;
     }
     
     /**

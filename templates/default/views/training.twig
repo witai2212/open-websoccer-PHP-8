@@ -31,6 +31,7 @@
 
     {{ profile.infofield(i18n.getMessage("entity_trainer_name"), training_unit.trainer.name) }}
     {{ profile.infofield(i18n.getMessage("entity_trainer_specialization"), i18n.getMessage(trainerSpecializations[training_unit.trainer.specialization])) }}
+    {{ profile.infofield(i18n.getMessage("entity_trainer_reputation"), training_unit.trainer.reputation) }}
     {{ profile.infofield(i18n.getMessage("entity_trainer_p_technique"), bar_tech|raw, true) }}
     {{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
     {{ profile.infofield(i18n.getMessage("entity_trainer_p_offense"), bar_offense|raw, true) }}
@@ -188,6 +189,8 @@
                     <th>{{ i18n.getMessage("entity_trainer_p_stamina") }}</th>
                     <th>{{ i18n.getMessage("entity_trainer_p_offense") }}</th>
                     <th>{{ i18n.getMessage("entity_trainer_p_defense") }}</th>
+                    <th>{{ i18n.getMessage("entity_trainer_reputation") }}</th>
+                    <th>{{ i18n.getMessage("training_trainer_requirements") }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -198,14 +201,26 @@
                             {% if trainer.premiumfee %}
                                 <p>{{ premium.premiumbadge(trainer.premiumfee) }}</p>
                             {% endif %}
-                            <p><a href="{{ env.getInternalUrl("trainer-details", "id=" ~ trainer.id) }}" class="btn"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></p>
+                            {% if trainer.suitability.can_hire %}
+                                <p><a href="{{ env.getInternalUrl("trainer-details", "id=" ~ trainer.id) }}" class="btn"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></p>
+                            {% else %}
+                                <p><span class="label label-warning">{{ i18n.getMessage("training_trainer_not_realistic") }}</span></p>
+                            {% endif %}
                         </td>
-                        <td>{{ trainer.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                        <td>
+                            {{ trainer.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                            {% if trainer.signing_fee > 0 %}<br><small>{{ i18n.getMessage("entity_trainer_signing_fee") }}: {{ trainer.signing_fee|number_format(0, ',', ' ') }}</small>{% endif %}
+                        </td>
                         <td>{{ i18n.getMessage(trainerSpecializations[trainer.specialization]) }}</td>
                         <td>{{ statisticelements.progressbar(trainer.p_technique) }}</td>
                         <td>{{ statisticelements.progressbar(trainer.p_stamina) }}</td>
                         <td>{{ statisticelements.progressbar(trainer.p_offense) }}</td>
                         <td>{{ statisticelements.progressbar(trainer.p_defense) }}</td>
+                        <td>{{ trainer.reputation }}</td>
+                        <td>
+                            {{ i18n.getMessage("entity_trainer_min_club_strength") }}: {{ trainer.min_club_strength }}<br>
+                            {{ i18n.getMessage("entity_trainer_min_league_rating") }}: {{ trainer.min_league_rating }}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -479,8 +479,7 @@ class MatchSimulationExecutor {
                 // add strength if player has no user
                 $playerTeam = TeamsDataService::getTeamById($websoccer, $db, $playerinfo['team_id']);
                 if ($playerTeam['team_user_id'] <= 0) {
-                    //$computerFactor = 1.2;
-                    $computerFactor = 1;
+                    $computerFactor = $this->_websoccer->getConfig('computor_simulation_factor');
                 } else {
                     $computerFactor = 1;
                 }
@@ -489,7 +488,7 @@ class MatchSimulationExecutor {
                 
                 // add strength if team is 'superclub'
                 if ($playerTeam['team_superclub'] == '1') {
-                    $superTeamFactor = 1.2;
+                    $superTeamFactor = $this->_websoccer->getConfig('superclub_simulation_factor');
                 } else {
                     $superTeamFactor = 1;
                 }

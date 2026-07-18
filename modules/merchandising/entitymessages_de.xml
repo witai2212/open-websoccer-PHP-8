@@ -1,42 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
+    <message id="entity_merchandisingproduct">Merchandising-Produkte</message>
+    <message id="entity_merchandisingproduct_name">Produktname</message>
+    <message id="entity_merchandisingproduct_name_help">Kann ein deutscher Messages-Key oder ein direkter Produktname sein.</message>
+    <message id="entity_merchandisingproduct_description">Beschreibung</message>
+    <message id="entity_merchandisingproduct_description_help">Kann ein deutscher Messages-Key oder ein direkter Beschreibungstext sein.</message>
+    <message id="entity_merchandisingproduct_category">Kategorie</message>
+    <message id="entity_merchandisingproduct_category_help">Steuert die Gruppierung im Fanshop.</message>
+    <message id="entity_merchandisingproduct_season_type">Saisontyp</message>
+    <message id="entity_merchandisingproduct_season_type_help">Legt fest, ob das Produkt dauerhaft, kalenderbezogen, saisonbezogen oder ereignisbezogen verfügbar ist.</message>
+    <message id="entity_merchandisingproduct_season_start">Beginn Verkaufsfenster</message>
+    <message id="entity_merchandisingproduct_season_start_help">Format MM-TT, zum Beispiel 11-15.</message>
+    <message id="entity_merchandisingproduct_season_end">Ende Verkaufsfenster</message>
+    <message id="entity_merchandisingproduct_season_end_help">Format MM-TT, zum Beispiel 01-06.</message>
+    <message id="entity_merchandisingproduct_purchase_price">Einkaufspreis</message>
+    <message id="entity_merchandisingproduct_purchase_price_help">Grundkosten je bestelltem Artikel.</message>
+    <message id="entity_merchandisingproduct_sales_price">Empfohlener Verkaufspreis</message>
+    <message id="entity_merchandisingproduct_sales_price_help">Ausgangspunkt für die Preisgrenzen und Nachfrageberechnung.</message>
+    <message id="entity_merchandisingproduct_base_demand">Grundnachfrage</message>
+    <message id="entity_merchandisingproduct_base_demand_help">Beispiel: 0.0100 entspricht einer Grundnachfrage von einem Prozent der Reichweite.</message>
+    <message id="entity_merchandisingproduct_development_cost">Entwicklungskosten</message>
+    <message id="entity_merchandisingproduct_development_cost_help">Einmalige Kosten einer neuen Vereinskollektion.</message>
+    <message id="entity_merchandisingproduct_development_days">Entwicklungsdauer</message>
+    <message id="entity_merchandisingproduct_development_days_help">Kalendertage bis zur Produktionsbereitschaft.</message>
+    <message id="entity_merchandisingproduct_delivery_days">Lieferdauer</message>
+    <message id="entity_merchandisingproduct_delivery_days_help">Kalendertage zwischen Bestellung und Wareneingang.</message>
+    <message id="entity_merchandisingproduct_minimum_order">Mindestbestellmenge</message>
+    <message id="entity_merchandisingproduct_minimum_order_help">Kleinste zulässige Bestellung.</message>
+    <message id="entity_merchandisingproduct_liquidation_percent">Liquidationswert</message>
+    <message id="entity_merchandisingproduct_liquidation_percent_help">Prozent der Stückkosten, die bei Auflösung des Restbestands zurückfließen.</message>
+    <message id="entity_merchandisingproduct_player_product">Spielerprodukt</message>
+    <message id="entity_merchandisingproduct_player_product_help">Nur aktivieren, wenn die Vorlage mit einem Merchandising-Star verbunden werden muss.</message>
+    <message id="entity_merchandisingproduct_event_type">Ereignistyp</message>
+    <message id="entity_merchandisingproduct_event_type_help">Optionale Voraussetzung für ereignisbezogene Produkte.</message>
+    <message id="entity_merchandisingproduct_stadium_factor">Faktor Stadionverkauf</message>
+    <message id="entity_merchandisingproduct_stadium_factor_help">Produktspezifischer Nachfragefaktor im Stadion.</message>
+    <message id="entity_merchandisingproduct_online_factor">Faktor Onlineverkauf</message>
+    <message id="entity_merchandisingproduct_online_factor_help">Produktspezifischer Nachfragefaktor im Online-Fanshop.</message>
+    <message id="entity_merchandisingproduct_max_price_factor">Maximaler Preisfaktor</message>
+    <message id="entity_merchandisingproduct_max_price_factor_help">Obergrenze relativ zum empfohlenen Verkaufspreis.</message>
+    <message id="entity_merchandisingproduct_active">Aktiv</message>
+    <message id="entity_merchandisingproduct_active_help">Nur aktive Vorlagen stehen Vereinen zur Verfügung.</message>
 
-	<message id="entity_merchandisingproduct">Merchandising-Produkte</message>
+    <message id="entity_merchandisingcampaigntype">Merchandising-Kampagnen</message>
+    <message id="entity_merchandisingcampaigntype_name">Kampagnenname</message>
+    <message id="entity_merchandisingcampaigntype_name_help">Deutscher Name der Kampagne.</message>
+    <message id="entity_merchandisingcampaigntype_description">Beschreibung</message>
+    <message id="entity_merchandisingcampaigntype_description_help">Kurze Erklärung der Kampagne.</message>
+    <message id="entity_merchandisingcampaigntype_cost">Kosten</message>
+    <message id="entity_merchandisingcampaigntype_cost_help">Einmalige Kosten beim Start.</message>
+    <message id="entity_merchandisingcampaigntype_duration_days">Laufzeit</message>
+    <message id="entity_merchandisingcampaigntype_duration_days_help">Kalendertage der Wirkung.</message>
+    <message id="entity_merchandisingcampaigntype_demand_bonus">Nachfragebonus</message>
+    <message id="entity_merchandisingcampaigntype_demand_bonus_help">Prozentualer Bonus während der Kampagne.</message>
+    <message id="entity_merchandisingcampaigntype_active">Aktiv</message>
+    <message id="entity_merchandisingcampaigntype_active_help">Nur aktive Kampagnen können gestartet werden.</message>
 
-	<message id="entity_merchandisingproduct_name">Produktname</message>
-	<message id="entity_merchandisingproduct_name_help">
-		Kann auch ein Messages-Key sein.
-	</message>
-
-	<message id="entity_merchandisingproduct_description">Beschreibung</message>
-	<message id="entity_merchandisingproduct_description_help">
-		Kann auch ein Messages-Key sein.
-	</message>
-
-	<message id="entity_merchandisingproduct_purchase_price">Einkaufspreis</message>
-	<message id="entity_merchandisingproduct_purchase_price_help">
-		Herstellungskosten bzw. Einkaufskosten pro verkauftem Artikel.
-	</message>
-
-	<message id="entity_merchandisingproduct_sales_price">Grundverkaufspreis</message>
-	<message id="entity_merchandisingproduct_sales_price_help">
-		Normaler Verkaufspreis vor Anwendung der vereinsabhängigen Preisstrategie.
-	</message>
-
-	<message id="entity_merchandisingproduct_base_demand">Grundnachfrage</message>
-	<message id="entity_merchandisingproduct_base_demand_help">
-		Anteil der Zuschauer, der dieses Produkt grundsätzlich kauft. Beispiel: 0.0100 entspricht 1,00 Prozent.
-	</message>
-
-	<message id="entity_merchandisingproduct_active">Aktiv</message>
-	<message id="entity_merchandisingproduct_active_help">
-		Nur aktive Produkte stehen den Managern zur Auswahl.
-	</message>
-	
-	<message id="entity_stadiumbuilding_effect_merchandising">Auswirkung: Merchandising</message>
-	<message id="entity_stadiumbuilding_effect_merchandising_help">
-		Um wieviel Prozentpunkte die Merchandising-Verkäufe bei Heimspielen erhöht werden.
-	</message>
-
+    <message id="entity_stadiumbuilding_effect_merchandising">Auswirkung: Merchandising</message>
+    <message id="entity_stadiumbuilding_effect_merchandising_help">Prozentualer Bonus für Verkäufe im Stadion-Fanshop.</message>
 </messages>

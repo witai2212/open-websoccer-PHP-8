@@ -82,7 +82,15 @@ function seasonRolloverRenderOverview($overview, $openMatchSummary = array(), $p
         'Aktive Mutterverein-Divisionskonflikte' => (int) $overview['parent_club_division_conflicts'],
         'Länder mit Teams' => (int) $overview['national_countries'],
         'UEFA-Länder' => (int) $overview['uefa_countries'],
-        'Teams in UEFA-Temp' => (int) $overview['uefa_temp_teams']
+        'Teams in UEFA-Temp' => (int) $overview['uefa_temp_teams'],
+        'CONMEBOL-Länder' => (int) $overview['conmebol_countries'],
+        'Teams in CONMEBOL-Temp' => (int) $overview['conmebol_temp_teams'],
+        'CONCACAF-Länder' => (int) $overview['concacaf_countries'],
+        'CONCACAF-Ligen' => (int) $overview['concacaf_leagues'],
+        'CONCACAF-Teams' => (int) $overview['concacaf_teams'],
+        'CONCACAF-Profispieler' => (int) $overview['concacaf_players'],
+        'CONCACAF-Jugendspieler' => (int) $overview['concacaf_youthplayers'],
+        'Teams in CONCACAF-Temp' => (int) $overview['concacaf_temp_teams']
     );
 
     foreach ($rows as $label => $value) {
@@ -93,6 +101,12 @@ function seasonRolloverRenderOverview($overview, $openMatchSummary = array(), $p
     echo '<tr><th>Champions League Gruppenrunde vorhanden</th><td>' . seasonRolloverBoolLabel($overview['champions_league_group_round']) . '</td></tr>';
     echo '<tr><th>UEFA Euro League vorhanden</th><td>' . seasonRolloverBoolLabel($overview['uefa_league_exists']) . '</td></tr>';
     echo '<tr><th>UEFA Euro League Gruppenrunde vorhanden</th><td>' . seasonRolloverBoolLabel($overview['uefa_league_group_round']) . '</td></tr>';
+    echo '<tr><th>Copa Libertadores vorhanden</th><td>' . seasonRolloverBoolLabel($overview['copa_libertadores_exists']) . '</td></tr>';
+    echo '<tr><th>Copa Libertadores Gruppenrunde vorhanden</th><td>' . seasonRolloverBoolLabel($overview['copa_libertadores_group_round']) . '</td></tr>';
+    echo '<tr><th>Copa Sudamericana vorhanden</th><td>' . seasonRolloverBoolLabel($overview['copa_sudamericana_exists']) . '</td></tr>';
+    echo '<tr><th>Copa Sudamericana Gruppenrunde vorhanden</th><td>' . seasonRolloverBoolLabel($overview['copa_sudamericana_group_round']) . '</td></tr>';
+    echo '<tr><th>CONCACAF Champions Cup vorhanden</th><td>' . seasonRolloverBoolLabel($overview['concacaf_champions_cup_exists']) . '</td></tr>';
+    echo '<tr><th>CONCACAF Champions Cup Gruppenrunde vorhanden</th><td>' . seasonRolloverBoolLabel($overview['concacaf_champions_cup_group_round']) . '</td></tr>';
 
     echo '</tbody>';
     echo '</table>';
@@ -119,10 +133,10 @@ function seasonRolloverRenderOptionsForm($site, $options, $step = 'validate') {
     $steps = array(
         'validate' => 'Nur prüfen',
         'end_seasons' => '1. Saisons beenden',
-        'uefa_temp' => '2. UEFA-Plätze + Temp aktualisieren',
+        'uefa_temp' => '2. Internationale Plätze + Temp aktualisieren',
         'new_seasons' => '3. Neue Saisons erstellen',
         'national_cups' => '4. Nationale Pokale vorbereiten',
-        'european_cups' => '5. Champions League / UEFA League vorbereiten',
+        'european_cups' => '5. UEFA, CONMEBOL und CONCACAF vorbereiten',
         'league_schedules' => '6. Liga-Spielpläne erzeugen',
         'execute_all' => 'Alle Schritte ausführen'
     );
@@ -159,6 +173,21 @@ function seasonRolloverRenderOptionsForm($site, $options, $step = 'validate') {
     echo '<p class="help-block">Donnerstag.</p>';
     echo '</div></div>';
 
+    echo '<div class="control-group"><label class="control-label" for="conmebol_lib_start_date">Copa Libertadores-Start</label><div class="controls">';
+    echo '<input type="text" id="conmebol_lib_start_date" name="conmebol_lib_start_date" value="' . escapeOutput($options['conmebol_lib_start_date']) . '">';
+    echo '<p class="help-block">CONMEBOL-Gruppenspiele, sofern Pokal und Gruppenrunde angelegt sind.</p>';
+    echo '</div></div>';
+
+    echo '<div class="control-group"><label class="control-label" for="conmebol_sud_start_date">Copa Sudamericana-Start</label><div class="controls">';
+    echo '<input type="text" id="conmebol_sud_start_date" name="conmebol_sud_start_date" value="' . escapeOutput($options['conmebol_sud_start_date']) . '">';
+    echo '<p class="help-block">CONMEBOL-Gruppenspiele, sofern Pokal und Gruppenrunde angelegt sind.</p>';
+    echo '</div></div>';
+
+    echo '<div class="control-group"><label class="control-label" for="concacaf_start_date">CONCACAF-Start</label><div class="controls">';
+    echo '<input type="text" id="concacaf_start_date" name="concacaf_start_date" value="' . escapeOutput($options['concacaf_start_date']) . '">';
+    echo '<p class="help-block">Temp-Tabelle, Cup und Gruppenrunde werden vorbereitet, sofern die SQL-Daten eingespielt wurden.</p>';
+    echo '</div></div>';
+
     echo '<div class="control-group"><label class="control-label" for="league_rounds">Liga-Runden</label><div class="controls">';
     echo '<input type="number" id="league_rounds" name="league_rounds" value="' . (int) $options['league_rounds'] . '" min="1" max="4">';
     echo '</div></div>';
@@ -169,7 +198,7 @@ function seasonRolloverRenderOptionsForm($site, $options, $step = 'validate') {
     echo '<input type="number" id="retirement_age" name="retirement_age" value="' . (int) $options['retirement_age'] . '" min="0" max="99">';
     echo '</div></div>';
 
-    echo '<div class="control-group"><label class="control-label" for="max_youth_age">Jugendspieler löschen ab Alter</label><div class="controls">';
+    echo '<div class="control-group"><label class="control-label" for="max_youth_age">Jugendspieler freigeben ab Alter</label><div class="controls">';
     echo '<input type="number" id="max_youth_age" name="max_youth_age" value="' . (int) $options['max_youth_age'] . '" min="0" max="99">';
     echo '</div></div>';
 

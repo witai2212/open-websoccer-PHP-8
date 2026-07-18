@@ -100,6 +100,13 @@
                     <column id="entity_country_conmebol_lib" field="conmebol_lib" type="text" sort="true" filter="true" />
                     <column id="entity_country_conmebol_sud" field="conmebol_sud" type="text" sort="true" filter="true" />
                     <column id="entity_country_conmebol_coeff" field="conmebol_coeff" type="text" sort="true" filter="true" />
+                    <column id="entity_country_concacaf_s1" field="concacaf_s1" type="text" sort="true" filter="true" />
+                    <column id="entity_country_concacaf_s2" field="concacaf_s2" type="text" sort="true" filter="true" />
+                    <column id="entity_country_concacaf_s3" field="concacaf_s3" type="text" sort="true" filter="true" />
+                    <column id="entity_country_concacaf_s4" field="concacaf_s4" type="text" sort="true" filter="true" />
+                    <column id="entity_country_concacaf_s5" field="concacaf_s5" type="text" sort="true" filter="true" />
+                    <column id="entity_country_concacaf_champions" field="concacaf_champions" type="text" sort="true" filter="true" />
+                    <column id="entity_country_concacaf_coeff" field="concacaf_coeff" type="text" sort="true" filter="true" />
                 </overview>
 
                 <editform>
@@ -156,6 +163,13 @@
                     <field id="conmebol_lib" type="number" required="true" />
                     <field id="conmebol_sud" type="number" required="true" />
                     <field id="conmebol_coeff" type="number" required="true" />
+                    <field id="concacaf_s1" type="number" required="true" />
+                    <field id="concacaf_s2" type="number" required="true" />
+                    <field id="concacaf_s3" type="number" required="true" />
+                    <field id="concacaf_s4" type="number" required="true" />
+                    <field id="concacaf_s5" type="number" required="true" />
+                    <field id="concacaf_champions" type="number" required="true" />
+                    <field id="concacaf_coeff" type="number" required="true" />
 
                 </editform>
             </entity>

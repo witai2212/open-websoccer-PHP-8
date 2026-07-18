@@ -49,6 +49,7 @@ class TrainingModel implements IModel {
             $paginator = new Paginator($count, $eps, $this->_websoccer);
             if ($count > 0) {
                 $trainers = TrainingDataService::getTrainers($this->_websoccer, $this->_db, $paginator->getFirstIndex(), $eps);
+                $trainers = TrainingDataService::decorateTrainersForTeam($this->_websoccer, $this->_db, $trainers, $teamId);
             }
         } else {
             $trainingUnit["trainer"] = TrainingDataService::getTrainerById($this->_websoccer, $this->_db, $trainingUnit["trainer_id"]);

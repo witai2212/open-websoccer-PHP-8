@@ -90,9 +90,14 @@ class I18n {
 	}	
 	
 	/**
-	 * 
+	 * Returns a translated message and optionally replaces sprintf placeholders.
+	 *
+	 * Multiple placeholder values can be passed as separate arguments, e.g.
+	 * getMessage('key', $name, $risk, $reason). A single array is supported as
+	 * well for backwards-compatible programmatic calls.
+	 *
 	 * @param string $messageKey message key
-	 * @param string $paramaters placeholder values.
+	 * @param mixed $paramaters first placeholder value or an array of values
 	 * @return string message with specified key or ???key??? if not found.
 	 */
 	public function getMessage($messageKey, $paramaters = null) {
@@ -102,9 +107,18 @@ class I18n {
 		}
 		
 		$message = stripslashes($msg[$messageKey]);
-		if ($paramaters != null) {
-			$message = sprintf($message, $paramaters);
+
+		$arguments = func_get_args();
+		array_shift($arguments);
+
+		if (count($arguments) === 1 && is_array($arguments[0])) {
+			$arguments = $arguments[0];
 		}
+
+		if (count($arguments) > 0 && !(count($arguments) === 1 && $arguments[0] === null)) {
+			$message = vsprintf($message, $arguments);
+		}
+
 		return $message;
 	}
 	

@@ -48,7 +48,10 @@ class TrainerDetailsModel implements IModel {
 			throw new Exception(MSG_KEY_ERROR_PAGENOTFOUND);
 		}
 		
-		return array("trainer" => $trainer, "trainerSpecializations" => TrainingDataService::getTrainerSpecializations());
+		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+			$suitability = ($teamId > 0) ? TrainingDataService::getTrainerSuitabilityForTeam($this->_websoccer, $this->_db, $trainer, $teamId) : array('can_hire' => false);
+
+			return array("trainer" => $trainer, "trainerSuitability" => $suitability, "trainerSpecializations" => TrainingDataService::getTrainerSpecializations());
 	}
 	
 }

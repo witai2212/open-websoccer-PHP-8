@@ -168,4 +168,11 @@
     <message id="individual_training_autosave_hint">Änderungen werden automatisch gespeichert, sobald Sie ein Einzeltraining auswählen oder entfernen.</message>
     <message id="individual_training_autosave_saving">wird gespeichert ...</message>
 
+
+    <message id="training_trainer_requirements">Anforderungen</message>
+    <message id="training_trainer_not_realistic">nicht realistisch</message>
+    <message id="training_trainer_not_realistic_detail">Dieser Trainer hält den Verein oder die Liga aktuell nicht für passend. Verbessern Sie Kaderstärke, Liga-Reputation oder Budget, bevor eine Verpflichtung möglich ist.</message>
+    <message id="training_trainer_err_club_too_weak">Der Trainer möchte zu einem sportlich stärkeren Verein.</message>
+    <message id="training_trainer_err_league_too_weak">Der Trainer möchte in einer stärkeren Liga arbeiten.</message>
+    <message id="training_trainer_err_budget_risk">Die Verpflichtung wäre für das aktuelle Budget zu riskant.</message>
 </messages>

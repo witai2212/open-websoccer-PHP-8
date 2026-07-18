@@ -24,6 +24,10 @@
 
 {{ profile.infofield(i18n.getMessage("entity_trainer_salary"), trainer.salary|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_specialization"), i18n.getMessage(trainerSpecializations[trainer.specialization])) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_reputation"), trainer.reputation) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_signing_fee"), trainer.signing_fee|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_min_club_strength"), trainer.min_club_strength) }}
+{{ profile.infofield(i18n.getMessage("entity_trainer_min_league_rating"), trainer.min_league_rating) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_technique"), bar_tech|raw, true) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_offense"), bar_offense|raw, true) }}
@@ -31,6 +35,10 @@
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_tactics"), bar_tactics|raw, true) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_goalkeeping"), bar_goalkeeping|raw, true) }}
 {{ profile.infofield(i18n.getMessage("entity_trainer_p_mental"), bar_mental|raw, true) }}
+
+{% if trainerSuitability.can_hire is defined and not trainerSuitability.can_hire %}
+    <div class="alert alert-warning">{{ i18n.getMessage("training_trainer_not_realistic_detail") }}</div>
+{% endif %}
 
 <form class="form-horizontal" method="post">
     <fieldset>
@@ -48,7 +56,7 @@
         </div>
     </fieldset>
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
+        <button type="submit" class="btn btn-primary"{% if trainerSuitability.can_hire is defined and not trainerSuitability.can_hire %} disabled="disabled"{% endif %}>{{ i18n.getMessage('button_save') }}</button>
         <a href="{{ env.getInternalUrl("training") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
     </div>
     <input type="hidden" name="id" value="{{ trainer.id }}" />

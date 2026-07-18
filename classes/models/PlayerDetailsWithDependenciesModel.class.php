@@ -75,9 +75,17 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		$showPersonality = PlayerPersonalityDataService::isVisibleForUser($this->_websoccer, $this->_db, $player['team_id'], $scouting);
 		$showTraits = PlayerTraitsDataService::isVisibleForUser($this->_websoccer, $this->_db, $player['team_id'], $scouting);
 
+		$precontractEligible = PlayerPrecontractDataService::isEligible($this->_websoccer, $this->_db, $playerId);
+		$acceptedPrecontract = PlayerPrecontractDataService::getAcceptedByPlayer($this->_websoccer, $this->_db, $playerId);
+		$myPrecontractOffer = ($userTeam > 0)
+			? PlayerPrecontractDataService::getOfferByPlayerAndTeam($this->_websoccer, $this->_db, $playerId, $userTeam)
+			: array();
+
 		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers, "watchlist" => $watchlist,
 		              "onmywatchlist" => $onMyWhatchlist, "scouting" => $scouting, "show_personality" => $showPersonality,
-		              "show_traits" => $showTraits, "talent_visibility" => $talentVisibility);
+		              "show_traits" => $showTraits, "talent_visibility" => $talentVisibility,
+		              "precontract_eligible" => $precontractEligible, "accepted_precontract" => $acceptedPrecontract,
+		              "my_precontract_offer" => $myPrecontractOffer);
 	}
 	
 	private function _getGrades($playerId) {

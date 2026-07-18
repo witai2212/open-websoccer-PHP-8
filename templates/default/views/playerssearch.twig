@@ -75,7 +75,7 @@
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 					<th>{{ i18n.getMessage("playertable_head_strength") }}</th>
 				{% endif %}
-				<th>{{ i18n.getMessage("entity_player_marktwert") }}/<br>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				<th>{{ i18n.getMessage("entity_player_marktwert") }}/<br>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}/<br>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</th>
 				<th>{{ i18n.getMessage("playerssearch_transfer_status") }}</th>
 				<th>{{ i18n.getMessage("playerssearch_actions") }}</th>
 			</tr>
@@ -118,7 +118,8 @@
 					{% endif %}
 					<td>
 						{{ player.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br>
-						{{ player.contract_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+						{{ player.contract_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br>
+						{{ i18n.getMessage("entity_player_vertrag_spiele") }}: {{ player.contract_matches }}
 					</td>
 					<td>
 						{% if player.transfermarket == '1' or player.transfermarket == 1 %}

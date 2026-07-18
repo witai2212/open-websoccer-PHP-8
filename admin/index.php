@@ -48,7 +48,85 @@ foreach ($adminpage as $pageId => $pageData) {
 		$siteInfo['entity'] = null;
 	}
 	
-	$navItems[$pageInfo['navcategory']][] = $siteInfo;
+	$siteInfo['source_id'] = $pageId;
+		$siteInfo['navcategory'] = $pageInfo['navcategory'];
+		$navItems[$pageInfo['navcategory']][] = $siteInfo;
+}
+
+
+
+function getAdminMenuSectionKey($navInfo, $fallbackCategory) {
+    $sourceId = isset($navInfo['source_id']) ? (string) $navInfo['source_id'] : '';
+    $pageId = isset($navInfo['pageid']) ? (string) $navInfo['pageid'] : '';
+    $entity = isset($navInfo['entity']) ? (string) $navInfo['entity'] : '';
+    $category = (string) $fallbackCategory;
+    $combined = strtolower($sourceId . ' ' . $pageId . ' ' . $entity . ' ' . $category);
+
+    if (preg_match('/(all_settings|all_logging|entitylogging|jobs|admin_game_health|config)/', $combined)) {
+        return 'adminsection_system';
+    }
+
+    if (preg_match('/(^| )admin( |$)|news|premium|payment|statement|userabsence|userbadges|users|frontend|website|termsandconditions|imprint/', $combined)) {
+        return 'adminsection_website_users';
+    }
+
+    if (preg_match('/(country|league|liga|clubs|verein|team|teamsgenerator|playersgenerator)/', $combined)
+        && !preg_match('/(trainer|training|transfer|youth|manager|partnership|staff|stadium|sponsor|finance|bank|money|merchandising|fanpressure|tacticaldna|squadplanner|seasonrollover)/', $combined)) {
+        return 'adminsection_world';
+    }
+
+    if (preg_match('/(clubstaff|staff|sponsor|stadium|building|finance|bank|money|konto|merchandising|financial|destatis)/', $combined)) {
+        return 'adminsection_club_finance';
+    }
+
+    if (preg_match('/(players|spieler|trait|trainer|training|youth|jugend|scout|scouting|squadplanner|tacticaldna|medical)/', $combined)) {
+        return 'adminsection_players_development';
+    }
+
+    if (preg_match('/(seasonrollover|season|saison|cup|pokal|match|spiel|schedule|tablemaker|uefa|groupmatches|nationalcup|unblock|simulation)/', $combined)) {
+        return 'adminsection_competition_season';
+    }
+
+    if (preg_match('/(transfer|lending|loan)/', $combined)) {
+        return 'adminsection_transfers';
+    }
+
+    if (preg_match('/(fanpressure|story|randomevent|managercareer|firemanagers|club_partnership|partnership|rivalr)/', $combined)) {
+        return 'adminsection_story_career';
+    }
+
+    return 'adminsection_other';
+}
+
+function buildAdminMenuSections($navItems) {
+    $sectionOrder = array(
+        'adminsection_system',
+        'adminsection_website_users',
+        'adminsection_world',
+        'adminsection_club_finance',
+        'adminsection_players_development',
+        'adminsection_competition_season',
+        'adminsection_transfers',
+        'adminsection_story_career',
+        'adminsection_other'
+    );
+
+    $sections = array();
+    foreach ($sectionOrder as $sectionKey) {
+        $sections[$sectionKey] = array();
+    }
+
+    foreach ($navItems as $navCategory => $categoryItems) {
+        foreach ($categoryItems as $navInfo) {
+            $sectionKey = getAdminMenuSectionKey($navInfo, $navCategory);
+            if (!isset($sections[$sectionKey])) {
+                $sections[$sectionKey] = array();
+            }
+            $sections[$sectionKey][] = $navInfo;
+        }
+    }
+
+    return $sections;
 }
 
 function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
@@ -94,6 +172,20 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 			border-left: 1px solid #CCCCCC;
 			padding: 3px 5px 0px 10px;
 		}
+      .admin-menu-section-toggle {
+        width: 100%;
+        text-align: left;
+        margin: 4px 0;
+        font-weight: bold;
+      }
+      .admin-menu-section-toggle .caret {
+        float: right;
+        margin-top: 8px;
+      }
+      .admin-menu-section-items {
+        margin-bottom: 6px;
+      }
+
     </style>	
   </head>
   <body>
@@ -129,15 +221,21 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              
-			  <?php
-				foreach ($navItems as $navCategory => $categoryItems) {
-					echo "<li class=\"nav-header\">". $i18n->getNavigationLabel("category_" . $navCategory) . "</li>";
-					foreach ($categoryItems as $navInfo) {
-						printNavItem($site, $navInfo["pageid"], $navInfo["label"], $navInfo["entity"]);
+				  <?php
+					$adminMenuSections = buildAdminMenuSections($navItems);
+					foreach ($adminMenuSections as $sectionKey => $categoryItems) {
+						if (!count($categoryItems)) {
+							continue;
+						}
+						$sectionDomId = 'admin-menu-' . preg_replace('/[^a-z0-9_-]/i', '-', $sectionKey);
+						echo '<li class="nav-header"><button type="button" class="btn btn-mini admin-menu-section-toggle" data-target="#' . $sectionDomId . '">' . $i18n->getNavigationLabel($sectionKey) . '<span class="caret"></span></button></li>';
+						echo '<li><ul class="nav nav-list admin-menu-section-items" id="' . $sectionDomId . '">';
+						foreach ($categoryItems as $navInfo) {
+							printNavItem($site, $navInfo["pageid"], $navInfo["label"], $navInfo["entity"]);
+						}
+						echo '</ul></li>';
 					}
-				}
-			  ?>
+				  ?>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -205,6 +303,23 @@ if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
 	<script src="js/bootbox.min.js"></script>
 	
 	<script src="js/bootstrap-tag.js"></script>
+
+		<script type="text/javascript">
+		jQuery(function($) {
+			$('.admin-menu-section-toggle').each(function() {
+				var target = $(this).data('target');
+				var stateKey = 'cm23-admin-menu-' + target;
+				if (localStorage.getItem(stateKey) === '0') {
+					$(target).hide();
+				}
+			});
+			$('.admin-menu-section-toggle').on('click', function() {
+				var target = $(this).data('target');
+				$(target).toggle();
+				localStorage.setItem('cm23-admin-menu-' + target, $(target).is(':visible') ? '1' : '0');
+			});
+		});
+		</script>
     
 	<script>
 	$(function() {

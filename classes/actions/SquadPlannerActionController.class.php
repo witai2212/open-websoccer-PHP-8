@@ -40,7 +40,7 @@ class SquadPlannerActionController implements IActionController {
             $message = implode(' ', $result['messages']);
         }
 
-        $type = ((isset($result['sell']) && $result['sell']) || (isset($result['loan']) && $result['loan']) || (isset($result['youth']) && $result['youth'])) ? MESSAGE_TYPE_SUCCESS : MESSAGE_TYPE_INFO;
+        $type = ((isset($result['sell']) && $result['sell']) || (isset($result['loan']) && $result['loan']) || (isset($result['youth']) && $result['youth'])) ? 'success' : 'info';
         $this->_websoccer->addFrontMessage(new FrontMessage($type, $message, ''));
 
         return 'squadplanner';

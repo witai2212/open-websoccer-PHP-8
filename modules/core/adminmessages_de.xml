@@ -280,4 +280,14 @@
 	<message id="unblock_matches_navlabel">Unblock matches</message>
 	
 	<message id="admin-execute-match_navlabel">Spiele manuell simulieren</message>
+
+    <message id="adminsection_system_navlabel">System und Einstellungen</message>
+    <message id="adminsection_website_users_navlabel">Website und Benutzer</message>
+    <message id="adminsection_world_navlabel">Spielwelt</message>
+    <message id="adminsection_club_finance_navlabel">Verein und Finanzen</message>
+    <message id="adminsection_players_development_navlabel">Spieler und Entwicklung</message>
+    <message id="adminsection_competition_season_navlabel">Wettbewerbe und Saison</message>
+    <message id="adminsection_transfers_navlabel">Transfers</message>
+    <message id="adminsection_story_career_navlabel">Story und Karriere</message>
+    <message id="adminsection_other_navlabel">Weitere Werkzeuge</message>
 </messages>

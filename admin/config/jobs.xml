@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE jobs SYSTEM "jobs.dtd">
 <jobs>
-    <job id="correctplayers" name="Correct player values" name_de="Spielerwert korrigieren" class="CorrectPlayerValuesJob" interval="1" last_ping="1783542570" stop="0" error="" inittime="0"/>
+    <job id="correctplayers" name="Correct player values" name_de="Spielerwert korrigieren" class="CorrectPlayerValuesJob" interval="1" last_ping="1784395909" stop="0" error="" inittime="0"/>
     
     <job id="addplyr" name="Add players without team to transfer market" name_de="Vereinslose Spieler auf die Transferliste setzen" class="AddPlayerWithoutTeamToTransfermarketJob" interval="5" last_ping="" stop="1" error="" inittime="0"/>
     
@@ -9,11 +9,11 @@
     
     <job id="sim" name="Simulate open matches" name_de="Offene Spiele simulieren" class="SimulateMatchesJob" interval="1" last_ping="1742135935" stop="0" error="" inittime="0"/>
     
-    <job id="usractv" name="Compute and update user inactivity" name_de="Benutzerinaktivität berechnen und aktualisieren" class="UserInactivityCheckJob" interval="20" last_ping="1783516595" stop="1" error="" inittime="0"/>
+    <job id="usractv" name="Compute and update user inactivity" name_de="Benutzerinaktivität berechnen und aktualisieren" class="UserInactivityCheckJob" interval="20" last_ping="1784380671" stop="1" error="" inittime="0"/>
     
-    <job id="stats" name="Compute and update league statistics" name_de="Ligastatistiken berechnen und aktualisieren" class="UpdateStatisticsJob" interval="30" last_ping="1783542570" stop="1" error="" inittime="0"/>
+    <job id="stats" name="Compute and update league statistics" name_de="Ligastatistiken berechnen und aktualisieren" class="UpdateStatisticsJob" interval="30" last_ping="1784395909" stop="1" error="" inittime="0"/>
     
-    <job id="stadium" name="Accept stadium construction works and training camp bookings" name_de="Fällige Stadionerweiterungen und Trainingslager ausführen" class="AcceptStadiumConstructionWorkJob" interval="30" last_ping="1783542568" stop="1" error="" inittime="0"/>
+    <job id="stadium" name="Accept stadium construction works and training camp bookings" name_de="Fällige Stadionerweiterungen und Trainingslager ausführen" class="AcceptStadiumConstructionWorkJob" interval="30" last_ping="1784395919" stop="1" error="" inittime="0"/>
     
     <job id="comptransf" name="Execute computer transfers" name_de="Computer Teams führen Transfers druch" class="ComputerTransfersJob" interval="1" last_ping="1779710953" stop="0" error="" inittime="0"/>
 
@@ -21,11 +21,11 @@
     
     <job id="youth" name="Computer Youth" name_de="Generate youth team/matches" class="ComputerYouthTeamsJob" interval="1" last_ping="1779367558" stop="0" error="" inittime="0"/>
     
-    <job id="scouting" name="Process scouting matchday" name_de="Scouting-Spieltag verarbeiten" class="ScoutingMatchdayJob" interval="5" last_ping="1783542570" stop="1" error="" inittime="0"/>
+    <job id="scouting" name="Process scouting matchday" name_de="Scouting-Spieltag verarbeiten" class="ScoutingMatchdayJob" interval="5" last_ping="1784395909" stop="1" error="" inittime="0"/>
 
     <job id="trainingmatchday" name="Process automatic training plans" name_de="Automatische Trainingspläne verarbeiten" class="TrainingMatchdayJob" interval="5" last_ping="" stop="0" error="" inittime="0"/>
     
-    <job id="clubstaff" name="Process club staff salaries" name_de="Mitarbeitergehälter verarbeiten" class="ClubStaffMatchdayJob" interval="5" last_ping="1783542570" stop="1" error="" inittime="0"/>
+    <job id="clubstaff" name="Process club staff salaries" name_de="Mitarbeitergehälter verarbeiten" class="ClubStaffMatchdayJob" interval="5" last_ping="1784395909" stop="1" error="" inittime="0"/>
 
     <job id="managerprofiles" name="Process manager salaries" name_de="Managergehälter verarbeiten" class="ManagerProfileMatchdayJob" interval="5" last_ping="" stop="0" error="" inittime="0"/>
 

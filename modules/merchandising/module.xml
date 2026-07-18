@@ -1,121 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
-<module version="1.0.0">
+<module version="2.0.0">
 
     <dependencies>
         <dependency module="clubs" version="1.0.0"/>
+        <dependency module="clubstaff" version="1.0.0"/>
+        <dependency module="finances" version="1.0.0"/>
     </dependencies>
 
     <admin>
-        <adminpage
-            id="merchandisingproduct"
-            entity="merchandisingproduct"
-            navcategory="league"
-            permissionrole="r_daten">
-
+        <adminpage id="merchandisingproduct" entity="merchandisingproduct" navcategory="league" permissionrole="r_daten">
             <entity dbtable="merchandising_product AS ProductTab">
-
                 <overview delete="true" edit="true">
-
-                    <column
-                        id="entity_merchandisingproduct_name"
-                        field="ProductTab.name"
-                        type="text"
-                        sort="true"
-                        filter="true" />
-
-                    <column
-                        id="entity_merchandisingproduct_purchase_price"
-                        field="ProductTab.purchase_price"
-                        type="number"
-                        sort="true" />
-
-                    <column
-                        id="entity_merchandisingproduct_sales_price"
-                        field="ProductTab.sales_price"
-                        type="number"
-                        sort="true" />
-
-                    <column
-                        id="entity_merchandisingproduct_base_demand"
-                        field="ProductTab.base_demand"
-                        type="text"
-                        sort="true" />
-
-                    <column
-                        id="entity_merchandisingproduct_active"
-                        field="ProductTab.active"
-                        type="boolean"
-                        sort="true" />
-
+                    <column id="entity_merchandisingproduct_name" field="ProductTab.name" type="text" sort="true" filter="true" />
+                    <column id="entity_merchandisingproduct_category" field="ProductTab.category" type="text" sort="true" filter="true" />
+                    <column id="entity_merchandisingproduct_season_type" field="ProductTab.season_type" type="text" sort="true" filter="true" />
+                    <column id="entity_merchandisingproduct_purchase_price" field="ProductTab.purchase_price" type="number" sort="true" />
+                    <column id="entity_merchandisingproduct_sales_price" field="ProductTab.sales_price" type="number" sort="true" />
+                    <column id="entity_merchandisingproduct_development_cost" field="ProductTab.development_cost" type="number" sort="true" />
+                    <column id="entity_merchandisingproduct_player_product" field="ProductTab.player_product" type="boolean" sort="true" />
+                    <column id="entity_merchandisingproduct_active" field="ProductTab.active" type="boolean" sort="true" />
                 </overview>
-
                 <editform>
                     <field id="name" type="text" required="true" />
                     <field id="description" type="textarea" required="false" />
+                    <field id="category" type="select" required="true" selection="standard|shirt|seasonal|player|event" default="standard" />
+                    <field id="season_type" type="select" required="true" selection="always|calendar|christmas|easter|summer|season|event" default="always" />
+                    <field id="season_start" type="text" required="false" />
+                    <field id="season_end" type="text" required="false" />
                     <field id="purchase_price" type="number" required="true" default="0" />
                     <field id="sales_price" type="number" required="true" default="0" />
                     <field id="base_demand" type="text" required="true" default="0.0100" />
-                    <field id="active" type="boolean" required="false" />
+                    <field id="development_cost" type="number" required="true" default="0" />
+                    <field id="development_days" type="number" required="true" default="3" />
+                    <field id="delivery_days" type="number" required="true" default="3" />
+                    <field id="minimum_order" type="number" required="true" default="25" />
+                    <field id="liquidation_percent" type="number" required="true" default="70" />
+                    <field id="player_product" type="boolean" required="false" default="0" />
+                    <field id="event_type" type="text" required="false" />
+                    <field id="stadium_factor" type="text" required="true" default="1.00" />
+                    <field id="online_factor" type="text" required="true" default="0.35" />
+                    <field id="max_price_factor" type="text" required="true" default="1.40" />
+                    <field id="active" type="boolean" required="false" default="1" />
                 </editform>
+            </entity>
+        </adminpage>
 
+        <adminpage id="merchandisingcampaigntype" entity="merchandisingcampaigntype" navcategory="league" permissionrole="r_daten">
+            <entity dbtable="merchandising_campaign_type AS CampaignTypeTab">
+                <overview delete="true" edit="true">
+                    <column id="entity_merchandisingcampaigntype_name" field="CampaignTypeTab.name" type="text" sort="true" filter="true" />
+                    <column id="entity_merchandisingcampaigntype_cost" field="CampaignTypeTab.cost" type="number" sort="true" />
+                    <column id="entity_merchandisingcampaigntype_duration_days" field="CampaignTypeTab.duration_days" type="number" sort="true" />
+                    <column id="entity_merchandisingcampaigntype_demand_bonus" field="CampaignTypeTab.demand_bonus" type="percent" sort="true" />
+                    <column id="entity_merchandisingcampaigntype_active" field="CampaignTypeTab.active" type="boolean" sort="true" />
+                </overview>
+                <editform>
+                    <field id="name" type="text" required="true" />
+                    <field id="description" type="textarea" required="false" />
+                    <field id="cost" type="number" required="true" default="0" />
+                    <field id="duration_days" type="number" required="true" default="7" />
+                    <field id="demand_bonus" type="percent" required="true" default="10" />
+                    <field id="active" type="boolean" required="false" default="1" />
+                </editform>
             </entity>
         </adminpage>
     </admin>
 
     <settings>
-        <setting
-            id="merchandising_enabled"
-            category="game"
-            type="boolean"
-            default="1" />
+        <setting id="merchandising_enabled" category="game" type="boolean" default="1" />
+        <setting id="merchandising_star_threshold" category="game" type="number" default="65" />
+        <setting id="merchandising_max_player_collections" category="game" type="number" default="3" />
     </settings>
 
     <pages>
-        <page
-            id="merchandising"
-            template="merchandising"
-            model="MerchandisingModel"
-            parentItem="finance"
-            navitem="true"
-            navweight="6"
-            role="user"
-            navitemOnlyForConfigEnabled="merchandising_enabled">
-        </page>
+        <page id="merchandising" template="merchandising" model="MerchandisingModel" parentItem="finance" navitem="true" navweight="6" role="user" navitemOnlyForConfigEnabled="merchandising_enabled" />
     </pages>
 
     <actions>
-        <action
-            id="save-merchandising-product"
-            controller="SaveMerchandisingProductController"
-            role="user"
-            log="true">
+        <action id="save-merchandising-settings" controller="SaveMerchandisingSettingsController" role="user" log="true">
+            <param id="management_mode" type="text" required="true" min="3" max="20" />
+            <param id="strategy" type="text" required="true" min="3" max="20" />
+            <param id="budget_limit" type="number" required="true" min="0" max="2000000000" />
+            <param id="max_stock_value" type="number" required="true" min="0" max="2000000000" />
+            <param id="min_margin_percent" type="number" required="true" min="0" max="80" />
+            <param id="auto_reorder" type="boolean" required="false" />
+        </action>
 
-            <param
-                id="productid"
-                type="number"
-                required="true"
-                min="1"
-                max="2000000000" />
+        <action id="start-merchandising-development" controller="StartMerchandisingDevelopmentController" role="user" log="true">
+            <param id="productid" type="number" required="true" min="1" max="2000000000" />
+            <param id="playerid" type="number" required="false" min="0" max="2000000000" />
+            <param id="quality" type="text" required="true" min="3" max="20" />
+        </action>
 
-            <param
-                id="enabled"
-                type="boolean"
-                required="false" />
+        <action id="order-merchandising-stock" controller="OrderMerchandisingStockController" role="user" log="true">
+            <param id="collectionid" type="number" required="true" min="1" max="2000000000" />
+            <param id="quantity" type="number" required="true" min="1" max="1000000" />
+        </action>
 
-            <param
-                id="price_factor"
-                type="text"
-                required="true" />
+        <action id="update-merchandising-collection" controller="UpdateMerchandisingCollectionController" role="user" log="true">
+            <param id="collectionid" type="number" required="true" min="1" max="2000000000" />
+            <param id="selling_price" type="number" required="true" min="1" max="2000000000" />
+            <param id="reorder_point" type="number" required="true" min="0" max="1000000" />
+            <param id="collection_status" type="text" required="true" min="3" max="20" />
+        </action>
 
+        <action id="liquidate-merchandising-collection" controller="LiquidateMerchandisingCollectionController" role="user" log="true">
+            <param id="collectionid" type="number" required="true" min="1" max="2000000000" />
+        </action>
+
+        <action id="start-merchandising-campaign" controller="StartMerchandisingCampaignController" role="user" log="true">
+            <param id="campaigntypeid" type="number" required="true" min="1" max="2000000000" />
+            <param id="collectionid" type="number" required="false" min="0" max="2000000000" />
         </action>
     </actions>
 
     <plugins>
-        <eventlistener
-            event="MatchCompletedEvent"
-            class="MerchandisingPlugin"
-            method="creditMatchdayMerchandisingRevenue" />
+        <eventlistener event="MatchCompletedEvent" class="MerchandisingPlugin" method="processCompletedMatch" />
     </plugins>
 
 </module>

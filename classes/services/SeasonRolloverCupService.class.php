@@ -251,7 +251,7 @@ class SeasonRolloverCupService {
         $db->queryDelete($prefix . '_cup_round_group', 'cup_round_id = %d', $roundId);
     }
 
-    public static function generateEuropeanCups(WebSoccer $websoccer, DbConnection $db, $firstClWednesdayTimestamp, $firstUlThursdayTimestamp) {
+    public static function generateEuropeanCups(WebSoccer $websoccer, DbConnection $db, $firstClWednesdayTimestamp, $firstUlThursdayTimestamp, $firstLibertadoresTimestamp = 0, $firstSudamericanaTimestamp = 0, $firstConcacafTimestamp = 0) {
         $results = array();
 
         $results[] = self::generateEuropeanCup(
@@ -269,6 +269,17 @@ class SeasonRolloverCupService {
             UefaDataService::UEFA_UL_CUP_ID,
             SeasonRolloverScheduleService::nextWeekday((int) $firstUlThursdayTimestamp, 4, 20, 0)
         );
+
+        if (class_exists('ConmebolDataService')) {
+            $libStart = ((int) $firstLibertadoresTimestamp > 0) ? (int) $firstLibertadoresTimestamp : (int) $firstClWednesdayTimestamp;
+            $sudStart = ((int) $firstSudamericanaTimestamp > 0) ? (int) $firstSudamericanaTimestamp : (int) $firstUlThursdayTimestamp;
+            $results[] = self::generateConmebolCup($websoccer, $db, ConmebolDataService::COPA_LIBERTADORES, $libStart);
+            $results[] = self::generateConmebolCup($websoccer, $db, ConmebolDataService::COPA_SUDAMERICANA, $sudStart);
+        }
+
+        if (class_exists('ConcacafDataService') && (int) $firstConcacafTimestamp > 0) {
+            $results[] = self::generateConcacafCupIfReady($websoccer, $db, ConcacafDataService::CONCACAF_CHAMPIONS_CUP, (int) $firstConcacafTimestamp);
+        }
 
         return $results;
     }
@@ -343,5 +354,170 @@ class SeasonRolloverCupService {
             'winner_stored' => $winnerStored
         );
     }
+
+    public static function generateConmebolCup(WebSoccer $websoccer, DbConnection $db, $cupName, $firstMatchTimestamp) {
+        $resolvedCupId = CupsDataService::getCupIdByName($websoccer, $db, $cupName);
+        if (!$resolvedCupId) {
+            return array(
+                'cup_name' => $cupName,
+                'skipped' => 1,
+                'reason' => 'Pokal nicht gefunden'
+            );
+        }
+
+        $roundId = CupsDataService::getGroupIdByCupId($websoccer, $db, (int) $resolvedCupId, 'Gruppen');
+        if (!$roundId) {
+            return array(
+                'cup_name' => $cupName,
+                'skipped' => 1,
+                'reason' => 'Gruppenrunde nicht gefunden'
+            );
+        }
+
+        $winnerStored = self::storeWinnerOfLastEuropeanFinal($websoccer, $db, $cupName);
+        $deletedMatches = self::deleteCupMatches($websoccer, $db, $cupName);
+        self::clearEuropeanCupGroupAssignments($websoccer, $db, $roundId);
+
+        $tempTeams = ConmebolDataService::getConmebolTeamsByCupName($websoccer, $db, $cupName);
+        if (!is_array($tempTeams) || empty($tempTeams)) {
+            return array(
+                'cup_name' => $cupName,
+                'skipped' => 1,
+                'reason' => 'Keine CONMEBOL-Temp-Teams gefunden'
+            );
+        }
+
+        $groups = array('A', 'B', 'C', 'D');
+        self::putTeamsInCupGroups($websoccer, $db, $roundId, $tempTeams, $groups);
+        $firstDate = SeasonRolloverScheduleService::formatGermanDate($firstMatchTimestamp);
+        $groupsGenerated = 0;
+
+        foreach ($groups as $groupName) {
+            $groupTeams = UefaDataService::getUefaTeamsByGroup($websoccer, $db, $groupName, $roundId);
+            if (!is_array($groupTeams) || empty($groupTeams)) {
+                continue;
+            }
+
+            ScheduleGenerator::createUEFACupGroupSchedule(
+                $websoccer,
+                $db,
+                $groupTeams,
+                $firstDate,
+                20,
+                0,
+                7,
+                $cupName,
+                max(1, count($groupTeams) - 1),
+                $groupName,
+                'Gruppen'
+            );
+
+            $groupsGenerated++;
+        }
+
+        return self::buildCupGenerationResult($websoccer, $db, $cupName, count($tempTeams), $groupsGenerated, $deletedMatches, $winnerStored);
+    }
+
+    public static function generateConcacafCupIfReady(WebSoccer $websoccer, DbConnection $db, $cupName, $firstMatchTimestamp) {
+        $resolvedCupId = CupsDataService::getCupIdByName($websoccer, $db, $cupName);
+        if (!$resolvedCupId) {
+            return array(
+                'cup_name' => $cupName,
+                'skipped' => 1,
+                'reason' => 'Vorbereitet, aber Pokal noch nicht angelegt'
+            );
+        }
+
+        $roundId = CupsDataService::getGroupIdByCupId($websoccer, $db, (int) $resolvedCupId, 'Gruppen');
+        if (!$roundId) {
+            return array(
+                'cup_name' => $cupName,
+                'skipped' => 1,
+                'reason' => 'Vorbereitet, aber Gruppenrunde noch nicht angelegt'
+            );
+        }
+
+        $deletedMatches = self::deleteCupMatches($websoccer, $db, $cupName);
+        self::clearEuropeanCupGroupAssignments($websoccer, $db, $roundId);
+        $tempTeams = ConcacafDataService::getConcacafTeamsByCupName($websoccer, $db, $cupName);
+        if (!is_array($tempTeams) || empty($tempTeams)) {
+            return array(
+                'cup_name' => $cupName,
+                'skipped' => 1,
+                'reason' => 'Keine CONCACAF-Temp-Teams gefunden'
+            );
+        }
+
+        $groups = array('A', 'B', 'C', 'D');
+        self::putTeamsInCupGroups($websoccer, $db, $roundId, $tempTeams, $groups);
+        $firstDate = SeasonRolloverScheduleService::formatGermanDate($firstMatchTimestamp);
+        $groupsGenerated = 0;
+
+        foreach ($groups as $groupName) {
+            $groupTeams = UefaDataService::getUefaTeamsByGroup($websoccer, $db, $groupName, $roundId);
+            if (!is_array($groupTeams) || empty($groupTeams)) {
+                continue;
+            }
+            ScheduleGenerator::createUEFACupGroupSchedule($websoccer, $db, $groupTeams, $firstDate, 19, 0, 7, $cupName, max(1, count($groupTeams) - 1), $groupName, 'Gruppen');
+            $groupsGenerated++;
+        }
+
+        return self::buildCupGenerationResult($websoccer, $db, $cupName, count($tempTeams), $groupsGenerated, $deletedMatches, false);
+    }
+
+
+    public static function putTeamsInCupGroups(WebSoccer $websoccer, DbConnection $db, $roundId, array $teams, array $groups) {
+        $roundId = (int) $roundId;
+        if ($roundId <= 0 || empty($teams) || empty($groups)) {
+            return 0;
+        }
+
+        $prefix = $websoccer->getConfig('db_prefix');
+        $db->queryDelete($prefix . '_cup_round_group', 'cup_round_id = %d', $roundId);
+
+        $groupCount = count($groups);
+        $inserted = 0;
+        foreach (array_values($teams) as $index => $teamId) {
+            $teamId = (int) $teamId;
+            if ($teamId <= 0) {
+                continue;
+            }
+
+            $groupName = $groups[$index % $groupCount];
+            $db->queryInsert(
+                array(
+                    'cup_round_id' => $roundId,
+                    'team_id' => $teamId,
+                    'name' => $groupName
+                ),
+                $prefix . '_cup_round_group'
+            );
+            $inserted++;
+        }
+
+        return $inserted;
+    }
+
+    private static function buildCupGenerationResult(WebSoccer $websoccer, DbConnection $db, $cupName, $tempTeams, $groupsGenerated, $deletedMatches, $winnerStored) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $result = $db->querySelect(
+            'COUNT(*) AS matches',
+            $prefix . '_spiel',
+            "spieltyp = 'Pokalspiel' AND pokalname = '%s'",
+            $cupName
+        );
+        $row = $result->fetch_array();
+        $result->free();
+
+        return array(
+            'cup_name' => $cupName,
+            'temp_teams' => (int) $tempTeams,
+            'groups_generated' => (int) $groupsGenerated,
+            'created_matches' => $row ? (int) $row['matches'] : 0,
+            'deleted_matches' => (int) $deletedMatches,
+            'winner_stored' => $winnerStored
+        );
+    }
+
 }
 ?>

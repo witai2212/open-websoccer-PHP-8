@@ -14,6 +14,8 @@
       <setting id="transfermarket_min_teamsize" category="transfermarket" type="number" default="18" />
       <setting id="transfermarket_max_transactions_between_users" category="transfermarket" type="number" default="2" />
       <setting id="transfermarket_max_players_on_tl" category="transfermarket" type="number" default="250" />
+      <setting id="precontract_decision_matches_min" category="transfermarket" type="number" default="2" />
+      <setting id="precontract_decision_matches_max" category="transfermarket" type="number" default="4" />
   </settings>
   
     <pages>
@@ -39,6 +41,7 @@
 	            <script file="jquery.countdown.min.js" />
 	         </page>
         </page>
+        <page id="player-precontract" template="player-precontract" model="PlayerPrecontractModel" role="user" />
 
     </pages> 
     
@@ -112,6 +115,14 @@
     </blocks>
     
   <actions>
+	<action id="player-precontract" controller="PlayerPrecontractController" role="user" log="true">
+        <param id="id" type="number" required="true" />
+        <param id="handmoney" type="number" min="0" max="1000000000" required="true" />
+        <param id="contract_salary" type="number" min="1" max="1000000000" required="true" />
+        <param id="contract_goal_bonus" type="number" min="0" max="1000000000" required="true" />
+        <param id="contract_matches" type="number" min="20" max="100" required="true" />
+    </action>
+
 	<action id="sell-player" controller="SellPlayerController" role="user" log="true">
 		<param id="min_bid" type="number" required="true" max="1000000000" />
 		<param id="id" type="number" required="true" />

@@ -226,6 +226,10 @@ class PlayersDataService {
 			'label_key' => 'entity_player_vertrag_gehalt',
 			'column' => 'P.vertrag_gehalt'
 		);
+		$filters['contract_matches'] = array(
+			'label_key' => 'entity_player_vertrag_spiele',
+			'column' => 'P.vertrag_spiele'
+		);
 
 		if ($websoccer->getConfig('hide_strength_attributes') !== '1') {
 			$filters['strength'] = array('label_key' => 'entity_player_w_staerke', 'column' => 'P.w_staerke');

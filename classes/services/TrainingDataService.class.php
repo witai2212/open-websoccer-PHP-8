@@ -32,7 +32,7 @@ class TrainingDataService {
         self::ensureAdvancedTrainingSchema($websoccer, $db);
         $fromTable = $websoccer->getConfig("db_prefix") . "_trainer";
 
-        $result = $db->querySelect("COUNT(*) AS hits", $fromTable, "1=1");
+        $result = $db->querySelect("COUNT(*) AS hits", $fromTable, "available = '1'");
         $trainers = $result->fetch_array();
         $result->free();
 
@@ -45,7 +45,7 @@ class TrainingDataService {
         $limit = $startIndex . "," . $entries_per_page;
 
         $trainers = array();
-        $result = $db->querySelect("*", $fromTable, "1=1 ORDER BY salary DESC", null, $limit);
+        $result = $db->querySelect("*", $fromTable, "available = '1' ORDER BY reputation DESC, salary DESC", null, $limit);
         while ($trainer = $result->fetch_array()) {
             $trainers[] = self::normalizeTrainerRow($trainer);
         }
@@ -438,37 +438,77 @@ class TrainingDataService {
                 $vname = str_replace("'", "", $vname);
                 $nname = str_replace("'", "", $nname);
 
-                $ratio = round(75000 / 90, 0);
-                $expertise = mt_rand(60, 90);
-                $p_technique = mt_rand(60, 90);
-                $p_stamina = mt_rand(60, 90);
-                $p_offense = mt_rand(45, 90);
-                $p_defense = mt_rand(45, 90);
-                $p_tactics = mt_rand(45, 90);
-                $p_goalkeeping = mt_rand(35, 90);
-                $p_mental = mt_rand(45, 90);
-                $specialization = $specializations[mt_rand(0, count($specializations) - 1)];
-
-                $x = ($expertise + $p_technique + $p_stamina + $p_offense + $p_defense + $p_tactics + $p_mental) / 7;
-                $salary = round($x * $ratio, 0);
+                $profile = self::generateTrainerProfile($specializations[mt_rand(0, count($specializations) - 1)]);
                 $name = $vname . " " . $nname;
 
-                $db->queryInsert(array(
-                    'name' => $name,
-                    'salary' => $salary,
-                    'p_technique' => $p_technique,
-                    'p_stamina' => $p_stamina,
-                    'expertise' => $expertise,
-                    'specialization' => $specialization,
-                    'p_offense' => $p_offense,
-                    'p_defense' => $p_defense,
-                    'p_tactics' => $p_tactics,
-                    'p_goalkeeping' => $p_goalkeeping,
-                    'p_mental' => $p_mental
-                ), $websoccer->getConfig("db_prefix") . "_trainer");
+                $db->queryInsert(array_merge(array('name' => $name), $profile), $websoccer->getConfig("db_prefix") . "_trainer");
             }
         }
     }
+
+
+    public static function getTrainerSuitabilityForTeam(WebSoccer $websoccer, DbConnection $db, $trainer, $teamId) {
+        self::ensureAdvancedTrainingSchema($websoccer, $db);
+        $teamInfo = self::getTrainerTeamContext($websoccer, $db, $teamId);
+        $clubStrength = isset($teamInfo['club_strength']) ? (int) $teamInfo['club_strength'] : 0;
+        $leagueRating = isset($teamInfo['league_rating']) ? (int) $teamInfo['league_rating'] : 50;
+        $budget = isset($teamInfo['budget']) ? (int) $teamInfo['budget'] : 0;
+        $salary = isset($trainer['salary']) ? (int) $trainer['salary'] : 0;
+        $signingFee = isset($trainer['signing_fee']) ? (int) $trainer['signing_fee'] : 0;
+        $minClubStrength = isset($trainer['min_club_strength']) ? (int) $trainer['min_club_strength'] : 0;
+        $minLeagueRating = isset($trainer['min_league_rating']) ? (int) $trainer['min_league_rating'] : 0;
+
+        $reasons = array();
+        if ($minClubStrength > 0 && $clubStrength < $minClubStrength) {
+            $reasons[] = 'club_strength';
+        }
+        if ($minLeagueRating > 0 && $leagueRating < $minLeagueRating) {
+            $reasons[] = 'league_rating';
+        }
+        if ($budget > 0 && ($salary + $signingFee) > max(0, (int) floor($budget * 0.35))) {
+            $reasons[] = 'budget';
+        }
+
+        return array(
+            'can_hire' => empty($reasons),
+            'club_strength' => $clubStrength,
+            'league_rating' => $leagueRating,
+            'required_club_strength' => $minClubStrength,
+            'required_league_rating' => $minLeagueRating,
+            'reasons' => $reasons
+        );
+    }
+
+    public static function canTeamHireTrainer(WebSoccer $websoccer, DbConnection $db, $trainer, $teamId) {
+        $suitability = self::getTrainerSuitabilityForTeam($websoccer, $db, $trainer, $teamId);
+        return !empty($suitability['can_hire']);
+    }
+
+    public static function getTrainerHiringErrorMessage(I18n $i18n, $suitability) {
+        if (!is_array($suitability) || !isset($suitability['reasons']) || empty($suitability['reasons'])) {
+            return '';
+        }
+
+        $messages = array();
+        foreach ($suitability['reasons'] as $reason) {
+            if ($reason === 'club_strength') {
+                $messages[] = $i18n->getMessage('training_trainer_err_club_too_weak');
+            } elseif ($reason === 'league_rating') {
+                $messages[] = $i18n->getMessage('training_trainer_err_league_too_weak');
+            } elseif ($reason === 'budget') {
+                $messages[] = $i18n->getMessage('training_trainer_err_budget_risk');
+            }
+        }
+        return implode(' ', $messages);
+    }
+
+    public static function decorateTrainersForTeam(WebSoccer $websoccer, DbConnection $db, array $trainers, $teamId) {
+        foreach ($trainers as $idx => $trainer) {
+            $trainers[$idx]['suitability'] = self::getTrainerSuitabilityForTeam($websoccer, $db, $trainer, $teamId);
+        }
+        return $trainers;
+    }
+
 
     public static function ensureAdvancedTrainingSchema(WebSoccer $websoccer, DbConnection $db) {
         if (self::$_schemaReady) {
@@ -483,6 +523,11 @@ class TrainingDataService {
         self::ensureColumn($db, $prefix . '_trainer', 'p_tactics', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN p_tactics TINYINT(3) NOT NULL DEFAULT 60");
         self::ensureColumn($db, $prefix . '_trainer', 'p_goalkeeping', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN p_goalkeeping TINYINT(3) NOT NULL DEFAULT 60");
         self::ensureColumn($db, $prefix . '_trainer', 'p_mental', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN p_mental TINYINT(3) NOT NULL DEFAULT 60");
+        self::ensureColumn($db, $prefix . '_trainer', 'reputation', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN reputation TINYINT(3) NOT NULL DEFAULT 50");
+        self::ensureColumn($db, $prefix . '_trainer', 'min_club_strength', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN min_club_strength TINYINT(3) NOT NULL DEFAULT 0");
+        self::ensureColumn($db, $prefix . '_trainer', 'min_league_rating', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN min_league_rating TINYINT(3) NOT NULL DEFAULT 0");
+        self::ensureColumn($db, $prefix . '_trainer', 'signing_fee', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN signing_fee INT(10) NOT NULL DEFAULT 0");
+        self::ensureColumn($db, $prefix . '_trainer', 'available', "ALTER TABLE " . $prefix . "_trainer ADD COLUMN available ENUM('1','0') NOT NULL DEFAULT '1'");
 
         $focusType = self::columnType($db, $prefix . '_training_unit', 'focus');
         if (strlen($focusType) && strpos(strtolower($focusType), 'varchar') === false) {
@@ -907,12 +952,29 @@ class TrainingDataService {
         $factor = 0.65 + (max(1, min(100, $skill)) / 100) * 0.70;
         $specialization = isset($trainer['specialization']) ? $trainer['specialization'] : 'balanced';
         if ($specialization === $skillGroup || $specialization === $trainingType) {
-            $factor *= 1.12;
+            $factor *= 1.16;
         } elseif ($specialization === 'balanced') {
             $factor *= 1.03;
+        } elseif (self::isTrainerSpecializationWeakAgainst($specialization, $skillGroup)) {
+            $factor *= 0.88;
         }
 
         return $factor;
+    }
+
+
+    private static function isTrainerSpecializationWeakAgainst($specialization, $skillGroup) {
+        $weaknesses = array(
+            'offense' => array('defense'),
+            'defense' => array('offense'),
+            'fitness' => array('mental'),
+            'mental' => array('fitness'),
+            'goalkeeper' => array('offense', 'defense'),
+            'setpieces' => array('fitness'),
+            'tactics' => array('fitness'),
+            'technique' => array('fitness')
+        );
+        return isset($weaknesses[$specialization]) && in_array($skillGroup, $weaknesses[$specialization], true);
     }
 
     private static function getPositionFactor($player, $trainingType, $effectKey) {
@@ -1081,6 +1143,69 @@ class TrainingDataService {
         return false;
     }
 
+
+    private static function getTrainerTeamContext(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $columns = 'C.id, C.finanz_budget AS budget, C.strength AS club_strength, C.highscore, L.id AS league_id, COALESCE(ML.rating, 50) AS league_rating';
+        $fromTable = $prefix . '_verein AS C LEFT JOIN ' . $prefix . '_liga AS L ON L.id = C.liga_id LEFT JOIN ' . $prefix . '_manager_league_rating AS ML ON ML.league_id = L.id';
+        $result = $db->querySelect($columns, $fromTable, 'C.id = %d', (int) $teamId, 1);
+        $team = $result->fetch_array();
+        $result->free();
+        return $team ? $team : array('budget' => 0, 'club_strength' => 0, 'league_rating' => 50);
+    }
+
+    private static function generateTrainerProfile($specialization) {
+        $skills = array(
+            'p_technique' => mt_rand(45, 75),
+            'p_stamina' => mt_rand(45, 75),
+            'p_offense' => mt_rand(45, 75),
+            'p_defense' => mt_rand(45, 75),
+            'p_tactics' => mt_rand(45, 75),
+            'p_goalkeeping' => mt_rand(35, 70),
+            'p_mental' => mt_rand(45, 75)
+        );
+
+        if ($specialization === 'technique') {
+            $skills['p_technique'] = mt_rand(78, 96); $skills['p_stamina'] = mt_rand(35, 62);
+        } elseif ($specialization === 'fitness') {
+            $skills['p_stamina'] = mt_rand(80, 98); $skills['p_mental'] = mt_rand(35, 62);
+        } elseif ($specialization === 'offense') {
+            $skills['p_offense'] = mt_rand(82, 99); $skills['p_defense'] = mt_rand(30, 58);
+        } elseif ($specialization === 'defense') {
+            $skills['p_defense'] = mt_rand(82, 99); $skills['p_offense'] = mt_rand(30, 58);
+        } elseif ($specialization === 'setpieces') {
+            $skills['p_tactics'] = mt_rand(72, 92); $skills['p_technique'] = mt_rand(72, 92); $skills['p_stamina'] = mt_rand(35, 62);
+        } elseif ($specialization === 'goalkeeper') {
+            $skills['p_goalkeeping'] = mt_rand(84, 99); $skills['p_offense'] = mt_rand(30, 55);
+        } elseif ($specialization === 'mental') {
+            $skills['p_mental'] = mt_rand(82, 99); $skills['p_technique'] = mt_rand(35, 65);
+        } elseif ($specialization === 'tactics') {
+            $skills['p_tactics'] = mt_rand(82, 99); $skills['p_stamina'] = mt_rand(35, 62);
+        } else {
+            foreach ($skills as $key => $value) {
+                $skills[$key] = mt_rand(58, 82);
+            }
+        }
+
+        $expertise = (int) round(($skills['p_technique'] + $skills['p_stamina'] + $skills['p_offense'] + $skills['p_defense'] + $skills['p_tactics'] + $skills['p_goalkeeping'] + $skills['p_mental']) / 7);
+        $reputation = max(20, min(100, $expertise + mt_rand(-8, 12)));
+        $salary = max(25000, (int) round(($expertise * 850) + ($reputation * 450)));
+        $signingFee = (int) round($salary * (mt_rand(2, 6) / 10));
+
+        return array_merge(array(
+            'salary' => $salary,
+            'expertise' => $expertise,
+            'premiumfee' => 0,
+            'specialization' => $specialization,
+            'reputation' => $reputation,
+            'min_club_strength' => max(0, $reputation - 30),
+            'min_league_rating' => max(0, $reputation - 35),
+            'signing_fee' => $signingFee,
+            'available' => '1'
+        ), $skills);
+    }
+
+
     private static function normalizeTrainerRow($trainer) {
         if (!$trainer) {
             return array();
@@ -1091,7 +1216,12 @@ class TrainingDataService {
             'p_defense' => isset($trainer['expertise']) ? $trainer['expertise'] : 60,
             'p_tactics' => isset($trainer['expertise']) ? $trainer['expertise'] : 60,
             'p_goalkeeping' => isset($trainer['p_technique']) ? $trainer['p_technique'] : 60,
-            'p_mental' => isset($trainer['expertise']) ? $trainer['expertise'] : 60
+            'p_mental' => isset($trainer['expertise']) ? $trainer['expertise'] : 60,
+            'reputation' => isset($trainer['expertise']) ? $trainer['expertise'] : 50,
+            'min_club_strength' => 0,
+            'min_league_rating' => 0,
+            'signing_fee' => 0,
+            'available' => '1'
         );
         foreach ($defaults as $key => $value) {
             if (!isset($trainer[$key]) || $trainer[$key] === '') {

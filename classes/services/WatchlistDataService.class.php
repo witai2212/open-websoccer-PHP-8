@@ -62,6 +62,23 @@ class WatchlistDataService {
 			$hasOffer = self:: checkIfPLayerHasOffer($websoccer, $db, $player['spieler_id'], $teamId);
 			$players[$i]['hasoffer'] = $hasOffer;
 
+            $players[$i]['precontract_offer'] = PlayerPrecontractDataService::getOfferByPlayerAndTeam(
+                $websoccer,
+                $db,
+                $player['spieler_id'],
+                $teamId
+            );
+            $players[$i]['accepted_precontract'] = PlayerPrecontractDataService::getAcceptedByPlayer(
+                $websoccer,
+                $db,
+                $player['spieler_id']
+            );
+            $players[$i]['precontract_open_offer_count'] = PlayerPrecontractDataService::getOpenOfferCount(
+                $websoccer,
+                $db,
+                $player['spieler_id']
+            );
+
 			// Dynamic scout recommendation for this watchlist entry.
 			// Hidden values such as w_talent and w_staerke_max are intentionally not used here.
 			$players[$i]['scout_recommendation'] = self::calculateScoutRecommendation($recommendationContext, $player);

@@ -3,7 +3,7 @@
 class ComputerTransfersDataService {
     
     const MAX_SQUAD_SIZE = 23;
-    const MAX_OFFERS = 3;
+    const MAX_OFFERS = 8; // fallback; configurable
     const MAX_LENDING_OFFERS_PER_TEAM = 2;
     const MAX_BORROWED_PLAYERS_PER_TEAM = 2;
     const MIN_SQUAD_SIZE_AFTER_LENDING = 20;
@@ -48,12 +48,15 @@ class ComputerTransfersDataService {
 	    self::offerButNotONTL($websoccer, $db);
 	    
 		$now = $websoccer->getNowAsTimestamp();
-		$teamIds = self::getComputerControlledTeams($websoccer, $db);
+		$teamsPerRun = max(1, self::getOptionalConfigInt($websoccer, 'computer_transfers_teams_per_run', 100));
+		$maxOffersPerTeam = max(1, self::getOptionalConfigInt($websoccer, 'computer_transfers_max_active_offers_per_team', 8));
+		$maxOffersPerPlayer = max(1, self::getOptionalConfigInt($websoccer, 'computer_transfers_max_offers_per_player', 6));
+		$teamIds = self::getComputerControlledTeams($websoccer, $db, $teamsPerRun);
 
 		// --- Managing Transfer List (only if condition is met) ---
 		$playersOnTL = self::getNumberOfPlayersOnTL($websoccer, $db);
 		
-		echo"[executeComputerBids]: ". $playersOnTL ." - ". $MAX_PLAYERS_ON_TL ."\n";
+		echo"[executeComputerBids]: ONTL: ". $playersOnTL ." - MAXONTL: ". $MAX_PLAYERS_ON_TL ."\n";
 
 		if($playersOnTL<$MAX_PLAYERS_ON_TL) {
 		//if ((($playersOnTL / $totalPlayers) < self::MAX_PERCENTAGE_PLAYERS_ON_TL) || ($playersOnTL < self::MAX_PLAYERS_ON_TL)) {
@@ -80,8 +83,9 @@ class ComputerTransfersDataService {
 		}
 
 		// --- Bidding on Players (always runs) ---
-		foreach ($teamIds as $teamId) {
-		    
+        foreach ($teamIds as $teamId) {
+            PlayerPrecontractDataService::createComputerOffers($websoccer, $db, $teamId);
+            
 			$budget = self::getTeamBudget($websoccer, $db, $teamId);
 			$currentOffers = self::getTeamOfferCount($websoccer, $db, $teamId);
 			$squad = self::getLoanRelevantTeamSquad($websoccer, $db, $teamId);
@@ -97,7 +101,7 @@ class ComputerTransfersDataService {
 
 			foreach ($playersOnMarket as $player) {
 				if ($player['transfermarkt'] == '1') {
-					if ($currentOffers >= self::MAX_OFFERS) break;
+					if ($currentOffers >= $maxOffersPerTeam) break;
 					$traitNeedScore = self::scorePlayerForTraitNeeds($websoccer, $db, $player, $traitNeeds);
 					if (!self::positionFitsTransferNeeds($player, $transferNeeds, $squad, $traitNeedScore)) continue;
 				    
@@ -134,14 +138,14 @@ class ComputerTransfersDataService {
 					if ($bidAmount <= $budget) {
 						
 						$offersForPlayerId = self::countOffersForPlayerId($websoccer, $db, $player['id']);
-						if($offersForPlayerId<3) {
+						if ($offersForPlayerId < $maxOffersPerPlayer) {
 							
 							self::placeBid($websoccer, $db, $teamId, $player['id'], $bidAmount, $now, $salaryAmount, $goalAmount);
-							self::deleteTooManyOffers($websoccer, $db);
+							self::deleteTooManyOffers($websoccer, $db, $maxOffersPerPlayer);
 							$currentOffers++;
-							if ($currentOffers >= self::MAX_OFFERS) break;
+							if ($currentOffers >= $maxOffersPerTeam) break;
 						} else {
-							self::deleteTooManyOffers($websoccer, $db);
+							self::deleteTooManyOffers($websoccer, $db, $maxOffersPerPlayer);
 						}
 					}
 				}
@@ -150,13 +154,13 @@ class ComputerTransfersDataService {
 	}
     
     
-    private static function getComputerControlledTeams(WebSoccer $websoccer, DbConnection $db) {
+    private static function getComputerControlledTeams(WebSoccer $websoccer, DbConnection $db, $limit = 100) {
         $query = "
             SELECT id
             FROM ". $websoccer->getConfig('db_prefix') ."_verein
             WHERE user_id IS NULL OR user_id <= '0'
             ORDER BY RAND()
-            LIMIT 1";
+            LIMIT ". max(1, (int) $limit);
         $result = $db->executeQuery($query);
         
         $teamIds = [];
@@ -282,8 +286,8 @@ class ComputerTransfersDataService {
     }
     
     private static function isStrengthWithinRange($playerStrength, $teamStrength) {
-        $lowerBound = $teamStrength * 0.9;
-        $upperBound = $teamStrength * 1.1;
+        $lowerBound = $teamStrength * 0.75;
+        $upperBound = $teamStrength * 1.30;
         return $playerStrength >= $lowerBound && $playerStrength <= $upperBound;
     }
     
@@ -843,15 +847,12 @@ class ComputerTransfersDataService {
     private static function positionFitsTransferNeeds($player, $needs, $squad, $traitNeedScore = 0) {
         $traitNeedScore = max(0, (int) $traitNeedScore);
         if (!count($needs)) {
-            // No hard shortage: keep a small market-opportunity chance, but prefer
-            // players who solve a concrete trait gap.
-            if (count($squad) >= self::MAX_SQUAD_SIZE) {
-                return false;
-            }
+            // Clubs with a complete squad must still participate in the market:
+            // they can replace weaker players or react to an attractive opportunity.
             if ($traitNeedScore > 0) {
-                return (rand(1, 100) <= min(65, 20 + ($traitNeedScore * 4)));
+                return (rand(1, 100) <= min(90, 55 + ($traitNeedScore * 4)));
             }
-            return (rand(1, 100) <= 10);
+            return (rand(1, 100) <= 35);
         }
 
         if (isset($player['position']) && in_array($player['position'], $needs)) {
@@ -860,7 +861,7 @@ class ComputerTransfersDataService {
 
         // A very good specialist can still be interesting if the squad is not full,
         // but hard positional shortages remain the main driver.
-        return (count($squad) < self::MAX_SQUAD_SIZE && $traitNeedScore >= 8 && rand(1, 100) <= 20);
+        return ($traitNeedScore >= 6 && rand(1, 100) <= 35);
     }
 
     private static function getPositionNeeds($positionsCount) {
@@ -1090,26 +1091,53 @@ class ComputerTransfersDataService {
 		return $offer['offers'];
     }
     
-    public static function deleteTooManyOffers(WebSoccer $websoccer, DbConnection $db) {
-        
-        $query = "SELECT * FROM ". $websoccer->getConfig('db_prefix') ."_v_transfer_angebot_player
-                    WHERE offer>3";
+    public static function deleteTooManyOffers(WebSoccer $websoccer, DbConnection $db, $maxOffersPerPlayer = 6) {
+        // Keep the best offers instead of deleting every computer offer once the old
+        // hard-coded limit of three is exceeded.
+        $maxOffersPerPlayer = max(1, (int) $maxOffersPerPlayer);
+        $table = $websoccer->getConfig('db_prefix') . "_transfer_angebot";
+
+        $query = "SELECT spieler_id, COUNT(*) AS offer_count
+                  FROM " . $table . "
+                  GROUP BY spieler_id
+                  HAVING COUNT(*) > " . $maxOffersPerPlayer;
         $result = $db->executeQuery($query);
-        $offer = $result->fetch_assoc();
-        $result->free();
-        
-        //correct too many offers
-        if($offer['offer']>3) {
-            
-            $delStr = "DELETE FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot
-                        WHERE spieler_id='".$offer['spieler_id']."'
-                            AND (user_id IS NULL OR user_id<=0)";
-            $db->executeQuery($delStr);
-            
+        $playerIds = array();
+        while ($row = $result->fetch_assoc()) {
+            $playerIds[] = (int) $row['spieler_id'];
         }
-        
+        $result->free();
+
+        foreach ($playerIds as $playerId) {
+            $userQuery = "SELECT COUNT(*) AS user_count FROM " . $table . "
+                          WHERE spieler_id='" . $playerId . "' AND user_id > 0";
+            $userResult = $db->executeQuery($userQuery);
+            $userRow = $userResult->fetch_assoc();
+            $userResult->free();
+
+            $cpuSlots = max(0, $maxOffersPerPlayer - (int) $userRow['user_count']);
+            $cpuQuery = "SELECT id FROM " . $table . "
+                         WHERE spieler_id='" . $playerId . "'
+                           AND (user_id IS NULL OR user_id <= 0)
+                         ORDER BY abloese DESC, datum DESC, id DESC";
+            $cpuResult = $db->executeQuery($cpuQuery);
+            $keep = 0;
+            $deleteIds = array();
+            while ($cpuRow = $cpuResult->fetch_assoc()) {
+                if ($keep < $cpuSlots) {
+                    $keep++;
+                } else {
+                    $deleteIds[] = (int) $cpuRow['id'];
+                }
+            }
+            $cpuResult->free();
+
+            if (count($deleteIds)) {
+                $db->executeQuery("DELETE FROM " . $table . " WHERE id IN (" . implode(',', $deleteIds) . ")");
+            }
+        }
     }
-	
+
 	public static function deleteOfferByPlayerId(WebSoccer $websoccer, DbConnection $db, $playerId) {
 		
 		$delStr = "DELETE FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot WHERE spieler_id='".$playerId."'";

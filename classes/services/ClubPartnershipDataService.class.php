@@ -646,17 +646,20 @@ class ClubPartnershipDataService {
 
     private static function cancelFirstOptions(WebSoccer $websoccer, DbConnection $db, $playerId, $youthPlayerId) {
         $where = "status = 'open'";
+        $parameters = array();
         if ((int) $playerId > 0) {
-            $where .= " AND player_id = " . (int) $playerId;
+            $where .= " AND player_id = %d";
+            $parameters[] = (int) $playerId;
         } elseif ((int) $youthPlayerId > 0) {
-            $where .= " AND youth_player_id = " . (int) $youthPlayerId;
+            $where .= " AND youth_player_id = %d";
+            $parameters[] = (int) $youthPlayerId;
         } else {
             return;
         }
         $db->queryUpdate(array(
             'status' => self::FIRST_OPTION_STATUS_CANCELLED,
             'decision_date' => $websoccer->getNowAsTimestamp()
-        ), self::firstOptionTable($websoccer), $where);
+        ), self::firstOptionTable($websoccer), $where, $parameters);
     }
 
     private static function expireFirstOptions(WebSoccer $websoccer, DbConnection $db) {

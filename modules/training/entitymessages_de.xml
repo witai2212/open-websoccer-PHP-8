@@ -13,4 +13,10 @@
     <message id="entity_trainer_p_goalkeeping">Torwarttraining</message>
     <message id="entity_trainer_p_mental">Mentalität</message>
     <message id="entity_trainer_premiumfee">Premiumgebühr</message>
+
+    <message id="entity_trainer_reputation">Reputation</message>
+    <message id="entity_trainer_min_club_strength">Mindest-Vereinsstärke</message>
+    <message id="entity_trainer_min_league_rating">Mindest-Ligareputation</message>
+    <message id="entity_trainer_signing_fee">Handgeld</message>
+    <message id="entity_trainer_available">Verfügbar</message>
 </messages>

@@ -273,12 +273,18 @@ class TransfermarketDataService {
 			$bid = self::getHighestBidForPlayer($websoccer, $db, $player['player_id']);
 			if (!isset($bid['bid_id']) && $player['transfer_end'] < $now) {
 				
-				// self::extendDuration($websoccer, $db, $player['player_id']);
-				$updStr = "UPDATE " . $websoccer->getConfig('db_prefix') . "_spieler SET transfermarkt='0', transfer_start='0', transfer_ende='0' WHERE id='" . $player['player_id'] . "'";
-				$db->executeQuery($updStr);
-				
-				// delete all other offers
-				ComputerTransfersDataService::deleteOfferByPlayerId($websoccer, $db, $player['player_id']);
+				// A user-managed club explicitly decided to put this player on the transfer list.
+				// Do not overrule that decision merely because the current listing period expired
+				// without an offer. Renew the listing instead.
+				if ((int) $player['team_user_id'] > 0) {
+					self::extendDuration($websoccer, $db, $player['player_id']);
+				} else {
+					$updStr = "UPDATE " . $websoccer->getConfig('db_prefix') . "_spieler SET transfermarkt='0', transfer_start='0', transfer_ende='0' WHERE id='" . $player['player_id'] . "'";
+					$db->executeQuery($updStr);
+					
+					// delete all other offers
+					ComputerTransfersDataService::deleteOfferByPlayerId($websoccer, $db, $player['player_id']);
+				}
 				
 			} else {
 				

@@ -56,7 +56,12 @@ class MyTeamModel implements IModel {
 			$players = PlayersDataService::getPlayersOfTeamById($this->_websoccer, $this->_db, $teamId);
 		}
 		
-		return array("players" => $players, "captain_id" => $captain_id, "show_traits" => TRUE);
+        foreach ($players as &$player) {
+            $player["accepted_precontract"] = PlayerPrecontractDataService::getAcceptedByPlayer($this->_websoccer, $this->_db, $player["id"]);
+        }
+        unset($player);
+        $incomingPlayers = ($teamId > 0) ? PlayerPrecontractDataService::getIncoming($this->_websoccer, $this->_db, $teamId) : array();
+        return array("players" => $players, "incoming_players" => $incomingPlayers, "captain_id" => $captain_id, "show_traits" => TRUE);
 	}
 	
 }

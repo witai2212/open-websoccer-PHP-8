@@ -7,7 +7,7 @@ This file is part of OpenWebSoccer-Sim.
 
 /**
  * Small helper for continent / association navigation and coefficient updates.
- * It keeps UEFA backwards-compatible and adds CONMEBOL as the first additional association.
+ * It keeps UEFA backwards-compatible and adds CONMEBOL / CONCACAF as additional associations.
  */
 class ContinentalAssociationDataService {
 
@@ -34,6 +34,16 @@ class ContinentalAssociationDataService {
                     array('page' => 'copasudamericana', 'label' => 'Copa Sudamericana')
                 ),
                 'coefficient_column' => 'conmebol_s1'
+            ),
+            'CONCACAF' => array(
+                'code' => 'CONCACAF',
+                'label' => 'CONCACAF',
+                'ranking_page' => 'concacaf',
+                'ranking_label_key' => 'concacaf_ranking_navlabel',
+                'cup_pages' => array(
+                    array('page' => 'concacafchampionscup', 'label' => 'CONCACAF Champions Cup')
+                ),
+                'coefficient_column' => 'concacaf_s1'
             )
         );
     }
@@ -43,6 +53,10 @@ class ContinentalAssociationDataService {
 
         if ($value === 'CONMEBOL' || strpos($value, 'SÜD') !== false || strpos($value, 'SUD') !== false || strpos($value, 'SOUTH') !== false) {
             return 'CONMEBOL';
+        }
+
+        if ($value === 'CONCACAF' || strpos($value, 'NORTH') !== false || strpos($value, 'CENTRAL') !== false || strpos($value, 'KARIB') !== false || strpos($value, 'CARIB') !== false) {
+            return 'CONCACAF';
         }
 
         if ($value === 'UEFA' || strpos($value, 'EURO') !== false || strpos($value, 'EUROPA') !== false) {
@@ -132,6 +146,10 @@ class ContinentalAssociationDataService {
 
         if ($cupName === 'Copa Libertadores' || $cupName === 'Copa Sudamericana') {
             return 'CONMEBOL';
+        }
+
+        if ($cupName === 'CONCACAF Champions Cup') {
+            return 'CONCACAF';
         }
 
         return '';

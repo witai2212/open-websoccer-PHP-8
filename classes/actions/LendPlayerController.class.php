@@ -32,6 +32,7 @@ class LendPlayerController implements IActionController {
 			throw new Exception($this->_i18n->getMessage('lending_err_notownplayer'));
 		}
 		
+        if (PlayerPrecontractDataService::hasAcceptedAgreement($this->_websoccer, $this->_db, $player['player_id'])) { throw new Exception($this->_i18n->getMessage('precontract_locked')); }
 		if ($player['lending_owner_id'] > 0) {
 			throw new Exception($this->_i18n->getMessage('lending_err_borrowed_player'));
 		}

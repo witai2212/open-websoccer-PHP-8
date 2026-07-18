@@ -1,4 +1,3 @@
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -220,6 +219,33 @@ CREATE TABLE `cm23_backup_spiel_before_results_fix_20260525` (
   `blocked` enum('1','0') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `cm23_backup_stadion_before_real_2026` (
+  `id` int(10) NOT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  `stadt` varchar(30) DEFAULT NULL,
+  `land` varchar(20) DEFAULT NULL,
+  `p_steh` int(6) DEFAULT 0,
+  `p_sitz` int(6) DEFAULT NULL,
+  `p_haupt_steh` int(6) DEFAULT NULL,
+  `p_haupt_sitz` int(6) DEFAULT NULL,
+  `p_vip` int(6) DEFAULT NULL,
+  `level_pitch` tinyint(2) NOT NULL DEFAULT 3,
+  `level_videowall` tinyint(2) NOT NULL DEFAULT 1,
+  `level_seatsquality` tinyint(2) NOT NULL DEFAULT 5,
+  `level_vipquality` tinyint(2) NOT NULL DEFAULT 5,
+  `maintenance_pitch` tinyint(2) NOT NULL DEFAULT 1,
+  `maintenance_videowall` tinyint(2) NOT NULL DEFAULT 1,
+  `maintenance_seatsquality` tinyint(2) NOT NULL DEFAULT 1,
+  `maintenance_vipquality` tinyint(2) NOT NULL DEFAULT 1,
+  `picture` varchar(128) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+CREATE TABLE `cm23_backup_verein_stadium_link_2026` (
+  `verein_id` int(10) NOT NULL DEFAULT 0,
+  `verein_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `stadion_id` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_badge` (
   `id` int(10) NOT NULL,
   `name` varchar(128) NOT NULL,
@@ -319,6 +345,24 @@ CREATE TABLE `cm23_club_partnership` (
   `context_data` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `cm23_club_partnership_first_option` (
+  `id` int(10) NOT NULL,
+  `partnership_id` int(10) NOT NULL DEFAULT 0,
+  `parent_team_id` int(10) NOT NULL DEFAULT 0,
+  `partner_team_id` int(10) NOT NULL DEFAULT 0,
+  `parent_user_id` int(10) NOT NULL DEFAULT 0,
+  `player_id` int(10) NOT NULL DEFAULT 0,
+  `youth_player_id` int(10) NOT NULL DEFAULT 0,
+  `player_name` varchar(128) NOT NULL DEFAULT '',
+  `source` varchar(32) NOT NULL DEFAULT '',
+  `status` enum('open','used','declined','expired','cancelled') NOT NULL DEFAULT 'open',
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `expires_date` int(11) NOT NULL DEFAULT 0,
+  `decision_date` int(11) NOT NULL DEFAULT 0,
+  `used_by_team_id` int(10) NOT NULL DEFAULT 0,
+  `context_data` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_club_partnership_log` (
   `id` int(10) NOT NULL,
   `partnership_id` int(10) NOT NULL DEFAULT 0,
@@ -351,6 +395,12 @@ CREATE TABLE `cm23_club_staff_assignment` (
 CREATE TABLE `cm23_cl_temp` (
   `id` int(3) NOT NULL,
   `verein_id` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_concacaf_temp` (
+  `id` int(10) NOT NULL,
+  `verein_id` int(10) NOT NULL,
+  `cup_name` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `cm23_config` (
@@ -665,7 +715,14 @@ CREATE TABLE `cm23_land` (
   `conmebol_s5` decimal(10,3) DEFAULT 0.000,
   `conmebol_lib` tinyint(1) NOT NULL DEFAULT 0,
   `conmebol_sud` tinyint(1) NOT NULL DEFAULT 0,
-  `conmebol_coeff` decimal(10,3) NOT NULL DEFAULT 0.000
+  `conmebol_coeff` decimal(10,3) NOT NULL DEFAULT 0.000,
+  `concacaf_s1` decimal(10,3) DEFAULT 0.000,
+  `concacaf_s2` decimal(10,3) DEFAULT 0.000,
+  `concacaf_s3` decimal(10,3) DEFAULT 0.000,
+  `concacaf_s4` decimal(10,3) DEFAULT 0.000,
+  `concacaf_s5` decimal(10,3) DEFAULT 0.000,
+  `concacaf_champions` tinyint(1) NOT NULL DEFAULT 0,
+  `concacaf_coeff` decimal(10,3) NOT NULL DEFAULT 0.000
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `cm23_leaguehistory` (
@@ -779,6 +836,18 @@ CREATE TABLE `cm23_manager_application` (
   `context_data` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `cm23_manager_assignment` (
+  `id` int(10) NOT NULL,
+  `manager_id` int(10) NOT NULL,
+  `team_id` int(10) NOT NULL,
+  `start_date` int(11) NOT NULL DEFAULT 0,
+  `end_date` int(11) NOT NULL DEFAULT 0,
+  `end_reason` varchar(64) NOT NULL DEFAULT '',
+  `status` enum('active','ended') NOT NULL DEFAULT 'active',
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `updated_date` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_manager_award` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -803,6 +872,21 @@ CREATE TABLE `cm23_manager_career_history` (
   `new_club_score` int(10) NOT NULL DEFAULT 0,
   `highscore_bonus` int(10) NOT NULL DEFAULT 0,
   `change_date` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_manager_competence_log` (
+  `id` int(10) NOT NULL,
+  `manager_id` int(10) NOT NULL DEFAULT 0,
+  `user_id` int(10) NOT NULL DEFAULT 0,
+  `team_id` int(10) NOT NULL DEFAULT 0,
+  `old_competence` tinyint(3) NOT NULL DEFAULT 0,
+  `new_competence` tinyint(3) NOT NULL DEFAULT 0,
+  `old_score` int(10) NOT NULL DEFAULT 0,
+  `new_score` int(10) NOT NULL DEFAULT 0,
+  `reason_key` varchar(64) NOT NULL DEFAULT '',
+  `message` varchar(255) NOT NULL DEFAULT '',
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `context_data` mediumtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `cm23_manager_contract` (
@@ -845,6 +929,13 @@ CREATE TABLE `cm23_manager_job_offer` (
   `context_data` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `cm23_manager_league_rating` (
+  `league_id` smallint(5) NOT NULL,
+  `rating` tinyint(3) NOT NULL DEFAULT 50,
+  `label` varchar(80) NOT NULL DEFAULT '',
+  `updated_date` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_manager_mission` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -874,6 +965,26 @@ CREATE TABLE `cm23_manager_mission_youth_promotion` (
   `promoted_date` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `cm23_manager_profile` (
+  `id` int(10) NOT NULL,
+  `user_id` int(10) DEFAULT NULL,
+  `is_cpu` enum('1','0') NOT NULL DEFAULT '1',
+  `firstname` varchar(64) NOT NULL DEFAULT '',
+  `lastname` varchar(64) NOT NULL DEFAULT '',
+  `display_name` varchar(128) NOT NULL DEFAULT '',
+  `nation` varchar(40) DEFAULT NULL,
+  `age` tinyint(3) NOT NULL DEFAULT 45,
+  `competence` tinyint(3) NOT NULL DEFAULT 10,
+  `competence_score` int(10) NOT NULL DEFAULT 100,
+  `competence_peak` tinyint(3) NOT NULL DEFAULT 10,
+  `character_key` varchar(32) NOT NULL DEFAULT 'balanced',
+  `salary_per_match` int(10) NOT NULL DEFAULT 0,
+  `avatar_key` varchar(64) NOT NULL DEFAULT '',
+  `status` enum('active','free','retired') NOT NULL DEFAULT 'active',
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `updated_date` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_matchreport` (
   `id` int(10) NOT NULL,
   `match_id` int(10) NOT NULL,
@@ -884,13 +995,84 @@ CREATE TABLE `cm23_matchreport` (
   `active_home` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
+CREATE TABLE `cm23_merchandising_campaign` (
+  `id` int(10) NOT NULL,
+  `team_id` int(10) NOT NULL,
+  `collection_id` int(10) DEFAULT NULL,
+  `campaign_type_id` int(10) NOT NULL,
+  `cost` int(10) NOT NULL DEFAULT 0,
+  `demand_bonus` tinyint(3) NOT NULL DEFAULT 0,
+  `start_date` int(11) NOT NULL DEFAULT 0,
+  `end_date` int(11) NOT NULL DEFAULT 0,
+  `status` enum('active','completed','cancelled') NOT NULL DEFAULT 'active',
+  `created_by` enum('manager','staff') NOT NULL DEFAULT 'manager'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_merchandising_campaign_type` (
+  `id` int(10) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `cost` int(10) NOT NULL DEFAULT 0,
+  `duration_days` smallint(5) NOT NULL DEFAULT 7,
+  `demand_bonus` tinyint(3) NOT NULL DEFAULT 10,
+  `active` enum('1','0') NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_merchandising_collection` (
+  `id` int(10) NOT NULL,
+  `team_id` int(10) NOT NULL,
+  `product_id` int(10) NOT NULL,
+  `player_id` int(10) DEFAULT NULL,
+  `season_key` varchar(32) NOT NULL DEFAULT '',
+  `quality` enum('simple','standard','premium') NOT NULL DEFAULT 'standard',
+  `status` enum('development','ready','active','clearance','closed') NOT NULL DEFAULT 'development',
+  `selling_price` int(10) NOT NULL DEFAULT 0,
+  `stock` int(10) NOT NULL DEFAULT 0,
+  `incoming_stock` int(10) NOT NULL DEFAULT 0,
+  `reorder_point` int(10) NOT NULL DEFAULT 0,
+  `development_started` int(11) NOT NULL DEFAULT 0,
+  `development_ready` int(11) NOT NULL DEFAULT 0,
+  `active_from` int(11) NOT NULL DEFAULT 0,
+  `active_until` int(11) NOT NULL DEFAULT 0,
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `updated_date` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_merchandising_order` (
+  `id` int(10) NOT NULL,
+  `team_id` int(10) NOT NULL,
+  `collection_id` int(10) NOT NULL,
+  `quantity` int(10) NOT NULL DEFAULT 0,
+  `unit_cost` int(10) NOT NULL DEFAULT 0,
+  `total_cost` int(10) NOT NULL DEFAULT 0,
+  `order_date` int(11) NOT NULL DEFAULT 0,
+  `delivery_date` int(11) NOT NULL DEFAULT 0,
+  `delivered_date` int(11) NOT NULL DEFAULT 0,
+  `status` enum('pending','delivered','cancelled') NOT NULL DEFAULT 'pending',
+  `created_by` enum('manager','staff') NOT NULL DEFAULT 'manager'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_merchandising_product` (
   `id` int(10) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `category` varchar(32) NOT NULL DEFAULT 'standard',
+  `season_type` enum('always','calendar','christmas','easter','summer','season','event') NOT NULL DEFAULT 'always',
+  `season_start` char(5) DEFAULT NULL,
+  `season_end` char(5) DEFAULT NULL,
   `purchase_price` int(10) NOT NULL DEFAULT 0,
   `sales_price` int(10) NOT NULL DEFAULT 0,
   `base_demand` decimal(6,4) NOT NULL DEFAULT 0.0100,
+  `development_cost` int(10) NOT NULL DEFAULT 0,
+  `development_days` smallint(5) NOT NULL DEFAULT 3,
+  `delivery_days` smallint(5) NOT NULL DEFAULT 3,
+  `minimum_order` int(10) NOT NULL DEFAULT 25,
+  `liquidation_percent` tinyint(3) NOT NULL DEFAULT 70,
+  `player_product` enum('1','0') NOT NULL DEFAULT '0',
+  `event_type` varchar(32) NOT NULL DEFAULT '',
+  `stadium_factor` decimal(5,2) NOT NULL DEFAULT 1.00,
+  `online_factor` decimal(5,2) NOT NULL DEFAULT 0.35,
+  `max_price_factor` decimal(4,2) NOT NULL DEFAULT 1.40,
   `active` enum('1','0') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -899,6 +1081,14 @@ CREATE TABLE `cm23_merchandising_sales` (
   `match_id` int(10) NOT NULL,
   `team_id` int(10) NOT NULL,
   `product_id` int(10) NOT NULL,
+  `collection_id` int(10) DEFAULT NULL,
+  `player_id` int(10) DEFAULT NULL,
+  `channel` enum('legacy','stadium','online','clearance') NOT NULL DEFAULT 'legacy',
+  `demand_units` int(10) NOT NULL DEFAULT 0,
+  `missed_units` int(10) NOT NULL DEFAULT 0,
+  `stock_before` int(10) NOT NULL DEFAULT 0,
+  `stock_after` int(10) NOT NULL DEFAULT 0,
+  `campaign_id` int(10) DEFAULT NULL,
   `units_sold` int(10) NOT NULL DEFAULT 0,
   `revenue` int(10) NOT NULL DEFAULT 0,
   `costs` int(10) NOT NULL DEFAULT 0,
@@ -906,11 +1096,34 @@ CREATE TABLE `cm23_merchandising_sales` (
   `created_date` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `cm23_merchandising_stock_log` (
+  `id` int(10) NOT NULL,
+  `team_id` int(10) NOT NULL,
+  `collection_id` int(10) NOT NULL,
+  `movement_type` enum('delivery','sale','clearance','liquidation','correction') NOT NULL,
+  `quantity` int(10) NOT NULL DEFAULT 0,
+  `stock_after` int(10) NOT NULL DEFAULT 0,
+  `reference_id` int(10) NOT NULL DEFAULT 0,
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `note` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_merchandising_team_product` (
   `team_id` int(10) NOT NULL,
   `product_id` int(10) NOT NULL,
   `enabled` enum('1','0') NOT NULL DEFAULT '1',
   `price_factor` decimal(4,2) NOT NULL DEFAULT 1.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_merchandising_team_settings` (
+  `team_id` int(10) NOT NULL,
+  `management_mode` enum('manual','advisory','delegated') NOT NULL DEFAULT 'manual',
+  `strategy` enum('conservative','balanced','ambitious') NOT NULL DEFAULT 'balanced',
+  `budget_limit` int(10) NOT NULL DEFAULT 250000,
+  `auto_reorder` enum('1','0') NOT NULL DEFAULT '0',
+  `min_margin_percent` tinyint(3) NOT NULL DEFAULT 20,
+  `max_stock_value` int(10) NOT NULL DEFAULT 500000,
+  `updated_date` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `cm23_name` (
@@ -960,6 +1173,46 @@ CREATE TABLE `cm23_penalty` (
   `id` int(2) NOT NULL,
   `budget` bigint(20) NOT NULL DEFAULT 0,
   `penalty` bigint(20) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_player_precontract` (
+  `id` int(10) NOT NULL,
+  `player_id` int(10) NOT NULL,
+  `current_team_id` int(10) NOT NULL,
+  `destination_team_id` int(10) NOT NULL,
+  `destination_user_id` int(10) NOT NULL DEFAULT 0,
+  `contract_salary` int(10) NOT NULL DEFAULT 0,
+  `contract_goal_bonus` int(10) NOT NULL DEFAULT 0,
+  `hand_money` int(10) NOT NULL DEFAULT 0,
+  `contract_matches` smallint(5) NOT NULL DEFAULT 60,
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `decision_after_matches` tinyint(3) NOT NULL DEFAULT 2,
+  `waited_matches` tinyint(3) NOT NULL DEFAULT 0,
+  `decision_date` int(11) NOT NULL DEFAULT 0,
+  `completed_date` int(11) NOT NULL DEFAULT 0,
+  `is_computer` enum('1','0') NOT NULL DEFAULT '0',
+  `status` enum('open','accepted','rejected','cancelled','completed') NOT NULL DEFAULT 'open'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `cm23_player_salary_repair` (
+  `id` int(10) NOT NULL,
+  `player_id` int(10) NOT NULL,
+  `admin_id` smallint(5) DEFAULT NULL,
+  `repair_type` varchar(32) NOT NULL,
+  `old_salary` int(10) NOT NULL,
+  `new_salary` int(10) NOT NULL,
+  `market_value` bigint(20) NOT NULL DEFAULT 0,
+  `player_strength` decimal(7,2) NOT NULL DEFAULT 0.00,
+  `repaired_at` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+CREATE TABLE `cm23_player_trait` (
+  `id` int(10) NOT NULL,
+  `player_id` int(10) NOT NULL,
+  `trait_key` varchar(64) NOT NULL,
+  `trait_value` tinyint(1) NOT NULL DEFAULT 1,
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `updated_date` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `cm23_premiumpayment` (
@@ -1170,6 +1423,8 @@ CREATE TABLE `cm23_scouting_proposal` (
   `real_w_flair` decimal(4,2) NOT NULL DEFAULT 1.00,
   `real_w_penalty` decimal(4,2) NOT NULL DEFAULT 1.00,
   `real_w_penalty_killing` decimal(4,2) NOT NULL DEFAULT 1.00,
+  `real_traits` text DEFAULT NULL,
+  `reported_traits` text DEFAULT NULL,
   `reported_strength` varchar(32) DEFAULT NULL,
   `reported_talent` varchar(32) DEFAULT NULL,
   `reported_potential` varchar(32) DEFAULT NULL,
@@ -1335,7 +1590,7 @@ CREATE TABLE `cm23_spieler` (
   `transfer_mindestgebot` int(11) NOT NULL DEFAULT 0,
   `last_transfer` int(11) DEFAULT 0,
   `w_staerke_calc` varchar(6) DEFAULT '0',
-  `w_staerke` decimal(4,2) NOT NULL,
+  `w_staerke` varchar(6) NOT NULL,
   `w_staerke_max` varchar(6) NOT NULL,
   `w_technik` varchar(6) NOT NULL,
   `w_kondition` varchar(6) NOT NULL,
@@ -1597,6 +1852,21 @@ CREATE TABLE `cm23_stadium_naming_payout` (
   `created_date` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `cm23_stadium_update_2026_stage` (
+  `stadium_id` int(10) NOT NULL,
+  `club_id` int(10) NOT NULL,
+  `club_name` varchar(100) NOT NULL,
+  `stadium_name` varchar(60) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `country` varchar(20) NOT NULL,
+  `p_steh` int(6) NOT NULL DEFAULT 0,
+  `p_sitz` int(6) NOT NULL DEFAULT 0,
+  `p_haupt_steh` int(6) NOT NULL DEFAULT 0,
+  `p_haupt_sitz` int(6) NOT NULL DEFAULT 0,
+  `p_vip` int(6) NOT NULL DEFAULT 0,
+  `source_note` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_stats_salary` (
   `id` int(10) NOT NULL,
   `season` int(5) DEFAULT NULL,
@@ -1722,7 +1992,12 @@ CREATE TABLE `cm23_trainer` (
   `p_defense` tinyint(3) NOT NULL DEFAULT 60,
   `p_tactics` tinyint(3) NOT NULL DEFAULT 60,
   `p_goalkeeping` tinyint(3) NOT NULL DEFAULT 60,
-  `p_mental` tinyint(3) NOT NULL DEFAULT 60
+  `p_mental` tinyint(3) NOT NULL DEFAULT 60,
+  `reputation` tinyint(3) NOT NULL DEFAULT 50,
+  `min_club_strength` tinyint(3) NOT NULL DEFAULT 0,
+  `min_league_rating` tinyint(3) NOT NULL DEFAULT 0,
+  `signing_fee` int(10) NOT NULL DEFAULT 0,
+  `available` enum('1','0') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 CREATE TABLE `cm23_training` (
@@ -1964,7 +2239,11 @@ CREATE TABLE `cm23_user` (
   `c_hideinonlinelist` enum('1','0') NOT NULL DEFAULT '0',
   `premium_balance` int(6) NOT NULL DEFAULT 0,
   `picture` varchar(255) DEFAULT NULL,
-  `status` enum('1','2','0') NOT NULL DEFAULT '0'
+  `status` enum('1','2','0') NOT NULL DEFAULT '0',
+  `manager_competence` tinyint(3) NOT NULL DEFAULT 10,
+  `manager_competence_score` int(10) NOT NULL DEFAULT 100,
+  `manager_competence_peak` tinyint(3) NOT NULL DEFAULT 10,
+  `manager_salary_per_match` int(10) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 CREATE TABLE `cm23_userabsence` (
@@ -1986,11 +2265,11 @@ CREATE TABLE `cm23_user_inactivity` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   `login` tinyint(3) NOT NULL DEFAULT 0,
-  `login_last` int(11) NOT NULL,
-  `login_check` int(11) NOT NULL,
+  `login_last` int(11) NOT NULL DEFAULT 0,
+  `login_check` int(11) NOT NULL DEFAULT 0,
   `aufstellung` tinyint(3) NOT NULL DEFAULT 0,
   `transfer` tinyint(3) NOT NULL DEFAULT 0,
-  `transfer_check` int(11) NOT NULL,
+  `transfer_check` int(11) NOT NULL DEFAULT 0,
   `vertragsauslauf` tinyint(3) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
@@ -2198,6 +2477,15 @@ CREATE TABLE `cm23_youthplayer` (
   `transfer_fee` int(10) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
+CREATE TABLE `cm23_youthplayer_trait` (
+  `id` int(10) NOT NULL,
+  `youth_player_id` int(10) NOT NULL,
+  `trait_key` varchar(64) NOT NULL,
+  `trait_value` tinyint(1) NOT NULL DEFAULT 1,
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `updated_date` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `cm23_youthscout` (
   `id` int(10) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -2247,6 +2535,24 @@ CREATE TABLE `cm23_youth_academy_log` (
   `match_id` int(10) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `PREFIX_club_partnership_first_option` (
+  `id` int(10) NOT NULL,
+  `partnership_id` int(10) NOT NULL DEFAULT 0,
+  `parent_team_id` int(10) NOT NULL DEFAULT 0,
+  `partner_team_id` int(10) NOT NULL DEFAULT 0,
+  `parent_user_id` int(10) NOT NULL DEFAULT 0,
+  `player_id` int(10) NOT NULL DEFAULT 0,
+  `youth_player_id` int(10) NOT NULL DEFAULT 0,
+  `player_name` varchar(128) NOT NULL DEFAULT '',
+  `source` varchar(32) NOT NULL DEFAULT '',
+  `status` enum('open','used','declined','expired','cancelled') NOT NULL DEFAULT 'open',
+  `created_date` int(11) NOT NULL DEFAULT 0,
+  `expires_date` int(11) NOT NULL DEFAULT 0,
+  `decision_date` int(11) NOT NULL DEFAULT 0,
+  `used_by_team_id` int(10) NOT NULL DEFAULT 0,
+  `context_data` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 ALTER TABLE `cm23_achievement`
   ADD PRIMARY KEY (`id`);
@@ -2255,6 +2561,9 @@ ALTER TABLE `cm23_admin`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cm23_aufstellung`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `cm23_backup_stadion_before_real_2026`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cm23_badge`
@@ -2290,6 +2599,14 @@ ALTER TABLE `cm23_club_partnership`
   ADD KEY `idx_club_partnership_pending_user` (`pending_user_id`,`status`),
   ADD KEY `idx_club_partnership_status_date` (`status`,`updated_date`);
 
+ALTER TABLE `cm23_club_partnership_first_option`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_club_partnership_first_option_parent` (`parent_team_id`,`status`,`expires_date`),
+  ADD KEY `idx_club_partnership_first_option_partner` (`partner_team_id`,`status`,`expires_date`),
+  ADD KEY `idx_club_partnership_first_option_player` (`player_id`,`status`),
+  ADD KEY `idx_club_partnership_first_option_youth` (`youth_player_id`,`status`),
+  ADD KEY `idx_club_partnership_first_option_partnership` (`partnership_id`,`status`);
+
 ALTER TABLE `cm23_club_partnership_log`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_club_partnership_log_partnership` (`partnership_id`,`created_date`),
@@ -2305,6 +2622,11 @@ ALTER TABLE `cm23_club_staff_assignment`
 
 ALTER TABLE `cm23_cl_temp`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `cm23_concacaf_temp`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_concacaf_temp_cup` (`cup_name`),
+  ADD KEY `idx_concacaf_temp_team` (`verein_id`);
 
 ALTER TABLE `cm23_config`
   ADD PRIMARY KEY (`id`);
@@ -2454,6 +2776,12 @@ ALTER TABLE `cm23_manager_application`
   ADD KEY `idx_manager_application_decision` (`status`,`decision_date`),
   ADD KEY `idx_manager_application_offer` (`offer_id`);
 
+ALTER TABLE `cm23_manager_assignment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_manager_assignment_team_status` (`team_id`,`status`),
+  ADD KEY `idx_manager_assignment_manager_status` (`manager_id`,`status`),
+  ADD KEY `idx_manager_assignment_dates` (`start_date`,`end_date`);
+
 ALTER TABLE `cm23_manager_award`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_manager_award_key` (`award_key`),
@@ -2466,6 +2794,12 @@ ALTER TABLE `cm23_manager_career_history`
   ADD KEY `idx_manager_career_user_date` (`user_id`,`change_date`),
   ADD KEY `idx_manager_career_new_team` (`new_team_id`),
   ADD KEY `idx_manager_career_old_team` (`old_team_id`);
+
+ALTER TABLE `cm23_manager_competence_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_manager_competence_user_date` (`user_id`,`created_date`),
+  ADD KEY `idx_manager_competence_manager_date` (`manager_id`,`created_date`),
+  ADD KEY `idx_manager_competence_team_date` (`team_id`,`created_date`);
 
 ALTER TABLE `cm23_manager_contract`
   ADD PRIMARY KEY (`id`),
@@ -2484,6 +2818,10 @@ ALTER TABLE `cm23_manager_job_offer`
   ADD KEY `idx_manager_job_offer_created_match` (`created_match_id`),
   ADD KEY `idx_manager_job_offer_expiry` (`status`,`expires_date`);
 
+ALTER TABLE `cm23_manager_league_rating`
+  ADD PRIMARY KEY (`league_id`),
+  ADD KEY `idx_manager_league_rating_rating` (`rating`);
+
 ALTER TABLE `cm23_manager_mission`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_manager_mission` (`user_id`,`team_id`,`season_id`,`mission_type`),
@@ -2496,19 +2834,62 @@ ALTER TABLE `cm23_manager_mission_youth_promotion`
   ADD KEY `idx_manager_mission_youth_team_season` (`team_id`,`season_id`),
   ADD KEY `idx_manager_mission_youth_user` (`user_id`);
 
+ALTER TABLE `cm23_manager_profile`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_manager_profile_user` (`user_id`),
+  ADD KEY `idx_manager_profile_cpu_status` (`is_cpu`,`status`),
+  ADD KEY `idx_manager_profile_competence` (`competence`);
+
 ALTER TABLE `cm23_matchreport`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_auto_match_id` (`match_id`);
 
+ALTER TABLE `cm23_merchandising_campaign`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_merch_campaign_team_status` (`team_id`,`status`,`end_date`),
+  ADD KEY `idx_merch_campaign_collection` (`collection_id`,`status`),
+  ADD KEY `idx_merch_campaign_type` (`campaign_type_id`);
+
+ALTER TABLE `cm23_merchandising_campaign_type`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_merch_campaign_type_active` (`active`);
+
+ALTER TABLE `cm23_merchandising_collection`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_merch_collection_edition` (`team_id`,`product_id`,`player_id`,`season_key`),
+  ADD KEY `idx_merch_collection_team_status` (`team_id`,`status`),
+  ADD KEY `idx_merch_collection_product` (`product_id`),
+  ADD KEY `idx_merch_collection_player` (`player_id`),
+  ADD KEY `idx_merch_collection_dates` (`active_from`,`active_until`);
+
+ALTER TABLE `cm23_merchandising_order`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_merch_order_team_status` (`team_id`,`status`,`delivery_date`),
+  ADD KEY `idx_merch_order_collection` (`collection_id`,`status`);
+
 ALTER TABLE `cm23_merchandising_product`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_merch_product_active_season` (`active`,`season_type`),
+  ADD KEY `idx_merch_product_player` (`player_product`,`active`);
 
 ALTER TABLE `cm23_merchandising_sales`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_auto_match_id_team_id` (`match_id`,`team_id`);
+  ADD UNIQUE KEY `uniq_merch_sale_execution` (`match_id`,`team_id`,`collection_id`,`channel`),
+  ADD KEY `idx_auto_match_id_team_id` (`match_id`,`team_id`),
+  ADD KEY `idx_merch_sales_collection` (`collection_id`,`created_date`),
+  ADD KEY `idx_merch_sales_player` (`player_id`,`created_date`),
+  ADD KEY `idx_merch_sales_channel` (`team_id`,`channel`,`created_date`);
+
+ALTER TABLE `cm23_merchandising_stock_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_merch_stock_log_collection` (`collection_id`,`created_date`),
+  ADD KEY `idx_merch_stock_log_team` (`team_id`,`created_date`);
 
 ALTER TABLE `cm23_merchandising_team_product`
   ADD PRIMARY KEY (`team_id`,`product_id`);
+
+ALTER TABLE `cm23_merchandising_team_settings`
+  ADD PRIMARY KEY (`team_id`);
 
 ALTER TABLE `cm23_name`
   ADD PRIMARY KEY (`id`);
@@ -2525,6 +2906,23 @@ ALTER TABLE `cm23_notification`
 
 ALTER TABLE `cm23_penalty`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `cm23_player_precontract`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_precontract_open_team` (`player_id`,`destination_team_id`,`status`),
+  ADD KEY `idx_precontract_player_status` (`player_id`,`status`),
+  ADD KEY `idx_precontract_destination_status` (`destination_team_id`,`status`);
+
+ALTER TABLE `cm23_player_salary_repair`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_salary_repair_player` (`player_id`),
+  ADD KEY `idx_salary_repair_type_date` (`repair_type`,`repaired_at`);
+
+ALTER TABLE `cm23_player_trait`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_player_trait` (`player_id`,`trait_key`),
+  ADD KEY `idx_player_trait_player` (`player_id`),
+  ADD KEY `idx_player_trait_key_value` (`trait_key`,`trait_value`);
 
 ALTER TABLE `cm23_premiumpayment`
   ADD PRIMARY KEY (`id`),
@@ -2619,7 +3017,8 @@ ALTER TABLE `cm23_shoutmessage`
 ALTER TABLE `cm23_spiel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_auto_berechnet` (`berechnet`),
-  ADD KEY `idx_auto_saison_id` (`saison_id`);
+  ADD KEY `idx_auto_saison_id` (`saison_id`),
+  ADD KEY `idx_auto_spieltyp_home_verein_gast_verein` (`spieltyp`,`home_verein`,`gast_verein`);
 
 ALTER TABLE `cm23_spieler`
   ADD PRIMARY KEY (`id`),
@@ -2679,6 +3078,10 @@ ALTER TABLE `cm23_stadium_naming_payout`
   ADD UNIQUE KEY `uniq_stadium_naming_payout_match` (`contract_id`,`match_id`),
   ADD KEY `idx_stadium_naming_payout_team_date` (`team_id`,`created_date`),
   ADD KEY `idx_stadium_naming_payout_match` (`match_id`);
+
+ALTER TABLE `cm23_stadium_update_2026_stage`
+  ADD PRIMARY KEY (`stadium_id`),
+  ADD KEY `idx_stage_club` (`club_id`);
 
 ALTER TABLE `cm23_stats_salary`
   ADD PRIMARY KEY (`id`);
@@ -2824,6 +3227,12 @@ ALTER TABLE `cm23_youthplayer`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_auto_team_id` (`team_id`);
 
+ALTER TABLE `cm23_youthplayer_trait`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_youthplayer_trait` (`youth_player_id`,`trait_key`),
+  ADD KEY `idx_youthplayer_trait_player` (`youth_player_id`),
+  ADD KEY `idx_youthplayer_trait_key` (`trait_key`);
+
 ALTER TABLE `cm23_youthscout`
   ADD PRIMARY KEY (`id`);
 
@@ -2841,6 +3250,14 @@ ALTER TABLE `cm23_youth_academy_log`
   ADD KEY `idx_youth_academy_log_team_date` (`team_id`,`created_date`),
   ADD KEY `idx_youth_academy_log_player` (`player_id`);
 
+ALTER TABLE `PREFIX_club_partnership_first_option`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_club_partnership_first_option_parent` (`parent_team_id`,`status`,`expires_date`),
+  ADD KEY `idx_club_partnership_first_option_partner` (`partner_team_id`,`status`,`expires_date`),
+  ADD KEY `idx_club_partnership_first_option_player` (`player_id`,`status`),
+  ADD KEY `idx_club_partnership_first_option_youth` (`youth_player_id`,`status`),
+  ADD KEY `idx_club_partnership_first_option_partnership` (`partnership_id`,`status`);
+
 
 ALTER TABLE `cm23_achievement`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -2849,6 +3266,9 @@ ALTER TABLE `cm23_admin`
   MODIFY `id` smallint(5) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_aufstellung`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_backup_stadion_before_real_2026`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_badge`
@@ -2869,6 +3289,9 @@ ALTER TABLE `cm23_briefe`
 ALTER TABLE `cm23_club_partnership`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `cm23_club_partnership_first_option`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `cm23_club_partnership_log`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
@@ -2877,6 +3300,9 @@ ALTER TABLE `cm23_club_staff`
 
 ALTER TABLE `cm23_cl_temp`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_concacaf_temp`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_config`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
@@ -2956,10 +3382,16 @@ ALTER TABLE `cm23_loan_request`
 ALTER TABLE `cm23_manager_application`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `cm23_manager_assignment`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `cm23_manager_award`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_manager_career_history`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_manager_competence_log`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_manager_contract`
@@ -2974,13 +3406,31 @@ ALTER TABLE `cm23_manager_mission`
 ALTER TABLE `cm23_manager_mission_youth_promotion`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `cm23_manager_profile`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `cm23_matchreport`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_merchandising_campaign`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_merchandising_campaign_type`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_merchandising_collection`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_merchandising_order`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_merchandising_product`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_merchandising_sales`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_merchandising_stock_log`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_name`
@@ -2994,6 +3444,15 @@ ALTER TABLE `cm23_notification`
 
 ALTER TABLE `cm23_penalty`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_player_precontract`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_player_salary_repair`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cm23_player_trait`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_premiumpayment`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -3190,6 +3649,9 @@ ALTER TABLE `cm23_youthmatch_request`
 ALTER TABLE `cm23_youthplayer`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `cm23_youthplayer_trait`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `cm23_youthscout`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
@@ -3197,6 +3659,9 @@ ALTER TABLE `cm23_youth_academy_level`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `cm23_youth_academy_log`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `PREFIX_club_partnership_first_option`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 
@@ -3249,7 +3714,6 @@ ALTER TABLE `cm23_useractionlog`
 
 ALTER TABLE `cm23_user_inactivity`
   ADD CONSTRAINT `cm23_user_inactivity_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `cm23_user` (`id`) ON DELETE CASCADE;
-SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

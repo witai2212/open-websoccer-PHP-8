@@ -3,6 +3,7 @@
 <messages>
     <message id="transfermarket_navlabel">Transfermarkt</message>
     <message id="transfermarket_title">Transfermarkt</message>
+    <message id="transfermarket_player_marker_on_list">Spieler steht auf der Transferliste</message>
     
     <message id="sell-player_navlabel">Spieler verkaufen</message>
     <message id="sell_player_title">%s verkaufen</message>

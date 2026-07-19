@@ -35,8 +35,15 @@ class CorrectPlayerValuesJob extends AbstractJob {
      * @see AbstractJob::execute()
      */
     function execute() {
+        // Correct source values before derived strength and market values are calculated.
         PlayersDataService::playerStrengthCorrection($this->_websoccer, $this->_db);
         PlayersStrengthDataService::updateAllPlayersMarketAndStrength($this->_websoccer, $this->_db);
+
+        // Derived values such as w_staerke_calc must not remain above 100 either.
+        PlayersDataService::playerStrengthCorrection($this->_websoccer, $this->_db);
+
+        // Safety cleanup in case a manager was removed outside the normal controllers.
+        PlayersDataService::resetUnsellableForUnmanagedTeams($this->_websoccer, $this->_db);
     }
 }
 

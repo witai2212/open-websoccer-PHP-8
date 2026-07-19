@@ -22,14 +22,14 @@
 <div class="tab-content">
   <div class="tab-pane active" id="overview">
 
-	<table class="table table-striped">
+	<table class="table table-striped" id="myoffers-overview-table">
 		<thead>
 			<tr>
 				<th></th>
-				<th>{{ i18n.getMessage("offertable_head_player") }}</th>
+				<th aria-sort="none"><a href="#overview" class="myoffers-sort" data-sort-column="player">{{ i18n.getMessage("offertable_head_player") }} <i class="icon-resize-vertical"></i></a></th>
 				<th>{{ i18n.getMessage("offertable_head_position") }}</th>
 				<th>{{ i18n.getMessage("offertable_head_enddate") }}</th>
-				<th>{{ i18n.getMessage("offertable_head_transfer_fee") }}</th>
+				<th aria-sort="none"><a href="#overview" class="myoffers-sort" data-sort-column="fee">{{ i18n.getMessage("offertable_head_transfer_fee") }} <i class="icon-resize-vertical"></i></a></th>
 				<th>{{ i18n.getMessage("offertable_head_market_value") }}</th>
 				<th>{{ i18n.getMessage("offertable_bidder") }}</th>
 				<th></th>
@@ -40,12 +40,12 @@
 
 		{% for offer in offers %}
 	
-			<tr>
-				<td><strong>{{ loop.index }}</strong></td>
-				<td><a href="?page=player&id={{offer.spieler_id }}">{{ offer.vorname }} {{ offer.nachname }}</a></td>
+			<tr data-original-order="{{ loop.index }}">
+				<td class="myoffers-row-number"><strong>{{ loop.index }}</strong></td>
+				<td data-sort-column="player" data-sort-value="{{ (offer.vorname ~ ' ' ~ offer.nachname)|lower }}"><a href="?page=player&id={{offer.spieler_id }}">{{ offer.vorname }} {{ offer.nachname }}</a></td>
 				<td>{{ offer.position_main }} ({{ offer.position_second }})</td>
 				<td>{{ env.getFormattedDatetime(offer.transfer_ende) }}</td>
-				<td>{{ offer.abloese|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td data-sort-column="fee" data-sort-value="{{ offer.abloese }}">{{ offer.abloese|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 				<td>{{ offer.marktwert|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 				<td>{{ offer.bidder.team_name }}</td>
 				<td>
@@ -75,5 +75,54 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+jQuery(function($) {
+	var $table = $('#myoffers-overview-table');
+
+	$table.on('click', '.myoffers-sort', function(event) {
+		event.preventDefault();
+
+		var $link = $(this);
+		var column = $link.attr('data-sort-column');
+		var direction = $link.attr('data-sort-direction') === 'asc' ? 'desc' : 'asc';
+		var $tbody = $table.find('tbody');
+		var rows = $tbody.children('tr').get();
+
+		rows.sort(function(rowA, rowB) {
+			var valueA = $(rowA).find('td[data-sort-column="' + column + '"]').attr('data-sort-value') || '';
+			var valueB = $(rowB).find('td[data-sort-column="' + column + '"]').attr('data-sort-value') || '';
+			var comparison = 0;
+
+			if (column === 'fee') {
+				comparison = (parseFloat(valueA) || 0) - (parseFloat(valueB) || 0);
+			} else {
+				comparison = valueA.localeCompare(valueB);
+			}
+
+			if (comparison === 0) {
+				comparison = (parseInt($(rowA).attr('data-original-order'), 10) || 0) - (parseInt($(rowB).attr('data-original-order'), 10) || 0);
+			}
+
+			return direction === 'asc' ? comparison : -comparison;
+		});
+
+		$.each(rows, function(index, row) {
+			$(row).find('.myoffers-row-number strong').text(index + 1);
+			$tbody.append(row);
+		});
+
+		$table.find('.myoffers-sort')
+			.removeAttr('data-sort-direction')
+			.find('i')
+			.attr('class', 'icon-resize-vertical');
+		$table.find('th[aria-sort]').attr('aria-sort', 'none');
+
+		$link.attr('data-sort-direction', direction);
+		$link.find('i').attr('class', direction === 'asc' ? 'icon-chevron-up' : 'icon-chevron-down');
+		$link.closest('th').attr('aria-sort', direction === 'asc' ? 'ascending' : 'descending');
+	});
+});
+</script>
 
 {% endblock %}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="player_salary_repair_navlabel">Spielergehälter prüfen</message>
+    <message id="player_salary_repair_title">Spielergehälter prüfen</message>
+    <message id="player_salary_repair_intro">Prüft gezielt auf den bekannten Faktor-100-Fehler. Vor jeder automatischen Korrektur werden die alten Werte in einer eigenen Protokolltabelle gesichert.</message>
+    <message id="player_salary_repair_error">Fehler</message>
+    <message id="player_salary_repair_demo_blocked">Im Demo-Modus sind Datenbankänderungen gesperrt.</message>
+    <message id="player_salary_repair_confirmation_required">Bitte die Sicherheitsbestätigung setzen.</message>
+    <message id="player_salary_repair_success">Korrektur abgeschlossen</message>
+    <message id="player_salary_repair_success_detail">%d Spielergehälter wurden gesichert und durch 100 geteilt.</message>
+    <message id="player_salary_repair_nothing_to_do">Es wurden keine passenden Faktor-100-Datensätze gefunden.</message>
+    <message id="player_salary_repair_candidates">Verdächtige Datensätze</message>
+    <message id="player_salary_repair_old_total">Gehaltssumme vorher</message>
+    <message id="player_salary_repair_new_total">Gehaltssumme nachher</message>
+    <message id="player_salary_repair_rule">Prüfregel</message>
+    <message id="player_salary_repair_rule_detail">Aktiv, Verein vorhanden, Marktwert positiv, Gehalt ab 100.000 EUR und Ergebnis nach Teilung zwischen 500 und 50.000 EUR.</message>
+    <message id="player_salary_repair_confirm_dialog">Die angezeigten Gehälter werden gesichert und durch 100 geteilt. Fortfahren?</message>
+    <message id="player_salary_repair_confirm_checkbox">Ich bestätige die Korrektur der angezeigten Faktor-100-Datensätze.</message>
+    <message id="player_salary_repair_execute">Faktor-100-Gehälter automatisch korrigieren</message>
+    <message id="player_salary_repair_preview">Vorschau</message>
+    <message id="player_salary_repair_player">Spieler</message>
+    <message id="player_salary_repair_club">Verein</message>
+    <message id="player_salary_repair_league">Liga</message>
+    <message id="player_salary_repair_position">Position</message>
+    <message id="player_salary_repair_strength">Stärke</message>
+    <message id="player_salary_repair_market_value">Marktwert</message>
+    <message id="player_salary_repair_old_salary">Gehalt vorher</message>
+    <message id="player_salary_repair_new_salary">Gehalt nachher</message>
+    <message id="player_salary_repair_clean">Aktuell wurden keine Faktor-100-Gehälter gefunden.</message>
+    <message id="player_salary_repair_history">Letzte Korrekturen</message>
+    <message id="player_salary_repair_date">Datum</message>
+    <message id="player_salary_repair_no_history">Noch keine Korrektur protokolliert.</message>
+</messages>

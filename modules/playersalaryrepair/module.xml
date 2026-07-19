@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="1.0.0">
+
+    <admin>
+        <adminpage id="player_salary_repair" permissionrole="r_admin" navcategory="league" filename="player-salary-repair"/>
+    </admin>
+
+</module>

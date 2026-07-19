@@ -93,9 +93,9 @@ class PlayersStrengthDataService {
                 break;
         }
         
-        $strength = round(((($w_passing+$w_shooting+$w_heading+$w_tackling+$w_freekick+
+        $strength = min(100, round(((($w_passing+$w_shooting+$w_heading+$w_tackling+$w_freekick+
             $w_pace+$w_creativity+$w_influence+$w_flair+$w_penalty+$w_penalty_killing)
-            /10)+$note_schnitt)*($vertrag_spiele/60),0);
+            /10)+$note_schnitt)*($vertrag_spiele/60),0));
         //echo "(((".$w_passing ." + ". $w_shooting ." + ". $w_heading ." + ". $w_tackling ." + ". $w_freekick ." + ". $w_pace ." + ". $w_creativity ." + ". $w_influence ." + ". $w_flair ." + ". $w_penalty ." + ". $w_penalty_killing.")/10) + ". $note_schnitt .")*(". $vertrag_spiele ."/60)<br>";
         
         // update in DB
@@ -252,7 +252,7 @@ class PlayersStrengthDataService {
         ] = $position_weights[$position] ?? array_fill(0, 11, 1); // Default to 1 if position is missing
         
         // Calculate player strength
-        $strength = round(((
+        $strength = min(100, round(((
             ($w_passing * $player_data['player_strength_passing']) +
             ($w_shooting * $player_data['player_strength_shooting']) +
             ($w_heading * $player_data['player_strength_heading']) +
@@ -264,7 +264,7 @@ class PlayersStrengthDataService {
             ($w_flair * $player_data['player_strength_flair']) +
             ($w_penalty * $player_data['player_strength_penalty']) +
             ($w_penalty_killing * $player_data['player_strength_penalty_killing'])
-            ) / 10 + $note_schnitt) * ($vertrag_spiele / 60), 0);
+            ) / 10 + $note_schnitt) * ($vertrag_spiele / 60), 0));
         
         // Calculate market value
         $age = $player_data['player_age'];

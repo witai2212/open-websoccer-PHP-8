@@ -15,6 +15,9 @@
 					{% if player.unsellable %}
 						<i class="icon-eye-close" title="{{ i18n.getMessage("entity_player_unsellable") }}"></i>
 					{% endif %}
+					{% if player.transfermarket > 0 and env.getConfig("transfermarket_enabled") %}
+						<i class="icon-tag" title="{{ i18n.getMessage("transfermarket_player_marker_on_list") }}"></i>
+					{% endif %}
 					{% if player.lending_owner_id > 0 %}
 						<i class="icon-star-empty" title="{{ i18n.getMessage("lending_player_marker_tooltip") }}"></i>
 					{% elseif player.lending_fee > 0 and env.getConfig("lending_enabled") %}

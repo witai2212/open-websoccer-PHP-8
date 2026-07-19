@@ -392,6 +392,7 @@ class SeasonRolloverDataService {
         if (!empty($team['min_target_rank']) && (int) $team['min_target_rank'] > 0 && (int) $team['min_target_rank'] < (int) $rank) {
             if ($fireManager) {
                 $db->queryUpdate(array('user_id' => NULL), $prefix . '_verein', 'id = %d', (int) $team['id']);
+                PlayersDataService::resetUnsellableForTeam($websoccer, $db, (int) $team['id']);
             }
 
             if ($popularityReduc > 0) {

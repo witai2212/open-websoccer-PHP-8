@@ -387,6 +387,7 @@ class ManagerCareerDataService {
                 'id = %d',
                 (int) $oldTeamId
             );
+            PlayersDataService::resetUnsellableForTeam($websoccer, $db, $oldTeamId);
 
             if (class_exists('ManagerProfileDataService')) {
                 ManagerProfileDataService::handleUserLeftTeam($websoccer, $db, $oldTeamId, 'user_left');

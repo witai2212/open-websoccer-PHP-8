@@ -1257,12 +1257,95 @@ class PlayersDataService {
 	    }
 	}
 	
-	/*
-	 * Correction on w_staerke acc. to w_staerke_max
+	/**
+	 * Limits every numeric player value column (w_*) to 100 and keeps
+	 * w_staerke within the player's individual w_staerke_max value.
+	 *
+	 * The column list is read from the database so newly added player values
+	 * are protected automatically as well.
+	 *
+	 * @return int Number of players which had at least one value above 100.
 	 */
 	public static function playerStrengthCorrection(WebSoccer $websoccer, DbConnection $db) {
-	    $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler SET w_staerke=w_staerke_max WHERE w_staerke>w_staerke_max";
-	    $db->executeQuery($updStr);
+	    $table = $websoccer->getConfig('db_prefix') . '_spieler';
+	    $valueColumns = self::_getPlayerValueColumns($db, $table);
+	    $correctedPlayers = 0;
+
+	    if (count($valueColumns)) {
+	        $setParts = array();
+	        $whereParts = array();
+	        foreach ($valueColumns as $column) {
+	            $quotedColumn = '`' . $column . '`';
+	            $setParts[] = $quotedColumn . ' = CASE WHEN ' . $quotedColumn . ' > 100 THEN 100 ELSE ' . $quotedColumn . ' END';
+	            $whereParts[] = $quotedColumn . ' > 100';
+	        }
+
+	        $where = implode(' OR ', $whereParts);
+	        $countResult = $db->executeQuery('SELECT COUNT(*) AS hits FROM ' . $table . ' WHERE ' . $where);
+	        $countRow = $countResult->fetch_array();
+	        $countResult->free();
+	        $correctedPlayers = ($countRow && isset($countRow['hits'])) ? (int) $countRow['hits'] : 0;
+
+	        if ($correctedPlayers > 0) {
+	            $db->executeQuery('UPDATE ' . $table . ' SET ' . implode(', ', $setParts) . ' WHERE ' . $where);
+	        }
+	    }
+
+	    // Preserve the original individual strength-limit rule as a second step.
+	    $db->executeQuery('UPDATE ' . $table . ' SET w_staerke = w_staerke_max WHERE w_staerke > w_staerke_max');
+	    return $correctedPlayers;
+	}
+
+	/**
+	 * Removes the unsellable flag from every player of one club.
+	 * Transfer-market and lending data remain unchanged.
+	 */
+	public static function resetUnsellableForTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
+	    $teamId = (int) $teamId;
+	    if ($teamId < 1) {
+	        return;
+	    }
+
+	    $db->queryUpdate(
+	        array('unsellable' => 0),
+	        $websoccer->getConfig('db_prefix') . '_spieler',
+	        'verein_id = %d AND unsellable != 0',
+	        $teamId
+	    );
+	}
+
+	/**
+	 * Safety cleanup for clubs without a user manager.
+	 * Transfer-market and lending data remain unchanged.
+	 */
+	public static function resetUnsellableForUnmanagedTeams(WebSoccer $websoccer, DbConnection $db) {
+	    $prefix = $websoccer->getConfig('db_prefix');
+	    $db->executeQuery(
+	        'UPDATE ' . $prefix . '_spieler AS P '
+	        . 'INNER JOIN ' . $prefix . '_verein AS V ON V.id = P.verein_id '
+	        . 'SET P.unsellable = 0 '
+	        . 'WHERE P.unsellable != 0 AND (V.user_id IS NULL OR V.user_id <= 0)'
+	    );
+	}
+
+	private static function _getPlayerValueColumns(DbConnection $db, $table) {
+	    static $cache = array();
+	    if (isset($cache[$table])) {
+	        return $cache[$table];
+	    }
+
+	    $columns = array();
+	    $result = $db->executeQuery('SHOW COLUMNS FROM ' . $table);
+	    while ($row = $result->fetch_array()) {
+	        $field = isset($row['Field']) ? (string) $row['Field'] : '';
+	        if (preg_match('/^w_[a-z0-9_]+$/i', $field)) {
+	            $columns[] = $field;
+	        }
+	    }
+	    $result->free();
+
+	    $cache[$table] = $columns;
+	    return $columns;
 	}
 	
 	/*

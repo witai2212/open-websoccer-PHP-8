@@ -61,7 +61,13 @@
   		{% for message in messages %}
   			<tr>
   				<td>{{ env.getFormattedDatetime(message.date) }}</td>
-  				<td>{% if message.sender_id > 0 %}<a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a>{% else %}{{ message.sender_name }}{% endif %}</td>
+  				<td>
+				{% if message.context.sender_club is defined and message.context.sender_club.id > 0 %}
+					<a href="{{ env.getInternalUrl("team", "id=" ~ message.context.sender_club.id) }}">
+					{% if message.context.sender_club.logo|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ message.context.sender_club.logo }}" alt="{{ message.context.sender_club.name }}" style="max-width:24px;max-height:24px;margin-right:5px;">{% endif %}
+					{{ message.context.sender_club.name }}</a>
+				{% elseif message.sender_id > 0 %}<a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a>{% else %}{{ message.sender_name }}{% endif %}
+				</td>
   				<td>
   				{% if not message.seen %}<strong>{% endif %}
   				<a href="#showMessage" data-toggle="modal" class="ajaxLink"

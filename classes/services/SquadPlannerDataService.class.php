@@ -1021,6 +1021,9 @@ class SquadPlannerDataService {
             if ((int) $userId > 0 && class_exists('BadgeAwardService')) {
                 BadgeAwardService::processYouthPromotion($websoccer, $db, (int) $userId, (int) $player['team_id'], $professionalPlayerId);
             }
+            if (class_exists('PlayerMarketValueDataService')) {
+                PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, $professionalPlayerId);
+            }
 
             $db->queryDelete($websoccer->getConfig('db_prefix') . '_youthplayer', 'id = %d', (int) $player['id']);
             $db->connection->commit();

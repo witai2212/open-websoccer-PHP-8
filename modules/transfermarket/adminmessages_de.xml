@@ -23,4 +23,14 @@
 	<message id="settings_label_transferoffers_max_offer_deviation">max. Abweichung bei Transfers [%]</message>
 	<message id="settings_label_transferoffers_deviation_penalty">Strafe bei Abweichung</message>
 
+	<message id="settings_label_transfer_news_enabled">Bedeutende Transfers als News veröffentlichen</message>
+	<message id="settings_label_transfer_news_market_value_min">Mindestmarktwert für Transfer-News</message>
+	<message id="settings_label_transfer_news_market_value_min_help">Ab diesem Marktwert gilt ein Spieler unabhängig von der Ablöse als großer Name. 0 deaktiviert dieses Kriterium.</message>
+	<message id="settings_label_transfer_news_strength_min">Mindeststärke für Transfer-News</message>
+	<message id="settings_label_transfer_news_strength_min_help">Ab dieser Stärke wird ein Wechsel als bedeutender Transfer veröffentlicht. 0 deaktiviert dieses Kriterium.</message>
+	<message id="settings_label_transfer_news_fee_min">Mindestablöse für Transfer-News</message>
+	<message id="settings_label_transfer_news_fee_min_help">Ab dieser Ablöse wird der Wechsel als Transfer-News veröffentlicht. 0 deaktiviert dieses Kriterium.</message>
+	<message id="settings_label_transfer_news_top_percent">Top-Prozent nach Marktwert</message>
+	<message id="settings_label_transfer_news_top_percent_help">Spieler innerhalb dieses Anteils der wertvollsten aktiven Spieler lösen ebenfalls eine Transfer-News aus.</message>
+
 </messages>

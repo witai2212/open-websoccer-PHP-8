@@ -17,8 +17,9 @@
 				<th></th>
 				<th>{{ i18n.getMessage("mywatchlist_playername") }}</th>
 				<th>{{ i18n.getMessage("mywatchlist_verein") }}</th>
-				<th>{{ i18n.getMessage("mywatchlist_vertrag_spiele") }}</th>
+				<th>{{ i18n.getMessage("mywatchlist_alter") }}</th>
 				<th>{{ i18n.getMessage("mywatchlist_position_main") }}</th>
+				<!--<th>{{ i18n.getMessage("mywatchlist_position_second") }}</th>-->
 				<th>{{ i18n.getMessage("mywatchlist_marktwert") }}</th>
 				<th width="30%">{{ i18n.getMessage("mywatchlist_scout_recommendation") }}</th>
 				<th>&nbsp;</th>
@@ -37,9 +38,22 @@
 					{% set countryLabel = player.nation %}
 				{% endif %}
 				
+				{% if player.transfermarkt >0 %}
+					{% set transfermarktLabel = "1" %}
+				{% else %}
+					{% set transfermarktLabel = "" %}
+				{% endif %}
+				
+				{% if player.transfermarkt >=1 and player.hasoffer >=1 %}
+					{% set hasOfferLabel = ",2" %}
+				{% elseif player.hasoffer >=1 %}
+					{% set hasOfferLabel = "2" %}
+				{% else %}
+					{% set hasOfferLabel = "" %}
+				{% endif %}
 				<td>
 					{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% endif %}
-					<a href="?page=player&id={{ player.spieler_id }}">{{ player.vorname }}&nbsp;{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }} ({{ player.age }})</a>
+					<a href="?page=player&id={{ player.spieler_id }}">{{ player.vorname }}&nbsp;{% if player.kunstname|length > 0 %}{{ player.kunstname }}&nbsp;{% endif %}{{ player.nachname }}</a>
                     {% if player.accepted_precontract.id is defined %}
                         <br><span class="label label-warning">{{ i18n.getMessage("precontract_watchlist_moving", player.accepted_precontract.destination_team_name) }}</span>
                     {% elseif player.precontract_offer.id is defined and player.precontract_offer.status == 'open' %}
@@ -55,17 +69,9 @@
 					{% endif %}
 					<a href="?page=team&id={{ player.verein_id }}">{{ player.team_name }}</a>
 				</td>
-				<td>{{ player.vertrag_spiele }}</td>
+				<td>{{ player.age }}</td>
 				<td coslspan="2">{{ player.position_main }} {{ player.position_second }}</td>
-				<td>
-					{{ player.marktwert|number_format(0, ',', ' ') }}
-					{% if player.transfermarkt > 0 %}
-						<i class="icon-tag" title="{{ i18n.getMessage("mywatchlist_player_on_transferlist") }}"></i>
-					{% endif %}
-					{% if player.hasoffer > 0 %}
-						<i class="icon-shopping-cart" title="{{ i18n.getMessage("mywatchlist_player_has_offer") }}"></i>
-					{% endif %}
-				</td>
+				<td>{{ player.marktwert|number_format(0, ',', ' ') }} <sub>{{ transfermarktLabel }}{{ hasOfferLabel }}</sub></td>
 				<td>
 					{% if player.scout_recommendation.available %}
 						<span class="label {{ player.scout_recommendation.css_class }}" title="{{ player.scout_recommendation.reason }}">{{ i18n.getMessage(player.scout_recommendation.label_key) }}</span><br>
@@ -86,6 +92,8 @@
 		{% endfor %}
 		</tbody>
 		</table>
+<strong>{{ i18n.getMessage("mywatchlist_player_on_transferlist") }}</strong><br>
+<strong>{{ i18n.getMessage("mywatchlist_player_has_offer") }}</strong>
 
 {% endif %}
 {% endblock %}

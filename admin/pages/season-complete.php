@@ -525,7 +525,6 @@ if (!function_exists('seasonCompletionCompleteSingleSeason')) {
                                         'id = %d',
                                         (int) $team['id']
                                         );
-                                    PlayersDataService::resetUnsellableForTeam($website, $db, (int) $team['id']);
                                 }
                                 
                                 if ($popularityReduc > 0) {

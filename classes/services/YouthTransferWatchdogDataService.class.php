@@ -134,6 +134,9 @@ class YouthTransferWatchdogDataService {
      * @return int Fair value
      */
     public static function calculateFairYouthPlayerValue($player) {
+        if (isset($player['market_value']) && (int) $player['market_value'] > 0) {
+            return (int) $player['market_value'];
+        }
         $strength = max(1, (int) $player['strength']);
         $age = max(14, (int) $player['age']);
         $position = isset($player['position']) ? $player['position'] : '';

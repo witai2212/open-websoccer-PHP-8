@@ -770,8 +770,12 @@ class RandomEventsDataService {
 			'strength' => (int) $context['youth_strength'],
 			'transfer_fee' => 0
 		), $websoccer->getConfig('db_prefix') . '_youthplayer');
+		$youthPlayerId = (int) $db->getLastInsertedId();
+		if (class_exists('PlayerMarketValueDataService')) {
+			PlayerMarketValueDataService::recalculateYouthPlayer($websoccer, $db, $youthPlayerId);
+		}
 
-		return (int) $db->getLastInsertedId();
+		return $youthPlayerId;
 	}
 
 	private static function _getTeamCountry(WebSoccer $websoccer, DbConnection $db, $teamId) {

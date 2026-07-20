@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="market_value_harmonization_navlabel">Marktwerte harmonisieren</message>
+    <message id="market_value_harmonization_title">Marktwerte harmonisieren</message>
+</messages>

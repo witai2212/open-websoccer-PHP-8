@@ -392,7 +392,6 @@ class SeasonRolloverDataService {
         if (!empty($team['min_target_rank']) && (int) $team['min_target_rank'] > 0 && (int) $team['min_target_rank'] < (int) $rank) {
             if ($fireManager) {
                 $db->queryUpdate(array('user_id' => NULL), $prefix . '_verein', 'id = %d', (int) $team['id']);
-                PlayersDataService::resetUnsellableForTeam($websoccer, $db, (int) $team['id']);
             }
 
             if ($popularityReduc > 0) {
@@ -563,6 +562,10 @@ class SeasonRolloverDataService {
         );
 
         $db->queryInsert($columns, $websoccer->getConfig('db_prefix') . '_spieler');
+        $playerId = (int) $db->getLastInsertedId();
+        if (class_exists('PlayerMarketValueDataService')) {
+            PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, $playerId);
+        }
     }
 
     private static function convertYouthPlayerToFreeProfessional(WebSoccer $websoccer, DbConnection $db, array $youthplayer, $age) {
@@ -616,6 +619,9 @@ class SeasonRolloverDataService {
 
             if (class_exists('PlayerTraitsDataService')) {
                 PlayerTraitsDataService::copyYouthTraitsToProfessionalPlayer($websoccer, $db, (int) $youthplayer['id'], $professionalPlayerId);
+            }
+            if (class_exists('PlayerMarketValueDataService')) {
+                PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, $professionalPlayerId);
             }
 
             $db->queryDelete($websoccer->getConfig('db_prefix') . '_youthplayer', 'id = %d', (int) $youthplayer['id']);

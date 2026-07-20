@@ -71,9 +71,15 @@ class DirectTransferRejectController implements IActionController {
 			$playerName = $player["player_firstname"] . " " . $player["player_lastname"];
 		}
 		
-		// create notification
-		NotificationsDataService::createNotification($this->_websoccer, $this->_db, $offer["sender_user_id"], "transferoffer_notification_rejected",
-			array("playername" => $playerName, "receivername" => $this->_websoccer->getUser()->username), "transferoffer", "transferoffers#sent");
+		TransferMessagesDataService::createOfferRejected(
+			$this->_websoccer,
+			$this->_db,
+			$offer['sender_user_id'],
+			$offer['player_id'],
+			$offer['receiver_club_id'],
+			$offer['sender_club_id'],
+			$parameters['comment']
+		);
 			
 		// show success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,

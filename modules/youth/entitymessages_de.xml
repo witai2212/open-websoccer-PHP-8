@@ -18,6 +18,8 @@
 	<message id="entity_youthplayer_st_cards_yellow">Gelbe Karten</message>
 	<message id="entity_youthplayer_st_cards_yellow_red">Gelb-Rote Karten</message>
 	<message id="entity_youthplayer_st_cards_red">Rote Karten</message>
+	<message id="entity_youthplayer_market_value">Automatischer Marktwert</message>
+	<message id="entity_youthplayer_market_value_help">Wird automatisch aus Stärke, Alter, Leistung, Spezialfähigkeiten, Liga, Verein und Gesamtwirtschaft berechnet.</message>
 	<message id="entity_youthplayer_transfer_fee">Ablösesumme</message>
 	<message id="entity_youthplayer_transfer_fee_help">Wenn grösser als 0, wird der Spieler zu dieser Summe auf dem Marktplatz angeboten.</message>
 

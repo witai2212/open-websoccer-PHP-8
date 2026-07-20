@@ -56,6 +56,10 @@ class DirectTransferCancelController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
 		}
 		
+		$receiverTeam = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $offer['receiver_club_id']);
+		if (!empty($receiverTeam['user_id'])) {
+			TransferMessagesDataService::createOfferWithdrawn($this->_websoccer, $this->_db, $receiverTeam['user_id'], $offer['player_id'], $offer['receiver_club_id'], $offer['sender_club_id']);
+		}
 		$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") . "_transfer_offer", "id = %d", $offer["id"]);
 			
 		// show success message

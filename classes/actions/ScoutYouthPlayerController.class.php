@@ -177,10 +177,14 @@ class ScoutYouthPlayerController implements IActionController {
 				"nation" => $country,
 				"strength" => $strength
 				), $this->_websoccer->getConfig("db_prefix") . "_youthplayer");
+		$youthPlayerId = (int) $this->_db->getLastInsertedId();
+		if (class_exists('PlayerMarketValueDataService')) {
+			PlayerMarketValueDataService::recalculateYouthPlayer($this->_websoccer, $this->_db, $youthPlayerId);
+		}
 		
 		// trigger event for plug-ins
 		$event = new YouthPlayerScoutedEvent($this->_websoccer, $this->_db, $this->_i18n,
-				$clubId, $scout["id"], $this->_db->getLastInsertedId());
+				$clubId, $scout["id"], $youthPlayerId);
 		PluginMediator::dispatchEvent($event);
 		
 		// create success message

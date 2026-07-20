@@ -34,7 +34,7 @@ class UpdateMarketvaluesJob extends AbstractJob {
             PlayersDataService::updateMarketValueById($this->_websoccer, $this->_db, $player['id']);
             
         }*/
-        PlayersDataService::updateMarketValue($this->_websoccer, $this->_db);
+        PlayerMarketValueDataService::recalculateAfterLatestMatch($this->_websoccer, $this->_db);
         
 	}
 }

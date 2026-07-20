@@ -71,12 +71,15 @@ class WithdrawBidController implements IActionController {
 		// check if clib has a userID --> 0,1 value
 		$hasUser = TeamsDataService::clubHasUser($this->_websoccer, $this->_db, $player['team_id']);
 		
-		if($hasUser>0 && $offer['user_id']>0) {
-		  // create notification
-		  NotificationsDataService::createNotification($this->_websoccer, $this->_db, $offer["user_id"], 
-		          "transferoffer_notification_withdrawn",
-			     array("playername" => $playerName, "receivername" => $this->_websoccer->getUser()->username), 
-		              "transferoffer", "transferoffers#sent");
+		if ($hasUser > 0 && !empty($player['team_user_id'])) {
+			TransferMessagesDataService::createOfferWithdrawn(
+				$this->_websoccer,
+				$this->_db,
+				$player['team_user_id'],
+				$playerId,
+				$player['team_id'],
+				$clubId
+			);
 		}
 		
 		//delete offer from db

@@ -74,6 +74,8 @@ class MessagesDataService {
 		$columns["L.nachricht"] = "content";
 		$columns["L.datum"] = "date";
 		$columns["L.gelesen"] = "seen";
+		$columns["L.message_type"] = "message_type";
+		$columns["L.context_data"] = "context_data";
 		
 		$columns["R.id"] = "recipient_id";
 		$columns["R.nick"] = "recipient_name";
@@ -90,6 +92,13 @@ class MessagesDataService {
 		
 		$messages = array();
 		while ($message = $result->fetch_array()) {
+			$message['context'] = array();
+			if (isset($message['context_data']) && strlen((string) $message['context_data'])) {
+				$context = json_decode($message['context_data'], true);
+				if (is_array($context)) {
+					$message['context'] = $context;
+				}
+			}
 			$messages[] = $message;
 		}
 		$result->free();

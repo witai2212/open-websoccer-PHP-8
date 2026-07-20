@@ -792,20 +792,12 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 			$borrower = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $playerinfo['verein_id']);
 			$lender = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $playerinfo['lending_owner_id']);
 			
-			// create notifications
-			$messageKey = 'lending_notification_return';
-			$messageType = 'lending_return';
-			$playerName = ($playerinfo['kunstname']) ? $playerinfo['kunstname'] : $playerinfo['vorname'] . ' ' . $playerinfo['nachname'];
-			$messageData = array('player' => $playerName, 'borrower' => $borrower['team_name'], 'lender' => $lender['team_name']);
-			
+			$loanDetails = array('matches' => 0);
 			if ($borrower['user_id']) {
-				NotificationsDataService::createNotification($this->_websoccer, $this->_db, $borrower['user_id'], 
-					$messageKey, $messageData, $messageType, 'loans', '');
+				TransferMessagesDataService::createLoanMessage($this->_websoccer, $this->_db, $borrower['user_id'], 'returned', $playerinfo['id'], $playerinfo['lending_owner_id'], $playerinfo['verein_id'], $loanDetails, $playerinfo['lending_owner_id']);
 			}
-			
 			if ($lender['user_id']) {
-				NotificationsDataService::createNotification($this->_websoccer, $this->_db, $lender['user_id'],
-					$messageKey, $messageData, $messageType, 'loans', '');
+				TransferMessagesDataService::createLoanMessage($this->_websoccer, $this->_db, $lender['user_id'], 'returned', $playerinfo['id'], $playerinfo['lending_owner_id'], $playerinfo['verein_id'], $loanDetails, $playerinfo['verein_id']);
 			}
 			
 		}

@@ -13,7 +13,7 @@ class ComputerTransfersDataService {
     const CPU_LOAN_REQUEST_EXPIRY_DAYS = 10;
     const TRANSFER_DURATION_DAYS = 1;
     const MAX_PERCENTAGE_PLAYERS_ON_TL = 2;
-    const MAX_PLAYERS_ON_TL = 800;
+    const MAX_PLAYERS_ON_TL = 800; // fallback; runtime value comes from configuration
 
     // Computer offers shall normally stay close to player market value.
     // In a small number of cases the limits are widened a little to keep the market dynamic.
@@ -389,13 +389,23 @@ class ComputerTransfersDataService {
                 
         echo"- BID: ". $playerId ."\n";
 
-		// create notification for owner
 		$playerData = PlayersDataService::getPlayerById($websoccer, $db, $playerId);
-		$playerName = (strlen($playerData["player_pseudonym"])) ? $playerData["player_pseudonym"] : $playerData["player_firstname"] . " " . $playerData["player_lastname"];
-			
-		if($playerData["team_user_id"]>0) {
-			NotificationsDataService::createNotification($websoccer, $db, $playerData["team_user_id"], "received_offer_for_player",
-				array("player" => $playerName), "myoffers", "myoffers", "");
+		if ($playerData["team_user_id"] > 0) {
+			TransferMessagesDataService::createOfferReceived(
+				$websoccer,
+				$db,
+				$playerData["team_user_id"],
+				$playerId,
+				$teamId,
+				$playerData["team_id"],
+				$bidAmount,
+				array(
+					"hand_money" => (int) $handgeld,
+					"contract_matches" => 60,
+					"contract_salary" => (int) $salaryAmount,
+					"contract_goal_bonus" => (int) $goalAmount
+				)
+			);
 		}
     }
     
@@ -962,11 +972,19 @@ class ComputerTransfersDataService {
 
         echo "--- BORROWED: ". $player['id'] ." -> ". $borrowerTeamId ."\n";
 
+        $loanDetails = array(
+            'matches' => (int) $matches,
+            'loan_fee_per_match' => (int) $player['lending_fee'],
+            'total_fee' => (int) $totalFee,
+            'salary_share_percent' => (int) $salaryShare,
+            'buy_fee' => (int) $buyFee,
+            'option_type' => $optionType
+        );
         if ((int) $player['lender_user_id'] > 0) {
-            $playerName = (strlen($player['kunstname'])) ? $player['kunstname'] : $player['vorname'] . ' ' . $player['nachname'];
-            NotificationsDataService::createNotification($websoccer, $db, $player['lender_user_id'], 'lending_notification_lent',
-                array('player' => $playerName, 'matches' => $matches, 'newteam' => $borrowerTeam['team_name']),
-                'lending_lent', 'loans', '');
+            TransferMessagesDataService::createLoanMessage($websoccer, $db, $player['lender_user_id'], 'started', $player['id'], $lenderTeamId, $borrowerTeamId, $loanDetails, $borrowerTeamId);
+        }
+        if (!empty($borrowerTeam['user_id'])) {
+            TransferMessagesDataService::createLoanMessage($websoccer, $db, $borrowerTeam['user_id'], 'started', $player['id'], $lenderTeamId, $borrowerTeamId, $loanDetails, $lenderTeamId);
         }
     }
 

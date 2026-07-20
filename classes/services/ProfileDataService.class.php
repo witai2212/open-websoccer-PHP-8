@@ -49,7 +49,6 @@ class ProfileDataService {
 		//delete user_id from club
 		$updStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET user_id='' WHERE id='" .$clubId."'";
 		$db->executeQuery($updStr);
-        PlayersDataService::resetUnsellableForTeam($websoccer, $db, $clubId);
           
     }
 }

@@ -16,6 +16,11 @@
       <setting id="transfermarket_max_players_on_tl" category="transfermarket" type="number" default="250" />
       <setting id="precontract_decision_matches_min" category="transfermarket" type="number" default="2" />
       <setting id="precontract_decision_matches_max" category="transfermarket" type="number" default="4" />
+      <setting id="transfer_news_enabled" category="transfermarket" type="boolean" default="1" />
+      <setting id="transfer_news_market_value_min" category="transfermarket" type="number" default="40000000" />
+      <setting id="transfer_news_strength_min" category="transfermarket" type="number" default="90" />
+      <setting id="transfer_news_fee_min" category="transfermarket" type="number" default="30000000" />
+      <setting id="transfer_news_top_percent" category="transfermarket" type="number" default="2" />
   </settings>
   
     <pages>

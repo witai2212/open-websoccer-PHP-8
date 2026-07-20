@@ -77,7 +77,9 @@ class ExtendContractController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("extend-contract_matches_too_high", $maxContractMatches));
 		}
 		
-		$averageSalary = $this->getAverageSalary($player["player_strength"]);
+		$averageSalary = class_exists("PlayerMarketValueDataService")
+			? PlayerMarketValueDataService::getRecommendedSalary($player)
+			: $this->getAverageSalary($player["player_strength"]);
 		
 		// if salary is already higher than average, then just expect 10% more
 		if ($player["player_contract_salary"] > $averageSalary) {

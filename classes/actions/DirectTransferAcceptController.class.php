@@ -80,6 +80,10 @@ class DirectTransferAcceptController implements IActionController {
 		if ($this->_websoccer->getConfig("transferoffers_adminapproval_required")) {
 			$this->_db->queryUpdate(array("admin_approval_pending" => "1"), $this->_websoccer->getConfig("db_prefix") . "_transfer_offer", 
 					"id = %d", $parameters["id"]);
+			$exchangePlayers = array();
+			if ((int) $offer['offer_player1'] > 0) $exchangePlayers[] = TransferMessagesDataService::getPlayerReference($this->_websoccer, $this->_db, $offer['offer_player1']);
+			if ((int) $offer['offer_player2'] > 0) $exchangePlayers[] = TransferMessagesDataService::getPlayerReference($this->_websoccer, $this->_db, $offer['offer_player2']);
+			TransferMessagesDataService::createOfferAccepted($this->_websoccer, $this->_db, $offer['sender_user_id'], $offer['player_id'], $offer['receiver_club_id'], $offer['sender_club_id'], $offer['offer_amount'], array('exchange_players' => $exchangePlayers, 'offer_message' => $offer['offer_message']), true);
 			
 			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 					$this->_i18n->getMessage("transferoffer_accepted_title"),

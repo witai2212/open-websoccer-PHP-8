@@ -93,7 +93,6 @@ class TransfermarketOverviewModel implements IModel {
 		
 		if ($count > 0) {
 			$players = PlayersDataService::getPlayersOnTransferList($this->_websoccer, $this->_db, $paginator->getFirstIndex(), $eps, $positionFilter, $advancedFilters);
-			$players = $this->_refreshDisplayedMarketValues($players);
 		} else {
 			$players = array();
 		}
@@ -108,23 +107,6 @@ class TransfermarketOverviewModel implements IModel {
 		);
 	}
 	
-	private function _refreshDisplayedMarketValues($players) {
-		foreach ($players as $index => $player) {
-			if (!isset($player['id']) || (int) $player['id'] < 1) {
-				continue;
-			}
-
-			// The player detail page recalculates the market value before displaying the player.
-			// Keep the transfer market overview in sync, otherwise the list can show stale P.marktwert.
-			$stats = PlayersStrengthDataService::calculatePlayerStats($this->_websoccer, $this->_db, (int) $player['id']);
-			if (isset($stats['market_value'])) {
-				$players[$index]['marketvalue'] = $stats['market_value'];
-			}
-		}
-
-		return $players;
-	}
-
 	private function _getNumericRequestParameter($parameterName) {
 		$value = $this->_websoccer->getRequestParameter($parameterName);
 		

@@ -155,59 +155,59 @@ class LoanRequestDataService {
             'id = %d',
             (int) $request['id']
         );
-
         $player = self::getPlayerRow($websoccer, $db, $request['player_id']);
         $borrowerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $request['borrower_team_id']);
         if (!empty($request['borrower_user_id']) && isset($borrowerTeam['team_id'])) {
-            NotificationsDataService::createNotification(
+            TransferMessagesDataService::createLoanMessage(
                 $websoccer,
                 $db,
                 (int) $request['borrower_user_id'],
-                'lending_request_notification_rejected',
-                array('player' => self::playerName($player), 'borrower' => $borrowerTeam['team_name']),
-                'lending_request_rejected',
-                'loans',
-                ''
+                'request_rejected',
+                (int) $request['player_id'],
+                (int) $request['lender_team_id'],
+                (int) $request['borrower_team_id'],
+                self::messageDetails($request),
+                (int) $request['lender_team_id']
             );
         }
     }
 
     private static function notifyNewRequest(WebSoccer $websoccer, DbConnection $db, $request, $player) {
         $lenderTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $request['lender_team_id']);
-        $borrowerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $request['borrower_team_id']);
-
         if (!empty($lenderTeam['user_id'])) {
-            NotificationsDataService::createNotification(
+            TransferMessagesDataService::createLoanMessage(
                 $websoccer,
                 $db,
                 (int) $lenderTeam['user_id'],
-                'lending_request_notification_received',
-                array(
-                    'player' => self::playerName($player),
-                    'borrower' => $borrowerTeam['team_name'],
-                    'matches' => (int) $request['requested_matches'],
-                    'fee' => number_format((int) $request['loan_fee_per_match'], 0, ',', ' ')
-                ),
-                'lending_request_received',
-                'loans',
-                ''
+                'request_received',
+                (int) $request['player_id'],
+                (int) $request['lender_team_id'],
+                (int) $request['borrower_team_id'],
+                self::messageDetails($request),
+                (int) $request['borrower_team_id']
             );
         }
     }
 
     private static function notifyAcceptedRequest(WebSoccer $websoccer, DbConnection $db, $request, $player, $lenderTeam, $borrowerTeam) {
-        $data = array(
-            'player' => self::playerName($player),
-            'matches' => (int) $request['requested_matches'],
-            'newteam' => $borrowerTeam['team_name']
-        );
-
+        $details = self::messageDetails($request);
         if (!empty($lenderTeam['user_id'])) {
-            NotificationsDataService::createNotification($websoccer, $db, (int) $lenderTeam['user_id'], 'lending_notification_lent', $data, 'lending_lent', 'loans', '');
+            TransferMessagesDataService::createLoanMessage($websoccer, $db, (int) $lenderTeam['user_id'], 'started', (int) $request['player_id'], (int) $request['lender_team_id'], (int) $request['borrower_team_id'], $details, (int) $request['borrower_team_id']);
         }
         if (!empty($request['borrower_user_id'])) {
-            NotificationsDataService::createNotification($websoccer, $db, (int) $request['borrower_user_id'], 'lending_request_notification_accepted', $data, 'lending_request_accepted', 'loans', '');
+            TransferMessagesDataService::createLoanMessage($websoccer, $db, (int) $request['borrower_user_id'], 'request_accepted', (int) $request['player_id'], (int) $request['lender_team_id'], (int) $request['borrower_team_id'], $details, (int) $request['lender_team_id']);
         }
+    }
+
+    private static function messageDetails($request) {
+        return array(
+            'matches' => isset($request['requested_matches']) ? (int) $request['requested_matches'] : 0,
+            'loan_fee_per_match' => isset($request['loan_fee_per_match']) ? (int) $request['loan_fee_per_match'] : 0,
+            'total_fee' => isset($request['total_fee']) ? (int) $request['total_fee'] : 0,
+            'salary_share_percent' => isset($request['salary_share_percent']) ? (int) $request['salary_share_percent'] : 100,
+            'buy_fee' => isset($request['buy_fee']) ? (int) $request['buy_fee'] : 0,
+            'option_type' => isset($request['option_type']) ? $request['option_type'] : LoanDataService::OPTION_NONE
+        );
     }
 
     private static function getPlayerRow(WebSoccer $websoccer, DbConnection $db, $playerId) {

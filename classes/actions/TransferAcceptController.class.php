@@ -82,20 +82,6 @@ class TransferAcceptController implements IActionController {
 			$playerName = $player["player_firstname"] . " " . $player["player_lastname"];
 		}
 		
-		if($hasUser>0 && $offer['user_id']>0) {
-		    // create notification for selling user
-    		  NotificationsDataService::createNotification($this->_websoccer, $this->_db, $oldTeam['team_user_id'], 
-    		          "player_transfer_message",
-    			     array("playername" => $playerName, "receivername" => $this->_websoccer->getUser()->username), 
-    		              "transferoffer", "myoffers");
-
-    		// creat notification for buyer user
-    		NotificationsDataService::createNotification($this->_websoccer, $this->_db, $offer["user_id"], 
-    			  "player_transfer_message",
-    			 array("playername" => $playerName, "receivername" => $this->_websoccer->getUser()->username), 
-    				  "transferoffer", "myteam");
-		}
-		
 		//debit amount from buyer (take money)
 		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $offer['verein_id'], $offer['abloese'], "player_transfer_message", $oldTeam['team_name']);
 		
@@ -132,6 +118,23 @@ class TransferAcceptController implements IActionController {
 		);
 		$this->_db->queryInsert($transferColumns, $this->_websoccer->getConfig("db_prefix") . "_transfer");
 		$transferId = (int) $this->_db->getLastInsertedId();
+
+		TransferMessagesDataService::createTransferCompleted(
+			$this->_websoccer,
+			$this->_db,
+			$offer['spieler_id'],
+			$oldTeam['team_id'],
+			$offer['verein_id'],
+			$offer['abloese'],
+			!empty($oldTeam['team_user_id']) ? $oldTeam['team_user_id'] : 0,
+			!empty($offer['user_id']) ? $offer['user_id'] : 0,
+			array(
+				'contract_matches' => (int) $offer['vertrag_spiele'],
+				'contract_salary' => (int) $offer['vertrag_gehalt'],
+				'contract_goal_bonus' => (int) $offer['vertrag_torpraemie'],
+				'hand_money' => isset($offer['handgeld']) ? (int) $offer['handgeld'] : 0
+			)
+		);
 
 		if (class_exists('BadgeAwardService') && !empty($oldTeam['team_user_id'])) {
 			BadgeAwardService::processTransferSale(

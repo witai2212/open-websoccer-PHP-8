@@ -479,7 +479,6 @@ class ManagerCareerImprovementService {
             'user_id_actual' => '0',
             'interimmanager' => '1'
         ), $prefix . '_verein', 'id = %d', $teamId);
-        PlayersDataService::resetUnsellableForTeam($websoccer, $db, $teamId);
 
         $db->queryUpdate(array(
             'status' => self::CONTRACT_SACKED,

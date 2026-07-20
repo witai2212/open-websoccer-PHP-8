@@ -504,19 +504,22 @@ class TransfermarketDataService {
 			);
 		}
 		
-		// notify human buyer, if this was not a computer bid
-		if (!empty($bid['user_id'])) {
-			NotificationsDataService::createNotification(
-				$websoccer,
-				$db,
-				$bid['user_id'],
-				'transfer_bid_notification_transfered',
-				array('player' => $playerName),
-				'transfermarket',
-				'player',
-				'id=' . $player['player_id']
-			);
-		}
+		TransferMessagesDataService::createTransferCompleted(
+			$websoccer,
+			$db,
+			$player['player_id'],
+			$player['team_id'],
+			$bid['team_id'],
+			$bid['amount'],
+			!empty($player['team_user_id']) ? $player['team_user_id'] : 0,
+			!empty($bid['user_id']) ? $bid['user_id'] : 0,
+			array(
+				'hand_money' => (int) $bid['hand_money'],
+				'contract_matches' => (int) $bid['contract_matches'],
+				'contract_salary' => (int) $bid['contract_salary'],
+				'contract_goal_bonus' => (int) $bid['contract_goalbonus']
+			)
+		);
 		
 		// transfer watchdog
 		self::transferWatchdog($websoccer, $db, $bid['bid_id'], $player['team_id']);

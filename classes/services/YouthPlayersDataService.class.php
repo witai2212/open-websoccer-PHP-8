@@ -37,6 +37,7 @@ class YouthPlayersDataService {
 	 * @return array assoc. array of player data.
 	 */
 	public static function getYouthPlayerById(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $playerId) {
+		self::_ensureMarketValueSchema($websoccer, $db);
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthplayer";
 
 		$players = $db->queryCachedSelect("*", $fromTable, "id = %d", $playerId);
@@ -65,6 +66,7 @@ class YouthPlayersDataService {
 	 */
 	public static function getYouthPlayersOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
 
+		self::_ensureMarketValueSchema($websoccer, $db);
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthplayer";
 		$whereCondition = "team_id = %d ORDER BY position ASC, lastname ASC, firstname ASC";
 
@@ -132,6 +134,7 @@ class YouthPlayersDataService {
 	 * @return array asoc. array of youth players, with key=converted position ID, value=list of players
 	 */
 	public static function getYouthPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = "ASC") {
+		self::_ensureMarketValueSchema($websoccer, $db);
 		$columns = "*";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthplayer";
 		$minAge = (int) $websoccer->getConfig("youth_scouting_min_age");
@@ -196,6 +199,7 @@ class YouthPlayersDataService {
 	public static function getTransferableYouthPlayers(WebSoccer $websoccer, DbConnection $db, 
 			$startIndex, $entries_per_page, $positionFilter = NULL) {
 
+		self::_ensureMarketValueSchema($websoccer, $db);
 		$columns = array(
 				"P.id" => "player_id",
 				"P.firstname" => "firstname",
@@ -203,6 +207,7 @@ class YouthPlayersDataService {
 				"P.position" => "position",
 				"P.nation" => "nation",
 				"P.transfer_fee" => "transfer_fee",
+				"P.market_value" => "market_value",
 				"P.age" => "age",
 				"P.strength" => "strength",
 				"P.st_matches" => "st_matches",
@@ -410,5 +415,12 @@ class YouthPlayersDataService {
 		$timeBoundary = $websoccer->getNowAsTimestamp() + $websoccer->getConfig("youth_matchrequest_accept_hours_in_advance");
 		$db->queryDelete($websoccer->getConfig("db_prefix") . "_youthmatch_request", "matchdate <= %d", $timeBoundary);
 	}
+
+	private static function _ensureMarketValueSchema(WebSoccer $websoccer, DbConnection $db) {
+		if (class_exists('PlayerMarketValueDataService')) {
+			PlayerMarketValueDataService::ensureSchema($websoccer, $db);
+		}
+	}
+
 }
 ?>

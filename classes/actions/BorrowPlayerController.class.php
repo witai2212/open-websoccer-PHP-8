@@ -104,12 +104,17 @@ class BorrowPlayerController implements IActionController {
 		LoanDataService::createLoan($this->_websoccer, $this->_db, $player['player_id'], $player['team_id'], $clubId, $parameters['matches'], $player['lending_fee'], $salaryShare, $optionType, $buyFee);
 		LoanDataService::closeOffer($this->_websoccer, $this->_db, $player['player_id'], 'accepted');
 		
-		$playerName = (strlen($player['player_pseudonym'])) ? $player['player_pseudonym'] : $player['player_firstname'] . ' ' . $player['player_lastname'];
+		$loanDetails = array(
+			'matches' => (int) $parameters['matches'],
+			'loan_fee_per_match' => (int) $player['lending_fee'],
+			'total_fee' => (int) $fee,
+			'salary_share_percent' => (int) $salaryShare,
+			'buy_fee' => (int) $buyFee
+		);
 		if ($player['team_user_id']) {
-			NotificationsDataService::createNotification($this->_websoccer, $this->_db, $player['team_user_id'], 'lending_notification_lent',
-				array('player' => $playerName, 'matches' => $parameters['matches'], 'newteam' => $team['team_name']), 
-				'lending_lent', 'loans', '');
+			TransferMessagesDataService::createLoanMessage($this->_websoccer, $this->_db, $player['team_user_id'], 'started', $player['player_id'], $player['team_id'], $clubId, $loanDetails, $clubId);
 		}
+		TransferMessagesDataService::createLoanMessage($this->_websoccer, $this->_db, $user->id, 'started', $player['player_id'], $player['team_id'], $clubId, $loanDetails, $player['team_id']);
 		
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
 				$this->_i18n->getMessage('lending_hire_success'),

@@ -1,12 +1,13 @@
-
 {% set replySubject = "Re: " ~ message.subject %}
 {% set replyRecipient = (message.sender_id == env.getUser().id) ? message.recipient_name : message.sender_name %}
 
 <div class="btn-group">
+	{% if message.message_type|length == 0 %}
 	<a href="#composeMessage" class="btn btn-small ajaxLink"
 		 data-toggle="modal"
 		  data-dismiss="modal" aria-hidden="true"
 		  data-ajaxtarget="sendmsgbody" data-ajaxblock="compose-message-body" data-ajaxquerystr="subject={{ replySubject }}&amp;nick={{ replyRecipient }}"><i class="icon-hand-right"></i> {{ i18n.getMessage("messages_reply_button") }}</a>
+	{% endif %}
 	<a href="{{ env.getInternalUrl("messages", "action=delete-message&id=" ~ message.message_id) }}" class="btn btn-small"><i class="icon-trash"></i> {{ i18n.getMessage("button_delete") }}</a>
 </div>
 
@@ -17,7 +18,13 @@
 	</colgroup>
 	<tr>
 		<td><strong>{{ i18n.getMessage("messages_sender") }}</strong></td>
-		<td>{% if message.sender_id > 0 %}<a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a>{% else %}{{ message.sender_name }}{% endif %}</td>
+		<td>
+		{% if message.context.sender_club is defined and message.context.sender_club.id > 0 %}
+			<a href="{{ env.getInternalUrl("team", "id=" ~ message.context.sender_club.id) }}">
+			{% if message.context.sender_club.logo|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ message.context.sender_club.logo }}" alt="{{ message.context.sender_club.name }}" style="max-width:28px;max-height:28px;margin-right:6px;">{% endif %}
+			{{ message.context.sender_club.name }}</a>
+		{% elseif message.sender_id > 0 %}<a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a>{% else %}{{ message.sender_name }}{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td><strong>{{ i18n.getMessage("messages_recipient") }}</strong></td>
@@ -32,5 +39,60 @@
 		<td>{{ message.subject }}</td>
 	</tr>
 </table>
+
+{% if message.context.category is defined %}
+<div class="well" style="margin-top:15px;">
+	{% if message.context.player is defined and message.context.player.id > 0 %}
+	<h4><a href="{{ env.getInternalUrl("player", "id=" ~ message.context.player.id) }}">{{ message.context.player.name }}</a></h4>
+	{% endif %}
+
+	{% if message.context.from_club is defined or message.context.to_club is defined %}
+	<div class="row-fluid" style="margin-bottom:12px;">
+		<div class="span5 text-center">
+			{% if message.context.from_club.id > 0 %}
+				{% if message.context.from_club.logo|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ message.context.from_club.logo }}" alt="{{ message.context.from_club.name }}" style="max-width:52px;max-height:52px;"><br>{% endif %}
+				<a href="{{ env.getInternalUrl("team", "id=" ~ message.context.from_club.id) }}">{{ message.context.from_club.name }}</a>
+			{% else %}<span class="muted">Vereinslos</span>{% endif %}
+		</div>
+		<div class="span2 text-center" style="font-size:24px;padding-top:12px;">→</div>
+		<div class="span5 text-center">
+			{% if message.context.to_club.id > 0 %}
+				{% if message.context.to_club.logo|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ message.context.to_club.logo }}" alt="{{ message.context.to_club.name }}" style="max-width:52px;max-height:52px;"><br>{% endif %}
+				<a href="{{ env.getInternalUrl("team", "id=" ~ message.context.to_club.id) }}">{{ message.context.to_club.name }}</a>
+			{% endif %}
+		</div>
+	</div>
+	{% endif %}
+
+	<table class="table table-condensed">
+		{% if message.context.amount is defined %}<tr><th style="width:45%;">Ablöse</th><td>{% if message.context.amount > 0 %}{{ message.context.amount|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% else %}ablösefrei{% endif %}</td></tr>{% endif %}
+		{% if message.context.hand_money is defined and message.context.hand_money > 0 %}<tr><th>Handgeld</th><td>{{ message.context.hand_money|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endif %}
+		{% if message.context.contract_matches is defined and message.context.contract_matches > 0 %}<tr><th>Vertragsdauer</th><td>{{ message.context.contract_matches }} Spiele</td></tr>{% endif %}
+		{% if message.context.contract_salary is defined and message.context.contract_salary > 0 %}<tr><th>Gehalt pro Spiel</th><td>{{ message.context.contract_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endif %}
+		{% if message.context.contract_goal_bonus is defined and message.context.contract_goal_bonus > 0 %}<tr><th>Torprämie</th><td>{{ message.context.contract_goal_bonus|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endif %}
+		{% if message.context.matches is defined and message.context.matches > 0 %}<tr><th>Leihdauer</th><td>{{ message.context.matches }} Spiele</td></tr>{% endif %}
+		{% if message.context.loan_fee_per_match is defined and message.context.loan_fee_per_match > 0 %}<tr><th>Leihgebühr pro Spiel</th><td>{{ message.context.loan_fee_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endif %}
+		{% if message.context.total_fee is defined and message.context.total_fee > 0 %}<tr><th>Leihgebühr gesamt</th><td>{{ message.context.total_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endif %}
+		{% if message.context.salary_share_percent is defined and message.context.salary_share_percent > 0 %}<tr><th>Gehaltsanteil Leihverein</th><td>{{ message.context.salary_share_percent }}%</td></tr>{% endif %}
+		{% if message.context.buy_fee is defined and message.context.buy_fee > 0 %}<tr><th>Kaufpreis</th><td>{{ message.context.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td></tr>{% endif %}
+		{% if message.context.offer_message is defined and message.context.offer_message|length > 0 %}<tr><th>Kommentar</th><td>{{ message.context.offer_message }}</td></tr>{% endif %}
+		{% if message.context.reason is defined and message.context.reason|length > 0 %}<tr><th>Begründung</th><td>{{ message.context.reason }}</td></tr>{% endif %}
+	</table>
+
+	{% if message.context.exchange_players is defined and message.context.exchange_players|length > 0 %}
+	<p><strong>Tauschspieler:</strong>
+	{% for exchangePlayer in message.context.exchange_players %}
+		{% if not loop.first %}, {% endif %}<a href="{{ env.getInternalUrl("player", "id=" ~ exchangePlayer.id) }}">{{ exchangePlayer.name }}</a>
+	{% endfor %}
+	</p>
+	{% endif %}
+
+	{% if message.context.target_page is defined and message.context.target_page|length > 0 %}
+	<p style="margin-bottom:0;"><a class="btn btn-primary" href="{{ env.getInternalUrl(message.context.target_page, message.context.target_query|default('')) }}">
+	{% if message.context.target_page == 'myoffers' %}Zu den Transferangeboten{% elseif message.context.target_page == 'loans' %}Zu den Leihen{% elseif message.context.target_page == 'transfermarket' %}Zum Transfermarkt{% else %}Zum Kader{% endif %}
+	</a></p>
+	{% endif %}
+</div>
+{% endif %}
 
 <p>{% if message.content_html is defined %}{{ message.content_html|raw }}{% else %}{{ message.content|nl2br }}{% endif %}</p>

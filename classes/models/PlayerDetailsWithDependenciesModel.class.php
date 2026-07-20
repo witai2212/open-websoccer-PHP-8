@@ -53,10 +53,6 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 			$userTeam = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 		}
 		
-		//strength + marketvalue update
-		//PlayersStrengthDataService::updateAllPlayersMarketAndStrengthByPlayerId($this->_websoccer, $this->_db, $playerId);
-		PlayersStrengthDataService::calculatePlayerStats($this->_websoccer, $this->_db, $playerId);
-		
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $playerId);
 		$watchlist = PlayersDataService::whoIsWatchingPlayerId($this->_websoccer, $this->_db, $playerId);
 		$onMyWhatchlist = WatchlistDataService::checkIfPlayerOnWatchlist($this->_websoccer, $this->_db, $playerId, $userTeam);

@@ -722,6 +722,9 @@ class ScoutingDataService {
                 $proposalTraits = PlayerTraitsDataService::decodeTraitMap($proposal['real_traits']);
                 PlayerTraitsDataService::assignTraitsToPlayer($websoccer, $db, (int) $playerId, $proposalTraits);
             }
+            if (class_exists('PlayerMarketValueDataService')) {
+                PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, (int) $playerId);
+            }
             
             $db->queryUpdate(array(
                 'status' => 'accepted',

@@ -75,11 +75,23 @@ class DirectTransfersDataService {
 		echo $insStr ."<br>";
 		$db->executeQuery($insStr);
 		
-		$sender = UsersDataService::getUserById($websoccer, $db, $senderUserId);
-		
-		// create notification
-		NotificationsDataService::createNotification($websoccer, $db, $receiverUserId, "transferoffer_notification_offerreceived",
-		    array("sendername" => $sender["nick"]), NOTIFICATION_TYPE, NOTIFICATION_TARGETPAGE_MYOFFERS, null, $receiverClubId);
+		$exchangePlayers = array();
+		if ((int) $offerPlayerId1 > 0) {
+			$exchangePlayers[] = TransferMessagesDataService::getPlayerReference($websoccer, $db, $offerPlayerId1);
+		}
+		if ((int) $offerPlayerId2 > 0) {
+			$exchangePlayers[] = TransferMessagesDataService::getPlayerReference($websoccer, $db, $offerPlayerId2);
+		}
+		TransferMessagesDataService::createOfferReceived(
+			$websoccer,
+			$db,
+			$receiverUserId,
+			$playerId,
+			$senderClubId,
+			$receiverClubId,
+			$offerAmount,
+			array('offer_message' => $offerMessage, 'exchange_players' => $exchangePlayers)
+		);
 		
 	}
 	
@@ -129,20 +141,25 @@ class DirectTransfersDataService {
 		// delete offer and other offers for this player
 		$db->queryDelete($websoccer->getConfig("db_prefix") . "_transfer_offer", "player_id = %d", $offer["player_id"]);
 		
-		// get player name for notification
-		$player = PlayersDataService::getPlayerById($websoccer, $db, $offer["player_id"]);
-		if ($player["player_pseudonym"]) {
-			$playerName = $player["player_pseudonym"];
-		} else {
-			$playerName = $player["player_firstname"] . " " . $player["player_lastname"];
+		$exchangePlayers = array();
+		if ((int) $offer['offer_player1'] > 0) {
+			$exchangePlayers[] = TransferMessagesDataService::getPlayerReference($websoccer, $db, $offer['offer_player1']);
 		}
-		
-		// notify and award users
-		NotificationsDataService::createNotification($websoccer, $db, $currentTeam["user_id"], "transferoffer_notification_executed",
-			array("playername" => $playerName), NOTIFICATION_TYPE, "player", "id=" . $offer["player_id"], $currentTeam["team_id"]);
-		NotificationsDataService::createNotification($websoccer, $db, $offer["sender_user_id"], "transferoffer_notification_executed",
-			array("playername" => $playerName), NOTIFICATION_TYPE, "player", "id=" . $offer["player_id"], $targetTeam['team_id']);
-		
+		if ((int) $offer['offer_player2'] > 0) {
+			$exchangePlayers[] = TransferMessagesDataService::getPlayerReference($websoccer, $db, $offer['offer_player2']);
+		}
+		TransferMessagesDataService::createTransferCompleted(
+			$websoccer,
+			$db,
+			$offer['player_id'],
+			$offer['receiver_club_id'],
+			$offer['sender_club_id'],
+			$offer['offer_amount'],
+			!empty($currentTeam['user_id']) ? $currentTeam['user_id'] : 0,
+			!empty($offer['sender_user_id']) ? $offer['sender_user_id'] : 0,
+			array('exchange_players' => $exchangePlayers, 'offer_message' => $offer['offer_message'])
+		);
+
 		TransfermarketDataService::awardUserForTrades($websoccer, $db, $currentTeam["user_id"]);
 		TransfermarketDataService::awardUserForTrades($websoccer, $db, $offer["sender_user_id"]);
 	}

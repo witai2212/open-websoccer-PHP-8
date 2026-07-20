@@ -155,17 +155,40 @@ class TransferBidController implements IActionController {
 		$this->saveBid($playerId, $user->id, $clubId, $parameters);
 		
 		
+		if (!empty($player['team_user_id'])) {
+			TransferMessagesDataService::createOfferReceived(
+				$this->_websoccer,
+				$this->_db,
+				$player['team_user_id'],
+				$playerId,
+				$clubId,
+				$player['team_id'],
+				$parameters['amount'],
+				array(
+					'hand_money' => (int) $parameters['handmoney'],
+					'contract_matches' => (int) $parameters['contract_matches'],
+					'contract_salary' => (int) $parameters['contract_salary'],
+					'contract_goal_bonus' => (int) $parameters['contract_goal_bonus']
+				)
+			);
+		}
+		
 		// mark previous highest bid as outbidden
 		if (isset($highestBid['bid_id'])) {
 			$this->_db->queryUpdate(array('ishighest' => '0'), $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot', 
 					'id = %d', $highestBid['bid_id']);
 		}
 		
-		// notify outbidden user
+		// create persistent inbox message for the previous highest bidder
 		if (isset($highestBid['user_id']) && $highestBid['user_id']) {
-			$playerName = (strlen($player['player_pseudonym'])) ? $player['player_pseudonym'] : $player['player_firstname'] . ' ' . $player['player_lastname'];
-			NotificationsDataService::createNotification($this->_websoccer, $this->_db, $highestBid['user_id'], 
-				'transfer_bid_notification_outbidden', array('player' => $playerName), 'transfermarket', 'transfer-bid', 'id=' . $playerId);
+			TransferMessagesDataService::createOutbidMessage(
+				$this->_websoccer,
+				$this->_db,
+				$highestBid['user_id'],
+				$playerId,
+				$clubId,
+				$parameters['amount']
+			);
 		}
 		
 		// success message

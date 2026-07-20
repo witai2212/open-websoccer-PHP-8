@@ -292,6 +292,13 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
                     $professionalPlayerId
                     );
             }
+            if (class_exists("PlayerMarketValueDataService")) {
+                PlayerMarketValueDataService::recalculatePlayer(
+                    $this->_websoccer,
+                    $this->_db,
+                    $professionalPlayerId
+                    );
+            }
 
             $playerName = trim($player["firstname"] . " " . $player["lastname"]);
             if (class_exists("ManagerMissionsDataService")) {

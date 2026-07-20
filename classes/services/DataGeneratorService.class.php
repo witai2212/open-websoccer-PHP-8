@@ -264,6 +264,10 @@ class DataGeneratorService {
 		
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
 		$db->queryInsert($columns, $fromTable);
+		$playerId = (int) $db->getLastInsertedId();
+		if ($playerId > 0 && class_exists('PlayerMarketValueDataService')) {
+			PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, $playerId);
+		}
 	}
 	
 	private static function _getRandomDeviationValue($maxDeviation) {

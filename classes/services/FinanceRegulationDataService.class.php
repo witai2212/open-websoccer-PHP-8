@@ -583,10 +583,6 @@ class FinanceRegulationDataService {
             $rows[] = self::simulateOrScale($websoccer, $db, 'Ticketpreise', 'verein', array('preis_stehen', 'preis_sitz', 'preis_haupt_stehen', 'preis_haupt_sitze', 'preis_vip'), self::factor($params['ticket_percent']), self::teamWhere($websoccer, $db, 'all', ''), $apply, 1);
         }
 
-        if (isset($targets['market_values'])) {
-            $rows[] = self::marketValueEffect($websoccer, $db, self::factor($params['market_value_percent']), $apply);
-        }
-
         return $rows;
     }
 

@@ -75,25 +75,68 @@ class PlayerPrecontractDataService {
     }
 
     private static function decidePlayer(WebSoccer $websoccer, DbConnection $db, $playerId) {
-        if(self::hasAcceptedAgreement($websoccer,$db,$playerId)) return;
-        $prefix=$websoccer->getConfig('db_prefix');
-        $sql="SELECT A.*, T.strength AS club_strength, T.finanz_budget, L.division FROM {$prefix}_player_precontract A INNER JOIN {$prefix}_verein T ON T.id=A.destination_team_id LEFT JOIN {$prefix}_liga L ON L.id=T.liga_id WHERE A.player_id=".(int)$playerId." AND A.status='open'";
-        $r=$db->executeQuery($sql);$offers=array();while($o=$r->fetch_array()){$league=max(1,8-(int)$o['division']);$o['score']=(int)$o['hand_money']+((int)$o['contract_salary']*(int)$o['contract_matches'])+((int)$o['contract_goal_bonus']*8)+((int)$o['club_strength']*25000)+($league*100000);$offers[]=$o;}$r->free();
-        if(!$offers)return; usort($offers,function($a,$b){return $b['score']<=>$a['score'];});$best=$offers[0];
-        $db->queryUpdate(array('status'=>'accepted','decision_date'=>$websoccer->getNowAsTimestamp()),$prefix.'_player_precontract','id = %d',(int)$best['id']);
-        $db->executeQuery("UPDATE {$prefix}_player_precontract SET status='rejected', decision_date=".(int)$websoccer->getNowAsTimestamp()." WHERE player_id=".(int)$playerId." AND status='open'");
-        if((int)$best['destination_user_id']>0) NotificationsDataService::createNotification($websoccer,$db,(int)$best['destination_user_id'],'precontract_accepted',array('player'=>self::playerName($websoccer,$db,$playerId)),'transfermarket','myteam','');
+        if (self::hasAcceptedAgreement($websoccer, $db, $playerId)) return;
+        $prefix = $websoccer->getConfig('db_prefix');
+        $sql = "SELECT A.*, T.strength AS club_strength, T.finanz_budget, L.division FROM {$prefix}_player_precontract A INNER JOIN {$prefix}_verein T ON T.id=A.destination_team_id LEFT JOIN {$prefix}_liga L ON L.id=T.liga_id WHERE A.player_id=".(int)$playerId." AND A.status='open'";
+        $r = $db->executeQuery($sql);
+        $offers = array();
+        while ($o = $r->fetch_array()) {
+            $league = max(1, 8 - (int) $o['division']);
+            $o['score'] = (int) $o['hand_money'] + ((int) $o['contract_salary'] * (int) $o['contract_matches']) + ((int) $o['contract_goal_bonus'] * 8) + ((int) $o['club_strength'] * 25000) + ($league * 100000);
+            $offers[] = $o;
+        }
+        $r->free();
+        if (!$offers) return;
+        usort($offers, function($a, $b) { return $b['score'] <=> $a['score']; });
+        $best = $offers[0];
+        $now = $websoccer->getNowAsTimestamp();
+        $db->queryUpdate(array('status' => 'accepted', 'decision_date' => $now), $prefix.'_player_precontract', 'id = %d', (int) $best['id']);
+        $db->executeQuery("UPDATE {$prefix}_player_precontract SET status='rejected', decision_date=".(int)$now." WHERE player_id=".(int)$playerId." AND status='open'");
+
+        foreach ($offers as $offer) {
+            if ((int) $offer['destination_user_id'] < 1) continue;
+            TransferMessagesDataService::createPrecontractMessage(
+                $websoccer,
+                $db,
+                (int) $offer['destination_user_id'],
+                ((int) $offer['id'] === (int) $best['id']) ? 'accepted' : 'rejected',
+                $playerId,
+                (int) $offer['current_team_id'],
+                (int) $offer['destination_team_id'],
+                array(
+                    'hand_money' => (int) $offer['hand_money'],
+                    'contract_matches' => (int) $offer['contract_matches'],
+                    'contract_salary' => (int) $offer['contract_salary'],
+                    'contract_goal_bonus' => (int) $offer['contract_goal_bonus']
+                )
+            );
+        }
     }
 
     public static function executeAcceptedTransfers(WebSoccer $websoccer, DbConnection $db) {
-        $prefix=$websoccer->getConfig('db_prefix');$r=$db->executeQuery("SELECT * FROM {$prefix}_player_precontract WHERE status='accepted'");$count=0;
-        while($a=$r->fetch_array()){
-            $team=TeamsDataService::getTeamSummaryById($websoccer,$db,(int)$a['destination_team_id']); if(!$team)continue;
-            BankAccountDataService::debitAmount($websoccer,$db,(int)$a['destination_team_id'],(int)$a['hand_money'],'Handgeld für ablösefreien Wechsel','Spieler');
-            $db->queryUpdate(array('verein_id'=>(int)$a['destination_team_id'],'vertrag_gehalt'=>(int)$a['contract_salary'],'vertrag_torpraemie'=>(int)$a['contract_goal_bonus'],'vertrag_spiele'=>(int)$a['contract_matches'],'transfermarkt'=>'0','transfer_start'=>0,'transfer_ende'=>0,'transfer_mindestgebot'=>0,'lending_fee'=>0),$prefix.'_spieler','id = %d',(int)$a['player_id']);
-            $db->queryInsert(array('spieler_id'=>(int)$a['player_id'],'seller_club_id'=>(int)$a['current_team_id'],'buyer_user_id'=>(int)$a['destination_user_id'],'buyer_club_id'=>(int)$a['destination_team_id'],'datum'=>$websoccer->getNowAsTimestamp(),'directtransfer_amount'=>0),$prefix.'_transfer');
-            $db->queryUpdate(array('status'=>'completed','completed_date'=>$websoccer->getNowAsTimestamp()),$prefix.'_player_precontract','id = %d',(int)$a['id']);$count++;
-        }$r->free();return $count;
+        $prefix = $websoccer->getConfig('db_prefix');
+        $r = $db->executeQuery("SELECT * FROM {$prefix}_player_precontract WHERE status='accepted'");
+        $count = 0;
+        while ($a = $r->fetch_array()) {
+            $destination = TeamsDataService::getTeamSummaryById($websoccer, $db, (int) $a['destination_team_id']);
+            $current = TeamsDataService::getTeamSummaryById($websoccer, $db, (int) $a['current_team_id']);
+            if (!$destination) continue;
+            BankAccountDataService::debitAmount($websoccer, $db, (int) $a['destination_team_id'], (int) $a['hand_money'], 'Handgeld für ablösefreien Wechsel', 'Spieler');
+            $db->queryUpdate(array('verein_id'=>(int)$a['destination_team_id'],'vertrag_gehalt'=>(int)$a['contract_salary'],'vertrag_torpraemie'=>(int)$a['contract_goal_bonus'],'vertrag_spiele'=>(int)$a['contract_matches'],'transfermarkt'=>'0','transfer_start'=>0,'transfer_ende'=>0,'transfer_mindestgebot'=>0,'lending_fee'=>0), $prefix.'_spieler', 'id = %d', (int) $a['player_id']);
+            $db->queryInsert(array('spieler_id'=>(int)$a['player_id'],'seller_user_id'=>!empty($current['user_id'])?(int)$current['user_id']:0,'seller_club_id'=>(int)$a['current_team_id'],'buyer_user_id'=>(int)$a['destination_user_id'],'buyer_club_id'=>(int)$a['destination_team_id'],'datum'=>$websoccer->getNowAsTimestamp(),'directtransfer_amount'=>0), $prefix.'_transfer');
+            $details = array('hand_money'=>(int)$a['hand_money'],'contract_matches'=>(int)$a['contract_matches'],'contract_salary'=>(int)$a['contract_salary'],'contract_goal_bonus'=>(int)$a['contract_goal_bonus']);
+            if (!empty($current['user_id'])) {
+                TransferMessagesDataService::createPrecontractMessage($websoccer, $db, (int) $current['user_id'], 'completed', (int) $a['player_id'], (int) $a['current_team_id'], (int) $a['destination_team_id'], $details);
+            }
+            if ((int) $a['destination_user_id'] > 0) {
+                TransferMessagesDataService::createPrecontractMessage($websoccer, $db, (int) $a['destination_user_id'], 'completed', (int) $a['player_id'], (int) $a['current_team_id'], (int) $a['destination_team_id'], $details);
+            }
+            TransferMessagesDataService::createMajorTransferNewsForPlayer($websoccer, $db, (int) $a['player_id'], (int) $a['current_team_id'], (int) $a['destination_team_id'], 0);
+            $db->queryUpdate(array('status'=>'completed','completed_date'=>$websoccer->getNowAsTimestamp()), $prefix.'_player_precontract', 'id = %d', (int) $a['id']);
+            $count++;
+        }
+        $r->free();
+        return $count;
     }
 
     public static function createComputerOffers(WebSoccer $websoccer, DbConnection $db, $teamId) {

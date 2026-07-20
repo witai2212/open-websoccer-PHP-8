@@ -70,12 +70,15 @@ class TransferRejectController implements IActionController {
 			$playerName = $player["player_firstname"] . " " . $player["player_lastname"];
 		}
 		
-		if($hasUser>0 && $offer['user_id']>0) {
-		  // create notification
-		  NotificationsDataService::createNotification($this->_websoccer, $this->_db, $offer["user_id"], 
-		          "transferoffer_notification_rejected",
-			     array("playername" => $playerName, "receivername" => $this->_websoccer->getUser()->username), 
-		              "transferoffer", "transferoffers#sent");
+		if ($hasUser > 0 && $offer['user_id'] > 0) {
+			TransferMessagesDataService::createOfferRejected(
+				$this->_websoccer,
+				$this->_db,
+				$offer['user_id'],
+				$offer['spieler_id'],
+				$clubId,
+				$offer['verein_id']
+			);
 		}
 		
 		//delete offer from db

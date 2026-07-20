@@ -1069,31 +1069,20 @@ class PlayersDataService {
 	 * @return int market value of player.
 	 */
 	public static function getMarketValue(WebSoccer $websoccer, DbConnection $db, $player, $columnPrefix = 'player_') {
-
-		if (!$websoccer->getConfig('transfermarket_computed_marketvalue')) {
-			return (isset($player[$columnPrefix . 'marketvalue'])) ? $player[$columnPrefix . 'marketvalue'] : 0;
+		// spieler.marktwert is the canonical value. It is recalculated by the
+		// matchday job or explicitly by the admin tool, never while rendering a page.
+		if (isset($player[$columnPrefix . 'marketvalue'])) {
+			return (int) $player[$columnPrefix . 'marketvalue'];
 		}
-		
-		if (isset($player['player_id'])) {
-			$playerId = (int) $player['player_id'];
-		} elseif (isset($player[$columnPrefix . 'id'])) {
-			$playerId = (int) $player[$columnPrefix . 'id'];
-		} elseif (isset($player['id'])) {
-			$playerId = (int) $player['id'];
-		} else {
-			return (isset($player[$columnPrefix . 'marketvalue'])) ? $player[$columnPrefix . 'marketvalue'] : 0;
+		if (isset($player['marktwert'])) {
+			return (int) $player['marktwert'];
 		}
-		
-		if ($playerId < 1) {
-			return (isset($player[$columnPrefix . 'marketvalue'])) ? $player[$columnPrefix . 'marketvalue'] : 0;
+		if (isset($player['marketvalue'])) {
+			return (int) $player['marketvalue'];
 		}
-
-		// calculatePlayerStats() is the single source of truth: it recalculates
-		// w_staerke_calc and marktwert and writes both values back to the DB.
-		$pl_mw = PlayersStrengthDataService::calculatePlayerStats($websoccer, $db, $playerId);
-		return $pl_mw['market_value'];
+		return 0;
 	}
-	
+
 	/**
 	 * Provides the correct flag file name for specified nationality.
 	 * Removes umlauts.
@@ -1257,109 +1246,21 @@ class PlayersDataService {
 	    }
 	}
 	
-	/**
-	 * Limits every numeric player value column (w_*) to 100 and keeps
-	 * w_staerke within the player's individual w_staerke_max value.
-	 *
-	 * The column list is read from the database so newly added player values
-	 * are protected automatically as well.
-	 *
-	 * @return int Number of players which had at least one value above 100.
+	/*
+	 * Correction on w_staerke acc. to w_staerke_max
 	 */
 	public static function playerStrengthCorrection(WebSoccer $websoccer, DbConnection $db) {
-	    $table = $websoccer->getConfig('db_prefix') . '_spieler';
-	    $valueColumns = self::_getPlayerValueColumns($db, $table);
-	    $correctedPlayers = 0;
-
-	    if (count($valueColumns)) {
-	        $setParts = array();
-	        $whereParts = array();
-	        foreach ($valueColumns as $column) {
-	            $quotedColumn = '`' . $column . '`';
-	            $setParts[] = $quotedColumn . ' = CASE WHEN ' . $quotedColumn . ' > 100 THEN 100 ELSE ' . $quotedColumn . ' END';
-	            $whereParts[] = $quotedColumn . ' > 100';
-	        }
-
-	        $where = implode(' OR ', $whereParts);
-	        $countResult = $db->executeQuery('SELECT COUNT(*) AS hits FROM ' . $table . ' WHERE ' . $where);
-	        $countRow = $countResult->fetch_array();
-	        $countResult->free();
-	        $correctedPlayers = ($countRow && isset($countRow['hits'])) ? (int) $countRow['hits'] : 0;
-
-	        if ($correctedPlayers > 0) {
-	            $db->executeQuery('UPDATE ' . $table . ' SET ' . implode(', ', $setParts) . ' WHERE ' . $where);
-	        }
-	    }
-
-	    // Preserve the original individual strength-limit rule as a second step.
-	    $db->executeQuery('UPDATE ' . $table . ' SET w_staerke = w_staerke_max WHERE w_staerke > w_staerke_max');
-	    return $correctedPlayers;
-	}
-
-	/**
-	 * Removes the unsellable flag from every player of one club.
-	 * Transfer-market and lending data remain unchanged.
-	 */
-	public static function resetUnsellableForTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
-	    $teamId = (int) $teamId;
-	    if ($teamId < 1) {
-	        return;
-	    }
-
-	    $db->queryUpdate(
-	        array('unsellable' => 0),
-	        $websoccer->getConfig('db_prefix') . '_spieler',
-	        'verein_id = %d AND unsellable != 0',
-	        $teamId
-	    );
-	}
-
-	/**
-	 * Safety cleanup for clubs without a user manager.
-	 * Transfer-market and lending data remain unchanged.
-	 */
-	public static function resetUnsellableForUnmanagedTeams(WebSoccer $websoccer, DbConnection $db) {
-	    $prefix = $websoccer->getConfig('db_prefix');
-	    $db->executeQuery(
-	        'UPDATE ' . $prefix . '_spieler AS P '
-	        . 'INNER JOIN ' . $prefix . '_verein AS V ON V.id = P.verein_id '
-	        . 'SET P.unsellable = 0 '
-	        . 'WHERE P.unsellable != 0 AND (V.user_id IS NULL OR V.user_id <= 0)'
-	    );
-	}
-
-	private static function _getPlayerValueColumns(DbConnection $db, $table) {
-	    static $cache = array();
-	    if (isset($cache[$table])) {
-	        return $cache[$table];
-	    }
-
-	    $columns = array();
-	    $result = $db->executeQuery('SHOW COLUMNS FROM ' . $table);
-	    while ($row = $result->fetch_array()) {
-	        $field = isset($row['Field']) ? (string) $row['Field'] : '';
-	        if (preg_match('/^w_[a-z0-9_]+$/i', $field)) {
-	            $columns[] = $field;
-	        }
-	    }
-	    $result->free();
-
-	    $cache[$table] = $columns;
-	    return $columns;
+	    $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler SET w_staerke=w_staerke_max WHERE w_staerke>w_staerke_max";
+	    $db->executeQuery($updStr);
 	}
 	
 	/*
 	 * Save Marketvalue of PlayerId
 	 *
 	*/
-	public static function setPlayerMarketValue(WebSoccer $websoccer, DbConnection $db, $playerId, $marketvalue) {
-		
-		// update marketvalue in DB
-	    $markwert = round($marketvalue,0);
-	    $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler SET marktwert='".$markwert."' WHERE id='$playerId'";
-    	$db->executeQuery($updStr);
-		
-		
+	public static function setPlayerMarketValue(WebSoccer $websoccer, DbConnection $db, $playerId, $marketvalue = null) {
+		// Manual values are intentionally ignored. The canonical market value is always calculated automatically.
+		return PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, (int) $playerId);
 	}
 	
 	/*
@@ -1367,31 +1268,19 @@ class PlayersDataService {
 	 * generate Marketvalue
 	 */
 	public static function updateMarketValue(WebSoccer $websoccer, DbConnection $db) {
-	    $sqlStr = "SELECT id AS player_id
-	               FROM ". $websoccer->getConfig('db_prefix') ."_spieler
-	               WHERE status = '1'
-	               ORDER BY id";
-	    
-	    $result = $db->executeQuery($sqlStr);
-	    
-	    while ($player_data = $result->fetch_array()) {
-	        PlayersStrengthDataService::calculatePlayerStats($websoccer, $db, (int) $player_data['player_id']);
-	    }
-	    
-	    $result->free();
-	    if (session_status() === PHP_SESSION_ACTIVE) {
-	        $_SESSION['market_value_calculated'] = '1';
-	    }
+		PlayerMarketValueDataService::recalculateAll($websoccer, $db, 0, 'service');
+		if (session_status() === PHP_SESSION_ACTIVE) {
+			$_SESSION['market_value_calculated'] = '1';
+		}
 	}
-	
+
 	public static function updateMarketValueById(WebSoccer $websoccer, DbConnection $db, $playerId) {
-	    $playerId = (int) $playerId;
-	    if ($playerId < 1) {
-	        return;
-	    }
-	    PlayersStrengthDataService::calculatePlayerStats($websoccer, $db, $playerId);
+		$playerId = (int) $playerId;
+		if ($playerId > 0) {
+			PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, $playerId);
+		}
 	}
-	
+
 	/*
 	 *
 	 * count total offers for players

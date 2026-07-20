@@ -202,6 +202,10 @@ class ComputerYouthTeamsDataService {
             "strength" => $strength,
             "transfer_fee" => 0
         ), $websoccer->getConfig("db_prefix") . "_youthplayer");
+        $youthPlayerId = (int) $db->getLastInsertedId();
+        if (class_exists('PlayerMarketValueDataService')) {
+            PlayerMarketValueDataService::recalculateYouthPlayer($websoccer, $db, $youthPlayerId);
+        }
     }
     
     /**
@@ -563,6 +567,10 @@ class ComputerYouthTeamsDataService {
         
         try {
             $db->queryInsert($columns, $websoccer->getConfig("db_prefix") . "_spieler");
+            $professionalPlayerId = (int) $db->getLastInsertedId();
+            if (class_exists('PlayerMarketValueDataService')) {
+                PlayerMarketValueDataService::recalculatePlayer($websoccer, $db, $professionalPlayerId);
+            }
             $db->queryDelete($websoccer->getConfig("db_prefix") . "_youthplayer", "id = %d", $player["id"]);
             $db->connection->commit();
             return true;
@@ -855,6 +863,9 @@ class ComputerYouthTeamsDataService {
      */
     private static function calculateComputerYouthTransferFee($player) {
         
+        if (isset($player["market_value"]) && (int) $player["market_value"] > 0) {
+            return (int) $player["market_value"];
+        }
         $strength = max(1, (int) $player["strength"]);
         $age = max(14, (int) $player["age"]);
         $fee = $strength * $strength * 1000;
@@ -2306,6 +2317,9 @@ class ComputerYouthTeamsDataService {
      */
     private static function calculateFairYouthPlayerValue($player) {
         
+        if (isset($player["market_value"]) && (int) $player["market_value"] > 0) {
+            return (int) $player["market_value"];
+        }
         $strength = max(1, (int) $player["strength"]);
         $age = max(14, (int) $player["age"]);
         $position = isset($player["position"]) ? $player["position"] : "";

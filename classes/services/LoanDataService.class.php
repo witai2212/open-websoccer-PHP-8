@@ -138,7 +138,19 @@ class LoanDataService {
         BankAccountDataService::debitAmount($websoccer,$db,$loan['borrower_team_id'],$fee,'lending_buy_fee_subject',$l['team_name']); BankAccountDataService::creditAmount($websoccer,$db,$loan['lender_team_id'],$fee,'lending_buy_fee_subject',$b['team_name']);
         $now = $websoccer->getNowAsTimestamp(); $db->queryUpdate(array('lending_matches'=>0,'lending_owner_id'=>0,'lending_fee'=>0,'verein_id'=>(int)$loan['borrower_team_id'],'last_transfer'=>$now), $websoccer->getConfig('db_prefix') . '_spieler', 'id = %d', (int)$loan['player_id']);
         $db->queryInsert(array('spieler_id'=>(int)$loan['player_id'],'seller_user_id'=>(int)$l['user_id'],'seller_club_id'=>(int)$loan['lender_team_id'],'buyer_user_id'=>(int)$b['user_id'],'buyer_club_id'=>(int)$loan['borrower_team_id'],'datum'=>$now,'directtransfer_amount'=>$fee), $websoccer->getConfig('db_prefix') . '_transfer');
-        self::completeLoan($websoccer,$db,$loan['id'],self::STATUS_BOUGHT); self::closeOffer($websoccer,$db,$loan['player_id'],'accepted'); self::notifyLoanStatus($websoccer,$db,$loan,self::getPlayerRow($websoccer,$db,$loan['player_id']),'lending_notification_bought');
+        self::completeLoan($websoccer,$db,$loan['id'],self::STATUS_BOUGHT);
+        self::closeOffer($websoccer,$db,$loan['player_id'],'accepted');
+        TransferMessagesDataService::createTransferCompleted(
+            $websoccer,
+            $db,
+            (int) $loan['player_id'],
+            (int) $loan['lender_team_id'],
+            (int) $loan['borrower_team_id'],
+            $fee,
+            !empty($l['user_id']) ? (int) $l['user_id'] : 0,
+            !empty($b['user_id']) ? (int) $b['user_id'] : 0,
+            array('source' => 'loan_option')
+        );
     }
     public static function handleEndOfLoan(WebSoccer $websoccer, DbConnection $db, &$cols, $info) {
         $loan = self::getActiveLoanByPlayerId($websoccer,$db,$info['id']);
@@ -160,7 +172,23 @@ class LoanDataService {
     private static function getPlayerRow(WebSoccer $websoccer, DbConnection $db, $playerId) { $r=$db->querySelect('*',$websoccer->getConfig('db_prefix').'_spieler','id = %d',(int)$playerId,1); $p=$r->fetch_array(); $r->free(); return $p?$p:array(); }
     private static function playerName($p) { return (isset($p['kunstname']) && strlen($p['kunstname'])) ? $p['kunstname'] : trim((isset($p['vorname'])?$p['vorname']:'') . ' ' . (isset($p['nachname'])?$p['nachname']:'')); }
     private static function notifyDevelopment(WebSoccer $websoccer, DbConnection $db, $loan, $info, $bonus, $attr) { $l=TeamsDataService::getTeamSummaryById($websoccer,$db,$loan['lender_team_id']); if (!empty($l['user_id'])) NotificationsDataService::createNotification($websoccer,$db,$l['user_id'],'lending_notification_development',array('player'=>self::playerName($info),'bonus'=>number_format($bonus,2,',',' '),'attribute'=>$attr),'lending_development','loans',''); }
-    private static function notifyLoanStatus(WebSoccer $websoccer, DbConnection $db, $loan, $player, $key) { $l=TeamsDataService::getTeamSummaryById($websoccer,$db,$loan['lender_team_id']); $b=TeamsDataService::getTeamSummaryById($websoccer,$db,$loan['borrower_team_id']); $d=array('player'=>self::playerName($player),'lender'=>$l['team_name'],'borrower'=>$b['team_name']); if (!empty($l['user_id'])) NotificationsDataService::createNotification($websoccer,$db,$l['user_id'],$key,$d,'lending_status','loans',''); if (!empty($b['user_id'])) NotificationsDataService::createNotification($websoccer,$db,$b['user_id'],$key,$d,'lending_status','loans',''); }
+    private static function notifyLoanStatus(WebSoccer $websoccer, DbConnection $db, $loan, $player, $key) {
+        $l = TeamsDataService::getTeamSummaryById($websoccer, $db, $loan['lender_team_id']);
+        $b = TeamsDataService::getTeamSummaryById($websoccer, $db, $loan['borrower_team_id']);
+        $event = ($key == 'lending_notification_recalled') ? 'recalled' : 'obligation_failed';
+        $details = array(
+            'matches' => isset($loan['total_matches']) ? (int) $loan['total_matches'] : 0,
+            'loan_fee_per_match' => isset($loan['loan_fee_per_match']) ? (int) $loan['loan_fee_per_match'] : 0,
+            'salary_share_percent' => isset($loan['salary_share_percent']) ? (int) $loan['salary_share_percent'] : 100,
+            'buy_fee' => isset($loan['buy_fee']) ? (int) $loan['buy_fee'] : 0
+        );
+        if (!empty($l['user_id'])) {
+            TransferMessagesDataService::createLoanMessage($websoccer, $db, $l['user_id'], $event, $loan['player_id'], $loan['lender_team_id'], $loan['borrower_team_id'], $details, $loan['borrower_team_id']);
+        }
+        if (!empty($b['user_id'])) {
+            TransferMessagesDataService::createLoanMessage($websoccer, $db, $b['user_id'], $event, $loan['player_id'], $loan['lender_team_id'], $loan['borrower_team_id'], $details, $loan['lender_team_id']);
+        }
+    }
 }
 
 ?>

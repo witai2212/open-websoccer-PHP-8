@@ -146,6 +146,12 @@
                         field="PlayerTab.strength"
                         type="number"
                         sort="true" />
+
+                     <column
+                        id="entity_youthplayer_market_value"
+                        field="PlayerTab.market_value"
+                        type="number"
+                        sort="true" />
                      
                 	<join type="INNER" jointable="verein AS ClubTab" joincondition="PlayerTab.team_id = ClubTab.id" />
                 </overview>

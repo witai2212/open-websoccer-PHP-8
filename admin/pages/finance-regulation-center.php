@@ -153,13 +153,10 @@ function frcRenderCorrectionForm($i18n, $site, $tab, $seasonId, $params, $mode) 
                 </div>
             </div>
 
-            <div class="control-group">
-                <label class="control-label"><input type="checkbox" name="targets[]" value="market_values"<?php echo frcCheckedTarget($params, 'market_values', FALSE); ?>> <?php echo frcMsg($i18n, 'finance_regulation_market_values', 'Marktwert-Formel'); ?></label>
-                <div class="controls">
-                    <div class="input-append"><input class="input-small" type="text" name="market_value_percent" value="<?php echo escapeOutput($params['market_value_percent']); ?>"><span class="add-on">%</span></div>
-                    <span class="help-inline"><?php echo frcMsg($i18n, 'finance_regulation_market_values_help', 'Setzt einen globalen Formel-Faktor und skaliert bestehende Marktwerte.'); ?></span>
-                </div>
+            <div class="alert alert-info">
+                Marktwerte werden ausschließlich automatisch aus Spielerqualität, Vertrag, Liga, Verein und der aktuellen Gesamtwirtschaft berechnet. Die Neuberechnung erfolgt im Bereich „Marktwerte harmonisieren“.
             </div>
+
 
             <?php if ($isApply) { ?>
                 <div class="control-group">

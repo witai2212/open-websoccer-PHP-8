@@ -826,7 +826,6 @@ class StockMarketDataService {
 
         $oldManagerUserId = (int) $targetTeam['user_id'];
         $db->executeQuery("UPDATE ". $websoccer->getConfig("db_prefix") ."_verein SET user_id = 0, user_id_actual = NULL, interimmanager = '0', board_satisfaction = 50 WHERE id='".$targetTeamId."'");
-        PlayersDataService::resetUnsellableForTeam($websoccer, $db, $targetTeamId);
 
         $now = $websoccer->getNowAsTimestamp();
         $db->queryInsert(array(

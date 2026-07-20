@@ -67,7 +67,7 @@ class FinancesModel implements IModel {
 		$expenses = BankAccountDataService::getExpensesByTeamId($this->_websoccer, $this->_db, $teamId);
 		$revenues = BankAccountDataService::getRevenuesByTeamId($this->_websoccer, $this->_db, $teamId);
 		
-		$groupedCosts = BankAccountDataService::groupedFinanceByTeamId($this->_websoccer, $this->_db, $teamId);
+		$financeGroups = BankAccountDataService::groupedFinanceByTeamId($this->_websoccer, $this->_db, $teamId);
 		
 		$cashDevelopment = BankAccountDataService::getCashDevelopmentOfCurrentSeason(
 		    $this->_websoccer,
@@ -88,7 +88,7 @@ class FinancesModel implements IModel {
 		    "balance" => $balance,
 		    "total_revenues" => $total_revenues,
 		    "total_expenses" => $total_expenses,
-		    "grouped_costs" => $groupedCosts,
+		    "finance_groups" => $financeGroups,
 		    "expenses" => $expenses,
 		    "paginator" => $paginator,
 		    

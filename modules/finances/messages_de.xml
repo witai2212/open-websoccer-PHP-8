@@ -59,6 +59,21 @@
 	
 	<message id="finance_overview">Finanzübersicht</message>
 	<message id="finance_account_statement">Kontoauszüge</message>
+	<message id="finance_group_total">Gesamtübersicht</message>
+	<message id="finance_group_category">Finanzbereich</message>
+	<message id="finance_group_revenues">Einnahmen</message>
+	<message id="finance_group_expenses">Ausgaben</message>
+	<message id="finance_group_balance">Saldo</message>
+	<message id="finance_group_high_loss">Auffälliger Verlust</message>
+	<message id="finance_group_match_operations">Spielbetrieb und Mannschaft</message>
+	<message id="finance_group_transfers_contracts">Transfers und Verträge</message>
+	<message id="finance_group_scouting">Scouting</message>
+	<message id="finance_group_youth">Nachwuchs und Jugendakademie</message>
+	<message id="finance_group_stadium">Stadion und Infrastruktur</message>
+	<message id="finance_group_marketing">Sponsoring und Vermarktung</message>
+	<message id="finance_group_competitions">Wettbewerbe und Prämien</message>
+	<message id="finance_group_banking">Banken und Beteiligungen</message>
+	<message id="finance_group_other">Sonstige Buchungen</message>
 	<message id="finance_transfer_penalties_title">Transferstrafen</message>
 	<message id="finance_transfer_penalties_season">Transferstrafen diese Saison</message>
 	<message id="finance_transfer_penalties_last">Letzte Transferstrafe</message>

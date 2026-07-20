@@ -280,24 +280,191 @@ class BankAccountDataService {
 	}
 	
 	public static function groupedFinanceByTeamId(WebSoccer $websoccer, DbConnection $db, $teamId) {
-		
-		$statements = [];
+		$teamId = (int) $teamId;
+		$groups = self::getFinanceGroupDefinitions();
+		$totalExpenseAmount = 0;
 
-		$sqlStr = "SELECT verwendung, SUM(betrag) as betrag
-					FROM " . $websoccer->getConfig("db_prefix") . "_konto
-					WHERE verein_id='$teamId'
-					GROUP BY verwendung ORDER BY betrag, verwendung";
-		$result = $db->executeQuery($sqlStr);
+		$result = $db->querySelect(
+			"verwendung, SUM(betrag) AS betrag",
+			$websoccer->getConfig("db_prefix") . "_konto",
+			"verein_id = %d GROUP BY verwendung",
+			$teamId
+		);
 
-		while ($cost = $result->fetch_array()) {
-			$statements[] = $cost;
+		while ($statement = $result->fetch_array()) {
+			$subject = isset($statement['verwendung']) ? trim((string) $statement['verwendung']) : '';
+			$amount = isset($statement['betrag']) ? (int) round($statement['betrag'], 0) : 0;
+
+			if ($subject === '' || $amount === 0) {
+				continue;
+			}
+
+			$groupKey = self::classifyFinanceSubject($subject);
+			if (!isset($groups[$groupKey])) {
+				$groupKey = 'other';
+			}
+
+			$groups[$groupKey]['entries'][] = array(
+				'verwendung' => $subject,
+				'betrag' => $amount
+			);
+			$groups[$groupKey]['balance'] += $amount;
+
+			if ($amount > 0) {
+				$groups[$groupKey]['revenues'] += $amount;
+			} else {
+				$groups[$groupKey]['expenses'] += $amount;
+				$totalExpenseAmount += abs($amount);
+			}
 		}
 		$result->free();
-		
-		/*echo"<pre>";
-		print_r($statements);
-		echo"</pre>";*/
-		return $statements;
+
+		$visibleGroups = array();
+		foreach ($groups as $group) {
+			if (!count($group['entries'])) {
+				continue;
+			}
+
+			usort($group['entries'], function($first, $second) {
+				$firstAmount = abs((int) $first['betrag']);
+				$secondAmount = abs((int) $second['betrag']);
+				if ($firstAmount === $secondAmount) {
+					return strcmp((string) $first['verwendung'], (string) $second['verwendung']);
+				}
+				return ($firstAmount > $secondAmount) ? -1 : 1;
+			});
+
+			$group['is_high_loss'] = false;
+			if ($group['balance'] < 0 && $totalExpenseAmount > 0) {
+				$group['is_high_loss'] = (abs($group['balance']) / $totalExpenseAmount) >= 0.20;
+			}
+
+			$visibleGroups[] = $group;
+		}
+
+		return $visibleGroups;
+	}
+
+	/**
+	 * Defines the fixed presentation order and labels of the finance overview.
+	 * Entries are assigned by their account statement subject in
+	 * classifyFinanceSubject().
+	 *
+	 * @return array
+	 */
+	private static function getFinanceGroupDefinitions() {
+		return array(
+			'match_operations' => self::createFinanceGroup('match_operations', 'finance_group_match_operations', 'icon-group'),
+			'transfers' => self::createFinanceGroup('transfers', 'finance_group_transfers_contracts', 'icon-random'),
+			'scouting' => self::createFinanceGroup('scouting', 'finance_group_scouting', 'icon-search'),
+			'youth' => self::createFinanceGroup('youth', 'finance_group_youth', 'icon-star-empty'),
+			'stadium' => self::createFinanceGroup('stadium', 'finance_group_stadium', 'icon-home'),
+			'marketing' => self::createFinanceGroup('marketing', 'finance_group_marketing', 'icon-bullhorn'),
+			'competitions' => self::createFinanceGroup('competitions', 'finance_group_competitions', 'icon-trophy'),
+			'banking' => self::createFinanceGroup('banking', 'finance_group_banking', 'icon-briefcase'),
+			'other' => self::createFinanceGroup('other', 'finance_group_other', 'icon-list-alt')
+		);
+	}
+
+	private static function createFinanceGroup($key, $labelKey, $icon) {
+		return array(
+			'key' => $key,
+			'label_key' => $labelKey,
+			'icon' => $icon,
+			'revenues' => 0,
+			'expenses' => 0,
+			'balance' => 0,
+			'entries' => array(),
+			'is_high_loss' => false
+		);
+	}
+
+	/**
+	 * Assigns historic and current account statement subjects to a meaningful
+	 * finance area. Exact keys cover the regular bookings; keyword fallbacks
+	 * also handle older installations and translated/raw legacy subjects.
+	 *
+	 * @param string $subject
+	 * @return string
+	 */
+	private static function classifyFinanceSubject($subject) {
+		$exactGroups = array(
+			'transfers' => array(
+				'player_transfer_message', 'directtransfer_subject', 'transfer_transaction_subject_handmoney',
+				'lending_fee_subject', 'lending_salary_share_subject', 'lending_buy_fee_subject',
+				'fireplayer_compensation_subject', 'youthteam_transferfee_subject', 'transfer_violation',
+				'transfer_penalty_distribution', 'youth_transfer_violation'
+			),
+			'match_operations' => array(
+				'match_salarypayment_subject', 'clubstaff_account_salary_subject', 'managerprofile_account_salary_subject',
+				'training_trainer_salary_subject', 'trainingcamp_booking_costs_subject'
+			),
+			'scouting' => array(
+				'scouting_scout_fee', 'scouting_scout_hire_fee', 'scouting_camp_fee',
+				'scouting_department_maintenance_fee', 'scouting_department_build_cost',
+				'scouting_department_upgrade_cost', 'scouting_proposal_transfer_fee',
+				'youthteam_scouting_fee_subject'
+			),
+			'youth' => array(
+				'youthteam_salarypayment_subject', 'youthteam_matchrequest_reward_subject',
+				'youthacademy_account_build_subject', 'youthacademy_account_upgrade_subject',
+				'youthacademy_account_maintenance_subject'
+			),
+			'stadium' => array(
+				'stadium_extend_transaction_subject', 'stadium_upgrade_transaction_subject',
+				'building_construction_fee_subject', 'stadiumenvironment_matchincome_subject',
+				'stadiumenvironment_costs_per_match_subject', 'stadium_naming_payout_subject',
+				'rivalries_derby_building_income_subject'
+			),
+			'marketing' => array(
+				'match_sponsorpayment_subject', 'sponsor_championship_bonus_subject',
+				'merchandising_development_cost_subject', 'merchandising_order_cost_subject',
+				'merchandising_campaign_cost_subject', 'merchandising_liquidation_income_subject',
+				'merchandising_stadium_revenue_subject', 'merchandising_online_revenue_subject',
+				'merchandising_matchday_profit_subject'
+			),
+			'competitions' => array(
+				'cup_cuproundaward_perround_subject', 'cup_cuproundaward_winner_subject',
+				'cup_cuproundaward_second_subject', 'seasontarget_failed_penalty_subject',
+				'seasontarget_accomplished_reward_subject', 'premium-exchange_team_subject'
+			),
+			'banking' => array(
+				'bankloans_account_payout', 'bankloans_account_early_repayment', 'bankloans_account_installment',
+				'buy_stock_message', 'sell_stock_message', 'team_on_stockmarket_message',
+				'stockmarket_dividend_payment', 'stockmarket_dividend_income'
+			)
+		);
+
+		foreach ($exactGroups as $groupKey => $subjects) {
+			if (in_array($subject, $subjects, true)) {
+				return $groupKey;
+			}
+		}
+
+		$normalized = function_exists('mb_strtolower')
+			? mb_strtolower($subject, 'UTF-8')
+			: strtolower($subject);
+
+		$keywordGroups = array(
+			'transfers' => array('transfer', 'ablöse', 'handgeld', 'spielerleihe', 'leihgebühr', 'leihgebuehr', 'vertragsauflösung', 'spieler sprechen'),
+			'scouting' => array('scout', 'scouting'),
+			'youth' => array('jugendakademie', 'jugendkader', 'jugendspiel', 'nachwuchs'),
+			'stadium' => array('stadion', 'baukosten', 'ausbaukosten', 'wartungsarbeiten', 'infrastruktur'),
+			'marketing' => array('sponsor', 'merchandising', 'fanshop', 'marketing'),
+			'competitions' => array('pokal', 'meisterschaft', 'saisonziel', 'prämie', 'praemie', 'belohnung'),
+			'banking' => array('kredit', 'darlehen', 'aktie', 'dividende', 'börse', 'boerse', 'zins'),
+			'match_operations' => array('gehalt', 'gehälter', 'gehaelter', 'training', 'physio', 'medizin', 'ticket', 'spielbetrieb', 'mitarbeiter')
+		);
+
+		foreach ($keywordGroups as $groupKey => $keywords) {
+			foreach ($keywords as $keyword) {
+				if (strpos($normalized, $keyword) !== false) {
+					return $groupKey;
+				}
+			}
+		}
+
+		return 'other';
 	}
 	
 	/**

@@ -135,40 +135,108 @@
 			</div>
 		{% endif %}
 
-		{% if grouped_costs|length>0 %}
-			<table class="table table-striped">
-				
-				<tr>
-					<th>&nbsp;</th>
-					<th><b>{{ i18n.getMessage("entity_club_finanz_bilanz_summe") }}:&nbsp;
-					{% if total_expenses + total_revenues > 0 %}
-						<span style="color: black">{{ (total_expenses + total_revenues)|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
-					{% else %}
-						<span style="color: red">{{ (total_expenses + total_revenues)|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
-					{% endif %}</b>
-					</th>
-					<th><span style="color: black">{{ total_revenues|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></th>
-					<th><span style="color: red">{{ total_expenses|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></th>
-				</tr>
-					
-			{% for grouped_cost in grouped_costs %}
-				{% if grouped_cost.betrag < 0 %}
+		{% if finance_groups|length > 0 %}
+			<div class="well" style="padding: 10px 15px;">
+				<table class="table table-condensed" style="margin-bottom: 0; table-layout: fixed;">
+					<thead>
+						<tr>
+							<th style="width: 46%;">{{ i18n.getMessage("finance_group_total") }}</th>
+							<th class="text-right" style="width: 18%;">{{ i18n.getMessage("finance_group_revenues") }}</th>
+							<th class="text-right" style="width: 18%;">{{ i18n.getMessage("finance_group_expenses") }}</th>
+							<th class="text-right" style="width: 18%;">{{ i18n.getMessage("finance_group_balance") }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>{{ i18n.getMessage("entity_club_finanz_bilanz_summe") }}</strong></td>
+							<td class="text-right">{{ total_revenues|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+							<td class="text-right"><span class="text-error">{{ total_expenses|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></td>
+							<td class="text-right">
+								{% if total_expenses + total_revenues >= 0 %}
+									<strong class="text-success">+{{ (total_expenses + total_revenues)|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong>
+								{% else %}
+									<strong class="text-error">{{ (total_expenses + total_revenues)|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong>
+								{% endif %}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<table class="table table-condensed" style="margin-bottom: 5px; table-layout: fixed;">
+				<thead>
 					<tr>
-						<td>{{ i18n.getMessage(grouped_cost.verwendung) }}<td>
-						<td>&nbsp;</td>
-						<td align="right"><span style="color: red">{{ grouped_cost.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span></td>
+						<th style="width: 46%;">{{ i18n.getMessage("finance_group_category") }}</th>
+						<th class="text-right" style="width: 18%;">{{ i18n.getMessage("finance_group_revenues") }}</th>
+						<th class="text-right" style="width: 18%;">{{ i18n.getMessage("finance_group_expenses") }}</th>
+						<th class="text-right" style="width: 18%;">{{ i18n.getMessage("finance_group_balance") }}</th>
 					</tr>
-				{% else %}
-					<tr>
-						<td>{{ i18n.getMessage(grouped_cost.verwendung) }}<td>
-						<td class="text-right">
-    						{{ grouped_cost.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
-						</td>
-						<td>&nbsp;</td>
-					</tr>
-				{% endif %}
-			{% endfor %}
+				</thead>
 			</table>
+
+			<div class="accordion" id="financeGroups">
+			{% for group in finance_groups %}
+				<div class="accordion-group" style="margin-bottom: 8px;">
+					<div class="accordion-heading">
+						<table class="table table-condensed" style="margin-bottom: 0; table-layout: fixed;">
+							<tbody>
+								<tr>
+									<td style="width: 46%;">
+										<a class="accordion-toggle" style="display: inline; padding: 0;" data-toggle="collapse" href="#financeGroup_{{ group.key }}">
+											<i class="{{ group.icon }}"></i>
+											<strong>{{ i18n.getMessage(group.label_key) }}</strong>
+										</a>
+										{% if group.is_high_loss %}
+											<span class="label label-important">{{ i18n.getMessage("finance_group_high_loss") }}</span>
+										{% endif %}
+									</td>
+									<td class="text-right" style="width: 18%;">
+										{% if group.revenues > 0 %}+{{ group.revenues|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% else %}&ndash;{% endif %}
+									</td>
+									<td class="text-right" style="width: 18%;">
+										{% if group.expenses < 0 %}<span class="text-error">{{ group.expenses|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>{% else %}&ndash;{% endif %}
+									</td>
+									<td class="text-right" style="width: 18%;">
+										{% if group.balance >= 0 %}
+											<strong class="text-success">+{{ group.balance|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong>
+										{% else %}
+											<strong class="text-error">{{ group.balance|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong>
+										{% endif %}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div id="financeGroup_{{ group.key }}" class="accordion-body collapse{% if group.is_high_loss %} in{% endif %}">
+						<div class="accordion-inner" style="padding: 0;">
+							<table class="table table-striped table-condensed" style="margin-bottom: 0;">
+								<tbody>
+								{% for entry in group.entries %}
+									<tr>
+										<td>
+											{% if i18n.hasMessage(entry.verwendung) %}
+												{{ i18n.getMessage(entry.verwendung) }}
+											{% else %}
+												{{ entry.verwendung }}
+											{% endif %}
+										</td>
+										<td class="text-right" style="width: 30%;">
+											{% if entry.betrag >= 0 %}
+												<span class="text-success">+{{ entry.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+											{% else %}
+												<span class="text-error">{{ entry.betrag|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</span>
+											{% endif %}
+										</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			</div>
 		{% endif %}
 		
 	</div>

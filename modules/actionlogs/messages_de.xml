@@ -11,6 +11,7 @@
 	<message id="activitylog_save-tickets">%s hat neue Eintrittspreise festgelegt.</message>
 	<message id="activitylog_sell-player">%s hat einen Spieler auf den Transfermarkt gesetzt.</message>
 	<message id="activitylog_transfer-bid">%s hat auf dem Transfermarkt auf einen Spieler geboten.</message>
+	<message id="activitylog_player-precontract">%s hat einem Spieler ein Vertragsangebot für die nächste Saison unterbreitet.</message>
 	<message id="activitylog_extend-stadium">%s hat den Ausbau seines Stadions in Auftrag gegeben.</message>
 	<message id="activitylog_upgrade-stadium">%s hat Wartungsarbeiten am Stadion durchführen lassen.</message>
 	<message id="activitylog_execute-training">%s hat seine Mannschaft trainiert.</message>

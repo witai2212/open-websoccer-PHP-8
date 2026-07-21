@@ -17,7 +17,7 @@
  */
 class PlayerTalentVisibilityDataService {
 
-    const MAX_TALENT_BAR = 5;
+    const MAX_TALENT_BAR = 6;
 
     public static function getVisibility(WebSoccer $websoccer, DbConnection $db, $player, $userTeamId, $isOnMyWatchlist) {
         $userTeamId = (int) $userTeamId;

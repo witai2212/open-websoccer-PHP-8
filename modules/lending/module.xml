@@ -10,9 +10,10 @@
 	    <setting id="lending_enabled" category="game" type="boolean" default="1" />
 	    <setting id="lending_matches_min" category="game" type="number" default="5" />
 	    <setting id="lending_matches_max" category="game" type="number" default="20" />
-	    <setting id="lending_cpu_offer_duration_days" category="game" type="number" default="21" />
+	    <setting id="lending_cpu_offer_duration_days" category="game" type="number" default="7" />
 	    <setting id="lending_cpu_offer_cooldown_days" category="game" type="number" default="20" />
 	    <setting id="lending_cpu_request_expiry_days" category="game" type="number" default="10" />
+	    <setting id="max_number_of_players_on_loan_list" category="game" type="number" default="3" />
 	</settings>
 	
     <pages>

@@ -33,4 +33,11 @@
 	<message id="settings_label_transfer_news_top_percent">Top-Prozent nach Marktwert</message>
 	<message id="settings_label_transfer_news_top_percent_help">Spieler innerhalb dieses Anteils der wertvollsten aktiven Spieler lösen ebenfalls eine Transfer-News aus.</message>
 
+
+	<message id="settings_label_computer_transfers_teams_per_run">CPU-Vereine pro Transferlauf</message>
+	<message id="settings_label_computer_transfers_teams_per_run_help">Höchstzahl der CPU-Vereine, die pro Systemlauf neue Transferangebote prüfen.</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team">Maximale CPU-Angebote pro Verein</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team_help">Höchstzahl gleichzeitig offener Transferangebote eines CPU-Vereins.</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player">Maximale CPU-Angebote pro Spieler</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player_help">Höchstzahl gleichzeitig offener Angebote von CPU-Vereinen für einen Spieler.</message>
 </messages>

@@ -364,3 +364,28 @@
 		padding: 8px 0;
 	}
 }
+
+.user-profile-stat-row-five {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	gap: 12px;
+}
+
+.user-profile-stat-card-five {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 1 0;
+	-ms-flex: 1 1 0;
+	flex: 1 1 0;
+	margin-left: 0 !important;
+}
+
+@media (max-width: 767px) {
+	.user-profile-stat-row-five {
+		display: block;
+	}
+	.user-profile-stat-card-five {
+		margin-bottom: 10px;
+	}
+}

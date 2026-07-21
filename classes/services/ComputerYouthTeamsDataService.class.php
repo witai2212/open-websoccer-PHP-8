@@ -27,8 +27,10 @@ class ComputerYouthTeamsDataService {
         
         self::createMissingYouthSquads($websoccer, $db);
         self::promoteEligibleYouthPlayers($websoccer, $db, 0, false);
+        YouthTransferOfferDataService::prepareComputerRun($websoccer, $db);
         self::sellSurplusYouthPlayers($websoccer, $db);
         self::buyUsefulYouthPlayers($websoccer, $db);
+        YouthTransferOfferDataService::finalizeComputerRun($websoccer, $db);
         self::acceptManagerYouthMatchRequests($websoccer, $db);
         self::acceptComputerYouthMatchRequests($websoccer, $db);
         self::createLimitedComputerYouthMatchRequests($websoccer, $db);
@@ -508,23 +510,12 @@ class ComputerYouthTeamsDataService {
         }
         
         $mainPosition = self::getAutomaticMainPosition($player["position"]);
-        $talent = self::generateProfessionalTalent();
+        $talent = PlayerTalentDataService::generateTalent($websoccer);
         
-        if ($talent >= 4) {
-            $a = 75;
-            $b = 100;
-        } elseif ($talent >= 2) {
-            $a = 50;
-            $b = 80;
-        } else {
-            $a = 25;
-            $b = 60;
-        }
-        
-        $maxStrength = mt_rand($a, $b);
-        if ($maxStrength < $strength) {
-            $maxStrength = $strength;
-        }
+        $range = PlayerTalentDataService::getPotentialRange($talent);
+        $a = $range[0];
+        $b = $range[1];
+        $maxStrength = PlayerTalentDataService::generateMaximumStrength($talent, $strength);
         
         $birthdayTime = strtotime("-" . (int) $player["age"] . " years", $websoccer->getNowAsTimestamp());
         $birthday = date("Y-m-d", $birthdayTime);
@@ -644,6 +635,9 @@ class ComputerYouthTeamsDataService {
         $targetPlayers = (int) $websoccer->getConfig("computer_youth_target_players");
         $minimumPromotionAge = (int) $websoccer->getConfig("youth_min_age_professional");
         $minimumPromotionStrength = (int) $websoccer->getConfig("computer_youth_promotion_min_strength");
+        $maxListedPlayers = max(1, (int) $websoccer->getConfig("computer_youth_max_players_on_transfer_list"));
+        $listingDurationDays = max(1, (int) $websoccer->getConfig("computer_youth_transfer_list_duration_days"));
+        $now = $websoccer->getNowAsTimestamp();
         
         if ($maxPlayers < 11) {
             $maxPlayers = 25;
@@ -669,6 +663,17 @@ class ComputerYouthTeamsDataService {
             $players = self::getYouthPlayersForSellingCheck($websoccer, $db, $teamId);
             
             if (!count($players)) {
+                continue;
+            }
+
+            $listedForTeam = 0;
+            foreach ($players as $listedPlayer) {
+                if ((int) $listedPlayer["transfer_fee"] > 0) {
+                    $listedForTeam++;
+                }
+            }
+            $availableListingSlots = max(0, $maxListedPlayers - $listedForTeam);
+            if ($availableListingSlots <= 0) {
                 continue;
             }
             
@@ -729,6 +734,9 @@ class ComputerYouthTeamsDataService {
             $markedForTeam = 0;
             
             foreach ($players as $player) {
+                if ($markedForTeam >= $availableListingSlots) {
+                    break;
+                }
                 $playerId = (int) $player["id"];
                 
                 if (!isset($markedPlayerIds[$playerId]) || (int) $player["transfer_fee"] > 0) {
@@ -738,7 +746,12 @@ class ComputerYouthTeamsDataService {
                 $transferFee = self::calculateComputerYouthTransferFee($player);
                 
                 $db->queryUpdate(
-                    array("transfer_fee" => $transferFee),
+                    array(
+                        "transfer_fee" => $transferFee,
+                        "transfer_start" => $now,
+                        "transfer_ende" => $now + ($listingDurationDays * 24 * 60 * 60),
+                        "transfer_listed_by_cpu" => "1"
+                    ),
                     $websoccer->getConfig("db_prefix") . "_youthplayer",
                     "id = %d",
                     $playerId
@@ -977,25 +990,26 @@ class ComputerYouthTeamsDataService {
                     break;
                 }
                 
-                if (!self::buyComputerYouthPlayer($websoccer, $db, $buyerTeamId, $candidate)) {
+                if (!YouthTransferOfferDataService::createComputerOffer(
+                    $websoccer,
+                    $db,
+                    $buyerTeamId,
+                    $candidate,
+                    (int) $candidate["transfer_fee"]
+                )) {
                     break;
                 }
-                
-                $candidate["team_id"] = $buyerTeamId;
-                $candidate["transfer_fee"] = 0;
-                $ownPlayers[] = $candidate;
-                
-                $currentCount++;
+
                 $boughtForTeam++;
                 $boughtTotal++;
             }
             
             if ($boughtForTeam > 0) {
-                echo "[ComputerYouthTeamsDataService] bought " . $boughtForTeam . " youth players for team #" . $buyerTeamId . ".\n";
+                echo "[ComputerYouthTeamsDataService] placed " . $boughtForTeam . " youth offers for team #" . $buyerTeamId . ".\n";
             }
         }
         
-        echo "[ComputerYouthTeamsDataService] youth players bought total: " . $boughtTotal . ".\n";
+        echo "[ComputerYouthTeamsDataService] youth offers placed total: " . $boughtTotal . ".\n";
     }
     
     /**
@@ -1093,8 +1107,13 @@ class ComputerYouthTeamsDataService {
             $fromTable = $websoccer->getConfig("db_prefix") . "_youthplayer AS P";
             $fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.id = P.team_id";
             
-            $whereCondition = "P.transfer_fee > 0 AND P.team_id <> %d AND P.transfer_fee <= %d ORDER BY P.strength DESC, P.age ASC";
-            $parameters = array($buyerTeamId, $maxAffordableFee);
+            $whereCondition = "P.transfer_fee > 0 AND P.team_id <> %d AND P.transfer_fee <= %d
+                AND NOT EXISTS (
+                    SELECT 1 FROM " . $websoccer->getConfig("db_prefix") . "_youth_transfer_offer AS O
+                    WHERE O.player_id = P.id AND O.buyer_team_id = %d AND O.status = 'open'
+                )
+                ORDER BY P.strength DESC, P.age ASC";
+            $parameters = array($buyerTeamId, $maxAffordableFee, $buyerTeamId);
             
             $result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 100);
             
@@ -1212,11 +1231,11 @@ class ComputerYouthTeamsDataService {
      * @param array $player
      * @return bool
      */
-    private static function buyComputerYouthPlayer(WebSoccer $websoccer, DbConnection $db, $buyerTeamId, $player) {
+    public static function completeComputerYouthTransfer(WebSoccer $websoccer, DbConnection $db, $buyerTeamId, $player, $acceptedFee = 0) {
         
         $playerId = (int) $player["id"];
         $sellerTeamId = (int) $player["team_id"];
-        $transferFee = (int) $player["transfer_fee"];
+        $transferFee = (int) $acceptedFee > 0 ? (int) $acceptedFee : (int) $player["transfer_fee"];
         
         if (!self::isYouthPlayerPriceReasonable($websoccer, $player)) {
             echo "[ComputerYouthTeamsDataService] skipped overpriced youth player #" . $playerId . " with fee " . $transferFee . ".\n";
@@ -1227,10 +1246,32 @@ class ComputerYouthTeamsDataService {
             return false;
         }
         
+        // Re-read the player before completing the transfer. The listing or owner may
+        // have changed since the offer was created.
+        $result = $db->querySelect(
+            "*",
+            $websoccer->getConfig("db_prefix") . "_youthplayer",
+            "id = %d AND team_id = %d AND transfer_fee > 0",
+            array($playerId, $sellerTeamId),
+            1
+        );
+        $currentPlayer = $result->fetch_assoc();
+        $result->free();
+        if (!$currentPlayer) {
+            return false;
+        }
+        $player = array_merge($player, $currentPlayer);
+        $player["id"] = $playerId;
+        $player["team_id"] = $sellerTeamId;
+        $player["transfer_fee"] = $transferFee;
+
         $buyerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $buyerTeamId);
         $sellerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $sellerTeamId);
         
         if (!$buyerTeam || !$sellerTeam || !isset($buyerTeam["team_budget"]) || !isset($sellerTeam["team_budget"])) {
+            return false;
+        }
+        if ((int) $buyerTeam["team_budget"] <= $transferFee) {
             return false;
         }
         
@@ -1240,7 +1281,13 @@ class ComputerYouthTeamsDataService {
             self::bookComputerYouthTransferFee($websoccer, $db, $buyerTeam, $sellerTeam, $transferFee);
             
             $db->queryUpdate(
-                array("team_id" => $buyerTeamId, "transfer_fee" => 0),
+                array(
+                    "team_id" => $buyerTeamId,
+                    "transfer_fee" => 0,
+                    "transfer_start" => 0,
+                    "transfer_ende" => 0,
+                    "transfer_listed_by_cpu" => "0"
+                ),
                 $websoccer->getConfig("db_prefix") . "_youthplayer",
                 "id = %d",
                 $playerId

@@ -50,8 +50,15 @@ class DirectTransferAcceptController implements IActionController {
 				$parameters["id"]);
 		$offer = $result->fetch_array();
 		$result->free();
+
+		if (!$offer || (int) $offer["receiver_club_id"] !== (int) $clubId || (int) $offer["sender_club_id"] === (int) $clubId) {
+			throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
+		}
 		
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $offer["player_id"]);
+		if (!$player || (int) $player["team_id"] !== (int) $clubId) {
+			throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
+		}
 		
 		// check if player is already on transfer market
 		if ($player["player_transfermarket"]) {
@@ -91,7 +98,10 @@ class DirectTransferAcceptController implements IActionController {
 			
 			// execute transfer
 		} else {
-			DirectTransfersDataService::executeTransferFromOffer($this->_websoccer, $this->_db, $parameters["id"]);
+			$executed = DirectTransfersDataService::executeTransferFromOffer($this->_websoccer, $this->_db, $parameters["id"]);
+			if (!$executed) {
+				throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
+			}
 			
 			// show success message
 			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,

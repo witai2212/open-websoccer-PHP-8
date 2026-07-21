@@ -36,4 +36,5 @@
 	<message id="user_history_no_previous_club">Kein vorheriger Verein</message>
 	<message id="user_history_competition_timeline">Liga-Historie</message>
 	<message id="user_history_cup_results">Pokal-Historie</message>
+    <message id="user_profile_manager_competence">Managerkompetenz</message>
 </messages>

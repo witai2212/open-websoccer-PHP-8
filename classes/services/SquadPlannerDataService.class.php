@@ -956,23 +956,11 @@ class SquadPlannerDataService {
             throw new Exception($i18n->getMessage('youthteam_makeprofessional_err_budgettooless'));
         }
 
-        $talentRoll = mt_rand(1, 100);
-        $talent = ($talentRoll > 94) ? 6 : mt_rand(1, 5);
-        if ($talent >= 4) {
-            $minSkill = 75;
-            $maxSkill = 100;
-        } elseif ($talent >= 2) {
-            $minSkill = 50;
-            $maxSkill = 80;
-        } else {
-            $minSkill = 25;
-            $maxSkill = 60;
-        }
-
-        $maxStrength = mt_rand($minSkill, $maxSkill);
-        if ($maxStrength < (float) $player['strength']) {
-            $maxStrength = (float) $player['strength'];
-        }
+        $talent = PlayerTalentDataService::generateTalent($websoccer);
+        $range = PlayerTalentDataService::getPotentialRange($talent);
+        $minSkill = $range[0];
+        $maxSkill = $range[1];
+        $maxStrength = PlayerTalentDataService::generateMaximumStrength($talent, (float) $player['strength']);
 
         $birthday = date('Y-m-d', strtotime('-' . (int) $player['age'] . ' years', $websoccer->getNowAsTimestamp()));
         $columns = array(

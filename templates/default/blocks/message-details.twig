@@ -88,8 +88,14 @@
 	{% endif %}
 
 	{% if message.context.target_page is defined and message.context.target_page|length > 0 %}
-	<p style="margin-bottom:0;"><a class="btn btn-primary" href="{{ env.getInternalUrl(message.context.target_page, message.context.target_query|default('')) }}">
-	{% if message.context.target_page == 'myoffers' %}Zu den Transferangeboten{% elseif message.context.target_page == 'loans' %}Zu den Leihen{% elseif message.context.target_page == 'transfermarket' %}Zum Transfermarkt{% else %}Zum Kader{% endif %}
+		{% set isTransferOffersTarget = message.context.target_page == 'myoffers' or (message.context.target_page == 'transfermarket' and message.context.target_anchor is defined and message.context.target_anchor == 'offers') %}
+		{% if isTransferOffersTarget %}
+			{% set messageTargetUrl = env.getInternalUrl('transfermarket') ~ '#offers' %}
+		{% else %}
+			{% set messageTargetUrl = env.getInternalUrl(message.context.target_page, message.context.target_query|default('')) %}
+		{% endif %}
+	<p style="margin-bottom:0;"><a class="btn btn-primary" href="{{ messageTargetUrl }}">
+	{% if isTransferOffersTarget %}Zu den Transferangeboten{% elseif message.context.target_page == 'loans' %}Zu den Leihen{% elseif message.context.target_page == 'transfermarket' %}Zum Transfermarkt{% else %}Zum Kader{% endif %}
 	</a></p>
 	{% endif %}
 </div>

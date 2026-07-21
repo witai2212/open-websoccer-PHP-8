@@ -503,7 +503,7 @@ function ghBuildChecks(WebSoccer $websoccer, DbConnection $db) {
                 "SELECT P.id AS spieler_id, CONCAT(P.vorname, ' ', P.nachname) AS spieler, P.w_staerke, P.w_talent
                  FROM " . $prefix . "_spieler AS P
                  INNER JOIN " . $prefix . "_verein AS V ON V.id = P.verein_id AND V.status = '1'
-                 WHERE P.status = '1' AND (P.w_staerke IS NULL OR P.w_staerke < 0 OR P.w_staerke > 100 OR P.w_talent IS NULL OR P.w_talent < 1 OR P.w_talent > 5)");
+                 WHERE P.status = '1' AND (P.w_staerke IS NULL OR P.w_staerke < 0 OR P.w_staerke > 100 OR P.w_talent IS NULL OR P.w_talent < 1 OR P.w_talent > 6)");
         }
 
         if (ghColumnExists($websoccer, $db, 'spieler', 'transfermarkt') && ghColumnExists($websoccer, $db, 'spieler', 'transfer_ende')) {

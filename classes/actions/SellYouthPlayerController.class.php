@@ -74,7 +74,12 @@ class SellYouthPlayerController implements IActionController {
 	
 	private function updatePlayer($playerId, $transferFee) {
 		
-		$columns = array("transfer_fee" => $transferFee);
+		$columns = array(
+			"transfer_fee" => $transferFee,
+			"transfer_start" => 0,
+			"transfer_ende" => 0,
+			"transfer_listed_by_cpu" => "0"
+		);
 		
 		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_youthplayer";
 		$whereCondition = "id = %d";

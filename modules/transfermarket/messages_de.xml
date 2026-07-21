@@ -114,4 +114,14 @@
     <message id="precontract_watchlist_own_offer">Eigenes Angebot wird geprüft</message>
     <message id="precontract_watchlist_negotiations">Verhandlungen für nächste Saison laufen</message>
     <message id="precontract_watchlist_moving">Wechselt nächste Saison zu %s</message>
+
+    <message id="transfermarket_tab_myoffers">Meine Angebote</message>
+    <message id="transfermarket_combined_intro">Transfermarkt, eingegangene Angebote, eigene Gebote und Transfers an einem Ort.</message>
+    <message id="transfermarket_players_short">Spieler auf dem Markt</message>
+    <message id="transfermarket_received_short">eingegangene Angebote</message>
+    <message id="transfermarket_no_received_offers">Derzeit liegen keine Angebote für deine Spieler vor.</message>
+    <message id="transfermarket_no_sent_offers">Du hast derzeit keine offenen Gebote.</message>
+    <message id="transfermarket_no_own_listed_players">Von deinem Verein steht derzeit kein Spieler auf der Transferliste.</message>
+    <message id="transfermarket_myoffers_moved">Die Angebotsübersicht wurde in den Transfermarkt integriert.</message>
+    <message id="transfermarket_open_myoffers">Meine Angebote öffnen</message>
 </messages>

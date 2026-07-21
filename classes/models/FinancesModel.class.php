@@ -57,6 +57,8 @@ class FinancesModel implements IModel {
 			$statements = array();
 		}
 		
+		$statementGroups = $this->_groupStatementsByDate($statements);
+
 		$stockmarketCriteria = StockMarketDataService::clubStockmarketCriteria($this->_websoccer, $this->_db, $teamId);
 		$stockmarketInfo = StockMarketDataService::getClubStockmarketListingInfo($this->_websoccer, $this->_db, $teamId);
 		$balance = BankAccountDataService::getAccountBalance($this->_websoccer, $this->_db, $teamId);
@@ -82,6 +84,7 @@ class FinancesModel implements IModel {
 		    "budget" => $team["team_budget"],
 		    "team_id" => $teamId,
 		    "statements" => $statements,
+		    "statement_groups" => $statementGroups,
 		    "stockmarketCriteria" => $stockmarketCriteria,
 		    "stockmarket_info" => $stockmarketInfo,
 		    "club_value" => $stockmarketInfo["club_value"],
@@ -100,6 +103,34 @@ class FinancesModel implements IModel {
 		
 	}
 	
+
+	private function _groupStatementsByDate($statements) {
+		$groups = array();
+		foreach ($statements as $statement) {
+			$timestamp = isset($statement["date"]) ? (int) $statement["date"] : 0;
+			$key = $timestamp > 0 ? date("Y-m-d", $timestamp) : "unknown";
+			if (!isset($groups[$key])) {
+				$groups[$key] = array(
+					"key" => str_replace("-", "", $key),
+					"date" => $timestamp,
+					"revenues" => 0,
+					"expenses" => 0,
+					"balance" => 0,
+					"statements" => array()
+				);
+			}
+			$amount = isset($statement["amount"]) ? (int) $statement["amount"] : 0;
+			if ($amount >= 0) {
+				$groups[$key]["revenues"] += $amount;
+			} else {
+				$groups[$key]["expenses"] += $amount;
+			}
+			$groups[$key]["balance"] += $amount;
+			$groups[$key]["statements"][] = $statement;
+		}
+		return array_values($groups);
+	}
+
 	/**
 	 * Builds a compact transfer penalty summary for the finances page.
 	 * Penalties are booked as normal account statements with subject

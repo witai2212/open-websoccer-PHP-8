@@ -36,4 +36,19 @@
     <message id="sponsor_negotiation_success">Die Verhandlung war erfolgreich. Das Angebot wurde verbessert.</message>
     <message id="sponsor_negotiation_withdrawn">Der Sponsor ist abgesprungen. Dieses Angebot steht nicht mehr zur Verfügung.</message>
     
+
+    <message id="sponsor_page_title">Sponsoring-Zentrale</message>
+    <message id="sponsor_page_intro">Vertrag, Prämien, Verhandlungen und erwartete Einnahmen im Überblick.</message>
+    <message id="sponsor_remaining_matches">verbleibende Spiele als Berechnungsbasis</message>
+    <message id="sponsor_earned_so_far">Bisher verdient</message>
+    <message id="sponsor_payments">Auszahlungen</message>
+    <message id="sponsor_estimated_remaining">Geschätzte weitere Einnahmen</message>
+    <message id="sponsor_estimate_hint">Richtwert auf Basis der verbleibenden Spiele</message>
+    <message id="sponsor_negotiation_status">Verhandlungsstufe</message>
+    <message id="sponsor_signed_contract">Vertrag abgeschlossen</message>
+    <message id="sponsor_estimated_income">Geschätztes Volumen</message>
+    <message id="sponsor_naming_title">Stadion-Namenssponsor</message>
+    <message id="sponsor_naming_sponsor">Partner</message>
+    <message id="sponsor_naming_stadium">Stadionname</message>
+    <message id="sponsor_naming_per_match">Pro Heimspiel</message>
 </messages>

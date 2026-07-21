@@ -1,0 +1,47 @@
+{% extends "base.twig" %}
+
+{% block page_title %}{{ i18n.getMessage("manager_notes_title") }}{% endblock %}
+
+{% block page_content %}
+<div class="well">
+    <h3 style="margin-top:0"><i class="icon-pencil"></i> {{ i18n.getMessage("manager_notes_title") }}</h3>
+    <p>{{ i18n.getMessage("manager_notes_intro") }}</p>
+</div>
+
+<form id="managerNotesForm" method="post">
+    <input type="hidden" name="page" value="manager-notes">
+    <input type="hidden" name="action" value="save-manager-note">
+
+    <textarea id="managerNotesText" name="note" maxlength="10000" rows="20" style="width:98%;resize:vertical" placeholder="{{ i18n.getMessage("manager_notes_placeholder") }}">{{ manager_note.note_text }}</textarea>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <span class="muted">
+                {% if manager_note.updated_date > 0 %}
+                    {{ i18n.getMessage("manager_notes_last_saved") }} {{ env.getFormattedDatetime(manager_note.updated_date) }}
+                {% else %}
+                    {{ i18n.getMessage("manager_notes_not_saved_yet") }}
+                {% endif %}
+            </span>
+        </div>
+        <div class="span6 text-right"><span id="managerNotesCounter">{{ manager_note.note_text|length }}</span> / 10000</div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+            <i class="icon-ok"></i> {{ i18n.getMessage("button_save") }}
+        </button>
+    </div>
+</form>
+
+<script>
+jQuery(function($) {
+    var $text = $('#managerNotesText');
+    var $counter = $('#managerNotesCounter');
+
+    $text.on('input', function() {
+        $counter.text($text.val().length);
+    });
+});
+</script>
+{% endblock %}

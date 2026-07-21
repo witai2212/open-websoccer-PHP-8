@@ -195,6 +195,12 @@
   <settings>
       <setting id="hide_strength_attributes" category="game" type="boolean" default="0" />
       <setting id="players_aging" category="game" type="select" selection="birthday,static" default="birthday" />
+      <setting id="player_talent_probability_1" category="game" type="number" default="15.5" />
+      <setting id="player_talent_probability_2" category="game" type="number" default="30.0" />
+      <setting id="player_talent_probability_3" category="game" type="number" default="35.0" />
+      <setting id="player_talent_probability_4" category="game" type="number" default="15.0" />
+      <setting id="player_talent_probability_5" category="game" type="number" default="4.0" />
+      <setting id="player_talent_probability_6" category="game" type="number" default="0.5" />
   </settings>
   
     <pages>

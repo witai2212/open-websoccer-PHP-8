@@ -100,9 +100,19 @@ class BuyYouthPlayerController implements IActionController {
 			);
 			
 			// update player
-			$this->_db->queryUpdate(array("team_id" => $clubId, "transfer_fee" => 0),
+			$this->_db->queryUpdate(array(
+					"team_id" => $clubId,
+					"transfer_fee" => 0,
+					"transfer_start" => 0,
+					"transfer_ende" => 0,
+					"transfer_listed_by_cpu" => "0"
+				),
 					$this->_websoccer->getConfig("db_prefix") . "_youthplayer", "id = %d", $parameters["id"]);
 			
+			if (class_exists('YouthTransferOfferDataService')) {
+				YouthTransferOfferDataService::closeOpenOffersForPlayer($this->_websoccer, $this->_db, $parameters["id"]);
+			}
+
 			if (class_exists('ClubPartnershipDataService')) {
 				ClubPartnershipDataService::markYouthFirstOptionUsed($this->_websoccer, $this->_db, $parameters["id"], $clubId);
 			}

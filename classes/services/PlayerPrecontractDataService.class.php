@@ -138,6 +138,17 @@ class PlayerPrecontractDataService {
         $r->free();
         return $count;
     }
+    
+    public static function getCurrentPreContractOffers(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        
+        $prefix=$websoccer->getConfig('db_prefix');
+        $sql="SELECT cCOUNT(*) as offers FROM {$prefix}_player_precontract WHERE A.destination_team_id=".(int)$teamId."";
+        $r=$db->executeQuery($sql); $rows=array();
+        $r->free();
+        
+        return $r;
+        
+    }
 
     public static function createComputerOffers(WebSoccer $websoccer, DbConnection $db, $teamId) {
         $prefix=$websoccer->getConfig('db_prefix');$limit=(int)$websoccer->getConfig('contract_max_number_of_remaining_matches');if($limit<1)return 0;

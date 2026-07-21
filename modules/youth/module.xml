@@ -69,6 +69,10 @@
 		<setting id="computer_youth_max_buy_fee" category="youth" type="number" default="5000000" />
 		<setting id="computer_youth_max_buys_per_run" category="youth" type="number" default="10" />
 		<setting id="computer_youth_max_buys_per_club" category="youth" type="number" default="2" />
+		<setting id="computer_youth_max_players_on_transfer_list" category="youth" type="number" default="3" />
+		<setting id="computer_youth_transfer_list_duration_days" category="youth" type="number" default="7" />
+		<setting id="computer_youth_max_offers_per_player" category="youth" type="number" default="3" />
+		<setting id="computer_youth_offer_decision_hours" category="youth" type="number" default="24" />
 	
 		<!-- 120 means: computer may pay max. 120% of calculated fair youth player value -->
 		<setting id="computer_youth_max_price_factor" category="youth" type="number" default="120" />

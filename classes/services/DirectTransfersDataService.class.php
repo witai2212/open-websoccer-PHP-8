@@ -48,8 +48,9 @@ class DirectTransfersDataService {
 			$senderUserId, $senderClubId, $receiverUserId, $receiverClubId,
 			$offerAmount, $offerMessage, $offerPlayerId1 = null, $offerPlayerId2 = null) {
 		
-		$now =$websoccer->getNowAsTimestamp();
-			    
+		$now = $websoccer->getNowAsTimestamp();
+		$table = $websoccer->getConfig("db_prefix") . "_transfer_offer";
+
 		$columns = array(
 				"player_id" => $playerId,
 				"sender_user_id" => $senderUserId,
@@ -58,22 +59,33 @@ class DirectTransfersDataService {
 				"submitted_date" => $now,
 				"offer_amount" => $offerAmount,
 				"offer_message" => $offerMessage,
-				"offer_player1" => $offerPlayerId1,
-				"offer_player2" => $offerPlayerId2
-				);
-		
-		//$db->queryInsert($columns, $websoccer->getConfig("db_prefix") . "_transfer_offer");
-		
-		
-		$player = PlayersDataService::getPlayerById($websoccer, $db, $playerId);
-		$new_salary = $player['player_contract_salary']*(rand(8,15)/10);
-		$goal_bonus = $player['player_contract_goalbonus']*(rand(8,15)/10);
-		
-		$insStr = "INSERT INTO ". $websoccer->getConfig("db_prefix") . "_transfer_angebot
-                    (spieler_id, verein_id, user_id, datum, abloese, vertrag_spiele, vertrag_gehalt, vertrag_torpraemie)
-                    VALUES ('$playerId', '$senderClubId', '$senderUserId', '$now', '$offerAmount', '60', '$new_salary', '$goal_bonus')";
-		echo $insStr ."<br>";
-		$db->executeQuery($insStr);
+				"offer_player1" => (int) $offerPlayerId1,
+				"offer_player2" => (int) $offerPlayerId2,
+				"rejected_date" => 0,
+				"rejected_message" => null,
+				"rejected_allow_alternative" => "0",
+				"admin_approval_pending" => "0"
+		);
+
+		// One active direct offer per player and sending club. A revision updates
+		// the existing row so references and the offer ID remain stable.
+		$result = $db->querySelect("id", $table,
+				"player_id = %d AND sender_club_id = %d AND rejected_date = 0 AND admin_approval_pending = '0' ORDER BY submitted_date DESC, id DESC",
+				array($playerId, $senderClubId), 1);
+		$existingOffer = $result->fetch_array();
+		$result->free();
+
+		if ($existingOffer && !empty($existingOffer["id"])) {
+			$offerId = (int) $existingOffer["id"];
+			$db->queryUpdate($columns, $table, "id = %d", $offerId);
+
+			// Remove legacy duplicates that may have been created before this fix.
+			$db->queryDelete($table,
+					"player_id = %d AND sender_club_id = %d AND rejected_date = 0 AND admin_approval_pending = '0' AND id <> %d",
+					array($playerId, $senderClubId, $offerId));
+		} else {
+			$db->queryInsert($columns, $table);
+		}
 		
 		$exchangePlayers = array();
 		if ((int) $offerPlayerId1 > 0) {
@@ -110,11 +122,23 @@ class DirectTransfersDataService {
 		$result->free();
 		
 		if (!$offer) {
-			return;
+			return false;
+		}
+
+		$player = PlayersDataService::getPlayerById($websoccer, $db, $offer["player_id"]);
+		if (!$player
+				|| (int) $player["team_id"] !== (int) $offer["receiver_club_id"]
+				|| (int) $offer["sender_club_id"] === (int) $offer["receiver_club_id"]) {
+			$db->queryDelete($websoccer->getConfig("db_prefix") . "_transfer_offer", "id = %d", $offerId);
+			return false;
 		}
 		
 		$currentTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $offer["receiver_club_id"]);
 		$targetTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $offer["sender_club_id"]);
+		if (!$currentTeam || !$targetTeam) {
+			$db->queryDelete($websoccer->getConfig("db_prefix") . "_transfer_offer", "id = %d", $offerId);
+			return false;
+		}
 		
 		// move player (and create transfer log)
 		self::_transferPlayer($websoccer, $db, $offer["player_id"], $offer["sender_club_id"], $offer["sender_user_id"], 
@@ -162,6 +186,7 @@ class DirectTransfersDataService {
 
 		TransfermarketDataService::awardUserForTrades($websoccer, $db, $currentTeam["user_id"]);
 		TransfermarketDataService::awardUserForTrades($websoccer, $db, $offer["sender_user_id"]);
+		return true;
 	}
 	
 	private static function _transferPlayer(WebSoccer $websoccer, DbConnection $db, $playerId, 

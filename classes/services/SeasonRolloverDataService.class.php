@@ -517,7 +517,8 @@ class SeasonRolloverDataService {
 
     private static function createSeasonReplacementPlayer(WebSoccer $websoccer, DbConnection $db, $teamId, array $templatePlayer) {
         $strength = max(25, min(70, (int) round(((int) $templatePlayer['w_staerke'] * 0.75) + mt_rand(-4, 8))));
-        $maxStrength = max($strength, min(88, $strength + mt_rand(8, 24)));
+        $talent = PlayerTalentDataService::generateTalent($websoccer);
+        $maxStrength = PlayerTalentDataService::generateMaximumStrength($talent, $strength);
         $age = mt_rand(18, 22);
         $birthday = date('Y-m-d', strtotime('-' . $age . ' years', $websoccer->getNowAsTimestamp()));
         $position = isset($templatePlayer['position']) ? $templatePlayer['position'] : 'Mittelfeld';
@@ -542,7 +543,7 @@ class SeasonRolloverDataService {
             'w_kondition' => mt_rand(55, 82),
             'w_frische' => mt_rand(65, 95),
             'w_zufriedenheit' => mt_rand(55, 85),
-            'w_talent' => mt_rand(2, 5),
+            'w_talent' => $talent,
             'personality' => class_exists('PlayerPersonalityDataService') ? PlayerPersonalityDataService::getRandomTrait() : 'professional',
             'w_passing' => self::randomSkillNear($strength),
             'w_shooting' => self::randomSkillNear($strength),
@@ -570,8 +571,8 @@ class SeasonRolloverDataService {
 
     private static function convertYouthPlayerToFreeProfessional(WebSoccer $websoccer, DbConnection $db, array $youthplayer, $age) {
         $strength = max(1, min(100, (int) $youthplayer['strength']));
-        $talent = mt_rand(1, 5);
-        $maxStrength = max($strength, min(100, $strength + mt_rand(5, 25)));
+        $talent = PlayerTalentDataService::generateTalent($websoccer);
+        $maxStrength = PlayerTalentDataService::generateMaximumStrength($talent, $strength);
         $birthday = date('Y-m-d', strtotime('-' . (int) $age . ' years', $websoccer->getNowAsTimestamp()));
         $mainPosition = self::normalizeMainPositionForPosition($youthplayer['position'], '');
         $salary = max(1000, (int) $websoccer->getConfig('youth_salary_per_strength') * $strength);

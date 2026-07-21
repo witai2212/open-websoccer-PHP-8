@@ -51,6 +51,9 @@ class RemoveYouthPlayerFromMarketController implements IActionController {
 		}
 		
 		$this->updatePlayer($parameters["id"]);
+		if (class_exists('YouthTransferOfferDataService')) {
+			YouthTransferOfferDataService::closeOpenOffersForPlayer($this->_websoccer, $this->_db, $parameters["id"]);
+		}
 		if (class_exists('ClubPartnershipDataService')) {
 			ClubPartnershipDataService::cancelYouthFirstOptions($this->_websoccer, $this->_db, $parameters["id"]);
 		}
@@ -65,7 +68,12 @@ class RemoveYouthPlayerFromMarketController implements IActionController {
 	
 	private function updatePlayer($playerId) {
 		
-		$columns = array("transfer_fee" => 0);
+		$columns = array(
+			"transfer_fee" => 0,
+			"transfer_start" => 0,
+			"transfer_ende" => 0,
+			"transfer_listed_by_cpu" => "0"
+		);
 		
 		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_youthplayer";
 		$whereCondition = "id = %d";

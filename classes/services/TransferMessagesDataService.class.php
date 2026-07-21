@@ -18,8 +18,9 @@ class TransferMessagesDataService {
         $receiver = self::getClub($websoccer, $db, $receiverClubId);
         $playerName = self::playerName($player);
 
-        $context = self::baseContext(self::CATEGORY_TRANSFER, 'offer_received', $player, $receiver, $sender, 'myoffers');
+        $context = self::baseContext(self::CATEGORY_TRANSFER, 'offer_received', $player, $receiver, $sender, 'transfermarket');
         $context['amount'] = (int) $amount;
+        $context['target_anchor'] = 'offers';
         $context['sender_club'] = $sender;
         $context = array_merge($context, $details);
 
@@ -40,8 +41,9 @@ class TransferMessagesDataService {
         $seller = self::getClub($websoccer, $db, $sellerClubId);
         $buyer = self::getClub($websoccer, $db, $buyerClubId);
         $playerName = self::playerName($player);
-        $context = self::baseContext(self::CATEGORY_TRANSFER, $approvalPending ? 'offer_accepted_pending' : 'offer_accepted', $player, $seller, $buyer, 'myoffers');
+        $context = self::baseContext(self::CATEGORY_TRANSFER, $approvalPending ? 'offer_accepted_pending' : 'offer_accepted', $player, $seller, $buyer, 'transfermarket');
         $context['amount'] = (int) $amount;
+        $context['target_anchor'] = 'offers';
         $context['sender_club'] = $seller;
         $context = array_merge($context, $details);
         $content = $seller['name'] . ' hat das Kaufangebot für ' . $playerName . ' angenommen.';
@@ -56,7 +58,8 @@ class TransferMessagesDataService {
         $seller = self::getClub($websoccer, $db, $sellerClubId);
         $buyer = self::getClub($websoccer, $db, $buyerClubId);
         $playerName = self::playerName($player);
-        $context = self::baseContext(self::CATEGORY_TRANSFER, 'offer_rejected', $player, $seller, $buyer, 'myoffers');
+        $context = self::baseContext(self::CATEGORY_TRANSFER, 'offer_rejected', $player, $seller, $buyer, 'transfermarket');
+        $context['target_anchor'] = 'offers';
         $context['sender_club'] = $seller;
         if (strlen(trim((string) $reason))) {
             $context['reason'] = trim((string) $reason);
@@ -79,7 +82,8 @@ class TransferMessagesDataService {
         $seller = self::getClub($websoccer, $db, $sellerClubId);
         $buyer = self::getClub($websoccer, $db, $buyerClubId);
         $playerName = self::playerName($player);
-        $context = self::baseContext(self::CATEGORY_TRANSFER, 'offer_withdrawn', $player, $seller, $buyer, 'myoffers');
+        $context = self::baseContext(self::CATEGORY_TRANSFER, 'offer_withdrawn', $player, $seller, $buyer, 'transfermarket');
+        $context['target_anchor'] = 'offers';
         $context['sender_club'] = $buyer;
 
         self::createInboxMessage(

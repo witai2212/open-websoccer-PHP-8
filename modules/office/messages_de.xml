@@ -159,4 +159,14 @@
     <message id="dailybriefing_youthacademy_log_scouting_bonus">Scoutingbonus durch die Jugendakademie</message>
     <message id="dailybriefing_youthacademy_log_generic">Neue Meldung aus der Jugendakademie</message>
 
+
+    <message id="manager-notes_navlabel">Meine Notizen</message>
+    <message id="manager_notes_title">Meine Notizen</message>
+    <message id="manager_notes_intro">Private Notizen für deine Planung. Der Inhalt gehört zu deinem Benutzerkonto und bleibt bei einem Vereinswechsel erhalten.</message>
+    <message id="manager_notes_placeholder">Taktische Ideen, Transferziele, Erinnerungen oder persönliche Aufgaben ...</message>
+    <message id="manager_notes_last_saved">Zuletzt gespeichert:</message>
+    <message id="manager_notes_not_saved_yet">Noch nicht gespeichert.</message>
+    <message id="manager_notes_saving">Wird gespeichert ...</message>
+    <message id="manager_notes_saved">Gespeichert.</message>
+    <message id="manager_notes_save_error">Speichern fehlgeschlagen.</message>
 </messages>

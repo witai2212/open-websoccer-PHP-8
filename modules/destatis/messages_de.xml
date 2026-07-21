@@ -33,7 +33,7 @@
     <message id="destatis_categories_title">Statistikbereiche</message>
     <message id="destatis_category_players">Spieler</message>
     <message id="destatis_category_clubs">Vereine</message>
-    <message id="destatis_category_stadium_finance">Stadion &amp; Finanzen</message>
+    <message id="destatis_category_stadium_finance">Stadion und Finanzen</message>
 
     <message id="bestplayers_navlabel">Weltbeste Spieler</message>
     <message id="bestplayers_title">Weltbeste Spieler</message>
@@ -174,4 +174,12 @@
     <message id="financial_economy_stats_categories">Kategorien</message>
     <message id="financial_economy_stats_category">Kategorie</message>
 
+
+    <message id="manager_rankings_intro">Rangliste aller aktiven menschlichen Manager, sortiert nach derselben Reputation wie im Managerprofil.</message>
+    <message id="manager_rankings_reputation">Reputation</message>
+    <message id="manager_rankings_competence">Kompetenz</message>
+    <message id="manager_rankings_titles">Titel</message>
+    <message id="manager_rankings_achievements">Erfolge</message>
+    <message id="manager_rankings_badges">Errungenschaften</message>
+    <message id="manager_rankings_awards">Auszeichnungen</message>
 </messages>

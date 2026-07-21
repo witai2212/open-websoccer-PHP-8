@@ -73,4 +73,13 @@
 
 	<message id="season_complete_label_youthplayers_age_delete">Höchstalter Jugendspieler</message>
 	<message id="season_complete_label_youthplayers_age_delete_help">Ab diesem Alter werden Jugendspieler gelöscht.</message>
+
+	<message id="settings_label_computer_youth_max_players_on_transfer_list">Maximale CPU-Jugendspieler auf der Transferliste</message>
+	<message id="settings_label_computer_youth_max_players_on_transfer_list_help">Höchstzahl gleichzeitig gelisteter Jugendspieler pro CPU-Verein.</message>
+	<message id="settings_label_computer_youth_transfer_list_duration_days">Dauer von CPU-Jugendlistungen</message>
+	<message id="settings_label_computer_youth_transfer_list_duration_days_help">Kalendertage bis eine CPU-Listung automatisch entschieden oder entfernt wird.</message>
+	<message id="settings_label_computer_youth_max_offers_per_player">Maximale CPU-Angebote pro Jugendspieler</message>
+	<message id="settings_label_computer_youth_max_offers_per_player_help">Höchstzahl gleichzeitig offener CPU-Angebote je gelistetem Jugendspieler.</message>
+	<message id="settings_label_computer_youth_offer_decision_hours">Prüfzeit für Jugendangebote</message>
+	<message id="settings_label_computer_youth_offer_decision_hours_help">Stunden bis offene CPU-Angebote spätestens bewertet werden, sofern nicht vorher die Angebotsgrenze erreicht wird.</message>
 </messages>

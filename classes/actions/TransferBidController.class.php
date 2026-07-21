@@ -105,6 +105,9 @@ class TransferBidController implements IActionController {
 			ClubPartnershipDataService::assertProfessionalTransferAllowed($this->_websoccer, $this->_db, $this->_i18n, $playerId, $clubId);
 		}
 		
+		// A club may have only one bid per player. Revisions update the existing row.
+		$existingBid = $this->getExistingBid($playerId, $clubId);
+
 		// get existing highest bid
 		$highestBid = TransfermarketDataService::getHighestBidForPlayer($this->_websoccer, $this->_db, $parameters['id'], $player['transfer_start'], $player['transfer_end']);
 		
@@ -143,16 +146,17 @@ class TransferBidController implements IActionController {
 		
 		// check if budget is enough for all current highest bids of user.
 		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
-		$result = $this->_db->querySelect('SUM(abloese) + SUM(handgeld) AS bidsamount', $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot', 
-				'user_id = %d AND ishighest = \'1\'', $user->id);
+		$result = $this->_db->querySelect('SUM(abloese) + SUM(handgeld) AS bidsamount', $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot',
+				'user_id = %d AND ishighest = \'1\' AND NOT (spieler_id = %d AND verein_id = %d)',
+				array($user->id, $playerId, $clubId));
 		$bids = $result->fetch_array();
 		$result->free();
 		if (isset($bids['bidsamount']) && ($parameters['handmoney'] + $parameters['amount'] + $bids['bidsamount']) >= $team['team_budget']) {
 			throw new Exception($this->_i18n->getMessage('transfer_bid_budget_for_all_bids_too_less'));
 		}
 		
-		// save bid
-		$this->saveBid($playerId, $user->id, $clubId, $parameters);
+		// save bid. Existing offers from this club for this player are updated and duplicates removed.
+		$savedBidId = $this->saveBid($playerId, $user->id, $clubId, $parameters, $existingBid);
 		
 		
 		if (!empty($player['team_user_id'])) {
@@ -173,14 +177,18 @@ class TransferBidController implements IActionController {
 			);
 		}
 		
-		// mark previous highest bid as outbidden
-		if (isset($highestBid['bid_id'])) {
-			$this->_db->queryUpdate(array('ishighest' => '0'), $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot', 
+		// Mark only a different club's previous highest bid as outbid. When the user
+		// revises its own highest bid, the updated row must remain the highest bid.
+		$previousHighestWasOtherClub = isset($highestBid['bid_id'])
+				&& (int) $highestBid['team_id'] !== (int) $clubId
+				&& (int) $highestBid['bid_id'] !== (int) $savedBidId;
+		if ($previousHighestWasOtherClub) {
+			$this->_db->queryUpdate(array('ishighest' => '0'), $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot',
 					'id = %d', $highestBid['bid_id']);
 		}
 		
 		// create persistent inbox message for the previous highest bidder
-		if (isset($highestBid['user_id']) && $highestBid['user_id']) {
+		if ($previousHighestWasOtherClub && isset($highestBid['user_id']) && $highestBid['user_id']) {
 			TransferMessagesDataService::createOutbidMessage(
 				$this->_websoccer,
 				$this->_db,
@@ -199,8 +207,18 @@ class TransferBidController implements IActionController {
 		return null;
 	}
 	
-	private function saveBid($playerId, $userId, $clubId, $parameters) {
-		
+	private function getExistingBid($playerId, $clubId) {
+		$table = $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot';
+		$result = $this->_db->querySelect('*', $table,
+				'spieler_id = %d AND verein_id = %d ORDER BY datum DESC, id DESC',
+				array($playerId, $clubId), 1);
+		$bid = $result->fetch_array();
+		$result->free();
+		return $bid ? $bid : null;
+	}
+
+	private function saveBid($playerId, $userId, $clubId, $parameters, $existingBid = null) {
+		$columns = array();
 		$columns['spieler_id'] = $playerId;
 		$columns['user_id'] = $userId;
 		$columns['datum'] = $this->_websoccer->getNowAsTimestamp();
@@ -211,11 +229,22 @@ class TransferBidController implements IActionController {
 		$columns['vertrag_torpraemie'] = $parameters['contract_goal_bonus'];
 		$columns['verein_id'] = $clubId;
 		$columns['ishighest'] = '1';
-		
-		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot';
-		
-		$this->_db->queryInsert($columns, $fromTable);
-		
+
+		$table = $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot';
+
+		if ($existingBid && !empty($existingBid['id'])) {
+			$bidId = (int) $existingBid['id'];
+			$this->_db->queryUpdate($columns, $table, 'id = %d', $bidId);
+
+			// Remove legacy duplicates that may already exist for the same club and player.
+			$this->_db->queryDelete($table,
+					'spieler_id = %d AND verein_id = %d AND id <> %d',
+					array($playerId, $clubId, $bidId));
+			return $bidId;
+		}
+
+		$this->_db->queryInsert($columns, $table);
+		return (int) $this->_db->getLastInsertedId();
 	}
 	
 }

@@ -136,7 +136,7 @@
             template="myoffers"
             model="MyOffersModel"
             role="user"
-            navitem="true"
+            navitem="false"
             navweight="2"
             parentItem="transfermarket" 
             navitemOnlyForConfigEnabled="transferoffers_enabled" />

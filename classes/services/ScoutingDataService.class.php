@@ -1054,8 +1054,8 @@ class ScoutingDataService {
         $qualityBonus = round(($effectiveQuality - 50) / 20);
         $strength = self::clamp($baseStrength + $qualityBonus + mt_rand(-3, 3), 1, 99);
         
-        $talent = self::generateTalent($effectiveQuality, $talentModifier, $age);
-        $strengthMaxReal = self::clamp($strength + mt_rand(3, 12) + ($talent * mt_rand(2, 5)), $strength, 99);
+        $talent = self::generateTalent($websoccer, $effectiveQuality, $talentModifier, $age);
+        $strengthMaxReal = PlayerTalentDataService::generateMaximumStrength($talent, $strength);
         
         $skillDeviation = max(4, 18 - (int) round($effectiveQuality / 10));
         $technique = self::skillAround($strength, $skillDeviation);
@@ -1266,22 +1266,19 @@ class ScoutingDataService {
         return $options[mt_rand(0, count($options) - 1)];
     }
     
-    private static function generateTalent($expertise, $talentModifier, $age) {
-        $chance = mt_rand(1, 100) + (int) round($expertise / 10) + (int) $talentModifier;
-        if ($age <= 20) {
-            $chance += 8;
-        } elseif ($age >= 30) {
-            $chance -= 8;
-        }
-        
-        if ($chance >= 112) return 6;
-        if ($chance >= 95) return 5;
-        if ($chance >= 72) return 4;
-        if ($chance >= 45) return 3;
-        if ($chance >= 22) return 2;
-        return 1;
+    private static function generateTalent(WebSoccer $websoccer, $expertise, $talentModifier, $age) {
+        $talent = PlayerTalentDataService::generateTalent($websoccer);
+        if ($talent >= 6) return 6;
+
+        // Scouting infrastructure may improve ordinary candidates, but Talent 6
+        // is exclusively controlled by the configured global probability.
+        $upgradeChance = max(0, min(45, (int) round(($expertise - 50) / 3) + (int) $talentModifier));
+        if ($age <= 20) $upgradeChance += 5;
+        if ($age >= 30) $upgradeChance -= 8;
+        if ($talent < 5 && mt_rand(1, 100) <= max(0, $upgradeChance)) $talent++;
+        return min(5, max(1, $talent));
     }
-    
+
     private static function skillAround($strength, $deviation) {
         return self::clamp($strength + mt_rand(0 - (int) $deviation, (int) $deviation), 1, 99);
     }

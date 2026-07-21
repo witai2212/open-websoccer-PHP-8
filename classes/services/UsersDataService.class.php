@@ -162,6 +162,7 @@ class UsersDataService {
 		$columns["email"] = "email";
 		$columns["highscore"] = "highscore";
 		$columns["fanbeliebtheit"] = "popularity";
+		$columns["manager_competence"] = "manager_competence";
 		$columns["datum_anmeldung"] = "registration_date";
 		$columns["lastonline"] = "lastonline";
 		$columns["picture"] = "picture";

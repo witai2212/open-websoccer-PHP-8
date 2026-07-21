@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block page_title %}
-{{ i18n.getMessage(page_id ~ "_navlabel") }}
+{% if cup_found and cup.name|length > 0 %}{{ cup.name }}{% else %}{{ i18n.getMessage(page_id ~ "_navlabel") }}{% endif %}
 {% endblock %}
 
 {% block page_content %}

@@ -123,38 +123,13 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
         // Generate talent
         // ---------------------------------------------------------------------
         
-        $rTalent = mt_rand(1, 100);
-        
-        if ($rTalent > 94) {
-            $talent = 6;
-        } else {
-            $talent = mt_rand(1, 5);
-        }
-        
+        $talent = PlayerTalentDataService::generateTalent($this->_websoccer);
         $player["w_talent"] = $talent;
-        
-        // ---------------------------------------------------------------------
-        // Generate maximum strength and skill ranges
-        // ---------------------------------------------------------------------
-        
-        if ($talent >= 4) {
-            $a = 75;
-            $b = 100;
-        } elseif ($talent >= 2) {
-            $a = 50;
-            $b = 80;
-        } else {
-            $a = 25;
-            $b = 60;
-        }
-        
-        $maxStrength = mt_rand($a, $b);
-        
-        // Max strength must never be below current player strength
-        if ($maxStrength < $player["strength"]) {
-            $maxStrength = $player["strength"];
-        }
-        
+
+        $range = PlayerTalentDataService::getPotentialRange($talent);
+        $a = $range[0];
+        $b = $range[1];
+        $maxStrength = PlayerTalentDataService::generateMaximumStrength($talent, $player["strength"]);
         $player["strength_max"] = $maxStrength;
         
         // ---------------------------------------------------------------------

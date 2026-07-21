@@ -4,25 +4,26 @@
 {% import "macros/playerlists.twig" as playerlists %}
 {% import "macros/messagebox.twig" as messagebox %}
 
-{% block page_title %}
-{{ i18n.getMessage("transfermarket_title") }}
-{% endblock %}
+{% block page_title %}{{ i18n.getMessage("transfermarket_title") }}{% endblock %}
 
 {% block page_content %}
+<div class="well" style="padding:14px 18px">
+    <div class="row-fluid">
+        <div class="span8"><h3 style="margin:0 0 5px"><i class="icon-exchange"></i> {{ i18n.getMessage("transfermarket_title") }}</h3><span class="muted">{{ i18n.getMessage("transfermarket_combined_intro") }}</span></div>
+        <div class="span4 text-right"><span class="badge badge-info">{{ playerscount }}</span> {{ i18n.getMessage("transfermarket_players_short") }} &nbsp; <span class="badge">{{ offers|length }}</span> {{ i18n.getMessage("transfermarket_received_short") }}</div>
+    </div>
+</div>
 
 <ul class="nav nav-tabs" id="transferTab">
-  <li class="active"><a href="#overview" data-toggle="tab">{{ i18n.getMessage("transfermarket_tab_overview") }}</a></li>
-  <!-- <li><a href="#mybids" data-toggle="tab"
-  	data-ajaxtarget="mybidslist" data-ajaxblock="transfermarket-mybids" class="ajaxLink">{{ i18n.getMessage("transfermarket_tab_mybids") }}</a></li>-->
-	
-  <li><a href="#lasttransfers" data-toggle="tab"
-  	data-ajaxtarget="lasttransferslist" data-ajaxblock="transfermarket-lasttransfers" class="ajaxLink">{{ i18n.getMessage("transfermarket_tab_lasttransfers") }}</a></li>
-  <li><a href="#mytransfers" data-toggle="tab"
-  	data-ajaxtarget="mytransferslist" data-ajaxblock="transfermarket-mytransfers" class="ajaxLink">{{ i18n.getMessage("transfermarket_tab_mytransfers") }}</a></li>
+  <li{% if active_tab == 'market' %} class="active"{% endif %}><a href="#overview" data-toggle="tab"><i class="icon-search"></i> {{ i18n.getMessage("transfermarket_tab_overview") }}</a></li>
+  <li{% if active_tab == 'offers' %} class="active"{% endif %}><a href="#offers" data-toggle="tab"><i class="icon-inbox"></i> {{ i18n.getMessage("transfermarket_tab_myoffers") }}</a></li>
+  <li{% if active_tab == 'lasttransfers' %} class="active"{% endif %}><a href="#lasttransfers" data-toggle="tab" data-ajaxtarget="lasttransferslist" data-ajaxblock="transfermarket-lasttransfers" class="ajaxLink"><i class="icon-time"></i> {{ i18n.getMessage("transfermarket_tab_lasttransfers") }}</a></li>
+  <li{% if active_tab == 'mytransfers' %} class="active"{% endif %}><a href="#mytransfers" data-toggle="tab" data-ajaxtarget="mytransferslist" data-ajaxblock="transfermarket-mytransfers" class="ajaxLink"><i class="icon-user"></i> {{ i18n.getMessage("transfermarket_tab_mytransfers") }}</a></li>
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="overview">
+  <div class="tab-pane{% if active_tab == 'market' %} active{% endif %}" id="overview">
+
   
     <form class="form-inline" method="get">
   		<label for="position">{{ i18n.getMessage("transfermarket_filter_by_position") }}</label>
@@ -164,15 +165,15 @@
   {% else %}
   	{{ messagebox.box(i18n.getMessage("transfermarket_no_players"), "", "info") }}
   {% endif %}
-  </div>  
-  
-  <div class="tab-pane" id="lasttransfers">
-  	<div id="lasttransferslist"></div>
   </div>
-  
-  <div class="tab-pane" id="mytransfers">
-  	<div id="mytransferslist"></div>
+  <div class="tab-pane{% if active_tab == 'offers' %} active{% endif %}" id="offers">
+    {% include "blocks/transfermarket_myoffers.twig" %}
   </div>
+  <div class="tab-pane{% if active_tab == 'lasttransfers' %} active{% endif %}" id="lasttransfers"><div id="lasttransferslist"></div></div>
+  <div class="tab-pane{% if active_tab == 'mytransfers' %} active{% endif %}" id="mytransfers"><div id="mytransferslist"></div></div>
 </div>
 
+{% if active_tab == 'lasttransfers' or active_tab == 'mytransfers' %}
+<script>jQuery(function($){ $('#transferTab li.active a.ajaxLink').trigger('click'); });</script>
+{% endif %}
 {% endblock %}

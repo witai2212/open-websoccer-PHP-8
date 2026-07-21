@@ -14,6 +14,9 @@
       <setting id="transfermarket_min_teamsize" category="transfermarket" type="number" default="18" />
       <setting id="transfermarket_max_transactions_between_users" category="transfermarket" type="number" default="2" />
       <setting id="transfermarket_max_players_on_tl" category="transfermarket" type="number" default="250" />
+      <setting id="computer_transfers_teams_per_run" category="transfermarket" type="number" default="100" />
+      <setting id="computer_transfers_max_active_offers_per_team" category="transfermarket" type="number" default="3" />
+      <setting id="computer_transfers_max_offers_per_player" category="transfermarket" type="number" default="3" />
       <setting id="precontract_decision_matches_min" category="transfermarket" type="number" default="2" />
       <setting id="precontract_decision_matches_max" category="transfermarket" type="number" default="4" />
       <setting id="transfer_news_enabled" category="transfermarket" type="boolean" default="1" />

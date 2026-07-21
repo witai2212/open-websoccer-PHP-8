@@ -34,6 +34,16 @@
 		            role="user" />
 	  		</page>
 	        
+
+            <page
+                id="manager-notes"
+                template="manager-notes"
+                model="ManagerNotesModel"
+                navitem="true"
+                navweight="9"
+                role="user">
+            </page>
+
 	        <page
 	            id="tickets"
 	            template="tickets"
@@ -96,6 +106,11 @@
 		<param id="id" type="number" required="true" min="1" max="1000000000" />
 	</action>
 	
+
+    <action id="save-manager-note" controller="SaveManagerNoteController" role="user">
+        <param id="note" type="text" required="false" max="10000" />
+    </action>
+
   </actions>
     
 </module>

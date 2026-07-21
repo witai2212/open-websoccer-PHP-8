@@ -753,7 +753,7 @@ class TransfermarketDataService {
 	        "transfer_violation_notification",
 	        array("penalty" => $penalty),
 	        "transfermarket",
-	        "mybids",
+	        "transfermarket#offers",
 	        null,
 	        $teamId
 	    );

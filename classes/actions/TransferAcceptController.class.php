@@ -60,22 +60,28 @@ class TransferAcceptController implements IActionController {
 				"id = %d", array($parameters["id"]));
 		$offer = $result->fetch_array();
 		$result->free();
-			if (!$offer) {
-				throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
-			}
-			
-			if (class_exists('ClubPartnershipDataService')) {
-				ClubPartnershipDataService::assertProfessionalTransferAllowed($this->_websoccer, $this->_db, $this->_i18n, $offer['spieler_id'], $offer['verein_id']);
-			}
-			
-			//new team data
-			$newTeam = TeamsDataService::getTeamById($this->_websoccer, $this->_db, $offer['verein_id']);
-			
-			//transfermarket watchdog, with explicit seller club before the player is moved
-			TransfermarketDataService::transferWatchdog($this->_websoccer, $this->_db, $offer['id'], $oldTeam['team_id']);
-		
-		// get player name for notification
+		if (!$offer) {
+			throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
+		}
+
+		// The offer may only be accepted by the player's current club. This also
+		// prevents stale duplicate offers from creating payments to the same club.
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $offer["spieler_id"]);
+		if (!$player || (int) $player["team_id"] !== (int) $clubId || (int) $offer["verein_id"] === (int) $clubId) {
+			throw new Exception($this->_i18n->getMessage("transferoffers_offer_cancellation_notfound"));
+		}
+
+		if (class_exists('ClubPartnershipDataService')) {
+			ClubPartnershipDataService::assertProfessionalTransferAllowed($this->_websoccer, $this->_db, $this->_i18n, $offer['spieler_id'], $offer['verein_id']);
+		}
+
+		// new team data
+		$newTeam = TeamsDataService::getTeamById($this->_websoccer, $this->_db, $offer['verein_id']);
+
+		// transfermarket watchdog, with explicit seller club before the player is moved
+		TransfermarketDataService::transferWatchdog($this->_websoccer, $this->_db, $offer['id'], $oldTeam['team_id']);
+
+		// get player name for notification
 		if ($player["player_pseudonym"]) {
 			$playerName = $player["player_pseudonym"];
 		} else {

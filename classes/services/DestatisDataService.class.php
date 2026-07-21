@@ -676,17 +676,34 @@ class DestatisDataService {
 
         $missionJoin = '';
         $careerJoin = '';
+        $achievementJoin = '';
+        $badgeJoin = '';
+        $awardJoin = '';
         $missionColumn = '0 AS completed_missions';
         $careerColumn = '0 AS club_changes';
+        $achievementColumns = '0 AS achievements, 0 AS titles';
+        $badgeColumn = '0 AS badges';
+        $awardColumn = '0 AS manager_awards';
 
         if (self::_tableExists($websoccer, $db, 'manager_mission')) {
             $missionJoin = " LEFT JOIN " . $prefix . "_manager_mission AS M ON M.user_id = U.id AND M.status = 'completed'";
             $missionColumn = 'COUNT(DISTINCT M.id) AS completed_missions';
         }
-
         if (self::_tableExists($websoccer, $db, 'manager_career_history')) {
             $careerJoin = " LEFT JOIN " . $prefix . "_manager_career_history AS H ON H.user_id = U.id";
             $careerColumn = 'COUNT(DISTINCT H.id) AS club_changes';
+        }
+        if (self::_tableExists($websoccer, $db, 'achievement')) {
+            $achievementJoin = " LEFT JOIN " . $prefix . "_achievement AS A ON A.user_id = U.id";
+            $achievementColumns = "COUNT(DISTINCT A.id) AS achievements, COUNT(DISTINCT CASE WHEN A.rank = 1 THEN A.id END) AS titles";
+        }
+        if (self::_tableExists($websoccer, $db, 'badge_user')) {
+            $badgeJoin = " LEFT JOIN " . $prefix . "_badge_user AS BU ON BU.user_id = U.id";
+            $badgeColumn = 'COUNT(DISTINCT BU.id) AS badges';
+        }
+        if (self::_tableExists($websoccer, $db, 'manager_award')) {
+            $awardJoin = " LEFT JOIN " . $prefix . "_manager_award AS MA ON MA.user_id = U.id";
+            $awardColumn = 'COUNT(DISTINCT MA.id) AS manager_awards';
         }
 
         $sqlStr = "SELECT
@@ -694,23 +711,51 @@ class DestatisDataService {
                         U.nick AS manager_name,
                         U.highscore,
                         U.fanbeliebtheit,
+                        U.manager_competence,
                         " . $missionColumn . ",
                         " . $careerColumn . ",
+                        " . $achievementColumns . ",
+                        " . $badgeColumn . ",
+                        " . $awardColumn . ",
                         C.id AS club_id,
                         C.name AS club_name,
                         C.bild AS club_bild,
                         L.id AS league_id,
                         L.name AS league_name
                     FROM " . $prefix . "_user AS U
-                    LEFT JOIN " . $prefix . "_verein AS C ON C.user_id = U.id AND C.status = '1'
+                    LEFT JOIN " . $prefix . "_verein AS C ON C.user_id = U.id AND C.status = '1' AND C.nationalteam <> '1'
                     LEFT JOIN " . $prefix . "_liga AS L ON L.id = C.liga_id
                     " . $missionJoin . "
                     " . $careerJoin . "
+                    " . $achievementJoin . "
+                    " . $badgeJoin . "
+                    " . $awardJoin . "
                     WHERE U.status = '1'
-                    GROUP BY U.id
-                    ORDER BY U.highscore DESC, completed_missions DESC, U.fanbeliebtheit DESC, U.nick ASC
-                    LIMIT 30";
-        return self::_fetchAll($db, $sqlStr);
+                    GROUP BY U.id";
+        $managers = self::_fetchAll($db, $sqlStr);
+
+        foreach ($managers as $index => $manager) {
+            $managers[$index]['reputation'] = (int) ManagerCareerDataService::getManagerScoreForUser(
+                $websoccer,
+                $db,
+                (int) $manager['user_id']
+            );
+        }
+
+        usort($managers, function($a, $b) {
+            if ((int) $a['reputation'] !== (int) $b['reputation']) {
+                return ((int) $a['reputation'] > (int) $b['reputation']) ? -1 : 1;
+            }
+            if ((int) $a['titles'] !== (int) $b['titles']) {
+                return ((int) $a['titles'] > (int) $b['titles']) ? -1 : 1;
+            }
+            if ((int) $a['achievements'] !== (int) $b['achievements']) {
+                return ((int) $a['achievements'] > (int) $b['achievements']) ? -1 : 1;
+            }
+            return strcasecmp((string) $a['manager_name'], (string) $b['manager_name']);
+        });
+
+        return array_slice($managers, 0, 50);
     }
 
     /**

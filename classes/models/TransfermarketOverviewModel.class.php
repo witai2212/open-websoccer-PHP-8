@@ -96,6 +96,14 @@ class TransfermarketOverviewModel implements IModel {
 		} else {
 			$players = array();
 		}
+
+		$offers = TransfermarketDataService::getTransferOffers($this->_websoccer, $this->_db, $teamId);
+		$bids = TransfermarketDataService::getCurrentBidsOfTeam($this->_websoccer, $this->_db, $teamId);
+		$myplayers = TransfermarketDataService::getPlayersOnTLByTeamId($this->_websoccer, $this->_db, $teamId);
+		$activeTab = $this->_websoccer->getRequestParameter("tab");
+		if (!in_array($activeTab, array("market", "offers", "lasttransfers", "mytransfers"))) {
+			$activeTab = "market";
+		}
 		
 		return array(
 			"transferplayers" => $players,
@@ -103,7 +111,11 @@ class TransfermarketOverviewModel implements IModel {
 			"playeroffers" => $countOffers,
 			"paginator" => $paginator,
 			"transfermarket_filter_definitions" => $filterDefinitions,
-			"transfermarket_advancedfilters_active" => $advancedFiltersActive
+			"transfermarket_advancedfilters_active" => $advancedFiltersActive,
+			"offers" => $offers,
+			"bids" => $bids,
+			"myplayers" => $myplayers,
+			"active_tab" => $activeTab
 		);
 	}
 	

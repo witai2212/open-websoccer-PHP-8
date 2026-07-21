@@ -9,4 +9,16 @@
 	<message id="option_static">Beim Beenden der Saison</message>
 
     <message id="player-traits_navlabel">Spezialfähigkeiten</message>
+    <message id="settings_label_player_talent_probability_1">Anteil Talent 1 in Prozent</message>
+    <message id="settings_label_player_talent_probability_2">Anteil Talent 2 in Prozent</message>
+    <message id="settings_label_player_talent_probability_3">Anteil Talent 3 in Prozent</message>
+    <message id="settings_label_player_talent_probability_4">Anteil Talent 4 in Prozent</message>
+    <message id="settings_label_player_talent_probability_5">Anteil Talent 5 in Prozent</message>
+    <message id="settings_label_player_talent_probability_6">Anteil Talent 6 in Prozent</message>
+    <message id="settings_label_player_talent_probability_1_help">Wahrscheinlichkeit bei neu erzeugten Profispielern. Alle sechs Werte werden automatisch auf zusammen 100 Prozent normiert.</message>
+    <message id="settings_label_player_talent_probability_2_help">Wahrscheinlichkeit bei neu erzeugten Profispielern. Alle sechs Werte werden automatisch auf zusammen 100 Prozent normiert.</message>
+    <message id="settings_label_player_talent_probability_3_help">Wahrscheinlichkeit bei neu erzeugten Profispielern. Alle sechs Werte werden automatisch auf zusammen 100 Prozent normiert.</message>
+    <message id="settings_label_player_talent_probability_4_help">Wahrscheinlichkeit bei neu erzeugten Profispielern. Alle sechs Werte werden automatisch auf zusammen 100 Prozent normiert.</message>
+    <message id="settings_label_player_talent_probability_5_help">Wahrscheinlichkeit bei neu erzeugten Profispielern. Alle sechs Werte werden automatisch auf zusammen 100 Prozent normiert.</message>
+    <message id="settings_label_player_talent_probability_6_help">Wahrscheinlichkeit bei neu erzeugten Profispielern. Standard: 0,5 Prozent. Bestehende Spieler werden nicht verändert.</message>
 </messages>

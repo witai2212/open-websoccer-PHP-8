@@ -249,4 +249,10 @@
     <message id="stockmarket_recommend_reason_loss_position">Position liegt im Verlust.</message>
     <message id="stockmarket_recommend_reason_mixed_signals">Gemischte Signale.</message>
 
+
+    <message id="account_statement_open_all">Alle öffnen</message>
+    <message id="account_statement_close_all">Alle schließen</message>
+    <message id="account_statement_daily_balance">Tagessaldo</message>
+    <message id="account_statement_amount">Betrag</message>
+    <message id="account_statement_no_entries">Keine Kontobuchungen vorhanden.</message>
 </messages>

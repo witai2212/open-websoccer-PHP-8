@@ -106,18 +106,26 @@ class PlayerMarketValueDataService {
             );
         }
 
-        $quality = self::_clamp(($baseStrength * 0.55) + ($positionQuality * 0.35) + ($technicalStrength * 0.10), 1, 100);
-        $qualityRatio = self::_clamp($quality / 100, 0.01, 1.05);
-        $economyCeiling = max(self::MIN_ACTIVE_VALUE, (float) $economySnapshot['market_ceiling']);
-        $baseValue = $economyCeiling * pow($qualityRatio, 5.0);
-
         $age = (int) self::_value($player, 'age', 0);
         if ($age < 1 && strlen((string) self::_value($player, 'geburtstag', ''))) {
             $age = self::_ageFromBirthday((string) $player['geburtstag']);
         }
+
+        $currentQuality = self::_clamp(($baseStrength * 0.55) + ($positionQuality * 0.35) + ($technicalStrength * 0.10), 1, 100);
+        $talent = max(1, min(6, (int) self::_value($player, 'w_talent', 3)));
+        $storedMaximum = self::_clamp((float) self::_value($player, 'w_staerke_max', $baseStrength), 0, 100);
+        $talentMaximum = max($baseStrength, PlayerTalentDataService::getPotentialCeiling($talent));
+        $potentialQuality = min($storedMaximum, $talentMaximum);
+        $developmentWeight = PlayerTalentDataService::getPotentialWeight($talent);
+        if ($age > 0) $developmentWeight *= self::_clamp((31 - $age) / 13, 0.05, 1.0);
+        $quality = self::_clamp($currentQuality + (max(0, $potentialQuality - $currentQuality) * $developmentWeight), 1, 100);
+        $qualityRatio = self::_clamp($quality / 100, 0.01, 1.0);
+        $economyCeiling = max(self::MIN_ACTIVE_VALUE, (float) $economySnapshot['market_ceiling']);
+        $baseValue = $economyCeiling * pow($qualityRatio, 5.0);
+
         $ageFactor = self::_ageFactor($age);
         $positionFactor = self::_positionFactor($position);
-        $talentFactor = self::_talentFactor($player, $age, $baseStrength);
+        $talentFactor = PlayerTalentDataService::getMarketPremium($talent);
         $contractFactor = self::_contractFactor($websoccer, (int) self::_value($player, 'vertrag_spiele', 0));
         $healthFactor = self::_healthFactor($player);
         $formFactor = self::_formFactor($player);
@@ -146,7 +154,8 @@ class PlayerMarketValueDataService {
         // hard ceiling remains linked to the economy and never exceeds 100m.
         $individualCeiling = min(
             self::ABSOLUTE_MAX_VALUE,
-            $economyCeiling * self::_clamp(max(1.0, $leagueFactor * $clubFactor), 1.0, 1.18) * $regulationFactor
+            $economyCeiling * PlayerTalentDataService::getMarketCeilingFactor($talent)
+                * self::_clamp(max(1.0, $leagueFactor * $clubFactor), 1.0, 1.18) * $regulationFactor
         );
         $unrounded = self::_clamp($unrounded, self::MIN_ACTIVE_VALUE, $individualCeiling);
         $marketValue = self::_roundMarketValue($unrounded);

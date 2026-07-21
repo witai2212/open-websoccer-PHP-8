@@ -21,7 +21,11 @@
 ******************************************************/
 
 // execute transfer
-DirectTransfersDataService::executeTransferFromOffer($website, $db, $website->getRequestParameter('id'));
+$executed = DirectTransfersDataService::executeTransferFromOffer($website, $db, $website->getRequestParameter('id'));
+if (!$executed) {
+	echo createErrorMessage($i18n->getMessage('alert_error_title'), $i18n->getMessage('transferoffers_offer_cancellation_notfound'));
+	return;
+}
 
 // remove pending state
 $db->queryUpdate(array('admin_approval_pending' => '0'), $website->getConfig('db_prefix') . '_transfer_offer',

@@ -9,6 +9,47 @@
 
 {% block page_content %}
 
+	<style type="text/css">
+		#user-profile-main-stats {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-flex-wrap: nowrap;
+			-ms-flex-wrap: nowrap;
+			flex-wrap: nowrap;
+			-webkit-box-align: stretch;
+			-webkit-align-items: stretch;
+			-ms-flex-align: stretch;
+			align-items: stretch;
+			gap: 12px;
+			width: 100%;
+		}
+		#user-profile-main-stats .user-profile-stat-card-five {
+			-webkit-box-flex: 1;
+			-webkit-flex: 1 1 0;
+			-ms-flex: 1 1 0;
+			flex: 1 1 0;
+			width: 0;
+			min-width: 0;
+			margin-left: 0 !important;
+		}
+		@media (max-width: 767px) {
+			#user-profile-main-stats {
+				-webkit-flex-wrap: wrap;
+				-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
+			}
+			#user-profile-main-stats .user-profile-stat-card-five {
+				-webkit-box-flex: 1;
+				-webkit-flex: 1 1 42%;
+				-ms-flex: 1 1 42%;
+				flex: 1 1 42%;
+				width: auto;
+			}
+		}
+	</style>
+
 	<div class="user-profile-hero">
 		<div class="user-profile-hero-avatar">
 			{% if user.picture|length > 0 %}
@@ -87,26 +128,31 @@
 			{% set team = "-" %}
 		{% endif %}
 
-		<div class="row-fluid user-profile-stat-row">
-			<div class="span3 user-profile-stat-card">
+		<div id="user-profile-main-stats" class="row-fluid user-profile-stat-row user-profile-stat-row-five">
+			<div class="user-profile-stat-card user-profile-stat-card-five">
 				<span class="user-profile-stat-icon"><i class="icon-flag"></i></span>
 				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_club") }}</span>
 				<span class="user-profile-stat-value">{% if userteams|length > 0 %}{{ userteams|length }}{% else %}-{% endif %}</span>
 			</div>
-			<div class="span3 user-profile-stat-card">
+			<div class="user-profile-stat-card user-profile-stat-card-five">
 				<span class="user-profile-stat-icon"><i class="icon-star"></i></span>
 				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_users_highscore") }}</span>
 				<span class="user-profile-stat-value">{{ user.highscore }}</span>
 			</div>
-			<div class="span3 user-profile-stat-card">
+			<div class="user-profile-stat-card user-profile-stat-card-five">
 				<span class="user-profile-stat-icon"><i class="icon-trophy"></i></span>
 				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_users_reputation") }}</span>
 				<span class="user-profile-stat-value">{{ user.reputation|default(0) }}</span>
 			</div>
-			<div class="span3 user-profile-stat-card">
+			<div class="user-profile-stat-card user-profile-stat-card-five">
 				<span class="user-profile-stat-icon"><i class="icon-heart"></i></span>
 				<span class="user-profile-stat-label">{{ i18n.getMessage("entity_users_fanbeliebtheit") }}</span>
 				<span class="user-profile-stat-value">{{ user.popularity }}%</span>
+			</div>
+			<div class="user-profile-stat-card user-profile-stat-card-five">
+				<span class="user-profile-stat-icon"><i class="icon-certificate"></i></span>
+				<span class="user-profile-stat-label">{{ i18n.getMessage("user_profile_manager_competence") }}</span>
+				<span class="user-profile-stat-value">{{ user.manager_competence|default(10) }}/20</span>
 			</div>
 		</div>
 

@@ -6,4 +6,13 @@
 	<message id="settings_label_lending_matches_min_help">Anzahl Spiele</message>  
 	<message id="settings_label_lending_matches_max">Höchstleihdauer</message> 
 	<message id="settings_label_lending_matches_max_help">Anzahl Spiele</message> 
+
+	<message id="settings_label_lending_cpu_offer_duration_days">Dauer von CPU-Leihlistungen</message>
+	<message id="settings_label_lending_cpu_offer_duration_days_help">Kalendertage bis eine von einem CPU-Verein erstellte Leihlistung automatisch endet.</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days">Wartezeit für erneute CPU-Leihlistung</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days_help">Kalendertage, bevor derselbe Spieler erneut von einem CPU-Verein angeboten werden kann.</message>
+	<message id="settings_label_lending_cpu_request_expiry_days">Gültigkeit von CPU-Leihanfragen</message>
+	<message id="settings_label_lending_cpu_request_expiry_days_help">Kalendertage bis eine offene CPU-Leihanfrage abläuft.</message>
+	<message id="settings_label_max_number_of_players_on_loan_list">Maximale CPU-Spieler auf der Leihliste</message>
+	<message id="settings_label_max_number_of_players_on_loan_list_help">Höchstzahl gleichzeitig angebotener Leihspieler pro CPU-Verein.</message>
 </messages>

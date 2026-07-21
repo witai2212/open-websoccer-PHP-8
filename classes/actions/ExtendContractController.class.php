@@ -112,16 +112,48 @@ class ExtendContractController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("extend-contract_goalbonus_too_low"));
 		}
 		
-		$this->updatePlayer($player["player_id"], $player["player_strength_satisfaction"], $parameters["salary"], $parameters["goal_bonus"], $newMatches);
-		
+		$hasExternalOffers = PlayerPrecontractDataService::hasOpenExternalOffers(
+			$this->_websoccer,
+			$this->_db,
+			(int) $player["player_id"],
+			(int) $clubId
+		);
+
+		if ($hasExternalOffers) {
+			// Bei offenen Angeboten anderer Vereine wird die Verlängerung nicht
+			// sofort erzwungen. Das Angebot des aktuellen Vereins nimmt als
+			// Gegenangebot an der Spielerentscheidung teil.
+			PlayerPrecontractDataService::placeRetentionOffer(
+				$this->_websoccer,
+				$this->_db,
+				(int) $player["player_id"],
+				(int) $clubId,
+				(int) $user->id,
+				(int) $parameters["salary"],
+				(int) $parameters["goal_bonus"],
+				(int) $newMatches,
+				false
+			);
+			$successMessage = $this->_i18n->getMessage("extend-contract_counteroffer_success");
+		} else {
+			$this->updatePlayer(
+				$player["player_id"],
+				$player["player_strength_satisfaction"],
+				$parameters["salary"],
+				$parameters["goal_bonus"],
+				$newMatches
+			);
+			$successMessage = $this->_i18n->getMessage("extend-contract_success");
+		}
+
 		// reset inactivity
 		UserInactivityDataService::resetContractExtensionField($this->_websoccer, $this->_db, $user->id);
-		
+
 		// success message
-		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
-				$this->_i18n->getMessage("extend-contract_success"),
+		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
+				$successMessage,
 				""));
-		
+
 		return null;
 	}
 	

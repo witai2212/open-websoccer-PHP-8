@@ -206,15 +206,34 @@ class TransferMessagesDataService {
 
         $subject = 'Vorvertrag: ' . $playerName;
         $content = $playerName . ' hat das Vorvertragsangebot von ' . $destination['name'] . ' angenommen.';
-        if ($event === 'rejected') {
+        $senderName = 'Transferabteilung';
+
+        if ($event === 'received') {
+            $subject = 'Vorvertragsangebot für ' . $playerName;
+            $content = $destination['name'] . ' hat ' . $playerName . ' ein Vertragsangebot für die nächste Saison unterbreitet. Ihr Verein kann über die Vertragsverlängerung ein Gegenangebot abgeben.';
+            $context['target_page'] = 'extend-contract';
+            $context['target_query'] = 'id=' . (int) $playerId;
+            $senderName = $destination['name'];
+        } elseif ($event === 'rejected') {
             $subject = 'Vorvertrag abgelehnt: ' . $playerName;
             $content = $playerName . ' hat das Vorvertragsangebot von ' . $destination['name'] . ' abgelehnt.';
+        } elseif ($event === 'retained') {
+            $subject = 'Vertrag verlängert: ' . $playerName;
+            $content = $playerName . ' hat das Gegenangebot Ihres Vereins angenommen und den Vertrag verlängert.';
+            $context['target_page'] = 'myteam';
+            $context['target_query'] = '';
+        } elseif ($event === 'retention_rejected') {
+            $subject = 'Vertragsverlängerung abgelehnt: ' . $playerName;
+            $content = $playerName . ' hat das Gegenangebot Ihres Vereins abgelehnt und sich für einen Wechsel zur nächsten Saison entschieden.';
+        } elseif ($event === 'leaving') {
+            $subject = 'Vorvertrag unterschrieben: ' . $playerName;
+            $content = $playerName . ' hat ein Vertragsangebot von ' . $destination['name'] . ' angenommen und wird den Verein zur nächsten Saison verlassen.';
         } elseif ($event === 'completed') {
             $subject = 'Vorvertrag vollzogen: ' . $playerName;
             $content = $playerName . ' ist zur neuen Saison zu ' . $destination['name'] . ' gewechselt.';
         }
 
-        self::createInboxMessage($websoccer, $db, $recipientUserId, $subject, $content, 'precontract', $context, 'Transferabteilung');
+        self::createInboxMessage($websoccer, $db, $recipientUserId, $subject, $content, 'precontract', $context, $senderName);
     }
 
     public static function getPlayerReference(WebSoccer $websoccer, DbConnection $db, $playerId) {

@@ -299,7 +299,7 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		
 		if (!$player->team->isNationalTeam) {
 			$contractTeamId = $this->getContractOwningTeamId($playerinfo, $player->team->id);
-			$columns['vertrag_spiele'] = $this->computeContractMatchesAfterMatch($contractTeamId, $playerinfo['vertrag_spiele']);
+			$columns['vertrag_spiele'] = $this->computeContractMatchesAfterMatch($playerinfo['id'], $contractTeamId, $playerinfo['vertrag_spiele']);
 		}
 		
 		// update other fields
@@ -354,7 +354,7 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		$columns['verletzt'] = max(0, $playerinfo['verletzt'] - 1);
 		if (!$isNationalTeam) {
 			$contractTeamId = $this->getContractOwningTeamId($playerinfo, $playerinfo['verein_id']);
-			$columns['vertrag_spiele'] = $this->computeContractMatchesAfterMatch($contractTeamId, $playerinfo['vertrag_spiele']);
+			$columns['vertrag_spiele'] = $this->computeContractMatchesAfterMatch($playerinfo['id'], $contractTeamId, $playerinfo['vertrag_spiele']);
 		}
 		
 		if (!$isNationalTeam || $this->_websoccer->getConfig('sim_playerupdate_through_nationalteam')) {
@@ -378,8 +378,9 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		return (int) $currentTeamId;
 	}
 
-	private function computeContractMatchesAfterMatch($teamId, $currentMatches) {
-		$newMatches = max(0, (int) $currentMatches - 1);
+	private function computeContractMatchesAfterMatch($playerId, $teamId, $currentMatches) {
+		$maxContractMatches = $this->getCpuContractRenewalMatches();
+		$newMatches = min($maxContractMatches, max(0, (int) $currentMatches - 1));
 
 		if ($this->isTeamManagedByHuman($teamId)) {
 			if ($newMatches == 5) {
@@ -389,10 +390,34 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 			return $newMatches;
 		}
 
-		// CPU/non-user clubs renew contracts automatically shortly before expiry.
-		// This prevents CPU squads from flooding the transfer market due to expired contracts.
+		// Sobald ein anderer Verein ein Angebot für die nächste Saison abgegeben
+		// oder der Spieler bereits zugesagt hat, darf der CPU-Vertrag nicht mehr
+		// automatisch erzwungen verlängert werden. Der aktuelle CPU-Verein nimmt
+		// stattdessen mit einem eigenen Gegenangebot an der Entscheidung teil.
+		$precontractLimit = max(1, (int) $this->_websoccer->getConfig('contract_max_number_of_remaining_matches'));
+		if ($newMatches < $precontractLimit
+				&& PlayerPrecontractDataService::hasExternalOfferOrAgreement(
+					$this->_websoccer,
+					$this->_db,
+					(int) $playerId,
+					(int) $teamId)) {
+			if (!PlayerPrecontractDataService::hasAcceptedAgreement(
+					$this->_websoccer,
+					$this->_db,
+					(int) $playerId)) {
+				PlayerPrecontractDataService::ensureComputerRetentionOffer(
+					$this->_websoccer,
+					$this->_db,
+					(int) $playerId,
+					(int) $teamId);
+			}
+
+			return $newMatches;
+		}
+
+		// Ohne Konkurrenzangebot verlängert ein CPU-Verein weiterhin automatisch.
 		if ($newMatches <= 5) {
-			return $this->getCpuContractRenewalMatches();
+			return $maxContractMatches;
 		}
 
 		return $newMatches;

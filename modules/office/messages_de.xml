@@ -37,6 +37,7 @@
     <message id="extend-contract_decrease_satisfaction_hint">Beachten Sie, dass die Zufriedenheit des Spielers unter jedem zu schlechten Angebot leidet.</message>
     
     <message id="extend-contract_success">Der Vertrag wurde erfolgreich zu den neuen Konditionen verlängert!</message>
+    <message id="extend-contract_counteroffer_success">Das Gegenangebot wurde abgegeben. Der Spieler prüft nun alle Angebote für die nächste Saison.</message>
     
     <message id="extend-contract_player_is_unhappy">Der Spieler fühlt sich in Ihrem Verein nicht mehr wohl und möchte den Vertrag daher im Moment nicht verlängern.</message>
     <message id="extend-contract_lower_than_current_salary">Der Spieler akzeptiert keine Gehaltskürzung.</message>

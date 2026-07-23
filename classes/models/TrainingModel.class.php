@@ -36,23 +36,43 @@ class TrainingModel implements IModel {
         }
 
         TrainingDataService::ensureAdvancedTrainingSchema($this->_websoccer, $this->_db);
+        TrainingDataService::processAutomaticTrainingForTeam($this->_websoccer, $this->_db, $this->_i18n, $teamId);
 
         $lastExecution = TrainingDataService::getLatestTrainingExecutionTime($this->_websoccer, $this->_db, $teamId);
         $unitsCount = TrainingDataService::countRemainingTrainingUnits($this->_websoccer, $this->_db, $teamId);
         $paginator = null;
         $trainers = null;
+        $trainerSpecializations = TrainingDataService::getTrainerSpecializations();
+        $trainerSpecializationCounts = TrainingDataService::countTrainersBySpecialization($this->_websoccer, $this->_db);
+        $selectedTrainerSpecialization = $this->_websoccer->getRequestParameter('specialization');
+        if (!isset($trainerSpecializations[$selectedTrainerSpecialization])
+                || empty($trainerSpecializationCounts[$selectedTrainerSpecialization])) {
+            $selectedTrainerSpecialization = null;
+        }
 
         $trainingUnit = TrainingDataService::getValidTrainingUnit($this->_websoccer, $this->_db, $teamId);
-        if (!isset($trainingUnit["id"])) {
-            $count = TrainingDataService::countTrainers($this->_websoccer, $this->_db);
+        if (isset($trainingUnit["id"])) {
+            $trainingUnit["trainer"] = TrainingDataService::getTrainerById($this->_websoccer, $this->_db, $trainingUnit["trainer_id"]);
+        }
+        $trainerStaff = TrainingDataService::getActiveTrainerStaff($this->_websoccer, $this->_db, $teamId);
+        $maxTrainerStaff = max(1, (int) $this->_websoccer->getConfig('training_max_trainers_per_team'));
+        if (count($trainerStaff) < $maxTrainerStaff) {
+            $count = TrainingDataService::countTrainers($this->_websoccer, $this->_db, $selectedTrainerSpecialization);
             $eps = $this->_websoccer->getConfig("entries_per_page");
             $paginator = new Paginator($count, $eps, $this->_websoccer);
+            if ($selectedTrainerSpecialization !== null) {
+                $paginator->addParameter('specialization', $selectedTrainerSpecialization);
+            }
             if ($count > 0) {
-                $trainers = TrainingDataService::getTrainers($this->_websoccer, $this->_db, $paginator->getFirstIndex(), $eps);
+                $trainers = TrainingDataService::getTrainers(
+                    $this->_websoccer,
+                    $this->_db,
+                    $paginator->getFirstIndex(),
+                    $eps,
+                    $selectedTrainerSpecialization
+                );
                 $trainers = TrainingDataService::decorateTrainersForTeam($this->_websoccer, $this->_db, $trainers, $teamId);
             }
-        } else {
-            $trainingUnit["trainer"] = TrainingDataService::getTrainerById($this->_websoccer, $this->_db, $trainingUnit["trainer_id"]);
         }
 
         $trainingEffects = array();
@@ -71,6 +91,8 @@ class TrainingModel implements IModel {
             "unitsCount" => $unitsCount,
             "lastExecution" => $lastExecution,
             "training_unit" => $trainingUnit,
+            "trainerStaff" => $trainerStaff,
+            "maxTrainerStaff" => $maxTrainerStaff,
             "trainers" => $trainers,
             "paginator" => $paginator,
             "trainingEffects" => $trainingEffects,
@@ -78,7 +100,9 @@ class TrainingModel implements IModel {
             "trainingPlanSlots" => $planSlots,
             "trainingSlotNumbers" => array(1, 2, 3, 4, 5),
             "trainingTypes" => TrainingDataService::getTrainingTypes(),
-            "trainerSpecializations" => TrainingDataService::getTrainerSpecializations(),
+            "trainerSpecializations" => $trainerSpecializations,
+            "trainerSpecializationCounts" => $trainerSpecializationCounts,
+            "selectedTrainerSpecialization" => $selectedTrainerSpecialization,
             "latestTrainingReport" => $latestReport,
             "latestTrainingReportPlayers" => $latestReportPlayers,
             "trainingReports" => $reports,

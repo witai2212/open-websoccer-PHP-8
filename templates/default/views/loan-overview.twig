@@ -29,7 +29,7 @@
 	{% for player in loaned_out_players %}
 		<tr>
 			<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ loanmacros.playerName(player) }}</a></td>
-			<td>{{ player.position }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
+			<td>{{ i18n.getMessage("player_position_" ~ player.position) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
 			<td>{{ player.borrower_name }}</td>
 			<td>{{ player.lending_matches }}</td>
 			<td>
@@ -72,7 +72,7 @@
 	{% for player in borrowed_players %}
 		<tr>
 			<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ loanmacros.playerName(player) }}</a></td>
-			<td>{{ player.position }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
+			<td>{{ i18n.getMessage("player_position_" ~ player.position) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
 			<td>{{ player.lender_name }}</td>
 			<td>{{ player.lending_matches }}</td>
 			<td>
@@ -114,7 +114,7 @@
 	{% for request in incoming_loan_requests %}
 		<tr>
 			<td><a href="{{ env.getInternalUrl("player", "id=" ~ request.id) }}">{{ loanmacros.playerName(request) }}</a></td>
-			<td>{{ request.position }}{% if request.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ request.position_main) }}{% endif %}</td>
+			<td>{{ i18n.getMessage("player_position_" ~ request.position) }}{% if request.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ request.position_main) }}{% endif %}</td>
 			<td>{{ request.borrower_name }}</td>
 			<td>{{ request.requested_matches }}</td>
 			<td>{{ request.loan_fee_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br><small>{{ i18n.getMessage("loans_total_fee") }}: {{ request.total_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</small></td>
@@ -149,7 +149,7 @@
 	{% for request in outgoing_loan_requests %}
 		<tr>
 			<td><a href="{{ env.getInternalUrl("player", "id=" ~ request.id) }}">{{ loanmacros.playerName(request) }}</a></td>
-			<td>{{ request.position }}{% if request.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ request.position_main) }}{% endif %}</td>
+			<td>{{ i18n.getMessage("player_position_" ~ request.position) }}{% if request.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ request.position_main) }}{% endif %}</td>
 			<td>{{ request.lender_name }}</td>
 			<td>{{ request.requested_matches }}</td>
 			<td>{{ request.loan_fee_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br><small>{{ i18n.getMessage("loans_total_fee") }}: {{ request.total_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</small></td>
@@ -179,7 +179,7 @@
 	{% for player in loan_offers %}
 		<tr>
 			<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ loanmacros.playerName(player) }}</a></td>
-			<td>{{ player.position }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
+			<td>{{ i18n.getMessage("player_position_" ~ player.position) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
 			<td>{{ player.lending_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
 			<td>{{ player.salary_share_percent }}%</td>
 			<td>{{ i18n.getMessage("loans_option_" ~ player.option_type) }}{% if player.buy_fee > 0 %}<br>{{ player.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
@@ -192,9 +192,15 @@
 	<p><em>{{ i18n.getMessage("loans_no_offers") }}</em></p>
 {% endif %}
 
-<h3>{{ i18n.getMessage("loans_tab_available") }}</h3>
+<h3 id="available-loan-players">{{ i18n.getMessage("loans_tab_available") }}</h3>
 {% if available_loan_players|length > 0 %}
-<table class="table table-striped table-bordered">
+<div class="btn-group" id="available-loan-position-filter" style="margin-bottom: 15px;">
+	<button type="button" class="btn active" data-position="goaly">{{ i18n.getMessage("player_position_goaly") }}</button>
+	<button type="button" class="btn" data-position="defense">{{ i18n.getMessage("player_position_defense") }}</button>
+	<button type="button" class="btn" data-position="midfield">{{ i18n.getMessage("player_position_midfield") }}</button>
+	<button type="button" class="btn" data-position="striker">{{ i18n.getMessage("player_position_striker") }}</button>
+</div>
+<table class="table table-striped table-bordered" id="available-loan-players-table">
 	<thead>
 		<tr>
 			<th>{{ i18n.getMessage("entity_player") }}</th>
@@ -208,9 +214,9 @@
 	</thead>
 	<tbody>
 	{% for player in available_loan_players %}
-		<tr>
+		<tr class="available-loan-player-row" data-position="{{ player.position }}"{% if player.position != 'goaly' %} style="display: none;"{% endif %}>
 			<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ loanmacros.playerName(player) }}</a></td>
-			<td>{{ player.position }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
+			<td>{{ i18n.getMessage("player_position_" ~ player.position) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
 			<td>
 				{{ player.team_name }}
 				{% if player.partnership_id is defined and player.partnership_id > 0 %}
@@ -229,5 +235,77 @@
 {% else %}
 	<p><em>{{ i18n.getMessage("loans_no_available") }}</em></p>
 {% endif %}
+
+
+<script type="text/javascript">
+(function() {
+	var filter = document.getElementById('available-loan-position-filter');
+	var table = document.getElementById('available-loan-players-table');
+	if (!filter || !table) {
+		return;
+	}
+
+	var buttons = filter.getElementsByTagName('button');
+	var rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+	function hasPlayers(position) {
+		for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+			if (rows[rowIndex].getAttribute('data-position') === position) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function showPosition(position) {
+		for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+			rows[rowIndex].style.display = rows[rowIndex].getAttribute('data-position') === position ? '' : 'none';
+		}
+
+		for (var buttonIndex = 0; buttonIndex < buttons.length; buttonIndex++) {
+			var button = buttons[buttonIndex];
+			var isActive = button.getAttribute('data-position') === position;
+			button.className = button.className.replace(/(^|\s)active(?=\s|$)/g, ' ').replace(/\s+/g, ' ').replace(/^\s|\s$/g, '');
+			if (isActive) {
+				button.className += ' active';
+			}
+		}
+	}
+
+	var defaultPosition = 'goaly';
+	var firstAvailablePosition = '';
+
+	for (var buttonIndex = 0; buttonIndex < buttons.length; buttonIndex++) {
+		(function(button) {
+			var position = button.getAttribute('data-position');
+			if (!position) {
+				return;
+			}
+
+			if (!hasPlayers(position)) {
+				button.disabled = true;
+				button.className += ' disabled';
+				return;
+			}
+
+			if (!firstAvailablePosition) {
+				firstAvailablePosition = position;
+			}
+
+			button.onclick = function() {
+				showPosition(position);
+				return false;
+			};
+		})(buttons[buttonIndex]);
+	}
+
+	if (!hasPlayers(defaultPosition)) {
+		defaultPosition = firstAvailablePosition;
+	}
+	if (defaultPosition) {
+		showPosition(defaultPosition);
+	}
+})();
+</script>
 
 {% endblock %}

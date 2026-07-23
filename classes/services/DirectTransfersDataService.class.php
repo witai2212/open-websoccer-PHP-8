@@ -85,6 +85,7 @@ class DirectTransfersDataService {
 					array($playerId, $senderClubId, $offerId));
 		} else {
 			$db->queryInsert($columns, $table);
+			$offerId = (int) $db->getLastInsertedId();
 		}
 		
 		$exchangePlayers = array();
@@ -104,9 +105,70 @@ class DirectTransfersDataService {
 			$offerAmount,
 			array('offer_message' => $offerMessage, 'exchange_players' => $exchangePlayers)
 		);
-		
+
+		return (int) $offerId;
 	}
-	
+
+	/**
+	 * Evaluates a cash offer submitted by a human manager to a CPU partner club.
+	 * The partnership allows the approach, but the CPU may still reject it.
+	 *
+	 * @return string accepted, rejected or pending
+	 */
+	public static function evaluateComputerPartnershipOffer(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $offerId) {
+		$offerId = (int) $offerId;
+		if ($offerId < 1) {
+			return 'pending';
+		}
+
+		$table = $websoccer->getConfig('db_prefix') . '_transfer_offer';
+		$result = $db->querySelect('*', $table, 'id = %d', $offerId, 1);
+		$offer = $result->fetch_array();
+		$result->free();
+		if (!$offer || (int) $offer['sender_user_id'] < 1) {
+			return 'pending';
+		}
+
+		$receiver = TeamsDataService::getTeamSummaryById($websoccer, $db, (int) $offer['receiver_club_id']);
+		if (!$receiver || (int) $receiver['user_id'] > 0
+				|| !class_exists('ClubPartnershipDataService')
+				|| !ClubPartnershipDataService::isActivePartnershipBetween($websoccer, $db, (int) $offer['sender_club_id'], (int) $offer['receiver_club_id'])) {
+			return 'pending';
+		}
+
+		$player = PlayersDataService::getPlayerById($websoccer, $db, (int) $offer['player_id']);
+		$minimumSize = max(11, (int) $websoccer->getConfig('transfermarket_min_teamsize'));
+		$receiverSize = TeamsDataService::getTeamSize($websoccer, $db, (int) $offer['receiver_club_id']);
+		$marketValue = $player ? (int) PlayersDataService::getMarketValue($websoccer, $db, $player) : 0;
+		$minimumPrice = max(100000, $marketValue);
+		$acceptancePrice = (int) round($minimumPrice * mt_rand(90, 108) / 100);
+		$canSell = $player
+			&& (int) $player['team_id'] === (int) $offer['receiver_club_id']
+			&& (int) $player['player_unsellable'] !== 1
+			&& $receiverSize > $minimumSize;
+
+		if ($canSell && (int) $offer['offer_amount'] >= $acceptancePrice) {
+			return self::executeTransferFromOffer($websoccer, $db, $offerId) ? 'accepted' : 'pending';
+		}
+
+		$reason = $i18n->getMessage('transferoffer_partner_cpu_rejection_reason');
+		$db->queryUpdate(array(
+			'rejected_date' => $websoccer->getNowAsTimestamp(),
+			'rejected_message' => $reason,
+			'rejected_allow_alternative' => '1'
+		), $table, 'id = %d', $offerId);
+		TransferMessagesDataService::createOfferRejected(
+			$websoccer,
+			$db,
+			(int) $offer['sender_user_id'],
+			(int) $offer['player_id'],
+			(int) $offer['receiver_club_id'],
+			(int) $offer['sender_club_id'],
+			$reason
+		);
+		return 'rejected';
+	}
+
 	/**
 	 * Executes a transfer according to direct transfer offer. Deletes all offers for this player on success.
 	 * 

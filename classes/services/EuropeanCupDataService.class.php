@@ -110,6 +110,7 @@ class EuropeanCupDataService {
             'phases' => $phases,
             'group_table' => $groupTable,
             'matches' => $matches,
+            'match_date_groups' => MatchGroupingDataService::groupByDate($matches, $websoccer->getNowAsTimestamp()),
             'latest_results' => self::getLatestResults($websoccer, $db, $cupName, 5),
             'next_matches' => self::getNextMatches($websoccer, $db, $cupName, 5),
             'round_stats' => self::getMatchStats($matches),

@@ -18,27 +18,49 @@
     {{ profile.infofield(i18n.getMessage("training_last_execution"), env.getFormattedDatetime(lastExecution)) }}
 {% endif %}
 
-{% if training_unit is defined and training_unit.id is defined %}
-    <h3>{{ i18n.getMessage("training_current_trainer") }}</h3>
-
-    {% set bar_tech = statisticelements.progressbar(training_unit.trainer.p_technique) %}
-    {% set bar_stamina = statisticelements.progressbar(training_unit.trainer.p_stamina) %}
-    {% set bar_offense = statisticelements.progressbar(training_unit.trainer.p_offense) %}
-    {% set bar_defense = statisticelements.progressbar(training_unit.trainer.p_defense) %}
-    {% set bar_tactics = statisticelements.progressbar(training_unit.trainer.p_tactics) %}
-    {% set bar_goalkeeping = statisticelements.progressbar(training_unit.trainer.p_goalkeeping) %}
-    {% set bar_mental = statisticelements.progressbar(training_unit.trainer.p_mental) %}
-
-    {{ profile.infofield(i18n.getMessage("entity_trainer_name"), training_unit.trainer.name) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_specialization"), i18n.getMessage(trainerSpecializations[training_unit.trainer.specialization])) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_reputation"), training_unit.trainer.reputation) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_p_technique"), bar_tech|raw, true) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_p_offense"), bar_offense|raw, true) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_p_defense"), bar_defense|raw, true) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_p_tactics"), bar_tactics|raw, true) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_p_goalkeeping"), bar_goalkeeping|raw, true) }}
-    {{ profile.infofield(i18n.getMessage("entity_trainer_p_mental"), bar_mental|raw, true) }}
+{% if trainerStaff|length > 0 %}
+    <h3>{{ i18n.getMessage("training_staff_title") }}</h3>
+    <p><i class="icon-info-sign"></i> {{ i18n.getMessage("training_staff_intro", maxTrainerStaff) }}</p>
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>{{ i18n.getMessage("entity_trainer_name") }}</th>
+                <th>{{ i18n.getMessage("training_staff_role") }}</th>
+                <th>{{ i18n.getMessage("entity_trainer_specialization") }}</th>
+                <th>{{ i18n.getMessage("training_staff_open_units") }}</th>
+                <th>{{ i18n.getMessage("entity_trainer_salary") }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff in trainerStaff %}
+                <tr>
+                    <td><strong>{{ staff.name }}</strong></td>
+                    <td>
+                        {% if staff.role == 'head' %}
+                            <span class="label label-info">{{ i18n.getMessage("training_staff_head") }}</span>
+                        {% else %}
+                            <span class="label">{{ i18n.getMessage("training_staff_specialist") }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ i18n.getMessage(trainerSpecializations[staff.specialization]) }}</td>
+                    <td>{{ staff.open_units }}</td>
+                    <td>{{ staff.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+                    <td style="white-space: nowrap;">
+                        <a href="{{ env.getInternalUrl("trainer-details", "id=" ~ staff.id) }}" class="btn btn-small"><i class="icon-plus"></i> {{ i18n.getMessage("training_add_units") }}</a>
+                        <form method="post" style="display: inline; margin: 0;" onsubmit="return confirm('{{ i18n.getMessage("training_dismiss_trainer_confirm", (staff.salary * 2)|number_format(0, ',', ' '), env.getConfig("game_currency")) }}');">
+                            <input type="hidden" name="page" value="training" />
+                            <input type="hidden" name="action" value="dismiss-trainer" />
+                            <input type="hidden" name="id" value="{{ staff.id }}" />
+                            <button type="submit" class="btn btn-small btn-danger"><i class="icon-remove icon-white"></i> {{ i18n.getMessage("training_dismiss_trainer") }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-warning">{{ i18n.getMessage("training_staff_empty") }}</div>
 {% endif %}
 
 <h3>{{ i18n.getMessage("training_plan_title") }}</h3>
@@ -175,8 +197,29 @@
     </table>
 {% endif %}
 
-{% if training_unit is not defined or training_unit|length == 0 %}
+{% if trainerStaff|length < maxTrainerStaff %}
     <h3>{{ i18n.getMessage("training_choose_trainer") }}</h3>
+    <p>{{ i18n.getMessage("training_staff_slots_available", maxTrainerStaff - trainerStaff|length) }}</p>
+
+    <div class="btn-toolbar" style="margin-bottom: 15px;">
+        <div class="btn-group">
+            <a href="{{ env.getInternalUrl('training') }}" class="btn{% if selectedTrainerSpecialization is empty %} active{% endif %}">
+                {{ i18n.getMessage("training_trainer_filter_all") }}
+            </a>
+            {% for specializationId,specializationMessage in trainerSpecializations %}
+                {% set specializationCount = trainerSpecializationCounts[specializationId]|default(0) %}
+                {% if specializationCount > 0 %}
+                    <a href="{{ env.getInternalUrl('training', 'specialization=' ~ specializationId) }}" class="btn{% if selectedTrainerSpecialization == specializationId %} active{% endif %}">
+                        {{ i18n.getMessage(specializationMessage) }} ({{ specializationCount }})
+                    </a>
+                {% else %}
+                    <span class="btn disabled">
+                        {{ i18n.getMessage(specializationMessage) }} (0)
+                    </span>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 
     {% if trainers is defined and trainers|length > 0 %}
         <table class="table table-striped">
@@ -202,7 +245,7 @@
                                 <p>{{ premium.premiumbadge(trainer.premiumfee) }}</p>
                             {% endif %}
                             {% if trainer.suitability.can_hire %}
-                                <p><a href="{{ env.getInternalUrl("trainer-details", "id=" ~ trainer.id) }}" class="btn"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></p>
+                                <p><a href="{{ env.getInternalUrl("trainer-details", "id=" ~ trainer.id) }}" class="btn"><i class="icon-hand-right"></i> {% if trainer.in_staff %}{{ i18n.getMessage("training_add_units") }}{% else %}{{ i18n.getMessage("button_choose") }}{% endif %}</a></p>
                             {% else %}
                                 <p><span class="label label-warning">{{ i18n.getMessage("training_trainer_not_realistic") }}</span></p>
                             {% endif %}

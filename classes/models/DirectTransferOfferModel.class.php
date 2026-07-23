@@ -49,9 +49,16 @@ class DirectTransferOfferModel implements IModel {
 			return FALSE;
 		}
 		
-		// is player seallable and is playing in a team with a manager; and is not borrowed
-		return (!$this->_player["player_unsellable"] && $this->_player["team_user_id"] > 0 
-				&& $this->_player["team_user_id"] !== $this->_websoccer->getUser()->id
+		$ownClubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		$managedByOtherUser = ((int) $this->_player["team_user_id"] > 0
+				&& (int) $this->_player["team_user_id"] !== (int) $this->_websoccer->getUser()->id);
+		$cpuPartner = ((int) $this->_player["team_user_id"] < 1
+				&& (int) $ownClubId > 0
+				&& class_exists('ClubPartnershipDataService')
+				&& ClubPartnershipDataService::isActivePartnershipBetween($this->_websoccer, $this->_db, (int) $ownClubId, (int) $this->_player['team_id']));
+
+		return (!$this->_player["player_unsellable"]
+				&& ($managedByOtherUser || $cpuPartner)
 				&& !$this->_player["player_transfermarket"]
 				&& $this->_player["lending_owner_id"] == 0);
 	}

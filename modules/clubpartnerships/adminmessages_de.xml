@@ -19,4 +19,16 @@
   <message id="clubpartnership_admin_conflict">Konflikt</message>
   <message id="clubpartnership_admin_manager_left">Managerwechsel erkannt</message>
   <message id="clubpartnerships_date">Datum</message>
+
+  <message id="settings_label_club_partnership_minimum_matches">Mindestdauer einer Partnerschaft</message>
+  <message id="settings_label_club_partnership_minimum_matches_help">Anzahl absolvierter Spiele beider Vereine bis zur kostenfreien Kündigung.</message>
+  <message id="settings_label_club_partnership_termination_fee_percent">Kündigungsentschädigung in Prozent</message>
+  <message id="settings_label_club_partnership_termination_fee_percent_help">Anteil des aktuellen Vereinsbudgets bei vorzeitiger Kündigung.</message>
+  <message id="settings_label_club_partnership_termination_fee_max">Maximale Kündigungsentschädigung</message>
+  <message id="settings_label_club_partnership_termination_fee_max_help">Höchstbetrag, den der andere Partnerverein bei vorzeitiger Kündigung erhält.</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers">CPU-Partnerangebote aktivieren</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers_help">CPU-Partnervereine dürfen ablehnbare Direktangebote an User-Vereine senden.</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance">Chance auf CPU-Partnerangebot</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance_help">Prozentchance je verarbeitetem Spieltag und aktiver gemischter Partnerschaft.</message>
+
 </messages>

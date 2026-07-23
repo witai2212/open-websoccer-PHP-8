@@ -193,5 +193,40 @@ class NotificationsDataService {
 		}
 		return $notifications;
 	}
+
+    public static function groupNotificationsByDateAndType($notifications) {
+        $dateGroups = array();
+        foreach ($notifications as $notification) {
+            $timestamp = isset($notification['eventdate']) ? (int) $notification['eventdate'] : 0;
+            $dateKey = $timestamp > 0 ? date('Y-m-d', $timestamp) : 'unknown';
+            $typeKey = !empty($notification['eventtype']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', $notification['eventtype']) : 'general';
+            if (!isset($dateGroups[$dateKey])) {
+                $dateGroups[$dateKey] = array(
+                    'key' => str_replace('-', '', $dateKey),
+                    'timestamp' => $timestamp,
+                    'is_open' => count($dateGroups) === 0,
+                    'types' => array()
+                );
+            }
+            if (!isset($dateGroups[$dateKey]['types'][$typeKey])) {
+                $dateGroups[$dateKey]['types'][$typeKey] = array(
+                    'key' => $typeKey,
+                    'eventtype' => isset($notification['eventtype']) ? $notification['eventtype'] : '',
+                    'items' => array(),
+                    'has_unseen' => false
+                );
+            }
+            $dateGroups[$dateKey]['types'][$typeKey]['items'][] = $notification;
+            if (empty($notification['seen'])) {
+                $dateGroups[$dateKey]['types'][$typeKey]['has_unseen'] = true;
+            }
+        }
+        foreach ($dateGroups as &$dateGroup) {
+            $dateGroup['types'] = array_values($dateGroup['types']);
+        }
+        unset($dateGroup);
+        return array_values($dateGroups);
+    }
+
 }
 ?>

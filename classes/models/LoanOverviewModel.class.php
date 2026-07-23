@@ -153,8 +153,7 @@ class LoanOverviewModel implements IModel {
 			  AND P.transfermarkt <> '1'
 			  AND P.lending_fee > 0
 			  AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)
-			ORDER BY CASE WHEN CP.id IS NULL THEN 1 ELSE 0 END ASC, P.position ASC, P.w_staerke DESC, P.nachname ASC
-			LIMIT 100";
+			ORDER BY CASE WHEN CP.id IS NULL THEN 1 ELSE 0 END ASC, P.position ASC, P.w_staerke DESC, P.nachname ASC";
 
 		return $this->fetchSimpleRows($query);
 	}

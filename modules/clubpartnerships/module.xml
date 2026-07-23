@@ -14,6 +14,11 @@
     <setting id="club_partnership_development_bonus_percent" category="game" type="number" default="5" />
     <setting id="club_partnership_shared_scouting_bonus" category="game" type="number" default="5" />
     <setting id="club_partnership_first_option_days" category="game" type="number" default="2" />
+    <setting id="club_partnership_minimum_matches" category="game" type="number" default="30" />
+    <setting id="club_partnership_termination_fee_percent" category="game" type="number" default="10" />
+    <setting id="club_partnership_termination_fee_max" category="game" type="number" default="5000000" />
+    <setting id="club_partnership_cpu_direct_offers" category="game" type="boolean" default="1" />
+    <setting id="club_partnership_cpu_offer_chance" category="game" type="number" default="15" />
   </settings>
 
   <admin>

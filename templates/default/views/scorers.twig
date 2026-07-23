@@ -45,7 +45,7 @@
 				<td><p><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a></p></td>
 				<td>
 				{% if player.team_id > 0 %}
-				<a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
+				{% if player.team_picture|default('')|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ player.team_picture }}" alt="{{ player.team_name }}" style="max-width: 20px; max-height: 20px; vertical-align: middle" /> {% endif %}<a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
 				{% else %}
 				-
 				{% endif %}

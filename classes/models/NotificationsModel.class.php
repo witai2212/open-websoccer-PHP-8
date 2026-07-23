@@ -57,7 +57,10 @@ class NotificationsModel implements IModel {
 		$this->_db->queryUpdate(array("seen" => "1"), $this->_websoccer->getConfig("db_prefix") . "_notification", 
 				"user_id = %d", $this->_websoccer->getUser()->id);
 		
-		return array("notifications" => $notifications);
+		return array(
+            "notifications" => $notifications,
+            "notification_groups" => NotificationsDataService::groupNotificationsByDateAndType($notifications)
+        );
 	}
 	
 }

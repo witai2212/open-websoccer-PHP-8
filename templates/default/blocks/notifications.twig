@@ -1,19 +1,40 @@
-{% if notifications|length == 0 %}
-	{{ i18n.getMessage("userprofile_block_notifications_noneavailable") }}
+{% if notification_groups|length == 0 %}
+    {{ i18n.getMessage("userprofile_block_notifications_noneavailable") }}
 {% else %}
-
-<ul class="unstyled">
-	{% for notification in notifications %}
-		<li>
-			{% if notification.link|length >0 %}
-				<a href="{{ notification.link }}">{{ notification.message|raw }}</a>
-			{% else %}
-				<span>{{ notification.message|raw }}</span>
-			{% endif %}
-			<br>
-			<small class="{% if notification.seen == 0 %}text-error{% else %}muted{% endif %}">{{ env.getFormattedDateTime(notification.eventdate) }}</small>
-		</li>
-	{% endfor %}
-</ul>
-
+<div class="accordion" id="notificationDateGroups">
+    {% for group in notification_groups %}
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#notificationDateGroups" href="#notificationDate{{ group.key }}">
+                    <i class="icon-calendar"></i> <strong>{{ group.timestamp|date(env.getConfig("date_format")) }}</strong>
+                </a>
+            </div>
+            <div id="notificationDate{{ group.key }}" class="accordion-body collapse{% if group.is_open %} in{% endif %}">
+                <div class="accordion-inner">
+                    {% for typegroup in group.types %}
+                        <div style="margin-bottom: 12px;">
+                            {% if typegroup.items|length > 1 %}
+                                <a data-toggle="collapse" href="#notificationType{{ group.key }}_{{ typegroup.key }}">
+                                    <strong>{{ i18n.getMessage("notifications_grouped_count", typegroup.items|length) }}</strong>
+                                    {% if typegroup.has_unseen %}<span class="label label-important">{{ i18n.getMessage("notifications_new") }}</span>{% endif %}
+                                </a>
+                                <div id="notificationType{{ group.key }}_{{ typegroup.key }}" class="collapse">
+                            {% endif %}
+                            <ul class="unstyled"{% if typegroup.items|length > 1 %} style="margin-top: 8px;"{% endif %}>
+                            {% for notification in typegroup.items %}
+                                <li style="margin-bottom: 8px;">
+                                    {% if notification.link|length > 0 %}<a href="{{ notification.link }}">{{ notification.message|raw }}</a>
+                                    {% else %}<span>{{ notification.message|raw }}</span>{% endif %}
+                                    <br><small class="{% if notification.seen == 0 %}text-error{% else %}muted{% endif %}">{{ env.getFormattedDateTime(notification.eventdate) }}</small>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            {% if typegroup.items|length > 1 %}</div>{% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endif %}

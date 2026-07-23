@@ -30,12 +30,14 @@ class TransferMarketIntelligenceDataService {
 
         $team = self::getTeam($websoccer, $db, $teamId);
         $scouting = self::getScoutCoverage($websoccer, $db, $teamId);
+        $clubNeeds = self::getClubNeeds($websoccer, $db, $i18n, $teamId);
 
         $listedPlayers = array();
         $loanPlayers = array();
         if (!empty($scouting['has_coverage'])) {
             $listedPlayers = self::getListedTransferPlayers($websoccer, $db, $teamId, $scouting['covered_positions']);
             $loanPlayers = self::getLoanPlayers($websoccer, $db, $teamId, $scouting['covered_positions']);
+            $loanPlayers = self::buildLoanRecommendations($loanPlayers, $clubNeeds, $team);
         }
 
         $bestPlayers = $listedPlayers;
@@ -65,15 +67,13 @@ class TransferMarketIntelligenceDataService {
         usort($expiring, array('TransferMarketIntelligenceDataService', 'sortExpiring'));
         usort($loanPlayers, array('TransferMarketIntelligenceDataService', 'sortLoanPlayers'));
 
-        $clubNeeds = self::getClubNeeds($websoccer, $db, $i18n, $teamId);
-
         return array(
             'market_intelligence_team' => $team,
             'market_intelligence_scouting' => $scouting,
             'market_intelligence_best_players' => $bestPlayers,
             'market_intelligence_bargains' => array_slice($bargains, 0, 15),
             'market_intelligence_overpriced' => array_slice($overpriced, 0, 15),
-            'market_intelligence_loans' => array_slice($loanPlayers, 0, 15),
+            'market_intelligence_loans' => array_slice($loanPlayers, 0, 10),
             'market_intelligence_expiring_contracts' => array_slice($expiring, 0, 20),
             'market_intelligence_club_needs' => $clubNeeds,
             'market_intelligence_contract_limit' => $contractLimit
@@ -324,6 +324,132 @@ class TransferMarketIntelligenceDataService {
         }
     }
 
+
+    /**
+     * Convert the complete loan market into a short, club-specific recommendation list.
+     * The score deliberately combines squad need, sporting improvement and affordability.
+     */
+    private static function buildLoanRecommendations($players, $clubNeeds, $team) {
+        if (!count($players)) {
+            return array();
+        }
+
+        $depth = (isset($clubNeeds['available']) && $clubNeeds['available'] && isset($clubNeeds['depth']))
+            ? $clubNeeds['depth']
+            : array();
+        $budget = isset($team['finanz_budget']) ? max(0, (int) $team['finanz_budget']) : 0;
+        $maxFee = 0;
+        foreach ($players as $player) {
+            $maxFee = max($maxFee, isset($player['listed_price']) ? (int) $player['listed_price'] : 0);
+        }
+
+        $recommendations = array();
+        foreach ($players as $player) {
+            $position = isset($player['position']) ? (string) $player['position'] : '';
+            $positionDepth = isset($depth[$position]) ? $depth[$position] : array();
+            $needStatus = isset($positionDepth['status']) ? (string) $positionDepth['status'] : 'unknown';
+            $averageStrength = isset($positionDepth['avg_strength']) ? (float) $positionDepth['avg_strength'] : 0;
+            $weakestStrength = isset($positionDepth['weakest_strength']) ? (float) $positionDepth['weakest_strength'] : 0;
+            $playerStrength = isset($player['strength']) ? (float) $player['strength'] : 0;
+
+            // A recommendation must solve a shortage or be a clear quality upgrade.
+            if ($needStatus === 'surplus') {
+                continue;
+            }
+            if ($needStatus !== 'shortage' && $averageStrength > 0 && $playerStrength < ($averageStrength + 2)) {
+                continue;
+            }
+
+            $score = 20;
+            $reasons = array();
+
+            if ($needStatus === 'shortage') {
+                $missingPlayers = isset($positionDepth['diff']) ? abs((int) $positionDepth['diff']) : 1;
+                $score += 38 + min(12, $missingPlayers * 6);
+                $reasons[] = 'transfermarket_intelligence_loan_reason_shortage';
+            } elseif ($needStatus === 'ok') {
+                $score += 10;
+            } else {
+                $score += 8;
+                $reasons[] = 'transfermarket_intelligence_loan_reason_scouted';
+            }
+
+            if ($averageStrength > 0) {
+                $strengthGap = $playerStrength - $averageStrength;
+                $score += self::clamp((int) round($strengthGap * 2.5), -15, 24);
+                if ($strengthGap >= 3) {
+                    $reasons[] = 'transfermarket_intelligence_loan_reason_upgrade';
+                } elseif ($weakestStrength > 0 && $playerStrength >= ($weakestStrength + 5)) {
+                    $reasons[] = 'transfermarket_intelligence_loan_reason_depth';
+                }
+            } else {
+                $score += 18;
+            }
+
+            $age = isset($player['age']) ? (int) $player['age'] : 0;
+            if ($age > 0 && $age <= 23) {
+                $score += 8;
+                $reasons[] = 'transfermarket_intelligence_loan_reason_young';
+            } elseif ($age > 0 && $age <= 26) {
+                $score += 5;
+            } elseif ($age >= 33) {
+                $score -= 4;
+            }
+
+            $salaryShare = isset($player['salary_share_percent']) ? self::clamp((int) $player['salary_share_percent'], 0, 100) : 100;
+            $score += (int) round((100 - $salaryShare) / 5);
+            if ($salaryShare <= 75) {
+                $reasons[] = 'transfermarket_intelligence_loan_reason_salary';
+            }
+
+            $optionType = isset($player['option_type']) ? (string) $player['option_type'] : 'none';
+            $buyFee = isset($player['buy_fee']) ? max(0, (int) $player['buy_fee']) : 0;
+            if ($optionType === 'buy_option') {
+                $score += 7;
+                $reasons[] = 'transfermarket_intelligence_loan_reason_buy_option';
+                if ($buyFee > 0 && !empty($player['marketvalue']) && $buyFee <= (int) $player['marketvalue']) {
+                    $score += 3;
+                }
+            } elseif ($optionType === 'buy_obligation') {
+                $score -= 3;
+            }
+
+            $loanFee = isset($player['listed_price']) ? max(0, (int) $player['listed_price']) : 0;
+            if ($maxFee > 0) {
+                $score += (int) round((1 - ($loanFee / $maxFee)) * 10);
+            }
+
+            $salary = isset($player['contract_salary']) ? max(0, (int) $player['contract_salary']) : 0;
+            $salaryCost = (int) round($salary * ($salaryShare / 100));
+            $totalCostPerMatch = $loanFee + $salaryCost;
+            $estimatedTenMatchCost = $totalCostPerMatch * 10;
+            if ($budget > 0) {
+                $budgetRatio = $estimatedTenMatchCost / $budget;
+                if ($budgetRatio <= 0.05) {
+                    $score += 8;
+                    $reasons[] = 'transfermarket_intelligence_loan_reason_affordable';
+                } elseif ($budgetRatio <= 0.10) {
+                    $score += 3;
+                } elseif ($budgetRatio > 0.20) {
+                    $score -= 10;
+                }
+            }
+
+            $player['position_need_status'] = $needStatus;
+            $player['position_need_amount'] = ($needStatus === 'shortage' && isset($positionDepth['diff'])) ? abs((int) $positionDepth['diff']) : 0;
+            $player['position_average_strength'] = $averageStrength;
+            $player['loan_total_cost_per_match'] = $totalCostPerMatch;
+            $player['loan_recommendation_score'] = self::clamp((int) round($score), 0, 100);
+            $player['loan_recommendation_reasons'] = array_values(array_unique($reasons));
+
+            if ($player['loan_recommendation_score'] >= 35) {
+                $recommendations[] = $player;
+            }
+        }
+
+        return $recommendations;
+    }
+
     private static function getAdminFilters(WebSoccer $websoccer, DbConnection $db) {
         $prefix = $websoccer->getConfig('db_prefix');
         return array(
@@ -425,6 +551,10 @@ class TransferMarketIntelligenceDataService {
         return isset(self::$_positionKeys[$position]) ? self::$_positionKeys[$position] : 'field';
     }
 
+    private static function clamp($value, $minimum, $maximum) {
+        return max((int) $minimum, min((int) $maximum, (int) $value));
+    }
+
     private static function configInt(WebSoccer $websoccer, $key, $default) {
         $value = $websoccer->getConfig($key);
         if ($value === null || $value === '') {
@@ -487,10 +617,17 @@ class TransferMarketIntelligenceDataService {
     }
 
     public static function sortLoanPlayers($a, $b) {
-        if ((float) $a['strength'] == (float) $b['strength']) {
-            return (int) $a['listed_price'] - (int) $b['listed_price'];
+        $scoreA = isset($a['loan_recommendation_score']) ? (int) $a['loan_recommendation_score'] : 0;
+        $scoreB = isset($b['loan_recommendation_score']) ? (int) $b['loan_recommendation_score'] : 0;
+        if ($scoreA !== $scoreB) {
+            return ($scoreA < $scoreB) ? 1 : -1;
         }
-        return ((float) $a['strength'] < (float) $b['strength']) ? 1 : -1;
+        if ((float) $a['strength'] != (float) $b['strength']) {
+            return ((float) $a['strength'] < (float) $b['strength']) ? 1 : -1;
+        }
+        $costA = isset($a['loan_total_cost_per_match']) ? (int) $a['loan_total_cost_per_match'] : (int) $a['listed_price'];
+        $costB = isset($b['loan_total_cost_per_match']) ? (int) $b['loan_total_cost_per_match'] : (int) $b['listed_price'];
+        return $costA - $costB;
     }
 }
 

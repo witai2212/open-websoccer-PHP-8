@@ -625,44 +625,37 @@ class ComputerYouthTeamsDataService {
      * @param DbConnection $db
      */
     private static function sellSurplusYouthPlayers(WebSoccer $websoccer, DbConnection $db) {
-        
         if ((int) $websoccer->getConfig("computer_youth_sell_enabled") !== 1) {
             echo "[ComputerYouthTeamsDataService] youth selling disabled.\n";
             return;
         }
-        
-        $maxPlayers = (int) $websoccer->getConfig("computer_youth_max_players");
-        $targetPlayers = (int) $websoccer->getConfig("computer_youth_target_players");
-        $minimumPromotionAge = (int) $websoccer->getConfig("youth_min_age_professional");
-        $minimumPromotionStrength = (int) $websoccer->getConfig("computer_youth_promotion_min_strength");
+
+        $sellAbove = max(23, (int) $websoccer->getConfig("computer_youth_sell_above_players"));
         $maxListedPlayers = max(1, (int) $websoccer->getConfig("computer_youth_max_players_on_transfer_list"));
+        $globalMaximum = max(1, (int) $websoccer->getConfig("computer_youth_global_max_players_on_transfer_list"));
         $listingDurationDays = max(1, (int) $websoccer->getConfig("computer_youth_transfer_list_duration_days"));
         $now = $websoccer->getNowAsTimestamp();
-        
-        if ($maxPlayers < 11) {
-            $maxPlayers = 25;
+        $prefix = $websoccer->getConfig("db_prefix");
+
+        $countResult = $db->executeQuery("SELECT COUNT(*) AS hits FROM {$prefix}_youthplayer P INNER JOIN {$prefix}_verein V ON V.id=P.team_id WHERE P.transfer_fee > 0 AND P.transfer_listed_by_cpu='1' AND (V.user_id IS NULL OR V.user_id <= 0)");
+        $countRow = $countResult->fetch_array();
+        $countResult->free();
+        $globalSlots = max(0, $globalMaximum - (int) $countRow['hits']);
+        if ($globalSlots <= 0) {
+            echo "[ComputerYouthTeamsDataService] global youth marketplace limit reached.\n";
+            return;
         }
-        
-        if ($targetPlayers < 11) {
-            $targetPlayers = 20;
-        }
-        
-        if ($minimumPromotionAge <= 0) {
-            $minimumPromotionAge = 18;
-        }
-        
-        if ($minimumPromotionStrength <= 0) {
-            $minimumPromotionStrength = 45;
-        }
-        
+
         $markedTotal = 0;
         $teams = self::getComputerControlledTeams($websoccer, $db);
-        
         foreach ($teams as $team) {
+            if ($globalSlots <= 0) {
+                break;
+            }
             $teamId = (int) $team["id"];
             $players = self::getYouthPlayersForSellingCheck($websoccer, $db, $teamId);
-            
-            if (!count($players)) {
+            $currentCount = count($players);
+            if ($currentCount <= $sellAbove) {
                 continue;
             }
 
@@ -672,103 +665,38 @@ class ComputerYouthTeamsDataService {
                     $listedForTeam++;
                 }
             }
-            $availableListingSlots = max(0, $maxListedPlayers - $listedForTeam);
-            if ($availableListingSlots <= 0) {
+            $availableListingSlots = min($globalSlots, max(0, $maxListedPlayers - $listedForTeam));
+            $surplus = min($availableListingSlots, max(0, $currentCount - $sellAbove));
+            if ($surplus <= 0) {
                 continue;
             }
-            
-            $markedPlayerIds = array();
-            
+
+            usort($players, array("ComputerYouthTeamsDataService", "sortYouthPlayersWeakestFirst"));
+            $markedForTeam = 0;
             foreach ($players as $player) {
+                if ($markedForTeam >= $surplus || $globalSlots <= 0) {
+                    break;
+                }
                 if ((int) $player["transfer_fee"] > 0) {
                     continue;
                 }
-                
-                if ((int) $player["age"] >= $minimumPromotionAge && (int) $player["strength"] < $minimumPromotionStrength) {
-                    $markedPlayerIds[(int) $player["id"]] = (int) $player["id"];
-                }
-            }
-            
-            $currentCount = count($players);
-            if ($currentCount > $maxPlayers) {
-                $surplus = $currentCount - $maxPlayers;
-                $weakestPlayers = $players;
-                usort($weakestPlayers, array("ComputerYouthTeamsDataService", "sortYouthPlayersWeakestFirst"));
-                
-                foreach ($weakestPlayers as $player) {
-                    if ($surplus <= 0) {
-                        break;
-                    }
-                    
-                    if ((int) $player["transfer_fee"] > 0) {
-                        continue;
-                    }
-                    
-                    $playerId = (int) $player["id"];
-                    if (!isset($markedPlayerIds[$playerId])) {
-                        $markedPlayerIds[$playerId] = $playerId;
-                        $surplus--;
-                    }
-                }
-            }
-            
-            if ($currentCount > $targetPlayers) {
-                $overloadedPlayers = self::getWeakPlayersFromOverloadedPositions($players);
-                
-                foreach ($overloadedPlayers as $player) {
-                    if (count($markedPlayerIds) >= ($currentCount - $targetPlayers)) {
-                        break;
-                    }
-                    
-                    if ((int) $player["transfer_fee"] > 0) {
-                        continue;
-                    }
-                    
-                    $playerId = (int) $player["id"];
-                    if (!isset($markedPlayerIds[$playerId])) {
-                        $markedPlayerIds[$playerId] = $playerId;
-                    }
-                }
-            }
-            
-            $markedForTeam = 0;
-            
-            foreach ($players as $player) {
-                if ($markedForTeam >= $availableListingSlots) {
-                    break;
-                }
-                $playerId = (int) $player["id"];
-                
-                if (!isset($markedPlayerIds[$playerId]) || (int) $player["transfer_fee"] > 0) {
-                    continue;
-                }
-                
-                $transferFee = self::calculateComputerYouthTransferFee($player);
-                
-                $db->queryUpdate(
-                    array(
-                        "transfer_fee" => $transferFee,
-                        "transfer_start" => $now,
-                        "transfer_ende" => $now + ($listingDurationDays * 24 * 60 * 60),
-                        "transfer_listed_by_cpu" => "1"
-                    ),
-                    $websoccer->getConfig("db_prefix") . "_youthplayer",
-                    "id = %d",
-                    $playerId
-                    );
-                
+                $db->queryUpdate(array(
+                    "transfer_fee" => self::calculateComputerYouthTransferFee($player),
+                    "transfer_start" => $now,
+                    "transfer_ende" => $now + ($listingDurationDays * 86400),
+                    "transfer_listed_by_cpu" => "1"
+                ), $prefix . "_youthplayer", "id = %d", (int) $player["id"]);
                 $markedForTeam++;
                 $markedTotal++;
+                $globalSlots--;
             }
-            
             if ($markedForTeam > 0) {
-                echo "[ComputerYouthTeamsDataService] marked " . $markedForTeam . " youth players for sale for team #" . $teamId . ".\n";
+                echo "[ComputerYouthTeamsDataService] marked " . $markedForTeam . " surplus youth players for team #" . $teamId . ".\n";
             }
         }
-        
         echo "[ComputerYouthTeamsDataService] youth players marked for sale total: " . $markedTotal . ".\n";
     }
-    
+
     /**
      * @param WebSoccer $websoccer
      * @param DbConnection $db
@@ -909,21 +837,15 @@ class ComputerYouthTeamsDataService {
             return;
         }
         
-        $targetPlayers = (int) $websoccer->getConfig("computer_youth_target_players");
-        $maxPlayers = (int) $websoccer->getConfig("computer_youth_max_players");
+        $targetPlayers = max(11, (int) $websoccer->getConfig("computer_youth_active_buy_below_players"));
+        $targetedBuyMaximum = max($targetPlayers, (int) $websoccer->getConfig("computer_youth_targeted_buy_max_players"));
+        $maxPlayers = $targetedBuyMaximum + 1;
         $minBudgetAfterBuy = (int) $websoccer->getConfig("computer_youth_min_budget_after_buy");
         $maxBuyFee = (int) $websoccer->getConfig("computer_youth_max_buy_fee");
         $maxBuysPerRun = (int) $websoccer->getConfig("computer_youth_max_buys_per_run");
         $maxBuysPerClub = (int) $websoccer->getConfig("computer_youth_max_buys_per_club");
         
-        if ($targetPlayers < 11) {
-            $targetPlayers = 20;
-        }
-        
-        if ($maxPlayers < $targetPlayers) {
-            $maxPlayers = $targetPlayers;
-        }
-        
+
         if ($maxBuyFee <= 0) {
             $maxBuyFee = 5000000;
         }
@@ -945,6 +867,9 @@ class ComputerYouthTeamsDataService {
             }
             
             $buyerTeamId = (int) $teamRow["id"];
+            if (class_exists('ComputerBudgetProtectionDataService')) {
+                ComputerBudgetProtectionDataService::ensureTeamFloor($websoccer, $db, $buyerTeamId);
+            }
             $buyerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $buyerTeamId);
             
             if (!$buyerTeam || !isset($buyerTeam["team_budget"])) {
@@ -952,9 +877,6 @@ class ComputerYouthTeamsDataService {
             }
             
             $buyerBudget = (int) $buyerTeam["team_budget"];
-            if ($buyerBudget <= $minBudgetAfterBuy) {
-                continue;
-            }
             
             $ownPlayers = self::getYouthPlayersForBuyingCheck($websoccer, $db, $buyerTeamId);
             $currentCount = count($ownPlayers);
@@ -968,7 +890,7 @@ class ComputerYouthTeamsDataService {
             while ($boughtForTeam < $maxBuysPerClub && $boughtTotal < $maxBuysPerRun && $currentCount < $maxPlayers) {
                 $buyerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $buyerTeamId);
                 $buyerBudget = (int) $buyerTeam["team_budget"];
-                $availableBudget = $buyerBudget - $minBudgetAfterBuy;
+                $availableBudget = min($buyerBudget, $maxBuyFee);
                 
                 if ($availableBudget <= 0) {
                     break;

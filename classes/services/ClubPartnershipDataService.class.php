@@ -52,6 +52,9 @@ class ClubPartnershipDataService {
             created_date INT(11) NOT NULL DEFAULT 0,
             updated_date INT(11) NOT NULL DEFAULT 0,
             confirmed_date INT(11) NOT NULL DEFAULT 0,
+            minimum_matches SMALLINT(5) NOT NULL DEFAULT 30,
+            termination_fee INT(10) NOT NULL DEFAULT 0,
+            last_cpu_offer_match_id INT(10) NOT NULL DEFAULT 0,
             stopped_date INT(11) NOT NULL DEFAULT 0,
             context_data TEXT DEFAULT NULL,
             PRIMARY KEY (id),
@@ -60,6 +63,10 @@ class ClubPartnershipDataService {
             KEY idx_club_partnership_pending_user (pending_user_id, status),
             KEY idx_club_partnership_status_date (status, updated_date)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
+
+        self::ensureColumn($db, self::table($websoccer), 'minimum_matches', "ALTER TABLE " . self::table($websoccer) . " ADD COLUMN minimum_matches SMALLINT(5) NOT NULL DEFAULT 30 AFTER confirmed_date");
+        self::ensureColumn($db, self::table($websoccer), 'termination_fee', "ALTER TABLE " . self::table($websoccer) . " ADD COLUMN termination_fee INT(10) NOT NULL DEFAULT 0 AFTER minimum_matches");
+        self::ensureColumn($db, self::table($websoccer), 'last_cpu_offer_match_id', "ALTER TABLE " . self::table($websoccer) . " ADD COLUMN last_cpu_offer_match_id INT(10) NOT NULL DEFAULT 0 AFTER termination_fee");
 
         $db->executeQuery("CREATE TABLE IF NOT EXISTS " . self::logTable($websoccer) . " (
             id INT(10) NOT NULL AUTO_INCREMENT,
@@ -110,9 +117,14 @@ class ClubPartnershipDataService {
         $team = self::getTeam($websoccer, $db, $teamId);
         $hasOpen = ($team) ? self::hasOpenPartnershipForTeam($websoccer, $db, $teamId) : true;
 
+        $activePartnership = ($team) ? self::getOpenPartnershipForTeam($websoccer, $db, $teamId, true) : array();
+        if (isset($activePartnership['id'])) {
+            $activePartnership = self::decoratePartnershipDuration($websoccer, $db, $activePartnership, $teamId);
+        }
+
         return array(
             'team' => $team,
-            'active_partnership' => ($team) ? self::getOpenPartnershipForTeam($websoccer, $db, $teamId, true) : array(),
+            'active_partnership' => $activePartnership,
             'incoming_requests' => self::getRequestsForUser($websoccer, $db, $userId),
             'outgoing_requests' => ($team) ? self::getOutgoingRequestsForTeam($websoccer, $db, $teamId) : array(),
             'candidate_parents' => (!$hasOpen && $team) ? self::getCandidateParents($websoccer, $db, $teamId) : array(),
@@ -189,6 +201,9 @@ class ClubPartnershipDataService {
             'created_date' => $now,
             'updated_date' => $now,
             'confirmed_date' => ($status === self::STATUS_ACTIVE) ? $now : 0,
+            'minimum_matches' => self::getMinimumPartnershipMatches($websoccer),
+            'termination_fee' => 0,
+            'last_cpu_offer_match_id' => 0,
             'stopped_date' => 0,
             'context_data' => self::json(array('parent_score' => self::calculateTeamScore($parent), 'partner_score' => self::calculateTeamScore($partner)))
         );
@@ -231,6 +246,8 @@ class ClubPartnershipDataService {
             'status' => self::STATUS_ACTIVE,
             'updated_date' => $now,
             'confirmed_date' => $now,
+            'minimum_matches' => self::getMinimumPartnershipMatches($websoccer),
+            'termination_fee' => 0,
             'suspended_reason' => ''
         ), self::table($websoccer), 'id = %d', (int) $partnershipId);
 
@@ -265,9 +282,176 @@ class ClubPartnershipDataService {
             throw new Exception(self::message($i18n, 'clubpartnership_error_not_manager'));
         }
 
+        $terminatingTeamId = ((int) $parent['user_id'] === (int) $userId) ? (int) $parent['id'] : (int) $partner['id'];
+        $receivingTeamId = ($terminatingTeamId === (int) $parent['id']) ? (int) $partner['id'] : (int) $parent['id'];
+        $duration = self::getPartnershipDuration($websoccer, $db, $partnership);
+        $terminationFee = 0;
+        if (in_array($partnership['status'], array(self::STATUS_ACTIVE, self::STATUS_SUSPENDED), true) && (int) $duration['remaining_matches'] > 0) {
+            $terminatingTeam = ($terminatingTeamId === (int) $parent['id']) ? $parent : $partner;
+            $terminationFee = self::calculateTerminationFee($websoccer, (int) $terminatingTeam['finanz_budget']);
+            if ($terminationFee > 0) {
+                BankAccountDataService::debitAmount($websoccer, $db, $terminatingTeamId, $terminationFee, 'clubpartnership_termination_fee_subject', (($receivingTeamId === (int) $parent['id']) ? $parent['name'] : $partner['name']));
+                BankAccountDataService::creditAmount($websoccer, $db, $receivingTeamId, $terminationFee, 'clubpartnership_termination_fee_subject', (($terminatingTeamId === (int) $parent['id']) ? $parent['name'] : $partner['name']));
+            }
+        }
+
+        $db->queryUpdate(array('termination_fee' => $terminationFee), self::table($websoccer), 'id = %d', (int) $partnershipId);
         self::setStatus($websoccer, $db, $partnershipId, self::STATUS_STOPPED, self::REASON_MANAGER_STOPPED);
         self::notifyBothSides($websoccer, $db, $partnershipId, 'clubpartnership_notification_stopped', 'clubpartnership_stopped');
-        self::log($websoccer, $db, $partnershipId, 'stopped', self::message($i18n, 'clubpartnership_log_stopped'), $userId, 0);
+        self::log($websoccer, $db, $partnershipId, 'stopped', self::message($i18n, 'clubpartnership_log_stopped_with_fee', array($terminationFee)), $userId, 0);
+    }
+
+    public static function isActivePartnershipBetween(WebSoccer $websoccer, DbConnection $db, $teamId1, $teamId2) {
+        self::ensureSchema($websoccer, $db);
+        $where = "status = 'active' AND ((parent_team_id = %d AND partner_team_id = %d) OR (parent_team_id = %d AND partner_team_id = %d))";
+        $result = $db->querySelect('id', self::table($websoccer), $where, array((int) $teamId1, (int) $teamId2, (int) $teamId2, (int) $teamId1), 1);
+        $row = $result->fetch_array();
+        $result->free();
+        return $row ? true : false;
+    }
+
+    public static function processComputerDirectOffers(WebSoccer $websoccer, DbConnection $db, I18n $i18n) {
+        self::ensureSchema($websoccer, $db);
+        if (self::configInt($websoccer, 'club_partnership_cpu_direct_offers', 1) < 1) {
+            return array('checked' => 0, 'created' => 0);
+        }
+
+        $prefix = $websoccer->getConfig('db_prefix');
+        $result = $db->querySelect('MAX(id) AS latest_id', $prefix . '_spiel', "berechnet = '1'", array(), 1);
+        $latest = $result->fetch_array();
+        $result->free();
+        $latestMatchId = $latest ? (int) $latest['latest_id'] : 0;
+        if ($latestMatchId < 1) {
+            return array('checked' => 0, 'created' => 0);
+        }
+
+        $sql = "SELECT CP.*, P.user_id AS parent_current_user_id, C.user_id AS partner_current_user_id "
+            . "FROM " . $prefix . "_club_partnership AS CP "
+            . "INNER JOIN " . $prefix . "_verein AS P ON P.id = CP.parent_team_id "
+            . "INNER JOIN " . $prefix . "_verein AS C ON C.id = CP.partner_team_id "
+            . "WHERE CP.status = 'active' AND CP.last_cpu_offer_match_id < " . (int) $latestMatchId . " "
+            . "AND ((P.user_id > 0 AND (C.user_id = 0 OR C.user_id IS NULL)) OR (C.user_id > 0 AND (P.user_id = 0 OR P.user_id IS NULL)))";
+        $rows = $db->executeQuery($sql);
+        $checked = 0;
+        $created = 0;
+        $chance = max(0, min(100, self::configInt($websoccer, 'club_partnership_cpu_offer_chance', 15)));
+        while ($partnership = $rows->fetch_assoc()) {
+            $checked++;
+            $db->queryUpdate(array('last_cpu_offer_match_id' => $latestMatchId), self::table($websoccer), 'id = %d', (int) $partnership['id']);
+            if (mt_rand(1, 100) > $chance) {
+                continue;
+            }
+
+            $parentIsCpu = ((int) $partnership['parent_current_user_id'] < 1);
+            $cpuTeamId = $parentIsCpu ? (int) $partnership['parent_team_id'] : (int) $partnership['partner_team_id'];
+            $humanTeamId = $parentIsCpu ? (int) $partnership['partner_team_id'] : (int) $partnership['parent_team_id'];
+            $humanUserId = $parentIsCpu ? (int) $partnership['partner_current_user_id'] : (int) $partnership['parent_current_user_id'];
+            if ($humanUserId < 1 || TeamsDataService::getTeamSize($websoccer, $db, $cpuTeamId) >= 26) {
+                continue;
+            }
+            $humanSize = TeamsDataService::getTeamSize($websoccer, $db, $humanTeamId);
+            $minimumSize = max(11, (int) $websoccer->getConfig('transfermarket_min_teamsize'));
+            if ($humanSize <= $minimumSize) {
+                continue;
+            }
+
+            $open = $db->querySelect('id', $prefix . '_transfer_offer', "sender_club_id = %d AND receiver_club_id = %d AND rejected_date = 0", array($cpuTeamId, $humanTeamId), 1);
+            $hasOpen = $open->fetch_array();
+            $open->free();
+            if ($hasOpen) {
+                continue;
+            }
+
+            if (class_exists('ComputerBudgetProtectionDataService')) {
+                ComputerBudgetProtectionDataService::ensureTeamFloor($websoccer, $db, $cpuTeamId);
+            }
+            $cpu = TeamsDataService::getTeamSummaryById($websoccer, $db, $cpuTeamId);
+            if (!$cpu) {
+                continue;
+            }
+            $available = max(0, (int) $cpu['team_budget']);
+            if ($available < 100000) {
+                continue;
+            }
+
+            $candidateSql = "SELECT id FROM " . $prefix . "_spieler "
+                . "WHERE verein_id = " . (int) $humanTeamId . " AND status = '1' AND unsellable = '0' AND transfermarkt = '0' "
+                . "AND (lending_owner_id IS NULL OR lending_owner_id = 0) AND age BETWEEN 18 AND 32 "
+                . "ORDER BY RAND() LIMIT 1";
+            $candidateResult = $db->executeQuery($candidateSql);
+            $candidate = $candidateResult->fetch_array();
+            $candidateResult->free();
+            if (!$candidate) {
+                continue;
+            }
+            $player = PlayersDataService::getPlayerById($websoccer, $db, (int) $candidate['id']);
+            if (!$player) {
+                continue;
+            }
+            $marketValue = isset($player['player_marketvalue']) ? (int) $player['player_marketvalue'] : 0;
+            if ($marketValue < 1) {
+                $marketValue = (int) PlayersDataService::getMarketValue($websoccer, $db, $player);
+            }
+            $offerAmount = max(100000, (int) round($marketValue * mt_rand(95, 115) / 100));
+            if ($offerAmount > $available) {
+                continue;
+            }
+
+            DirectTransfersDataService::createTransferOffer(
+                $websoccer,
+                $db,
+                (int) $candidate['id'],
+                0,
+                $cpuTeamId,
+                $humanUserId,
+                $humanTeamId,
+                $offerAmount,
+                self::message($i18n, 'clubpartnership_cpu_offer_comment'),
+                0,
+                0
+            );
+            $created++;
+        }
+        $rows->free();
+        return array('checked' => $checked, 'created' => $created);
+    }
+
+    private static function decoratePartnershipDuration(WebSoccer $websoccer, DbConnection $db, $partnership, $viewerTeamId) {
+        $duration = self::getPartnershipDuration($websoccer, $db, $partnership);
+        $partnership['elapsed_matches'] = (int) $duration['elapsed_matches'];
+        $partnership['remaining_matches'] = (int) $duration['remaining_matches'];
+        $partnership['minimum_matches'] = (int) $duration['minimum_matches'];
+        $viewerBudget = ((int) $viewerTeamId === (int) $partnership['parent_team_id']) ? (int) $partnership['parent_budget'] : (int) $partnership['partner_budget'];
+        $partnership['termination_fee_preview'] = ($partnership['status'] === self::STATUS_PENDING || $partnership['remaining_matches'] < 1) ? 0 : self::calculateTerminationFee($websoccer, $viewerBudget);
+        return $partnership;
+    }
+
+    private static function getPartnershipDuration(WebSoccer $websoccer, DbConnection $db, $partnership) {
+        $minimum = isset($partnership['minimum_matches']) && (int) $partnership['minimum_matches'] > 0 ? (int) $partnership['minimum_matches'] : self::getMinimumPartnershipMatches($websoccer);
+        $confirmed = isset($partnership['confirmed_date']) ? (int) $partnership['confirmed_date'] : 0;
+        if ($confirmed < 1) {
+            return array('minimum_matches' => $minimum, 'elapsed_matches' => 0, 'remaining_matches' => $minimum);
+        }
+        $prefix = $websoccer->getConfig('db_prefix');
+        $counts = array();
+        foreach (array((int) $partnership['parent_team_id'], (int) $partnership['partner_team_id']) as $teamId) {
+            $result = $db->querySelect('COUNT(*) AS qty', $prefix . '_spiel', "berechnet = '1' AND datum >= %d AND (home_verein = %d OR gast_verein = %d)", array($confirmed, $teamId, $teamId), 1);
+            $row = $result->fetch_array();
+            $result->free();
+            $counts[] = $row ? (int) $row['qty'] : 0;
+        }
+        $elapsed = count($counts) ? min($counts) : 0;
+        return array('minimum_matches' => $minimum, 'elapsed_matches' => $elapsed, 'remaining_matches' => max(0, $minimum - $elapsed));
+    }
+
+    private static function calculateTerminationFee(WebSoccer $websoccer, $budget) {
+        $percent = self::configInt($websoccer, 'club_partnership_termination_fee_percent', 10);
+        $maximum = self::configInt($websoccer, 'club_partnership_termination_fee_max', 5000000);
+        return max(0, min($maximum, (int) floor(max(0, (int) $budget) * $percent / 100)));
+    }
+
+    private static function getMinimumPartnershipMatches(WebSoccer $websoccer) {
+        return self::configInt($websoccer, 'club_partnership_minimum_matches', 30);
     }
 
     public static function adminSetStatus(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $adminId, $partnershipId, $status) {
@@ -1140,6 +1324,15 @@ class ClubPartnershipDataService {
             $score += 50;
         }
         return max(0, (int) $score);
+    }
+
+    private static function ensureColumn(DbConnection $db, $table, $column, $alterSql) {
+        $result = $db->executeQuery("SHOW COLUMNS FROM " . $table . " LIKE '" . $db->connection->real_escape_string($column) . "'");
+        $exists = $result->fetch_array();
+        $result->free();
+        if (!$exists) {
+            $db->executeQuery($alterSql);
+        }
     }
 
     private static function table(WebSoccer $websoccer) {

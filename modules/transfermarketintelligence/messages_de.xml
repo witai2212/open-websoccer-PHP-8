@@ -4,12 +4,13 @@
     <message id="transfermarket_intelligence_navlabel">Transfermarkt-Analyse</message>
     <message id="transfer-market-intelligence_navlabel">Transfermarkt-Analyse</message>
     <message id="transfermarket_intelligence_title">Transfermarkt-Analyse</message>
-    <message id="transfermarket_intelligence_intro">Diese Analyse zeigt nur Spieler, die tatsächlich auf Transfer- oder Leihliste stehen. Empfehlungen werden nur für Positionen berechnet, für die dein Verein einen passenden aktiven Scout besitzt.</message>
+    <message id="transfermarket_intelligence_intro">Diese Analyse verbindet den Transfermarkt mit dem Bedarf deines Kaders. Empfehlungen werden nur für Positionen berechnet, für die dein Verein einen passenden aktiven Scout besitzt.</message>
     <message id="transfermarket_intelligence_not_enabled">Die Transfermarkt-Analyse ist deaktiviert.</message>
 
     <message id="transfermarket_intelligence_tab_overview">Übersicht</message>
     <message id="transfermarket_intelligence_tab_recommendations">Kaufempfehlungen</message>
     <message id="transfermarket_intelligence_tab_loans">Leihen</message>
+    <message id="transfermarket_intelligence_tab_loan_recommendations">Leihempfehlungen</message>
     <message id="transfermarket_intelligence_tab_contracts">Vertragsende</message>
     <message id="transfermarket_intelligence_tab_needs">Vereinsbedarf</message>
     <message id="transfermarket_intelligence_tab_admin">Admin / Marktgesundheit</message>
@@ -25,6 +26,10 @@
     <message id="transfermarket_intelligence_bargains">Schnäppchen</message>
     <message id="transfermarket_intelligence_overpriced">Überteuerte Spieler</message>
     <message id="transfermarket_intelligence_loan_opportunities">Leihchancen</message>
+    <message id="transfermarket_intelligence_loan_recommendations">Empfohlene Leihspieler</message>
+    <message id="transfermarket_intelligence_loan_recommendations_help">Die Auswahl ist auf zehn Spieler begrenzt und berücksichtigt Kaderengpässe, Qualitätsgewinn, Alter, Leihgebühr, Gehaltsanteil und Kaufoption. Die vollständige Leihliste bleibt unter Leihen verfügbar.</message>
+    <message id="transfermarket_intelligence_no_loan_recommendations">Aktuell gibt es keine Leihspieler, die zu den erkannten Kaderbedürfnissen und der vorhandenen Scouting-Abdeckung passen.</message>
+    <message id="transfermarket_intelligence_all_loan_players">Alle verfügbaren Leihspieler</message>
     <message id="transfermarket_intelligence_expiring_contracts">Auslaufende Verträge</message>
     <message id="transfermarket_intelligence_club_needs">Vereinsbedarf</message>
 
@@ -49,6 +54,17 @@
     <message id="transfermarket_intelligence_buy_option">Kaufoption</message>
     <message id="transfermarket_intelligence_salary_share">Gehaltsanteil</message>
     <message id="transfermarket_intelligence_matches">Spiele</message>
+    <message id="transfermarket_intelligence_fit">Eignung</message>
+    <message id="transfermarket_intelligence_loan_fee">Leihgebühr</message>
+    <message id="transfermarket_intelligence_loan_cost_per_match">Kosten pro Spiel</message>
+    <message id="transfermarket_intelligence_loan_reason_shortage">Schließt einen Positionsengpass.</message>
+    <message id="transfermarket_intelligence_loan_reason_scouted">Vom zuständigen Scout sportlich empfohlen.</message>
+    <message id="transfermarket_intelligence_loan_reason_upgrade">Hebt die Durchschnittsstärke der Position.</message>
+    <message id="transfermarket_intelligence_loan_reason_depth">Verbessert die Kaderbreite.</message>
+    <message id="transfermarket_intelligence_loan_reason_young">Jung und entwicklungsfähig.</message>
+    <message id="transfermarket_intelligence_loan_reason_salary">Günstiger Gehaltsanteil.</message>
+    <message id="transfermarket_intelligence_loan_reason_buy_option">Kaufoption vorhanden.</message>
+    <message id="transfermarket_intelligence_loan_reason_affordable">Im Verhältnis zum Vereinsbudget gut finanzierbar.</message>
 
     <message id="transfermarket_intelligence_need_shortage">Unterbesetzt</message>
     <message id="transfermarket_intelligence_need_surplus">Überbesetzt</message>

@@ -4,5 +4,7 @@
     <message id="settings_label_training_min_hours_between_execution">Ruhepause zwischen Trainingseinheiten</message> 
     <message id="settings_label_training_min_hours_between_execution_help">in Stunden. Mindestanzahl an Stunden, die zwischen zwei manuellen Trainingseinheiten liegen müssen.</message>
     <message id="settings_label_advanced_training_enabled">Automatisches erweitertes Training aktivieren</message>
-    <message id="settings_label_advanced_training_enabled_help">Wenn aktiv, wird pro Human-Verein nach einem abgeschlossenen Spiel der nächste Slot aus dem gespeicherten Trainingsplan ausgeführt.</message>
+    <message id="settings_label_advanced_training_enabled_help">Wenn aktiv, wird pro Human-Verein einmal innerhalb der festgelegten Stundenfrist der nächste Slot aus dem gespeicherten Trainingsplan ausgeführt, auch an spielfreien Tagen.</message>
+    <message id="settings_label_training_max_trainers_per_team">Maximale Trainer pro Verein</message>
+    <message id="settings_label_training_max_trainers_per_team_help">Ein Cheftrainer und bis zu drei Spezialtrainer ergeben maximal vier aktive Trainer.</message>
 </messages>

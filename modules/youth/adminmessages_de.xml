@@ -82,4 +82,8 @@
 	<message id="settings_label_computer_youth_max_offers_per_player_help">Höchstzahl gleichzeitig offener CPU-Angebote je gelistetem Jugendspieler.</message>
 	<message id="settings_label_computer_youth_offer_decision_hours">Prüfzeit für Jugendangebote</message>
 	<message id="settings_label_computer_youth_offer_decision_hours_help">Stunden bis offene CPU-Angebote spätestens bewertet werden, sofern nicht vorher die Angebotsgrenze erreicht wird.</message>
+    <message id="settings_label_computer_youth_active_buy_below_players">Aktiver CPU-Jugendkauf unter Kadergröße</message>
+    <message id="settings_label_computer_youth_targeted_buy_max_players">Gezielte CPU-Jugendkäufe bis Kadergröße</message>
+    <message id="settings_label_computer_youth_sell_above_players">CPU-Jugendverkäufe über Kadergröße</message>
+    <message id="settings_label_computer_youth_global_max_players_on_transfer_list">Maximale CPU-Spieler auf dem Jugendmarkt</message>
 </messages>

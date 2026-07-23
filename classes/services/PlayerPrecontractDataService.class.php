@@ -132,6 +132,76 @@ class PlayerPrecontractDataService {
         return $row ? (int) $row['offer_count'] : 0;
     }
 
+    public static function getOpenComputerOfferCount(WebSoccer $websoccer, DbConnection $db, $playerId) {
+        $result = $db->querySelect(
+            'COUNT(*) AS offer_count',
+            $websoccer->getConfig('db_prefix') . '_player_precontract',
+            "player_id = %d AND status = 'open' AND is_computer = '1' AND destination_team_id <> current_team_id",
+            (int) $playerId,
+            1
+        );
+        $row = $result->fetch_array();
+        $result->free();
+        return $row ? (int) $row['offer_count'] : 0;
+    }
+
+    public static function cancelOffersBecauseContractWasExtended(WebSoccer $websoccer, DbConnection $db, $playerId, $currentTeamId) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $sql = "SELECT A.* FROM {$prefix}_player_precontract A
+                WHERE A.player_id = " . (int) $playerId . " AND A.status = 'open'";
+        $result = $db->executeQuery($sql);
+        $offers = array();
+        while ($offer = $result->fetch_array()) {
+            $offers[] = $offer;
+        }
+        $result->free();
+        if (!count($offers)) {
+            return 0;
+        }
+
+        $now = $websoccer->getNowAsTimestamp();
+        foreach ($offers as $offer) {
+            if ((int) $offer['destination_user_id'] > 0 && (int) $offer['destination_team_id'] !== (int) $currentTeamId) {
+                TransferMessagesDataService::createPrecontractMessage(
+                    $websoccer,
+                    $db,
+                    (int) $offer['destination_user_id'],
+                    'contract_extended',
+                    (int) $playerId,
+                    (int) $currentTeamId,
+                    (int) $offer['destination_team_id'],
+                    self::offerDetails($offer)
+                );
+            }
+        }
+        $db->queryUpdate(
+            array('status' => 'cancelled', 'decision_date' => $now, 'completed_date' => $now),
+            $prefix . '_player_precontract',
+            "player_id = %d AND status = 'open'",
+            (int) $playerId
+        );
+        return count($offers);
+    }
+
+    private static function cancelIneligibleOpenOffers(WebSoccer $websoccer, DbConnection $db) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $limit = max(1, (int) $websoccer->getConfig('contract_max_number_of_remaining_matches'));
+        $sql = "SELECT DISTINCT A.player_id, A.current_team_id
+                FROM {$prefix}_player_precontract A
+                INNER JOIN {$prefix}_spieler P ON P.id=A.player_id
+                WHERE A.status='open' AND P.vertrag_spiele >= " . (int) $limit;
+        $result = $db->executeQuery($sql);
+        $players = array();
+        while ($row = $result->fetch_array()) {
+            $players[] = $row;
+        }
+        $result->free();
+        foreach ($players as $row) {
+            self::cancelOffersBecauseContractWasExtended($websoccer, $db, (int) $row['player_id'], (int) $row['current_team_id']);
+        }
+        return count($players);
+    }
+
     public static function getIncoming(WebSoccer $websoccer, DbConnection $db, $teamId) {
         $prefix = $websoccer->getConfig('db_prefix');
         $sql = "SELECT A.*, P.vorname AS firstname, P.nachname AS lastname,
@@ -376,6 +446,7 @@ class PlayerPrecontractDataService {
     }
 
     public static function processOpenOffers(WebSoccer $websoccer, DbConnection $db) {
+        self::cancelIneligibleOpenOffers($websoccer, $db);
         $prefix = $websoccer->getConfig('db_prefix');
         $db->executeQuery("UPDATE {$prefix}_player_precontract SET waited_matches = waited_matches + 1 WHERE status = 'open'");
         $sql = "SELECT player_id
@@ -565,6 +636,16 @@ class PlayerPrecontractDataService {
                 $prefix . '_transfer'
             );
 
+            if (class_exists('PlayerTalentChangeDataService')) {
+                PlayerTalentChangeDataService::applyTransferChance(
+                    $websoccer,
+                    $db,
+                    (int) $agreement['player_id'],
+                    (int) $agreement['destination_team_id'],
+                    (int) $agreement['destination_user_id']
+                );
+            }
+
             $details = self::offerDetails($agreement);
             if (!empty($current['user_id'])) {
                 TransferMessagesDataService::createPrecontractMessage(
@@ -670,9 +751,17 @@ class PlayerPrecontractDataService {
         $result = $db->executeQuery($sql);
         $made = 0;
 
+        $maxComputerOffersPerPlayer = max(1, (int) $websoccer->getConfig('computer_transfers_max_offers_per_player'));
+        if ($maxComputerOffersPerPlayer < 1) {
+            $maxComputerOffersPerPlayer = 3;
+        }
+
         while ($player = $result->fetch_array()) {
             if ($made >= 1) {
                 break;
+            }
+            if (self::getOpenComputerOfferCount($websoccer, $db, (int) $player['id']) >= $maxComputerOffersPerPlayer) {
+                continue;
             }
 
             $salary = max(

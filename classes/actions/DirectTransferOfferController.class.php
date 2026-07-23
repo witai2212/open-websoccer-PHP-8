@@ -52,11 +52,17 @@ class DirectTransferOfferController implements IActionController {
 		
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $this->_websoccer->getRequestParameter("id"));
 		
-		// check if player team has a manager
-		if (!$player["team_user_id"]) {
+		$isCpuPartner = false;
+		if (!$player["team_user_id"] && class_exists('ClubPartnershipDataService')) {
+			$isCpuPartner = ClubPartnershipDataService::isActivePartnershipBetween($this->_websoccer, $this->_db, $clubId, (int) $player['team_id']);
+		}
+		if (!$player["team_user_id"] && !$isCpuPartner) {
 			throw new Exception($this->_i18n->getMessage("transferoffer_err_nomanager"));
 		}
-		
+		if ($isCpuPartner && ((int) $parameters['exchangeplayer1'] > 0 || (int) $parameters['exchangeplayer2'] > 0)) {
+			throw new Exception($this->_i18n->getMessage('transferoffer_partner_cpu_cash_only'));
+		}
+
 		// check if player is already in one of user's teams
 		if ($player["team_user_id"] == $this->_websoccer->getUser()->id) {
 			throw new Exception($this->_i18n->getMessage("transferoffer_err_ownplayer"));
@@ -105,11 +111,13 @@ class DirectTransferOfferController implements IActionController {
 		}
 		
 		// check maximum number of transactions between same user within last 30 days
-		$noOfTransactions = TransfermarketDataService::getTransactionsBetweenUsers($this->_websoccer, $this->_db, 
-				$player["team_user_id"], $this->_websoccer->getUser()->id);
-		$maxTransactions = $this->_websoccer->getConfig("transfermarket_max_transactions_between_users");
-		if ($noOfTransactions >= $maxTransactions) {
-			throw new Exception($this->_i18n->getMessage("transfer_bid_too_many_transactions_with_user", $noOfTransactions));
+		if (!$isCpuPartner) {
+			$noOfTransactions = TransfermarketDataService::getTransactionsBetweenUsers($this->_websoccer, $this->_db, 
+					$player["team_user_id"], $this->_websoccer->getUser()->id);
+			$maxTransactions = $this->_websoccer->getConfig("transfermarket_max_transactions_between_users");
+			if ($noOfTransactions >= $maxTransactions) {
+				throw new Exception($this->_i18n->getMessage("transfer_bid_too_many_transactions_with_user", $noOfTransactions));
+			}
 		}
 		
 		// check if budget is enough to pay this amount and sum of other open offers
@@ -123,14 +131,22 @@ class DirectTransferOfferController implements IActionController {
 		TeamsDataService::validateWhetherTeamHasEnoughBudgetForSalaryBid($this->_websoccer, $this->_db, $this->_i18n, $clubId, $player["player_contract_salary"]);
 		
 		// submit offer
-		DirectTransfersDataService::createTransferOffer($this->_websoccer, $this->_db, 
-			$player["player_id"], $this->_websoccer->getUser()->id, $clubId, $player["team_user_id"], $player["team_id"], 
+		$offerId = DirectTransfersDataService::createTransferOffer($this->_websoccer, $this->_db, 
+			$player["player_id"], $this->_websoccer->getUser()->id, $clubId, (int) $player["team_user_id"], $player["team_id"], 
 				$parameters["amount"], $parameters["comment"], $parameters["exchangeplayer1"], $parameters["exchangeplayer2"]);
-				
-		// show success message
+
+		$successMessage = $this->_i18n->getMessage("transferoffer_submitted_message");
+		if ($isCpuPartner) {
+			$decision = DirectTransfersDataService::evaluateComputerPartnershipOffer($this->_websoccer, $this->_db, $this->_i18n, $offerId);
+			if ($decision === 'accepted') {
+				$successMessage = $this->_i18n->getMessage('transferoffer_partner_cpu_accepted');
+			} else if ($decision === 'rejected') {
+				$successMessage = $this->_i18n->getMessage('transferoffer_partner_cpu_rejected');
+			}
+		}
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 				$this->_i18n->getMessage("transferoffer_submitted_title"),
-				$this->_i18n->getMessage("transferoffer_submitted_message")));
+				$successMessage));
 		
 		return null;
 	}

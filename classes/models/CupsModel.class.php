@@ -62,14 +62,25 @@ class CupsModel implements IModel {
 		$cupId = $this->_websoccer->getRequestParameter('cup');
 		$cups = CupsDataService::getCups($this->_websoccer, $this->_db);
 		
-		if($cupId < 1) {
-			$cupId = $myCup['id'];
+		if ($cupId < 1 && isset($myCup['id'])) {
+			$cupId = (int) $myCup['id'];
+		}
+		if ($cupId < 1 && count($cups) && isset($cups[0]['id'])) {
+			$cupId = (int) $cups[0]['id'];
 		}
 		
-		$cup = CupsDataService::getCupDataByCupId($this->_websoccer, $this->_db, $cupId);
-		$matches = CupsDataService::getMatchesByCupname($this->_websoccer, $this->_db, $cup['name']);
+		$cup = ($cupId > 0) ? CupsDataService::getCupDataByCupId($this->_websoccer, $this->_db, $cupId) : array();
+		$matches = (isset($cup['name']) && strlen((string) $cup['name']))
+			? CupsDataService::getMatchesByCupname($this->_websoccer, $this->_db, $cup['name'])
+			: array();
 		
-		return array('cups' => $cups, 'cup' => $cup, 'matches' => $matches, "user_id" => $userId);
+		return array(
+			'cups' => $cups,
+			'cup' => $cup,
+			'matches' => $matches,
+			'match_round_groups' => MatchGroupingDataService::groupByRound($matches),
+			'user_id' => $userId
+		);
 	}
 	
 }

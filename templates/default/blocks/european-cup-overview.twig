@@ -136,11 +136,6 @@
 		{% endif %}
 	{% endif %}
 
-	<h3>{{ i18n.getMessage(message_prefix ~ "_fixtures") }} - {{ selected_phase_label }}</h3>
-	{% set match_table_matches = matches %}
-	{% set match_table_show_round = false %}
-	{% include 'blocks/european-cup-match-table.twig' %}
-
 	<div class="row-fluid">
 		<div class="span6">
 			<h3>{{ i18n.getMessage(message_prefix ~ "_latest_results") }}</h3>
@@ -155,4 +150,29 @@
 			{% include 'blocks/european-cup-match-table.twig' %}
 		</div>
 	</div>
+
+	<h3>{{ i18n.getMessage(message_prefix ~ "_fixtures") }} - {{ selected_phase_label }}</h3>
+	{% if match_date_groups|length > 0 %}
+		<div class="accordion" id="competitionMatchdays">
+		{% for group in match_date_groups %}
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#competitionMatchdays" href="#competitionMatchday{{ group.key }}">
+						<i class="icon-calendar"></i> <strong>{{ env.getFormattedDate(group.timestamp) }}</strong>
+						<span class="badge pull-right">{{ group.matches|length }}</span>
+					</a>
+				</div>
+				<div id="competitionMatchday{{ group.key }}" class="accordion-body collapse{% if group.is_open %} in{% endif %}">
+					<div class="accordion-inner">
+						{% set match_table_matches = group.matches %}
+						{% set match_table_show_round = false %}
+						{% include 'blocks/european-cup-match-table.twig' %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	{% else %}
+		{{ messagebox.box(i18n.getMessage("results_no_matches_found"), "", "info") }}
+	{% endif %}
 {% endif %}

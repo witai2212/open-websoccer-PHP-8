@@ -46,9 +46,22 @@
                     <td>
                         <span class="label {% if p.status == 'active' %}label-success{% elseif p.status == 'suspended' %}label-warning{% elseif p.status == 'pending' %}label-info{% else %}label-default{% endif %}">{{ i18n.getMessage("clubpartnerships_status_" ~ p.status) }}</span>
                         {% if p.suspended_reason|length > 0 %}<br><small class="muted">{{ p.suspended_reason }}</small>{% endif %}
+                        {% if p.status != 'pending' %}
+                            <hr style="margin:8px 0;">
+                            <strong>{{ i18n.getMessage("clubpartnerships_duration") }}</strong><br>
+                            <small>{{ i18n.getMessage("clubpartnerships_duration_progress", p.elapsed_matches, p.minimum_matches) }}</small><br>
+                            {% if p.remaining_matches > 0 %}
+                                <small class="text-warning">{{ i18n.getMessage("clubpartnerships_duration_remaining", p.remaining_matches) }}</small>
+                            {% else %}
+                                <small class="text-success">{{ i18n.getMessage("clubpartnerships_duration_complete") }}</small>
+                            {% endif %}
+                        {% endif %}
                     </td>
                     <td>{{ i18n.getMessage("clubpartnerships_effects_text")|replace({'{0}': p.development_bonus_percent}) }}</td>
                     <td>
+                        {% if p.termination_fee_preview > 0 %}
+                            <div class="alert alert-warning" style="padding:6px 8px; margin-bottom:8px;">{{ i18n.getMessage("clubpartnerships_termination_warning", p.termination_fee_preview) }}</div>
+                        {% endif %}
                         <a class="btn btn-small btn-danger" href="{{ env.getInternalActionUrl("stop-club-partnership", "id=" ~ p.id, "clubpartnerships") }}" onclick="return confirm('{{ i18n.getMessage("clubpartnerships_stop_confirm") }}');"><i class="icon-remove"></i> {{ i18n.getMessage("clubpartnerships_stop") }}</a>
                     </td>
                 </tr>

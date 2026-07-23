@@ -19,7 +19,7 @@
   If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
-define("NEWS_ENTRIES_PER_PAGE", 5);
+define("NEWS_ENTRIES_PER_PAGE", 12);
 define("NEWS_TEASER_MAXLENGTH", 256);
 
 /**
@@ -49,6 +49,7 @@ class NewsListModel implements IModel {
 	 * @see IModel::getTemplateParameters()
 	 */
 	public function getTemplateParameters() {
+		NewsDataService::trimToMaximum($this->_websoccer, $this->_db);
 		$prefix = $this->_websoccer->getConfig("db_prefix");
 		$fromTable = $prefix . "_news";
 		$whereCondition = "status = %d";
@@ -76,7 +77,8 @@ class NewsListModel implements IModel {
 			$articles[] = array("id" => $article["id"],
 								"title" => $display["title"],
 								"date" => $this->_websoccer->getFormattedDate($article["datum"]),
-								"teaser" => $this->_shortenMessage($display["message"]));
+								"teaser" => $this->_shortenMessage($display["message"]),
+                                "tile_size" => count($articles) === 0 ? "large" : (count($articles) < 5 ? "medium" : "small"));
 		}
 		$result->free();
 		

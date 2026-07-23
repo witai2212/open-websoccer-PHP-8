@@ -107,6 +107,7 @@
     <settings>
         <setting id="training_min_hours_between_execution" category="game" type="number" default="24" />
         <setting id="advanced_training_enabled" category="game" type="boolean" default="1" />
+        <setting id="training_max_trainers_per_team" category="game" type="number" default="4" />
     </settings>
     
     <pages>
@@ -145,6 +146,10 @@
             <param id="units" type="number" required="true" min="5" max="20" />
         </action>
         
+        <action id="dismiss-trainer" controller="DismissTrainerController" role="user" log="true">
+            <param id="id" type="number" required="true" min="1" max="2000000000" />
+        </action>
+
         <action id="save-training-plan" controller="SaveTrainingPlanController" role="user" log="true">
             <param id="type_1" type="text" required="true" min="3" max="32" />
             <param id="intensity_1" type="number" required="true" min="1" max="100" />

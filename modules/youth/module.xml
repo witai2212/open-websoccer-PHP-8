@@ -72,6 +72,10 @@
 		<setting id="computer_youth_max_players_on_transfer_list" category="youth" type="number" default="3" />
 		<setting id="computer_youth_transfer_list_duration_days" category="youth" type="number" default="7" />
 		<setting id="computer_youth_max_offers_per_player" category="youth" type="number" default="3" />
+        <setting id="computer_youth_active_buy_below_players" category="youth" type="number" default="23" />
+        <setting id="computer_youth_targeted_buy_max_players" category="youth" type="number" default="26" />
+        <setting id="computer_youth_sell_above_players" category="youth" type="number" default="26" />
+        <setting id="computer_youth_global_max_players_on_transfer_list" category="youth" type="number" default="100" />
 		<setting id="computer_youth_offer_decision_hours" category="youth" type="number" default="24" />
 	
 		<!-- 120 means: computer may pay max. 120% of calculated fair youth player value -->

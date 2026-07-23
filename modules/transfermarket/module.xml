@@ -17,6 +17,7 @@
       <setting id="computer_transfers_teams_per_run" category="transfermarket" type="number" default="100" />
       <setting id="computer_transfers_max_active_offers_per_team" category="transfermarket" type="number" default="3" />
       <setting id="computer_transfers_max_offers_per_player" category="transfermarket" type="number" default="3" />
+      <setting id="player_talent_transfer_change_chance" category="transfermarket" type="number" default="2" />
       <setting id="precontract_decision_matches_min" category="transfermarket" type="number" default="2" />
       <setting id="precontract_decision_matches_max" category="transfermarket" type="number" default="4" />
       <setting id="transfer_news_enabled" category="transfermarket" type="boolean" default="1" />
@@ -24,6 +25,7 @@
       <setting id="transfer_news_strength_min" category="transfermarket" type="number" default="90" />
       <setting id="transfer_news_fee_min" category="transfermarket" type="number" default="30000000" />
       <setting id="transfer_news_top_percent" category="transfermarket" type="number" default="2" />
+      <setting id="computer_budget_subsidy_floor" category="transfermarket" type="number" default="5000000" />
   </settings>
   
     <pages>

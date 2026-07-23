@@ -39,7 +39,6 @@ class ChooseTrainerController implements IActionController {
 	 * @see IActionController::executeAction()
 	 */
 	public function executeAction($parameters) {
-		
 		TrainingDataService::ensureAdvancedTrainingSchema($this->_websoccer, $this->_db);
 
 		$user = $this->_websoccer->getUser();
@@ -47,67 +46,67 @@ class ChooseTrainerController implements IActionController {
 		if ($teamId < 1) {
 			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
 		}
-		
-		if (TrainingDataService::countRemainingTrainingUnits($this->_websoccer, $this->_db, $teamId)) {
-			throw new Exception($this->_i18n->getMessage("training_choose_trainer_err_existing_units"));
-		}	
-		
-		// trainer info
+
 		$trainer = TrainingDataService::getTrainerById($this->_websoccer, $this->_db, $parameters["id"]);
 		if (!isset($trainer["id"])) {
 			throw new Exception("invalid ID");
 		}
-		
-		
-			$suitability = TrainingDataService::getTrainerSuitabilityForTeam($this->_websoccer, $this->_db, $trainer, $teamId);
-			if (empty($suitability['can_hire'])) {
-				$message = TrainingDataService::getTrainerHiringErrorMessage($this->_i18n, $suitability);
-				if (!strlen($message)) {
-					$message = $this->_i18n->getMessage('training_trainer_not_realistic_detail');
-				}
-				throw new Exception($message);
+
+		$trainerAlreadyInStaff = TrainingDataService::isTrainerInStaff($this->_websoccer, $this->_db, $teamId, $trainer['id']);
+		$maxStaff = max(1, (int) $this->_websoccer->getConfig('training_max_trainers_per_team'));
+		if (!$trainerAlreadyInStaff && TrainingDataService::countActiveTrainerStaff($this->_websoccer, $this->_db, $teamId) >= $maxStaff) {
+			throw new Exception($this->_i18n->getMessage('training_staff_full'));
+		}
+
+		$suitability = TrainingDataService::getTrainerSuitabilityForTeam($this->_websoccer, $this->_db, $trainer, $teamId);
+		if (empty($suitability['can_hire'])) {
+			$message = TrainingDataService::getTrainerHiringErrorMessage($this->_i18n, $suitability);
+			if (!strlen($message)) {
+				$message = $this->_i18n->getMessage('training_trainer_not_realistic_detail');
 			}
-// can team afford it?
+			throw new Exception($message);
+		}
+
 		$numberOfUnits = $this->normalizeNumberOfUnits($parameters["units"], $trainer);
-		
-		$totalCosts = ($numberOfUnits * (int) $trainer["salary"]) + (isset($trainer['signing_fee']) ? (int) $trainer['signing_fee'] : 0);
-		
+		$totalCosts = ($numberOfUnits * (int) $trainer["salary"])
+			+ (!$trainerAlreadyInStaff && isset($trainer['signing_fee']) ? (int) $trainer['signing_fee'] : 0);
+
 		$teamInfo = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $teamId);
-		if ($teamInfo["team_budget"] <= $totalCosts) {
+		if ((int) $teamInfo["team_budget"] <= $totalCosts) {
 			throw new Exception($this->_i18n->getMessage("training_choose_trainer_err_too_expensive"));
 		}
-		
-		// try to debit premium fee
-		if ($trainer['premiumfee']) {
+
+		if (!$trainerAlreadyInStaff && !empty($trainer['premiumfee'])) {
 			PremiumDataService::debitAmount($this->_websoccer, $this->_db, $user->id, $trainer['premiumfee'], "choose-trainer");
 		}
-		
-		// debit money
-		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $teamId,
+
+		BankAccountDataService::debitAmount(
+			$this->_websoccer,
+			$this->_db,
+			$teamId,
 			$totalCosts,
 			"training_trainer_salary_subject",
-			$trainer["name"]);
-		
-		// create new units
-		$columns["team_id"] = $teamId;
-		$columns["trainer_id"] = $trainer["id"];
+			$trainer["name"]
+		);
+
+		$columns = array(
+			"team_id" => $teamId,
+			"trainer_id" => $trainer["id"]
+		);
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_training_unit";
-		
 		for ($unitNo = 1; $unitNo <= $numberOfUnits; $unitNo++) {
 			$this->_db->queryInsert($columns, $fromTable);
 		}
-		
-		// create default automatic training plan if missing
-		TrainingDataService::getOrCreateTrainingPlan($this->_websoccer, $this->_db, $teamId);
 
-		// success message
-		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
-				$this->_i18n->getMessage("saved_message_title"),
-				""));
-		
-		// redirect to training overview
+		TrainingDataService::getOrCreateTrainingPlan($this->_websoccer, $this->_db, $teamId);
+		$this->_websoccer->addFrontMessage(new FrontMessage(
+			MESSAGE_TYPE_SUCCESS,
+			$this->_i18n->getMessage("saved_message_title"),
+			""
+		));
 		return "training";
 	}
+
 	
 
     private function normalizeNumberOfUnits($requestedUnits, $trainer) {

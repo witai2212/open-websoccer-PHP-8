@@ -3,7 +3,7 @@
 <messages>
   <message id="clubpartnerships_navlabel">Partnerschaften</message>
   <message id="clubpartnerships_title">Vereinspartnerschaften</message>
-  <message id="clubpartnerships_intro">Partnerschaften verbinden einen größeren Verein mit einem kleineren Partnerverein. Sie benötigen immer die Zustimmung der betroffenen Manager und werden bei Managerwechsel oder Ligakonflikt automatisch beendet oder pausiert.</message>
+  <message id="clubpartnerships_intro">Partnerschaften verbinden einen größeren Verein mit einem kleineren Partnerverein. Sie laufen mindestens 30 Spiele. Eine frühere Kündigung kostet 10 Prozent des aktuellen Vereinsbudgets, höchstens jedoch 5.000.000 EUR; die Zahlung erhält der Partnerverein.</message>
   <message id="clubpartnerships_no_team">Du benötigst einen Verein, um Partnerschaften zu nutzen.</message>
   <message id="clubpartnerships_current_title">Aktuelle Partnerschaft</message>
   <message id="clubpartnerships_no_current">Für deinen Verein gibt es derzeit keine aktive oder offene Partnerschaft.</message>
@@ -33,7 +33,13 @@
   <message id="clubpartnerships_accept">Annehmen</message>
   <message id="clubpartnerships_reject">Ablehnen</message>
   <message id="clubpartnerships_stop">Partnerschaft beenden</message>
-  <message id="clubpartnerships_stop_confirm">Diese Partnerschaft wirklich beenden?</message>
+  <message id="clubpartnerships_stop_confirm">Diese Partnerschaft wirklich beenden? Falls die Mindestdauer noch nicht erreicht ist, wird die angezeigte Ablöse sofort an den Partnerverein gezahlt.</message>
+  <message id="clubpartnerships_duration">Mindestdauer</message>
+  <message id="clubpartnerships_duration_progress">%d von %d Spielen absolviert</message>
+  <message id="clubpartnerships_duration_remaining">Noch %d Spiele bis zur kostenfreien Kündigung.</message>
+  <message id="clubpartnerships_duration_complete">Die Mindestdauer ist erfüllt. Die Partnerschaft kann kostenfrei beendet werden.</message>
+  <message id="clubpartnerships_termination_warning">Vorzeitige Kündigung: %d EUR werden an den anderen Verein gezahlt.</message>
+  <message id="clubpartnership_termination_fee_subject">Ausgleich für vorzeitige Partnerschaftskündigung</message>
   <message id="clubpartnerships_recent_log">Historie</message>
   <message id="clubpartnerships_no_log">Noch keine Ereignisse.</message>
   <message id="clubpartnership_request_created">Die Partnerschaftsanfrage wurde erstellt.</message>
@@ -68,6 +74,7 @@
   <message id="clubpartnership_log_accepted">Partnerschaft angenommen</message>
   <message id="clubpartnership_log_rejected">Partnerschaft abgelehnt</message>
   <message id="clubpartnership_log_stopped">Partnerschaft beendet</message>
+  <message id="clubpartnership_log_stopped_with_fee">Partnerschaft beendet; Ausgleichszahlung: %d EUR</message>
   <message id="loans_partner_preferred">Partnerverein</message>
   <message id="loans_partner_development_hint">Diese Leihe profitiert von der Vereinspartnerschaft: +{0}% Entwicklung.</message>
   <message id="clubpartnerships_date">Datum</message>
@@ -96,4 +103,5 @@
   <message id="clubpartnership_first_option_error_not_allowed">Dieser Erstzugriff kann von dir nicht bearbeitet werden.</message>
   <message id="clubpartnership_first_option_blocked">{0} ist bis {2} für {1} reserviert. Andere Vereine können erst danach handeln oder wenn der Mutterverein verzichtet.</message>
   <message id="clubpartnership_first_option_transfer_bid_hint">Dieser Spieler ist aktuell für den Mutterverein reserviert.</message>
+  <message id="clubpartnership_cpu_offer_comment">Kaufangebot des Computer-Partnervereins. Der Nutzerverein kann frei annehmen oder ablehnen.</message>
 </messages>

@@ -381,6 +381,9 @@ class FanPressureDataService {
         $fanMood = self::normalizePercent($team['fan_mood']);
         $mediaPressure = self::normalizePercent($team['media_pressure']);
 
+        $log = self::getRecentLog($websoccer, $db, $i18n, $teamId, 50);
+        $storyLog = self::getRecentStoryLog($websoccer, $db, $i18n, $teamId, 50);
+
         return array(
             'team' => $team,
             'fan_mood' => $fanMood,
@@ -390,8 +393,10 @@ class FanPressureDataService {
             'sponsor_effect' => self::getSponsorEffectPercent($websoccer, $fanMood),
             'mood_label' => self::getMoodLabelKey($fanMood),
             'hint_key' => self::getMoodHintKey($fanMood),
-            'log' => self::getRecentLog($websoccer, $db, $i18n, $teamId, 25),
-            'story_log' => self::getRecentStoryLog($websoccer, $db, $i18n, $teamId, 25),
+            'log' => $log,
+            'log_groups' => self::groupRowsByDate($log, 'event_date'),
+            'story_log' => $storyLog,
+            'story_log_groups' => self::groupRowsByDate($storyLog, 'event_date'),
             'open_interviews' => self::getOpenInterviews($websoccer, $db, $i18n, (int) $team['user_id'], $teamId)
         );
     }
@@ -908,6 +913,25 @@ class FanPressureDataService {
             ),
             $websoccer->getConfig('db_prefix') . '_fan_mood_log'
         );
+    }
+
+
+    private static function groupRowsByDate($rows, $timestampKey) {
+        $groups = array();
+        foreach ($rows as $row) {
+            $timestamp = isset($row[$timestampKey]) ? (int) $row[$timestampKey] : 0;
+            $key = $timestamp > 0 ? date('Y-m-d', $timestamp) : 'unknown';
+            if (!isset($groups[$key])) {
+                $groups[$key] = array(
+                    'key' => str_replace('-', '', $key),
+                    'timestamp' => $timestamp,
+                    'items' => array(),
+                    'is_open' => count($groups) === 0
+                );
+            }
+            $groups[$key]['items'][] = $row;
+        }
+        return array_values($groups);
     }
 
     private static function getRecentLog(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $teamId, $limit) {

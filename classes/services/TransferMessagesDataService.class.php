@@ -161,6 +161,10 @@ class TransferMessagesDataService {
         }
 
         self::maybeCreateMajorTransferNews($websoccer, $db, $player, $seller, $buyer, (int) $amount);
+
+        if (class_exists('PlayerTalentChangeDataService')) {
+            PlayerTalentChangeDataService::applyTransferChance($websoccer, $db, (int) $playerId, (int) $buyerClubId, (int) $buyerUserId);
+        }
     }
 
     public static function createLoanMessage(WebSoccer $websoccer, DbConnection $db, $recipientUserId, $event, $playerId, $lenderClubId, $borrowerClubId, $details = array(), $senderClubId = 0) {
@@ -231,6 +235,11 @@ class TransferMessagesDataService {
         } elseif ($event === 'completed') {
             $subject = 'Vorvertrag vollzogen: ' . $playerName;
             $content = $playerName . ' ist zur neuen Saison zu ' . $destination['name'] . ' gewechselt.';
+        } elseif ($event === 'contract_extended') {
+            $subject = 'Vorvertrag beendet: ' . $playerName;
+            $content = 'Der aktuelle Verein hat den Vertrag mit ' . $playerName . ' verlängert. Ihr Vorvertragsangebot wurde deshalb automatisch zurückgezogen.';
+            $context['target_page'] = 'player';
+            $context['target_query'] = 'id=' . (int) $playerId;
         }
 
         self::createInboxMessage($websoccer, $db, $recipientUserId, $subject, $content, 'precontract', $context, $senderName);

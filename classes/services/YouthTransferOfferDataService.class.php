@@ -45,8 +45,12 @@ class YouthTransferOfferDataService {
             return false;
         }
 
+        if (class_exists('ComputerBudgetProtectionDataService')) {
+            ComputerBudgetProtectionDataService::ensureTeamFloor($websoccer, $db, $buyerTeamId);
+        }
         $buyer = TeamsDataService::getTeamSummaryById($websoccer, $db, $buyerTeamId);
-        if (!$buyer || !isset($buyer['team_budget']) || (int) $buyer['team_budget'] <= $offerAmount) {
+        $maximumOffer = max(100000, self::getConfigInt($websoccer, 'computer_youth_max_buy_fee', 5000000));
+        if (!$buyer || !isset($buyer['team_budget']) || (int) $buyer['team_budget'] < $offerAmount || $offerAmount > $maximumOffer) {
             return false;
         }
 
@@ -236,6 +240,27 @@ class YouthTransferOfferDataService {
             }
         }
         $teams->free();
+
+        $globalMaximum = max(1, self::getConfigInt($websoccer, 'computer_youth_global_max_players_on_transfer_list', 100));
+        $globalQuery = "SELECT P.id FROM ". $prefix ."_youthplayer AS P
+                        INNER JOIN ". $prefix ."_verein AS V ON V.id=P.team_id
+                        WHERE P.transfer_fee > 0 AND P.transfer_listed_by_cpu='1'
+                          AND (V.user_id IS NULL OR V.user_id <= 0)
+                        ORDER BY P.transfer_start ASC, P.strength DESC, P.age ASC, P.id ASC";
+        $globalResult = $db->executeQuery($globalQuery);
+        $position = 0;
+        $remove = array();
+        while ($row = $globalResult->fetch_assoc()) {
+            $position++;
+            if ($position > $globalMaximum) {
+                $remove[] = (int) $row['id'];
+            }
+        }
+        $globalResult->free();
+        if (count($remove)) {
+            $db->executeQuery("UPDATE ". $prefix ."_youthplayer SET transfer_fee=0, transfer_start=0, transfer_ende=0, transfer_listed_by_cpu='0' WHERE id IN (". implode(',', $remove) .")");
+            $db->executeQuery("DELETE FROM ". $prefix ."_youth_transfer_offer WHERE player_id IN (". implode(',', $remove) .") AND status='open'");
+        }
     }
 
     private static function removeUndatedLegacyComputerListings(WebSoccer $websoccer, DbConnection $db) {

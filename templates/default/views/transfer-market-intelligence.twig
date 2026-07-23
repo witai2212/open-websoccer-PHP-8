@@ -16,7 +16,7 @@
 <ul class="nav nav-tabs" id="transferMarketIntelligenceTabs">
     <li{% if not adminTabActive %} class="active"{% endif %}><a href="#tmi-overview" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_overview") }}</a></li>
     <li><a href="#tmi-recommendations" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_recommendations") }}</a></li>
-    <li><a href="#tmi-loans" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_loans") }}</a></li>
+    <li><a href="#tmi-loans" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_loan_recommendations") }}</a></li>
     <li><a href="#tmi-contracts" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_contracts") }}</a></li>
     <li><a href="#tmi-needs" data-toggle="tab">{{ i18n.getMessage("transfermarket_intelligence_tab_needs") }}</a></li>
     {% if market_intelligence_is_admin %}
@@ -152,7 +152,8 @@
     </div>
 
     <div class="tab-pane" id="tmi-loans">
-        <h3>{{ i18n.getMessage("transfermarket_intelligence_loan_opportunities") }}</h3>
+        <h3>{{ i18n.getMessage("transfermarket_intelligence_loan_recommendations") }}</h3>
+        <p class="muted">{{ i18n.getMessage("transfermarket_intelligence_loan_recommendations_help") }}</p>
         {% if market_intelligence_loans|length > 0 %}
             <table class="table table-striped table-bordered">
                 <thead>
@@ -162,9 +163,9 @@
                         <th>{{ i18n.getMessage("transfermarket_intelligence_club") }}</th>
                         <th>{{ i18n.getMessage("transfermarket_intelligence_age") }}</th>
                         <th>{{ i18n.getMessage("transfermarket_intelligence_strength") }}</th>
-                        <th>{{ i18n.getMessage("transfermarket_intelligence_price") }}</th>
-                        <th>{{ i18n.getMessage("transfermarket_intelligence_salary_share") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_loan_cost_per_match") }}</th>
                         <th>{{ i18n.getMessage("transfermarket_intelligence_buy_option") }}</th>
+                        <th>{{ i18n.getMessage("transfermarket_intelligence_fit") }}</th>
                         <th>{{ i18n.getMessage("transfermarket_intelligence_action") }}</th>
                     </tr>
                 </thead>
@@ -172,21 +173,37 @@
                     {% for player in market_intelligence_loans %}
                         <tr>
                             <td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ tmi.playerName(player) }}</a></td>
-                            <td>{{ i18n.getMessage("player_position_" ~ player.position_key) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}</td>
+                            <td>
+                                {{ i18n.getMessage("player_position_" ~ player.position_key) }}{% if player.position_main|length > 0 %} / {{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}{% endif %}
+                                {% if player.position_need_status == 'shortage' %}
+                                    <br><span class="label label-important">{{ i18n.getMessage("transfermarket_intelligence_need_shortage") }}</span>
+                                {% elseif player.position_need_status == 'ok' %}
+                                    <br><span class="label label-info">{{ i18n.getMessage("transfermarket_intelligence_need_ok") }}</span>
+                                {% endif %}
+                            </td>
                             <td><a href="{{ env.getInternalUrl("team", "id=" ~ player.verein_id) }}">{{ player.team_name }}</a></td>
                             <td>{{ player.age }}</td>
                             <td>{{ player.strength|number_format(1, ',', ' ') }}</td>
-                            <td>{{ player.listed_price|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
-                            <td>{{ player.salary_share_percent }}%</td>
+                            <td>
+                                {{ player.loan_total_cost_per_match|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                                <br><small>{{ i18n.getMessage("transfermarket_intelligence_loan_fee") }}: {{ player.listed_price|number_format(0, ',', ' ') }} / {{ i18n.getMessage("transfermarket_intelligence_salary_share") }}: {{ player.salary_share_percent }}%</small>
+                            </td>
                             <td>{{ i18n.getMessage("loans_option_" ~ player.option_type) }}{% if player.buy_fee > 0 %}<br>{{ player.buy_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}{% endif %}</td>
+                            <td>
+                                <span class="label label-success">{{ player.loan_recommendation_score }}/100</span>
+                                {% for reason in player.loan_recommendation_reasons %}
+                                    <br><small>{{ i18n.getMessage(reason) }}</small>
+                                {% endfor %}
+                            </td>
                             <td><a class="btn btn-small btn-primary" href="{{ env.getInternalUrl("borrow-player", "id=" ~ player.id) }}">{{ i18n.getMessage("transfermarket_intelligence_borrow") }}</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
-            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_data") }}</em></p>
+            <p><em>{{ i18n.getMessage("transfermarket_intelligence_no_loan_recommendations") }}</em></p>
         {% endif %}
+        <p><a class="btn" href="{{ env.getInternalUrl("loans") }}#available-loan-players"><i class="icon-list"></i> {{ i18n.getMessage("transfermarket_intelligence_all_loan_players") }}</a></p>
     </div>
 
     <div class="tab-pane" id="tmi-contracts">

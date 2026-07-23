@@ -67,6 +67,7 @@ class ManagerCareerDataService {
                 if (class_exists('ManagerCareerImprovementService')) {
                     ManagerCareerImprovementService::processDueApplicationsNow($websoccer, $db, $i18n);
                 }
+                self::cleanupOffersAfterCompletedMove($websoccer, $db, $profileUserId);
                 $openOffers = self::getOpenOffersOfUser($websoccer, $db, $profileUserId);
             } catch (Exception $e) {
                 $openOffers = array();
@@ -546,7 +547,15 @@ class ManagerCareerDataService {
                 'betreff' => $subject,
                 'nachricht' => $message,
                 'gelesen' => '0',
-                'typ' => 'eingang'
+                'typ' => 'eingang',
+                'message_type' => 'manager_job_offer',
+                'context_data' => json_encode(array(
+                    'sender_club' => array(
+                        'id' => (int) $target['team_id'],
+                        'name' => $target['team_name'],
+                        'logo' => isset($target['team_picture']) ? $target['team_picture'] : ''
+                    )
+                ))
             ),
             $websoccer->getConfig('db_prefix') . '_briefe'
         );
@@ -872,6 +881,7 @@ class ManagerCareerDataService {
         $columns = array(
             'C.id' => 'team_id',
             'C.name' => 'team_name',
+            'C.bild' => 'team_picture',
             'C.user_id' => 'user_id',
             'C.finanz_budget' => 'team_budget',
             'C.highscore' => 'team_highscore',
@@ -1058,6 +1068,52 @@ class ManagerCareerDataService {
         }
 
         $db->queryUpdate($columns, $websoccer->getConfig('db_prefix') . '_manager_job_offer', 'id = %d', (int) $offerId);
+    }
+
+    private static function cleanupOffersAfterCompletedMove(WebSoccer $websoccer, DbConnection $db, $userId) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $result = $db->querySelect(
+            'offer_id, new_team_id, change_date',
+            $prefix . '_manager_career_history',
+            'user_id = %d AND offer_id > 0 ORDER BY change_date DESC, id DESC',
+            (int) $userId,
+            1
+        );
+        $move = $result->fetch_array();
+        $result->free();
+        if (!$move || (int) $move['offer_id'] < 1 || !self::userOwnsTeam($websoccer, $db, $userId, (int) $move['new_team_id'])) {
+            return;
+        }
+
+        $now = $websoccer->getNowAsTimestamp();
+        $offerResult = $db->querySelect(
+            'accepted_date',
+            $prefix . '_manager_job_offer',
+            'id = %d AND user_id = %d',
+            array((int) $move['offer_id'], (int) $userId),
+            1
+        );
+        $acceptedOffer = $offerResult->fetch_array();
+        $offerResult->free();
+        $acceptedDate = ($acceptedOffer && (int) $acceptedOffer['accepted_date'] > 0) ? (int) $acceptedOffer['accepted_date'] : $now;
+        $db->queryUpdate(
+            array('status' => self::OFFER_ACCEPTED, 'accepted_date' => $acceptedDate),
+            $prefix . '_manager_job_offer',
+            'id = %d AND user_id = %d',
+            array((int) $move['offer_id'], (int) $userId)
+        );
+        $db->queryUpdate(
+            array('status' => self::OFFER_DECLINED, 'declined_date' => $now),
+            $prefix . '_manager_job_offer',
+            "user_id = %d AND id != %d AND status = '" . self::OFFER_OPEN . "' AND created_date <= %d",
+            array((int) $userId, (int) $move['offer_id'], (int) $move['change_date'])
+        );
+        $db->queryUpdate(
+            array('status' => 'withdrawn', 'answered_date' => $now),
+            $prefix . '_manager_application',
+            "user_id = %d AND status = 'open' AND created_date <= %d",
+            array((int) $userId, (int) $move['change_date'])
+        );
     }
 
     private static function closeOtherOffers(WebSoccer $websoccer, DbConnection $db, $userId, $acceptedOfferId) {

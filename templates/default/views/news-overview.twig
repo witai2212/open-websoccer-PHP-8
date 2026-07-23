@@ -1,25 +1,36 @@
 {% import "macros/paginator.twig" as pagination %}
 {% extends "base.twig" %}
 
-{% block page_title %}
-{{ i18n.getMessage("news_title") }}
-{% endblock %}
+{% block page_title %}{{ i18n.getMessage("news_title") }}{% endblock %}
 
 {% block page_content %}
+<style>
+.news-mosaic { margin-left: -2%; }
+.news-tile { display: inline-block; vertical-align: top; box-sizing: border-box; margin: 0 0 18px 2%; padding: 18px; width: 31.333%; min-height: 185px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; }
+.news-tile-large { width: 64.666%; min-height: 245px; }
+.news-tile-medium { width: 48%; min-height: 210px; }
+.news-tile h3, .news-tile h4 { margin-top: 0; line-height: 1.25; }
+.news-tile-date { color: #777; font-size: 12px; margin-bottom: 12px; }
+.news-tile-more { margin: 14px 0 0; }
+@media (max-width: 767px) { .news-tile, .news-tile-large, .news-tile-medium { width: 98%; min-height: 0; } }
+</style>
 
 {% if articles|length == 0 %}
-{{ i18n.getMessage("news_no_items") }}
+    <div class="alert alert-info">{{ i18n.getMessage("news_no_items") }}</div>
+{% else %}
+    <div class="news-mosaic">
+    {% for article in articles %}
+        <article class="news-tile news-tile-{{ article.tile_size }}">
+            {% if article.tile_size == "large" %}<h3>{% else %}<h4>{% endif %}
+                <a href="{{ env.getInternalUrl("news-details", "id=" ~ article.id) }}">{{ article.title }}</a>
+            {% if article.tile_size == "large" %}</h3>{% else %}</h4>{% endif %}
+            <div class="news-tile-date"><i class="icon-calendar"></i> {{ article.date }}</div>
+            <div>{{ article.teaser|raw }}</div>
+            <p class="news-tile-more"><a class="btn btn-small" href="{{ env.getInternalUrl("news-details", "id=" ~ article.id) }}">{{ i18n.getMessage("news_read_more") }}</a></p>
+        </article>
+    {% endfor %}
+    </div>
 {% endif %}
 
-{% for article in articles %}
-<h4><a href="{{ env.getInternalUrl("news-details", "id=" ~ article.id) }}">{{ article.title }}</a></h4>
-<p><em>{{ article.date }}</em></p>
-
-<p>{{ article.teaser|raw }}</p>
-
-<p style="margin-bottom: 30px;"><a href="{{ env.getInternalUrl("news-details", "id=" ~ article.id) }}">Mehr</a></p>
-{% endfor %}
-
 {{ pagination.paginator(paginator) }}
-
 {% endblock %}

@@ -310,7 +310,8 @@ class ManagerCareerImprovementService {
                 'league' => $club['league_name'],
                 'expires' => date('d.m.Y', $now + ((int) $validDays * 86400)),
                 'url' => $websoccer->getInternalUrl('managercareer')
-            ))
+            )),
+            $club
         );
 
         NotificationsDataService::createNotification(
@@ -740,7 +741,8 @@ class ManagerCareerImprovementService {
             . "FROM " . $prefix . "_manager_application AS A "
             . "INNER JOIN " . $prefix . "_verein AS C ON C.id = A.target_team_id "
             . "LEFT JOIN " . $prefix . "_liga AS L ON L.id = C.liga_id "
-            . "WHERE A.user_id = " . (int) $userId . " ORDER BY A.created_date DESC, A.id DESC LIMIT " . (int) $limit;
+            . "WHERE A.user_id = " . (int) $userId . " AND NOT (A.status = 'accepted' AND C.user_id = " . (int) $userId . ") "
+            . "ORDER BY A.created_date DESC, A.id DESC LIMIT " . (int) $limit;
         return self::fetchAll($db, $sql);
     }
 
@@ -999,7 +1001,7 @@ class ManagerCareerImprovementService {
 
     private static function getClubById(WebSoccer $websoccer, DbConnection $db, $teamId) {
         $prefix = $websoccer->getConfig('db_prefix');
-        $sql = "SELECT C.id AS team_id, C.name AS team_name, C.user_id, C.interimmanager, C.finanz_budget AS team_budget, C.highscore AS team_highscore, C.strength AS team_strength, C.superclub AS team_superclub, C.board_satisfaction, "
+        $sql = "SELECT C.id AS team_id, C.name AS team_name, C.bild AS team_picture, C.user_id, C.interimmanager, C.finanz_budget AS team_budget, C.highscore AS team_highscore, C.strength AS team_strength, C.superclub AS team_superclub, C.board_satisfaction, "
             . "L.name AS league_name, L.land AS league_country, L.division AS league_division "
             . "FROM " . $prefix . "_verein AS C "
             . "LEFT JOIN " . $prefix . "_liga AS L ON L.id = C.liga_id "
@@ -1067,14 +1069,14 @@ class ManagerCareerImprovementService {
         return ($row && isset($row['match_id'])) ? (int) $row['match_id'] : 0;
     }
 
-    private static function createInboxMessage(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $userId, $subject, $body) {
+    private static function createInboxMessage(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $userId, $subject, $body, $senderClub = null) {
         if ((int) $userId < 1) {
             return;
         }
         if (strlen($subject) > 50) {
             $subject = substr($subject, 0, 47) . '...';
         }
-        $db->queryInsert(array(
+        $columns = array(
             'empfaenger_id' => (int) $userId,
             'absender_name' => self::message($i18n, 'managercareer_message_sender'),
             'datum' => $websoccer->getNowAsTimestamp(),
@@ -1082,7 +1084,18 @@ class ManagerCareerImprovementService {
             'nachricht' => $body,
             'gelesen' => '0',
             'typ' => 'eingang'
-        ), $websoccer->getConfig('db_prefix') . '_briefe');
+        );
+        if (is_array($senderClub) && isset($senderClub['team_id'])) {
+            $columns['message_type'] = 'manager_job_offer';
+            $columns['context_data'] = json_encode(array(
+                'sender_club' => array(
+                    'id' => (int) $senderClub['team_id'],
+                    'name' => isset($senderClub['team_name']) ? $senderClub['team_name'] : '',
+                    'logo' => isset($senderClub['team_picture']) ? $senderClub['team_picture'] : ''
+                )
+            ));
+        }
+        $db->queryInsert($columns, $websoccer->getConfig('db_prefix') . '_briefe');
     }
 
     private static function fetchAll(DbConnection $db, $sql) {

@@ -1116,19 +1116,26 @@ class TeamsDataService {
 	 * 
  	*/
  	public static function extendContractForNewManager(WebSoccer $websoccer, DbConnection $db, $teamId) {
-	    $teamId = (int) $teamId;
-	    if ($teamId <= 0) {
-	        return;
-	    }
+        $teamId = (int) $teamId;
+        if ($teamId <= 0) {
+            return;
+        }
 
-	    $db->queryUpdate(
-	        array(
-	            'vertrag_spiele' => '50'
-	        ),
-	        $websoccer->getConfig('db_prefix') . '_spieler',
-	        'verein_id = %d',
-	        $teamId
-	    );
- 	}
-}
+        $prefix = $websoccer->getConfig('db_prefix');
+        $result = $db->querySelect('id', $prefix . '_spieler', "verein_id = %d AND status = '1'", $teamId);
+        $extendIds = array();
+        while ($player = $result->fetch_array()) {
+            $playerId = (int) $player['id'];
+            if (PlayerPrecontractDataService::hasAcceptedAgreement($websoccer, $db, $playerId)) {
+                continue;
+            }
+            PlayerPrecontractDataService::cancelOffersBecauseContractWasExtended($websoccer, $db, $playerId, $teamId);
+            $extendIds[] = $playerId;
+        }
+        $result->free();
+
+        if (count($extendIds)) {
+            $db->executeQuery("UPDATE {$prefix}_spieler SET vertrag_spiele = 50 WHERE id IN (" . implode(',', $extendIds) . ")");
+        }
+ 	}}
 ?>

@@ -2,6 +2,10 @@
 <!DOCTYPE module SYSTEM "../module.dtd">
 <module version="1.0.0">
   
+  <settings>
+    <setting id="news_max_entries" category="website" type="number" default="50" />
+  </settings>
+
   <admin>
 	<adminpage id="news" permissionrole="r_news" navcategory="website" entity="news">
 		<entity dbtable="news AS NewsTab">

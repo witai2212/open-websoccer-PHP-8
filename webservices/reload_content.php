@@ -123,6 +123,14 @@ if ($active_session_id >= 1 && $active_session_id != $session_id) {
         include_once(sprintf(CONFIGCACHE_MESSAGES, $i18n->getCurrentLanguage()));
         include_once(sprintf(CONFIGCACHE_ENTITYMESSAGES, $i18n->getCurrentLanguage()));
         
+        executeSafeOperation('[ComputerBudgetProtectionDataService] Ensuring CPU budgets...', function() use ($website, $db) {
+            $budgetResult = ComputerBudgetProtectionDataService::subsidizeAllComputerClubs($website, $db);
+            echo "[CPU budget] clubs: " . (int) $budgetResult['clubs'] . ", amount: " . (int) $budgetResult['amount'] . "\n";
+        });
+        executeSafeOperation('[NewsDataService] Trimming news archive...', function() use ($website, $db) {
+            echo "[News] deleted: " . (int) NewsDataService::trimToMaximum($website, $db) . "\n";
+        });
+
         // Date-based jobs first: completed camps are removed before automatic training checks active camps.
         executeSafeOperation('[AcceptStadiumConstructionWorkJob] Executing stadium const. and training camp...', function() use ($website, $db, $i18n) {
             executeConfiguredJobOnce($website, $db, $i18n, 'stadium', 'AcceptStadiumConstructionWorkJob');
@@ -156,11 +164,16 @@ if ($active_session_id >= 1 && $active_session_id != $session_id) {
             $trainingResult = TrainingDataService::processAutomaticTrainingMatchday($website, $db, $i18n);
             
             echo "[TrainingMatchdayJob] processed: " . getTrainingResultValue($trainingResult, 'processed') . "\n";
-            echo "[TrainingMatchdayJob] skipped without new match: " . getTrainingResultValue($trainingResult, 'skipped_no_match') . "\n";
+            echo "[TrainingMatchdayJob] skipped because interval is active: " . getTrainingResultValue($trainingResult, 'skipped_interval') . "\n";
             echo "[TrainingMatchdayJob] skipped without units: " . getTrainingResultValue($trainingResult, 'skipped_no_units') . "\n";
             echo "[TrainingMatchdayJob] skipped in training camp: " . getTrainingResultValue($trainingResult, 'skipped_camp') . "\n";
         });
         
+        executeSafeOperation('[ClubPartnershipDataService] Creating CPU partnership offers...', function() use ($website, $db, $i18n) {
+            $partnershipOfferResult = ClubPartnershipDataService::processComputerDirectOffers($website, $db, $i18n);
+            echo "[ClubPartnershipOffers] checked: " . (int) $partnershipOfferResult['checked'] . ", created: " . (int) $partnershipOfferResult['created'] . "\n";
+        });
+
         executeSafeOperation('[ManagerCareerDataService] Executing manager career job offers...', function() use ($website, $db, $i18n) {
             $careerResult = ManagerCareerDataService::processJobOffersMatchday($website, $db, $i18n);
             echo "[ManagerCareerJob] users processed: " . getTrainingResultValue($careerResult, 'processed') . "\n";
@@ -201,6 +214,10 @@ if ($active_session_id >= 1 && $active_session_id != $session_id) {
             
         }
         
+        executeSafeOperation('[ComputerBudgetProtectionDataService] Final CPU budget protection...', function() use ($website, $db) {
+            ComputerBudgetProtectionDataService::subsidizeAllComputerClubs($website, $db);
+        });
+
         updateConfigTimestamp($website, $db, 'match_simulation', '0', '0');
     }
 }

@@ -100,4 +100,9 @@
 	
 	<message id="transfer_violation">Verstoss gegen die Transferregeln</message>
 	<message id="transfer_violation_notification">Du hast gegen die Transferregeln verstossen. Die Strafe beträgt: <strong>{penalty}</strong></message>
+
+    <message id="transferoffer_partner_cpu_cash_only">Bei einem Computer-Partnerverein sind nur reine Geldangebote möglich.</message>
+    <message id="transferoffer_partner_cpu_accepted">Der Computer-Partnerverein hat das Angebot angenommen. Der Transfer wurde sofort ausgeführt.</message>
+    <message id="transferoffer_partner_cpu_rejected">Der Computer-Partnerverein hat das Angebot abgelehnt. Eine Nachricht mit der Entscheidung wurde zugestellt.</message>
+    <message id="transferoffer_partner_cpu_rejection_reason">Das Angebot entspricht nicht der aktuellen Kader- und Marktwertplanung des Partnervereins.</message>
 </messages>

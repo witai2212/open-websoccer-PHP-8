@@ -105,98 +105,97 @@
 
 <h3>{{ i18n.getMessage("fanpressure_recent_development") }}</h3>
 
-{% if log|length == 0 %}
-    <div class="alert alert-warning">
-        {{ i18n.getMessage("fanpressure_no_log") }}
-    </div>
+{% if log_groups|length == 0 %}
+    <div class="alert alert-warning">{{ i18n.getMessage("fanpressure_no_log") }}</div>
 {% else %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{{ i18n.getMessage("fanpressure_date") }}</th>
-                <th>{{ i18n.getMessage("fanpressure_reason") }}</th>
-                <th style="text-align: right;">{{ i18n.getMessage("fanpressure_change") }}</th>
-                <th>{{ i18n.getMessage("fanpressure_old_new") }}</th>
-                <th>{{ i18n.getMessage("fanpressure_media_old_new") }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in log %}
-                <tr>
-                    <td>{{ item.event_date|date(env.getConfig("date_format")) }}</td>
-                    <td>
-                        {{ item.reason_label }}
-                        {% if item.context.player is defined %}
-                            <br><small>{{ item.context.player }}</small>
-                        {% elseif item.context.mission is defined %}
-                            <br><small>{{ item.context.mission }}</small>
-                        {% elseif item.context.score is defined %}
-                            <br><small>{{ item.context.score }}</small>
-                        {% endif %}
-                        {% if item.match_id > 0 %}
-                            <br><small><a href="{{ env.getInternalUrl("match", "id=" ~ item.match_id) }}">{{ i18n.getMessage("fanpressure_match_link") }}</a></small>
-                        {% endif %}
-                    </td>
-                    <td style="text-align: right;">
-                        {% if item.mood_change > 0 %}
-                            <span style="color: green;">{{ item.mood_change_signed }}</span>
-                        {% elseif item.mood_change < 0 %}
-                            <span style="color: red;">{{ item.mood_change_signed }}</span>
-                        {% else %}
-                            {{ item.mood_change_signed }}
-                        {% endif %}
-                    </td>
-                    <td>{{ item.old_mood }}% / {{ item.new_mood }}%</td>
-                    <td>
-                        {{ item.old_pressure }}% / {{ item.new_pressure }}%
-                        {% if item.pressure_change != 0 %}
-                            <small>({{ item.pressure_change_signed }})</small>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="accordion" id="fanpressureDevelopmentGroups">
+    {% for group in log_groups %}
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#fanpressureDevelopmentGroups" href="#fanpressureDevelopment{{ group.key }}">
+                    <i class="icon-calendar"></i> <strong>{{ group.timestamp|date(env.getConfig("date_format")) }}</strong>
+                    <span class="badge">{{ group.items|length }}</span>
+                </a>
+            </div>
+            <div id="fanpressureDevelopment{{ group.key }}" class="accordion-body collapse{% if group.is_open %} in{% endif %}">
+                <div class="accordion-inner" style="padding: 0;">
+                    <table class="table table-striped" style="margin-bottom: 0;">
+                        <thead><tr>
+                            <th>{{ i18n.getMessage("fanpressure_reason") }}</th>
+                            <th style="text-align: right;">{{ i18n.getMessage("fanpressure_change") }}</th>
+                            <th>{{ i18n.getMessage("fanpressure_old_new") }}</th>
+                            <th>{{ i18n.getMessage("fanpressure_media_old_new") }}</th>
+                        </tr></thead>
+                        <tbody>
+                        {% for item in group.items %}
+                            <tr>
+                                <td>
+                                    {{ item.reason_label }}
+                                    {% if item.context.player is defined %}<br><small>{{ item.context.player }}</small>
+                                    {% elseif item.context.mission is defined %}<br><small>{{ item.context.mission }}</small>
+                                    {% elseif item.context.score is defined %}<br><small>{{ item.context.score }}</small>{% endif %}
+                                    {% if item.match_id > 0 %}<br><small><a href="{{ env.getInternalUrl("match", "id=" ~ item.match_id) }}">{{ i18n.getMessage("fanpressure_match_link") }}</a></small>{% endif %}
+                                </td>
+                                <td style="text-align: right;">
+                                    {% if item.mood_change > 0 %}<span style="color: green;">{{ item.mood_change_signed }}</span>
+                                    {% elseif item.mood_change < 0 %}<span style="color: red;">{{ item.mood_change_signed }}</span>
+                                    {% else %}{{ item.mood_change_signed }}{% endif %}
+                                </td>
+                                <td>{{ item.old_mood }}% / {{ item.new_mood }}%</td>
+                                <td>{{ item.old_pressure }}% / {{ item.new_pressure }}%{% if item.pressure_change != 0 %} <small>({{ item.pressure_change_signed }})</small>{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 {% endif %}
 
 <hr>
 
 <h3>{{ i18n.getMessage("fanpressure_story_events") }}</h3>
 
-{% if story_log|length == 0 %}
-    <div class="alert alert-warning">
-        {{ i18n.getMessage("fanpressure_no_story_events") }}
-    </div>
+{% if story_log_groups|length == 0 %}
+    <div class="alert alert-warning">{{ i18n.getMessage("fanpressure_no_story_events") }}</div>
 {% else %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{{ i18n.getMessage("fanpressure_date") }}</th>
-                <th>{{ i18n.getMessage("fanpressure_story_title") }}</th>
-                <th>{{ i18n.getMessage("fanpressure_story_effects") }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in story_log %}
-                <tr>
-                    <td>{{ item.event_date|date(env.getConfig("date_format")) }}</td>
-                    <td>
-                        <strong>{{ item.title }}</strong><br>
-                        <small>{{ item.message }}</small>
-                        {% if item.match_id > 0 %}
-                            <br><small><a href="{{ env.getInternalUrl("match", "id=" ~ item.match_id) }}">{{ i18n.getMessage("fanpressure_match_link") }}</a></small>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {{ i18n.getMessage("fanpressure_fan_mood") }} {{ item.mood_change_signed }}<br>
-                        {{ i18n.getMessage("fanpressure_media_pressure") }} {{ item.pressure_change_signed }}<br>
-                        {{ i18n.getMessage("fanpressure_board_satisfaction") }} {{ item.board_change_signed }}<br>
-                        {{ i18n.getMessage("fanpressure_team_chemistry") }} {{ item.chemistry_change_signed }}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="accordion" id="fanpressureStoryGroups">
+    {% for group in story_log_groups %}
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#fanpressureStoryGroups" href="#fanpressureStory{{ group.key }}">
+                    <i class="icon-calendar"></i> <strong>{{ group.timestamp|date(env.getConfig("date_format")) }}</strong>
+                    <span class="badge">{{ group.items|length }}</span>
+                </a>
+            </div>
+            <div id="fanpressureStory{{ group.key }}" class="accordion-body collapse{% if group.is_open %} in{% endif %}">
+                <div class="accordion-inner" style="padding: 0;">
+                    <table class="table table-striped" style="margin-bottom: 0;">
+                        <thead><tr><th>{{ i18n.getMessage("fanpressure_story_title") }}</th><th>{{ i18n.getMessage("fanpressure_story_effects") }}</th></tr></thead>
+                        <tbody>
+                        {% for item in group.items %}
+                            <tr>
+                                <td>
+                                    <strong>{{ item.title }}</strong><br><small>{{ item.message }}</small>
+                                    {% if item.match_id > 0 %}<br><small><a href="{{ env.getInternalUrl("match", "id=" ~ item.match_id) }}">{{ i18n.getMessage("fanpressure_match_link") }}</a></small>{% endif %}
+                                </td>
+                                <td>
+                                    {{ i18n.getMessage("fanpressure_fan_mood") }} {{ item.mood_change_signed }}<br>
+                                    {{ i18n.getMessage("fanpressure_media_pressure") }} {{ item.pressure_change_signed }}<br>
+                                    {{ i18n.getMessage("fanpressure_board_satisfaction") }} {{ item.board_change_signed }}<br>
+                                    {{ i18n.getMessage("fanpressure_team_chemistry") }} {{ item.chemistry_change_signed }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 {% endif %}
 
 {% endblock %}

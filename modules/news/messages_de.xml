@@ -5,6 +5,7 @@
     <message id="news-details_navlabel">lesen</message>
     <message id="news_title">Neuigkeiten</message>
     <message id="news_no_items">Es sind noch keine Neuigkeiten vorhanden.</message>
+    <message id="news_read_more">Weiterlesen</message>
     <message id="news_author">geschrieben von %s</message>
     <message id="news_related_links">Verwandte Links</message>
     

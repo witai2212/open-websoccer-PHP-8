@@ -28,30 +28,69 @@ class TrainingDataService {
     const DEFAULT_PLAN_SLOTS = 5;
     private static $_schemaReady = false;
 
-    public static function countTrainers(WebSoccer $websoccer, DbConnection $db) {
+    public static function countTrainers(WebSoccer $websoccer, DbConnection $db, $specialization = null) {
         self::ensureAdvancedTrainingSchema($websoccer, $db);
         $fromTable = $websoccer->getConfig("db_prefix") . "_trainer";
 
-        $result = $db->querySelect("COUNT(*) AS hits", $fromTable, "available = '1'");
+        $whereCondition = "available = '1'";
+        $parameters = null;
+        if ($specialization !== null && isset(self::getTrainerSpecializations()[$specialization])) {
+            $whereCondition .= " AND specialization = '%s'";
+            $parameters = $specialization;
+        }
+
+        $result = $db->querySelect("COUNT(*) AS hits", $fromTable, $whereCondition, $parameters);
         $trainers = $result->fetch_array();
         $result->free();
 
         return $trainers["hits"];
     }
 
-    public static function getTrainers(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page) {
+    public static function getTrainers(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $specialization = null) {
         self::ensureAdvancedTrainingSchema($websoccer, $db);
         $fromTable = $websoccer->getConfig("db_prefix") . "_trainer";
         $limit = $startIndex . "," . $entries_per_page;
 
+        $whereCondition = "available = '1'";
+        $parameters = null;
+        if ($specialization !== null && isset(self::getTrainerSpecializations()[$specialization])) {
+            $whereCondition .= " AND specialization = '%s'";
+            $parameters = $specialization;
+        }
+        $whereCondition .= " ORDER BY reputation DESC, salary DESC";
+
         $trainers = array();
-        $result = $db->querySelect("*", $fromTable, "available = '1' ORDER BY reputation DESC, salary DESC", null, $limit);
+        $result = $db->querySelect("*", $fromTable, $whereCondition, $parameters, $limit);
         while ($trainer = $result->fetch_array()) {
             $trainers[] = self::normalizeTrainerRow($trainer);
         }
         $result->free();
 
         return $trainers;
+    }
+
+    public static function countTrainersBySpecialization(WebSoccer $websoccer, DbConnection $db) {
+        self::ensureAdvancedTrainingSchema($websoccer, $db);
+        $fromTable = $websoccer->getConfig("db_prefix") . "_trainer";
+
+        $counts = array();
+        foreach (self::getTrainerSpecializations() as $specialization => $messageKey) {
+            $counts[$specialization] = 0;
+        }
+
+        $result = $db->querySelect(
+            "specialization, COUNT(*) AS hits",
+            $fromTable,
+            "available = '1' GROUP BY specialization"
+        );
+        while ($row = $result->fetch_array()) {
+            if (isset($counts[$row['specialization']])) {
+                $counts[$row['specialization']] = (int) $row['hits'];
+            }
+        }
+        $result->free();
+
+        return $counts;
     }
 
     public static function getTrainerById(WebSoccer $websoccer, DbConnection $db, $trainerId) {
@@ -102,6 +141,85 @@ class TrainingDataService {
         $result->free();
 
         return $unit ? $unit : array();
+    }
+
+    public static function getActiveTrainerStaff(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        self::ensureAdvancedTrainingSchema($websoccer, $db);
+        $prefix = $websoccer->getConfig('db_prefix');
+        $sql = "SELECT T.*, COUNT(U.id) AS open_units, MIN(U.id) AS first_unit_id
+                FROM {$prefix}_training_unit U
+                INNER JOIN {$prefix}_trainer T ON T.id=U.trainer_id
+                WHERE U.team_id=" . (int) $teamId . " AND (U.date_executed=0 OR U.date_executed IS NULL)
+                GROUP BY T.id
+                ORDER BY first_unit_id ASC";
+        $result = $db->executeQuery($sql);
+        $staff = array();
+        while ($trainer = $result->fetch_array()) {
+            $trainer = self::normalizeTrainerRow($trainer);
+            $trainer['role'] = count($staff) === 0 ? 'head' : 'specialist';
+            $staff[] = $trainer;
+        }
+        $result->free();
+        return $staff;
+    }
+
+    public static function countActiveTrainerStaff(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        return count(self::getActiveTrainerStaff($websoccer, $db, $teamId));
+    }
+
+    public static function isTrainerInStaff(WebSoccer $websoccer, DbConnection $db, $teamId, $trainerId) {
+        $result = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_training_unit', "team_id=%d AND trainer_id=%d AND (date_executed=0 OR date_executed IS NULL)", array((int) $teamId, (int) $trainerId), 1);
+        $row = $result->fetch_array();
+        $result->free();
+        return (bool) $row;
+    }
+
+    public static function dismissTrainer(WebSoccer $websoccer, DbConnection $db, $teamId, $trainerId) {
+        self::ensureAdvancedTrainingSchema($websoccer, $db);
+        $result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_training_unit', "team_id=%d AND trainer_id=%d AND (date_executed=0 OR date_executed IS NULL)", array((int) $teamId, (int) $trainerId), 1);
+        $row = $result->fetch_array();
+        $result->free();
+        $count = $row ? (int) $row['hits'] : 0;
+        if ($count > 0) {
+            $db->queryDelete($websoccer->getConfig('db_prefix') . '_training_unit', "team_id=%d AND trainer_id=%d AND (date_executed=0 OR date_executed IS NULL)", array((int) $teamId, (int) $trainerId));
+        }
+        return $count;
+    }
+
+    public static function getBestTrainingUnitForType(WebSoccer $websoccer, DbConnection $db, $teamId, $trainingType) {
+        self::ensureAdvancedTrainingSchema($websoccer, $db);
+        $preferred = self::getPreferredSpecializationsForTrainingType($trainingType);
+        $prefix = $websoccer->getConfig('db_prefix');
+        $result = $db->querySelect('U.id, U.trainer_id, U.focus, U.intensity, U.date_executed, T.specialization', $prefix . '_training_unit AS U INNER JOIN ' . $prefix . '_trainer AS T ON T.id=U.trainer_id', "U.team_id=%d AND (U.date_executed=0 OR U.date_executed IS NULL) ORDER BY U.id ASC", (int) $teamId);
+        $fallback = array();
+        while ($unit = $result->fetch_array()) {
+            if (!isset($fallback['id'])) {
+                $fallback = $unit;
+            }
+            if (in_array($unit['specialization'], $preferred, true)) {
+                $result->free();
+                return $unit;
+            }
+        }
+        $result->free();
+        return $fallback;
+    }
+
+    private static function getPreferredSpecializationsForTrainingType($trainingType) {
+        $map = array(
+            'regeneration' => array('fitness','mental','balanced'),
+            'technique' => array('technique','balanced'),
+            'passing' => array('technique','tactics','balanced'),
+            'finishing' => array('offense','technique','balanced'),
+            'setpieces' => array('setpieces','technique','balanced'),
+            'defense' => array('defense','tactics','balanced'),
+            'athletics' => array('fitness','balanced'),
+            'teambuilding' => array('mental','balanced'),
+            'matchprep' => array('tactics','balanced'),
+            'goalkeeper' => array('goalkeeper','balanced')
+        );
+        $trainingType = self::normalizeTrainingType($trainingType);
+        return isset($map[$trainingType]) ? $map[$trainingType] : array('balanced');
     }
 
     public static function getTrainingUnitById(WebSoccer $websoccer, DbConnection $db, $teamId, $unitId) {
@@ -184,6 +302,7 @@ class TrainingDataService {
             'team_id' => (int) $teamId,
             'current_slot_no' => 1,
             'last_match_id' => 0,
+            'last_training_date' => 0,
             'created_date' => $now,
             'updated_date' => $now,
             'status' => '1'
@@ -273,17 +392,12 @@ class TrainingDataService {
     public static function processAutomaticTrainingMatchday(WebSoccer $websoccer, DbConnection $db, I18n $i18n) {
         self::ensureAdvancedTrainingSchema($websoccer, $db);
         if (!self::isAdvancedTrainingEnabled($websoccer)) {
-            return array('processed' => 0, 'skipped_no_match' => 0, 'skipped_no_units' => 0, 'skipped_camp' => 0);
+            return array('processed' => 0, 'skipped_interval' => 0, 'skipped_no_units' => 0, 'skipped_camp' => 0);
         }
 
         $prefix = $websoccer->getConfig('db_prefix');
-        $result = $db->querySelect(
-            'id, user_id',
-            $prefix . '_verein',
-            "user_id > 0 AND status = '1' ORDER BY id ASC"
-        );
-
-        $summary = array('processed' => 0, 'skipped_no_match' => 0, 'skipped_no_units' => 0, 'skipped_camp' => 0);
+        $result = $db->querySelect('id, user_id', $prefix . '_verein', "user_id > 0 AND status = '1' ORDER BY id ASC");
+        $summary = array('processed' => 0, 'skipped_interval' => 0, 'skipped_no_units' => 0, 'skipped_camp' => 0);
         while ($team = $result->fetch_array()) {
             $teamResult = self::processAutomaticTrainingForTeam($websoccer, $db, $i18n, (int) $team['id']);
             if (isset($summary[$teamResult])) {
@@ -291,31 +405,23 @@ class TrainingDataService {
             }
         }
         $result->free();
-
         return $summary;
     }
 
     public static function processAutomaticTrainingForTeam(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $teamId) {
         self::ensureAdvancedTrainingSchema($websoccer, $db);
         $plan = self::getOrCreateTrainingPlan($websoccer, $db, $teamId);
-        $latestMatch = self::getLatestCompletedMatchForTeam($websoccer, $db, $teamId);
-        if (!isset($latestMatch['id']) || (int) $latestMatch['id'] <= (int) $plan['last_match_id']) {
-            return 'skipped_no_match';
+        $now = $websoccer->getNowAsTimestamp();
+        $minimumHours = max(1, (int) $websoccer->getConfig('training_min_hours_between_execution'));
+        $lastTrainingDate = isset($plan['last_training_date']) ? (int) $plan['last_training_date'] : 0;
+        if ($lastTrainingDate <= 0) {
+            $lastTrainingDate = self::getLatestTrainingExecutionTime($websoccer, $db, $teamId);
         }
-
+        if ($lastTrainingDate > 0 && $now < ($lastTrainingDate + ($minimumHours * 3600))) {
+            return 'skipped_interval';
+        }
         if (self::isTeamInTrainingCamp($websoccer, $db, $teamId)) {
             return 'skipped_camp';
-        }
-
-        $unit = self::getValidTrainingUnit($websoccer, $db, $teamId);
-        if (!isset($unit['id'])) {
-            $db->queryUpdate(array('last_match_id' => (int) $latestMatch['id']), $websoccer->getConfig('db_prefix') . '_training_plan', 'id = %d', (int) $plan['id']);
-            return 'skipped_no_units';
-        }
-
-        $trainer = self::getTrainerById($websoccer, $db, $unit['trainer_id']);
-        if (!isset($trainer['id'])) {
-            return 'skipped_no_units';
         }
 
         $slots = self::getTrainingPlanSlots($websoccer, $db, $teamId);
@@ -324,20 +430,31 @@ class TrainingDataService {
             $slotNo = 1;
         }
         $slot = $slots[$slotNo];
+        $unit = self::getBestTrainingUnitForType($websoccer, $db, $teamId, $slot['training_type']);
+        if (!isset($unit['id'])) {
+            return 'skipped_no_units';
+        }
+        $trainer = self::getTrainerById($websoccer, $db, $unit['trainer_id']);
+        if (!isset($trainer['id'])) {
+            return 'skipped_no_units';
+        }
 
-        self::executeTrainingUnit($websoccer, $db, $i18n, $teamId, $unit, $trainer, $slot['training_type'], $slot['intensity'], (int) $latestMatch['spieltag'], (int) $latestMatch['id']);
+        $latestMatch = self::getLatestCompletedMatchForTeam($websoccer, $db, $teamId);
+        $matchId = isset($latestMatch['id']) ? (int) $latestMatch['id'] : 0;
+        $matchday = isset($latestMatch['spieltag']) ? (int) $latestMatch['spieltag'] : 0;
+        self::executeTrainingUnit($websoccer, $db, $i18n, $teamId, $unit, $trainer, $slot['training_type'], $slot['intensity'], $matchday, $matchId);
 
         if (class_exists('IndividualTrainingDataService')) {
-            IndividualTrainingDataService::processForTeam($websoccer, $db, $i18n, $teamId, $trainer, (int) $latestMatch['id'], (int) $latestMatch['spieltag']);
+            IndividualTrainingDataService::processForTeam($websoccer, $db, $i18n, $teamId, $trainer, $now, $matchday);
         }
 
         $nextSlotNo = ($slotNo >= self::DEFAULT_PLAN_SLOTS) ? 1 : $slotNo + 1;
         $db->queryUpdate(array(
             'current_slot_no' => $nextSlotNo,
-            'last_match_id' => (int) $latestMatch['id'],
-            'updated_date' => $websoccer->getNowAsTimestamp()
+            'last_match_id' => $matchId,
+            'last_training_date' => $now,
+            'updated_date' => $now
         ), $websoccer->getConfig('db_prefix') . '_training_plan', 'id = %d', (int) $plan['id']);
-
         return 'processed';
     }
 
@@ -505,6 +622,7 @@ class TrainingDataService {
     public static function decorateTrainersForTeam(WebSoccer $websoccer, DbConnection $db, array $trainers, $teamId) {
         foreach ($trainers as $idx => $trainer) {
             $trainers[$idx]['suitability'] = self::getTrainerSuitabilityForTeam($websoccer, $db, $trainer, $teamId);
+            $trainers[$idx]['in_staff'] = self::isTrainerInStaff($websoccer, $db, $teamId, (int) $trainer['id']);
         }
         return $trainers;
     }
@@ -543,6 +661,7 @@ class TrainingDataService {
             team_id INT(10) NOT NULL,
             current_slot_no TINYINT(3) NOT NULL DEFAULT 1,
             last_match_id INT(10) NOT NULL DEFAULT 0,
+            last_training_date INT(11) NOT NULL DEFAULT 0,
             created_date INT(11) NOT NULL DEFAULT 0,
             updated_date INT(11) NOT NULL DEFAULT 0,
             status ENUM('1','0') NOT NULL DEFAULT '1',
@@ -550,6 +669,8 @@ class TrainingDataService {
             UNIQUE KEY uniq_training_plan_team (team_id),
             KEY idx_training_plan_status (status)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
+
+        self::ensureColumn($db, $prefix . '_training_plan', 'last_training_date', "ALTER TABLE " . $prefix . "_training_plan ADD COLUMN last_training_date INT(11) NOT NULL DEFAULT 0 AFTER last_match_id");
 
         $db->executeQuery("CREATE TABLE IF NOT EXISTS " . $prefix . "_training_plan_slot (
             id INT(10) NOT NULL AUTO_INCREMENT,

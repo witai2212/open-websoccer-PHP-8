@@ -42,7 +42,7 @@
 			<tr>
 				<td><strong>{{ loop.index }}</strong></td>
 				<td><a href="?page=player&id={{ wd.id }}">{{ wd.vorname }} {% if wd.kunstname|default('')|length > 0 %}{{ wd.kunstname }} {% endif %}{{ wd.nachname }}</a></td>
-                <td>{% if wd.club_id > 0 %}<a href="{{ env.getInternalUrl("team", "id=" ~ wd.club_id) }}">{{ wd.club_name }}</a>{% else %}-{% endif %}</td>
+                <td>{% if wd.club_id > 0 %}{% if wd.club_bild|default('')|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ wd.club_bild }}" alt="{{ wd.club_name }}" style="max-width: 20px; max-height: 20px; vertical-align: middle" /> {% endif %}<a href="{{ env.getInternalUrl("team", "id=" ~ wd.club_id) }}">{{ wd.club_name }}</a>{% else %}-{% endif %}</td>
                 <td>{{ wd.card_score|number_format(0, ',', ' ') }}</td>
 				<td>{{ wd.sa_karten_rot|number_format(0, ',', ' ') }}</td>
 				<td>{{ wd.sa_karten_gelb_rot|number_format(0, ',', ' ') }}</td>

@@ -15,6 +15,7 @@
 	<message id="activitylog_extend-stadium">%s hat den Ausbau seines Stadions in Auftrag gegeben.</message>
 	<message id="activitylog_upgrade-stadium">%s hat Wartungsarbeiten am Stadion durchführen lassen.</message>
 	<message id="activitylog_execute-training">%s hat seine Mannschaft trainiert.</message>
+	<message id="activitylog_dismiss-trainer">%s hat einen Trainer entlassen.</message>
 	<message id="activitylog_book-camp">%s hat ein Trainingslager gebucht.</message>
 	<message id="activitylog_create-youthmatch-request">%s hat eine Spielanfrage für die Jugendmannschaft veröffentlicht.</message>
 	<message id="activitylog_sell-youthplayer">%s bietet einen Jugendspieler zum Verkauf an.</message>
@@ -36,4 +37,7 @@
 	<message id="activitylog_sign-stadium-naming-contract">%s hat einen Vertrag über die Stadionnamensrechte abgeschlossen.</message>
 	<message id="activitylog_rename-stadium">%s hat sein Stadion umbenannt.</message>
 	
+
+	<message id="activitylog_create-club-partnership-request">%s hat eine Vereinspartnerschaft angefragt.</message>
+	<message id="activitylog_stop-club-partnership">%s hat eine Vereinspartnerschaft beendet.</message>
 </messages>

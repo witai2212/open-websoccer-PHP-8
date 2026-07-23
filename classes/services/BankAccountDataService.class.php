@@ -164,6 +164,9 @@ class BankAccountDataService {
         
         // update team budget
         $newBudget = $team["team_budget"] + $amount;
+        if (class_exists('ComputerBudgetProtectionDataService') && empty($team['user_id'])) {
+            $newBudget = ComputerBudgetProtectionDataService::protectAfterTransaction($websoccer, $db, $team, $newBudget);
+        }
         $updateColumns["finanz_budget"] = $newBudget;
         $fromTable = $websoccer->getConfig("db_prefix") ."_verein";
         $whereCondition = "id = %d";

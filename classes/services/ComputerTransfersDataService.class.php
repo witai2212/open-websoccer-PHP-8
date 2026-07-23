@@ -13,7 +13,7 @@ class ComputerTransfersDataService {
     const CPU_LOAN_REQUEST_EXPIRY_DAYS = 10;
     const TRANSFER_DURATION_DAYS = 1;
     const MAX_PERCENTAGE_PLAYERS_ON_TL = 2;
-    const MAX_PLAYERS_ON_TL = 800;
+    const MAX_PLAYERS_ON_TL = $websoccer->getConfig("transfermarket_max_players_on_tl");
 
     // Computer offers shall normally stay close to player market value.
     // In a small number of cases the limits are widened a little to keep the market dynamic.
@@ -545,7 +545,7 @@ class ComputerTransfersDataService {
             return;
         }
 
-        $maxLoanOffers = max(1, self::getOptionalConfigInt($websoccer, 'max_number_of_players_on_loan_list', self::MAX_LENDING_OFFERS_PER_TEAM));
+        $maxLoanOffers = max(1, self::getOptionalConfigInt($websoccer, 'lending_cpu_max_players_on_loan_list', self::MAX_LENDING_OFFERS_PER_TEAM));
         $currentLoanOffers = self::getTeamLendingOfferCount($websoccer, $db, $teamId);
         if ($currentLoanOffers >= $maxLoanOffers) {
             return;
@@ -582,6 +582,11 @@ class ComputerTransfersDataService {
     }
 
     private static function borrowLendablePlayer(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $maxOpenRequests = max(1, self::getOptionalConfigInt($websoccer, 'lending_cpu_max_open_requests_per_team', 3));
+        if (self::getOpenComputerLoanRequestCount($websoccer, $db, $teamId) >= $maxOpenRequests) {
+            return;
+        }
+
         if (self::getBorrowedPlayersCount($websoccer, $db, $teamId) >= self::MAX_BORROWED_PLAYERS_PER_TEAM) {
             return;
         }
@@ -686,7 +691,13 @@ class ComputerTransfersDataService {
               AND P.verein_id = O.lender_team_id
               AND P.lending_fee > 0
               AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)
-              AND (V.user_id IS NULL OR V.user_id <= 0)";
+              AND (V.user_id IS NULL OR V.user_id <= 0)
+              AND NOT EXISTS (
+                  SELECT 1
+                  FROM ". $dbPrefix ."_loan_request AS R
+                  WHERE R.player_id = O.player_id
+                    AND R.status = 'open'
+              )";
         $result = $db->executeQuery($query);
 
         $expired = array();
@@ -720,7 +731,7 @@ class ComputerTransfersDataService {
     }
 
     private static function enforceComputerLoanListingLimit(WebSoccer $websoccer, DbConnection $db) {
-        $maxOffers = max(1, self::getOptionalConfigInt($websoccer, 'max_number_of_players_on_loan_list', self::MAX_LENDING_OFFERS_PER_TEAM));
+        $maxOffers = max(1, self::getOptionalConfigInt($websoccer, 'lending_cpu_max_players_on_loan_list', self::MAX_LENDING_OFFERS_PER_TEAM));
         $prefix = $websoccer->getConfig('db_prefix');
         $query = "SELECT O.lender_team_id
                   FROM ". $prefix ."_loan_offer AS O
@@ -778,6 +789,19 @@ class ComputerTransfersDataService {
             return;
         }
 
+        $dbPrefix = $websoccer->getConfig('db_prefix');
+        $db->queryUpdate(
+            array('status' => LoanRequestDataService::STATUS_EXPIRED, 'answered_date' => $websoccer->getNowAsTimestamp()),
+            $dbPrefix . '_loan_request',
+            "status = 'open' AND player_id IN (
+                SELECT P.id
+                FROM ". $dbPrefix ."_spieler AS P
+                WHERE P.verein_id <> ". $dbPrefix ."_loan_request.lender_team_id
+                   OR P.lending_fee <= 0
+                   OR (P.lending_owner_id IS NOT NULL AND P.lending_owner_id > 0)
+            )"
+        );
+
         $expiryDays = self::getOptionalConfigInt($websoccer, 'lending_cpu_request_expiry_days', self::CPU_LOAN_REQUEST_EXPIRY_DAYS);
         if ($expiryDays <= 0) {
             return;
@@ -790,6 +814,19 @@ class ComputerTransfersDataService {
             "status = 'open' AND created_by_computer = '1' AND created_date > 0 AND created_date <= %d",
             (int) $threshold
         );
+    }
+
+    private static function getOpenComputerLoanRequestCount(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $query = "SELECT COUNT(*) AS request_count
+                  FROM ". $websoccer->getConfig('db_prefix') ."_loan_request
+                  WHERE borrower_team_id = '". (int) $teamId ."'
+                    AND status = 'open'
+                    AND created_by_computer = '1'";
+        $result = $db->executeQuery($query);
+        $row = $result->fetch_assoc();
+        $result->free();
+
+        return isset($row['request_count']) ? (int) $row['request_count'] : 0;
     }
 
     private static function hasRecentComputerLoanOffer(WebSoccer $websoccer, DbConnection $db, $playerId) {
@@ -1065,6 +1102,9 @@ class ComputerTransfersDataService {
         $db->executeQuery($updStr);
         LoanDataService::createLoan($websoccer, $db, $player['id'], $lenderTeamId, $borrowerTeamId, $matches, $player['lending_fee'], $salaryShare, $optionType, $buyFee);
         LoanDataService::closeOffer($websoccer, $db, $player['id'], 'accepted');
+        if (class_exists('LoanRequestDataService')) {
+            LoanRequestDataService::expireOpenRequestsForPlayer($websoccer, $db, $player['id']);
+        }
 
         echo "--- BORROWED: ". $player['id'] ." -> ". $borrowerTeamId ."\n";
 
@@ -1354,4 +1394,3 @@ class ComputerTransfersDataService {
 	}
 
 }
-

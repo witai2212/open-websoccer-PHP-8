@@ -170,6 +170,11 @@ class SeasonRolloverDataService {
 
         $seasonColumns = array('beendet' => '1');
 
+        $talentChanges = 0;
+        if (class_exists('PlayerTalentChangeDataService')) {
+            $talentChanges = PlayerTalentChangeDataService::processSeasonEnd($websoccer, $db, (int) $season['id'], (int) $season['liga_id']);
+        }
+
         $playerResetColumns = array(
             'P.sa_tore',
             'P.sa_spiele',
@@ -358,6 +363,7 @@ class SeasonRolloverDataService {
         );
 
         $season['processed_teams'] = $processedTeams;
+        $season['talent_changes'] = $talentChanges;
         $season['retirement_summary'] = $retirementSummary;
         return $season;
     }

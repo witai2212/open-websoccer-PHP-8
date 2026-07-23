@@ -40,4 +40,10 @@
 	<message id="settings_label_computer_transfers_max_active_offers_per_team_help">Höchstzahl gleichzeitig offener Transferangebote eines CPU-Vereins.</message>
 	<message id="settings_label_computer_transfers_max_offers_per_player">Maximale CPU-Angebote pro Spieler</message>
 	<message id="settings_label_computer_transfers_max_offers_per_player_help">Höchstzahl gleichzeitig offener Angebote von CPU-Vereinen für einen Spieler.</message>
+
+	<message id="settings_label_player_talent_transfer_change_chance">Talentänderung nach Transfer</message>
+	<message id="settings_label_player_talent_transfer_change_chance_help">Prozentchance auf eine einmalige Talentänderung um +1 oder -1 nach einem abgeschlossenen Transfer.</message>
+	<message id="settings_label_computer_budget_subsidy_floor">CPU-Grundbudget</message>
+	<message id="settings_label_computer_budget_subsidy_floor_help">CPU-Vereine werden automatisch auf diesen Mindestbetrag aufgefüllt.</message>
+
 </messages>

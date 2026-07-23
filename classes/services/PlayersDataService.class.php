@@ -290,6 +290,7 @@ class PlayersDataService {
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
+		$columns['C.bild'] = 'team_picture';
 		
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';

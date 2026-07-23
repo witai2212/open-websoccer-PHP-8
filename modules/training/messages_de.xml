@@ -5,20 +5,37 @@
     <message id="training_navlabel">Training</message>
     <message id="training_no_trainers_available">Derzeit stehen keine Trainer zur Verfügung.</message>
     <message id="training_choose_trainer">Wählen Sie einen Trainer</message>
+    <message id="training_trainer_filter_all">Alle Trainer</message>
     
     <message id="trainer-details_navlabel">Trainer auswählen</message>
     
     <message id="training_choose_trainer_title">Diesen Trainer einstellen</message>
     <message id="training_choose_trainer_units">Anzahl Trainingseinheiten</message>
     
-    <message id="training_choose_trainer_err_existing_units">Sie haben noch offene Trainingseinheiten. Diese müssen zuerst automatisch über den Trainingsplan verbraucht werden, bevor Sie einen neuen Trainer anstellen können.</message>
+    <message id="training_choose_trainer_err_existing_units">Dieser Trainer kann derzeit nicht eingestellt werden.</message>
     <message id="training_choose_trainer_err_too_expensive">Diesen Trainer können Sie sich im Moment nicht leisten.</message>
     
     <message id="training_trainer_salary_subject">Trainingseinheiten</message>
+    <message id="training_trainer_dismissal_subject">Abfindung Trainer</message>
     
     <message id="training_units_count">Offene Trainingseinheiten</message>
     <message id="training_last_execution">Letzte Trainingseinheit</message>
     <message id="training_current_trainer">Aktueller Trainer</message>
+    <message id="training_staff_title">Trainerstab</message>
+    <message id="training_staff_intro">Ein Cheftrainer und bis zu %d Spezialtrainer steuern das tägliche Training. Je nach Trainingsart wird automatisch der passendste Trainer eingesetzt.</message>
+    <message id="training_staff_role">Rolle</message>
+    <message id="training_staff_head">Cheftrainer</message>
+    <message id="training_staff_specialist">Spezialtrainer</message>
+    <message id="training_staff_open_units">Offene Einheiten</message>
+    <message id="training_staff_empty">Es ist noch kein Trainer beschäftigt. Ohne offene Trainingseinheiten findet kein Mannschaftstraining statt.</message>
+    <message id="training_staff_full">Der Trainerstab ist bereits vollständig besetzt.</message>
+    <message id="training_staff_slots_available">Noch %d Platz oder Plätze im Trainerstab verfügbar.</message>
+    <message id="training_add_units">Einheiten nachbuchen</message>
+    <message id="training_dismiss_trainer">Entlassen</message>
+    <message id="training_dismiss_trainer_confirm">Trainer wirklich entlassen? Alle offenen Einheiten dieses Trainers verfallen. Die Abfindung beträgt %s %s.</message>
+    <message id="training_dismiss_trainer_success">Trainer entlassen. %d offene Einheiten sind verfallen. Abfindung: %d.</message>
+    <message id="training_dismiss_trainer_not_found">Dieser Trainer gehört nicht zum aktuellen Trainerstab.</message>
+    <message id="training_dismiss_trainer_too_expensive">Die notwendige Abfindung kann derzeit nicht bezahlt werden.</message>
     
     <message id="training_trainer_details">Gebuchter Trainer</message>
     <message id="training_execute_training_title">Jetzt Mannschaft trainieren</message>
@@ -31,7 +48,7 @@
     <message id="training_execute_focus_regeneration">Regeneration</message>
     
     <message id="training_execute_intensity">Intensität</message>
-    <message id="training_execute_training_note">Normales Training wird automatisch nach einem abgeschlossenen Spiel über den gespeicherten Trainingsplan ausgeführt.</message>
+    <message id="training_execute_training_note">Normales Training wird unabhängig von Spielen automatisch etwa einmal innerhalb von 24 Stunden über den gespeicherten Trainingsplan ausgeführt.</message>
     
     <message id="training_execute_success">Das Team wurde trainiert.</message>
     <message id="training_execute_err_already_executed">Die Trainingseinheit wurde bereits ausgeführt. Laden Sie die Seite neu und probieren Sie es noch einmal.</message>
@@ -44,7 +61,7 @@
     <message id="training_execute_err_team_in_training_camp">Das Team ist momentan im Trainingslager und hat daher keine Zeit für normale Trainingseinheiten.</message>
 
     <message id="training_plan_title">Automatischer Trainingsplan</message>
-    <message id="training_plan_intro">Der Plan wird automatisch abgearbeitet. Nach jedem abgeschlossenen Spiel verbraucht der Verein eine offene Trainingseinheit und führt den nächsten Slot aus. Danach springt der Plan zum nächsten Slot weiter.</message>
+    <message id="training_plan_intro">Der Plan wird auch an spielfreien Tagen automatisch abgearbeitet. Etwa alle 24 Stunden verbraucht der Verein eine offene Trainingseinheit, setzt den passendsten Trainer ein und führt den nächsten Slot aus.</message>
     <message id="training_plan_no_units_warning">Es sind keine offenen Trainingseinheiten vorhanden. Der Plan bleibt gespeichert, wird aber erst ausgeführt, nachdem Sie einen Trainer gebucht haben.</message>
     <message id="training_plan_saved">Der Trainingsplan wurde gespeichert.</message>
     <message id="training_plan_slot">Slot</message>
@@ -101,7 +118,7 @@
     <message id="trainingcalendar_active_camp">Aktives Trainingslager</message>
     <message id="trainingcalendar_active_camp_note">Normale Trainingseinheiten werden während des Trainingslagers übersprungen.</message>
     <message id="trainingcalendar_plan_title">Trainingsplan bearbeiten</message>
-    <message id="trainingcalendar_plan_intro">Die markierte Zeile ist der nächste Slot. Nach jedem automatischen Training springt der Plan zum nächsten Slot weiter.</message>
+    <message id="trainingcalendar_plan_intro">Die markierte Zeile ist der nächste Slot. Das Training findet etwa alle 24 Stunden statt und springt anschließend zum nächsten Slot weiter.</message>
     <message id="trainingcalendar_last_report_title">Letzter Trainingsbericht</message>
     <message id="trainingcalendar_best_performer">Bester Spieler</message>
     <message id="trainingcalendar_worst_performer">Schwächster Spieler</message>
@@ -141,7 +158,7 @@
     <!-- Einzeltraining -->
     <message id="individual-training_navlabel">Einzeltraining</message>
     <message id="individual_training_title">Einzeltraining</message>
-    <message id="individual_training_intro">Legen Sie pro Spieler einen individuellen Trainingsschwerpunkt fest. Ein Spieler kann entweder genau ein aktives Einzeltraining haben oder keines. Der Fortschritt entsteht automatisch nach abgeschlossenen Spielen, wenn die normale Trainingseinheit des Vereins verarbeitet wird. Sobald das Ziel erreicht ist, endet das Einzeltraining und Sie erhalten eine Nachricht.</message>
+    <message id="individual_training_intro">Legen Sie pro Spieler einen individuellen Trainingsschwerpunkt fest. Ein Spieler kann genau ein aktives Einzeltraining haben. Der Fortschritt entsteht mit jeder täglichen Mannschaftseinheit, auch an spielfreien Tagen. Sobald das Ziel erreicht ist, endet das Einzeltraining und Sie erhalten eine Nachricht.</message>
     <message id="individual_training_only_human">Einzeltraining steht nur Vereinen mit menschlichem Manager zur Verfügung.</message>
     <message id="individual_training_no_trainer">Kein Trainer gebucht</message>
     <message id="individual_training_progress_hint_title">Fortschritt</message>

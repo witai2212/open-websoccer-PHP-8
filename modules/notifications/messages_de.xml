@@ -3,4 +3,7 @@
 <messages>
     <message id="userprofile_block_notifications">Benachrichtigungen</message>
     <message id="userprofile_block_notifications_noneavailable">Derzeit gibt es keine Benachrichtigungen für Sie.</message>
+    <message id="notifications_grouped_count">%d Benachrichtigungen anzeigen</message>
+    <message id="notifications_new">Neu</message>
+    <message id="player_talent_transfer_changed">Talententwicklung nach Transfer: {player} verändert sich von {old} auf {new} ({change}).</message>
 </messages>

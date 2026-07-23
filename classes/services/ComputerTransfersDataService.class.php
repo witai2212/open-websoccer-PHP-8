@@ -13,7 +13,7 @@ class ComputerTransfersDataService {
     const CPU_LOAN_REQUEST_EXPIRY_DAYS = 10;
     const TRANSFER_DURATION_DAYS = 1;
     const MAX_PERCENTAGE_PLAYERS_ON_TL = 2;
-    const MAX_PLAYERS_ON_TL = $websoccer->getConfig("transfermarket_max_players_on_tl");
+    const MAX_PLAYERS_ON_TL = 800; // fallback; runtime value is read from config.inc.php
 
     // Computer offers shall normally stay close to player market value.
     // In a small number of cases the limits are widened a little to keep the market dynamic.

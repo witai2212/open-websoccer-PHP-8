@@ -240,6 +240,18 @@ class PlayerPrecontractDataService {
             throw new Exception('Ein Verein kann dem eigenen Spieler keinen Vorvertrag anbieten.');
         }
 
+        // CPU-Vereine dürfen nur die konfigurierte Anzahl aktiver externer
+        // Vorverträge gleichzeitig besitzen. Ein vorhandenes Angebot darf
+        // weiterhin aktualisiert werden, auch wenn das Limit bereits erreicht ist.
+        if ($isComputer) {
+            $existingOffer = self::getOfferByPlayerAndTeam($websoccer, $db, $playerId, $teamId);
+            if (!$existingOffer
+                    && self::getCurrentPreContractOffers($websoccer, $db, $teamId)
+                        >= self::getMaxComputerPreContractOffers($websoccer)) {
+                throw new Exception('Der CPU-Verein hat bereits die maximale Anzahl aktiver Vorverträge erreicht.');
+            }
+        }
+
         $contractMatches = self::normalizeContractMatches($websoccer, $contractMatches);
         $salary = max((int) $salary, (int) ceil((int) $player['vertrag_gehalt'] * 1.05));
         $goalBonus = max((int) $goalBonus, (int) $player['vertrag_torpraemie']);
@@ -716,7 +728,7 @@ class PlayerPrecontractDataService {
         $result = $db->querySelect(
             'COUNT(*) AS offers',
             $prefix . '_player_precontract',
-            "destination_team_id = %d AND status IN ('open','accepted')",
+            "destination_team_id = %d AND current_team_id <> destination_team_id AND status IN ('open','accepted')",
             (int) $teamId,
             1
         );
@@ -730,6 +742,11 @@ class PlayerPrecontractDataService {
         $prefix = $websoccer->getConfig('db_prefix');
         $limit = (int) $websoccer->getConfig('contract_max_number_of_remaining_matches');
         if ($limit < 1) {
+            return 0;
+        }
+
+        $maxActiveOffers = self::getMaxComputerPreContractOffers($websoccer);
+        if (self::getCurrentPreContractOffers($websoccer, $db, $teamId) >= $maxActiveOffers) {
             return 0;
         }
 
@@ -757,7 +774,8 @@ class PlayerPrecontractDataService {
         }
 
         while ($player = $result->fetch_array()) {
-            if ($made >= 1) {
+            if ($made >= 1
+                    || self::getCurrentPreContractOffers($websoccer, $db, $teamId) >= $maxActiveOffers) {
                 break;
             }
             if (self::getOpenComputerOfferCount($websoccer, $db, (int) $player['id']) >= $maxComputerOffersPerPlayer) {
@@ -801,6 +819,11 @@ class PlayerPrecontractDataService {
 
     private static function normalizeContractMatches(WebSoccer $websoccer, $contractMatches) {
         return max(20, min(self::getMaxContractMatches($websoccer), (int) $contractMatches));
+    }
+
+    private static function getMaxComputerPreContractOffers(WebSoccer $websoccer) {
+        $max = (int) $websoccer->getConfig('precontract_max_cpu_offer');
+        return $max > 0 ? $max : 3;
     }
 
     private static function getMaxContractMatches(WebSoccer $websoccer) {

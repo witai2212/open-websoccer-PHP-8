@@ -6,265 +6,983 @@
 
 {% block page_content %}
 
+<div id="wiki-top"></div>
+
 <div class="alert alert-info">
     <i class="icon-question-sign"></i>
     <strong>Willkommen im CM23 Wiki.</strong>
-    Diese Seite erklärt die wichtigsten Spielbereiche kurz und verständlich. Sie richtet sich an neue Manager und an erfahrene Benutzer, die einzelne Funktionen schnell nachschlagen möchten.
+    Diese Spielhilfe erklärt die wichtigsten Bereiche für Manager: vom ersten Spieltag über Kaderplanung, Training und Transfers bis zu Jugend, Finanzen und Managerkarriere.
+</div>
+
+<div class="alert">
+    <i class="icon-info-sign"></i>
+    <strong>Hinweis:</strong>
+    Welche Funktionen verfügbar sind und welche Grenzwerte gelten, hängt von den Einstellungen der Spielwelt ab. Geldbeträge, Fristen, Wahrscheinlichkeiten und Höchstwerte können daher von den hier beschriebenen Beispielen abweichen.
 </div>
 
 <div class="well">
-    <h3>Inhalt</h3>
-    <ol>
-        <li><a href="#schnellstart">Schnellstart</a></li>
-        <li><a href="#kader-aufstellung">Kader &amp; Aufstellung</a></li>
-        <li><a href="#training">Training</a></li>
-        <li><a href="#transfers-scouting">Transfers &amp; Scouting</a></li>
-        <li><a href="#finanzen">Finanzen, Bank &amp; Börse</a></li>
-        <li><a href="#verein-umfeld">Verein, Umfeld &amp; Managerkarriere</a></li>
-        <li><a href="#spieltag">Spieltag</a></li>
-        <li><a href="#jugend">Jugend &amp; Entwicklung</a></li>
-        <li><a href="#spezialfeatures">Spezialfeatures</a></li>
-        <li><a href="#tipps">Kurze Tipps</a></li>
-    </ol>
+    <h3 style="margin-top: 0;">Schnelleinstieg</h3>
+    <div class="row-fluid">
+        <div class="span4">
+            <h4><i class="icon-home"></i> Täglich prüfen</h4>
+            <p>Büro, Nachrichten, nächste Begegnung, Aufstellung und offene Entscheidungen.</p>
+            <p><a class="btn btn-small" href="{{ env.getInternalUrl("office") }}">Zum Büro</a></p>
+        </div>
+        <div class="span4">
+            <h4><i class="icon-group"></i> Mannschaft führen</h4>
+            <p>Kaderzustand, Verträge, Teamchemie, Training und taktische Passung.</p>
+            <p><a class="btn btn-small" href="{{ env.getInternalUrl("myteam") }}">Zum Kader</a></p>
+        </div>
+        <div class="span4">
+            <h4><i class="icon-exchange"></i> Zukunft planen</h4>
+            <p>Transfers, Leihen, Scouting, Jugend, Finanzen und Karriereziele.</p>
+            <p><a class="btn btn-small" href="{{ env.getInternalUrl("transfermarket") }}">Zum Transfermarkt</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="well">
+    <h3 style="margin-top: 0;">Inhalt</h3>
+    <div class="row-fluid">
+        <div class="span4">
+            <ol>
+                <li><a href="#spielprinzip">Spielprinzip und Tagesablauf</a></li>
+                <li><a href="#buero">Büro, Nachrichten und Zusammenfassungen</a></li>
+                <li><a href="#kader">Kader, Spielerwerte und Verträge</a></li>
+                <li><a href="#aufstellung">Aufstellung und Spieltaktik</a></li>
+                <li><a href="#chemie">Taktische Identität und Teamchemie</a></li>
+                <li><a href="#training">Training und Trainer</a></li>
+            </ol>
+        </div>
+        <div class="span4">
+            <ol start="7">
+                <li><a href="#transfers">Transfermarkt und Angebote</a></li>
+                <li><a href="#vorvertraege">Vorverträge für die nächste Saison</a></li>
+                <li><a href="#leihen">Spielerleihen</a></li>
+                <li><a href="#scouting">Scouting und Transfermarkt-Analyse</a></li>
+                <li><a href="#jugend">Jugend und Jugendakademie</a></li>
+                <li><a href="#mitarbeiter">Vereinsmitarbeiter und Partnerschaften</a></li>
+            </ol>
+        </div>
+        <div class="span4">
+            <ol start="13">
+                <li><a href="#finanzen">Finanzen, Sponsoren und Bank</a></li>
+                <li><a href="#stadion">Stadion und Merchandising</a></li>
+                <li><a href="#medizin">Verletzungen und medizinische Abteilung</a></li>
+                <li><a href="#umfeld">Fans, Medien, Vorstand und Ereignisse</a></li>
+                <li><a href="#karriere">Managerkarriere, Ziele und Auszeichnungen</a></li>
+                <li><a href="#wettbewerbe">Spieltag, Wettbewerbe und Statistiken</a></li>
+                <li><a href="#fragen">Häufige Fragen und Tipps</a></li>
+            </ol>
+        </div>
+    </div>
 </div>
 
 <hr>
 
-<section id="schnellstart">
-    <h3>1. Schnellstart</h3>
+<section id="spielprinzip">
+    <h3>1. Spielprinzip und Tagesablauf</h3>
     <p>
-        In CM23 übernimmst du einen Fußballverein und entwickelst ihn sportlich, finanziell und organisatorisch weiter.
-        Am Anfang solltest du vor allem deinen Kader prüfen, eine Aufstellung setzen, die Finanzen beobachten und dein nächstes Spiel vorbereiten.
+        In CM23 übernimmst du die sportliche und wirtschaftliche Verantwortung für einen Fußballverein. Entscheidungen wirken nicht isoliert: Ein teurer Transfer verändert dein Budget, ein großer Kader erhöht die Gehaltskosten, häufige Wechsel können die Teamchemie belasten und sportliche Ergebnisse beeinflussen Fans, Medien, Vorstand und deine Managerkarriere.
     </p>
-    <p>
-        Die wichtigsten ersten Schritte sind:
-    </p>
+
+    <h4>Deine wichtigsten Aufgaben</h4>
     <ul>
-        <li><strong>Verein auswählen:</strong> Wähle einen freien Verein oder übernimm einen angebotenen Club.</li>
-        <li><strong>Kader prüfen:</strong> Achte auf Stärke, Frische, Kondition, Verträge, Verletzungen und Sperren.</li>
-        <li><strong>Aufstellung setzen:</strong> Stelle elf Spieler, Ersatzspieler, Formation, Auswechslungen und Taktik ein.</li>
-        <li><strong>Finanzen prüfen:</strong> Behalte Budget, Gehälter, Sponsoren, Stadion und mögliche Kredite im Blick.</li>
-        <li><strong>Nach dem Spiel auswerten:</strong> Prüfe Ergebnis, Trainingseffekte, Nachrichten und Änderungen im Verein.</li>
+        <li><strong>Mannschaft vorbereiten:</strong> Aufstellung, Ersatzbank, Auswechslungen, Standards und Taktik festlegen.</li>
+        <li><strong>Kader entwickeln:</strong> Spieler trainieren, Verträge verwalten und Schwachstellen erkennen.</li>
+        <li><strong>Personal planen:</strong> Trainer, Scouts, Vereinsmitarbeiter und Jugendförderung sinnvoll einsetzen.</li>
+        <li><strong>Transfers steuern:</strong> Spieler kaufen, verkaufen, verleihen, beobachten oder für die nächste Saison verpflichten.</li>
+        <li><strong>Finanzen sichern:</strong> Gehälter, Sponsoren, Eintrittspreise, Stadion, Kredite und Nebenkosten im Blick behalten.</li>
+        <li><strong>Umfeld führen:</strong> Auf Vorstand, Fans, Medien und Ereignisse reagieren.</li>
     </ul>
+
+    <h4>Empfohlener Ablauf</h4>
+    <ol>
+        <li>Öffne dein <a href="{{ env.getInternalUrl("office") }}">Büro</a> und prüfe Hinweise sowie offene Entscheidungen.</li>
+        <li>Kontrolliere im <a href="{{ env.getInternalUrl("myteam") }}">Kader</a> Verletzungen, Sperren, Frische und auslaufende Verträge.</li>
+        <li>Bereite unter <a href="{{ env.getInternalUrl("formation") }}">Aufstellung und Taktik</a> die nächste Begegnung vor.</li>
+        <li>Prüfe Training, Transferaktivitäten, Leihanfragen, Scouting und Jugend.</li>
+        <li>Werte nach der Begegnung den Spielbericht und <a href="{{ env.getInternalUrl("what-changed") }}">Was ist passiert?</a> aus.</li>
+    </ol>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
-<section id="kader-aufstellung">
-    <h3>2. Kader &amp; Aufstellung</h3>
+<section id="buero">
+    <h3>2. Büro, Nachrichten und Zusammenfassungen</h3>
     <p>
-        Dein Kader ist die Grundlage deines Erfolgs. Jeder Spieler besitzt eine Position, eine Hauptposition, mehrere Leistungswerte und einen Vertrag.
-        Neben der allgemeinen Stärke sind auch Frische, Kondition, Zufriedenheit und Spezialattribute wichtig.
+        Das <a href="{{ env.getInternalUrl("office") }}">Büro</a> ist deine zentrale Anlaufstelle. Dort erhältst du einen kompakten Überblick über den Zustand des Vereins und wirst auf wichtige Entwicklungen hingewiesen.
     </p>
-    <p>
-        Auf der Seite <a href="{{ env.getInternalUrl("myteam") }}">Mein Team</a> siehst du deine Spieler, Verträge, Marktwerte und Statusmeldungen.
-        Auf der Seite <a href="{{ env.getInternalUrl("formation") }}">Aufstellung</a> legst du fest, wer im nächsten Spiel spielt.
-    </p>
-    <h4>Wichtige Werte</h4>
+
+    <h4>Heute im Verein</h4>
+    <p>Der tägliche Überblick kann unter anderem auf folgende Themen hinweisen:</p>
     <ul>
-        <li><strong>Stärke:</strong> zeigt die aktuelle Gesamtqualität eines Spielers.</li>
-        <li><strong>Technik, Passing, Shooting, Tackling usw.:</strong> beeinflussen bestimmte Spielsituationen.</li>
-        <li><strong>Frische:</strong> sinkt durch Belastung und ist wichtig für die aktuelle Leistung.</li>
-        <li><strong>Kondition:</strong> beschreibt die körperliche Basis eines Spielers.</li>
-        <li><strong>Zufriedenheit:</strong> kann Entwicklung, Moral und Wechselbereitschaft beeinflussen.</li>
-        <li><strong>Verletzungen und Sperren:</strong> verhindern Einsätze oder machen sie riskant.</li>
+        <li>niedrige oder hohe Vorstandszufriedenheit;</li>
+        <li>kritische Fanstimmung oder hohen Mediendruck;</li>
+        <li>schwache oder besonders gute Teamchemie;</li>
+        <li>offene Medienfragen und Vereinsereignisse;</li>
+        <li>neue Scouting-Ergebnisse;</li>
+        <li>Entwicklungen in der Jugendakademie;</li>
+        <li>Leihspieler ohne ausreichende Spielpraxis;</li>
+        <li>neue Transferangebote oder Leihanfragen;</li>
+        <li>die letzte Spieltags-Zusammenfassung.</li>
     </ul>
+
+    <h4>Nachrichten</h4>
+    <p>
+        Wichtige Transfer- und Vereinsvorgänge werden als dauerhafte <a href="{{ env.getInternalUrl("messages") }}">Nachrichten</a> gespeichert. Dazu gehören beispielsweise eingegangene Angebote, Überbietungen, angenommene oder abgelehnte Transfers sowie Entscheidungen zu Vorverträgen. Dadurch gehen wichtige Informationen nicht zwischen kurzfristigen Hinweisen verloren.
+    </p>
+
+    <h4>Was ist passiert?</h4>
+    <p>
+        Die Seite <a href="{{ env.getInternalUrl("what-changed") }}">Was ist passiert?</a> fasst die Veränderungen nach deiner letzten Begegnung zusammen. Je nach aktivierten Spielsystemen findest du dort sportliche, finanzielle, personelle und atmosphärische Auswirkungen.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("office") }}">Büro</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("messages") }}">Nachrichten</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("what-changed") }}">Was ist passiert?</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="kader">
+    <h3>3. Kader, Spielerwerte und Verträge</h3>
+    <p>
+        Auf der Seite <a href="{{ env.getInternalUrl("myteam") }}">Mein Kader</a> siehst du deine Profispieler mit Position, Zustand, Vertrag, Marktwert und weiteren Informationen. Die Spielerstärke allein reicht nicht für eine gute Entscheidung. Ein etwas schwächerer, frischer und passender Spieler kann für eine bestimmte Rolle hilfreicher sein als ein erschöpfter Star.
+    </p>
+
+    <h4>Grundwerte</h4>
+    <dl class="dl-horizontal">
+        <dt>Stärke</dt>
+        <dd>Aktuelle Gesamtqualität des Spielers.</dd>
+        <dt>Maximalstärke</dt>
+        <dd>Mögliche obere Entwicklung. Sie kann abhängig von Scouting und Spielregeln nicht vollständig sichtbar sein.</dd>
+        <dt>Talent</dt>
+        <dd>Langfristige Entwicklungsvoraussetzung. Talent allein garantiert keine Entwicklung.</dd>
+        <dt>Technik</dt>
+        <dd>Technische Grundlage für viele Aktionen.</dd>
+        <dt>Kondition</dt>
+        <dd>Körperliche Basis und Belastbarkeit.</dd>
+        <dt>Frische</dt>
+        <dd>Aktueller Erholungszustand. Einsätze und intensive Belastung können den Wert senken.</dd>
+        <dt>Zufriedenheit</dt>
+        <dd>Reaktion des Spielers auf Einsatzzeiten, Vertragsangebote und Vereinssituation.</dd>
+    </dl>
+
+    <h4>Spezialattribute</h4>
+    <p>
+        Passspiel, Abschluss, Kopfball, Zweikampf, Freistöße, Tempo, Kreativität, Einfluss, Flair, Elfmeter und Elfmeterabwehr wirken in passenden Spielsituationen. Welche Attribute besonders wichtig sind, hängt von Position, Rolle und taktischer Identität ab.
+    </p>
+
+    <h4>Positionen</h4>
+    <p>
+        Neben der allgemeinen Positionsgruppe besitzen Spieler eine Hauptposition und teilweise eine Nebenposition. Ein Spieler sollte möglichst passend eingesetzt werden. Unpassende Positionen können die nutzbare Leistung verringern oder die Formation schwächen.
+    </p>
+
+    <h4>Charakter, Persönlichkeit und Eigenschaften</h4>
+    <p>
+        Spieler können charakterliche Merkmale und Eigenschaften besitzen. Positive oder negative Ausprägungen beeinflussen je nach Situation Entwicklung, Beständigkeit, Verletzungsanfälligkeit, wichtige Spiele, Loyalität, Ehrgeiz, Führung und Reaktionen des Umfelds. Sichtbarkeit und Genauigkeit können von Scouting oder Vereinszugriff abhängen.
+    </p>
+
+    <h4>Verträge</h4>
+    <p>
+        Verträge laufen in verbleibenden Spielen, nicht in Kalendermonaten. Ein Vertrag besteht aus Gehalt pro Spiel, Torprämie und Laufzeit. Zu niedrige Verlängerungsangebote können die Zufriedenheit des Spielers belasten. Warte nicht bis zum letzten Moment: Bei kurzer Restlaufzeit können andere Vereine für die nächste Saison verhandeln.
+    </p>
+
+    <h4>Kaderanalyse</h4>
+    <p>
+        Die <a href="{{ env.getInternalUrl("squadplanner") }}">Kaderanalyse</a> bewertet Kaderbreite, Altersstruktur, Vertragsrisiken, Verkaufs- und Leihkandidaten, Jugendoptionen und Positionsbedarf. Automatische Maßnahmen betreffen nur empfohlene interne Schritte. Das System verpflichtet keine Spieler ungefragt.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("myteam") }}">Mein Kader</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("squadplanner") }}">Kaderanalyse</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("playerssearch") }}">Spielersuche</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="aufstellung">
+    <h3>4. Aufstellung und Spieltaktik</h3>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("formation") }}">Aufstellung und Taktik</a> stellst du die erste Elf, Ersatzspieler und geplante Wechsel für die nächste Begegnung zusammen. Eine vollständige und gültige Aufstellung ist eine der wichtigsten Manageraufgaben.
+    </p>
+
+    <h4>Aufstellung</h4>
+    <ul>
+        <li>Besetze alle vorgesehenen Positionen mit einsatzberechtigten Spielern.</li>
+        <li>Beachte Verletzungen, Sperren, Frische und Positionspassung.</li>
+        <li>Nutze die Ersatzbank für taktische und verletzungsbedingte Wechsel.</li>
+        <li>Lege Kapitän sowie Freistoß- und Eckenschützen anhand passender Werte fest.</li>
+        <li>Speichere bewährte Aufstellungen als Vorlage, sofern diese Funktion aktiv ist.</li>
+    </ul>
+
+    <h4>Geplante Auswechslungen</h4>
+    <p>
+        Wechsel können mit Minute, einzuwechselndem Spieler, Zielposition und Bedingung vorbereitet werden. Das System führt nur mögliche und regelkonforme Wechsel aus. Ein bereits verletzter, gesperrter oder anderweitig eingesetzter Spieler kann nicht eingewechselt werden.
+    </p>
+
+    <h4>Offensive Ausrichtung</h4>
+    <p>
+        Die offensive Einstellung beeinflusst das Risiko deiner Spielweise. Mehr Offensive kann zusätzliche Chancen erzeugen, erhöht aber nicht automatisch die Qualität der Abschlüsse und kann defensive Stabilität kosten.
+    </p>
+
+    <h4>Zusatzoptionen</h4>
+    <ul>
+        <li><strong>Lange Pässe:</strong> können schneller zu Abschlüssen führen, erhöhen aber auch das Risiko von Ballverlusten.</li>
+        <li><strong>Konterspiel:</strong> verändert das Umschaltverhalten und kann die Zahl eigener oder gegnerischer Chancen beeinflussen.</li>
+        <li><strong>Formation:</strong> bestimmt die Grundordnung und Positionsverteilung.</li>
+        <li><strong>Live-Änderungen:</strong> können bei laufenden Begegnungen verfügbar sein, wenn die Spielwelt dies erlaubt.</li>
+    </ul>
+
+    <p><a class="btn btn-small" href="{{ env.getInternalUrl("formation") }}">Aufstellung öffnen</a></p>
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="chemie">
+    <h3>5. Taktische Identität und Teamchemie</h3>
+
     <h4>Taktische Identität</h4>
     <p>
-        Zusätzlich zur Formation kann ein Verein eine taktische Identität besitzen, zum Beispiel Ballbesitz, Konter, Pressing, Defensivblock, Flügelspiel, Standards, Jugendfokus oder körperbetontes Spiel.
-        Die Wirkung ist bewusst klein, kann aber helfen, wenn die Spielweise gut zu den Spielern passt.
+        Dein Verein kann einen festen Spielstil wählen. Die Wirkung ist bewusst begrenzt und belohnt vor allem eine gute Verbindung zwischen Kader, Training, Mitarbeitern und Spielidee. Ein Stilwechsel kann kurzfristig die Teamchemie verändern.
     </p>
+
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Stil</th>
+                <th>Besonders passende Werte</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Ausgewogen</td><td>Stärke, Technik, Kondition, Passspiel, Zweikampf und Frische in ausgeglichener Verteilung</td></tr>
+            <tr><td>Pressing</td><td>Kondition, Tempo, Zweikampf und Mentalität</td></tr>
+            <tr><td>Ballbesitz</td><td>Passspiel, Technik, Kreativität und Flair</td></tr>
+            <tr><td>Defensiv</td><td>Zweikampf, Kopfball, Kondition und Führung</td></tr>
+            <tr><td>Körperbetont</td><td>Kondition, Kopfball, Zweikampf und Grundstärke</td></tr>
+            <tr><td>Konter</td><td>Tempo, Abschluss, Passspiel und Frische</td></tr>
+        </tbody>
+    </table>
+
+    <h4>Teamchemie</h4>
+    <p>
+        Die <a href="{{ env.getInternalUrl("teamchemistry") }}">Teamchemie</a> zeigt, wie geschlossen dein Kader als Einheit funktioniert. Sie wird aus mehreren Faktoren gebildet, darunter Nationalitäten, Eingespieltheit, Formation, Kapitän, Transfers, Zufriedenheit, Charakter und taktische Identität.
+    </p>
+    <ul>
+        <li>Kontinuität in Formation und Kader kann die Chemie stabilisieren.</li>
+        <li>Viele Neuzugänge oder unzufriedene Spieler können Unruhe verursachen.</li>
+        <li>Ein geeigneter Kapitän kann positiv wirken.</li>
+        <li>Training, Trainingslager, Interviews und Ereignisse können den Wert verändern.</li>
+        <li>Die Spielwirkung bleibt klein und betrifft vor allem Passspiel, Moral und Stabilität.</li>
+    </ul>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("formation") }}">Taktische Identität</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("teamchemistry") }}">Teamchemie</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
 <section id="training">
-    <h3>3. Training</h3>
+    <h3>6. Training und Trainer</h3>
     <p>
-        Training verbessert Spieler schrittweise. Je nach Trainingsart, Intensität, Trainerqualität und Spielerprofil können unterschiedliche Werte steigen.
-        Zu hohe Belastung kann Frische kosten oder Verletzungen wahrscheinlicher machen.
+        Training entwickelt den Kader schrittweise. Wirkung und Risiko hängen von Trainingsart, Intensität, Trainerqualität, Spielerprofil, Frische und weiteren Vereinsfaktoren ab. Hohe Intensität kann stärkere Effekte bringen, erhöht aber Belastung und Verletzungsrisiko.
     </p>
+
+    <h4>Trainerstab</h4>
     <p>
-        Wichtige Trainingsbereiche sind:
+        Dein Trainerstab besteht aus einem Cheftrainer und möglichen Spezialtrainern. Für jede Einheit wird der passendste verfügbare Trainer berücksichtigt. Trainer unterscheiden sich in Spezialisierung, Fachwerten, Ruf, Gehalt und möglicher Einstellungsgebühr.
     </p>
-    <ul>
-        <li><strong>Normales Teamtraining:</strong> verbessert mehrere Spieler abhängig vom Trainingsfokus.</li>
-        <li><strong>Einzeltraining:</strong> ein Spieler arbeitet gezielt an einem bestimmten Attribut, bis das Ziel erreicht ist.</li>
-        <li><strong>Trainingslager:</strong> kosten Geld, können aber mehrere Werte und die Teamchemie verbessern.</li>
-        <li><strong>Trainer und Staff:</strong> bessere Mitarbeiter erhöhen die Wirkung bestimmter Trainingsbereiche.</li>
+    <p>Verfügbare Spezialisierungen umfassen:</p>
+    <ul class="inline">
+        <li>Ausgewogen</li>
+        <li>Technik</li>
+        <li>Fitness</li>
+        <li>Offensive</li>
+        <li>Defensive</li>
+        <li>Standards</li>
+        <li>Torwart</li>
+        <li>Mentalität</li>
+        <li>Taktik</li>
     </ul>
+
+    <h4>Mannschaftstraining</h4>
     <p>
-        Einzeltraining ist besonders nützlich, wenn ein Spieler ein klares Defizit hat oder besser zu deiner taktischen Identität passen soll.
+        Du kannst Trainingseinheiten direkt durchführen oder einen automatischen Plan mit mehreren Schwerpunkten und Intensitäten festlegen. Der Plan arbeitet die Slots nacheinander ab, sobald eine neue Trainingseinheit möglich ist. Berichte zeigen Auswirkungen, stärkste Entwicklungen und mögliche Verletzungen.
     </p>
+
+    <h4>Einzeltraining</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("individual-training") }}">Einzeltraining</a> kann jeder Spieler genau einen aktiven Schwerpunkt erhalten. Der Fortschritt entsteht zusammen mit den Mannschaftseinheiten. Nach Erreichen des Ziels wird das Einzeltraining beendet und das Ergebnis gemeldet.
+    </p>
+
+    <h4>Trainingslager</h4>
+    <p>
+        <a href="{{ env.getInternalUrl("trainingcamp") }}">Trainingslager</a> werden für einen begrenzten Zeitraum gebucht und kosten abhängig von Dauer, Ziel und Kadergröße Geld. Sie können Grundwerte, Spezialattribute, Zufriedenheit oder Teamchemie beeinflussen. Achte auf Belastung und Verletzungsrisiko.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("training") }}">Training</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("individual-training") }}">Einzeltraining</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("trainingcamp") }}">Trainingslager</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
-<section id="transfers-scouting">
-    <h3>4. Transfers &amp; Scouting</h3>
+<section id="transfers">
+    <h3>7. Transfermarkt und Angebote</h3>
     <p>
-        Auf dem Transfermarkt kannst du Spieler kaufen, verkaufen oder Angebote für Spieler anderer Vereine abgeben.
-        Dabei solltest du nicht nur auf Stärke achten, sondern auch auf Alter, Gehalt, Vertrag, Potenzial, Spezialwerte und dein Budget.
+        CM23 unterscheidet zwischen Transfermarkt-Auktionen, direkten Vereinsangeboten, Vorverträgen und Leihen. Prüfe deshalb zuerst, auf welchem Weg ein Spieler verpflichtet werden kann.
     </p>
+
+    <h4>Transfermarkt-Auktion</h4>
     <p>
-        Die wichtigsten Bereiche sind:
+        Auf dem <a href="{{ env.getInternalUrl("transfermarket") }}">Transfermarkt</a> stehen Spieler mit einer Frist. Bei Spielern mit Verein ist in erster Linie die Ablösesumme entscheidend. Zusätzlich müssen Gehalt und Torprämie die Mindestanforderungen des Spielers erfüllen. Bei vereinslosen Spielern entscheidet das Gesamtpaket aus Vertragswert und möglichem Handgeld.
     </p>
     <ul>
-        <li><strong>Transfermarkt:</strong> verfügbare Spieler suchen, filtern und beobachten.</li>
-        <li><strong>Transferangebote:</strong> direkte Angebote an andere Vereine senden oder erhalten.</li>
-        <li><strong>Scouting:</strong> Scouts einstellen, Scouting-Camps eröffnen und Spielervorschläge erhalten.</li>
-        <li><strong>Versteckte Werte:</strong> Talent und Maximalstärke sind nicht immer vollständig sichtbar.</li>
+        <li>Ein Gebot muss innerhalb der laufenden Frist abgegeben werden.</li>
+        <li>Bei einem Spieler mit Verein muss ein neues Höchstgebot über dem bisherigen Gebot liegen.</li>
+        <li>Dein Verein muss das Gebot und das Gehalt finanziell tragen können.</li>
+        <li>Pro Verein und Spieler besteht nur ein aktives Gebot. Eine Überarbeitung ersetzt das bisherige eigene Gebot.</li>
+        <li>Wirst du überboten, erhältst du eine Nachricht.</li>
+        <li>Offene Gebote binden einen Teil deiner finanziellen Handlungsfähigkeit.</li>
     </ul>
+
+    <h4>Direkte Vereinsangebote</h4>
     <p>
-        Scouting ist langfristig wichtig, weil du damit Spieler finden kannst, die auf dem normalen Transfermarkt nicht sofort offensichtlich sind.
-        Gute Scouts liefern bessere Einschätzungen, kosten aber auch mehr Geld.
+        Über das Spielerprofil können direkte Angebote an den aktuellen Verein möglich sein. Ein Angebot kann eine Geldsumme, eine Nachricht und je nach System bis zu zwei Tauschspieler enthalten. Der empfangende Manager kann annehmen, ablehnen oder weitere Verhandlungen zulassen. Manche Transfers benötigen zusätzlich eine Freigabe.
     </p>
+
+    <h4>Übersicht der Angebote</h4>
+    <p>
+        Im Transfermarkt-Reiter für Angebote sowie unter <a href="{{ env.getInternalUrl("transferoffers") }}">Transferangebote</a> findest du empfangene und gesendete direkte Angebote. Marktgebote, eigene Transfers und abgeschlossene Wechsel werden getrennt dargestellt.
+    </p>
+
+    <h4>Transferliste und unverkäufliche Spieler</h4>
+    <p>
+        Eigene Spieler können mit Mindestgebot und Frist auf die Transferliste gesetzt werden, sofern Kader- und Spielregeln dies erlauben. Die Kennzeichnung „unverkäuflich“ schützt vor direkten Anfragen. Verlässt ein Manager den Verein, können solche persönlichen Schutzentscheidungen zurückgesetzt werden.
+    </p>
+
+    <h4>Merkliste</h4>
+    <p>
+        Die <a href="{{ env.getInternalUrl("mywatchlist") }}">Merkliste</a> hilft dir, interessante Spieler zu beobachten. Statussymbole zeigen unter anderem, ob ein Spieler auf einer Liste steht oder bereits ein eigenes Angebot vorliegt. Verdeckte Informationen bleiben von Scouting und Zugriffsrechten abhängig.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("transfermarket") }}">Transfermarkt</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("transferoffers") }}">Transferangebote</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("mybids") }}">Meine Gebote</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("mywatchlist") }}">Merkliste</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
-<section id="finanzen">
-    <h3>5. Finanzen, Bank &amp; Börse</h3>
+<section id="vorvertraege">
+    <h3>8. Vorverträge für die nächste Saison</h3>
     <p>
-        Finanzen entscheiden, wie schnell du deinen Verein verbessern kannst. Ein teurer Kader kann sportlich helfen, aber dauerhaft zu hohe Gehälter können das Budget belasten.
+        Läuft der Vertrag eines Spielers bald aus, kann auf seinem Profil die Aktion „Für nächste Saison ansprechen“ erscheinen. Damit bewirbst du dich um einen ablösefreien Wechsel zum Saisonübergang.
     </p>
-    <p>
-        Wichtige Einnahmen und Ausgaben:
-    </p>
+
+    <h4>Bewertung des Angebots</h4>
+    <p>Der Spieler berücksichtigt mehrere Faktoren:</p>
     <ul>
-        <li><strong>Spielergehälter:</strong> regelmäßige Kosten für deinen Kader.</li>
-        <li><strong>Transfers:</strong> Ablösen, Handgeld und Gehälter können schnell teuer werden.</li>
-        <li><strong>Sponsoren:</strong> bringen Prämien und können je nach Erfolg unterschiedlich attraktiv sein.</li>
-        <li><strong>Stadion:</strong> Zuschauer, Ticketpreise, Ausbau und Infrastruktur beeinflussen deine Einnahmen.</li>
-        <li><strong>Bank:</strong> Kredite können kurzfristig helfen, müssen aber mit Zinsen zurückgezahlt werden.</li>
-        <li><strong>Börse:</strong> über den Aktienmarkt kannst du Geld investieren, trägst aber auch Verlustrisiko.</li>
-        <li><strong>Merchandising:</strong> zusätzliche Einnahmen bei Heimspielen, abhängig von Nachfrage und Preisstrategie.</li>
+        <li>Gehalt pro Spiel;</li>
+        <li>Torprämie;</li>
+        <li>Handgeld für den ablösefreien Wechsel;</li>
+        <li>Qualität und Ruf des Vereins;</li>
+        <li>Qualität der Liga;</li>
+        <li>sportliche Perspektive;</li>
+        <li>konkurrierende Angebote.</li>
     </ul>
+
     <p>
-        Ein gutes Budgetmanagement ist oft wichtiger als ein einzelner großer Transfer. Plane so, dass du auch nach mehreren Spieltagen noch handlungsfähig bist.
+        Eine Entscheidung fällt nicht zwingend sofort. Der Spieler kann mehrere weitere Spieltage abwarten und Angebote vergleichen. Solange das eigene Angebot offen ist, kann es über das Spielerprofil angepasst werden. Der aktuelle Verein kann mit einer Vertragsverlängerung gegenhalten.
     </p>
+
+    <h4>Nach einer Zusage</h4>
+    <p>
+        Ein angenommener Vorvertrag wird für die nächste Saison vorgemerkt. Der tatsächliche Vereinswechsel erfolgt erst beim Saisonübergang. Bis dahin bleibt der Spieler grundsätzlich bei seinem bisherigen Verein, darf aber nicht mehr wie ein frei verfügbarer Spieler behandelt werden.
+    </p>
+
+    <div class="alert alert-warning">
+        <strong>Wichtig:</strong> Ein Vorvertrag ist kein sofortiger Transfer. Plane den aktuellen Kader und den Kader der nächsten Saison getrennt.
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
-<section id="verein-umfeld">
-    <h3>6. Verein, Umfeld &amp; Managerkarriere</h3>
+<section id="leihen">
+    <h3>9. Spielerleihen</h3>
     <p>
-        Dein Verein wird nicht nur über Ergebnisse bewertet. Fans, Medien, Vorstand und deine Managerkarriere reagieren auf sportliche und wirtschaftliche Entscheidungen.
+        Die Seite <a href="{{ env.getInternalUrl("loans") }}">Leihen</a> bündelt aktive Leihen, eingehende und ausgehende Anfragen, eigene Leihangebote und verfügbare Leihspieler.
     </p>
-    <h4>Highscore, Reputation und bessere Vereine</h4>
+
+    <h4>Leihbedingungen</h4>
+    <ul>
+        <li><strong>Dauer:</strong> Anzahl der Spiele, für die der Spieler ausgeliehen wird.</li>
+        <li><strong>Leihgebühr:</strong> Betrag pro Spiel und daraus berechnete Gesamtkosten.</li>
+        <li><strong>Gehaltsanteil:</strong> Anteil des Spielergehalts, den der ausleihende Verein übernimmt.</li>
+        <li><strong>Keine Kaufregel:</strong> Der Spieler kehrt nach der Leihe zurück.</li>
+        <li><strong>Kaufoption:</strong> Der ausleihende Verein kann den Spieler zu einem festgelegten Preis kaufen.</li>
+        <li><strong>Kaufpflicht:</strong> Der vorgesehene Kauf kann nach den geltenden Regeln verbindlich werden.</li>
+    </ul>
+
+    <h4>Managerverein und Computerverein</h4>
     <p>
-        Der Highscore deines Vereins und deine Manager-Reputation sind miteinander verbunden.
-        Wenn du bessere Vereine übernehmen möchtest, musst du deinen Ruf verbessern: gute Ergebnisse, erfüllte Saisonziele, solide Finanzen und sportliche Entwicklung helfen dabei.
-        Stärkere Clubs erwarten in der Regel auch ein stärkeres Managerprofil.
+        Bei einem managergeführten Besitzer sendest du eine Leihanfrage, die angenommen oder abgelehnt werden muss. Bei einem Computerverein kann die Verpflichtung direkt verarbeitet werden, sofern alle Bedingungen erfüllt sind.
     </p>
-    <h4>Vorstand und Saisonziele</h4>
+
+    <h4>Entwicklung und Leistung</h4>
     <p>
-        Der Vorstand setzt Ziele wie Tabellenplatz, Highscore-Verbesserung, Gehaltsreduktion, Jugendförderung, Pokalrunden oder Mindestwerte bei der Vorstandszufriedenheit.
-        Erfüllte Ziele verbessern deine Bewertung, verfehlte Ziele können Konsequenzen haben.
+        Leihberichte zeigen Einsatzminuten, Durchschnittsnote, Tore, Vorlagen, Qualität des Zielvereins und Entwicklungswirkung. Für den verleihenden Verein ist nicht nur die Gebühr wichtig: Ein passender Verein mit echten Einsatzzeiten kann wertvoller sein als ein höheres Angebot ohne Spielpraxis.
     </p>
-    <h4>Fans und Medien</h4>
+
+    <h4>Rückruf und Kauf</h4>
     <p>
-        Siege, Niederlagen, Derbys, Transfers, Ticketpreise, Jugendspieler und Zielerreichung können die Fanstimmung und den Mediendruck verändern.
-        Gute Stimmung kann Zuschauer und Sponsoren positiv beeinflussen, während hoher Druck den Verein unruhiger macht.
+        Ein Rückruf ist erst möglich, wenn die vereinbarte Mindestphase erfüllt ist. Kaufoptionen oder Kaufpflichten werden in der Übersicht angezeigt. Prüfe vor einer endgültigen Verpflichtung Budget, Gehalt und Kadergröße.
     </p>
-    <h4>Managerkarriere</h4>
+
+    <h4>Leihlisten von Computervereinen</h4>
     <p>
-        Mit wachsender Reputation können sich neue Karrierewege öffnen. Schwächere Vereine können eine Chance bieten, Reputation aufzubauen; stärkere Vereine stellen höhere Anforderungen.
+        Angebote von Computervereinen können zeitlich begrenzt sein und automatisch entfernt oder erneuert werden. Dadurch verändert sich die verfügbare Auswahl regelmäßig.
     </p>
+
+    <p><a class="btn btn-small" href="{{ env.getInternalUrl("loans") }}">Leihübersicht öffnen</a></p>
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
-<section id="spieltag">
-    <h3>7. Spieltag</h3>
+<section id="scouting">
+    <h3>10. Scouting und Transfermarkt-Analyse</h3>
+
+    <h4>Scouting-Abteilung</h4>
     <p>
-        Am Spieltag wird deine Vorbereitung sichtbar. Aufstellung, Frische, Kondition, Taktik, Teamchemie, Moral, Heimvorteil und Spielerqualität können Einfluss auf das Ergebnis haben.
+        Unter <a href="{{ env.getInternalUrl("scouting") }}">Scouting</a> baust du eine Abteilung auf, stellst Scouts ein und startest Scouting-Camps. Die Stufe der Abteilung kann begrenzen, wie viele Scouts und Camps gleichzeitig möglich sind.
     </p>
+
+    <h4>Scouts</h4>
     <p>
-        Nach dem Spiel solltest du prüfen:
+        Scouts unterscheiden sich in Fachwissen, Kosten, Herkunft und Positionsspezialisierung. Die vier Spezialisierungen sind Torwart, Abwehr, Mittelfeld und Sturm. Ein Scout liefert vor allem für seinen Bereich verwertbare Ergebnisse.
     </p>
+
+    <h4>Scouting-Camps</h4>
+    <p>Für ein Camp legst du Suchkriterien fest, beispielsweise:</p>
     <ul>
-        <li><strong>Spielbericht:</strong> Tore, Karten, Verletzungen, Chancen und wichtige Szenen.</li>
-        <li><strong>Spielerleistungen:</strong> Noten und Statistiken einzelner Spieler.</li>
-        <li><strong>Budgetänderungen:</strong> Einnahmen, Ausgaben, Prämien und Buchungen.</li>
-        <li><strong>Trainingseffekte:</strong> Verbesserungen oder Verletzungen durch Training.</li>
-        <li><strong>Scoutingvorschläge:</strong> neue Spieler, die deine Scouts gefunden haben.</li>
-        <li><strong>Was ist passiert?</strong> kompakte Zusammenfassung der wichtigsten Änderungen nach dem Spieltag.</li>
+        <li>Region oder Standort;</li>
+        <li>Position;</li>
+        <li>Alter;</li>
+        <li>Stärkebereich;</li>
+        <li>Budgetrahmen.</li>
     </ul>
+    <p>
+        Standorte unterscheiden sich in Grundkosten, Reiseaufwand, Qualität und Talentwahrscheinlichkeit. Vorschläge enthalten berichtete Werte, die je nach Scout genauer oder ungenauer sein können. Ein Vorschlag kann angenommen, abgelehnt oder nach einer Frist automatisch geschlossen werden.
+    </p>
+
+    <h4>Transfermarkt-Analyse</h4>
+    <p>
+        Die <a href="{{ env.getInternalUrl("transfer-market-intelligence") }}">Transfermarkt-Analyse</a> wertet tatsächlich verfügbare Transfer- und Leihspieler aus. Empfehlungen werden nur für Positionsgruppen erstellt, für die dein Verein einen passenden aktiven Scout besitzt.
+    </p>
+    <p>Die Analyse umfasst:</p>
+    <ul>
+        <li>beste verfügbare Spieler;</li>
+        <li>mögliche Schnäppchen;</li>
+        <li>möglicherweise überteuerte Angebote;</li>
+        <li>Leihmöglichkeiten;</li>
+        <li>Spieler mit auslaufenden Verträgen;</li>
+        <li>Positionsbedarf aus der Kaderanalyse.</li>
+    </ul>
+
+    <div class="alert alert-info">
+        <strong>Unterschied:</strong> Die Leihseite ist die vollständige Arbeitsübersicht für Leihen. Die Transfermarkt-Analyse ist eine gefilterte Empfehlungshilfe auf Grundlage deiner Scouts und deines Kaderbedarfs.
+    </div>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("scouting") }}">Scouting</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("transfer-market-intelligence") }}">Transfermarkt-Analyse</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("playerssearch") }}">Spielersuche</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
 <section id="jugend">
-    <h3>8. Jugend &amp; Entwicklung</h3>
+    <h3>11. Jugend und Jugendakademie</h3>
     <p>
-        Die Jugendabteilung hilft dir, langfristig Talente aufzubauen und günstige Alternativen zum Transfermarkt zu entwickeln.
-        Jugendspieler können beobachtet, eingesetzt und später in den Profikader übernommen werden.
+        Die Jugend ist eine langfristige Alternative zu teuren Transfers. Nachwuchsspieler benötigen Entwicklung, passende Einsätze und Geduld. Nicht jedes Talent wird automatisch zum Stammspieler.
     </p>
+
+    <h4>Jugendmannschaft</h4>
     <p>
-        Besonders wichtig sind:
+        Unter <a href="{{ env.getInternalUrl("youth-team") }}">Jugendmannschaft</a> verwaltest du deinen Nachwuchs. Die <a href="{{ env.getInternalUrl("youth-formation") }}">Jugendaufstellung</a> bestimmt, wer in Jugendspielen eingesetzt wird. Ergebnisse und Leistungen findest du bei den <a href="{{ env.getInternalUrl("youth-matches") }}">Jugendspielen</a>.
+    </p>
+
+    <h4>Jugendspiele</h4>
+    <p>
+        Jugendspiele liefern Einsatzzeit, Noten und Statistiken. Sie helfen dir, Entwicklung und Leistungsstand besser einzuschätzen. Über Spielanfragen können zusätzliche Begegnungen organisiert werden, wenn das System dies erlaubt.
+    </p>
+
+    <h4>Jugendscouting</h4>
+    <p>
+        Im <a href="{{ env.getInternalUrl("youth-scouting") }}">Jugendscouting</a> suchst du nach Nachwuchsspielern. Qualität, Spezialisierung und Kosten des Jugendscouts beeinflussen die Möglichkeiten.
+    </p>
+
+    <h4>Jugendakademie</h4>
+    <p>
+        Die <a href="{{ env.getInternalUrl("youth-academy") }}">Jugendakademie</a> besitzt eine Ausbaustufe, laufende Kosten, Ruf und einen Entwicklungsschwerpunkt. Mögliche Schwerpunkte sind Technik, Physis, Mentalität und ausgewogene Förderung.
     </p>
     <ul>
-        <li><strong>Jugendspieler:</strong> junge Talente mit Entwicklungspotenzial.</li>
-        <li><strong>Jugendspiele:</strong> Einsätze helfen bei Bewertung und Entwicklung.</li>
-        <li><strong>Jugendförderung:</strong> kann Teil der Saisonziele sein.</li>
-        <li><strong>Jugendtrainer und Staff:</strong> können die Entwicklung unterstützen.</li>
+        <li>Höhere Stufen können Entwicklung, Scouting und Stabilität verbessern.</li>
+        <li>Die Akademie verursacht Bau- und Unterhaltskosten.</li>
+        <li>Kann der Verein laufende Kosten nicht tragen, entstehen Nachteile.</li>
+        <li>Ein Jugendkapitän kann zusätzliche Bedeutung für die Mannschaft erhalten.</li>
+        <li>Berichte informieren über Fortschritte, Risiken und besondere Entwicklungen.</li>
     </ul>
+
+    <h4>Profivertrag, Verkauf und Jugendmarkt</h4>
     <p>
-        Jugendspieler sind selten sofort perfekt. Sie lohnen sich vor allem, wenn du langfristig planst und ihnen passende Einsatzzeiten gibst.
+        Geeignete Jugendspieler können in den Profikader übernommen werden. Prüfe vorher Position, Potenzial, Kaderplatz und finanzielle Folgen. Über den <a href="{{ env.getInternalUrl("youth-marketplace") }}">Jugendmarkt</a> können Nachwuchsspieler angeboten oder verpflichtet werden. Schutzmechanismen sollen unrealistische oder missbräuchliche Geschäfte begrenzen.
     </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("youth-team") }}">Jugendmannschaft</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("youth-academy") }}">Jugendakademie</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("youth-scouting") }}">Jugendscouting</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("youth-marketplace") }}">Jugendmarkt</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
-<section id="spezialfeatures">
-    <h3>9. Spezialfeatures</h3>
+<section id="mitarbeiter">
+    <h3>12. Vereinsmitarbeiter und Partnerschaften</h3>
+
+    <h4>Vereinsmitarbeiter</h4>
     <p>
-        CM23 enthält mehrere Zusatzsysteme, die dem Spiel mehr Tiefe geben, ohne dass du jeden Bereich täglich verwalten musst.
+        Unter <a href="{{ env.getInternalUrl("club-staff") }}">Vereinsmitarbeiter</a> kannst du zusätzliche Fachkräfte einstellen. Jeder Mitarbeiter kostet regelmäßig Gehalt und wirkt nur in seinem Zuständigkeitsbereich.
     </p>
-    <h4>Teamchemie</h4>
+
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr><th>Rolle</th><th>Typische Wirkung</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Co-Trainer</td><td>Unterstützung bei Mannschaftsführung und Training</td></tr>
+            <tr><td>Torwarttrainer</td><td>Torwartbezogene Entwicklung</td></tr>
+            <tr><td>Fitnesstrainer</td><td>Kondition, Frische und Belastungssteuerung</td></tr>
+            <tr><td>Jugendtrainer</td><td>Entwicklung des Nachwuchses</td></tr>
+            <tr><td>Physiotherapeut</td><td>Verletzungsbehandlung und medizinische Unterstützung</td></tr>
+            <tr><td>Marketingmanager</td><td>Merchandising und Vermarktung</td></tr>
+            <tr><td>Finanzberater</td><td>Kreditwürdigkeit und finanzielle Beratung</td></tr>
+        </tbody>
+    </table>
+
     <p>
-        Teamchemie beschreibt, wie gut dein Kader als Einheit funktioniert. Sie hängt unter anderem von Nationalität, Eingespieltheit, Formation, Kapitän, Transfers, Zufriedenheit und Charakter ab.
-        Eine gute Chemie kann kleine Vorteile bei Passspiel, Moral und Stabilität geben.
+        Höhere Mitarbeiterstufen bringen stärkere Vorteile, verursachen aber höhere laufende Kosten. Ein Mitarbeiter lohnt sich nur, wenn du seine Wirkung tatsächlich nutzt und dauerhaft finanzieren kannst.
     </p>
-    <h4>Club Staff</h4>
+
+    <h4>Vereinspartnerschaften</h4>
     <p>
-        Mitarbeiter wie Co-Trainer, Torwarttrainer, Fitnesstrainer, Jugendtrainer, Physio, Marketingmanager oder Finanzberater geben kleine Boni in ihrem Bereich.
-        Sie kosten Gehalt, können aber langfristig helfen.
+        Unter <a href="{{ env.getInternalUrl("clubpartnerships") }}">Vereinspartnerschaften</a> kann eine Zusammenarbeit zwischen einem Mutterverein und einem Partnerverein entstehen. Managergeführte Vereine müssen der Beziehung gegenseitig zustimmen.
     </p>
-    <h4>Medical Center</h4>
+    <p>Mögliche Vorteile sind:</p>
+    <ul>
+        <li>bevorzugte Leihen;</li>
+        <li>Entwicklungsbonus für passende Leihspieler;</li>
+        <li>gemeinsame Scouting-Informationen;</li>
+        <li>zeitlich begrenztes Erstzugriffsrecht auf bestimmte Spieler.</li>
+    </ul>
+
+    <h4>Erstzugriffsrecht</h4>
     <p>
-        Im Medical Center siehst du Verletzungen, Behandlungsoptionen und Risiken. Manche Maßnahmen können die Ausfallzeit verkürzen, kosten aber Geld oder tragen Risiko.
+        Wird ein Spieler für den Mutterverein reserviert, kann während der angegebenen Frist nur dieser Verein das entsprechende Transferrecht nutzen. Nach Nutzung, Ablehnung oder Ablauf endet die Reservierung.
     </p>
+
+    <p>
+        Partnerschaften besitzen Regeln zu Mindestdauer, Beendigung und möglichen Kosten. Treffen Partner in einem nicht erlaubten Wettbewerb aufeinander oder endet die verantwortliche Managerbeziehung, kann die Partnerschaft ausgesetzt oder beendet werden.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("club-staff") }}">Vereinsmitarbeiter</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("clubpartnerships") }}">Vereinspartnerschaften</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="finanzen">
+    <h3>13. Finanzen, Sponsoren und Bank</h3>
+    <p>
+        Auf der Seite <a href="{{ env.getInternalUrl("finance") }}">Finanzen</a> siehst du Buchungen, Einnahmen, Ausgaben und gruppierte Salden. Nicht nur die aktuelle Bilanz ist wichtig: Plane auch wiederkehrende Kosten der nächsten Spieltage ein.
+    </p>
+
+    <h4>Typische Einnahmen</h4>
+    <ul>
+        <li>Eintrittsgelder;</li>
+        <li>Sponsorenzahlungen und Erfolgsprämien;</li>
+        <li>Transfer- und Leiheinnahmen;</li>
+        <li>Merchandising;</li>
+        <li>Stadion-Namensrechte;</li>
+        <li>Dividenden oder andere Sondereinnahmen.</li>
+    </ul>
+
+    <h4>Typische Ausgaben</h4>
+    <ul>
+        <li>Spieler-, Trainer-, Mitarbeiter- und Managergehälter;</li>
+        <li>Transferablösen, Handgeld und Leihkosten;</li>
+        <li>Scouting-Abteilung, Scouts und Camps;</li>
+        <li>Training, Trainingslager und Jugendakademie;</li>
+        <li>Stadionbau, Gebäude und Unterhaltung;</li>
+        <li>Kreditraten und Zinsen;</li>
+        <li>Warenentwicklung, Bestellungen und Kampagnen.</li>
+    </ul>
+
+    <h4>Finanzprognose</h4>
+    <p>
+        Die <a href="{{ env.getInternalUrl("financialforecast") }}">Finanzprognose</a> hilft dir, zukünftige Belastungen abzuschätzen. Offene Gebote, Verträge und wiederkehrende Kosten können wichtiger sein als der aktuelle Kontostand.
+    </p>
+
+    <h4>Sponsoren</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("sponsor") }}">Sponsoren</a> wählst und verhandelst du Angebote. Verträge können unterschiedlich gewichtet sein: sichere Zahlungen, stärkere Erfolgsabhängigkeit, Fanbezug oder Pokalprämien. Wähle ein Modell, das zu deinen realistischen Zielen passt.
+    </p>
+
+    <h4>Bank</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("bank-loans") }}">Bankkredite</a> kannst du kurzfristig Liquidität beschaffen. Kredite bestehen aus Restschuld, Zinsen, Laufzeit und regelmäßiger Rückzahlung. Kreditwürdigkeit, Finanzberater und Vereinssituation können die Konditionen beeinflussen. Ein Kredit löst kein dauerhaftes strukturelles Defizit.
+    </p>
+
+    <h4>Börse</h4>
+    <p>
+        Auf dem <a href="{{ env.getInternalUrl("stockmarket") }}">Aktienmarkt</a> kannst du Anteile kaufen und verkaufen. Dein <a href="{{ env.getInternalUrl("portfolio") }}">Depot</a> zeigt die gehaltenen Positionen. Kurse können steigen oder fallen; mögliche Dividenden sind nicht garantiert.
+    </p>
+
+    <h4>Eintrittspreise</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("tickets") }}">Eintrittspreise</a> legst du Preise für die verschiedenen Stadionbereiche fest. Zu niedrige Preise verschenken Einnahmen, zu hohe Preise können Nachfrage und Fanstimmung belasten.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("finance") }}">Finanzen</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("financialforecast") }}">Finanzprognose</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("sponsor") }}">Sponsoren</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("bank-loans") }}">Bank</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="stadion">
+    <h3>14. Stadion und Merchandising</h3>
+
+    <h4>Stadion</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("stadium") }}">Stadion</a> verwaltest du Kapazität, Ausbau und Ausstattung. Die einzelnen Zuschauerbereiche besitzen eigene Plätze und Preise. Bauprojekte kosten Geld und benötigen Zeit.
+    </p>
+
+    <h4>Zuschaueranalyse</h4>
+    <p>
+        Die <a href="{{ env.getInternalUrl("stadium-attendance") }}">Zuschaueranalyse</a> zeigt Auslastung, Einnahmen und Durchschnittspreise nach Bereichen. Damit kannst du beurteilen, ob Stadiongröße und Preisstrategie zusammenpassen.
+    </p>
+
+    <h4>Stadionumfeld</h4>
+    <p>
+        Im <a href="{{ env.getInternalUrl("stadiumenvironment") }}">Stadionumfeld</a> können Gebäude errichtet werden. Sie benötigen möglicherweise andere Gebäude als Voraussetzung und können Training, Jugendscouting, Tickets, Fanbeliebtheit, Verletzungsrisiko, Einnahmen oder Merchandising beeinflussen.
+    </p>
+
+    <h4>Namensrechte</h4>
+    <p>
+        Ein Stadion kann über einen Sponsor zeitweise einen Vermarktungsnamen erhalten. Die Auszahlung kann von Grundbetrag und Zuschauerinteresse abhängen. Nach Vertragsende wird der ursprüngliche Stadionname wiederhergestellt.
+    </p>
+
+    <h4>Merchandising</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("merchandising") }}">Merchandising</a> entwickelst du Kollektionen, bestellst Waren und steuerst Verkaufspreise sowie Lagerbestand.
+    </p>
+    <ul>
+        <li>Produkte können dauerhaft, saisonal oder an Ereignisse gebunden sein.</li>
+        <li>Spielerprodukte eignen sich vor allem für bekannte oder sportlich bedeutende Spieler.</li>
+        <li>Bestellungen besitzen Lieferzeiten und binden Geld.</li>
+        <li>Zu wenig Bestand führt zu entgangenen Verkäufen.</li>
+        <li>Zu viel Bestand erhöht das Lagerrisiko und kann spätere Rabatte oder Liquidation erfordern.</li>
+        <li>Kampagnen erhöhen Nachfrage, verursachen aber zusätzliche Kosten.</li>
+        <li>Ein Marketingmanager kann die Vermarktung unterstützen.</li>
+    </ul>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("stadium") }}">Stadion</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("stadium-attendance") }}">Zuschaueranalyse</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("stadiumenvironment") }}">Stadionumfeld</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("merchandising") }}">Merchandising</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="medizin">
+    <h3>15. Verletzungen und medizinische Abteilung</h3>
+    <p>
+        Verletzte Spieler fallen für eine bestimmte Zahl von Spielen aus. Die <a href="{{ env.getInternalUrl("medical-center") }}">medizinische Abteilung</a> zeigt den Zustand und mögliche Behandlungen.
+    </p>
+
+    <h4>Behandlungsentscheidungen</h4>
+    <p>
+        Je nach Verletzung und aktiven Regeln können verschiedene Maßnahmen zur Verfügung stehen. Schnellere oder riskantere Behandlungen können Ausfallzeiten verkürzen, verursachen aber Kosten und können Nebenwirkungen oder ein Entdeckungsrisiko besitzen.
+    </p>
+
+    <h4>Einflussfaktoren</h4>
+    <ul>
+        <li>Physiotherapeut und dessen Stufe;</li>
+        <li>medizinische oder infrastrukturelle Vereinsgebäude;</li>
+        <li>Trainingsintensität und Trainingslager;</li>
+        <li>Spielermerkmale wie Verletzungsanfälligkeit;</li>
+        <li>Belastung, Frische und Spielrhythmus.</li>
+    </ul>
+
+    <p>
+        Eine medizinische Freigabe bedeutet nicht automatisch, dass der Spieler bereits wieder die beste Frische oder Form besitzt. Prüfe vor dem Einsatz seinen gesamten Zustand.
+    </p>
+
+    <p><a class="btn btn-small" href="{{ env.getInternalUrl("medical-center") }}">Medizinische Abteilung öffnen</a></p>
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="umfeld">
+    <h3>16. Fans, Medien, Vorstand und Ereignisse</h3>
+
+    <h4>Fanstimmung und Mediendruck</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("fanpressure") }}">Fanstimmung und Medien</a> siehst du, wie das Umfeld auf deine Arbeit reagiert. Ergebnisse, Serien, Derbys, Transfers, Jugendförderung, Ticketpreise und Vereinsziele können die Werte verändern.
+    </p>
+    <ul>
+        <li>Gute Fanstimmung kann Zuschauerinteresse und fanbezogene Sponsorenvorteile stärken.</li>
+        <li>Hoher Mediendruck erhöht die Unruhe rund um den Verein.</li>
+        <li>Die Vorstandszufriedenheit hängt von Ergebnissen, Zielen, Finanzen und deiner Gesamtarbeit ab.</li>
+    </ul>
+
+    <h4>Interviews</h4>
+    <p>
+        Bei wichtigen Ereignissen können Medien, Fans oder Vorstand eine Stellungnahme verlangen. Jede Antwort kann Fanstimmung, Mediendruck, Vorstandszufriedenheit und Teamchemie unterschiedlich verändern. Lies die Situation genau, statt immer dieselbe Antwort zu wählen.
+    </p>
+
+    <h4>Vereinsereignisse</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("random-events") }}">Vereinsereignisse</a> findest du Entscheidungen zu besonderen Situationen, beispielsweise einem unzufriedenen Spieler, einem Sponsorproblem, einem entdeckten Jugendspieler oder einem Stadionschaden.
+    </p>
+    <p>
+        Manche Entscheidungen wirken sofort, andere bleiben bis zu einer Frist offen. Lässt du eine Entscheidung ablaufen, kann eine Standardfolge eintreten. Auswirkungen können Geld, Spielerzustand, Sperren, Verletzungen, Vorstand, Fans, Zuschauer oder Transferstatus betreffen.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("fanpressure") }}">Fanstimmung und Medien</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("random-events") }}">Vereinsereignisse</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<hr>
+
+<section id="karriere">
+    <h3>17. Managerkarriere, Ziele und Auszeichnungen</h3>
+
+    <h4>Managerprofil</h4>
+    <p>
+        Dein Managerprofil besitzt unter anderem Reputation, Kompetenz, Charakter und Karriereverlauf. Kompetenz wird auf einer Skala dargestellt und entwickelt sich durch sportliche Ergebnisse, Erfolge, Zielerreichung und Misserfolge.
+    </p>
+
+    <h4>Managercharakter</h4>
+    <p>
+        Der gewählte Charakter beschreibt deinen Führungsstil und kann verschiedene Bereiche leicht beeinflussen. Ein späterer Wechsel kann begrenzt sein oder Folgen haben. Wähle deshalb einen Charakter, der zu deiner langfristigen Spielweise passt.
+    </p>
+
+    <h4>Karriere und Vereinswechsel</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("managercareer") }}">Managerkarriere</a> findest du Verträge, Bewerbungen, Angebote und den bisherigen Karriereweg. Du kannst dich bei freien Vereinen bewerben, sofern dein Profil die Anforderungen erfüllt. Vereine vergleichen deine Bewertung mit ihrer eigenen Erwartung.
+    </p>
+    <ul>
+        <li>Bessere Ergebnisse und Titel erhöhen deine Chancen auf größere Vereine.</li>
+        <li>Länder- und Ligaerfahrung kann eine Rolle spielen.</li>
+        <li>Jobangebote besitzen eine Antwortfrist.</li>
+        <li>Eine Annahme führt zum Vereinswechsel und wird in der Karrierehistorie gespeichert.</li>
+        <li>Schwache Vorstandszufriedenheit kann zur Entlassung führen.</li>
+    </ul>
+
+    <h4>Saisonziele</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("manager-missions") }}">Managerziele</a> findest du Aufgaben des Vorstands. Mögliche Ziele betreffen Tabellenplatz, Highscore, Gehaltskosten, Jugendförderung, Pokalrunde oder Vorstandszufriedenheit. Ziele können Belohnungen oder Nachteile auslösen.
+    </p>
+
     <h4>Auszeichnungen</h4>
     <p>
-        Für besondere Leistungen kannst du Auszeichnungen erhalten, zum Beispiel für Erfolge, Transfers, Jugendförderung, Derbys oder finanzielle Meilensteine.
+        Unter <a href="{{ env.getInternalUrl("badges") }}">Auszeichnungen</a> werden besondere Leistungen dokumentiert. Dazu können langjährige Mitgliedschaft, hohe Siege, Saisonplatzierungen, Transfers, Pokalsiege, Stadionausbau, Derbys, Jugendförderung und finanzielle Erfolge gehören. Zusätzlich können Managerauszeichnungen für Monat oder Saison vergeben werden.
     </p>
-    <h4>Zufallsereignisse</h4>
-    <p>
-        Ereignisse können deinen Verein überraschend beeinflussen. Je nach Situation musst du Entscheidungen treffen, die Geld, Spieler, Stimmung oder Vorstand betreffen können.
-    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("managercareer") }}">Managerkarriere</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("manager-missions") }}">Managerziele</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("badges") }}">Auszeichnungen</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
 <hr>
 
-<section id="tipps">
-    <h3>10. Kurze Tipps</h3>
+<section id="wettbewerbe">
+    <h3>18. Spieltag, Wettbewerbe und Statistiken</h3>
+
+    <h4>Vor der Begegnung</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("myschedule") }}">Mein Spielplan</a> siehst du kommende und vergangene Begegnungen. Prüfe rechtzeitig Aufstellung, Zustand der Spieler und taktische Ausrichtung.
+    </p>
+
+    <h4>Während und nach der Begegnung</h4>
+    <p>
+        Der Spielbericht zeigt Tore, Vorlagen, Karten, Verletzungen, Wechsel und weitere Szenen. Je nach Spielzustand können Live-Änderungen möglich sein. Die Spielanalyse zeigt zusätzliche Mannschafts- und Spielerwerte.
+    </p>
+
+    <p>Nach der Begegnung solltest du kontrollieren:</p>
     <ul>
-        <li>Setze vor jedem Spiel eine vollständige Aufstellung.</li>
-        <li>Achte nicht nur auf Stärke, sondern auch auf Frische und Kondition.</li>
-        <li>Verlängere wichtige Verträge rechtzeitig.</li>
-        <li>Kaufe nicht zu viele teure Spieler auf einmal.</li>
-        <li>Nutze Scouting, um langfristig bessere Transferentscheidungen zu treffen.</li>
-        <li>Verbessere Highscore und Reputation, wenn du später bessere Vereine übernehmen möchtest.</li>
-        <li>Prüfe nach jedem Spiel die Zusammenfassung „Was ist passiert?“.</li>
-        <li>Plane Stadion, Sponsoren, Bank und Börse so, dass dein Verein finanziell stabil bleibt.</li>
+        <li>Ergebnis und Tabelle;</li>
+        <li>Spielernoten, Tore, Vorlagen und Karten;</li>
+        <li>Verletzungen und Sperren;</li>
+        <li>Frische, Kondition und Zufriedenheit;</li>
+        <li>Finanzbuchungen und Prämien;</li>
+        <li>Training, Scouting, Jugend und Leihen;</li>
+        <li>Reaktionen von Fans, Medien und Vorstand;</li>
+        <li>die Zusammenfassung „Was ist passiert?“.</li>
     </ul>
+
+    <h4>Ligen und Pokale</h4>
+    <p>
+        Tabellen, Ergebnisse, Spielpläne und Pokalrunden sind öffentlich einsehbar. Markierungen in der Tabelle zeigen je nach Wettbewerb Meisterschaft, internationale Qualifikation, Aufstieg oder Abstieg.
+    </p>
+
+    <h4>Internationale Wettbewerbe</h4>
+    <p>
+        Unter <a href="{{ env.getInternalUrl("internationalcups") }}">Internationale Wettbewerbe</a> findest du die Wettbewerbe der verschiedenen Verbände. Dazu können UEFA-Wettbewerbe, Copa Libertadores, Copa Sudamericana und der CONCACAF Champions Cup gehören. Länderwertungen beeinflussen die Verteilung internationaler Startplätze.
+    </p>
+
+    <h4>Statistiken</h4>
+    <p>
+        <a href="{{ env.getInternalUrl("stats") }}">CM|STATIS</a> enthält Ranglisten und Vergleichswerte, darunter Spieler, Scorer, Zuschauer, Gehälter, Finanzen, Stadien, Teamwerte, Disziplin und Manager. Nutze Statistiken als Orientierung, nicht als alleinige Entscheidungsgrundlage.
+    </p>
+
+    <div class="btn-group">
+        <a class="btn btn-small" href="{{ env.getInternalUrl("myschedule") }}">Mein Spielplan</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("todaysmatches") }}">Heutige Spiele</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("cups") }}">Pokal</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("internationalcups") }}">Internationale Wettbewerbe</a>
+        <a class="btn btn-small" href="{{ env.getInternalUrl("stats") }}">Statistiken</a>
+    </div>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
 </section>
 
-<p class="muted">
-    Hinweis: Diese Wiki-Seite ist bewusst kurz gehalten. Einzelne Spielbereiche können sich durch neue Features oder Balancing-Anpassungen weiterentwickeln.
-</p>
+<hr>
+
+<section id="fragen">
+    <h3>19. Häufige Fragen und Tipps</h3>
+
+    <h4>Warum ist mein stärkeres Team nicht automatisch erfolgreich?</h4>
+    <p>
+        Stärke ist nur ein Faktor. Positionen, Frische, Kondition, Zufriedenheit, Taktik, Teamchemie, Heimvorteil, Sperren, Verletzungen und Spielverlauf beeinflussen ebenfalls die Begegnung.
+    </p>
+
+    <h4>Warum sehe ich Talent oder Eigenschaften nicht vollständig?</h4>
+    <p>
+        Bestimmte Informationen sind absichtlich verdeckt oder ungenau. Ein passender Scout, ein eigener Spieler oder eine aktive Partnerschaft kann den Informationsstand verbessern.
+    </p>
+
+    <h4>Wann fällt eine Entscheidung über mein Angebot?</h4>
+    <p>
+        Transfermarkt-Auktionen enden mit der angegebenen Frist. Direkte Angebote warten auf die Reaktion des anderen Managers oder auf die Systemverarbeitung. Vorverträge werden nach mehreren weiteren Spieltagen bewertet. Leihanfragen eines managergeführten Vereins benötigen dessen Entscheidung.
+    </p>
+
+    <h4>Warum kann ich einen Spieler nicht verpflichten?</h4>
+    <p>Mögliche Gründe sind:</p>
+    <ul>
+        <li>zu wenig Budget oder zu hohe bereits offene Gebote;</li>
+        <li>unzulässige Kadergröße;</li>
+        <li>zu niedriges Gehalt oder zu niedrige Torprämie;</li>
+        <li>abgelaufene Frist;</li>
+        <li>Spieler steht nicht auf der erforderlichen Liste;</li>
+        <li>zu viele Geschäfte zwischen denselben Vereinen;</li>
+        <li>Erstzugriffsrecht eines Partnervereins;</li>
+        <li>bereits zugesagter Wechsel für die nächste Saison;</li>
+        <li>andere Schutz- oder Freigaberegeln der Spielwelt.</li>
+    </ul>
+
+    <h4>Warum ist mein Budget trotz positivem Kontostand gefährdet?</h4>
+    <p>
+        Wiederkehrende Gehälter, Unterhaltskosten, Kreditraten, offene Transfergebote, Bestellungen und Bauprojekte können zukünftige Spieltage belasten. Nutze die Finanzprognose und halte eine Reserve.
+    </p>
+
+    <h4>Was sollte ich als neuer Manager zuerst verbessern?</h4>
+    <ol>
+        <li>Eine vollständige, positionsgerechte Aufstellung sichern.</li>
+        <li>Verletzungen, Sperren und auslaufende Verträge prüfen.</li>
+        <li>Gehälter und laufende Kosten mit den Einnahmen vergleichen.</li>
+        <li>Nur klare Kaderlücken auf dem Transfermarkt schließen.</li>
+        <li>Training, Scouting und Jugend schrittweise ausbauen.</li>
+        <li>Vorstandsziele nicht aus den Augen verlieren.</li>
+    </ol>
+
+    <h4>Kurze Managerregeln</h4>
+    <ul>
+        <li>Setze vor jeder Begegnung eine gültige Aufstellung.</li>
+        <li>Bewerte Spieler nicht nur nach Stärke und Marktwert.</li>
+        <li>Verlängere Schlüsselverträge rechtzeitig.</li>
+        <li>Überarbeite ein bestehendes Gebot statt mehrere parallele Angebote zu erwarten.</li>
+        <li>Nutze Leihen für kurzfristige Kaderlücken und gezielte Entwicklung.</li>
+        <li>Stimme Scouts auf die Positionen ab, die du wirklich suchst.</li>
+        <li>Investiere nicht gleichzeitig in Transfers, Stadion, Akademie und Personal, wenn deine Einnahmen das nicht tragen.</li>
+        <li>Reagiere auf Nachrichten und Ereignisse vor Ablauf ihrer Frist.</li>
+        <li>Prüfe nach jedem Spieltag die Zusammenfassung und die Finanzbuchungen.</li>
+    </ul>
+
+    <p class="muted"><a href="#wiki-top"><i class="icon-arrow-up"></i> Nach oben</a></p>
+</section>
+
+<div class="alert alert-success" style="margin-top: 30px;">
+    <i class="icon-ok"></i>
+    <strong>Der wichtigste Grundsatz:</strong>
+    Baue den Verein schrittweise auf. Eine ausgewogene Mannschaft, stabile Finanzen und klare langfristige Planung sind meist wertvoller als eine einzelne spektakuläre Entscheidung.
+</div>
 
 {% endblock %}

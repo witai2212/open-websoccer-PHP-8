@@ -382,8 +382,16 @@ class StockMarketDataService {
             return false;
         }
     
-        // Sale revenue minus 5%.
-        $totalCredit = $unitPrice * $qty * 0.95;
+        // Apply configured transaction fee to the sale revenue.
+        $transactionFee = (float) $websoccer->getConfig("transaction_fee");
+
+        // Fall back to 5 percent if the configured value is invalid.
+        if ($transactionFee < 0 || $transactionFee > 100) {
+            $transactionFee = 5.0;
+        }
+
+        $totalCredit = $unitPrice * $qty * ((100 - $transactionFee) / 100);
+        $transactionCost =  ($unitPrice * $qty) - $totalCredit;
     
         // Reduce portfolio rows correctly.
         // buyStock() inserts one row per purchase, so we must consume rows one by one.
@@ -456,6 +464,11 @@ class StockMarketDataService {
                           AND stock_id='". $index ."'
                           AND qty <= 0";
         $db->executeQuery($cleanupStr);
+        
+        // Credit transaction fee cost to cm23_penalty.penalty
+        $penaltyStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_penalty
+                        SET penelty=penalty+'". $transactionCost ."'";
+        $db->executeQuery($penaltyStr);
     
         self::applyMajorityBoardControl($websoccer, $db, $index);
     

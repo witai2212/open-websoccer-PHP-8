@@ -218,6 +218,7 @@ class ComputerTransfersDataService {
         $result = $db->executeQuery($sqlStr);
         $offers = $result->fetch_assoc();
         $result->free();
+
         return (int) $offers['offer_count'];
     }
 
@@ -791,7 +792,10 @@ class ComputerTransfersDataService {
 
         $dbPrefix = $websoccer->getConfig('db_prefix');
         $db->queryUpdate(
-            array('status' => LoanRequestDataService::STATUS_EXPIRED, 'answered_date' => $websoccer->getNowAsTimestamp()),
+            array(
+                'status' => LoanRequestDataService::STATUS_EXPIRED,
+                'answered_date' => $websoccer->getNowAsTimestamp()
+            ),
             $dbPrefix . '_loan_request',
             "status = 'open' AND player_id IN (
                 SELECT P.id
@@ -799,7 +803,8 @@ class ComputerTransfersDataService {
                 WHERE P.verein_id <> ". $dbPrefix ."_loan_request.lender_team_id
                    OR P.lending_fee <= 0
                    OR (P.lending_owner_id IS NOT NULL AND P.lending_owner_id > 0)
-            )"
+            )",
+            array()
         );
 
         $expiryDays = self::getOptionalConfigInt($websoccer, 'lending_cpu_request_expiry_days', self::CPU_LOAN_REQUEST_EXPIRY_DAYS);
@@ -809,7 +814,10 @@ class ComputerTransfersDataService {
 
         $threshold = $websoccer->getNowAsTimestamp() - ($expiryDays * 24 * 60 * 60);
         $db->queryUpdate(
-            array('status' => LoanRequestDataService::STATUS_EXPIRED, 'answered_date' => $websoccer->getNowAsTimestamp()),
+            array(
+                'status' => LoanRequestDataService::STATUS_EXPIRED,
+                'answered_date' => $websoccer->getNowAsTimestamp()
+            ),
             $websoccer->getConfig('db_prefix') . '_loan_request',
             "status = 'open' AND created_by_computer = '1' AND created_date > 0 AND created_date <= %d",
             (int) $threshold
@@ -923,8 +931,19 @@ class ComputerTransfersDataService {
             return false;
         }
 
-        $traitNeeds = self::getTraitNeedsForTeam($websoccer, $db, isset($player['verein_id']) ? (int) $player['verein_id'] : 0);
-        return self::canListPlayerForTransfer($player, $positionsCount, $traitNeeds, $websoccer, $db);
+        $traitNeeds = self::getTraitNeedsForTeam(
+            $websoccer,
+            $db,
+            isset($player['verein_id']) ? (int) $player['verein_id'] : 0
+        );
+
+        return self::canListPlayerForTransfer(
+            $player,
+            $positionsCount,
+            $traitNeeds,
+            $websoccer,
+            $db
+        );
     }
 
     private static function markPlayerForLoan(WebSoccer $websoccer, DbConnection $db, $teamId, $player, $profile) {
@@ -932,6 +951,7 @@ class ComputerTransfersDataService {
         $salaryShare = self::calculateComputerLoanSalaryShare($player, $profile);
         $optionType = self::calculateComputerLoanOptionType($player, $profile);
         $buyFee = 0;
+
         if ($optionType != LoanDataService::OPTION_NONE) {
             $buyFee = self::calculateComputerLoanBuyFee($player);
         }
@@ -940,7 +960,18 @@ class ComputerTransfersDataService {
                     SET lending_fee = '". (int) $fee ."'
                     WHERE id = '". (int) $player['id'] ."'";
         $db->executeQuery($updStr);
-        LoanDataService::saveOffer($websoccer, $db, $player['id'], $teamId, $fee, $salaryShare, $optionType, $buyFee, true);
+
+        LoanDataService::saveOffer(
+            $websoccer,
+            $db,
+            $player['id'],
+            $teamId,
+            $fee,
+            $salaryShare,
+            $optionType,
+            $buyFee,
+            true
+        );
 
         echo "--- ON LOAN LIST: ". $player['id'] ."\n";
     }
@@ -1066,7 +1097,16 @@ class ComputerTransfersDataService {
         return (int) $budget['finanz_budget'];
     }
 
-    private static function createComputerLoanRequest(WebSoccer $websoccer, DbConnection $db, $borrowerTeamId, $player, $matches, $salaryShare = 100, $optionType = 'none', $buyFee = 0) {
+    private static function createComputerLoanRequest(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $borrowerTeamId,
+        $player,
+        $matches,
+        $salaryShare = 100,
+        $optionType = 'none',
+        $buyFee = 0
+    ) {
         $borrowerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $borrowerTeamId);
         $borrowerUserId = isset($borrowerTeam['user_id']) ? (int) $borrowerTeam['user_id'] : 0;
 
@@ -1087,12 +1127,37 @@ class ComputerTransfersDataService {
         echo "--- LOAN REQUEST: ". $player['id'] ." -> ". $borrowerTeamId ."\n";
     }
 
-    private static function executeComputerLoan(WebSoccer $websoccer, DbConnection $db, $borrowerTeamId, $player, $matches, $totalFee, $salaryShare = 100, $optionType = 'none', $buyFee = 0) {
+    private static function executeComputerLoan(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $borrowerTeamId,
+        $player,
+        $matches,
+        $totalFee,
+        $salaryShare = 100,
+        $optionType = 'none',
+        $buyFee = 0
+    ) {
         $borrowerTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $borrowerTeamId);
         $lenderTeamId = (int) $player['verein_id'];
 
-        BankAccountDataService::debitAmount($websoccer, $db, $borrowerTeamId, $totalFee, 'lending_fee_subject', $player['lender_team_name']);
-        BankAccountDataService::creditAmount($websoccer, $db, $lenderTeamId, $totalFee, 'lending_fee_subject', $borrowerTeam['team_name']);
+        BankAccountDataService::debitAmount(
+            $websoccer,
+            $db,
+            $borrowerTeamId,
+            $totalFee,
+            'lending_fee_subject',
+            $player['lender_team_name']
+        );
+
+        BankAccountDataService::creditAmount(
+            $websoccer,
+            $db,
+            $lenderTeamId,
+            $totalFee,
+            'lending_fee_subject',
+            $borrowerTeam['team_name']
+        );
 
         $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') . "_spieler
                     SET lending_matches = '". (int) $matches ."',
@@ -1100,8 +1165,22 @@ class ComputerTransfersDataService {
                         verein_id = '". (int) $borrowerTeamId ."'
                     WHERE id = '". (int) $player['id'] ."'";
         $db->executeQuery($updStr);
-        LoanDataService::createLoan($websoccer, $db, $player['id'], $lenderTeamId, $borrowerTeamId, $matches, $player['lending_fee'], $salaryShare, $optionType, $buyFee);
+
+        LoanDataService::createLoan(
+            $websoccer,
+            $db,
+            $player['id'],
+            $lenderTeamId,
+            $borrowerTeamId,
+            $matches,
+            $player['lending_fee'],
+            $salaryShare,
+            $optionType,
+            $buyFee
+        );
+
         LoanDataService::closeOffer($websoccer, $db, $player['id'], 'accepted');
+
         if (class_exists('LoanRequestDataService')) {
             LoanRequestDataService::expireOpenRequestsForPlayer($websoccer, $db, $player['id']);
         }
@@ -1116,18 +1195,46 @@ class ComputerTransfersDataService {
             'buy_fee' => (int) $buyFee,
             'option_type' => $optionType
         );
+
         if ((int) $player['lender_user_id'] > 0) {
-            TransferMessagesDataService::createLoanMessage($websoccer, $db, $player['lender_user_id'], 'started', $player['id'], $lenderTeamId, $borrowerTeamId, $loanDetails, $borrowerTeamId);
+            TransferMessagesDataService::createLoanMessage(
+                $websoccer,
+                $db,
+                $player['lender_user_id'],
+                'started',
+                $player['id'],
+                $lenderTeamId,
+                $borrowerTeamId,
+                $loanDetails,
+                $borrowerTeamId
+            );
         }
+
         if (!empty($borrowerTeam['user_id'])) {
-            TransferMessagesDataService::createLoanMessage($websoccer, $db, $borrowerTeam['user_id'], 'started', $player['id'], $lenderTeamId, $borrowerTeamId, $loanDetails, $lenderTeamId);
+            TransferMessagesDataService::createLoanMessage(
+                $websoccer,
+                $db,
+                $borrowerTeam['user_id'],
+                'started',
+                $player['id'],
+                $lenderTeamId,
+                $borrowerTeamId,
+                $loanDetails,
+                $lenderTeamId
+            );
         }
     }
 
     private static function getLoanProfile(WebSoccer $websoccer, DbConnection $db, $teamId, $squad) {
-        $result = $db->executeQuery("SELECT tactical_style, finanz_budget, strength FROM ". $websoccer->getConfig('db_prefix') ."_verein WHERE id = '". (int) $teamId ."'");
+        $result = $db->executeQuery(
+            "SELECT tactical_style, finanz_budget, strength
+             FROM ". $websoccer->getConfig('db_prefix') ."_verein
+             WHERE id = '". (int) $teamId ."'"
+        );
+
         $team = $result->fetch_assoc();
         $result->free();
+
         return array(
             'tactical_style' => isset($team['tactical_style']) ? $team['tactical_style'] : '',
             'budget' => isset($team['finanz_budget']) ? (int) $team['finanz_budget'] : 0,
@@ -1139,23 +1246,29 @@ class ComputerTransfersDataService {
     private static function scoreLoanOfferCandidate($player, $profile) {
         $score = 0;
         $playerStrength = self::calculatePlayerStrengthX($player);
+
         if ($playerStrength < $profile['avg_strength'] * 0.90) {
             $score += 20;
         }
+
         if ((int) $player['age'] <= 22) {
             $score += 25;
         } elseif ((int) $player['age'] <= 25) {
             $score += 10;
         }
+
         if ((int) $player['w_talent'] >= 4) {
             $score += 15;
         }
+
         if ($profile['tactical_style'] == 'youth_focused' || $profile['tactical_style'] == 'youth-focused') {
             $score += 10;
         }
+
         if ((int) $player['vertrag_gehalt'] > 0 && $profile['budget'] < ((int) $player['vertrag_gehalt'] * 20)) {
             $score += 10;
         }
+
         return $score;
     }
 
@@ -1163,9 +1276,11 @@ class ComputerTransfersDataService {
         if ((int) $player['vertrag_gehalt'] > 0 && $profile['budget'] < ((int) $player['vertrag_gehalt'] * 15)) {
             return 70;
         }
+
         if ((int) $player['age'] <= 22 && (int) $player['w_talent'] >= 4) {
             return 80;
         }
+
         return 100;
     }
 
@@ -1173,9 +1288,11 @@ class ComputerTransfersDataService {
         if ((int) $player['age'] <= 22 && (int) $player['w_talent'] >= 4) {
             return LoanDataService::OPTION_NONE;
         }
+
         if ((int) $player['vertrag_gehalt'] > 0 && $profile['budget'] < ((int) $player['vertrag_gehalt'] * 12)) {
             return LoanDataService::OPTION_BUY;
         }
+
         return LoanDataService::OPTION_NONE;
     }
 
@@ -1183,52 +1300,94 @@ class ComputerTransfersDataService {
         if ($teamStrength <= 0) {
             return true;
         }
+
         $playerStrength = self::calculatePlayerStrengthX($candidate);
-        return ($playerStrength >= $teamStrength * 0.75 && $playerStrength <= $teamStrength * 1.15);
+
+        return (
+            $playerStrength >= $teamStrength * 0.75
+            && $playerStrength <= $teamStrength * 1.15
+        );
     }
 
     private static function getTraitNeedsForTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
         $teamId = (int) $teamId;
-        if ($teamId < 1 || !class_exists('SquadPlannerDataService') || !class_exists('PlayerTraitsDataService')) {
+
+        if (
+            $teamId < 1
+            || !class_exists('SquadPlannerDataService')
+            || !class_exists('PlayerTraitsDataService')
+        ) {
             return array();
         }
+
         try {
-            return SquadPlannerDataService::getTraitNeedsForTeam($websoccer, $db, $teamId);
+            return SquadPlannerDataService::getTraitNeedsForTeam(
+                $websoccer,
+                $db,
+                $teamId
+            );
         } catch (Exception $e) {
             return array();
         }
     }
 
-    private static function scorePlayerForTraitNeeds(WebSoccer $websoccer, DbConnection $db, $player, $traitNeeds) {
-        if (!class_exists('PlayerTraitsDataService') || !is_array($traitNeeds) || !count($traitNeeds)) {
+    private static function scorePlayerForTraitNeeds(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $player,
+        $traitNeeds
+    ) {
+        if (
+            !class_exists('PlayerTraitsDataService')
+            || !is_array($traitNeeds)
+            || !count($traitNeeds)
+        ) {
             return 0;
         }
+
         if (!isset($player['id']) || (int) $player['id'] < 1) {
             return 0;
         }
 
         $position = isset($player['position']) ? $player['position'] : '';
         $filteredNeeds = array();
+
         foreach ($traitNeeds as $need) {
-            if (isset($need['position']) && strlen($position) && $need['position'] != $position) {
+            if (
+                isset($need['position'])
+                && strlen($position)
+                && $need['position'] != $position
+            ) {
                 continue;
             }
+
             $filteredNeeds[] = $need;
         }
+
         if (!count($filteredNeeds)) {
             return 0;
         }
 
-        $traitMap = PlayerTraitsDataService::getTraitMapFromPlayerArray($websoccer, $db, $player);
-        return PlayerTraitsDataService::getTraitNeedScore($traitMap, $filteredNeeds);
+        $traitMap = PlayerTraitsDataService::getTraitMapFromPlayerArray(
+            $websoccer,
+            $db,
+            $player
+        );
+
+        return PlayerTraitsDataService::getTraitNeedScore(
+            $traitMap,
+            $filteredNeeds
+        );
     }
 
     public static function sortByCpuTraitNeedScore($a, $b) {
         $scoreA = isset($a['cpu_trait_need_score']) ? (int) $a['cpu_trait_need_score'] : 0;
         $scoreB = isset($b['cpu_trait_need_score']) ? (int) $b['cpu_trait_need_score'] : 0;
+
         if ($scoreA == $scoreB) {
             return 0;
         }
+
         return ($scoreA > $scoreB) ? -1 : 1;
     }
 
@@ -1240,62 +1399,104 @@ class ComputerTransfersDataService {
         $result = $db->executeQuery($query);
         $offer = $result->fetch_assoc();
         $result->free();
+
         return (int) $offer['offers'];
     }
 
-    public static function deleteTooManyOffers(WebSoccer $websoccer, DbConnection $db, $maxOffersPerPlayer = 3) {
+    public static function deleteTooManyOffers(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $maxOffersPerPlayer = 3
+    ) {
         $maxOffersPerPlayer = max(1, (int) $maxOffersPerPlayer);
         $table = $websoccer->getConfig('db_prefix') . "_transfer_angebot";
-        $query = "SELECT spieler_id FROM ". $table ."
+
+        $query = "SELECT spieler_id
+                  FROM ". $table ."
                   WHERE user_id IS NULL OR user_id <= 0
                   GROUP BY spieler_id
                   HAVING COUNT(*) > ". $maxOffersPerPlayer;
         $result = $db->executeQuery($query);
+
         $playerIds = array();
         while ($row = $result->fetch_assoc()) {
             $playerIds[] = (int) $row['spieler_id'];
         }
         $result->free();
+
         foreach ($playerIds as $playerId) {
-            self::trimCpuOffers($websoccer, $db, "spieler_id = ". $playerId, $maxOffersPerPlayer);
+            self::trimCpuOffers(
+                $websoccer,
+                $db,
+                "spieler_id = ". $playerId,
+                $maxOffersPerPlayer
+            );
         }
     }
 
-    private static function deleteTooManyTeamOffers(WebSoccer $websoccer, DbConnection $db, $maxOffersPerTeam = 3) {
+    private static function deleteTooManyTeamOffers(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $maxOffersPerTeam = 3
+    ) {
         $maxOffersPerTeam = max(1, (int) $maxOffersPerTeam);
         $table = $websoccer->getConfig('db_prefix') . "_transfer_angebot";
-        $query = "SELECT verein_id FROM ". $table ."
+
+        $query = "SELECT verein_id
+                  FROM ". $table ."
                   WHERE user_id IS NULL OR user_id <= 0
                   GROUP BY verein_id
                   HAVING COUNT(*) > ". $maxOffersPerTeam;
         $result = $db->executeQuery($query);
+
         $teamIds = array();
         while ($row = $result->fetch_assoc()) {
             $teamIds[] = (int) $row['verein_id'];
         }
         $result->free();
+
         foreach ($teamIds as $teamId) {
-            self::trimCpuOffers($websoccer, $db, "verein_id = ". $teamId, $maxOffersPerTeam);
+            self::trimCpuOffers(
+                $websoccer,
+                $db,
+                "verein_id = ". $teamId,
+                $maxOffersPerTeam
+            );
         }
     }
 
-    private static function trimCpuOffers(WebSoccer $websoccer, DbConnection $db, $where, $limit) {
+    private static function trimCpuOffers(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $where,
+        $limit
+    ) {
         $table = $websoccer->getConfig('db_prefix') . "_transfer_angebot";
-        $query = "SELECT id FROM ". $table ."
-                  WHERE (user_id IS NULL OR user_id <= 0) AND ". $where ."
+
+        $query = "SELECT id
+                  FROM ". $table ."
+                  WHERE (user_id IS NULL OR user_id <= 0)
+                    AND ". $where ."
                   ORDER BY abloese DESC, datum DESC, id DESC";
         $result = $db->executeQuery($query);
+
         $position = 0;
         $deleteIds = array();
+
         while ($row = $result->fetch_assoc()) {
             $position++;
+
             if ($position > (int) $limit) {
                 $deleteIds[] = (int) $row['id'];
             }
         }
         $result->free();
+
         if (count($deleteIds)) {
-            $db->executeQuery("DELETE FROM ". $table ." WHERE id IN (". implode(',', $deleteIds) .")");
+            $db->executeQuery(
+                "DELETE FROM ". $table ."
+                 WHERE id IN (". implode(',', $deleteIds) .")"
+            );
         }
     }
 
@@ -1309,8 +1510,14 @@ class ComputerTransfersDataService {
                   LEFT JOIN ". $prefix ."_spieler AS P ON P.id = A.spieler_id
                   LEFT JOIN ". $prefix ."_verein AS V ON V.id = A.verein_id
                   WHERE (A.user_id IS NULL OR A.user_id <= 0)
-                    AND (P.id IS NULL OR V.id IS NULL OR P.transfermarkt <> '1' OR P.verein_id = A.verein_id)";
+                    AND (
+                        P.id IS NULL
+                        OR V.id IS NULL
+                        OR P.transfermarkt <> '1'
+                        OR P.verein_id = A.verein_id
+                    )";
         $result = $db->executeQuery($query);
+
         $deleteIds = array();
         while ($row = $result->fetch_assoc()) {
             $deleteIds[] = (int) $row['id'];
@@ -1324,13 +1531,16 @@ class ComputerTransfersDataService {
                            GROUP BY spieler_id, verein_id
                            HAVING COUNT(*) > 1";
         $duplicates = $db->executeQuery($duplicateQuery);
+
         while ($pair = $duplicates->fetch_assoc()) {
-            $pairQuery = "SELECT id FROM ". $table ."
+            $pairQuery = "SELECT id
+                          FROM ". $table ."
                           WHERE spieler_id='". (int) $pair['spieler_id'] ."'
                             AND verein_id='". (int) $pair['verein_id'] ."'
                             AND (user_id IS NULL OR user_id <= 0)
                           ORDER BY abloese DESC, datum DESC, id DESC";
             $pairResult = $db->executeQuery($pairQuery);
+
             $keepFirst = true;
             while ($offer = $pairResult->fetch_assoc()) {
                 if ($keepFirst) {
@@ -1339,19 +1549,25 @@ class ComputerTransfersDataService {
                     $deleteIds[] = (int) $offer['id'];
                 }
             }
+
             $pairResult->free();
         }
         $duplicates->free();
 
         $deleteIds = array_values(array_unique($deleteIds));
+
         if (count($deleteIds)) {
-            $db->executeQuery("DELETE FROM ". $table ." WHERE id IN (". implode(',', $deleteIds) .")");
+            $db->executeQuery(
+                "DELETE FROM ". $table ."
+                 WHERE id IN (". implode(',', $deleteIds) .")"
+            );
         }
     }
 
 	public static function deleteOfferByPlayerId(WebSoccer $websoccer, DbConnection $db, $playerId) {
 
-		$delStr = "DELETE FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot WHERE spieler_id='".$playerId."'";
+		$delStr = "DELETE FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot
+                   WHERE spieler_id='".$playerId."'";
 		$db->executeQuery($delStr);
 
 	}
@@ -1362,13 +1578,20 @@ class ComputerTransfersDataService {
 	public static function offerButNotONTL(WebSoccer $websoccer, DbConnection $db) {
 
 	    $sqlStr = "SELECT S.transfermarkt, T.*
-                FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot AS T, ". $websoccer->getConfig('db_prefix') ."_spieler AS S
-                WHERE S.id=T.spieler_id AND S.transfermarkt='0'";
+                FROM ". $websoccer->getConfig('db_prefix') ."_transfer_angebot AS T,
+                     ". $websoccer->getConfig('db_prefix') ."_spieler AS S
+                WHERE S.id=T.spieler_id
+                  AND S.transfermarkt='0'";
         $result = $db->executeQuery($sqlStr);
+
         while ($player = $result->fetch_assoc()) {
 
             echo"447: deleting offer if not on TL: ". $player['spieler_id'] ."\n";
-            ComputerTransfersDataService::deleteOfferByPlayerId($websoccer, $db, $player['spieler_id']);
+            ComputerTransfersDataService::deleteOfferByPlayerId(
+                $websoccer,
+                $db,
+                $player['spieler_id']
+            );
         }
 	}
 
@@ -1381,13 +1604,18 @@ class ComputerTransfersDataService {
 
 	    $sqlStr = "SELECT id
                 FROM ". $websoccer->getConfig('db_prefix') ."_spieler
-                WHERE transfermarkt='1' AND transfer_ende<$now";
+                WHERE transfermarkt='1'
+                  AND transfer_ende<$now";
 	    $result = $db->executeQuery($sqlStr);
+
 	    while ($player = $result->fetch_assoc()) {
 
 	        $updStr = "UPDATE ". $websoccer->getConfig('db_prefix') ."_spieler
-                        SET transfermarkt='0', transfer_start='0', transfer_ende='0'
+                        SET transfermarkt='0',
+                            transfer_start='0',
+                            transfer_ende='0'
                         WHERE id='".$player['id']."'";
+
 	        echo"468:". $updStr ."\n";
 	        $db->executeQuery($updStr);
 	    }

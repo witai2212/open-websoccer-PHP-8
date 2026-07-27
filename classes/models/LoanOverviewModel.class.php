@@ -37,52 +37,30 @@ class LoanOverviewModel implements IModel {
 	private function getLoanedOutPlayers($teamId) {
 		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
 		$query = "
-			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main, P.lending_matches, P.lending_fee,
-			       B.name AS borrower_name, L.id AS loan_id, L.matches_completed, L.total_matches, L.remaining_matches,
-			       L.salary_share_percent, L.option_type, L.buy_fee, L.status, L.min_recall_matches,
-			       COALESCE(SUM(R.minutes_played), 0) AS loan_minutes,
-			       COALESCE(AVG(NULLIF(R.grade, 0)), 0) AS avg_grade,
-			       COALESCE(SUM(R.goals), 0) AS goals,
-			       COALESCE(SUM(R.assists), 0) AS assists,
-			       COALESCE(SUM(R.development_bonus), 0) AS development_bonus,
-			       COALESCE(AVG(R.destination_quality), 0) AS destination_quality,
-			       COUNT(R.id) AS reports
+			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main,
+			       P.lending_matches, P.lending_fee, B.name AS borrower_name
 			FROM ". $dbPrefix ."_spieler AS P
 			INNER JOIN ". $dbPrefix ."_verein AS B ON B.id = P.verein_id
-			LEFT JOIN ". $dbPrefix ."_loan AS L ON L.player_id = P.id AND L.status = 'active'
-			LEFT JOIN ". $dbPrefix ."_loan_report AS R ON R.loan_id = L.id
 			WHERE P.status = '1'
 			  AND P.lending_owner_id = '". (int) $teamId ."'
-			GROUP BY P.id
 			ORDER BY P.lending_matches ASC, P.position ASC, P.nachname ASC";
 
-		return $this->fetchLoanRows($query, true);
+		return $this->decorateLoanRows($this->fetchSimpleRows($query), true);
 	}
 
 	private function getBorrowedPlayers($teamId) {
 		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
 		$query = "
-			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main, P.lending_matches, P.lending_fee,
-			       O.name AS lender_name, L.id AS loan_id, L.matches_completed, L.total_matches, L.remaining_matches,
-			       L.salary_share_percent, L.option_type, L.buy_fee, L.status, L.min_recall_matches,
-			       COALESCE(SUM(R.minutes_played), 0) AS loan_minutes,
-			       COALESCE(AVG(NULLIF(R.grade, 0)), 0) AS avg_grade,
-			       COALESCE(SUM(R.goals), 0) AS goals,
-			       COALESCE(SUM(R.assists), 0) AS assists,
-			       COALESCE(SUM(R.development_bonus), 0) AS development_bonus,
-			       COALESCE(AVG(R.destination_quality), 0) AS destination_quality,
-			       COUNT(R.id) AS reports
+			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main,
+			       P.lending_matches, P.lending_fee, O.name AS lender_name
 			FROM ". $dbPrefix ."_spieler AS P
 			INNER JOIN ". $dbPrefix ."_verein AS O ON O.id = P.lending_owner_id
-			LEFT JOIN ". $dbPrefix ."_loan AS L ON L.player_id = P.id AND L.status = 'active'
-			LEFT JOIN ". $dbPrefix ."_loan_report AS R ON R.loan_id = L.id
 			WHERE P.status = '1'
 			  AND P.verein_id = '". (int) $teamId ."'
 			  AND P.lending_owner_id > 0
-			GROUP BY P.id
 			ORDER BY P.lending_matches ASC, P.position ASC, P.nachname ASC";
 
-		return $this->fetchLoanRows($query, false);
+		return $this->decorateLoanRows($this->fetchSimpleRows($query), false);
 	}
 
 	private function getIncomingLoanRequests($teamId) {
@@ -122,17 +100,16 @@ class LoanOverviewModel implements IModel {
 	private function getOwnLoanOffers($teamId) {
 		$dbPrefix = $this->_websoccer->getConfig('db_prefix');
 		$query = "
-			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main, P.lending_fee,
-			       O.salary_share_percent, O.option_type, O.buy_fee
+			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main, P.lending_fee
 			FROM ". $dbPrefix ."_spieler AS P
-			LEFT JOIN ". $dbPrefix ."_loan_offer AS O ON O.player_id = P.id AND O.status = 'open'
 			WHERE P.status = '1'
 			  AND P.verein_id = '". (int) $teamId ."'
 			  AND P.lending_fee > 0
 			  AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)
 			ORDER BY P.position ASC, P.nachname ASC";
 
-		return $this->fetchSimpleRows($query);
+		$rows = $this->fetchSimpleRows($query);
+		return $this->applyOpenLoanOffers($rows);
 	}
 
 	private function getAvailableLoanPlayers($teamId) {
@@ -140,38 +117,235 @@ class LoanOverviewModel implements IModel {
 		if (class_exists('ClubPartnershipDataService')) {
 			ClubPartnershipDataService::ensureSchema($this->_websoccer, $this->_db);
 		}
+
+		$partnerships = $this->getPreferredLoanPartnerships($teamId);
+		$preferredOrder = '';
+		if (count($partnerships)) {
+			$preferredTeamIds = array_map('intval', array_keys($partnerships));
+			$preferredOrder = 'CASE WHEN P.verein_id IN (' . implode(',', $preferredTeamIds) . ') THEN 0 ELSE 1 END ASC, ';
+		}
+
 		$query = "
-			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main, P.lending_fee, P.vertrag_gehalt,
-			       C.name AS team_name, C.user_id AS team_user_id, O.salary_share_percent, O.option_type, O.buy_fee,
-			       CP.id AS partnership_id, CP.development_bonus_percent AS partnership_development_bonus
+			SELECT P.id, P.vorname, P.nachname, P.kunstname, P.position, P.position_main,
+			       P.lending_fee, P.vertrag_gehalt, C.id AS team_id, C.name AS team_name, C.user_id AS team_user_id
 			FROM ". $dbPrefix ."_spieler AS P
 			INNER JOIN ". $dbPrefix ."_verein AS C ON C.id = P.verein_id
-			LEFT JOIN ". $dbPrefix ."_loan_offer AS O ON O.player_id = P.id AND O.status = 'open'
-			LEFT JOIN ". $dbPrefix ."_club_partnership AS CP ON CP.parent_team_id = C.id AND CP.partner_team_id = '". (int) $teamId ."' AND CP.status = 'active' AND CP.preferred_loans = '1'
 			WHERE P.status = '1'
 			  AND P.verein_id <> '". (int) $teamId ."'
 			  AND P.transfermarkt <> '1'
 			  AND P.lending_fee > 0
 			  AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)
-			ORDER BY CASE WHEN CP.id IS NULL THEN 1 ELSE 0 END ASC, P.position ASC, P.w_staerke DESC, P.nachname ASC";
+			ORDER BY ". $preferredOrder ."P.position ASC, P.w_staerke DESC, P.nachname ASC";
 
-		return $this->fetchSimpleRows($query);
-	}
-
-	private function fetchLoanRows($query, $includeRecall) {
-		$result = $this->_db->executeQuery($query);
-		$rows = array();
-		while ($row = $result->fetch_assoc()) {
-			$row['position'] = PlayersDataService::_convertPosition($row['position']);
-			$row['can_recall'] = false;
-			if ($includeRecall && !empty($row['loan_id'])) {
-				$row['can_recall'] = LoanDataService::canRecallLoan($this->_websoccer, $this->_db, $row);
+		$rows = $this->applyOpenLoanOffers($this->fetchSimpleRows($query));
+		foreach ($rows as &$row) {
+			$teamIdOfPlayer = isset($row['team_id']) ? (int) $row['team_id'] : 0;
+			if ($teamIdOfPlayer > 0 && isset($partnerships[$teamIdOfPlayer])) {
+				$row['partnership_id'] = (int) $partnerships[$teamIdOfPlayer]['id'];
+				$row['partnership_development_bonus'] = (int) $partnerships[$teamIdOfPlayer]['development_bonus_percent'];
+			} else {
+				$row['partnership_id'] = 0;
+				$row['partnership_development_bonus'] = 0;
 			}
-			$rows[] = $row;
 		}
-		$result->free();
+		unset($row);
+
 		return $rows;
 	}
+
+	private function decorateLoanRows($rows, $includeRecall) {
+		if (!count($rows)) {
+			return $rows;
+		}
+
+		$playerIds = array();
+		foreach ($rows as $row) {
+			$playerIds[] = (int) $row['id'];
+		}
+
+		$loans = $this->getActiveLoansByPlayerIds($playerIds);
+		$loanIds = array();
+		foreach ($loans as $loan) {
+			$loanIds[] = (int) $loan['loan_id'];
+		}
+		$reports = $this->getLoanReportSummaries($loanIds);
+
+		foreach ($rows as &$row) {
+			$playerId = (int) $row['id'];
+			$row['loan_id'] = 0;
+			$row['matches_completed'] = 0;
+			$row['total_matches'] = 0;
+			$row['remaining_matches'] = (int) $row['lending_matches'];
+			$row['salary_share_percent'] = 100;
+			$row['option_type'] = LoanDataService::OPTION_NONE;
+			$row['buy_fee'] = 0;
+			$row['status'] = '';
+			$row['min_recall_matches'] = LoanDataService::MIN_RECALL_MATCHES;
+			$row['loan_minutes'] = 0;
+			$row['avg_grade'] = 0;
+			$row['goals'] = 0;
+			$row['assists'] = 0;
+			$row['development_bonus'] = 0;
+			$row['destination_quality'] = 0;
+			$row['reports'] = 0;
+
+			if (isset($loans[$playerId])) {
+				$loan = $loans[$playerId];
+				$row['loan_id'] = (int) $loan['loan_id'];
+				$row['matches_completed'] = (int) $loan['matches_completed'];
+				$row['total_matches'] = (int) $loan['total_matches'];
+				$row['remaining_matches'] = (int) $loan['remaining_matches'];
+				$row['salary_share_percent'] = (int) $loan['salary_share_percent'];
+				$row['option_type'] = LoanDataService::normalizeOptionType($loan['option_type']);
+				$row['buy_fee'] = (int) $loan['buy_fee'];
+				$row['status'] = $loan['status'];
+				$row['min_recall_matches'] = (int) $loan['min_recall_matches'];
+
+				$loanId = (int) $loan['loan_id'];
+				if (isset($reports[$loanId])) {
+					$row['loan_minutes'] = (int) $reports[$loanId]['loan_minutes'];
+					$row['avg_grade'] = (float) $reports[$loanId]['avg_grade'];
+					$row['goals'] = (int) $reports[$loanId]['goals'];
+					$row['assists'] = (int) $reports[$loanId]['assists'];
+					$row['development_bonus'] = (float) $reports[$loanId]['development_bonus'];
+					$row['destination_quality'] = (float) $reports[$loanId]['destination_quality'];
+					$row['reports'] = (int) $reports[$loanId]['reports'];
+				}
+			}
+
+			$row['can_recall'] = false;
+			if ($includeRecall && $row['loan_id'] > 0) {
+				$recallLoan = $row;
+				$recallLoan['id'] = $row['loan_id'];
+				$row['can_recall'] = LoanDataService::canRecallLoan($this->_websoccer, $this->_db, $recallLoan);
+			}
+		}
+		unset($row);
+
+		return $rows;
+	}
+
+	private function getActiveLoansByPlayerIds($playerIds) {
+		$loans = array();
+		if (!count($playerIds)) {
+			return $loans;
+		}
+
+		$table = $this->_websoccer->getConfig('db_prefix') . '_loan';
+		foreach (array_chunk(array_unique(array_map('intval', $playerIds)), 500) as $chunk) {
+			$query = "SELECT id AS loan_id, player_id, matches_completed, total_matches, remaining_matches,
+			                 salary_share_percent, option_type, buy_fee, status, min_recall_matches
+			          FROM ". $table ."
+			          WHERE status = 'active' AND player_id IN (". implode(',', $chunk) .")
+			          ORDER BY id DESC";
+			$result = $this->_db->executeQuery($query);
+			while ($row = $result->fetch_assoc()) {
+				$playerId = (int) $row['player_id'];
+				if (!isset($loans[$playerId])) {
+					$loans[$playerId] = $row;
+				}
+			}
+			$result->free();
+		}
+		return $loans;
+	}
+
+	private function getLoanReportSummaries($loanIds) {
+		$reports = array();
+		if (!count($loanIds)) {
+			return $reports;
+		}
+
+		$table = $this->_websoccer->getConfig('db_prefix') . '_loan_report';
+		foreach (array_chunk(array_unique(array_map('intval', $loanIds)), 500) as $chunk) {
+			$query = "SELECT loan_id,
+			                 COALESCE(SUM(minutes_played), 0) AS loan_minutes,
+			                 COALESCE(AVG(NULLIF(grade, 0)), 0) AS avg_grade,
+			                 COALESCE(SUM(goals), 0) AS goals,
+			                 COALESCE(SUM(assists), 0) AS assists,
+			                 COALESCE(SUM(development_bonus), 0) AS development_bonus,
+			                 COALESCE(AVG(destination_quality), 0) AS destination_quality,
+			                 COUNT(id) AS reports
+			          FROM ". $table ."
+			          WHERE loan_id IN (". implode(',', $chunk) .")
+			          GROUP BY loan_id";
+			$result = $this->_db->executeQuery($query);
+			while ($row = $result->fetch_assoc()) {
+				$reports[(int) $row['loan_id']] = $row;
+			}
+			$result->free();
+		}
+		return $reports;
+	}
+
+	private function applyOpenLoanOffers($rows) {
+		if (!count($rows)) {
+			return $rows;
+		}
+
+		$playerIds = array();
+		foreach ($rows as $row) {
+			$playerIds[] = (int) $row['id'];
+		}
+		$offers = $this->getOpenLoanOffersByPlayerIds($playerIds);
+
+		foreach ($rows as &$row) {
+			$playerId = (int) $row['id'];
+			if (isset($offers[$playerId])) {
+				$row['salary_share_percent'] = (int) $offers[$playerId]['salary_share_percent'];
+				$row['option_type'] = LoanDataService::normalizeOptionType($offers[$playerId]['option_type']);
+				$row['buy_fee'] = (int) $offers[$playerId]['buy_fee'];
+			}
+		}
+		unset($row);
+
+		return $rows;
+	}
+
+	private function getOpenLoanOffersByPlayerIds($playerIds) {
+		$offers = array();
+		if (!count($playerIds)) {
+			return $offers;
+		}
+
+		$table = $this->_websoccer->getConfig('db_prefix') . '_loan_offer';
+		foreach (array_chunk(array_unique(array_map('intval', $playerIds)), 500) as $chunk) {
+			$query = "SELECT id, player_id, salary_share_percent, option_type, buy_fee
+			          FROM ". $table ."
+			          WHERE status = 'open' AND player_id IN (". implode(',', $chunk) .")
+			          ORDER BY id DESC";
+			$result = $this->_db->executeQuery($query);
+			while ($row = $result->fetch_assoc()) {
+				$playerId = (int) $row['player_id'];
+				if (!isset($offers[$playerId])) {
+					$offers[$playerId] = $row;
+				}
+			}
+			$result->free();
+		}
+		return $offers;
+	}
+
+	private function getPreferredLoanPartnerships($teamId) {
+		$partnerships = array();
+		$table = $this->_websoccer->getConfig('db_prefix') . '_club_partnership';
+		$query = "SELECT id, parent_team_id, development_bonus_percent
+		          FROM ". $table ."
+		          WHERE partner_team_id = '". (int) $teamId ."'
+		            AND status = 'active'
+		            AND preferred_loans = '1'
+		          ORDER BY updated_date DESC, id DESC";
+		$result = $this->_db->executeQuery($query);
+		while ($row = $result->fetch_assoc()) {
+			$parentTeamId = (int) $row['parent_team_id'];
+			if (!isset($partnerships[$parentTeamId])) {
+				$partnerships[$parentTeamId] = $row;
+			}
+		}
+		$result->free();
+		return $partnerships;
+	}
+
 
 	private function fetchRequestRows($query) {
 		$result = $this->_db->executeQuery($query);

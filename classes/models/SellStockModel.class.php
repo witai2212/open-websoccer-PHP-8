@@ -53,9 +53,15 @@ class SellStockModel implements IModel {
         $team = TeamsDataService::getTeamByUserId($this->_websoccer, $this->_db, $userId);
         $teamId = $team['team_id'];
         
-        //$userMax = StockMarketDataService::getUserPortfolioByIndex($this->_websoccer, $this->_db, $stockId, $teamId);
-        $userMax = StockMarketDataService::getUserQuantityFromUserTeam($this->_websoccer, $this->_db, $stockId, $teamId);
-        //$userMax = $userMax['qty'];
+        // A stock can exist in several portfolio rows because every purchase creates
+        // a separate entry. Therefore the maximum sellable quantity must be the sum
+        // of all rows for this club and stock.
+        $userMax = StockMarketDataService::getQuantityFromUsersByIndex(
+            $this->_websoccer,
+            $this->_db,
+            $stockId,
+            $teamId
+        );
         
         $index = StockMarketDataService::getStockMarketDataById($this->_websoccer, $this->_db, $stockId);
         

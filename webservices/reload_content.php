@@ -70,6 +70,15 @@ function executeConfiguredJobOnce($website, $db, $i18n, $jobId, $jobClass) {
     unset($job);
 }
 
+function isWeekend(): bool {
+    $date = new DateTimeImmutable(
+        'now',
+        new DateTimeZone('Europe/Berlin')
+    );
+
+    return (int) $date->format('N') >= 6;
+}
+
 // Get configurations
 $zeitstempel = getConfig($website, $db, 'marketvalue');
 $mw_zeitstempel = $zeitstempel['zeitstempel'];
@@ -197,9 +206,12 @@ if ($active_session_id >= 1 && $active_session_id != $session_id) {
         // once a day
         if (($mw_zeitstempel + 86400) < $now) {
             
-            executeSafeOperation('[StockMarketDataService] Executing stock market update...', function() use ($website, $db) {
-                StockMarketDataService::updateStockDataFromAlphavantage($website, $db);
-            });
+            if(!isWeekend()) {
+                executeSafeOperation('[StockMarketDataService] Executing stock market update...', function() use ($website, $db) {
+                    StockMarketDataService::updateStockDataFromAlphavantage($website, $db);
+                });
+            }
+            
             executeSafeOperation('[TransfermarketDataService] Moving players without team to transfer market...', function() use ($website, $db) {
                 TransfermarketDataService::movePlayersWithoutTeamToTransfermarket($website, $db);
             });

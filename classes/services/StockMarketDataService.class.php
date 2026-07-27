@@ -390,8 +390,9 @@ class StockMarketDataService {
             $transactionFee = 5.0;
         }
 
-        $totalCredit = $unitPrice * $qty * ((100 - $transactionFee) / 100);
-        $transactionCost =  ($unitPrice * $qty) - $totalCredit;
+        $grossCredit = $unitPrice * $qty;
+        $totalCredit = (int) round($grossCredit * ((100 - $transactionFee) / 100));
+        $transactionCost = max(0, (int) round($grossCredit - $totalCredit));
     
         // Reduce portfolio rows correctly.
         // buyStock() inserts one row per purchase, so we must consume rows one by one.
@@ -465,9 +466,13 @@ class StockMarketDataService {
                           AND qty <= 0";
         $db->executeQuery($cleanupStr);
         
-        // Credit transaction fee cost to cm23_penalty.penalty
-        $penaltyStr = "UPDATE ". $websoccer->getConfig("db_prefix") ."_penalty
-                        SET penelty=penalty+'". $transactionCost ."'";
+        // Credit the transaction fee to the central penalty account.
+        // Ensure the singleton row exists before updating it.
+        $penaltyTable = $websoccer->getConfig("db_prefix") . "_penalty";
+        $db->executeQuery("INSERT IGNORE INTO ". $penaltyTable ." (id, budget, penalty) VALUES (1, 0, 0)");
+        $penaltyStr = "UPDATE ". $penaltyTable ."
+                          SET penalty = penalty + ". $transactionCost ."
+                        WHERE id = 1";
         $db->executeQuery($penaltyStr);
     
         self::applyMajorityBoardControl($websoccer, $db, $index);
@@ -1277,17 +1282,9 @@ class StockMarketDataService {
      * getting user quantity of own team
      */
     public static function getUserQuantityFromUserTeam(WebSoccer $websoccer, DbConnection $db, $index, $userId) {
-        
-        $sqlStr = "SELECT qty
-                    FROM ". $websoccer->getConfig("db_prefix") ."_user_stock
-                    WHERE stock_id='".$index."' AND user_id='".$userId."'";
-        $result = $db->executeQuery($sqlStr);
-        $qty = $result->fetch_array();
-        
-        $qty = $qty['qty'];
-        
-        return $qty;
-        
+        // Keep this legacy method as an alias, but return the complete holding.
+        // Every purchase creates a separate _user_stock row.
+        return self::getQuantityFromUsersByIndex($websoccer, $db, $index, $userId);
     }
 }
 ?>

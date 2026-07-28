@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_transaction">Transactions du compte</message>
+    
+	<message id="entity_transaction_verein_id">Destinataire</message>
+	<message id="entity_transaction_datum">Date</message>
+	<message id="entity_transaction_absender">Expéditeur</message>
+	<message id="entity_transaction_betrag">Montant</message>
+	<message id="entity_transaction_betrag_help"><strong>Attention :</strong> le budget du club est automatiquement ajusté de ce montant !</message>
+	<message id="entity_transaction_absender_help">Peut également être uniquement une clé de message.</message>
+	<message id="entity_transaction_verwendung">Motif</message>
+	<message id="entity_transaction_verwendung_help">Peut également être uniquement une clé de message.</message>
+	
+</messages>

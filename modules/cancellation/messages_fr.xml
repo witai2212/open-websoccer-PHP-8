@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="cancellation_navlabel">Résiliation</message>
+    <message id="cancellation_title">Fermer le compte utilisateur</message>
+    
+    <message id="cancellation_intro">Vous ne souhaitez plus jouer ? C’est dommage. Vous pouvez quitter le jeu ici. Vous perdrez votre club et votre compte utilisateur sera désactivé.</message>
+    <message id="cancellation_button">Résilier</message>
+    <message id="cancellation_modal_title">Confirmer la résiliation</message>
+    <message id="cancellation_modal_content">Voulez-vous vraiment fermer votre compte utilisateur ?</message>
+    <message id="cancellation_modal_confirm">Oui, résilier</message>
+    
+    <message id="cancellation_success">Votre compte utilisateur a été désactivé avec succès. Au revoir !</message>
+    
+</messages>

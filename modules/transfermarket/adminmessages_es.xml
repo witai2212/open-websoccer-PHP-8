@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_tab_transfermarket">Mercado de fichajes</message> 
+	
+	<message id="settings_label_transfermarket_enabled">Activar el mercado de fichajes automático.</message>
+	
+	<message id="settings_label_transfermarket_duration_days">Cuánto tiempo permanece un jugador en la lista de transferibles</message>
+	<message id="settings_label_transfermarket_duration_days_help">Días. Si el jugador no se vende durante este periodo, la duración se amplía por el mismo número de días.</message>
+	
+	<message id="settings_label_transfermarket_computed_marketvalue">Calcular automáticamente el valor de mercado. El valor depende de la fuerza real del jugador.</message>
+	
+	<message id="settings_label_transfermarket_value_per_strength">Valor de mercado por punto de fuerza</message>
+	<message id="settings_label_transfermarket_value_per_strength_help">si el valor de mercado se calcula automáticamente.</message>
+
+	<message id="settings_label_transfermarket_min_teamsize">Tamaño mínimo de la plantilla</message>
+	<message id="settings_label_transfermarket_min_teamsize_help">Número mínimo de jugadores en el equipo. No se pueden vender jugadores si la plantilla quedaría por debajo del mínimo.</message>
+
+	<message id="settings_label_transfermarket_max_transactions_between_users">Transacciones entre usuarios</message>
+	<message id="settings_label_transfermarket_max_transactions_between_users_help">Número máximo de transacciones permitidas entre dos usuarios en los últimos 30 días.</message>
+	<message id="settings_label_transfermarket_max_players_on_tl">Máx. jugadores en la lista</message>
+	<message id="settings_label_transferoffers_max_offer_deviation">Desviación máx. en fichajes [%]</message>
+	<message id="settings_label_transferoffers_deviation_penalty">Sanción por desviación</message>
+
+	<message id="settings_label_transfer_news_enabled">Publicar fichajes importantes como noticias</message>
+	<message id="settings_label_transfer_news_market_value_min">Valor de mercado mínimo para noticias de fichajes</message>
+	<message id="settings_label_transfer_news_market_value_min_help">A partir de este valor de mercado, un jugador se considera una gran figura independientemente del traspaso. 0 desactiva este criterio.</message>
+	<message id="settings_label_transfer_news_strength_min">Fuerza mínima para noticias de fichajes</message>
+	<message id="settings_label_transfer_news_strength_min_help">A partir de esta fuerza, un cambio se publica como fichaje importante. 0 desactiva este criterio.</message>
+	<message id="settings_label_transfer_news_fee_min">Traspaso mínimo para noticias de fichajes</message>
+	<message id="settings_label_transfer_news_fee_min_help">A partir de este importe, el cambio se publica como noticia de fichaje. 0 desactiva este criterio.</message>
+	<message id="settings_label_transfer_news_top_percent">Porcentaje superior por valor de mercado</message>
+	<message id="settings_label_transfer_news_top_percent_help">Los jugadores dentro de este porcentaje de los jugadores activos más valiosos también generan una noticia de fichaje.</message>
+
+
+	<message id="settings_label_computer_transfers_teams_per_run">Clubes CPU por ciclo de fichajes</message>
+	<message id="settings_label_computer_transfers_teams_per_run_help">Número máximo de clubes CPU que revisan nuevas ofertas de fichaje por ciclo del sistema.</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team">Máximo de ofertas CPU por club</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team_help">Número máximo de ofertas de fichaje abiertas simultáneamente de un club CPU.</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player">Máximo de ofertas CPU por jugador</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player_help">Número máximo de ofertas abiertas simultáneamente de clubes CPU por un jugador.</message>
+
+	<message id="settings_label_player_talent_transfer_change_chance">Cambio de talento tras el fichaje</message>
+	<message id="settings_label_player_talent_transfer_change_chance_help">Probabilidad porcentual de un cambio único de talento de +1 o -1 tras completar un fichaje.</message>
+	<message id="settings_label_computer_budget_subsidy_floor">Presupuesto base CPU</message>
+	<message id="settings_label_computer_budget_subsidy_floor_help">Los clubes CPU se completan automáticamente hasta este importe mínimo.</message>
+
+</messages>

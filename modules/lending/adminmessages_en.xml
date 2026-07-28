@@ -1,9 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="settings_label_lending_enabled">Users can lend and borrow players.</message> 
-	<message id="settings_label_lending_matches_min">Minimum lending duration</message>
+	<message id="settings_label_lending_enabled">Users can loan players from other clubs.</message> 
+	<message id="settings_label_lending_matches_min">Minimum loan duration</message>
 	<message id="settings_label_lending_matches_min_help">Number of matches</message>  
-	<message id="settings_label_lending_matches_max">Maximum lending duration</message> 
+	<message id="settings_label_lending_matches_max">Maximum loan duration</message> 
 	<message id="settings_label_lending_matches_max_help">Number of matches</message> 
+
+	<message id="settings_label_lending_cpu_offer_duration_days">Duration of CPU loan listings</message>
+	<message id="settings_label_lending_cpu_offer_duration_days_help">Calendar days until a loan listing created by a CPU club ends automatically.</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days">Waiting period for another CPU loan listing</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days_help">Calendar days before the same player can be offered again by a CPU club.</message>
+	<message id="settings_label_lending_cpu_request_expiry_days">Validity of CPU loan requests</message>
+	<message id="settings_label_lending_cpu_request_expiry_days_help">Calendar days until an open CPU loan request expires.</message>
+	<message id="settings_label_max_number_of_players_on_loan_list">Maximum CPU players on the loan list</message>
+	<message id="settings_label_max_number_of_players_on_loan_list_help">Maximum number of players offered for loan at the same time by each CPU club.</message>
 </messages>

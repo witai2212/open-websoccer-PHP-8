@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_stadium">Stades</message>
+    <message id="settings_label_stadium_max_side">Tribune latérale max.</message>
+	<message id="settings_label_stadium_max_side_help">Nombre maximal de places dans les tribunes latérales.</message>
+	
+	<message id="settings_label_stadium_max_grand">Tribune principale max.</message>
+	<message id="settings_label_stadium_max_grand_help">Nombre maximal de places dans la tribune principale.</message>
+
+	<message id="settings_label_stadium_max_vip">Loges VIP max.</message>
+	<message id="settings_label_stadium_max_vip_help">Nombre maximal de loges VIP.</message>
+	
+	<message id="settings_label_stadium_cost_standing">Coût d'agrandissement d'une place debout en tribune latérale</message>
+	<message id="settings_label_stadium_cost_standing_help">par place. Ces coûts s'ajoutent aux tarifs individuels des différents entrepreneurs.</message>
+	<message id="settings_label_stadium_cost_seats">Coût d'agrandissement d'un siège en tribune latérale</message>
+	<message id="settings_label_stadium_cost_seats_help">par place</message>
+	<message id="settings_label_stadium_cost_standing_grand">Coût d'agrandissement d'une place debout en tribune principale</message>
+	<message id="settings_label_stadium_cost_standing_grand_help">par place</message>
+	<message id="settings_label_stadium_cost_seats_grand">Coût d'agrandissement d'un siège en tribune principale</message>
+	<message id="settings_label_stadium_cost_seats_grand_help">par place</message>
+	<message id="settings_label_stadium_cost_vip">Coût d'agrandissement d'une loge VIP</message>
+	<message id="settings_label_stadium_cost_vip_help">par place</message>
+	
+	<message id="settings_label_stadium_construction_delay">Retard de construction en jours</message>
+	<message id="settings_label_stadium_construction_delay_help">Retard possible dans l'achèvement d'un agrandissement du stade lorsqu'un entrepreneur peu fiable est choisi. La valeur doit être suffisamment élevée pour rendre les prestataires plus chers mais plus fiables intéressants lors du choix futur.</message>
+
+	<message id="settings_label_stadium_hide_builders_reliability">Masquer la fiabilité des entrepreneurs dans les offres.</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_pitch">Intervalle d'entretien de la pelouse</message>
+	<message id="settings_label_stadium_maintenanceinterval_pitch_help">Matches à domicile. Nombre de matches à domicile après lequel la qualité de la pelouse diminue.</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_videowall">Intervalle d'entretien de l'écran géant</message>
+	<message id="settings_label_stadium_maintenanceinterval_videowall_help">Matches à domicile</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_seatsquality">Intervalle d'entretien des sièges</message>
+	<message id="settings_label_stadium_maintenanceinterval_seatsquality_help">Matches à domicile</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_vipquality">Intervalle d'entretien des loges VIP</message>
+	<message id="settings_label_stadium_maintenanceinterval_vipquality_help">Matches à domicile</message>
+	
+	<message id="settings_label_stadium_pitch_price">Coûts d'entretien de la pelouse</message>
+	<message id="settings_label_stadium_pitch_price_help">Coût de l'amélioration au premier niveau. La majoration indiquée ci-dessous s'applique aux niveaux suivants.</message>
+	
+	<message id="settings_label_stadium_videowall_price">Coûts d'entretien de l'écran géant</message>
+	<message id="settings_label_stadium_seatsquality_price">Coûts d'entretien des sièges (par siège)</message>
+	<message id="settings_label_stadium_vipquality_price">Coûts d'entretien des loges VIP (par loge)</message>
+	
+	<message id="settings_label_stadium_maintenance_priceincrease_per_level">Majoration des coûts d'entretien par niveau</message>
+	<message id="settings_label_stadium_maintenance_priceincrease_per_level_help">Pourcentage ; majoration cumulée des coûts d'entretien. Exemple : 10 % signifie une majoration de 40 % pour une amélioration au niveau 5 (coût du niveau 1 + 10 % + 10 % + 10 % + 10 %). 0 pour aucune majoration.</message>
+
+	<message id="settings_label_stadium_pitch_effect">Effet de l'état de la pelouse</message>
+	<message id="settings_label_stadium_pitch_effect_help">Nombre de points de pourcentage de technique perdus par l'équipe à domicile pour chaque niveau manquant.</message>
+	
+	<message id="settings_label_stadium_videowall_effect">Effet de l'écran géant</message>
+	<message id="settings_label_stadium_videowall_effect_help">Nombre de points de pourcentage de spectateurs supplémentaires par niveau lors des matches à domicile.</message>
+	
+	<message id="settings_label_stadium_seatsquality_effect">Effet de l'état des sièges</message>
+	<message id="settings_label_stadium_seatsquality_effect_help">Nombre de points de pourcentage de spectateurs en moins par niveau manquant lors des matches à domicile.</message>
+	
+	<message id="settings_label_stadium_vipquality_effect">Effet de l'état des loges VIP</message>
+	<message id="settings_label_stadium_vipquality_effect_help">Nombre de points de pourcentage de spectateurs en moins par niveau manquant lors des matches à domicile.</message>
+</messages>

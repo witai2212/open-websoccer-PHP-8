@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_stadium">Estádios</message>
+    <message id="settings_label_stadium_max_side">Máx. bancada lateral</message>
+	<message id="settings_label_stadium_max_side_help">Número máximo de lugares nas bancadas laterais.</message>
+	
+	<message id="settings_label_stadium_max_grand">Máx. bancada principal</message>
+	<message id="settings_label_stadium_max_grand_help">Número máximo de lugares na bancada principal.</message>
+
+	<message id="settings_label_stadium_max_vip">Máx. camarotes VIP</message>
+	<message id="settings_label_stadium_max_vip_help">Número máximo de camarotes VIP.</message>
+	
+	<message id="settings_label_stadium_cost_standing">Custo de expansão de lugar em pé na bancada lateral</message>
+	<message id="settings_label_stadium_cost_standing_help">por lugar. Estes custos são adicionados aos preços individuais dos diferentes construtores.</message>
+	<message id="settings_label_stadium_cost_seats">Custo de expansão de assento na bancada lateral</message>
+	<message id="settings_label_stadium_cost_seats_help">por lugar</message>
+	<message id="settings_label_stadium_cost_standing_grand">Custo de expansão de lugar em pé na bancada principal</message>
+	<message id="settings_label_stadium_cost_standing_grand_help">por lugar</message>
+	<message id="settings_label_stadium_cost_seats_grand">Custo de expansão de assento na bancada principal</message>
+	<message id="settings_label_stadium_cost_seats_grand_help">por lugar</message>
+	<message id="settings_label_stadium_cost_vip">Custo de expansão de camarote VIP</message>
+	<message id="settings_label_stadium_cost_vip_help">por lugar</message>
+	
+	<message id="settings_label_stadium_construction_delay">Atraso de construção em dias</message>
+	<message id="settings_label_stadium_construction_delay_help">Possível atraso na conclusão de uma expansão do estádio quando é escolhido um construtor pouco fiável. Deve ser suficientemente elevado para tornar interessantes os fornecedores mais caros, mas mais fiáveis, na escolha futura do construtor.</message>
+
+	<message id="settings_label_stadium_hide_builders_reliability">Ocultar a fiabilidade dos construtores nas propostas.</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_pitch">Intervalo de manutenção do relvado</message>
+	<message id="settings_label_stadium_maintenanceinterval_pitch_help">Jogos em casa. Número de jogos em casa após o qual a qualidade do relvado diminui.</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_videowall">Intervalo de manutenção do ecrã gigante</message>
+	<message id="settings_label_stadium_maintenanceinterval_videowall_help">Jogos em casa</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_seatsquality">Intervalo de manutenção dos assentos</message>
+	<message id="settings_label_stadium_maintenanceinterval_seatsquality_help">Jogos em casa</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_vipquality">Intervalo de manutenção dos camarotes VIP</message>
+	<message id="settings_label_stadium_maintenanceinterval_vipquality_help">Jogos em casa</message>
+	
+	<message id="settings_label_stadium_pitch_price">Custos de manutenção do relvado</message>
+	<message id="settings_label_stadium_pitch_price_help">Custo da melhoria para o primeiro nível. Para os níveis seguintes aplica-se o acréscimo indicado abaixo.</message>
+	
+	<message id="settings_label_stadium_videowall_price">Custos de manutenção do ecrã gigante</message>
+	<message id="settings_label_stadium_seatsquality_price">Custos de manutenção dos assentos (por assento)</message>
+	<message id="settings_label_stadium_vipquality_price">Custos de manutenção dos camarotes VIP (por camarote)</message>
+	
+	<message id="settings_label_stadium_maintenance_priceincrease_per_level">Acréscimo dos custos de manutenção por nível</message>
+	<message id="settings_label_stadium_maintenance_priceincrease_per_level_help">Percentagem; acréscimo acumulado aos custos de manutenção. Exemplo: 10% significa um acréscimo de 40% ao melhorar para o nível 5 (custo do nível 1 + 10% + 10% + 10% + 10%). 0 para não aplicar acréscimo.</message>
+
+	<message id="settings_label_stadium_pitch_effect">Efeito do estado do relvado</message>
+	<message id="settings_label_stadium_pitch_effect_help">Pontos percentuais de força técnica perdidos pela equipa da casa por cada nível em falta nos jogos em casa.</message>
+	
+	<message id="settings_label_stadium_videowall_effect">Efeito do ecrã gigante</message>
+	<message id="settings_label_stadium_videowall_effect_help">Pontos percentuais de espectadores adicionais nos jogos em casa por nível.</message>
+	
+	<message id="settings_label_stadium_seatsquality_effect">Efeito do estado dos assentos</message>
+	<message id="settings_label_stadium_seatsquality_effect_help">Pontos percentuais de espectadores a menos nos jogos em casa por cada nível em falta.</message>
+	
+	<message id="settings_label_stadium_vipquality_effect">Efeito do estado dos camarotes VIP</message>
+	<message id="settings_label_stadium_vipquality_effect_help">Pontos percentuais de espectadores a menos nos jogos em casa por cada nível em falta.</message>
+</messages>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_clubstaff">Personnel du club</message>
+    <message id="settings_label_club_staff_enabled">Activer le personnel du club</message>
+    <message id="settings_label_club_staff_enabled_help">Active la page Personnel du club. Les clubs gérés par des utilisateurs peuvent recruter un membre du personnel par rôle.</message>
+</messages>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="category_season_navlabel">Épocas</message>
+	<message id="complete-season_navlabel">Terminar época</message>
+    <message id="season_complete_title">Terminar épocas</message>
+	<message id="season_complete_introduction">Ao selecionar uma época, esta é marcada como "terminada", as estatísticas são atualizadas e os prémios dos patrocinadores são pagos. Já não existem jogos da liga por calcular nas seguintes épocas:</message>
+    <message id="season_complete_noseasons">Não existe nenhuma época que possa ser terminada.</message>
+	<message id="season_complete_submit">Terminar época</message>
+    <message id="season_complete_label_playerdisableage">Idade de reforma dos jogadores</message>
+	<message id="season_complete_label_playerdisableage_help">Os jogadores são desativados a partir desta idade.</message>
+	
+	<message id="season_complete_label_target_missed_firemanager">Despedir automaticamente o treinador se o objetivo da época não for alcançado.</message>
+	<message id="season_complete_label_target_missed_popularityreduction">Perda de popularidade junto dos adeptos</message>
+	<message id="season_complete_label_target_missed_popularityreduction_help">se o objetivo da época não for alcançado. 0 para não ter efeito.</message>
+	
+	<message id="season_complete_label_target_missed_penalty">Pagamento de penalização</message>
+	<message id="season_complete_label_target_missed_penalty_help">se o objetivo da época não for alcançado. 0 para não ter efeito.</message>
+	
+	<message id="season_complete_label_target_accomplished_reward">Prémio por alcançar o objetivo</message>
+	<message id="season_complete_label_target_accomplished_reward_help">se o objetivo da época for alcançado. 0 para não ter efeito.</message>
+	
+	<message id="schedulegenerator_navlabel">Gerar calendário</message>
+	<message id="schedulegenerator_label">Gerar uma época completa</message>
+	
+	<message id="schedulegenerator_label_league">Liga</message>
+	<message id="schedulegenerator_label_seasonname">Nome da nova época</message>
+	<message id="schedulegenerator_label_rounds">Número de voltas</message>
+	<message id="schedulegenerator_label_rounds_help">2 significa primeira e segunda volta</message>
+	<message id="schedulegenerator_label_firstmatchday">Data da primeira jornada</message>
+	<message id="schedulegenerator_label_timebreak">Intervalo entre duas jornadas</message>
+	<message id="schedulegenerator_label_timebreak_help">em dias. Os jogos realizam-se sempre à mesma hora da primeira jornada.</message>
+	
+	<message id="schedulegenerator_label_timebreak_rounds">Intervalo adicional entre duas voltas</message>
+	<message id="schedulegenerator_label_timebreak_rounds_help">em dias.</message>
+	
+	<message id="schedulegenerator_err_noteams">Não existem equipas na liga.</message>
+	<message id="schedulegenerator_err_invalidrounds">O número de voltas deve estar entre 1 e 10.</message>
+	<message id="schedulegenerator_err_invalidtimebreak">O número de dias entre duas voltas deve estar entre 1 e 50.</message>
+	
+	<message id="new-season_navlabel">Criar nova época</message>
+	
+	
+</messages>

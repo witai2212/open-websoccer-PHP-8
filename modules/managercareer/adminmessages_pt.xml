@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="managercareer_admin_navlabel">Carreira de treinador</message>
+    <message id="managercareer_admin_title">Carreira de treinador</message>
+    <message id="managercareer_admin_intro">Acompanha candidaturas, riscos de despedimento, contratos de treinador e prémios.</message>
+    <message id="managercareer_admin_tab_applications">Candidaturas</message>
+    <message id="managercareer_admin_tab_sackrisk">Risco de despedimento</message>
+    <message id="managercareer_admin_tab_awards">Prémios</message>
+    <message id="managercareer_admin_tab_settings">Definições</message>
+    <message id="managercareer_admin_open_applications">Candidaturas em aberto</message>
+    <message id="managercareer_admin_recent_applications">Decisões mais recentes</message>
+    <message id="managercareer_admin_no_open_applications">Atualmente não existem candidaturas em aberto.</message>
+    <message id="managercareer_admin_no_recent_applications">Ainda não existem candidaturas decididas.</message>
+    <message id="managercareer_admin_application_accepted">Candidatura aceite e oferta de trabalho criada.</message>
+    <message id="managercareer_admin_application_rejected">Candidatura rejeitada.</message>
+    <message id="managercareer_admin_reject">Rejeitar</message>
+    <message id="managercareer_admin_sackrisk_title">Risco de despedimento</message>
+    <message id="managercareer_admin_sackrisk_help">Os treinadores com satisfação muito baixa da direção recebem avisos e podem ser despedidos automaticamente se a definição estiver ativa.</message>
+    <message id="managercareer_admin_no_sackrisk">Não foram encontrados treinadores ativos.</message>
+    <message id="managercareer_admin_awards_title">Prémios de treinador mais recentes</message>
+    <message id="managercareer_admin_settings_title">Definições de carreira</message>
+    <message id="managercareer_admin_settings_help">Os valores são geridos através das definições gerais. Este resumo mostra os parâmetros atualmente ativos.</message>
+    <message id="managercareer_admin_open_settings">Abrir definições gerais</message>
+
+    <message id="settings_label_mgr_career_enabled">Ativar carreira de treinador</message>
+    <message id="settings_label_mgr_job_offers">Ativar ofertas de trabalho automáticas</message>
+    <message id="settings_label_freeclub_rep_check">Ativar verificação de reputação para clubes livres</message>
+    <message id="settings_label_mgr_offer_limit">Máximo de ofertas de trabalho ativas por treinador</message>
+    <message id="settings_label_mgr_offer_exp_days">Validade das ofertas de trabalho em dias</message>
+    <message id="settings_label_mgr_applications_enabled">Ativar candidaturas manuais</message>
+    <message id="settings_label_mgr_application_limit">Máximo de candidaturas em aberto por treinador</message>
+    <message id="settings_label_mgr_application_decision_min_days">Decisão da candidatura no mínimo após dias</message>
+    <message id="settings_label_mgr_application_decision_max_days">Decisão da candidatura no máximo após dias</message>
+    <message id="settings_label_mgr_application_exp_days">A candidatura expira após dias</message>
+    <message id="settings_label_mgr_auto_sacking_enabled">Ativar despedimentos automáticos</message>
+    <message id="settings_label_mgr_contract_days">Duração padrão do contrato de treinador em dias</message>
+
+    <message id="managercareer_application_chance">Probabilidade</message>
+    <message id="managercareer_decision_date">Decisão</message>
+    <message id="managercareer_status">Estado</message>
+    <message id="managercareer_date">Data</message>
+    <message id="managercareer_board_satisfaction">Satisfação da direção</message>
+    <message id="managercareer_sack_risk">Risco de despedimento</message>
+    <message id="managercareer_low_board_checks">Verificações de crise</message>
+    <message id="managercareer_award">Prémio</message>
+    <message id="managercareer_no_awards">Ainda não existem prémios de treinador.</message>
+    <message id="managercareer_button_accept">Aceitar</message>
+    <message id="managercareer_application_status_open">Aberto</message>
+    <message id="managercareer_application_status_accepted">Aceite</message>
+    <message id="managercareer_application_status_rejected">Rejeitado</message>
+    <message id="managercareer_application_status_withdrawn">Retirada</message>
+    <message id="managercareer_application_status_expired">Expirado</message>
+    <message id="managercareer_application_error_invalid">Esta candidatura já não está disponível.</message>
+    <message id="managercareer_application_accepted_subject">Candidatura bem-sucedida: {team}</message>
+    <message id="managercareer_application_accepted_body">O clube {team} avaliou positivamente a tua candidatura e apresentou-te uma oferta de trabalho oficial.
+
+Liga: {league}
+Válida até: {expires}
+
+Podes aceitar ou rejeitar a oferta aqui:
+{url}</message>
+    <message id="managercareer_application_rejected_subject">Candidatura rejeitada: {team}</message>
+    <message id="managercareer_application_rejected_body">O clube {team} rejeitou a tua candidatura após análise. Uma reputação mais forte, melhores resultados ou maior notoriedade neste país poderão melhorar as tuas hipóteses no futuro.</message>
+    <message id="managercareer_application_notification_accepted">{team} aceitou a tua candidatura.</message>
+    <message id="managercareer_application_notification_rejected">{team} rejeitou a tua candidatura.</message>
+    <message id="managercareer_message_sender">Carreira de treinador</message>
+</messages>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_fanpressure_enabled">Ativar estado de espírito dos adeptos e pressão mediática</message>
+    <message id="settings_label_fanpressure_attendance_max_effect">Efeito máximo do estado de espírito dos adeptos na assistência, em percentagem</message>
+    <message id="settings_label_fanpressure_sponsor_max_effect">Efeito máximo sobre patrocinadores baseados nos adeptos, em percentagem</message>
+    <message id="settings_label_fanpressure_notification_threshold">Notificação a partir de uma alteração de X pontos no estado de espírito</message>
+    <message id="settings_label_fanpressure_create_extreme_news">Criar notícia quando o estado de espírito dos adeptos for extremo</message>
+    <message id="fanpressure_admin_navlabel">Motor de histórias</message>
+    <message id="fanpressure_admin_title">Motor de histórias da direção, adeptos e comunicação social</message>
+    <message id="fanpressure_admin_intro">Aqui configuras a forma como os acontecimentos afetam os adeptos, a comunicação social, a direção e a química da equipa. As regras são aplicadas automaticamente após jogos, transferências, objetivos e entrevistas.</message>
+    <message id="fanpressure_admin_rules">Regras de acontecimentos</message>
+    <message id="fanpressure_admin_questions">Perguntas de entrevista</message>
+    <message id="fanpressure_admin_recent_logs">Acontecimentos recentes da história</message>
+    <message id="fanpressure_admin_event">Acontecimento</message>
+    <message id="fanpressure_admin_source">Origem</message>
+    <message id="fanpressure_admin_active">Ativo</message>
+    <message id="fanpressure_admin_fans">Adeptos</message>
+    <message id="fanpressure_admin_media">Comunicação social</message>
+    <message id="fanpressure_admin_board">Direção</message>
+    <message id="fanpressure_admin_team">Equipa</message>
+    <message id="fanpressure_admin_notification">Notificação</message>
+    <message id="fanpressure_admin_news">Notícias</message>
+    <message id="fanpressure_admin_interview_chance">Entrevista %</message>
+    <message id="fanpressure_admin_rules_saved">Regras de acontecimentos guardadas.</message>
+    <message id="fanpressure_admin_question_saved">Pergunta de entrevista guardada.</message>
+    <message id="fanpressure_admin_question_deleted">Pergunta de entrevista eliminada.</message>
+    <message id="fanpressure_admin_new_question">Nova pergunta</message>
+    <message id="fanpressure_admin_question">Pergunta</message>
+    <message id="fanpressure_admin_answer_a">Resposta A</message>
+    <message id="fanpressure_admin_answer_b">Resposta B</message>
+    <message id="fanpressure_admin_answer_c">Resposta C</message>
+    <message id="fanpressure_admin_weight">Ponderação</message>
+    <message id="settings_label_fanpressure_interview_expiry_days">As perguntas da comunicação social expiram após X dias</message>
+
+</messages>

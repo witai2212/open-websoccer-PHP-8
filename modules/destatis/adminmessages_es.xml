@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="category_statistics_navlabel">Estadísticas</message>
+    <message id="financial_economy_stats_navlabel">Estadísticas financieras</message>
+    <message id="financial_economy_stats_admin_title">Estadísticas financieras / Regulación del mercado</message>
+    <message id="financial_economy_stats_admin_intro">Esta página muestra si la economía del juego en conjunto, y especialmente los clubes gestionados por personas, genera demasiados beneficios o pérdidas. La base son los movimientos de cuenta; las tablas de funciones sirven como comprobación cruzada.</message>
+    <message id="financial_economy_stats_filter_season">Temporada</message>
+    <message id="financial_economy_stats_filter_matchday">Jornada</message>
+    <message id="financial_economy_stats_filter_all">Todas</message>
+    <message id="financial_economy_stats_humans">Clubes gestionados por personas</message>
+    <message id="financial_economy_stats_all_clubs">Todos los clubes</message>
+    <message id="financial_economy_stats_all_clubs_intro">Valores comparativos de todos los clubes activos.</message>
+    <message id="financial_economy_stats_clubs">Clubes</message>
+    <message id="financial_economy_stats_bookings">Movimientos</message>
+    <message id="financial_economy_stats_income">Ingresos</message>
+    <message id="financial_economy_stats_avg_income">Ingresos medios/club</message>
+    <message id="financial_economy_stats_expenses">Gastos</message>
+    <message id="financial_economy_stats_avg_expenses">Gastos medios/club</message>
+    <message id="financial_economy_stats_net">Saldo</message>
+    <message id="financial_economy_stats_avg_net">Saldo medio/club</message>
+    <message id="financial_economy_stats_categories">Categorías</message>
+    <message id="financial_economy_stats_category">Categoría</message>
+    <message id="financial_economy_stats_cross_checks">Comprobación cruzada de tablas de funciones</message>
+    <message id="financial_economy_stats_cross_checks_intro">Las diferencias no indican automáticamente un error, pero ayudan a encontrar movimientos de cuenta ausentes o mal categorizados.</message>
+    <message id="financial_economy_stats_feature">Función</message>
+    <message id="financial_economy_stats_feature_amount">Tabla de función</message>
+    <message id="financial_economy_stats_booked_amount">Contabilizado en la cuenta</message>
+    <message id="financial_economy_stats_difference">Diferencia</message>
+    <message id="financial_economy_stats_current_liabilities">Costes actuales por jornada</message>
+    <message id="financial_economy_stats_amount_per_matchday">Importe por jornada</message>
+    <message id="financial_economy_stats_biggest_losses">Mayores pérdidas</message>
+    <message id="financial_economy_stats_biggest_profits">Mayores beneficios</message>
+
+    <message id="financial_economy_stats_recommendations">Recomendaciones para regular el mercado</message>
+    <message id="financial_economy_stats_recommendations_intro">Estas recomendaciones se derivan del saldo de los clubes gestionados por personas, las categorías de ingresos y gastos y las comprobaciones cruzadas. Las acciones no modifican directamente los presupuestos de los clubes, sino únicamente futuros factores de ingresos o costes.</message>
+    <message id="financial_economy_stats_status">Estado</message>
+    <message id="financial_economy_stats_recommendation">Recomendación</message>
+    <message id="financial_economy_stats_effect">Efecto</message>
+    <message id="financial_economy_stats_action">Acción</message>
+    <message id="financial_economy_stats_regulation_confirm">Esta regulación del mercado ajusta varios valores monetarios un 5 %. ¿Continuar?</message>
+    <message id="financial_economy_stats_regulation_success">Regulación del mercado ejecutada</message>
+    <message id="financial_economy_stats_table">Clasificación</message>
+    <message id="financial_economy_stats_columns">Columnas</message>
+    <message id="financial_economy_stats_affected_rows">Registros modificados</message>
+</messages>

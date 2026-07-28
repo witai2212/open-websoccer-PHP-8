@@ -1,89 +1,142 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     
     <message id="stadium_navlabel">Stadium</message>
-    <message id="stadium_nostadium">You do not have any stadium.</message>
+    <message id="stadium_nostadium">You do not yet have a stadium.</message>
     
     <message id="stadium_capacity">Capacity</message>
     
-    <message id="stadium_extend_title">Extend Stadium</message>
-    <message id="stadium_extend_button">Construct</message>
-    <message id="stadium_extend_cost_help">Costs per seat:</message>
+    <message id="stadium_extend_title">Expand stadium</message>
+    <message id="stadium_extend_button">Expand</message>
+    <message id="stadium_extend_cost_help">Cost per place:</message>
     
-    <message id="stadium_extend_err_too_expensive">You cannot afford the construction costs at the moment.</message>
-    <message id="stadium_extend_err_exceed_max_side">The sides must not exceed %d places in total.</message>
-    <message id="stadium_extend_err_exceed_max_grand">The grandstand must not exceed %d places in total.</message>
-    <message id="stadium_extend_err_exceed_max_vip">The stadium must not have more than %d VIP lounges.</message>
-    <message id="stadium_extend_err_constructionongoing">There is already a construction on-going. Please wait until the work has been completed.</message>
+    <message id="stadium_extend_err_too_expensive">You cannot currently afford the expansion.</message>
+    <message id="stadium_extend_err_exceed_max_side">The side stand may hold a maximum of %d places in total.</message>
+    <message id="stadium_extend_err_exceed_max_grand">The main stand may hold a maximum of %d places in total.</message>
+    <message id="stadium_extend_err_exceed_max_vip">The stadium may only have %d VIP boxes.</message>
+    <message id="stadium_extend_err_constructionongoing">Construction work is already under way at the stadium. Wait until it has been completed.</message>
     
-    <message id="stadium_extend_transaction_subject">Stadium Extension</message>
-    <message id="stadium_extend_success">The construction order has been successfully placed.</message>
+    <message id="stadium_extend_transaction_subject">Stadium expansion</message>
+    <message id="stadium_extend_success">The stadium expansion has been commissioned.</message>
     
-    <message id="stadium-extend-confirm_navlabel">Confirm stadium extension</message>
-    <message id="stadium_extend_confirmation_title">Confirm construction order</message>
-    <message id="stadium_extend_totalcost_label">Total Costs</message>
+    <message id="stadium-extend-confirm_navlabel">Confirm stadium expansion</message>
+    <message id="stadium_extend_confirmation_title">Confirm expansion</message>
+    <message id="stadium_extend_totalcost_label">Total cost</message>
     
-    <message id="stadium_extend_limitation_intro">You can extend your stadium by the following listed maximum number of new seats</message>
-    <message id="stadium_extend_limitation_side">Sides</message>
-    <message id="stadium_extend_limitation_grand">Grandstand</message>
-    <message id="stadium_extend_limitation_vip">VIP lunges</message>
-    <message id="stadium_extend_limitation_instruction">In order to extend your stadium, enter the desired number of new seats below and select a builder company on the next page.</message>
-    <message id="stadium_extend_impossible">You cannot extend your stadium anymore because it has exceeded the maximum capacity.</message>
-    
-    <message id="stadium_extend_nobuilders">There are currently no builder company which show interest in this order.</message>
-    <message id="stadium_extend_builders_intro">Find offers of builder companies below. <strong>Note</strong> The provided completion time is only an estimation. The actual time might differ later, depending on the company's skills.</message>
-    <message id="stadium_extend_builders_totalcosts">Total costs</message>
-    <message id="stadium_extend_builders_details">Offer details</message>
-    <message id="stadium_extend_builders_constructiontime">%d days</message>
-    
-    <message id="stadium_construction_ongoing">There is a construction on-going at the moment. Details:</message>
-    <message id="stadium_construction_checkstatuslater">Come here again once the construction has been completed and verify the completion!</message>
-    <message id="stadium_construction_verifystatus">Accept the construction work</message>
-    
-    <message id="stadium_acceptconstruction_err_nonedue">There is currently no construction work which is due.</message>
-    
-    <message id="stadium_acceptconstruction_notcompleted_title">Unfortunately, the work has not been completed, yet.</message>
-	<message id="stadium_acceptconstruction_notcompleted_details">The builder is sorry and estimated a new completion date.</message>
+    <message id="stadium_extend_limitation_intro">You can expand your stadium by no more than the following</message>
+    <message id="stadium_extend_limitation_side">Side-stand places</message>
+    <message id="stadium_extend_limitation_grand">Main-stand places</message>
+    <message id="stadium_extend_limitation_vip">VIP boxes</message>
+    <message id="stadium_extend_limitation_instruction">Enter the desired number of new places and then select an offer from the interested contractors.</message>
+	<message id="stadium_extend_impossible">You can no longer expand your stadium because it has already reached its maximum size.</message>
+
+	<message id="stadium_extend_nobuilders">There are currently no contractors interested in this job.</message>
+	<message id="stadium_extend_builders_intro">The following contractors have submitted offers. <strong>Warning:</strong> The stated construction time is the provider's estimate. The actual construction time may vary depending on the company's ability.</message>
+	<message id="stadium_extend_builders_totalcosts">Total cost</message>
+	<message id="stadium_extend_builders_details">Offer details</message>
+	<message id="stadium_extend_builders_constructiontime">%d days</message>
+	
+	<message id="stadium_construction_ongoing">Your stadium is currently being expanded. Details:</message>
+	<message id="stadium_construction_checkstatuslater">Return after the planned completion date and check the construction status!</message>
+	<message id="stadium_construction_verifystatus">Check construction status</message>
+	
+	<message id="stadium_acceptconstruction_err_nonedue">There is currently no expansion work due for inspection.</message>
+	
+	<message id="stadium_acceptconstruction_notcompleted_title">Unfortunately, the work has not yet been completed.</message>
+	<message id="stadium_acceptconstruction_notcompleted_details">The contractor apologises for the inconvenience and has calculated a new completion date.</message>
 	
 	<message id="stadium_acceptconstruction_completed_title">Congratulations!</message>
-	<message id="stadium_acceptconstruction_completed_details">The work has been successfully completed. The new seats are now available for your audience.</message>
+	<message id="stadium_acceptconstruction_completed_details">The work has been completed successfully. The new places are now available to your spectators.</message>
 	
-	<message id="stadium_construction_notification_delay">Unfortunately, there is a delay in your stadium construction work. The builder provided a new estimation for the completion date.</message>
-	<message id="stadium_construction_notification_completed">Your stadium has been successfully extended.</message>
+	<message id="stadium_construction_notification_delay">The stadium expansion work has unfortunately been delayed. The contractor has set a new completion date.</message>
+	<message id="stadium_construction_notification_completed">Your stadium has been expanded successfully.</message>
 	
-	<message id="stadium_maintenance_title">Maintenance and Upgrading</message>
+	<message id="stadium_maintenance_title">Maintenance and upgrades</message>
 	<message id="stadium_maintenance_upgradecost_label">Upgrade costs</message>
 	<message id="stadium_upgrade_button">Upgrade</message>
 	
-	<message id="stadium_maintenance_pitch_tooltip">A bad quality can influence your team's performance.</message>
-	<message id="stadium_maintenance_videowall_tooltip">Influences ticket sales.</message>
-	<message id="stadium_maintenance_seatsquality_tooltip">Influences the sales for seat tickets.</message>
-	<message id="stadium_maintenance_vipquality_tooltip">Influences the sales for VIP tickets.</message>
+	<message id="stadium_maintenance_pitch_tooltip">Poor condition can weaken your team's performance.</message>
+	<message id="stadium_maintenance_videowall_tooltip">Affects attendance figures.</message>
+	<message id="stadium_maintenance_seatsquality_tooltip">Affects ticket sales for seats.</message>
+	<message id="stadium_maintenance_vipquality_tooltip">Affects ticket sales for VIP boxes.</message>
 	
-	<message id="stadium_upgrade_err_not_upgradable">The quality level cannot be upgraded anymore.</message>
+	<message id="stadium_upgrade_err_not_upgradable">The maximum upgrade level has already been reached.</message>
 	
-	<message id="stadium_upgrade_transaction_subject">Stadium maintenance</message>
-	<message id="stadium_upgrade_success">The maintenance work has been successfully completed!</message>
-	<message id="stadium_upgrade_success_details">Note that the quality might decrease over time. Hence, check the status from time to time.</message>
+	<message id="stadium_upgrade_transaction_subject">Stadium maintenance work</message>
+	<message id="stadium_upgrade_success">The maintenance work has been completed successfully!</message>
+	<message id="stadium_upgrade_success_details">Please note that quality deteriorates over time. Check the status from time to time.</message>
 
 	<message id="stadium_attendance_title">Attendance statistics</message>
-	<message id="stadium_attendance_intro">Recent home matches with spectators, utilization, average prices and revenue per category. New matches use stored values; older matches are estimated from current stadium/ticket data.</message>
-	<message id="stadium_attendance_average_title">Average of latest matches</message>
-	<message id="stadium_attendance_recent_title">Latest home matches</message>
+	<message id="stadium_attendance_intro">The latest home matches with attendance, occupancy, average prices and income by category. New matches use stored values; older matches are estimated using current stadium and ticket data.</message>
+	<message id="stadium_attendance_average_title">Average of recent matches</message>
+	<message id="stadium_attendance_recent_title">Recent home matches</message>
 	<message id="stadium_attendance_no_matches">No home matches with attendance data yet.</message>
-	<message id="stadium_attendance_match">Match</message>
+	<message id="stadium_attendance_match">Game</message>
 	<message id="stadium_attendance_category">Category</message>
-	<message id="stadium_attendance_visitors">Visitors</message>
+	<message id="stadium_attendance_visitors">Attendance</message>
 	<message id="stadium_attendance_capacity">Capacity</message>
-	<message id="stadium_attendance_utilization">Utilization</message>
+	<message id="stadium_attendance_utilization">Occupancy</message>
 	<message id="stadium_attendance_average_price">Avg. price</message>
-	<message id="stadium_attendance_revenue">Revenue</message>
-	<message id="stadium_attendance_standing">Standing</message>
-	<message id="stadium_attendance_seating">Seating</message>
+	<message id="stadium_attendance_revenue">Income</message>
+	<message id="stadium_attendance_standing">Standing places</message>
+	<message id="stadium_attendance_seating">Seats</message>
 	<message id="stadium_attendance_vip">VIP</message>
-	<message id="stadium_attendance_total">Total</message>
+	<message id="stadium_attendance_total">Overall</message>
 	<message id="stadium_attendance_against">against</message>
-	<message id="stadium_attendance_legacy_hint">Old match: categories and prices estimated from current stadium/ticket data. New matches are stored exactly.</message>
-	<message id="stadium-attendance_navlabel">Spectator numbers</message>
+	<message id="stadium_attendance_legacy_hint">Old match: categories and prices estimated from current stadium and ticket data. New matches are stored exactly.</message>
+	<message id="stadium-attendance_navlabel">Attendance</message>
+
+	<message id="stadium_naming_title">Stadium name and naming rights</message>
+	<message id="stadium_naming_active_label">Active naming-rights contract</message>
+	<message id="stadium_naming_sponsor">Sponsor</message>
+	<message id="stadium_naming_contract_name">Stadium name</message>
+	<message id="stadium_naming_base_payout">Base payment per home match</message>
+	<message id="stadium_naming_duration">Term</message>
+	<message id="stadium_naming_duration_season_end">until the end of the season</message>
+	<message id="stadium_naming_total_earned">Income so far</message>
+	<message id="stadium_rename_title">Rename stadium</message>
+	<message id="stadium_rename_name">New stadium name</message>
+	<message id="stadium_rename_help">Renaming is free and possible at any time as long as no naming-rights contract is active.</message>
+	<message id="stadium_rename_button">Save name</message>
+	<message id="stadium_rename_success">The stadium name has been changed.</message>
+	<message id="stadium_rename_err_invalid">Please enter a valid stadium name.</message>
+	<message id="stadium_rename_err_active_contract">The stadium name cannot be changed while a naming-rights contract is active.</message>
+	<message id="stadium_rename_locked_by_contract">While this contract is active, the stadium name cannot be changed manually. The original name will be restored after the end of the season.</message>
+	<message id="stadium_naming_offers_title">Sell naming rights</message>
+	<message id="stadium_naming_offers_intro">Up to three sponsors bid for your stadium's naming rights. The base payment depends on the sponsor, stadium size and fan mood. The actual payment per home match is then multiplied by attendance.</message>
+	<message id="stadium_naming_offer_calculation">Offer calculation</message>
+	<message id="stadium_naming_offer_base">Sponsor base</message>
+	<message id="stadium_naming_offer_capacity_bonus">Capacity bonus</message>
+	<message id="stadium_naming_offer_fan_mood_bonus">Fan-mood bonus</message>
+	<message id="stadium_naming_attendance_hint">Payment × actual stadium occupancy</message>
+	<message id="stadium_naming_current_sponsor">current main sponsor</message>
+	<message id="stadium_naming_no_offers">There are currently no suitable offers for the stadium naming rights.</message>
+	<message id="stadium_naming_sign_success">Naming rights sold</message>
+	<message id="stadium_naming_sign_success_details">Your stadium will be called %s until the end of the season.</message>
+	<message id="stadium_naming_err_active_contract">An active naming-rights contract already exists.</message>
+	<message id="stadium_naming_err_invalid_offer">This naming-rights offer is no longer available.</message>
+	<message id="stadium_naming_payout_subject">Stadium naming rights</message>
+
+	<message id="stadium_dashboard_title">Stadium dashboard</message>
+	<message id="stadium_visual_home_match">Home match</message>
+	<message id="stadium_visual_name_free">freely changeable</message>
+	<message id="stadium_visual_of_maximum">of maximum size</message>
+	<message id="stadium_visual_capacity_share">of capacity</message>
+	<message id="stadium_visual_standing">Standing places</message>
+	<message id="stadium_visual_seating">Seats</message>
+	<message id="stadium_visual_bowl_title">Stadium view</message>
+	<message id="stadium_visual_bowl_intro">The graphic shows the current stadium structure in relation to the maximum possible size.</message>
+	<message id="stadium_visual_side_stand">Side stands</message>
+	<message id="stadium_visual_main_stand">Main stands</message>
+	<message id="stadium_visual_attendance_title">Occupancy</message>
+	<message id="stadium_visual_attendance_intro">Compact overview of recent home matches.</message>
+	<message id="stadium_visual_last_attendance">Last home match</message>
+	<message id="stadium_visual_average_attendance">Avg. recent home matches</message>
+	<message id="stadium_visual_average_ticket_income">Avg. ticket income</message>
+	<message id="stadium_visual_no_attendance">No attendance statistics for home matches yet.</message>
+	<message id="stadium_visual_open_attendance">Show details</message>
+	<message id="stadium_visual_commercial_intro">Manage the stadium name and potential income from naming rights.</message>
+	<message id="stadium_visual_maintenance_intro">Quality levels affect performance, attendance and income potential.</message>
+	<message id="stadium_visual_max_level">Maximum level</message>
 </messages>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="formlogin_block_title">Se connecter</message>
+    <message id="formlogin_option_rememberme">Rester connecté</message>
+    <message id="formlogin_submit_button">Se connecter</message>
+    <message id="formlogin_link_register">S'inscrire</message>
+    <message id="formlogin_link_forgot_password">Mot de passe oublié ?</message>
+    
+    <message id="formlogin_invalid_data">Saisie incorrecte</message>
+    
+    <message id="login_navlabel">Se connecter</message>
+    <message id="login_title">Se connecter</message>
+    
+    <message id="forgot-password_navlabel">Envoyer un nouveau mot de passe</message>
+    <message id="forgot-password_title">Générer un nouveau mot de passe</message>
+    <message id="forgot-password_submit_button">Envoyer un nouveau mot de passe</message>
+    
+    <message id="forgot-password_email-not-found">Aucun utilisateur actif n'a été trouvé avec cette adresse e-mail. Veuillez vérifier votre saisie.</message>
+    <message id="forgot-password_already-sent">Tu as déjà demandé un nouveau mot de passe au cours des dernières 24 heures. Un seul nouveau mot de passe peut être demandé par jour.</message>
+    
+    <message id="forgot-password_message_title">Un nouveau mot de passe a été envoyé.</message>
+    <message id="forgot-password_message_content">Veuillez maintenant vérifier votre e-mail et votre dossier indésirable</message>
+    
+    <message id="activate-user_navlabel">Activer le compte</message>
+    <message id="activate-user_title">Activer le compte</message>
+    <message id="activate-user_content">Tu rencontres des difficultés avec ton compte ? Contacte-nous simplement.</message>
+    <message id="activate-user_user-not-found">Soit ton compte est déjà activé, soit tu as indiqué une adresse e-mail incorrecte. Vérifie à nouveau l'URL d'activation dans l'e-mail.</message>
+    <message id="activate-user_message_title">Ton compte a été activé avec succès.</message>
+    <message id="activate-user_message_content">Tu peux maintenant te connecter avec ton e-mail et ton mot de passe. Amuse-toi bien !</message>
+</messages>

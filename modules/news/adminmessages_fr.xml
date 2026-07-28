@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+  <message id="settings_label_news_max_entries">Nombre maximal d’actualités</message>
+  <message id="settings_label_news_max_entries_help">Les actualités plus anciennes sont automatiquement et définitivement supprimées.</message>
+</messages>

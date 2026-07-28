@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_formation_max_next_matches">Composition : prochains matchs</message> 
+	<message id="settings_label_formation_max_next_matches_help">Nombre de matchs à venir pour lesquels l'utilisateur peut soumettre une composition.</message>
+
+	<message id="settings_label_formation_max_templates">Composition : enregistrer des modèles</message> 
+	<message id="settings_label_formation_max_templates_help">Nombre de compositions pouvant être enregistrées comme modèles pour être réutilisées. 0 désactive la fonction.</message>
+	<message id="settings_label_tactical_style">Activer l'identité tactique</message>
+	<message id="settings_label_tactical_style_help">Permet aux clubs gérés par des humains d'adopter un style de jeu fixe ayant un léger effet sur la simulation des matchs. Les clubs contrôlés par l'IA choisissent automatiquement leur style.</message>
+
+</messages>

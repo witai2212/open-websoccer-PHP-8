@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_trainingcamp_min_days">Durée minimale du stage</message> 
+	<message id="settings_label_trainingcamp_min_days_help">en jours</message> 
+	
+	<message id="settings_label_trainingcamp_max_days">Durée maximale du stage</message> 
+	<message id="settings_label_trainingcamp_max_days_help">en jours</message> 
+	
+	<message id="settings_label_trainingcamp_booking_max_days_in_future">Réservation la plus tardive</message> 
+	<message id="settings_label_trainingcamp_booking_max_days_in_future_help">en jours ; délai maximal à l'avance pour réserver un stage.</message> 
+</messages>

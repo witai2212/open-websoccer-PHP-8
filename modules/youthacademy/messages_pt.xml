@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="youth-academy_navlabel">Academia de formação</message>
+    <message id="youthacademy_title">Academia de formação</message>
+    <message id="youthacademy_intro">A academia de jovens liga o desenvolvimento dos jovens, a observação de jovens, o departamento de observação e a equipa técnica. Reforça os sistemas existentes, mas não os substitui.</message>
+
+    <message id="youthacademy_tab_overview">Visão geral</message>
+    <message id="youthacademy_tab_focus">Foco de desenvolvimento</message>
+    <message id="youthacademy_tab_report">Relatório de progresso</message>
+    <message id="youthacademy_tab_recommendations">Recomendações</message>
+    <message id="youthacademy_tab_upgrade">Evolução da academia</message>
+    <message id="youthacademy_top">Voltar ao topo</message>
+    <message id="youthacademy_date">Data</message>
+
+    <message id="youthacademy_current_budget">Orçamento atual</message>
+    <message id="youthacademy_expected_income">Receitas previstas por jornada</message>
+    <message id="youthacademy_effective_income">Receitas efetivas incluindo o consultor financeiro</message>
+    <message id="youthacademy_financial_advisor">Consultor financeiro</message>
+    <message id="youthacademy_budget_after">Orçamento após construção/evolução</message>
+
+    <message id="youthacademy_missing">Este clube ainda não possui uma academia de jovens.</message>
+    <message id="youthacademy_missing_help">Os jogadores jovens e a observação de jovens continuam a funcionar como antes. A academia desbloqueia funcionalidades adicionais de desenvolvimento, observação e relatórios.</message>
+    <message id="youthacademy_settings_requires_academy">Esta funcionalidade fica disponível assim que o clube possuir uma academia de jovens.</message>
+
+    <message id="youthacademy_level">Nível</message>
+    <message id="youthacademy_levels">Nível da academia</message>
+    <message id="youthacademy_next_level">Nível seguinte</message>
+    <message id="youthacademy_no_next_level">A academia já se encontra no nível ativo mais elevado.</message>
+    <message id="youthacademy_build_cost">Custo de construção</message>
+    <message id="youthacademy_maintenance_fee">Custo por jornada</message>
+    <message id="youthacademy_development_bonus">Bónus de desenvolvimento</message>
+    <message id="youthacademy_scouting_bonus">Bónus de observação</message>
+    <message id="youthacademy_stagnation_reduction">Proteção contra a estagnação</message>
+    <message id="youthacademy_reputation">Reputação da academia</message>
+    <message id="youthacademy_focus">Foco</message>
+    <message id="youthacademy_captain">Capitão dos jovens</message>
+    <message id="youthacademy_focus_help">O foco influencia a orientação da academia. O efeito é deliberadamente reduzido para evitar um desenvolvimento excessivo.</message>
+    <message id="youthacademy_captain_help">O capitão dos jovens recebe um pequeno bónus de desenvolvimento e estabilidade. Jogadores jovens mais velhos ou mais fortes são adequados.</message>
+
+    <message id="youthacademy_focus_balanced">Equilibrado</message>
+    <message id="youthacademy_focus_technique">Técnica</message>
+    <message id="youthacademy_focus_physical">Físico</message>
+    <message id="youthacademy_focus_mental">Mentalidade</message>
+
+    <message id="youthacademy_integration">Interação com os sistemas existentes</message>
+    <message id="youthacademy_integration_youthcoach">Bónus do treinador de jovens</message>
+    <message id="youthacademy_integration_scouting_department">Departamento de prospeção</message>
+    <message id="youthacademy_integration_combined_scouting">Modificador combinado de observação de jovens</message>
+
+    <message id="youthacademy_report_development">Evolução nos últimos 30 dias</message>
+    <message id="youthacademy_report_scouting">Bónus de observação nos últimos 30 dias</message>
+    <message id="youthacademy_report_days">Período do relatório em dias</message>
+    <message id="youthacademy_recent_events">Últimos acontecimentos da academia</message>
+    <message id="youthacademy_no_recent_events">Ainda não existem acontecimentos da academia.</message>
+    <message id="youthacademy_event">Acontecimento</message>
+    <message id="youthacademy_change">Alteração</message>
+
+    <message id="youthacademy_talent_risk">Risco do talento</message>
+    <message id="youthacademy_loan_recommendation">Recomendação de empréstimo</message>
+    <message id="youthacademy_risk_high">Risco de estagnação</message>
+    <message id="youthacademy_risk_medium">Observar</message>
+    <message id="youthacademy_risk_low">Adequado</message>
+    <message id="youthacademy_loan_none_too_young">Ainda é demasiado jovem para um empréstimo.</message>
+    <message id="youthacademy_loan_competitive_lower_league">Recomenda-se um empréstimo a um clube mais pequeno com possibilidade de ser titular.</message>
+    <message id="youthacademy_loan_regular_minutes">Considere um empréstimo se faltarem minutos de jogo regulares.</message>
+    <message id="youthacademy_loan_stay_academy">Continuar, por enquanto, o desenvolvimento na academia.</message>
+
+    <message id="youthacademy_lineup_modes">Modos de formação dos jovens</message>
+    <message id="youthacademy_lineup_modes_help">As formações automáticas de jovens existentes mantêm-se e são apenas enquadradas nas recomendações da academia.</message>
+
+    <message id="youthacademy_affordability_help">A construção e as evoluções só são possíveis se o orçamento não ficar negativo após o pagamento e se as receitas regulares previstas conseguirem suportar os custos correntes da academia. Um consultor financeiro melhora ligeiramente esta previsão.</message>
+    <message id="youthacademy_downgrade_help">Não existe reembolso ao reduzir o nível. Os custos correntes diminuem a partir da jornada seguinte.</message>
+
+    <message id="build-youth-academy">Construir academia de jovens</message>
+    <message id="upgrade-youth-academy">Evoluir academia de jovens</message>
+    <message id="downgrade-youth-academy">Reduzir nível da academia de jovens</message>
+    <message id="save-youth-academy-settings">Guardar academia de jovens</message>
+    <message id="youthacademy_build_success">A academia de jovens foi construída.</message>
+    <message id="youthacademy_upgrade_success">A academia de jovens foi melhorada.</message>
+    <message id="youthacademy_downgrade_success">O nível da academia de jovens foi reduzido.</message>
+    <message id="youthacademy_settings_success">As definições da academia de jovens foram guardadas.</message>
+
+    <message id="youthacademy_err_disabled">A academia de jovens está desativada.</message>
+    <message id="youthacademy_err_exists">Este clube já possui uma academia de jovens.</message>
+    <message id="youthacademy_err_missing">Este clube ainda não possui uma academia de jovens.</message>
+    <message id="youthacademy_err_no_level">Não foi encontrado nenhum nível válido da academia.</message>
+    <message id="youthacademy_err_max_level">A academia de jovens já atingiu o nível mais elevado.</message>
+    <message id="youthacademy_err_min_level">O nível da academia de jovens não pode ser reduzido mais.</message>
+    <message id="youthacademy_err_invalid_focus">Foco de desenvolvimento inválido.</message>
+    <message id="youthacademy_err_invalid_captain">O capitão dos jovens selecionado não pertence a este clube.</message>
+    <message id="youthacademy_err_not_enough_budget">O clube não consegue suportar os custos de construção/evolução sem ficar imediatamente com saldo negativo.</message>
+    <message id="youthacademy_err_income_too_low">As receitas regulares previstas não são suficientes para suportar os custos correntes da academia.</message>
+
+    <message id="youthacademy_account_sender">Academia de formação</message>
+    <message id="youthacademy_account_build_subject">Construção da academia de jovens</message>
+    <message id="youthacademy_account_upgrade_subject">Evolução da academia de jovens</message>
+    <message id="youthacademy_account_maintenance_subject">Funcionamento da academia de jovens</message>
+
+    <message id="youthacademy_log_built">Academia construída</message>
+    <message id="youthacademy_log_upgraded">Academia melhorada</message>
+    <message id="youthacademy_log_downgraded">Nível da academia reduzido</message>
+    <message id="youthacademy_log_auto_downgraded">Nível da academia reduzido automaticamente</message>
+    <message id="youthacademy_log_development_bonus">Bónus de desenvolvimento da academia</message>
+    <message id="youthacademy_log_scouting_bonus">Bónus de observação da academia</message>
+
+    <message id="youthacademy_message_sender">Academia de formação</message>
+    <message id="youthacademy_message_report_subject">Relatório da academia de jovens</message>
+    <message id="youthacademy_message_report_body">O seu relatório mensal da academia de jovens está disponível. Desenvolvimento: {development}, observação: {scouting}, talentos em risco: {risk}. Ir para a academia: {url}</message>
+
+    <message id="youthacademy_youth_scouting_bonus_title">Bónus da academia e de observação</message>
+    <message id="youthacademy_youth_scouting_bonus_info">A página clássica de observação de jovens passa agora a considerar o nível e a reputação da academia, o treinador de jovens e o novo departamento de observação.</message>
+    <message id="youthacademy_youth_scouting_combined_bonus">Bónus combinado</message>
+    <message id="youthacademy_youth_scouting_strength_bonus">Possível bónus de nível</message>
+
+    <message id="entity_youthacademylevel_level">Nível</message>
+    <message id="entity_youthacademylevel_name">Nome</message>
+    <message id="entity_youthacademylevel_build_cost">Custo de construção</message>
+    <message id="entity_youthacademylevel_maintenance_fee">Custo por jornada</message>
+    <message id="entity_youthacademylevel_development_bonus">Bónus de desenvolvimento</message>
+    <message id="entity_youthacademylevel_scouting_bonus">Bónus de observação</message>
+    <message id="entity_youthacademylevel_status">Ativo</message>
+    <message id="youthacademy_log_trait_discovered">Capacidade especial identificada num jovem</message>
+</messages>

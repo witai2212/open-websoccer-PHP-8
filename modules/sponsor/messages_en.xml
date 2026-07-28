@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     
     <message id="sponsor_navlabel">Sponsor</message>
-    <message id="sponsor_contractduraction_info">Choose a sponsor contract until the end of the season. You can negotiate offers, but the sponsor may withdraw if the risk becomes too high.</message>
-    <message id="sponsor_no_offers">There is currently no company interested in sponsoring your team.</message>
+    <message id="sponsor_contractduraction_info">Select a sponsor contract until the end of the season. You can negotiate offers, but if the risk is too high the sponsor may withdraw.</message>
+    <message id="sponsor_no_offers">No company is currently interested in sponsorship.</message>
     
-    <message id="sponsor_choose_tooearly">You may choose a new sponsor only after the %dth match day.</message>
+    <message id="sponsor_choose_tooearly">You can only select a new sponsor from matchday %d onwards.</message>
     
-    <message id="sponsor_choose_novalidsponsor">The selected sponsor does not want to collaborate any more. Probably another team was faster or the offer is no longer valid.</message>
-    <message id="sponsor_choose_stillcontract">You still have a contract with a sponsor. This contract runs until the end of the season.</message>
-    <message id="sponsor_choose_success">Congratulations, you have a new sponsor now!</message>
+    <message id="sponsor_choose_novalidsponsor">The selected sponsor no longer wishes to work with you. Another team was probably quicker or the offer is no longer valid.</message>
+    <message id="sponsor_choose_stillcontract">You still have a sponsor contract. It runs until the end of the season.</message>
+    <message id="sponsor_choose_success">Congratulations, you now have a new sponsor!</message>
     
-    <message id="sponsor_championship_bonus_subject">Sponsor premium for won championship</message>
-    <message id="sponsor_cup_bonus_subject">Sponsor premium for cup round</message>
+    <message id="sponsor_championship_bonus_subject">Sponsor bonus for winning the championship</message>
+    <message id="sponsor_cup_bonus_subject">Sponsor bonus for cup round</message>
 
     <message id="sponsor_offer_type">Contract type</message>
     <message id="sponsor_offer_type_safe">Safe</message>
@@ -22,17 +22,33 @@
     <message id="sponsor_offer_type_cup">Cup</message>
     <message id="sponsor_offer_type_legacy">Legacy contract</message>
 
-    <message id="sponsor_offer_description_safe">High fixed income, but lower success bonuses.</message>
-    <message id="sponsor_offer_description_risky">Low fixed income, but high win and title bonuses.</message>
-    <message id="sponsor_offer_description_fan">Additional bonus based on stadium occupancy for home matches.</message>
-    <message id="sponsor_offer_description_cup">Stronger focus on cup matches and reached cup rounds.</message>
+    <message id="sponsor_offer_description_safe">High fixed payment, but lower performance bonuses.</message>
+    <message id="sponsor_offer_description_risky">Low fixed payment, but high win and title bonuses.</message>
+    <message id="sponsor_offer_description_fan">Additional bonus depending on stadium attendance at home matches.</message>
+    <message id="sponsor_offer_description_cup">Greater focus on cup matches and the cup rounds reached.</message>
 
     <message id="sponsor_attendance_bonus_percent">Attendance bonus</message>
-    <message id="sponsor_contract_duration">Duration</message>
-    <message id="sponsor_contract_duration_season">until season end</message>
+    <message id="sponsor_contract_duration">Term</message>
+    <message id="sponsor_contract_duration_season">until the end of the season</message>
     <message id="sponsor_negotiate_button">Negotiate</message>
     <message id="sponsor_negotiation_level">Negotiation level %d</message>
-    <message id="sponsor_withdraw_chance">Withdrawal risk when negotiating again: %d %%</message>
-    <message id="sponsor_negotiation_success">The negotiation was successful. The offer was improved.</message>
-    <message id="sponsor_negotiation_withdrawn">The sponsor withdrew. This offer is no longer available.</message>
+    <message id="sponsor_withdraw_chance">Risk of withdrawal if negotiations continue: %d %%</message>
+    <message id="sponsor_negotiation_success">The negotiation was successful. The offer has been improved.</message>
+    <message id="sponsor_negotiation_withdrawn">The sponsor has withdrawn. This offer is no longer available.</message>
+    
+
+    <message id="sponsor_page_title">Sponsorship centre</message>
+    <message id="sponsor_page_intro">Overview of contract, bonuses, negotiations and expected income.</message>
+    <message id="sponsor_remaining_matches">remaining matches as calculation basis</message>
+    <message id="sponsor_earned_so_far">Earned so far</message>
+    <message id="sponsor_payments">Payments</message>
+    <message id="sponsor_estimated_remaining">Estimated additional income</message>
+    <message id="sponsor_estimate_hint">Estimate based on the remaining matches</message>
+    <message id="sponsor_negotiation_status">Negotiation level</message>
+    <message id="sponsor_signed_contract">Contract signed</message>
+    <message id="sponsor_estimated_income">Estimated volume</message>
+    <message id="sponsor_naming_title">Stadium naming sponsor</message>
+    <message id="sponsor_naming_sponsor">Partner</message>
+    <message id="sponsor_naming_stadium">Stadium name</message>
+    <message id="sponsor_naming_per_match">Per home match</message>
 </messages>

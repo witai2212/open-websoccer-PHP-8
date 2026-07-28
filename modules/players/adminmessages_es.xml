@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_hide_strength_attributes">Ocultar los atributos de calidad de los futbolistas. Los usuarios no podrán ver entonces la calidad real de un jugador.</message> 
+	<message id="settings_label_players_aging">Envejecimiento de los jugadores</message>
+	
+	<message id="option_birthday">En el cumpleaños del jugador</message>
+	<message id="option_static">Al finalizar la temporada</message>
+
+    <message id="player-traits_navlabel">Habilidades especiales</message>
+    <message id="settings_label_player_talent_probability_1">Proporción de talento 1 en porcentaje</message>
+    <message id="settings_label_player_talent_probability_2">Proporción de talento 2 en porcentaje</message>
+    <message id="settings_label_player_talent_probability_3">Proporción de talento 3 en porcentaje</message>
+    <message id="settings_label_player_talent_probability_4">Proporción de talento 4 en porcentaje</message>
+    <message id="settings_label_player_talent_probability_5">Proporción de talento 5 en porcentaje</message>
+    <message id="settings_label_player_talent_probability_6">Proporción de talento 6 en porcentaje</message>
+    <message id="settings_label_player_talent_probability_1_help">Probabilidad para los nuevos jugadores profesionales generados. Los seis valores se normalizan automáticamente para sumar el 100 por ciento.</message>
+    <message id="settings_label_player_talent_probability_2_help">Probabilidad para los nuevos jugadores profesionales generados. Los seis valores se normalizan automáticamente para sumar el 100 por ciento.</message>
+    <message id="settings_label_player_talent_probability_3_help">Probabilidad para los nuevos jugadores profesionales generados. Los seis valores se normalizan automáticamente para sumar el 100 por ciento.</message>
+    <message id="settings_label_player_talent_probability_4_help">Probabilidad para los nuevos jugadores profesionales generados. Los seis valores se normalizan automáticamente para sumar el 100 por ciento.</message>
+    <message id="settings_label_player_talent_probability_5_help">Probabilidad para los nuevos jugadores profesionales generados. Los seis valores se normalizan automáticamente para sumar el 100 por ciento.</message>
+    <message id="settings_label_player_talent_probability_6_help">Probabilidad para los nuevos jugadores profesionales generados. Valor predeterminado: 0,5 por ciento. Los jugadores existentes no se modifican.</message>
+</messages>

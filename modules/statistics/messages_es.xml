@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="projectstatistics_title">Estadísticas</message>
+    <message id="projectstatistics_onlineusers"><strong>%d mánageres están conectados ahora</strong></message>
+    <message id="projectstatistics_onlineusers_single"><strong>Un mánager está conectado ahora</strong></message>
+    <message id="projectstatistics_totalusers">Hay un total de <strong>%d</strong> usuarios registrados</message>
+    
+    <message id="projectstatistics_leagues">Jugamos en <strong>%d</strong> ligas</message>
+    <message id="projectstatistics_freeteams"><strong>%d</strong> clubes están disponibles en este momento</message>
+</messages>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_formation_max_next_matches">Alineación: próximos partidos</message> 
+	<message id="settings_label_formation_max_next_matches_help">Número de partidos futuros para los que el usuario puede presentar una alineación.</message>
+
+	<message id="settings_label_formation_max_templates">Alineación: guardar plantillas</message> 
+	<message id="settings_label_formation_max_templates_help">Número de alineaciones que pueden guardarse como plantillas para reutilizarlas. 0 desactiva la función.</message>
+	<message id="settings_label_tactical_style">Activar identidad táctica</message>
+	<message id="settings_label_tactical_style_help">Permite que los clubes gestionados por personas adopten un estilo de juego fijo con un pequeño efecto en la simulación de partidos. Los clubes CPU eligen el estilo automáticamente.</message>
+
+</messages>

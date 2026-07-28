@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+    <message id="settings_tab_premium">Contas premium</message>
+	<message id="settings_label_premium_enabled">Ativar contas de utilizador premium. Os utilizadores podem adquirir crédito e utilizá-lo em funções especiais.</message> 
+	<message id="settings_label_premium_credit_unit">Nome da moeda de crédito</message>
+	<message id="settings_label_premium_infopage">Página de informação</message>
+	<message id="settings_label_premium_infopage_help">Página apresentada quando um utilizador pretende usar uma função premium, mas não tem crédito suficiente (ou não tem crédito). Pode ser um ID de página interno ou um URL completo (http://...).<br/>
+	    <strong>Atenção:</strong> se ativou pagamentos automáticos através de fornecedores terceiros (como o PayPal), tem de ser utilizada a página predefinida (<em>premium-feature-requested</em>).</message>
+	<message id="settings_label_premium_price_options">Opções de carregamento</message>
+	<message id="settings_label_premium_price_options_help">Se o crédito puder ser adquirido através de pagamentos, podem ser indicadas várias taxas de conversão. Por exemplo, 5.00:10 significa que 5,00 EUR de dinheiro real dão 10 unidades de crédito premium. Tenha em conta que os valores decimais devem ser introduzidos com ponto (por exemplo, 4.99 em vez de 4,99).</message>
+	<message id="settings_label_premium_currency">Moeda (real)</message>
+	
+	<message id="settings_label_premium_exchangerate_gamecurrency">Taxa de câmbio da moeda do jogo</message>
+	<message id="settings_label_premium_exchangerate_gamecurrency_help">Se os utilizadores puderem trocar crédito premium por dinheiro do jogo para o seu clube, indique aqui o valor por unidade premium. Introduza 0 se a troca não dever ser possível.</message>
+
+	<message id="settings_label_premium_initial_credit">Crédito inicial</message>
+	<message id="settings_label_premium_initial_credit_help">Crédito premium atribuído automaticamente a um novo utilizador no momento do registo.</message>
+</messages>

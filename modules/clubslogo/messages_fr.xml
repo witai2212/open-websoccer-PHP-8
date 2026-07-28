@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="upload-clublogo_navlabel">Téléverser un nouveau logo de club</message>
+    
+    <message id="upload-clublogo_intro">Vous pouvez téléverser ici une image PNG ou JPEG. Elle doit être <strong>rectangulaire</strong>, avoir une largeur minimale de <strong>120 pixels</strong> et une taille maximale de <strong>%d Ko</strong>.</message>
+	<message id="upload-clublogo_success">Le nouveau logo du club a été téléversé avec succès !</message>
+	
+	<message id="activitylog_upload-club-picture">%s a téléversé un nouveau logo de club.</message>
+    
+</messages>

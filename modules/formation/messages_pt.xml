@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="formation_navlabel">Formação</message>
+    <message id="formation_title">Formação e tática</message>
+    
+    <message id="next_match_block_title">Próximo jogo</message>
+    <message id="next_match_block_previous_matches">Encontros anteriores</message>
+    <message id="next_match_block_no_previous_matches">É a primeira vez que jogas contra esta equipa.</message>
+    
+    <message id="next_match_block_no_nextmatch">Atualmente não tens nenhum jogo agendado.</message>
+    
+    <message id="formation_playground_title">Definir formação</message>
+    <message id="formation_team_title">O teu plantel</message>
+    <message id="formation_team_noplayers">Não existem jogadores disponíveis.</message>
+    <message id="formation_bench">Banco</message>
+    
+    <message id="formation_team_collapsehead_tooltip">Expandir ou recolher lista</message>
+    
+    <message id="formation_team_blocked_cards">Suspenso por cartões amarelos ou vermelhos</message>
+    <message id="formation_team_blocked_injured">O jogador está lesionado</message>
+    
+    <message id="formation_dragging_note_title">Nota de utilização:</message>
+    <message id="formation_dragging_note">Arrasta os jogadores para o campo para os escalares ou faz duplo clique no jogador.</message>
+    
+    <message id="formation_substitutions_title">Substituições</message>
+    <message id="formation_substitutions_out">Sai</message>
+    <message id="formation_substitutions_in">Entra</message>
+    <message id="formation_substitutions_minute">Minuto</message>
+    
+    <message id="formation_substitutions_condition">Condição</message>
+    <message id="formation_substitutions_condition_none">Nenhuma</message>
+    <message id="formation_substitutions_condition_tie">em caso de empate</message>
+    <message id="formation_substitutions_condition_leading">em caso de vantagem</message>
+    <message id="formation_substitutions_condition_deficit">em caso de desvantagem</message>
+    
+    <message id="formation_substitutions_position">Posição</message>
+    <message id="formation_substitutions_position_default">(posição principal do jogador)</message>
+    
+    <message id="formation_err_player_already_set">O jogador já está escalado.</message>
+    <message id="formation_err_already_enough_players">Já estão 11 jogadores em campo.</message>
+    <message id="formation_err_only_one_goaly_allowed">Só pode ser escalado um guarda-redes.</message>
+    <message id="formation_err_only_x_players_per_area_allowed">Só podem ser escalados no máximo {0} jogadores de campo por zona.</message>
+    <message id="formation_err_only_x_players_on_bench_allowed">Só podem estar no banco no máximo {0} suplentes.</message>
+    <message id="formation_err_no_goaly_set">Não foi escalado nenhum guarda-redes.</message>
+    <message id="formation_err_not_enough_players">Não estão exatamente 11 jogadores em campo.</message>
+    <message id="formation_tooltip_remove_player">Faz duplo clique para remover {0}</message>
+    
+    <message id="formation_err_nonextmatch">O próximo jogo ainda não está definido.</message>
+    <message id="formation_err_invalidplayer">Foram escalados jogadores inválidos.</message>
+    <message id="formation_err_duplicateplayer">Foram escalados jogadores mais do que uma vez.</message>
+    <message id="formation_err_blockedplayer">Foram escalados jogadores suspensos ou lesionados.</message>
+    
+    <message id="formation_err_invalidsubstitutionminute">As substituições só são permitidas entre o 2.º e o 90.º minuto.</message>
+    
+    <message id="formation_offensive_title">Jogar ao ataque</message>
+    
+    <message id="formation_setup_title">Formação</message>
+    
+    <message id="formation_bench_placeholder">Arrasta jogadores para aqui...</message>
+    <message id="formation_bench_sub_in">Fazer entrar</message>
+    <message id="formation_bench_sub_title">Substituição de jogador</message>
+    
+    <message id="formation_setup_button">Escalar</message>
+    <message id="formation_setup_strongest">Jogadores mais fortes</message>
+    <message id="formation_setup_freshest">Jogadores mais frescos</message>
+    <message id="formation_setup_motivated">Jogadores mais motivados</message>
+    
+    <message id="formation_setup_altered_warn_title">A formação indicada foi ajustada pelo sistema!</message>
+    <message id="formation_setup_altered_warn_details">A formação escolhida não inclui exatamente 10 jogadores de campo, pelo que o sistema corrigiu automaticamente a tua seleção.</message>
+
+	<message id="formation_clearall">Limpar campo</message>
+	
+	<message id="formation_switch_on">Ligado</message>
+	<message id="formation_switch_off">Desligado</message>
+	
+	<message id="formation_option_longpasses">Passes longos</message>
+	<message id="formation_option_longpasses_help">Pode criar mais remates, mas também mais perdas de bola.</message>
+	
+	<message id="formation_option_counterattacks">Contra-ataque</message>
+	<message id="formation_option_counterattacks_help">Pode impedir contra-ataques adversários, mas também reduz o número de oportunidades próprias.</message>
+	
+	<message id="formation_freekickplayer">Marcador de livres</message>
+	<message id="formation_cornerplayer">Marcador de cantos</message>
+	
+	<message id="formation_templatename_field">Nome do modelo</message>
+	<message id="formation_templatename_field_help">Introduz um nome para guardares também esta formação como modelo.</message>
+	<message id="formation_load_from_template">Carregar modelo</message>
+	<message id="formation_load_from_template_none_available">Não existem modelos disponíveis. Para criares um novo modelo, introduz um nome de modelo ao guardares uma nova formação.</message>
+	
+	<message id="formation_template_saving_failed_because_boundary_title">Só podes guardar %d modelos!</message>
+	<message id="formation_template_saving_failed_because_boundary_details">A formação não foi guardada como modelo. Elimina primeiro os modelos de que já não precisas.</message>
+	
+	<message id="formation_submitted_tooltip">Formação entregue</message>
+	<message id="formation_notsubmitted_tooltip">Ainda não foi entregue nenhuma formação</message>
+	<message id="formation_tacticalstyle_title">Identidade tática</message>
+	<message id="formation_tacticalstyle_select">Estilo de jogo</message>
+	<message id="formation_tacticalstyle_fit">Adequação</message>
+	<message id="formation_tacticalstyle_effect_help">A identidade tática tem apenas um pequeno efeito nos jogos e recompensa sobretudo uma boa adequação entre estilo, plantel, treino e equipa técnica.</message>
+	<message id="tacticalstyle_balanced">Equilibrado</message>
+	<message id="tacticalstyle_balanced_help">Estilo neutro sem especialização rígida. Força base, técnica, condição física, passe, desarme e frescura contam de forma equilibrada.</message>
+	<message id="tacticalstyle_defensive">Defensivo</message>
+	<message id="tacticalstyle_defensive_help">Desarme, jogo de cabeça, condição física e jogadores influentes reforçam um estilo defensivo compacto.</message>
+	<message id="tacticalstyle_possession">Posse de bola</message>
+	<message id="tacticalstyle_possession_help">Passe, técnica, criatividade e criatividade individual elevados favorecem este estilo.</message>
+	<message id="tacticalstyle_counterattack">Contra-ataque</message>
+	<message id="tacticalstyle_counterattack_help">Velocidade, finalização, passe e frescura adequam-se especialmente bem a transições rápidas.</message>
+	<message id="tacticalstyle_pressing">Pressão</message>
+	<message id="tacticalstyle_pressing_help">Condição física, velocidade, desarme e mentalidade tornam a pressão mais consistente.</message>
+	<message id="tacticalstyle_defensive_block">Bloco defensivo</message>
+	<message id="tacticalstyle_defensive_block_help">Desarme, jogo de cabeça, condição física e influência reforçam um bloco compacto.</message>
+	<message id="tacticalstyle_wing_play">Jogo pelas alas</message>
+	<message id="tacticalstyle_wing_play_help">Velocidade, passe, criatividade individual e criatividade favorecem ataques pelas alas.</message>
+	<message id="tacticalstyle_set_pieces">Bolas paradas</message>
+	<message id="tacticalstyle_set_pieces_help">Livres, jogo de cabeça, finalização e influência aumentam a força nas bolas paradas.</message>
+	<message id="tacticalstyle_youth_focused">Foco na formação</message>
+	<message id="tacticalstyle_youth_focused_help">Potencial elevado, jogadores jovens, frescura e líderes adequam-se a este estilo.</message>
+	<message id="tacticalstyle_physical">Físico</message>
+	<message id="tacticalstyle_physical_help">Condição física, jogo de cabeça, desarme e força base são decisivos neste estilo.</message>
+	<message id="tacticalstyle_fit_good">O teu plantel adequa-se muito bem a este estilo.</message>
+	<message id="tacticalstyle_fit_neutral">O teu plantel adequa-se razoavelmente bem a este estilo.</message>
+	<message id="tacticalstyle_fit_bad">Atualmente este estilo adequa-se apenas parcialmente ao teu plantel.</message>
+	<message id="tacticalstyle_news_title">Nova identidade tática</message>
+	<message id="tacticalstyle_news_message">{team} altera a sua identidade tática de {oldstyle} para {newstyle}. A adequação atual do plantel é de {fit}%.</message>
+	<message id="tacticalstyle_news_link">Ir para a formação</message>
+
+</messages>

@@ -1,16 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="cup_firstround_only_date">Fecha</message>
-    <message id="cup_firstround">Primera Ronda</message>
-    <message id="cup_secondround">Segunda Ronda</message>
-    <message id="cup_created_from_winners_of_round">Ganador<strong>%s</strong>.</message>
-    <message id="cup_created_from_loosers_of_round">Perdedor<strong>%s</strong>.</message>
-    <message id="cup_cuproundaward_perround_subject">Premio por ronda de una copa</message>
-    <message id="cup_cuproundaward_winner_subject">Premio por ganar la Copa</message>
-    <message id="cup_cuproundaward_second_subject">Premio a la medalla de plata.</message>
+    <message id="cup_firstround">Ida</message>
+    <message id="cup_secondround">Vuelta</message>
+    <message id="cup_created_from_winners_of_round">Ganador de <strong>%s</strong>.</message>
+    <message id="cup_created_from_loosers_of_round">Perdedor de <strong>%s</strong>.</message>
+    <message id="cup_cuproundaward_perround_subject">Premio por ronda de copa</message>
+    <message id="cup_cuproundaward_winner_subject">Victoria en la copa</message>
+    <message id="cup_cuproundaward_second_subject">Premio por el segundo puesto</message>
     
     <message id="cup_title_groups">Grupos</message>
-    <message id="cup_group_noteamsavailable">Aún no se ha asignado ningún equipo de este grupo.</message>
-    <message id="cup_group_select_group_placeholder">Por favor, seleccione un grupo.</message>
+    <message id="cup_group_noteamsavailable">Todavía no se ha asignado ningún equipo a este grupo.</message>
+    <message id="cup_group_select_group_placeholder">Selecciona un grupo.</message>
+	
+	<message id="cups_navlabel">Copa</message>
+	<message id="cups_title">Copa</message>
+	<message id="select_cup">Seleccionar copa</message>
+	<message id="cup_select_choose">Selecciona una copa</message>
+	
+	<message id="entity_match_cup_round">Ronda de copa</message>
+	
+	<message id="uefatempgenerator_navlabel">Generar tabla temporal de la UEFA</message>
+    
 </messages>

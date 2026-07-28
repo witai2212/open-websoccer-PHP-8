@@ -1,20 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_news">News</message>
-    <message id="news-details_navlabel">read</message>
     <message id="entity_news_autor_id">Author</message>
-	<message id="entity_news_titel">Title</message>
+	<message id="entity_news_titel">Titles</message>
 	<message id="entity_news_datum">Date</message>
 	<message id="entity_news_nachricht">Message</message>
-	<message id="entity_news_linktext1">Relevant Link 1 (Text)</message>
-	<message id="entity_news_linkurl1">Relevant Link 1 (URL)</message>
-	<message id="entity_news_linktext2">Relevant Link 2 (Text)</message>
-	<message id="entity_news_linkurl2">Relevant Link 2 (URL)</message>
-	<message id="entity_news_linktext3">Relevant Link 3 (Text)</message>
-	<message id="entity_news_linkurl3">Relevant Link 3 (URL)</message>
-	<message id="entity_news_c_smilies">Transform Smilies</message>
+	<message id="entity_news_linktext1">Relevant link 1 (text)</message>
+	<message id="entity_news_linkurl1">Relevant link 1 (URL)</message>
+	<message id="entity_news_linktext2">Relevant link 2 (text)</message>
+	<message id="entity_news_linkurl2">Relevant link 2 (URL)</message>
+	<message id="entity_news_linktext3">Relevant link 3 (text)</message>
+	<message id="entity_news_linkurl3">Relevant link 3 (URL)</message>
+	<message id="entity_news_c_smilies">Convert emoticons</message>
 	<message id="entity_news_c_br">Display line breaks</message>
-	<message id="entity_news_c_links">Transform URLs into HTML links</message>
-	<message id="entity_news_status">Active</message>
+	<message id="entity_news_c_links">Convert URLs to HTML links</message>
+	<message id="entity_news_status">Enabled</message>
+
+    <message id="entity_bankloans">Bank loans</message>
+    <message id="bankloans_navlabel">Bank loans</message>
+    <message id="entity_bankloans_id">ID</message>
+    <message id="entity_bankloans_verein_id">Club ID</message>
+    <message id="entity_bankloans_original_amount">Loan amount</message>
+    <message id="entity_bankloans_remaining_principal">Remaining principal</message>
+    <message id="entity_bankloans_interest_rate">Interest rate</message>
+    <message id="entity_bankloans_remaining_interest">Remaining interest</message>
+    <message id="entity_bankloans_remaining_amount">Outstanding balance</message>
+    <message id="entity_bankloans_matches_left">Matches remaining</message>
+    <message id="entity_bankloans_status">Status</message>
+    <message id="entity_bankloans_credit_rating">Credit rating</message>
+    <message id="entity_bankloans_created_date">Taken out on</message>
+    <message id="entity_bankloans_board_warning_sent">Board warning sent</message>
 </messages>

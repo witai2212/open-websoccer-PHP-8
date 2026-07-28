@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_sofortcom_enabled">Adquirir saldo premium mediante pagos a través de <a href="https://www.sofort.com" target="_blank">Sofort.com</a>.</message> 
+	
+	<message id="settings_label_sofortcom_configkey">Clave de configuración de Sofort.com</message> 
+	<message id="settings_label_sofortcom_configkey_help">Se obtiene al registrarse como vendedor en sofort.com.</message> 
+</messages>

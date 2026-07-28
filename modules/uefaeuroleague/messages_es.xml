@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="uefaeuroleague_navlabel">UEFA Euro League</message>
+	<message id="uefaeuroleague_title">UEFA Euro League</message>
+	<message id="uefaeuroleaguetitle">UEFA Euro League</message>
+
+	<message id="uefa_euro_league_select_phase">Seleccionar grupo o fase</message>
+	<message id="champions_select_choose">Seleccione</message>
+	<message id="uefa_euro_league_groupa">Grupo A</message>
+	<message id="uefa_euro_league_groupb">Grupo B</message>
+	<message id="uefa_euro_league_groupc">Grupo C</message>
+	<message id="uefa_euro_league_groupd">Grupo D</message>
+	<message id="uefa_euro_league_round1">Primera ronda</message>
+	<message id="uefa_euro_league_afinal">Octavos de final</message>
+	<message id="uefa_euro_league_qfinal">Cuartos de final</message>
+	<message id="uefa_euro_league_sfinal">Semifinales</message>
+	<message id="uefa_euro_league_final">Final</message>
+
+	<message id="group_title_a">Grupo A</message>
+	<message id="group_title_b">Grupo B</message>
+	<message id="group_title_c">Grupo C</message>
+	<message id="group_title_d">Grupo D</message>
+	<message id="1round_title">Primera ronda</message>
+	<message id="afinal_title">Octavos de final</message>
+	<message id="qfinal_title">Cuartos de final</message>
+	<message id="sfinal_title">Semifinales</message>
+	<message id="final_title">Final</message>
+
+	<message id="uefaeuroleague_intro">Todos los grupos, eliminatorias, resultados y próximos partidos de la UEFA Euro League de un vistazo.</message>
+	<message id="uefaeuroleague_no_cup_found">No se ha encontrado la UEFA Euro League en la configuración de copas.</message>
+	<message id="uefaeuroleague_current_phase">Vista actual</message>
+	<message id="uefaeuroleague_matches_played">Partidos jugados</message>
+	<message id="uefaeuroleague_participants">Participantes</message>
+	<message id="uefaeuroleague_teams">Clubes</message>
+	<message id="uefaeuroleague_rounds">Rondas</message>
+	<message id="uefaeuroleague_rounds_subtitle">incluida la fase de grupos</message>
+	<message id="uefaeuroleague_winner">Defensor del título</message>
+	<message id="uefaeuroleague_winner_open">aún por decidir</message>
+	<message id="uefaeuroleague_prize_winner">Premio del ganador</message>
+	<message id="uefaeuroleague_my_club">Mi club</message>
+	<message id="uefaeuroleague_still_in_competition">Participantes</message>
+	<message id="uefaeuroleague_not_participating">no participa en la competición</message>
+	<message id="uefaeuroleague_my_group">Grupo</message>
+	<message id="uefaeuroleague_my_next_match">Próximo partido</message>
+	<message id="uefaeuroleague_my_last_match">Último partido</message>
+	<message id="uefaeuroleague_standings">Clasificación</message>
+	<message id="uefaeuroleague_fixtures">Calendario</message>
+	<message id="uefaeuroleague_latest_results">Últimos resultados</message>
+	<message id="uefaeuroleague_next_matches">Próximos partidos</message>
+	<message id="uefaeuroleague_no_group_table">Todavía no hay una clasificación disponible para este grupo.</message>
+
+	<message id="uefaeuroleague_grouptable_team">Club</message>
+	<message id="uefaeuroleague_grouptable_matches">PJ</message>
+	<message id="uefaeuroleague_grouptable_points">Puntos</message>
+	<message id="uefaeuroleague_grouptable_wins">Victorias</message>
+	<message id="uefaeuroleague_grouptable_draws">Emp.</message>
+	<message id="uefaeuroleague_grouptable_losses">Der.</message>
+	<message id="uefaeuroleague_grouptable_goals">Goles</message>
+	<message id="uefaeuroleague_grouptable_goalsreceived">Goles encajados</message>
+	<message id="uefaeuroleague_grouptable_goaldiff">Dif.</message>
+
+	<message id="uefa_euro_league_grouptable_team">Club</message>
+	<message id="uefa_euro_league_grouptable_points">Puntos</message>
+	<message id="uefa_euro_league_grouptable_wins">Victorias</message>
+	<message id="uefa_euro_league_grouptable_draws">Emp.</message>
+	<message id="uefa_euro_league_grouptable_losses">Der.</message>
+	<message id="uefa_euro_league_grouptable_goals">Goles</message>
+	<message id="uefa_euro_league_grouptable_goalsreceived">Goles encajados</message>
+</messages>

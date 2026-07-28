@@ -1,22 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	
-	<message id="settings_tab_transfermarket">Transfer Market</message> 
+	<message id="settings_tab_transfermarket">Transfer market</message> 
 	
 	<message id="settings_label_transfermarket_enabled">Enable automatic transfer market.</message>
 	
-	<message id="settings_label_transfermarket_duration_days">How long shall be a player on ther transfer list</message>
-	<message id="settings_label_transfermarket_duration_days_help">days. If the player cannot be sold within the deadline, the deadline will be posponed by the same number of days.</message>
+	<message id="settings_label_transfermarket_duration_days">How long a player remains on the transfer list</message>
+	<message id="settings_label_transfermarket_duration_days_help">Days. If the player is not sold within this period, the duration is extended by the same number of days.</message>
 	
-	<message id="settings_label_transfermarket_computed_marketvalue">Compute market value automatically. Value depends on player's actual strength.</message>
+	<message id="settings_label_transfermarket_computed_marketvalue">Calculate market value automatically. Market value is based on the player's actual strength.</message>
 	
 	<message id="settings_label_transfermarket_value_per_strength">Market value per strength point</message>
-	<message id="settings_label_transfermarket_value_per_strength_help">in case the market value shall be computed.</message>
-	
-	<message id="settings_label_transfermarket_min_teamsize">Minimum Team Size</message>
-	<message id="settings_label_transfermarket_min_teamsize_help">Minimum number of players that must be in the team. If minimum number is exceeded, further player sales are not possible.</message>
+	<message id="settings_label_transfermarket_value_per_strength_help">if market value is to be calculated automatically.</message>
 
-<message id="settings_label_transfermarket_max_transactions_between_users">Transactions between users</message>
-<message id="settings_label_transfermarket_max_transactions_between_users_help">Maximum number of trades between two particular users within 30 days.</message>
+	<message id="settings_label_transfermarket_min_teamsize">Minimum squad size</message>
+	<message id="settings_label_transfermarket_min_teamsize_help">Minimum number of players in the team. Players cannot be sold if this would reduce the squad below the minimum size.</message>
+
+	<message id="settings_label_transfermarket_max_transactions_between_users">Transactions between users</message>
+	<message id="settings_label_transfermarket_max_transactions_between_users_help">Maximum number of permitted transactions between two users within the last 30 days.</message>
+	<message id="settings_label_transfermarket_max_players_on_tl">Max. players on transfer list</message>
+	<message id="settings_label_transferoffers_max_offer_deviation">Max. transfer deviation [%]</message>
+	<message id="settings_label_transferoffers_deviation_penalty">Penalty for deviation</message>
+
+	<message id="settings_label_transfer_news_enabled">Publish significant transfers as news</message>
+	<message id="settings_label_transfer_news_market_value_min">Minimum market value for transfer news</message>
+	<message id="settings_label_transfer_news_market_value_min_help">From this market value, a player is considered a big name regardless of the fee. 0 disables this criterion.</message>
+	<message id="settings_label_transfer_news_strength_min">Minimum strength for transfer news</message>
+	<message id="settings_label_transfer_news_strength_min_help">From this strength onwards, a move is published as a significant transfer. 0 disables this criterion.</message>
+	<message id="settings_label_transfer_news_fee_min">Minimum fee for transfer news</message>
+	<message id="settings_label_transfer_news_fee_min_help">From this fee onwards, the move is published as transfer news. 0 disables this criterion.</message>
+	<message id="settings_label_transfer_news_top_percent">Top percentage by market value</message>
+	<message id="settings_label_transfer_news_top_percent_help">Players within this share of the most valuable active players also trigger transfer news.</message>
+
+
+	<message id="settings_label_computer_transfers_teams_per_run">CPU clubs per transfer run</message>
+	<message id="settings_label_computer_transfers_teams_per_run_help">Maximum number of CPU clubs that check new transfer offers per system run.</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team">Maximum CPU offers per club</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team_help">Maximum number of simultaneously open transfer offers from a CPU club.</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player">Maximum CPU offers per player</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player_help">Maximum number of simultaneously open offers from CPU clubs for one player.</message>
+
+	<message id="settings_label_player_talent_transfer_change_chance">Talent change after transfer</message>
+	<message id="settings_label_player_talent_transfer_change_chance_help">Percentage chance of a one-time talent change of +1 or -1 after a completed transfer.</message>
+	<message id="settings_label_computer_budget_subsidy_floor">CPU base budget</message>
+	<message id="settings_label_computer_budget_subsidy_floor_help">CPU clubs are automatically topped up to this minimum amount.</message>
+
 </messages>

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="stadiumenvironment_navlabel">Área envolvente do estádio</message>
+    
+    <message id="stadiumenvironment_existingbuildings">Edifícios existentes</message>
+    <message id="stadiumenvironment_existingbuildings_none">Ainda não foi adjudicada a construção de qualquer edifício.</message>
+    <message id="stadiumenvironment_existingbuildings_underconstruction">Em construção até %s</message>
+    
+    <message id="stadiumenvironment_availablebuildings">Edifícios disponíveis</message>
+    <message id="stadiumenvironment_availablebuildings_none">Atualmente, não existem mais edifícios disponíveis para construção no seu clube.</message>
+
+	<message id="stadiumenvironment_build">Construir</message>
+	
+	<message id="stadiumenvironment_build_err_too_expensive">Neste momento, não pode suportar os custos de construção.</message>
+	<message id="stadiumenvironment_build_err_already_exists">Já possui este edifício.</message>
+	<message id="stadiumenvironment_build_err_requires_building">Este edifício ainda não está disponível para si.</message>
+	<message id="stadiumenvironment_build_err_premium_balance">O seu saldo premium não é suficiente para este edifício. Carregue a sua conta premium.</message>
+	
+	<message id="stadiumenvironment_build_success">A construção do edifício foi adjudicada com sucesso.</message>
+	
+	<message id="building_construction_fee_subject">Construção de edifício na área envolvente do estádio</message>
+	<message id="actionsubject_order-building">Construção de um edifício premium</message>
+	<message id="activitylog_order-building">%s desenvolveu a área envolvente do seu estádio.</message>
+	
+	<message id="stadiumenvironment_matchincome_subject">Receitas da área envolvente do estádio</message>
+	<message id="stadiumenvironment_costs_per_match_subject">Custos da área envolvente do estádio</message>
+
+	<message id="stadiumenvironment_effect_injury_unit">jogo(s)</message>
+	
+	<message id="stadiumfacility_youthacademy_name">Academia de formação</message>
+	<message id="stadiumfacility_youthacademy_desc">Melhora a qualidade da formação e aumenta a probabilidade de surgirem jogadores jovens mais fortes.</message>
+	<message id="stadiumfacility_medicalcenter_name">Centro médico</message>
+	<message id="stadiumfacility_medicalcenter_desc">Melhores diagnósticos e reabilitação reduzem a duração das lesões dos jogadores.</message>
+	<message id="stadiumfacility_trainingcenter_name">Centro de treinos</message>
+	<message id="stadiumfacility_trainingcenter_desc">Campos de treino modernos e áreas de análise melhoram a eficácia do treino.</message>
+	<message id="stadiumfacility_fanshop_name">Loja do clube</message>
+	<message id="stadiumfacility_fanshop_desc">Aumenta as vendas de merchandising nos jogos em casa e gera receitas adicionais.</message>
+	<message id="stadiumfacility_mediacenter_name">Centro de comunicação</message>
+	<message id="stadiumfacility_mediacenter_desc">Um trabalho de comunicação mais profissional aumenta a popularidade junto dos adeptos e as receitas relacionadas com patrocinadores nos jogos em casa.</message>
+	<message id="stadiumfacility_viplounge_name">Lounge VIP</message>
+	<message id="stadiumfacility_viplounge_desc">Melhora as ofertas de hospitalidade, a procura de bilhetes e as receitas nos jogos em casa.</message>
+	<message id="stadiumfacility_pitchheating_name">Aquecimento do relvado</message>
+	<message id="stadiumfacility_pitchheating_desc">Proporciona melhores condições do relvado, assistência mais estável e menores consequências das lesões.</message>
+	<message id="stadiumfacility_scoutingoffice_name">Gabinete de prospeção</message>
+	<message id="stadiumfacility_scoutingoffice_desc">Melhora a prospeção juvenil e a qualidade das novas propostas de prospeção.</message>
+</messages>

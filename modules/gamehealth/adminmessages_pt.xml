@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="admin_game_health_navlabel">Verificação do sistema</message>
+    <message id="admin_game_health_title">Verificação de integridade do jogo para administração</message>
+    <message id="admin_game_health_intro">Verificação em direto de dados importantes do jogo e do sistema. As reparações são deliberadamente conservadoras e alteram apenas registos claramente inválidos ou expirados.</message>
+</messages>

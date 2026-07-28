@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="halloffame_navlabel">Hall of Fame</message>
-    <message id="halloffame_no_seasons">There are no completed seasons, yet.</message>
-    <message id="halloffame_no_cups">There are no completed cup competitions.</message>
+    <message id="halloffame_no_seasons">No seasons have been completed yet.</message>
+    <message id="halloffame_no_cups">No cup competitions have been played yet.</message>
     
 </messages>

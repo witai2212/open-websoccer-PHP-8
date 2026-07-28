@@ -1,23 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	<message id="activities_tab">Activity</message>
-	<message id="activities_none_available_for_user">The user has not done any special activity lately.</message>
-	<message id="activitylog_box_title">User Activities</message>
+	<message id="activities_none_available_for_user">The user has not performed any notable activities recently.</message>
+	<message id="activitylog_box_title">User activity</message>
 	
-	<message id="activitylog_save-formation">%s has submitted his tactics.</message>
-	<message id="activitylog_select-captain">%s has selected a new team captain.</message>
-	<message id="activitylog_extend-contract">%s has extended a player contract.</message>
-	<message id="activitylog_save-tickets">%s has chosen new ticket prices.</message>
-	<message id="activitylog_sell-player">%s offers one of his players on the transfer market.</message>
-	<message id="activitylog_transfer-bid">%s raised a bid on the transfer market.</message>
-	<message id="activitylog_extend-stadium">%s has placed an order for the improvement of his stadium.</message>
-	<message id="activitylog_upgrade-stadium">%s has ordered the maintenance of his stadium.</message>
-	<message id="activitylog_execute-training">%s has trained his team.</message>
-	<message id="activitylog_book-camp">%s has booked a training camp.</message>
-	<message id="activitylog_create-youthmatch-request">%s has posted a youth match request.</message>
-	<message id="activitylog_sell-youthplayer">%s offers one of his youth players for sale.</message>
-	<message id="activitylog_directtransfer-offer">%s has submitted a player transfer offer.</message>
-	<message id="activitylog_report-absence">%s has reported himself as absent.</message>
-	<message id="activitylog_return-from-absence">%s is back again.</message>
+	<message id="activitylog_save-formation">%s submitted a line-up.</message>
+	<message id="activitylog_select-captain">%s selected a new captain.</message>
+	<message id="activitylog_extend-contract">%s extended a player’s contract.</message>
+	<message id="activitylog_save-tickets">%s set new ticket prices.</message>
+	<message id="activitylog_sell-player">%s listed a player on the transfer market.</message>
+	<message id="activitylog_transfer-bid">%s placed a bid for a player on the transfer market.</message>
+	<message id="activitylog_player-precontract">%s offered a player a contract for next season.</message>
+	<message id="activitylog_extend-stadium">%s commissioned an expansion of the stadium.</message>
+	<message id="activitylog_upgrade-stadium">%s had maintenance work carried out on the stadium.</message>
+	<message id="activitylog_execute-training">%s trained the team.</message>
+	<message id="activitylog_dismiss-trainer">%s dismissed a coach.</message>
+	<message id="activitylog_book-camp">%s booked a training camp.</message>
+	<message id="activitylog_create-youthmatch-request">%s published a match request for the youth team.</message>
+	<message id="activitylog_sell-youthplayer">%s is offering a youth player for sale.</message>
+	<message id="activitylog_directtransfer-offer">%s submitted a purchase offer for a player.</message>
+	<message id="activitylog_report-absence">%s reported an absence.</message>
+	<message id="activitylog_return-from-absence">%s has returned.</message>
+	<message id="activitylog_save-training-plan">%s adjusted the training plan.</message>
+	<message id="activitylog_save-individual-training">%s adjusted the individual training.</message>
+	<message id="activitylog_hire-club-staff">%s hired a staff member.</message>
+	<message id="activitylog_fire-club-staff">%s dismissed a staff member.</message>
+	<message id="activitylog_managercareer_job_change">%s accepted a new manager job.</message>
+	<message id="activitylog_apply-medical-treatment">%s applied a medical treatment.</message>
+	<message id="activitylog_clear-player-risk">%s cleared a player to play despite the risk.</message>
+	<message id="activitylog_build-youth-academy">%s built a youth academy.</message>
+	<message id="activitylog_upgrade-youth-academy">%s upgraded the youth academy.</message>
+	<message id="activitylog_downgrade-youth-academy">%s downgraded the youth academy.</message>
+	<message id="activitylog_save-youth-academy-settings">%s adjusted the youth academy settings.</message>
+	
+	<message id="activitylog_sign-stadium-naming-contract">%s signed a stadium naming-rights agreement.</message>
+	<message id="activitylog_rename-stadium">%s renamed the stadium.</message>
+	
+
+	<message id="activitylog_create-club-partnership-request">%s requested a club partnership.</message>
+	<message id="activitylog_stop-club-partnership">%s ended a club partnership.</message>
 </messages>

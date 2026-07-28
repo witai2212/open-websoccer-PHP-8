@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_users">Utilisateur</message> 
+    
+	<message id="popup_user_inactivity_total">Total</message>
+	<message id="popup_user_inactivity_title_action">Activité mesurée</message>
+	
+	<message id="settings_label_highscore_win">Highscore par victoire</message>
+	<message id="settings_label_highscore_loss">Highscore par défaite</message>
+	<message id="settings_label_highscore_draw">Highscore par match nul</message>
+	
+	<message id="settings_label_user_picture_upload_enabled">Les utilisateurs peuvent télécharger leur propre photo de profil.</message>
+	
+	<message id="settings_label_user_picture_upload_maxsize_kb">Téléchargement d'image : taille maximale</message>
+	<message id="settings_label_user_picture_upload_maxsize_kb_help">en Ko</message>
+	
+</messages>

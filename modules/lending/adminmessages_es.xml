@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_lending_enabled">Los usuarios pueden tomar cedidos jugadores de otros clubes.</message> 
+	<message id="settings_label_lending_matches_min">Duración mínima de la cesión</message>
+	<message id="settings_label_lending_matches_min_help">Número de partidos</message>  
+	<message id="settings_label_lending_matches_max">Duración máxima de la cesión</message> 
+	<message id="settings_label_lending_matches_max_help">Número de partidos</message> 
+
+	<message id="settings_label_lending_cpu_offer_duration_days">Duración de las ofertas de cesión de CPU</message>
+	<message id="settings_label_lending_cpu_offer_duration_days_help">Días naturales hasta que una oferta de cesión creada por un club CPU finaliza automáticamente.</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days">Espera para una nueva oferta de cesión de CPU</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days_help">Días naturales antes de que un club CPU pueda volver a ofrecer al mismo jugador.</message>
+	<message id="settings_label_lending_cpu_request_expiry_days">Validez de solicitudes de cesión de CPU</message>
+	<message id="settings_label_lending_cpu_request_expiry_days_help">Días naturales hasta que caduca una solicitud de cesión abierta de CPU.</message>
+	<message id="settings_label_max_number_of_players_on_loan_list">Máximo de jugadores CPU en la lista de cesiones</message>
+	<message id="settings_label_max_number_of_players_on_loan_list_help">Número máximo de jugadores ofrecidos simultáneamente en cesión por cada club CPU.</message>
+</messages>

@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="entity_admin">Usuario Administrador</message>
+	<message id="entity_admin">Administradores</message>
 	<message id="entity_admin_name">Nombre de usuario</message>
 	<message id="entity_admin_passwort">Contraseña</message>
-	<message id="entity_admin_email">E-Mail</message>
+	<message id="entity_admin_email">Correo electrónico</message>
 	<message id="entity_admin_r_admin">Es administrador</message>
-	<message id="entity_admin_r_adminuser">Derechos: Puede administrar usuarios administradores</message>
-	<message id="entity_admin_r_user">Derechos: Puede administrar usuarios</message>
-	<message id="entity_admin_r_daten">Derechos: Puede administrar los datos del juego</message>
-	<message id="entity_admin_r_staerken">Derechos: Puede ver y cambiar los atributos de fuerza jugador</message>
-	<message id="entity_admin_r_spiele">Derechos: Se puede administrar partidos</message>
-	<message id="entity_admin_r_news">Derechos: Se puede administrar noticias</message>
-	<message id="entity_admin_r_kalender">Derechos: Puede administrar el calendario</message>
-	<message id="entity_admin_r_design">Derechos: Puede gestionar los archivos de diseño</message>
-	<message id="entity_admin_r_demo"><em>Es Demo-usuario</em> (no puede guardar los cambios)</message>
+	<message id="entity_admin_r_adminuser">Permisos: puede gestionar administradores</message>
+	<message id="entity_admin_r_user">Permisos: puede gestionar usuarios</message>
+	<message id="entity_admin_r_daten">Permisos: puede gestionar los datos del juego</message>
+	<message id="entity_admin_r_staerken">Permisos: puede ver y editar las habilidades de los jugadores</message>
+	<message id="entity_admin_r_spiele">Permisos: puede gestionar partidos</message>
+	<message id="entity_admin_r_news">Permisos: puede gestionar noticias</message>
+	<message id="entity_admin_r_kalender">Permisos: puede gestionar el calendario</message>
+	<message id="entity_admin_r_design">Permisos: puede modificar archivos de diseño</message>
+	<message id="entity_admin_r_demo"><em>Es usuario de demostración</em> (no puede guardar cambios)</message>
 </messages>

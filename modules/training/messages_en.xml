@@ -1,44 +1,195 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     
     <message id="training_navlabel">Training</message>
-    <message id="training_no_trainers_available">There are no trainers available at the moment.</message>
-    <message id="training_choose_trainer">Choose a Trainer</message>
-	
-    <message id="trainer-details_navlabel">Choose Trainer</message>
-    <message id="training_choose_trainer_title">Hire This Trainer</message>
-    <message id="training_choose_trainer_units">Number of Training Units</message>
+    <message id="training_no_trainers_available">No coaches are currently available.</message>
+    <message id="training_choose_trainer">Choose a coach</message>
+    <message id="training_trainer_filter_all">All coaches</message>
     
-    <message id="training_choose_trainer_err_existing_units">You still have open training units. They must be executed first before you hire a new trainer.</message>
-    <message id="training_choose_trainer_err_too_expensive">This trainer is too expensive for you at the moment.</message>
-
-	<message id="training_trainer_salary_subject">Fee for booked training units</message>
-	
-	<message id="training_units_count">Open Training Units</message>
-	<message id="training_last_execution">Last Training Session</message>
-	
-	<message id="training_trainer_details">Booked Trainer</message>
-	<message id="training_execute_training_title">Train Team Now</message>
-	<message id="training_execute_button">Execute training</message>
-	
-	<message id="training_execute_focus">Focus</message>
+    <message id="trainer-details_navlabel">Select coach</message>
+    
+    <message id="training_choose_trainer_title">Hire this coach</message>
+    <message id="training_choose_trainer_units">Number of training sessions</message>
+    
+    <message id="training_choose_trainer_err_existing_units">This coach cannot currently be hired.</message>
+    <message id="training_choose_trainer_err_too_expensive">You cannot currently afford this coach.</message>
+    
+    <message id="training_trainer_salary_subject">Training sessions</message>
+    <message id="training_trainer_dismissal_subject">Coach compensation</message>
+    
+    <message id="training_units_count">Open training sessions</message>
+    <message id="training_last_execution">Last training session</message>
+    <message id="training_current_trainer">Current coach</message>
+    <message id="training_staff_title">Coaching staff</message>
+    <message id="training_staff_intro">One head coach and up to %d specialist coaches manage daily training. Depending on the training type, the most suitable coach is assigned automatically.</message>
+    <message id="training_staff_role">Role</message>
+    <message id="training_staff_head">Head coach</message>
+    <message id="training_staff_specialist">Specialist coach</message>
+    <message id="training_staff_open_units">Open sessions</message>
+    <message id="training_staff_empty">No coach is employed yet. Without open training sessions, no team training takes place.</message>
+    <message id="training_staff_full">The coaching staff is already fully occupied.</message>
+    <message id="training_staff_slots_available">%d more place or places available in the coaching staff.</message>
+    <message id="training_add_units">Book additional sessions</message>
+    <message id="training_dismiss_trainer">Dismiss</message>
+    <message id="training_dismiss_trainer_confirm">Really dismiss this coach? All of this coach's open sessions will expire. Compensation amounts to %s %s.</message>
+    <message id="training_dismiss_trainer_success">Coach dismissed. %d open sessions expired. Compensation: %d.</message>
+    <message id="training_dismiss_trainer_not_found">This coach is not part of the current coaching staff.</message>
+    <message id="training_dismiss_trainer_too_expensive">The required compensation cannot currently be paid.</message>
+    
+    <message id="training_trainer_details">Booked coach</message>
+    <message id="training_execute_training_title">Train team now</message>
+    <message id="training_execute_button">Run training</message>
+    
+    <message id="training_execute_focus">Focus</message>
     <message id="training_execute_focus_technique">Technique</message>
     <message id="training_execute_focus_stamina">Stamina</message>
     <message id="training_execute_focus_motivation">Motivation</message>
-    <message id="training_execute_focus_regeneration">Regeneration</message>
+    <message id="training_execute_focus_regeneration">Recovery</message>
     
     <message id="training_execute_intensity">Intensity</message>
-    <message id="training_execute_training_note">You can execute another training unit every %d hours.</message>
+    <message id="training_execute_training_note">Regular training is carried out automatically about once every 24 hours via the saved training plan, independently of matches.</message>
     
-    <message id="training_execute_success">The team got trained.</message>
-    <message id="training_execute_err_already_executed">The training unit has been already executed. Refresh the page and try it again.</message>
+    <message id="training_execute_success">The team has been trained.</message>
+    <message id="training_execute_err_already_executed">The training session has already been carried out. Reload the page and try again.</message>
     
-    <message id="training_execute_err_too_early">The time break after the last training session is too short. The next training unit may be executed: %s</message>
+    <message id="training_execute_err_too_early">The rest period after the last training session is too short. The next training session may take place no earlier than: %s</message>
+    <message id="training_execute_err_match_simulating">The team is currently playing a match. You can train again afterwards.</message>
+    
+    <message id="training_execute_effects_title">Training session result</message>
+    
+    <message id="training_execute_err_team_in_training_camp">The team is currently at a training camp and therefore has no time for regular training sessions.</message>
 
-	<message id="training_execute_err_match_simulating">Your team is currently at a match. The players can train only after the match has completed again.</message>
+    <message id="training_plan_title">Automatic training plan</message>
+    <message id="training_plan_intro">The plan is also processed automatically on days without matches. About every 24 hours, the club uses one open training session, assigns the most suitable coach and runs the next slot.</message>
+    <message id="training_plan_no_units_warning">There are no open training sessions. The plan remains saved but will only run after you have booked a coach.</message>
+    <message id="training_plan_saved">The training plan has been saved.</message>
+    <message id="training_plan_slot">Slot</message>
+    <message id="training_plan_type">Training type</message>
 
-	<message id="training_execute_effects_title">Effects of this training unit</message>
-	
-	<message id="training_execute_err_team_in_training_camp">The team is currently at a training camp and therefore ordinary training units cannot be executed.</message>
+    <message id="training_type_regeneration">Recovery</message>
+    <message id="training_type_technique">Technical training</message>
+    <message id="training_type_passing">Passing</message>
+    <message id="training_type_finishing">Finishing</message>
+    <message id="training_type_setpieces">Set pieces</message>
+    <message id="training_type_defense">Defensive work</message>
+    <message id="training_type_athletics">Athletics</message>
+    <message id="training_type_teambuilding">Team building</message>
+    <message id="training_type_matchprep">Match preparation</message>
+    <message id="training_type_goalkeeper">Goalkeeper training</message>
+
+    <message id="training_latest_report">Latest training report</message>
+    <message id="training_history_title">Training history</message>
+    <message id="training_report_date">Date</message>
+    <message id="training_report_player_count">Player</message>
+    <message id="training_report_injuries">Injuries</message>
+    <message id="training_report_injured">Injured</message>
+    <message id="training_report_chemistry">Team chemistry</message>
+    <message id="training_report_player_details">Player development</message>
+
+    <message id="trainer_specialization_balanced">Balanced</message>
+    <message id="trainer_specialization_technique">Technique</message>
+    <message id="trainer_specialization_fitness">Fitness</message>
+    <message id="trainer_specialization_offense">Attack</message>
+    <message id="trainer_specialization_defense">Defence</message>
+    <message id="trainer_specialization_setpieces">Set pieces</message>
+    <message id="trainer_specialization_goalkeeper">Goalkeeper</message>
+    <message id="trainer_specialization_mental">Mentality</message>
+    <message id="trainer_specialization_tactics">Tactics</message>
+
+    <message id="training-calendar_navlabel">Training calendar</message>
+    <message id="trainingcalendar_title">Training calendar</message>
+    <message id="trainingcalendar_intro">The training calendar shows the next focus, intensity, expected effects, injury risk, team chemistry, training reports and training camps on one page.</message>
+    <message id="trainingcalendar_disabled">Advanced training is currently disabled. The plan can be viewed, but automatic effects are not applied.</message>
+    <message id="trainingcalendar_next_focus">Next training focus</message>
+    <message id="trainingcalendar_next">Next training</message>
+    <message id="trainingcalendar_open_units">Open sessions</message>
+    <message id="trainingcalendar_team_chemistry">Team chemistry</message>
+    <message id="trainingcalendar_expected_effects">Expected effects</message>
+    <message id="trainingcalendar_expected_chemistry">Chemistry effect</message>
+    <message id="trainingcalendar_no_expected_effects">No significant effects expected.</message>
+    <message id="trainingcalendar_injury_risk">Injury risk</message>
+    <message id="trainingcalendar_per_player">per player</message>
+    <message id="trainingcalendar_current_trainer">Current coach</message>
+    <message id="trainingcalendar_no_trainer">No coach booked yet. The forecast uses average values.</message>
+    <message id="trainingcalendar_no_units_warning">There are no open training sessions. The plan remains saved but will only run after you have booked a coach.</message>
+    <message id="trainingcalendar_go_to_training">Go to training</message>
+    <message id="trainingcalendar_go_to_camps">Go to training camps</message>
+    <message id="trainingcalendar_active_camp">Active training camp</message>
+    <message id="trainingcalendar_active_camp_note">Regular training sessions are skipped during the training camp.</message>
+    <message id="trainingcalendar_plan_title">Edit training plan</message>
+    <message id="trainingcalendar_plan_intro">The highlighted row is the next slot. Training takes place about every 24 hours and then advances to the next slot.</message>
+    <message id="trainingcalendar_last_report_title">Latest training report</message>
+    <message id="trainingcalendar_best_performer">Best player</message>
+    <message id="trainingcalendar_worst_performer">Worst performer</message>
+    <message id="trainingcalendar_total_effect">Total effect</message>
+    <message id="trainingcalendar_no_report">No training report is available yet.</message>
+    <message id="trainingcalendar_camps_title">Training camps in calendar</message>
+    <message id="trainingcalendar_no_camps">No active or planned training camp.</message>
+    <message id="trainingcalendar_last_camp_report">Latest training-camp report</message>
+    <message id="trainingcalendar_status">Status</message>
+    <message id="trainingcalendar_status_active">Active</message>
+    <message id="trainingcalendar_status_upcoming">Planned</message>
+    <message id="trainingcalendar_intensity_low">light</message>
+    <message id="trainingcalendar_intensity_normal">normal</message>
+    <message id="trainingcalendar_intensity_high">high</message>
+    <message id="trainingcalendar_intensity_extreme">extreme</message>
+    <message id="trainingcalendar_risk_none">no risk</message>
+    <message id="trainingcalendar_risk_low">low</message>
+    <message id="trainingcalendar_risk_medium">medium</message>
+    <message id="trainingcalendar_risk_high">high</message>
+    <message id="trainingcalendar_effect_strength">Strength</message>
+    <message id="trainingcalendar_effect_freshness">Fitness</message>
+    <message id="trainingcalendar_effect_technique">Technique</message>
+    <message id="trainingcalendar_effect_stamina">Stamina</message>
+    <message id="trainingcalendar_effect_satisfaction">Satisfaction</message>
+    <message id="trainingcalendar_effect_passing">Passing</message>
+    <message id="trainingcalendar_effect_shooting">Shooting</message>
+    <message id="trainingcalendar_effect_heading">Heading</message>
+    <message id="trainingcalendar_effect_tackling">Tackling</message>
+    <message id="trainingcalendar_effect_freekick">Free kicks</message>
+    <message id="trainingcalendar_effect_pace">Pace</message>
+    <message id="trainingcalendar_effect_creativity">Creativity</message>
+    <message id="trainingcalendar_effect_influence">Influence</message>
+    <message id="trainingcalendar_effect_flair">Flair</message>
+    <message id="trainingcalendar_effect_penalty">Penalties</message>
+    <message id="trainingcalendar_effect_penalty_killing">Penalty saving</message>
+
+    <!-- Einzeltraining -->
+    <message id="individual-training_navlabel">Individual training</message>
+    <message id="individual_training_title">Individual training</message>
+    <message id="individual_training_intro">Set an individual training focus for each player. A player can have exactly one active individual training programme. Progress is made with every daily team session, including on days without matches. Once the target is reached, individual training ends and you receive a message.</message>
+    <message id="individual_training_only_human">Individual training is only available to clubs with a human manager.</message>
+    <message id="individual_training_no_trainer">No coach booked</message>
+    <message id="individual_training_progress_hint_title">Progress</message>
+    <message id="individual_training_progress_hint">Duration and progress depend on the player, age, talent, current ability and coach quality.</message>
+    <message id="individual_training_no_units_warning">There are no open training sessions. Individual training remains saved but will only progress when regular training sessions are processed again.</message>
+    <message id="individual_training_recommendation">Weak values</message>
+    <message id="individual_training_current">Current focus</message>
+    <message id="individual_training_selected">Individual training</message>
+    <message id="individual_training_progress">Progress</message>
+    <message id="individual_training_none">No individual training</message>
+    <message id="individual_training_units_done">Sessions</message>
+    <message id="individual_training_remaining_approx">approx. remaining:</message>
+    <message id="individual_training_not_active">Not active</message>
+    <message id="individual_training_completed_title">Completed individual training</message>
+    <message id="individual_training_completed_date">Completed on</message>
+    <message id="individual_training_result">Result</message>
+    <message id="individual_training_saved">Individual training has been saved.</message>
+    <message id="individual_training_cancelled">Individual training has been removed.</message>
+    <message id="individual_training_unchanged">Individual training was already set this way.</message>
+    <message id="individual_training_error_player_not_found">The player does not belong to your club.</message>
+    <message id="individual_training_error_invalid_attribute">This ability cannot be selected as individual training for this player.</message>
+    <message id="individual_training_completed_notification">Individual training completed: {player} ({attribute})</message>
+    <message id="individual_training_age_years">years</message>
+    <message id="individual_training_autosave_hint">Changes are saved automatically as soon as you select or remove an individual training programme.</message>
+    <message id="individual_training_autosave_saving">saving ...</message>
+
+
+    <message id="training_trainer_requirements">Requirements</message>
+    <message id="training_trainer_not_realistic">not realistic</message>
+    <message id="training_trainer_not_realistic_detail">This coach does not currently consider the club or league suitable. Improve squad strength, league reputation or budget before a signing becomes possible.</message>
+    <message id="training_trainer_err_club_too_weak">The coach wants to join a stronger club.</message>
+    <message id="training_trainer_err_league_too_weak">The coach wants to work in a stronger league.</message>
+    <message id="training_trainer_err_budget_risk">The signing would be too risky for the current budget.</message>
 </messages>

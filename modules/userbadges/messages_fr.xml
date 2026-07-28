@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="badge_notification">Félicitations ! Vous avez remporté une nouvelle distinction.</message>
+    <message id="badge_notification_named">Félicitations ! Vous avez remporté la distinction {badge}.</message>
+    
+    <message id="badge_level_gold">Distinction en or</message>
+    <message id="badge_level_silver">Distinction en argent</message>
+    <message id="badge_level_bronze">Distinction en bronze</message>
+    
+    <message id="badges_navlabel">Récompenses</message>
+    <message id="badge_earned_count">Obtenu</message>
+</messages>

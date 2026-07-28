@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_trainingcamp_min_days">Duración mínima de la concentración</message> 
+	<message id="settings_label_trainingcamp_min_days_help">en días</message> 
+	
+	<message id="settings_label_trainingcamp_max_days">Duración máxima de la concentración</message> 
+	<message id="settings_label_trainingcamp_max_days_help">en días</message> 
+	
+	<message id="settings_label_trainingcamp_booking_max_days_in_future">Reserva más tardía</message> 
+	<message id="settings_label_trainingcamp_booking_max_days_in_future_help">en días; hasta cuántos días en el futuro puede reservarse una concentración.</message> 
+</messages>

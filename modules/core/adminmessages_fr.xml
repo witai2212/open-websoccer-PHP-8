@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="main_title">Centre d’administration WebSoccer</message>
+    
+    <message id="error_page_not_found">La page demandée n’existe plus. Avez-vous saisi la bonne adresse ?</message>
+    <message id="error_access_denied">Accès refusé.</message>
+    <message id="validationerror_no_changes_as_demo">Le compte de démonstration n’autorise aucune modification des données.</message>
+    <message id="validationerror_email">L’adresse e-mail indiquée n’est pas valide.</message>
+    <message id="validationerror_url">Aucune URL valide n’a été saisie pour %s.</message>
+    <message id="validationerror_number">Aucun nombre valide n’a été saisi pour %s.</message>
+    <message id="validationerror_percent">Un nombre valide doit être saisi pour %s.</message>
+    <message id="validationerror_text_too_long">Le texte de %s est trop long.</message>
+    <message id="validationerror_date">Aucune date valide n’a été indiquée pour %s. Elle doit respecter le format '%s'.</message>
+    <message id="validationerror_required">%s nécessite une saisie.</message>
+    <message id="validationerror_imageupload_noimagefile">Le fichier à téléverser n’est pas un fichier image valide.</message>
+    <message id="error_file_upload_failed">Le fichier sélectionné n’a pas pu être téléversé. Vérifiez que le dossier existe et dispose des droits d’écriture.</message>
+    
+    <message id="subpage_save_title">Enregistrer</message>
+    <message id="subpage_error_title">Erreur</message>
+    <message id="alert_save_success">Les données ont été enregistrées avec succès.</message>
+    <message id="subpage_error_alertbox_title">Les erreurs suivantes se sont produites :</message>
+    <message id="back_label">Retour</message>
+    <message id="continue_label">Passer au point suivant</message>
+    
+    <message id="button_save">Enregistrer</message>
+    <message id="button_reset">Réinitialiser</message>
+    <message id="button_delete">Supprimer</message>
+    <message id="button_close">Fermer</message>
+    <message id="button_search">Rechercher</message>
+    <message id="button_cancel">Annuler</message>
+    <message id="button_display">Afficher</message>
+    
+    <message id="option_yes">Oui</message>
+    <message id="option_no">Non</message>
+    
+    <message id="unit_days">Jours</message>
+    <message id="unit_hours">Heures</message>
+    <message id="unit_minutes">Minutes</message>
+    <message id="unit_matches">Matches</message>
+    <message id="unit_seats">Places</message>
+    
+    <message id="empty_list">Aucune entrée trouvée.</message>
+    
+    <message id="alert_error_title">Erreur.</message>
+    <message id="alert_success_title">Réussi.</message>
+    
+    <message id="internetexplorer_warning_title">Utilisez plutôt un autre navigateur web !</message>
+    <message id="internetexplorer_warning_message">Les pages du centre d’administration fonctionnent mieux et plus rapidement avec un navigateur compatible HTML5, par exemple Google Chrome. Essayez-le !</message>
+    
+    <message id="login_title">Connexion au centre d’administration</message>
+    <message id="login_error_nousername">Aucun nom d’utilisateur n’a été indiqué.</message>
+    <message id="login_error_nopassword">Aucun mot de passe n’a été indiqué.</message>
+    <message id="login_error_unknownusername">Nom d’utilisateur inconnu.</message>   
+    <message id="login_error_invalidpassword">Mot de passe incorrect.</message> 
+    <message id="login_alert_accessdenied_title">Vous devez vous connecter !</message>
+    <message id="login_alert_accessdenied_content">Veuillez saisir vos identifiants ci-dessous.</message>
+    <message id="login_alert_logoutsuccess_title">Déconnexion réussie.</message>
+    <message id="login_alert_logoutsuccess_content">À la prochaine !</message>
+    <message id="login_alert_sentpassword_title">Les identifiants ont été envoyés.</message>
+    <message id="login_alert_sentpassword_content">Consultez vos e-mails !</message>
+    <message id="login_alert_error_title">Échec de la connexion !</message>
+    <message id="login_alert_error_content">Vérifiez les informations saisies.</message>
+    
+    <message id="login_label_user">Nom d’utilisateur</message>
+    <message id="login_label_password">Mot de passe</message>
+    <message id="login_button_logon">Se connecter</message>    
+    
+    <message id="login_link_forgotpassword">Mot de passe oublié ?</message>    
+    
+    <message id="admincenter_brand">Centre d’administration</message>
+    <message id="admincenter_homelink_tooltip">Accéder à la page d’accueil du centre d’administration</message>
+    <message id="admincenter_loggedin_as">Connecté en tant que</message>
+    <message id="admincenter_editprofile_tooltip">Modifier le profil</message>
+    <message id="admincenter_logout">Se déconnecter</message>
+    <message id="admincenter_link_clear_cache">Vider le cache</message>
+    
+    
+    <message id="category_website_navlabel">Site web</message>
+    <message id="category_settings_navlabel">Général</message>
+    
+	<message id="nationalcupgenerator_navlabel">Générer les coupes nationales</message>
+	<message id="category_transfers_navlabel">Transferts</message>
+	<message id="computertransfers_navlabel">Transferts de l’ordinateur</message>
+	<message id="computertransfers_generator_label">Transferts de l’ordinateur</message>
+	<message id="rounds">Tours</message>
+	<message id="computertransfers_generator_label">Générer les transferts de l’ordinateur</message>
+	
+	<message id="schedulegenerator_cups_navlabel">Générer les matches de coupe</message>
+	
+	<message id="admincenter_link_website">Site web</message>
+	<message id="admincenter_link_profile">Profil</message>
+	
+	<message id="all_settings_navlabel">Paramètres</message>
+	<message id="all_logging_navlabel">Journal des connexions</message>
+	
+	<message id="profile_title">Modifier le profil</message>
+	<message id="profile_label_name">Nom</message>
+	<message id="profile_label_email">E-mail</message>
+	<message id="profile_label_newpassword">Nouveau mot de passe</message>
+	<message id="profile_label_repeatpassword">Répéter le nouveau mot de passe</message>
+	<message id="profile_label_language">Langue</message>
+	
+	<message id="all_logging_title">Journal des connexions</message>
+	<message id="all_logging_intro">Les dernières connexions au centre d’administration sont répertoriées ici.</message>
+	<message id="all_logging_filesize"><strong>Taille du fichier journal :</strong> %s Ko</message>
+	<message id="all_logging_button_empty_file">Vider le fichier</message>
+	<message id="all_logging_filenotfound">Le fichier journal est introuvable.</message>
+	<message id="all_logging_alert_logfile_truncated">Le fichier journal a été vidé avec succès.</message>
+	<message id="all_logging_error_not_truncated">Le fichier journal n’a pas pu être vidé. Dispose-t-il des droits d’écriture ?</message>
+	<message id="all_logging_only_last_entries_shown">Seules les 50 dernières entrées sont affichées.</message>
+	
+	<message id="all_logging_label_no">Nº</message>
+	<message id="all_logging_label_user">Utilisateur</message>
+	<message id="all_logging_label_ip">IP</message>
+	<message id="all_logging_label_time">Heure système</message>	
+	
+	<message id="clearcache_title">Vider le cache</message>	
+	<message id="clearcache_success_title">Le cache a été reconstruit.</message>	
+	<message id="clearcache_success_message">Effectuez toujours cette action après avoir modifié les paramètres des modules logiciels.</message>
+	
+	<message id="profile_validationerror_email">Aucune adresse e-mail indiquée.</message>
+	<message id="profile_validationerror_password_too_short">Le mot de passe est trop court.</message>
+	<message id="profile_validationerror_wrong_repeated_password">Le mot de passe répété ne correspond pas au premier.</message>
+	
+	<message id="home_title">Bienvenue, %s !</message>
+	<message id="home_intro">Bienvenue dans le centre d’administration de <strong>OpenWebSoccer-Sim</strong>. N’oubliez pas de vous <a href="logout.php">déconnecter</a> après votre session si d’autres utilisateurs se servent de votre ordinateur.</message>
+	<message id="home_softwareinfo_title">Informations sur le logiciel</message>
+	<message id="home_softwareinfo_name">Nom</message>
+	<message id="home_softwareinfo_version">Version</message>
+	<message id="home_softwareinfo_developer">Développeur</message>
+	<message id="home_softwareinfo_copyright">Droits d’auteur</message>
+	<message id="home_projectinfo_title">Informations sur le projet</message>
+	<message id="home_projectinfo_name">Nom</message>
+	<message id="home_projectinfo_adminemail">E-mail de l’administrateur</message>  
+	
+	<message id="all_settings_title">Paramètres système</message>	
+	
+	<message id="settings_tab_general">Général</message>  
+	<message id="settings_tab_offlinemode">Mode hors ligne</message> 
+	<message id="settings_tab_game">Jeu</message> 
+	<message id="settings_tab_social">Réseaux sociaux</message> 
+	
+	<message id="settings_label_context_root">Chemin relatif sur le serveur (racine du contexte)</message> 
+	<message id="settings_label_context_root_help">Sans « / » à la fin.</message> 
+	<message id="settings_label_projectname">Nom du projet</message> 
+	<message id="settings_label_systememail">E-mail système</message> 
+	<message id="settings_label_homepage">Site web officiel</message> 
+	<message id="settings_label_homepage_help">URL du script sans la racine du contexte</message> 
+	<message id="settings_label_time_offset">Décalage par rapport à l’heure du serveur</message> 
+	<message id="settings_label_time_offset_help">en secondes (3600 correspond à une heure)</message> 
+	<message id="settings_label_password_protected">Protéger toutes les pages.</message> 
+	<message id="settings_label_password_protected_help">Seuls les utilisateurs connectés peuvent accéder aux pages.</message> 
+	<message id="settings_label_password_protected_startpage">Protéger également la page d’accueil.</message> 
+	<message id="settings_label_entries_per_page">Nombre d’entrées par page</message> 
+	<message id="settings_label_entries_per_page_help">dans les listes</message> 
+	<message id="settings_label_supported_languages">Langues prises en charge</message> 
+	<message id="settings_label_supported_languages_help">Séparées par des virgules</message> 
+	<message id="settings_label_date_format">Format de date</message> 
+	<message id="settings_label_date_format_help">Selon la fonction PHP <a href="http://www.php.net/manual/en/function.date.php" target="_blank">date()</a></message> 
+	<message id="settings_label_datetime_format">Format de date et d’heure</message> 
+	<message id="settings_label_datetime_format_help">Selon la fonction PHP <a href="http://www.php.net/manual/en/function.date.php" target="_blank">date()</a></message> 
+	<message id="settings_label_time_format">Format de l’heure uniquement</message> 
+	<message id="settings_label_time_format_help">Selon la fonction PHP <a href="http://www.php.net/manual/en/function.date.php" target="_blank">date()</a></message> 
+	<message id="settings_label_skin">Thème</message> 
+	<message id="settings_label_skin_help">Nom d’une classe de thème. Les classes fournies sont <em>DefaultBootstrapSkin</em>, <em>GreenBootstrapSkin</em> et <em>SchedioartFootballSkin</em>.</message> 
+	<message id="settings_label_session_lifetime">Durée d’une session utilisateur</message> 
+	<message id="settings_label_session_lifetime_help">en secondes. Durée pendant laquelle un utilisateur peut rester inactif avant que sa session soit désactivée automatiquement.</message> 
+	
+	<message id="settings_label_time_zone">Fuseau horaire</message> 
+	<message id="settings_label_time_zone_help">Fuseau horaire du serveur. Il doit s’agir d’une <a href="http://php.net/manual/de/timezones.php" target="_blank">valeur prise en charge par PHP</a>.</message> 
+	
+	<message id="settings_label_privacypolicy_url">URL de la politique de confidentialité</message> 
+	<message id="settings_label_privacypolicy_url_help">URL interne ou externe (adresse web) d’une politique de confidentialité.</message> 
+	
+	<message id="settings_label_fix_term_deposit_interest">Taux d’intérêt</message>
+	
+	<message id="settings_label_game_currency">Devise du jeu</message> 
+	
+	<message id="settings_label_offline_help">Activez ou désactivez le site web. Si vous sélectionnez le mode « Hors ligne », les visiteurs ne verront que le message saisi ci-dessous lorsqu’ils accéderont à une page.</message>
+  	<message id="settings_label_offline">Mode</message>
+	<message id="settings_label_offline_text">Message hors ligne</message>
+	
+	<message id="settings_label_offline_times">Mise hors ligne planifiée</message>
+	<message id="settings_label_offline_times_help">Périodes séparées par des virgules, au format 24 heures, durant lesquelles le site doit passer chaque jour en mode hors ligne. Exemple : 09:00-12:00, 13:00-17:00</message>
+	
+	<message id="settings_saved_note_restartjobs">Redémarrez les tâches !</message>
+	<message id="settings_saved_note_restartjobs_details">Les modifications concernant les tâches ne prennent effet qu’après leur redémarrage.</message>
+	
+	<message id="manage_add">Créer une nouvelle entrée</message>
+	<message id="manage_edit">Modifier</message>
+	<message id="manage_delete">Supprimer</message>
+	<message id="manage_no_records_found">Aucun enregistrement trouvé.</message>
+	<message id="manage_number_of_records"><b>%d</b> enregistrements trouvés. Affichage de %d à %d :</message>
+	<message id="manage_select_all_label">Sélectionner toutes les entrées.</message>
+	<message id="manage_selected_items_label">Enregistrements sélectionnés :</message>
+	<message id="manage_status_active">Statut : actif</message>
+	<message id="manage_status_blocked">Statut : bloqué</message>
+	<message id="manage_show_details">Afficher les détails</message>
+	<message id="manage_sort_column_asc">Trier par %s dans l’ordre croissant</message>	
+	<message id="manage_sort_column_desc">Trier par %s dans l’ordre décroissant</message>	
+	<message id="manage_sort_column_reset">Supprimer le tri</message>	
+	<message id="manage_search_title">Recherche</message>
+	<message id="manage_search_collapse">Afficher ou masquer le formulaire de recherche</message>
+	<message id="manage_delete_multiselect_confirm">Voulez-vous vraiment supprimer les entrées sélectionnées ?</message>
+	<message id="manage_delete_link_confirm">Voulez-vous vraiment supprimer cette entrée ?</message>
+	<message id="manage_success_delete">Suppression réussie.</message>
+	<message id="manage_add_title">Créer</message>
+	<message id="manage_edit_title">Modifier</message>
+	
+	<message id="manage_select_placeholder">Aucun</message>
+	
+	<message id="jobs_navlabel">Tâches</message>
+	<message id="jobs_introduction">Les tâches sont des processus exécutés régulièrement en arrière-plan, comme le calcul automatique des matchs. Elles doivent toujours être démarrées manuellement après un redémarrage du serveur ou lorsqu'une autre erreur s'est produite.</message>
+	 <message id="jobs_warning">Vérifiez régulièrement (au moins une fois par jour) que les tâches sont toujours en cours d'exécution !</message>  
+	
+	<message id="jobs_head_name">Désignation</message>
+	<message id="jobs_head_status">Statut</message>
+	<message id="jobs_head_startstop">Démarrer/Arrêter</message> 
+	<message id="jobs_head_class">Classe</message> 
+	<message id="jobs_head_last_execution">Dernière exécution</message> 
+	<message id="jobs_head_interval">Intervalle</message> 
+	<message id="jobs_status_running">En cours</message> 
+	<message id="jobs_status_notrunning">À l'arrêt</message> 
+	<message id="jobs_button_stop">Arrêter</message>
+	<message id="jobs_button_start">Démarrer</message>
+	<message id="jobs_button_execute_once">Exécuter une fois</message>
+	<message id="jobs_executed">Exécution réussie.</message>
+	
+	<message id="sendpassword_admin_email_subject">Votre nouveau mot de passe pour l'AdminCenter</message>
+	<message id="sendpassword_admin_email_greeting">Bonjour,</message>
+	<message id="sendpassword_admin_email_introduction">voici le nouveau mot de passe que vous avez demandé via l'AdminCenter. Vous pouvez et devriez le modifier dans votre profil :</message>
+	<message id="sendpassword_admin_email_newpassword_label">Votre nouveau mot de passe :</message>
+	<message id="sendpassword_admin_email_ending">Veuillez noter que votre nouveau mot de passe ne sera activé qu'à votre première connexion avec celui-ci.</message>
+	
+	<message id="sendpassword_admin_usernotfound">Utilisateur inconnu.</message>
+	<message id="sendpassword_admin_alreadysent">Vous avez demandé un mot de passe récemment. Veuillez réessayer plus tard.</message>
+	
+	<message id="sendpassword_admin_title">Demander un mot de passe</message>
+	<message id="sendpassword_admin_intro">Vous avez oublié votre mot de passe ? Saisissez simplement votre adresse e-mail et nous vous enverrons un nouveau mot de passe.</message>
+	<message id="sendpassword_admin_label_email">E-mail</message>
+	<message id="sendpassword_admin_button">Envoyer le mot de passe</message>
+	<message id="sendpassword_admin_loginlink">Aller à la connexion</message>
+	
+	<message id="entitylogging_nologgingcolumns">Si vous activez la journalisation pour cette entité, vous devez indiquer les colonnes de base de données dans l'attribut <em>loggingcolumns</em>.</message>
+	<message id="entitylogging_navlabel">Modifications des données</message>
+	<message id="entitylogging_intro">Voici les 50 dernières modifications apportées aux principaux types de données. Vous pouvez activer ou désactiver le suivi des modifications séparément pour chaque module. Pour l'activer, ajoutez simplement les attributs <em>logging</em> et <em>loggingcolumns</em> au fichier <em>module.xml</em>, comme dans l'exemple.</message>
+	<message id="entitylogging_label_no">N°</message>
+	<message id="entitylogging_label_time">Heure</message>
+	<message id="entitylogging_label_user">Utilisateur (IP)</message>
+	<message id="entitylogging_label_type">Action</message>
+	<message id="entitylogging_label_data">Enregistrement</message>
+	
+	<message id="entitylogging_action_edit">Modification</message>
+	<message id="entitylogging_action_delete">Suppression</message>
+	
+	<message id="settings_tab_stockmarket">Marché boursier</message>
+	<message id="settings_label_finnhub_api">API Finnhub.io</message>
+	<message id="settings_label_finnhub_api_help">Clé API facultative pour les cours externes des actions.</message>
+	<message id="default_starting_value">Prix d'émission par défaut</message>
+	<message id="settings_label_default_starting_value">Prix d'émission par défaut</message>
+	<message id="settings_label_default_starting_value_help">Cours initial d'une action de club lors de son introduction en bourse.</message>
+	<message id="settings_label_min_stadium_size">Introduction en bourse : capacité minimale du stade</message>
+	<message id="settings_label_min_stadium_size_help">Capacité minimale du stade qu'un club doit atteindre pour être introduit en bourse.</message>
+	<message id="settings_label_min_team_value">Introduction en bourse : valeur minimale de l'effectif</message>
+	<message id="settings_label_min_team_value_help">Valeur minimale de l'effectif qu'un club doit atteindre pour être introduit en bourse.</message>
+	<message id="settings_label_min_team_titles_won">Introduction en bourse : nombre minimal de titres</message>
+	<message id="settings_label_min_team_titles_won_help">Nombre de titres qu'un club doit avoir remportés pour être introduit en bourse.</message>
+	
+	<message id="settings_label_max_scouts_per_team">Nombre max. de recruteurs/équipe</message>
+	<message id="settings_label_scouts_matches">Matchs du recruteur/équipe</message>
+	<message id="settings_tab_scouting">Recrutement</message>
+	
+	<message id="tablemaker_navlabel">Marquage du classement</message>
+	
+	<message id="subpage_error_tax_payment">Erreur lors du paiement de l'impôt</message>
+
+	<message id="category_unblock_matches_navlabel">Débloquer les matchs</message>
+	<message id="unblock_matches_navlabel">Débloquer les matchs</message>
+	
+	<message id="admin-execute-match_navlabel">Simuler les matchs manuellement</message>
+
+    <message id="adminsection_system_navlabel">Système et paramètres</message>
+    <message id="adminsection_website_users_navlabel">Site web et utilisateurs</message>
+    <message id="adminsection_world_navlabel">Monde du jeu</message>
+    <message id="adminsection_club_finance_navlabel">Club et finances</message>
+    <message id="adminsection_players_development_navlabel">Joueurs et progression</message>
+    <message id="adminsection_competition_season_navlabel">Compétitions et saison</message>
+    <message id="adminsection_transfers_navlabel">Transferts</message>
+    <message id="adminsection_story_career_navlabel">Récit et carrière</message>
+    <message id="adminsection_other_navlabel">Autres outils</message>
+</messages>

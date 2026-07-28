@@ -1,38 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="teamchemistry_navlabel">Team chemistry</message>
     <message id="teamchemistry_title">Team chemistry</message>
-    <message id="teamchemistry_intro">Team chemistry shows how well your squad works as a unit. It is based on nationality, time at club, formation familiarity, captain, transfers, happiness and personality.</message>
-    <message id="teamchemistry_schema_missing">The database columns for team chemistry are missing. Please run the SQL update first.</message>
+    <message id="teamchemistry_intro">Team chemistry shows how well your squad functions as a unit. It is calculated from nationality, time together, formation, captain, transfers, satisfaction and character.</message>
+    <message id="teamchemistry_schema_missing">The database columns for team chemistry are still missing. Please run the SQL update first.</message>
 
     <message id="teamchemistry_score">Chemistry</message>
     <message id="teamchemistry_match_effect">Match effect</message>
-    <message id="teamchemistry_match_effect_help">Small effect on passing, morale and match stability.</message>
+    <message id="teamchemistry_match_effect_help">Small effect on passing, morale and stability.</message>
     <message id="teamchemistry_factor">Factor</message>
     <message id="teamchemistry_value">Value</message>
     <message id="teamchemistry_detail">Details</message>
-    <message id="teamchemistry_recent_development">Recent development</message>
-    <message id="teamchemistry_no_log">No chemistry development stored yet.</message>
+    <message id="teamchemistry_recent_development">Latest development</message>
+    <message id="teamchemistry_no_log">No chemistry development has been recorded yet.</message>
     <message id="teamchemistry_date">Date</message>
-    <message id="teamchemistry_source">Source</message>
-    <message id="teamchemistry_old_new">Old / new</message>
+    <message id="teamchemistry_source">Trigger</message>
+    <message id="teamchemistry_old_new">Old / New</message>
     <message id="teamchemistry_change">Change</message>
 
-    <message id="teamchemistry_value_good">well connected</message>
-    <message id="teamchemistry_value_neutral">solid</message>
+    <message id="teamchemistry_value_good">well settled</message>
+    <message id="teamchemistry_value_neutral">decent</message>
     <message id="teamchemistry_value_bad">unsettled</message>
-    <message id="teamchemistry_hint_good">Your team is well connected. This can give small advantages in passing, morale and stability.</message>
-    <message id="teamchemistry_hint_neutral">Chemistry is solid. More continuity in formation, squad and captain can improve it.</message>
-    <message id="teamchemistry_hint_bad">Chemistry is low. Many new transfers, unhappy players or little familiarity can make the team less stable.</message>
+    <message id="teamchemistry_hint_good">Your team looks well settled. This can provide small advantages in passing, morale and stability during matches.</message>
+    <message id="teamchemistry_hint_neutral">Chemistry is solid. More continuity in formation, squad and captain can improve the value.</message>
+    <message id="teamchemistry_hint_bad">Chemistry is low. Many new transfers, dissatisfied players or limited familiarity can make your team more unsettled.</message>
 
     <message id="teamchemistry_factor_nationality">Nationality</message>
     <message id="teamchemistry_factor_settled">Time at club</message>
     <message id="teamchemistry_factor_formation">Formation</message>
     <message id="teamchemistry_factor_captain">Captain</message>
     <message id="teamchemistry_factor_transfers">New transfers</message>
-    <message id="teamchemistry_factor_happiness">Happiness</message>
-    <message id="teamchemistry_factor_personality">Personality</message>
+    <message id="teamchemistry_factor_happiness">Satisfaction</message>
+    <message id="teamchemistry_factor_personality">Flair</message>
 
     <message id="teamchemistry_source_page">Page view</message>
     <message id="teamchemistry_source_match">Match preparation</message>
@@ -41,4 +41,10 @@
     <message id="teamchemistry_source_manual">Update</message>
     <message id="teamchemistry_factor_trainingcamp">Training camp</message>
     <message id="teamchemistry_source_trainingcamp">Training camp</message>
+    
+    <message id="teamchemistry_factor_training">Training</message>
+    <message id="teamchemistry_factor_tactical_style">Tactical DNA</message>
+    <message id="teamchemistry_factor_manager_profile">Manager competence</message>
+    <message id="teamchemistry_source_tactical_style">Tactical DNA</message>
+    <message id="teamchemistry_source_manager_character">Manager character</message>
 </messages>

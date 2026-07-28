@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-
-	<message id="settings_label_merchandising_enabled">Enable merchandising</message>
-	<message id="settings_label_merchandising_enabled_help">
-		Defines whether the merchandising module is available in the game.
-	</message>
-
+    <message id="settings_label_merchandising_enabled">Enable merchandising</message>
+    <message id="settings_label_merchandising_enabled_help">Enables the complete merchandising system for human-managed clubs.</message>
+    <message id="settings_label_merchandising_star_threshold">Minimum rating for merchandising stars</message>
+    <message id="settings_label_merchandising_star_threshold_help">Minimum star rating from which a player is generally eligible for a personalised shirt.</message>
+    <message id="settings_label_merchandising_max_player_collections">Maximum player shirts per club</message>
+    <message id="settings_label_merchandising_max_player_collections_help">Limits the number of merchandising stars enabled at the same time.</message>
 </messages>

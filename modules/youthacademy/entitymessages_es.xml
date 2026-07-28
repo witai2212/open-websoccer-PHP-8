@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="youthacademylevel_navlabel">Niveles de la academia juvenil</message>
+
+    <message id="entity_youthacademylevel">Niveles de la academia juvenil</message>
+    <message id="entity_youthacademylevel_level">Nivel</message>
+    <message id="entity_youthacademylevel_level_help">Nivel interno de mejora de la academia juvenil. Los niveles superiores mejoran el desarrollo, el ojeo y la reputación.</message>
+    <message id="entity_youthacademylevel_name">Nombre</message>
+    <message id="entity_youthacademylevel_name_help">Nombre mostrado del nivel de academia, por ejemplo Academia básica o Academia de élite.</message>
+    <message id="entity_youthacademylevel_build_cost">Coste de construcción</message>
+    <message id="entity_youthacademylevel_build_cost_help">Coste único de construcción o mejora hasta este nivel.</message>
+    <message id="entity_youthacademylevel_maintenance_fee">Coste por jornada</message>
+    <message id="entity_youthacademylevel_maintenance_fee_help">Costes continuos de la academia cargados al club en cada jornada correspondiente.</message>
+    <message id="entity_youthacademylevel_development_bonus">Bonificación de desarrollo</message>
+    <message id="entity_youthacademylevel_development_bonus_help">Bonificación adicional para el desarrollo juvenil en este nivel de academia.</message>
+    <message id="entity_youthacademylevel_scouting_bonus">Bonificación de ojeo</message>
+    <message id="entity_youthacademylevel_scouting_bonus_help">Bonificación adicional para el ojeo juvenil y el ojeo de la academia.</message>
+    <message id="entity_youthacademylevel_stagnation_reduction">Protección contra el estancamiento</message>
+    <message id="entity_youthacademylevel_stagnation_reduction_help">Reduce el riesgo de que los jugadores juveniles se estanquen sin suficiente tiempo de juego.</message>
+    <message id="entity_youthacademylevel_reputation_bonus">Bonificación de reputación</message>
+    <message id="entity_youthacademylevel_reputation_bonus_help">Contribución adicional al atractivo y la reputación de la academia.</message>
+    <message id="entity_youthacademylevel_max_reputation">Reputación máxima</message>
+    <message id="entity_youthacademylevel_max_reputation_help">Límite máximo de reputación de la academia para este nivel de mejora.</message>
+    <message id="entity_youthacademylevel_status">Activo</message>
+    <message id="entity_youthacademylevel_status_help">Los clubes solo pueden utilizar niveles activos.</message>
+</messages>

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="stadium_navlabel">Estádio</message>
+    <message id="stadium_nostadium">Ainda não possui um estádio.</message>
+    
+    <message id="stadium_capacity">Capacidade</message>
+    
+    <message id="stadium_extend_title">Expandir estádio</message>
+    <message id="stadium_extend_button">Expandir</message>
+    <message id="stadium_extend_cost_help">Custo por lugar:</message>
+    
+    <message id="stadium_extend_err_too_expensive">Neste momento, não pode suportar o custo da expansão.</message>
+    <message id="stadium_extend_err_exceed_max_side">A bancada lateral pode ter, no máximo, %d lugares no total.</message>
+    <message id="stadium_extend_err_exceed_max_grand">A bancada principal pode ter, no máximo, %d lugares no total.</message>
+    <message id="stadium_extend_err_exceed_max_vip">O estádio só pode ter %d camarotes VIP.</message>
+    <message id="stadium_extend_err_constructionongoing">Já estão a decorrer obras no estádio. Aguarde até estarem concluídas.</message>
+    
+    <message id="stadium_extend_transaction_subject">Expansão do estádio</message>
+    <message id="stadium_extend_success">A expansão do estádio foi adjudicada.</message>
+    
+    <message id="stadium-extend-confirm_navlabel">Confirmar expansão do estádio</message>
+    <message id="stadium_extend_confirmation_title">Confirmar expansão</message>
+    <message id="stadium_extend_totalcost_label">Custo total</message>
+    
+    <message id="stadium_extend_limitation_intro">Pode ainda expandir o seu estádio, no máximo, da seguinte forma</message>
+    <message id="stadium_extend_limitation_side">Lugares na bancada lateral</message>
+    <message id="stadium_extend_limitation_grand">Lugares na bancada principal</message>
+    <message id="stadium_extend_limitation_vip">Camarotes VIP</message>
+    <message id="stadium_extend_limitation_instruction">Introduza o número pretendido de novos lugares e selecione depois uma proposta dos construtores interessados.</message>
+	<message id="stadium_extend_impossible">Já não pode expandir o seu estádio, pois este já atingiu a dimensão máxima.</message>
+
+	<message id="stadium_extend_nobuilders">Neste momento, não existem construtores interessados nesta obra.</message>
+	<message id="stadium_extend_builders_intro">Os seguintes construtores apresentam uma proposta. <strong>Atenção:</strong> o prazo indicado é uma estimativa do fornecedor. O tempo real de construção pode variar consoante a competência da empresa.</message>
+	<message id="stadium_extend_builders_totalcosts">Custo total</message>
+	<message id="stadium_extend_builders_details">Detalhes da proposta</message>
+	<message id="stadium_extend_builders_constructiontime">%d dias</message>
+	
+	<message id="stadium_construction_ongoing">O seu estádio está atualmente a ser expandido. Detalhes:</message>
+	<message id="stadium_construction_checkstatuslater">Regresse após a data prevista de conclusão e verifique o estado da obra!</message>
+	<message id="stadium_construction_verifystatus">Verificar estado da obra</message>
+	
+	<message id="stadium_acceptconstruction_err_nonedue">Neste momento, não existem obras de expansão prontas para verificação.</message>
+	
+	<message id="stadium_acceptconstruction_notcompleted_title">Infelizmente, as obras ainda não estão concluídas.</message>
+	<message id="stadium_acceptconstruction_notcompleted_details">O construtor pede desculpa pelo incómodo e calculou uma nova data de conclusão.</message>
+	
+	<message id="stadium_acceptconstruction_completed_title">Parabéns!</message>
+	<message id="stadium_acceptconstruction_completed_details">As obras foram concluídas com sucesso. Os novos lugares estão agora disponíveis para os seus espectadores.</message>
+	
+	<message id="stadium_construction_notification_delay">Infelizmente, as obras de expansão do estádio sofreram um atraso. O construtor definiu uma nova data de conclusão.</message>
+	<message id="stadium_construction_notification_completed">O seu estádio foi expandido com sucesso.</message>
+	
+	<message id="stadium_maintenance_title">Manutenção e melhorias</message>
+	<message id="stadium_maintenance_upgradecost_label">Custos de melhoria</message>
+	<message id="stadium_upgrade_button">Melhorar</message>
+	
+	<message id="stadium_maintenance_pitch_tooltip">Um mau estado pode reduzir o desempenho da sua equipa.</message>
+	<message id="stadium_maintenance_videowall_tooltip">Afeta a assistência.</message>
+	<message id="stadium_maintenance_seatsquality_tooltip">Afeta a venda de bilhetes para assentos.</message>
+	<message id="stadium_maintenance_vipquality_tooltip">Afeta a venda de bilhetes para camarotes VIP.</message>
+	
+	<message id="stadium_upgrade_err_not_upgradable">Já foi atingido o nível máximo de melhoria.</message>
+	
+	<message id="stadium_upgrade_transaction_subject">Trabalhos de manutenção do estádio</message>
+	<message id="stadium_upgrade_success">Os trabalhos de manutenção foram concluídos com sucesso!</message>
+	<message id="stadium_upgrade_success_details">Tenha em atenção que a qualidade se degrada com o tempo. Verifique o estado ocasionalmente.</message>
+
+	<message id="stadium_attendance_title">Estatísticas de assistência</message>
+	<message id="stadium_attendance_intro">Os últimos jogos em casa com assistência, ocupação, preços médios e receitas por categoria. Os jogos novos utilizam valores guardados; os antigos são estimados com base nos dados atuais do estádio e dos bilhetes.</message>
+	<message id="stadium_attendance_average_title">Média dos últimos jogos</message>
+	<message id="stadium_attendance_recent_title">Últimos jogos em casa</message>
+	<message id="stadium_attendance_no_matches">Ainda não existem jogos em casa com dados de assistência.</message>
+	<message id="stadium_attendance_match">Jogo</message>
+	<message id="stadium_attendance_category">Categoria</message>
+	<message id="stadium_attendance_visitors">Assistência</message>
+	<message id="stadium_attendance_capacity">Capacidade</message>
+	<message id="stadium_attendance_utilization">Ocupação</message>
+	<message id="stadium_attendance_average_price">Preço médio</message>
+	<message id="stadium_attendance_revenue">Receitas</message>
+	<message id="stadium_attendance_standing">Lugares em pé</message>
+	<message id="stadium_attendance_seating">Lugares sentados</message>
+	<message id="stadium_attendance_vip">VIP</message>
+	<message id="stadium_attendance_total">Total</message>
+	<message id="stadium_attendance_against">contra</message>
+	<message id="stadium_attendance_legacy_hint">Jogo antigo: categorias e preços estimados com base nos dados atuais do estádio e dos bilhetes. Os jogos novos são guardados com exatidão.</message>
+	<message id="stadium-attendance_navlabel">Assistência</message>
+
+	<message id="stadium_naming_title">Nome do estádio e direitos de nome</message>
+	<message id="stadium_naming_active_label">Contrato ativo de direitos de nome</message>
+	<message id="stadium_naming_sponsor">Patrocinador</message>
+	<message id="stadium_naming_contract_name">Nome do estádio</message>
+	<message id="stadium_naming_base_payout">Pagamento base por jogo em casa</message>
+	<message id="stadium_naming_duration">Prazo</message>
+	<message id="stadium_naming_duration_season_end">até ao fim da época</message>
+	<message id="stadium_naming_total_earned">Receitas até agora</message>
+	<message id="stadium_rename_title">Mudar nome do estádio</message>
+	<message id="stadium_rename_name">Novo nome do estádio</message>
+	<message id="stadium_rename_help">A alteração do nome é gratuita e possível a qualquer momento, desde que não exista um contrato ativo de direitos de nome.</message>
+	<message id="stadium_rename_button">Guardar nome</message>
+	<message id="stadium_rename_success">O nome do estádio foi alterado.</message>
+	<message id="stadium_rename_err_invalid">Introduza um nome de estádio válido.</message>
+	<message id="stadium_rename_err_active_contract">O nome do estádio não pode ser alterado durante um contrato ativo de direitos de nome.</message>
+	<message id="stadium_rename_locked_by_contract">Enquanto este contrato estiver ativo, o nome do estádio não pode ser alterado manualmente. No fim da época, o nome original será restaurado.</message>
+	<message id="stadium_naming_offers_title">Vender direitos de nome</message>
+	<message id="stadium_naming_offers_intro">Até três patrocinadores apresentam propostas pelos direitos de nome do seu estádio. O pagamento base depende do patrocinador, da dimensão do estádio e do estado de espírito dos adeptos. O pagamento real por jogo em casa é depois multiplicado pela ocupação.</message>
+	<message id="stadium_naming_offer_calculation">Cálculo da proposta</message>
+	<message id="stadium_naming_offer_base">Base do patrocinador</message>
+	<message id="stadium_naming_offer_capacity_bonus">Bónus de capacidade</message>
+	<message id="stadium_naming_offer_fan_mood_bonus">Bónus de estado de espírito dos adeptos</message>
+	<message id="stadium_naming_attendance_hint">Pagamento × ocupação real do estádio</message>
+	<message id="stadium_naming_current_sponsor">patrocinador principal atual</message>
+	<message id="stadium_naming_no_offers">Atualmente, não existem propostas adequadas para os direitos de nome do estádio.</message>
+	<message id="stadium_naming_sign_success">Direitos de nome vendidos</message>
+	<message id="stadium_naming_sign_success_details">O seu estádio chamar-se-á %s até ao fim da época.</message>
+	<message id="stadium_naming_err_active_contract">Já existe um contrato ativo de direitos de nome.</message>
+	<message id="stadium_naming_err_invalid_offer">Esta proposta de direitos de nome já não está disponível.</message>
+	<message id="stadium_naming_payout_subject">Direitos de nome do estádio</message>
+
+	<message id="stadium_dashboard_title">Painel do estádio</message>
+	<message id="stadium_visual_home_match">Jogo em casa</message>
+	<message id="stadium_visual_name_free">alterável livremente</message>
+	<message id="stadium_visual_of_maximum">da dimensão máxima</message>
+	<message id="stadium_visual_capacity_share">da capacidade</message>
+	<message id="stadium_visual_standing">Lugares em pé</message>
+	<message id="stadium_visual_seating">Lugares sentados</message>
+	<message id="stadium_visual_bowl_title">Vista do estádio</message>
+	<message id="stadium_visual_bowl_intro">O gráfico mostra a estrutura atual do estádio em relação à dimensão máxima possível.</message>
+	<message id="stadium_visual_side_stand">Bancadas laterais</message>
+	<message id="stadium_visual_main_stand">Bancadas principais</message>
+	<message id="stadium_visual_attendance_title">Ocupação</message>
+	<message id="stadium_visual_attendance_intro">Visão geral compacta dos últimos jogos em casa.</message>
+	<message id="stadium_visual_last_attendance">Último jogo em casa</message>
+	<message id="stadium_visual_average_attendance">Média dos últimos jogos em casa</message>
+	<message id="stadium_visual_average_ticket_income">Receita média de bilheteira</message>
+	<message id="stadium_visual_no_attendance">Ainda não existem estatísticas de assistência para jogos em casa.</message>
+	<message id="stadium_visual_open_attendance">Mostrar detalhes</message>
+	<message id="stadium_visual_commercial_intro">Gira o nome do estádio e as potenciais receitas dos direitos de nome.</message>
+	<message id="stadium_visual_maintenance_intro">Os níveis de qualidade afetam o desempenho, a assistência e o potencial de receitas.</message>
+	<message id="stadium_visual_max_level">Nível máximo</message>
+</messages>

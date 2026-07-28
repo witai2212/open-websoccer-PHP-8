@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="premium-feature-requested_navlabel">Funções premium</message>
+	<message id="premium_info_title">Carregue já a sua conta premium!</message>
+	<message id="premium_info_notenoughcredit_alert">A função solicitada requer pelo menos %d %s na sua conta premium.</message>
+	<message id="premium_info_description">
+		<p>A participação neste jogo é gratuita. No entanto, determinadas páginas e funções só estão disponíveis se a sua conta de utilizador tiver crédito premium suficiente.</p>
+	</message>
+	
+	<message id="premium_info_price_options">Opções de carregamento</message>
+	
+	<message id="premiumaccount_navlabel">Conta premium</message>
+	<message id="premiumaccount_recharge_button">Adquirir crédito</message>
+	
+	<message id="premium-confirm-action_navlabel">Confirmar função premium</message>
+	<message id="premium-confirm-action_title">Executar a função premium?</message>
+	<message id="premium-confirm-action_question">Esta ação debitará <strong>%d %s</strong> na sua conta premium! Pretende mesmo continuar?</message>
+	<message id="premium-confirm-action_confirm">Confirmar débito</message>
+	
+	<message id="premiumaccount_exchange_link">Trocar por dinheiro do jogo</message>
+	
+	<message id="premium-exchange_navlabel">Trocar crédito premium</message>
+	<message id="premium-exchange_intro">Pode converter o seu crédito premium em dinheiro do jogo. Indique quanto crédito pretende trocar.</message>
+	<message id="premium-exchange_amount_label">Crédito a trocar</message>
+	
+	<message id="premium-exchange_err_balancenotenough">Infelizmente, o seu crédito premium não é suficiente para o montante indicado.</message>
+	
+	<message id="premium-exchange_success">O seu crédito premium foi trocado com sucesso!</message>
+	
+	<message id="premium-exchange-confirm_navlabel">Confirmar troca</message>
+	<message id="premium-exchange-confirm_question">Confirme esta transação.</message>
+	
+	<message id="actionsubject_exchange-premium">Troca por dinheiro do jogo</message>
+	<message id="premium-exchange_team_subject">Troca de crédito premium</message>
+	
+	<message id="premium_balance_notenough">Infelizmente, o seu crédito premium não é suficiente para esta ação. Carregue a sua conta.</message>
+	<message id="premium_fature_fee_tooltip">Debita a sua conta premium</message>
+	
+	<message id="actionsubject_choose-trainer">Contratação de um treinador premium</message>
+	<message id="actionsubject_extend-stadium">Ampliação do estádio com empreiteiro premium</message>
+</messages>

@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	
-	<message id="settings_label_formation_max_next_matches">Formation submission: Next matches</message> 
-	<message id="settings_label_formation_max_next_matches_help">For how many future matches a user can submit his tactics.</message>
-	
-	<message id="settings_label_formation_max_templates">Formation submission: Saving templates</message> 
-	<message id="settings_label_formation_max_templates_help">Hoe many formations can be saved as templates. 0 for disabling the feature.</message>
+	<message id="settings_label_formation_max_next_matches">Formation submission: Upcoming matches</message> 
+	<message id="settings_label_formation_max_next_matches_help">How many future matches a user can submit a formation for.</message>
+
+	<message id="settings_label_formation_max_templates">Formation submission: Save templates</message> 
+	<message id="settings_label_formation_max_templates_help">How many formations can be saved as templates for reuse. 0 disables the feature.</message>
+	<message id="settings_label_tactical_style">Enable tactical identity</message>
+	<message id="settings_label_tactical_style_help">Allows human-managed clubs to adopt a fixed playing style with a small effect on match simulation. CPU clubs choose their style automatically.</message>
+
 </messages>

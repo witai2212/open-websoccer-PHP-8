@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_bank_loans_enabled">Ativar módulo bancário e de empréstimos</message>
+    <message id="settings_label_bank_loans_enabled_help">Ativa ofertas de empréstimo, prestações automáticas após os jogos, reembolso antecipado, classificação de crédito e avisos da direção.</message>
+</messages>

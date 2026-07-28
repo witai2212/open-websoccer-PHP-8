@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="home_navlabel">Início</message>
+    
+    <message id="errorpage_title">Erro</message>
+    
+    <message id="error_page_not_found">A página pedida já não existe. Verifica o endereço introduzido.</message>
+    
+    <message id="error_double_submit">Executaste esta ação há apenas alguns segundos. Tenta novamente daqui a pouco.</message>
+    
+    <message id="validation_error_box_title">Dados incorretos</message>
+    <message id="validation_error_box_message">Corrige os campos assinalados.</message>
+    <message id="validation_error_required">é obrigatório.</message>
+    <message id="validation_error_min_length">tem de ter pelo menos %d caracteres.</message>
+    <message id="validation_error_max_length">não pode ter mais de %d caracteres.</message>
+    
+    <message id="validation_error_min_number">tem de ser pelo menos %d.</message>
+    <message id="validation_error_max_number">não pode ser superior a %d.</message>
+    
+    <message id="validation_error_not_a_number">tem de ser um número.</message>
+    <message id="validation_error_email">não é um endereço de correio eletrónico válido.</message>
+    <message id="validation_error_password">é demasiado fraca. A palavra-passe tem de conter números e letras.</message>
+    
+    <message id="validation_error_not_a_url">tem de ser um URL válido (começando por http://...).</message>
+    <message id="validation_error_invaliddate">tem de estar no formato '%s'</message>
+    
+    
+    <message id="home_title">%s</message>
+	<message id="home_teaser">Torna-te treinador de um clube de futebol virtual e leva a tua equipa ao título contra outros utilizadores!</message>
+	<message id="home_teaser_link_register">Registar agora</message>
+	
+	<message id="button_save">Guardar</message>
+	<message id="button_cancel">Cancelar</message>
+	<message id="button_reset">Repor</message>
+	<message id="button_more">Mais</message>
+	<message id="button_refresh">Atualizar</message>
+	<message id="button_display">Apresentar</message>
+	<message id="button_submit">Enviar</message>
+	<message id="button_close">Fechar</message>
+	<message id="button_edit">Editar</message>
+	<message id="button_choose">Selecionar</message>
+	<message id="button_confirm">Confirmar</message>
+	<message id="button_delete">Eliminar</message>
+	<message id="button_buy">Comprar</message>
+	
+	<message id="saved_message_title">Guardado com êxito.</message>
+	
+	<message id="imprint_navlabel">Ficha técnica</message>
+	<message id="imprint_title">Ficha técnica</message>
+	
+	<message id="results_block_title">Resultados mais recentes</message>
+	
+	
+	<message id="unit_percent">Percentagem</message>
+</messages>

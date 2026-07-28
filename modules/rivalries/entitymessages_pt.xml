@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="rivalry_navlabel">Rivalidades</message>
+    <message id="settings_label_rivalries_enabled">Ativar rivalidades e dérbis</message>
+    <message id="settings_label_rivalries_enabled_help">Ativa os efeitos de dérbi detetados automaticamente e mantidos manualmente.</message>
+    <message id="settings_label_rivalries_auto_history_min_matches">Jogos históricos até rivalidade automática</message>
+    <message id="settings_label_rivalries_auto_history_min_matches_help">Número de jogos da liga/taça concluídos entre duas equipas do mesmo país necessários para detetar automaticamente um dérbi.</message>
+    <message id="settings_label_rivalries_create_preview_news">Criar notícia de antevisão do dérbi</message>
+    <message id="settings_label_rivalries_create_preview_news_help">Cria automaticamente uma notícia antes do dérbi.</message>
+    <message id="settings_label_rivalries_create_result_news">Criar notícia sobre o resultado do dérbi</message>
+    <message id="settings_label_rivalries_create_result_news_help">Cria automaticamente uma notícia após o dérbi.</message>
+</messages>

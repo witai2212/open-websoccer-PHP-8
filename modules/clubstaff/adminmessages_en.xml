@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_clubstaff">Club staff</message>
+    <message id="settings_label_club_staff_enabled">Enable club staff</message>
+    <message id="settings_label_club_staff_enabled_help">Enables the Club Staff page. User-managed clubs can hire one staff member for each role.</message>
+</messages>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="internationalcups_navlabel">Taças internacionais</message>
+    <message id="internationalcups_title">Competições internacionais</message>
+    <message id="internationalcups_intro">Aqui encontras as competições internacionais por confederação.</message>
+    <message id="internationalcups_current_association">Confederação atual</message>
+    <message id="internationalcups_ranking">Ranking</message>
+    <message id="internationalcups_competitions">Competições</message>
+    <message id="internationalcups_no_competitions">Não existem competições disponíveis.</message>
+</messages>

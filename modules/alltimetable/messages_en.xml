@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="alltimetable_navlabel">All-Time Table</message>
-    <message id="alltimetable_title">All-Time Table</message>
+    <message id="alltimetable_navlabel">All-time table</message>
+    <message id="alltimetable_title">All-time table</message>
     
 </messages>

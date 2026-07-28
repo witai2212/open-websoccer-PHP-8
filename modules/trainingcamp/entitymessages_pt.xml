@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_trainingcamp">Estágio de treino</message>
+	<message id="entity_trainingcamp_name">Nome</message>
+	<message id="entity_trainingcamp_land">País</message>
+	<message id="entity_trainingcamp_preis_spieler_tag">Custo por jogador e por dia</message>
+	<message id="entity_trainingcamp_p_staerke">Efeito na força</message>
+	<message id="entity_trainingcamp_p_technik">Efeito na técnica</message>
+	<message id="entity_trainingcamp_p_kondition">Efeito na condição física</message>
+	<message id="entity_trainingcamp_p_frische">Efeito na frescura</message>
+	<message id="entity_trainingcamp_p_zufriedenheit">Efeito na satisfação</message>
+	<message id="entity_trainingcamp_camp_type">Foco</message>
+	<message id="entity_trainingcamp_p_passing">Efeito no passe</message>
+	<message id="entity_trainingcamp_p_shooting">Efeito no remate</message>
+	<message id="entity_trainingcamp_p_heading">Efeito no jogo de cabeça</message>
+	<message id="entity_trainingcamp_p_tackling">Efeito no desarme</message>
+	<message id="entity_trainingcamp_p_freekick">Efeito nos livres</message>
+	<message id="entity_trainingcamp_p_pace">Efeito na velocidade</message>
+	<message id="entity_trainingcamp_p_creativity">Efeito na criatividade</message>
+	<message id="entity_trainingcamp_p_influence">Efeito na influência</message>
+	<message id="entity_trainingcamp_p_flair">Efeito no flair</message>
+	<message id="entity_trainingcamp_p_penalty">Efeito nas grandes penalidades</message>
+	<message id="entity_trainingcamp_p_penalty_killing">Efeito na defesa de grandes penalidades</message>
+	<message id="entity_trainingcamp_p_team_chemistry">Efeito na química da equipa</message>
+	<message id="entity_trainingcamp_injury_risk">Risco de lesão</message>
+</messages>

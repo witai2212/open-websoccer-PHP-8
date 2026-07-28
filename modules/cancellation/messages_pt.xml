@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="cancellation_navlabel">Cancelamento</message>
+    <message id="cancellation_title">Encerrar a conta de utilizador</message>
+    
+    <message id="cancellation_intro">Já não pretende continuar a jogar? É pena. Pode abandonar o jogo aqui. Perderá o seu clube e a sua conta de utilizador será desativada.</message>
+    <message id="cancellation_button">Cancelar conta</message>
+    <message id="cancellation_modal_title">Confirmar cancelamento</message>
+    <message id="cancellation_modal_content">Pretende mesmo encerrar a sua conta de utilizador?</message>
+    <message id="cancellation_modal_confirm">Sim, cancelar a conta</message>
+    
+    <message id="cancellation_success">A sua conta de utilizador foi desativada com sucesso. Até breve!</message>
+    
+</messages>

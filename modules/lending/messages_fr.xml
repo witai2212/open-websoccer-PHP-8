@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="lending_player_marker_tooltip">Le joueur est prêté</message>
+    <message id="lending_player_marker_lendable">Le joueur peut être prêté</message>
+    
+    <message id="lending_lend_button">Proposer en prêt</message>
+    <message id="lending_lendable_unmark">Le joueur est proposé en prêt (indemnité de prêt : %d). Retirer l'offre.</message>
+    
+    <message id="lend-player_navlabel">Prêter un joueur</message>
+    <message id="lend-player_intro">Proposez ici le joueur en prêt. Tout club intéressé pourra alors le recruter pour un maximum de <strong>%d</strong> matchs moyennant l'indemnité de prêt indiquée. Le prêt prend effet immédiatement dès qu'un club accepte les conditions. La part de salaire et les éventuelles options d'achat sont définies dans l'offre de prêt.</message>
+
+	<message id="lend_player_success">Le joueur est désormais disponible en prêt.</message>
+	
+	<message id="lending_err_notownplayer">Le joueur ne fait plus partie de votre effectif.</message>
+	<message id="lending_err_alreadyoffered">Le joueur est déjà disponible en prêt.</message>
+	<message id="lending_err_borrowed_player">Vous ne pouvez pas prêter ce joueur, car vous ne l'avez vous-même qu'emprunté.</message>
+	<message id="lending_err_on_transfermarket">Le joueur est actuellement sur le marché des transferts. Vous ne pouvez donc ni l'emprunter ni le prêter.</message>
+	<message id="lending_err_teamsize_too_small">Votre effectif compte actuellement trop peu de joueurs (%d) pour en laisser partir davantage.</message>
+	<message id="lending_err_contract_too_short">Le contrat du joueur expire bientôt. Vous ne pouvez donc plus le prêter.</message>
+
+	<message id="lending_lendable_unmark_success">Le joueur n'est plus disponible en prêt.</message>
+	
+	<message id="lending_player_lendable_info">Le joueur peut être emprunté pour <strong>%s</strong> par journée.</message>
+	<message id="lending_player_hire_button">Emprunter</message>
+	
+	<message id="borrow-player_navlabel">Emprunter un joueur</message>
+	<message id="borrow-player_intro">Indiquez le nombre de matchs souhaité et le joueur rejoindra immédiatement votre équipe pour cette durée. L'indemnité de prêt pour toute la période est due immédiatement. Vous payez également la part de salaire définie dans l'offre de prêt.</message>
+
+	<message id="lending_matches_durationhelp">Nombre compris entre %d et %d.</message>
+	
+	<message id="lending_hire_err_ownplayer">Le joueur fait déjà partie de votre équipe.</message>
+	<message id="lending_hire_err_borrowed_player">Le joueur est déjà prêté à une autre équipe. Un autre entraîneur a probablement été plus rapide.</message>
+	<message id="lending_hire_err_notoffered">Le joueur n'est plus proposé en prêt.</message>
+	<message id="lending_hire_err_illegalduration">La durée du prêt doit être comprise entre %d et %d matchs.</message>
+	<message id="lending_hire_err_contractendingtoosoon">Le contrat du joueur se termine déjà après %d matchs. La durée du prêt doit donc être plus courte.</message>
+	<message id="lending_hire_err_budget_too_low">Vous ne pouvez actuellement pas payer l'indemnité de prêt et le salaire du joueur.</message>
+	
+	<message id="lending_hire_success">Le joueur évolue désormais temporairement dans votre équipe !</message>
+	
+	<message id="lending_fee_subject">Indemnité de prêt du joueur</message>
+	
+	<message id="lending_notification_lent">Le joueur <strong>{player}</strong> est prêté pour <em>{matches}</em> matchs à <strong>{newteam}</strong>.</message>
+	<message id="lending_notification_return">Le joueur prêté <strong>{player}</strong> est revenu de <strong>{borrower}</strong> à <strong>{lender}</strong>.</message>
+	
+	<message id="lent_players">Joueurs prêtés</message>
+
+    <message id="loans_navlabel">Prêts</message>
+    <message id="loans_intro">Vous trouverez ici les joueurs prêtés, les joueurs empruntés, vos propres offres de prêt et les joueurs disponibles. Les rapports de prêt recensent le temps de jeu, les notes, la progression et les éventuelles options d'achat.</message>
+    <message id="loans_tab_loaned_out">Prêtés par nous</message>
+    <message id="loans_tab_borrowed">Empruntés par nous</message>
+    <message id="loans_tab_own_offers">Nos offres de prêt</message>
+    <message id="loans_tab_available">Joueurs disponibles en prêt</message>
+    <message id="loans_no_loaned_out">Aucun joueur de votre club n'est actuellement prêté.</message>
+    <message id="loans_no_borrowed">Aucun joueur n'est actuellement emprunté par votre club.</message>
+    <message id="loans_no_offers">Vous ne proposez actuellement aucun joueur en prêt.</message>
+    <message id="loans_no_available">Aucun joueur adapté n'est actuellement disponible en prêt.</message>
+    <message id="loans_borrower">Club emprunteur</message>
+    <message id="loans_lender">Club propriétaire</message>
+    <message id="loans_performance">Performance</message>
+    <message id="loans_development">Progression</message>
+    <message id="loans_destination_quality">Qualité du prêt</message>
+    <message id="loans_minutes">Minutes</message>
+    <message id="loans_avg_grade">Note moy.</message>
+    <message id="loans_salary_share">Part salariale du club emprunteur</message>
+    <message id="loans_salary_share_help">Entre 50 % et 100 %. Le club prêteur paie le reste par journée.</message>
+    <message id="loans_buy_option">Modalité d'achat</message>
+    <message id="loans_buy_fee">Prix d'achat</message>
+    <message id="loans_option_none">Aucune option d'achat</message>
+    <message id="loans_option_buy_option">Option d'achat</message>
+    <message id="loans_option_buy_obligation">Obligation d'achat</message>
+    <message id="loans_recall_button">Rappeler</message>
+    <message id="loans_recall_not_available">Rappel pas encore possible</message>
+    <message id="loans_buy_button">Acheter</message>
+    <message id="lending_lendable_unmark_short">Retirer l'offre</message>
+    <message id="lending_terms_limits">Indemnité de prêt maximale par journée : <strong>%s %s</strong>. Avec une option ou une obligation d'achat, le prix doit être compris entre <strong>%s %s</strong> et <strong>%s %s</strong>.</message>
+    <message id="lending_err_fee_invalid">L'indemnité de prêt doit être supérieure à 0.</message>
+    <message id="lending_err_fee_too_high">L'indemnité de prêt est trop élevée. Le maximum autorisé est de %s par journée.</message>
+    <message id="lending_err_buy_fee_invalid">Le prix d'achat se situe en dehors de la plage autorisée (%s à %s).</message>
+    <message id="lending_salary_share_subject">Part salariale du prêt de joueur</message>
+    <message id="lending_buy_fee_subject">Prix d'achat issu du prêt</message>
+    <message id="lending_recall_err_not_allowed">Vous n'êtes pas autorisé à rappeler ce prêt.</message>
+    <message id="lending_recall_err_too_early">Un rappel n'est possible qu'après au moins 5 journées et uniquement si le joueur n'a pas suffisamment joué.</message>
+    <message id="lending_recall_success">Le joueur a été rappelé de son prêt.</message>
+    <message id="lending_buy_err_not_allowed">Vous n'êtes pas autorisé à exercer cette option d'achat.</message>
+    <message id="lending_buy_err_no_option">Aucune option d'achat n'a été convenue pour ce prêt.</message>
+    <message id="lending_buy_err_budget">L'achat n'a pas pu être effectué. Le budget est insuffisant.</message>
+    <message id="lending_buy_success">Le joueur a été recruté définitivement.</message>
+    <message id="lending_notification_recalled">Le joueur prêté <strong>{player}</strong> a été rappelé de <strong>{borrower}</strong> vers <strong>{lender}</strong>.</message>
+    <message id="lending_notification_bought">Le joueur prêté <strong>{player}</strong> a été recruté définitivement par <strong>{borrower}</strong>. Son club propriétaire était <strong>{lender}</strong>.</message>
+    <message id="lending_notification_development">Le joueur prêté <strong>{player}</strong> a progressé grâce au temps de jeu : +{bonus} en {attribute}.</message>
+    <message id="lending_notification_obligation_failed">L'obligation d'achat de <strong>{player}</strong> n'a pas pu être exécutée. Le budget du club emprunteur est insuffisant.</message>
+
+    <message id="borrow-player_request_intro">Indiquez le nombre de matchs souhaité. Comme le joueur appartient à un club géré par un entraîneur, une demande de prêt sera d'abord créée. Le joueur ne rejoindra votre équipe que si l'entraîneur propriétaire accepte la demande.</message>
+    <message id="lending_player_request_button">Envoyer une demande de prêt</message>
+    <message id="lending_request_send_success">La demande de prêt a été créée. L'entraîneur propriétaire peut maintenant l'accepter ou la refuser.</message>
+    <message id="lending_request_accept_success">La demande de prêt a été acceptée. Le joueur a été prêté.</message>
+    <message id="lending_request_reject_success">La demande de prêt a été refusée.</message>
+    <message id="lending_request_accept_button">Accepter</message>
+    <message id="lending_request_reject_button">Refuser</message>
+    <message id="lending_request_err_not_allowed">Cette demande de prêt n'est plus disponible ou ne concerne pas votre club.</message>
+    <message id="lending_request_err_no_longer_available">Le joueur n'est plus disponible pour ce prêt.</message>
+    <message id="lending_request_notification_received"><strong>{borrower}</strong> souhaite emprunter <strong>{player}</strong> pour <em>{matches}</em> matchs. Indemnité de prêt : <strong>{fee}</strong> par journée.</message>
+    <message id="lending_request_notification_accepted">Votre demande de prêt pour <strong>{player}</strong> a été acceptée. Le joueur sera prêté pour <em>{matches}</em> matchs à <strong>{newteam}</strong>.</message>
+    <message id="lending_request_notification_rejected">Votre demande de prêt pour <strong>{player}</strong> a été refusée.</message>
+    <message id="loans_tab_incoming_requests">Demandes de prêt reçues</message>
+    <message id="loans_tab_outgoing_requests">Nos demandes de prêt ouvertes</message>
+    <message id="loans_no_incoming_requests">Aucune demande de prêt ouverte ne concerne actuellement vos joueurs.</message>
+    <message id="loans_no_outgoing_requests">Vous n'avez actuellement aucune demande de prêt ouverte.</message>
+    <message id="loans_total_fee">Total</message>
+    <message id="settings_label_lending_cpu_offer_duration_days">Offres de prêt de l'IA : durée en jours</message>
+    <message id="settings_label_lending_cpu_offer_cooldown_days">Offres de prêt de l'IA : délai avant remise en ligne</message>
+    <message id="settings_label_lending_cpu_request_expiry_days">Demandes de prêt de l'IA : expiration après X jours</message>
+
+</messages>

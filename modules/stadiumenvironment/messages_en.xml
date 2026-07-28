@@ -1,47 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="stadiumenvironment_navlabel">Stadium Environment</message>
+    <message id="stadiumenvironment_navlabel">Stadium surroundings</message>
     
     <message id="stadiumenvironment_existingbuildings">Existing buildings</message>
-    <message id="stadiumenvironment_existingbuildings_none">You do not have any buildings.</message>
-    <message id="stadiumenvironment_existingbuildings_underconstruction">Is under construction until %s</message>
+    <message id="stadiumenvironment_existingbuildings_none">No buildings have been commissioned yet.</message>
+    <message id="stadiumenvironment_existingbuildings_underconstruction">Under construction until %s</message>
     
     <message id="stadiumenvironment_availablebuildings">Available buildings</message>
-    <message id="stadiumenvironment_availablebuildings_none">There are no further buildings available for you.</message>
+    <message id="stadiumenvironment_availablebuildings_none">No further buildings are currently available for your club to construct.</message>
 
 	<message id="stadiumenvironment_build">Build</message>
 	
-	<message id="stadiumenvironment_build_err_too_expensive">You cannot afford the construction costs.</message>
-	<message id="stadiumenvironment_build_err_already_exists">You are already owning this building.</message>
-	<message id="stadiumenvironment_build_err_requires_building">This building is currently not vailable for you.</message>
-	<message id="stadiumenvironment_build_err_premium_balance">Your premium balance is not enough for this building. Please recharge your premium account first.</message>
+	<message id="stadiumenvironment_build_err_too_expensive">You cannot currently afford the construction costs.</message>
+	<message id="stadiumenvironment_build_err_already_exists">You already own this building.</message>
+	<message id="stadiumenvironment_build_err_requires_building">This building is not yet available to you.</message>
+	<message id="stadiumenvironment_build_err_premium_balance">Your premium balance is insufficient for this building. Please top up your premium account.</message>
 	
-	<message id="stadiumenvironment_build_success">The building has been successfully ordered.</message>
+	<message id="stadiumenvironment_build_success">The construction of the building has been commissioned successfully.</message>
 	
-	<message id="building_construction_fee_subject">Building construction</message>
+	<message id="building_construction_fee_subject">Stadium-surroundings building construction</message>
 	<message id="actionsubject_order-building">Construction of a premium building</message>
-	<message id="activitylog_order-building">%s has improved his stadium environment.</message>
+	<message id="activitylog_order-building">%s has expanded their stadium surroundings.</message>
 	
-	<message id="stadiumenvironment_matchincome_subject">Stadium environment revenue</message>
-	<message id="stadiumenvironment_costs_per_match_subject">Stadium environment costs</message>
+	<message id="stadiumenvironment_matchincome_subject">Stadium-surroundings income</message>
+	<message id="stadiumenvironment_costs_per_match_subject">Stadium-surroundings costs</message>
 
 	<message id="stadiumenvironment_effect_injury_unit">match(es)</message>
 	
-	<message id="stadiumfacility_youthacademy_name">Youth Academy</message>
-	<message id="stadiumfacility_youthacademy_desc">Improves youth development and increases the chance of stronger youth players.</message>
-	<message id="stadiumfacility_medicalcenter_name">Medical Center</message>
-	<message id="stadiumfacility_medicalcenter_desc">Better diagnosis and rehabilitation reduce player injury durations.</message>
-	<message id="stadiumfacility_trainingcenter_name">Training Center</message>
-	<message id="stadiumfacility_trainingcenter_desc">Modern training pitches and analysis areas improve training effects.</message>
-	<message id="stadiumfacility_fanshop_name">Fan Shop</message>
-	<message id="stadiumfacility_fanshop_desc">Increases merchandising sales on home matchdays and adds extra revenue.</message>
-	<message id="stadiumfacility_mediacenter_name">Media Center</message>
-	<message id="stadiumfacility_mediacenter_desc">Professional media work improves fan popularity and sponsor-related home match revenue.</message>
-	<message id="stadiumfacility_viplounge_name">VIP Lounge</message>
-	<message id="stadiumfacility_viplounge_desc">Improves hospitality, ticket demand and home match revenue.</message>
-	<message id="stadiumfacility_pitchheating_name">Pitch Heating</message>
-	<message id="stadiumfacility_pitchheating_desc">Improves pitch conditions, stabilizes attendance and reduces injury impact.</message>
-	<message id="stadiumfacility_scoutingoffice_name">Scouting Office</message>
+	<message id="stadiumfacility_youthacademy_name">Youth academy</message>
+	<message id="stadiumfacility_youthacademy_desc">Improves the quality of youth development and increases the chance of stronger youth players.</message>
+	<message id="stadiumfacility_medicalcenter_name">Medical centre</message>
+	<message id="stadiumfacility_medicalcenter_desc">Better diagnosis and rehabilitation shorten player injuries.</message>
+	<message id="stadiumfacility_trainingcenter_name">Training centre</message>
+	<message id="stadiumfacility_trainingcenter_desc">Modern training pitches and analysis areas improve training effectiveness.</message>
+	<message id="stadiumfacility_fanshop_name">Fan shop</message>
+	<message id="stadiumfacility_fanshop_desc">Increases merchandising sales on home matchdays and generates additional income.</message>
+	<message id="stadiumfacility_mediacenter_name">Media centre</message>
+	<message id="stadiumfacility_mediacenter_desc">More professional media work increases fan popularity and sponsor-related home-match income.</message>
+	<message id="stadiumfacility_viplounge_name">VIP lounge</message>
+	<message id="stadiumfacility_viplounge_desc">Improves hospitality offerings, ticket demand and income at home matches.</message>
+	<message id="stadiumfacility_pitchheating_name">Pitch heating</message>
+	<message id="stadiumfacility_pitchheating_desc">Provides better pitch conditions, more stable attendance and fewer injury consequences.</message>
+	<message id="stadiumfacility_scoutingoffice_name">Scouting office</message>
 	<message id="stadiumfacility_scoutingoffice_desc">Improves youth scouting and the quality of new scouting proposals.</message>
 </messages>

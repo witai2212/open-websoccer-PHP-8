@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="freeclubs_navlabel">Clubs libres</message>
+    <message id="freeclubs_title">Clubs sans entraîneur</message>
+    <message id="freeclubs_no_free_clubs_available">Aucun club n'est actuellement libre.</message>
+    <message id="freeclubs_head_choose">Sélection</message>
+    <message id="freeclubs_button_choose">Reprendre l'équipe</message>
+    <message id="freeclubs_button_choose_another">Reprendre une autre équipe</message>
+    <message id="freeclubs_msg_success">Félicitations ! Vous êtes désormais l'entraîneur de l'équipe sélectionnée.</message>
+    <message id="freeclubs_msg_error">L'équipe a probablement déjà été attribuée entre-temps.</message>
+    <message id="freeclubs_msg_error_user_is_already_manager">Vous êtes déjà l'entraîneur d'une équipe.</message>
+    <message id="freeclubs_msg_error_max_number_of_teams">Vous ne pouvez actuellement gérer que %d équipes au maximum.</message>
+    <message id="freeclubs_msg_error_no_club_from_same_league">Vous ne pouvez pas gérer plusieurs équipes de la même ligue.</message>
+    <message id="freeclubs_msg_error_minhighscore">Vous devez avoir un meilleur score d'au moins %d pour gérer un autre club.</message>
+    <message id="freeclubs_reputation_intro">Les clubs plus forts exigent une meilleure réputation d'entraîneur. Les clubs plus faibles restent accessibles aux nouveaux entraîneurs ou à ceux sans club.</message>
+    <message id="freeclubs_locked_hint">Réputation trop faible</message>
+    <message id="freeclubs_msg_error_reputation_required">Tu as besoin d'au moins {required} points de réputation d'entraîneur pour ce club. Ta réputation actuelle : {score}.</message>
+    <message id="freeclubs_button_switch">Rejoindre ce club</message>
+    <message id="freeclubs_msg_switch_success">Félicitations ! Vous avez changé de club.</message>
+</messages>

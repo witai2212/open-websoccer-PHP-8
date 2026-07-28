@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="premium-feature-requested_navlabel">Funciones premium</message>
+	<message id="premium_info_title">¡Recargue ahora su cuenta premium!</message>
+	<message id="premium_info_notenoughcredit_alert">La función solicitada requiere al menos %d %s en su cuenta premium.</message>
+	<message id="premium_info_description">
+		<p>La participación en este juego es gratuita. Sin embargo, algunas páginas y funciones solo están disponibles si su cuenta de usuario dispone de suficiente saldo premium.</p>
+	</message>
+	
+	<message id="premium_info_price_options">Opciones de ingreso</message>
+	
+	<message id="premiumaccount_navlabel">Cuenta premium</message>
+	<message id="premiumaccount_recharge_button">Comprar saldo</message>
+	
+	<message id="premium-confirm-action_navlabel">Confirmar función premium</message>
+	<message id="premium-confirm-action_title">¿Ejecutar la función premium?</message>
+	<message id="premium-confirm-action_question">¡Esta acción cargará <strong>%d %s</strong> en su cuenta premium! ¿Desea continuar?</message>
+	<message id="premium-confirm-action_confirm">Confirmar cargo</message>
+	
+	<message id="premiumaccount_exchange_link">Cambiar por dinero del juego</message>
+	
+	<message id="premium-exchange_navlabel">Cambiar saldo premium</message>
+	<message id="premium-exchange_intro">Puede convertir su saldo premium en dinero del juego. Indique cuánto saldo desea cambiar.</message>
+	<message id="premium-exchange_amount_label">Saldo que se va a cambiar</message>
+	
+	<message id="premium-exchange_err_balancenotenough">Lamentablemente, su saldo premium no es suficiente para la cantidad indicada.</message>
+	
+	<message id="premium-exchange_success">¡Su saldo premium se ha cambiado correctamente!</message>
+	
+	<message id="premium-exchange-confirm_navlabel">Confirmar cambio</message>
+	<message id="premium-exchange-confirm_question">Confirme esta transacción.</message>
+	
+	<message id="actionsubject_exchange-premium">Cambio por dinero del juego</message>
+	<message id="premium-exchange_team_subject">Cambio de saldo premium</message>
+	
+	<message id="premium_balance_notenough">Lamentablemente, su saldo premium no es suficiente para esta acción. Recargue su cuenta.</message>
+	<message id="premium_fature_fee_tooltip">Carga su cuenta premium</message>
+	
+	<message id="actionsubject_choose-trainer">Contratación de un entrenador premium</message>
+	<message id="actionsubject_extend-stadium">Ampliación del estadio con constructor premium</message>
+</messages>

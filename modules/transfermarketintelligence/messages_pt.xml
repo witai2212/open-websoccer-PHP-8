@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="transfermarket_intelligence_navlabel">Análise do mercado de transferências</message>
+    <message id="transfer-market-intelligence_navlabel">Análise do mercado de transferências</message>
+    <message id="transfermarket_intelligence_title">Análise do mercado de transferências</message>
+    <message id="transfermarket_intelligence_intro">Esta análise liga o mercado de transferências às necessidades do seu plantel. As recomendações só são calculadas para posições em que o clube possui um olheiro ativo adequado.</message>
+    <message id="transfermarket_intelligence_not_enabled">A análise do mercado de transferências está desativada.</message>
+
+    <message id="transfermarket_intelligence_tab_overview">Visão geral</message>
+    <message id="transfermarket_intelligence_tab_recommendations">Recomendações de compra</message>
+    <message id="transfermarket_intelligence_tab_loans">Empréstimos</message>
+    <message id="transfermarket_intelligence_tab_loan_recommendations">Recomendações de empréstimo</message>
+    <message id="transfermarket_intelligence_tab_contracts">Fim do contrato</message>
+    <message id="transfermarket_intelligence_tab_needs">Necessidades do clube</message>
+    <message id="transfermarket_intelligence_tab_admin">Administração / saúde do mercado</message>
+
+    <message id="transfermarket_intelligence_scouting">Cobertura de prospeção</message>
+    <message id="transfermarket_intelligence_scouting_help">Sem um olheiro adequado, os jogadores desta posição não são apresentados nas recomendações.</message>
+    <message id="transfermarket_intelligence_no_scouts">Atualmente, não existe cobertura de prospeção adequada. Contrate olheiros para guarda-redes, defesa, meio-campo ou ataque para desbloquear recomendações.</message>
+    <message id="transfermarket_intelligence_open_scouting">Abrir prospeção</message>
+    <message id="transfermarket_intelligence_covered_positions">Posições cobertas</message>
+    <message id="transfermarket_intelligence_no_data">Não foram encontrados jogadores adequados.</message>
+
+    <message id="transfermarket_intelligence_best_players">Melhores jogadores disponíveis</message>
+    <message id="transfermarket_intelligence_bargains">Oportunidades</message>
+    <message id="transfermarket_intelligence_overpriced">Jogadores sobrevalorizados</message>
+    <message id="transfermarket_intelligence_loan_opportunities">Oportunidades de empréstimo</message>
+    <message id="transfermarket_intelligence_loan_recommendations">Jogadores recomendados para empréstimo</message>
+    <message id="transfermarket_intelligence_loan_recommendations_help">A seleção está limitada a dez jogadores e considera lacunas no plantel, melhoria de qualidade, idade, taxa de empréstimo, parte do salário e opção de compra. A lista completa continua disponível em Empréstimos.</message>
+    <message id="transfermarket_intelligence_no_loan_recommendations">Atualmente, não existem jogadores disponíveis para empréstimo que correspondam às necessidades identificadas do plantel e à cobertura de prospeção disponível.</message>
+    <message id="transfermarket_intelligence_all_loan_players">Todos os jogadores disponíveis para empréstimo</message>
+    <message id="transfermarket_intelligence_expiring_contracts">Contratos a terminar</message>
+    <message id="transfermarket_intelligence_club_needs">Necessidades do clube</message>
+
+    <message id="transfermarket_intelligence_player">Jogador</message>
+    <message id="transfermarket_intelligence_club">Clube</message>
+    <message id="transfermarket_intelligence_position">Posição</message>
+    <message id="transfermarket_intelligence_age">Idade</message>
+    <message id="transfermarket_intelligence_strength">Força</message>
+    <message id="transfermarket_intelligence_value">Valor de mercado</message>
+    <message id="transfermarket_intelligence_price">Preço</message>
+    <message id="transfermarket_intelligence_salary">Salário</message>
+    <message id="transfermarket_intelligence_contract">Contrato</message>
+    <message id="transfermarket_intelligence_ratio">Preço/valor justo</message>
+    <message id="transfermarket_intelligence_saving">Poupança</message>
+    <message id="transfermarket_intelligence_overprice">Acréscimo</message>
+    <message id="transfermarket_intelligence_deadline">Prazo</message>
+    <message id="transfermarket_intelligence_action">Ação</message>
+    <message id="transfermarket_intelligence_bid">Analisar proposta</message>
+    <message id="transfermarket_intelligence_watch">Observar</message>
+    <message id="transfermarket_intelligence_borrow">Pedido de empréstimo</message>
+    <message id="transfermarket_intelligence_open_player">Abrir jogador</message>
+    <message id="transfermarket_intelligence_buy_option">Opção de compra</message>
+    <message id="transfermarket_intelligence_salary_share">Parte do salário</message>
+    <message id="transfermarket_intelligence_matches">Jogos</message>
+    <message id="transfermarket_intelligence_fit">Adequação</message>
+    <message id="transfermarket_intelligence_loan_fee">Taxa de empréstimo</message>
+    <message id="transfermarket_intelligence_loan_cost_per_match">Custo por jogo</message>
+    <message id="transfermarket_intelligence_loan_reason_shortage">Preenche uma lacuna na posição.</message>
+    <message id="transfermarket_intelligence_loan_reason_scouted">Recomendado desportivamente pelo olheiro responsável.</message>
+    <message id="transfermarket_intelligence_loan_reason_upgrade">Aumenta a força média da posição.</message>
+    <message id="transfermarket_intelligence_loan_reason_depth">Melhora a profundidade do plantel.</message>
+    <message id="transfermarket_intelligence_loan_reason_young">Jovem e com capacidade de evolução.</message>
+    <message id="transfermarket_intelligence_loan_reason_salary">Parte do salário favorável.</message>
+    <message id="transfermarket_intelligence_loan_reason_buy_option">Opção de compra disponível.</message>
+    <message id="transfermarket_intelligence_loan_reason_affordable">Acessível em relação ao orçamento do clube.</message>
+
+    <message id="transfermarket_intelligence_need_shortage">Falta de jogadores</message>
+    <message id="transfermarket_intelligence_need_surplus">Excesso de jogadores</message>
+    <message id="transfermarket_intelligence_need_ok">Equilibrado</message>
+    <message id="transfermarket_intelligence_squadplanner_hint">As necessidades do clube provêm da análise do plantel, para que o mercado de transferências e o planeamento do plantel utilizem os mesmos pontos fracos.</message>
+
+    <message id="transfermarket_intelligence_admin_scope_global">Global</message>
+    <message id="transfermarket_intelligence_admin_scope_league">Liga</message>
+    <message id="transfermarket_intelligence_admin_scope_country">País</message>
+    <message id="transfermarket_intelligence_admin_scope_club">Clube</message>
+    <message id="transfermarket_intelligence_admin_market_health">Saúde do mercado</message>
+    <message id="transfermarket_intelligence_admin_filter">Filtro</message>
+    <message id="transfermarket_intelligence_admin_apply">Apresentar</message>
+    <message id="transfermarket_intelligence_admin_average_transfer_fee">Indemnização média</message>
+    <message id="transfermarket_intelligence_admin_highest_fee">Indemnização mais elevada</message>
+    <message id="transfermarket_intelligence_admin_average_salary">Salário médio</message>
+    <message id="transfermarket_intelligence_admin_number_offers">Número de propostas</message>
+    <message id="transfermarket_intelligence_admin_listed_players">Jogadores na lista de transferências</message>
+    <message id="transfermarket_intelligence_admin_cpu_realism">Realismo das propostas CPU</message>
+    <message id="transfermarket_intelligence_admin_cpu_ratio">Proposta CPU média / valor de mercado</message>
+    <message id="transfermarket_intelligence_admin_market_ratio">Preço médio de lista / valor de mercado</message>
+    <message id="transfermarket_intelligence_admin_overheating">Sobreaquecimento do mercado</message>
+    <message id="transfermarket_intelligence_admin_overheating_ok">Não foi detetado qualquer sobreaquecimento claro.</message>
+    <message id="transfermarket_intelligence_admin_overheating_warning">Aviso: o mercado parece sobreaquecido. Verifique os preços de lista, as propostas CPU e o nível salarial.</message>
+    <message id="transfermarket_intelligence_admin_cpu_within_range">dentro do intervalo objetivo</message>
+    <message id="transfermarket_intelligence_admin_cpu_below_range">abaixo do intervalo objetivo</message>
+    <message id="transfermarket_intelligence_admin_cpu_above_range">acima do intervalo objetivo</message>
+</messages>

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     
-    <message id="error_access_denied">You do not have the required permission to access this page.</message>
-    <message id="logout_message_title">You successfully logged out!</message>
+    <message id="error_access_denied">You do not have the required permission for this page.</message>
+    <message id="logout_message_title">You have logged out successfully. See you next time!</message>
     
 </messages>

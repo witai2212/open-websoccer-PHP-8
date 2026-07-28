@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_tab_frontend">Interface pública</message> 
+	
+	<message id="imprint_navlabel">Ficha técnica</message>
+	<message id="imprint_label_content">Conteúdo da página</message>
+	<message id="imprint_label_content_help">É permitido HTML. As quebras de linha são convertidas automaticamente.</message>
+	<message id="imprint_introduction">Por motivos legais, é geralmente necessário identificar publicamente no site o respetivo responsável. Introduz abaixo os dados de contacto do operador do site. Serão apresentados no site em «Ficha técnica».</message>
+	
+	<message id="imprint_validationerror_content">Tem de ser indicado um conteúdo.</message>
+	
+	<message id="settings_label_head_code">Código HTML para a secção &lt;head&gt;</message>
+	
+</messages>

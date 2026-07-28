@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="fireplayer_button">Despedir</message>
+    
+    <message id="fireplayer_modal_title">Dispensar jogador?</message>
+    <message id="fireplayer_modal_content">Pretendes mesmo rescindir imediatamente o contrato de %s?</message>
+    <message id="fireplayer_modal_confirm">Sim, dispensar</message>
+    
+    <message id="fireplayer_modal_compensation">O jogador exige uma indemnização de <strong>%s %s</strong>!</message>
+    <message id="fireplayer_tooexpensive">Atualmente não podes pagar a indemnização exigida.</message>
+    
+    <message id="fireplayer_success">O jogador foi dispensado com êxito.</message>
+    
+    <message id="fireplayer_compensation_subject">Indemnização por dispensa antecipada</message>
+    
+    
+</messages>

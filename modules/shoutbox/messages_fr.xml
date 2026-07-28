@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="shoutbox_title">Shoutbox</message>
+    <message id="shoutbox_messageinput_placeholder">Votre message...</message>
+    <message id="shoutbox_button_go">Envoyer</message>
+    
+    <message id="shoutbox_hiddensubmit_note">Vous devez être connecté et ouvrir un rapport de match pour pouvoir écrire des messages.</message>
+</messages>

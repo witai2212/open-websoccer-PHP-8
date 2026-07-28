@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="player_navlabel">Profil du joueur</message>
+    
+    <message id="no_players_found">Aucun joueur trouvé.</message>
+    
+    <message id="playertable_head_position_abbr">Pos</message>
+    <message id="playertable_head_position">Poste</message>
+    <message id="playertable_head_name">Nom</message>
+    <message id="playertable_head_personality">Personnalité</message>
+    <message id="playertable_head_strength_abbr">Niv</message>
+    <message id="playertable_head_strength">Niveau</message>
+    <message id="playertable_head_strength_technic_abbr">Tec</message>
+    <message id="playertable_head_strength_technic">Technique</message>
+    <message id="playertable_head_strength_freshness_abbr">Fra</message>
+    <message id="playertable_head_strength_freshness">Fraîcheur</message>
+    <message id="playertable_head_strength_stamina_abbr">End</message>
+    <message id="playertable_head_strength_stamina">Endurance</message>
+    <message id="playertable_head_strength_satisfaction_abbr">Sat</message>
+    <message id="playertable_head_strength_satisfaction">Satisfaction</message>
+    <message id="playertable_head_strength_talent_abbr">Tal</message>
+    <message id="playertable_head_strength_talent">Talent</message>
+
+    <message id="playertable_head_strength_shooting_abbr">Tir</message>
+    <message id="playertable_head_strength_shooting">Tir</message>
+    <message id="playertable_head_strength_passing_abbr">Pas</message>
+    <message id="playertable_head_strength_passing">Passes</message>
+    <message id="playertable_head_strength_tackling_abbr">Due</message>
+    <message id="playertable_head_strength_tackling">Duels</message>
+    <message id="playertable_head_strength_freekick_abbr">CF</message>
+    <message id="playertable_head_strength_freekick">Coups francs</message>
+    <message id="playertable_head_strength_heading_abbr">Têt</message>
+    <message id="playertable_head_strength_heading">Jeu de tête</message>
+    <message id="playertable_head_strength_creativity_abbr">Cré</message>
+    <message id="playertable_head_strength_creativity">Créativité</message>
+    <message id="playertable_head_strength_influence_abbr">Inf</message>
+    <message id="playertable_head_strength_influence">Influence</message>
+    <message id="playertable_head_strength_flair_abbr">Car</message>
+    <message id="playertable_head_strength_flair">Caractère</message>
+    <message id="playertable_head_strength_penalty_abbr">PEN</message>
+    <message id="playertable_head_strength_penalty">Penalties</message>
+    <message id="playertable_head_strength_penalty_killing_abbr">AP</message>
+    <message id="playertable_head_strength_penalty_killing">Arrêt des penalties</message>
+	
+    <message id="playertable_head_age">Âge</message>
+    <message id="playertable_head_blocked">Indisponibilité</message>
+    <message id="playertable_head_matches_abbr">Matches</message>
+    
+    <message id="player_details_tab_general">Profil</message>
+    <message id="player_details_tab_statistic">Statistiques</message>
+    <message id="player_details_tab_history">Historique</message>
+    
+    <message id="player_details_unit_matches">Matches</message>
+    
+    <message id="player_details_strength_title">Niveau de jeu</message>
+    
+    <message id="player_details_statistic_season">Cette saison</message>
+    <message id="player_details_statistic_total">Total</message>
+    
+    <message id="player_details_statistic_goals">Buts</message>
+    <message id="player_details_statistic_assists">Passes décisives</message>
+    <message id="player_details_statistic_matches">Matches</message>
+    <message id="player_details_statistic_yellow">Cartons jaunes</message>
+    <message id="player_details_statistic_yellow_red">Cartons J.-R.</message>
+    <message id="player_details_statistic_red">Cartons rouges</message>
+    <message id="player_details_statistic_assists">Passes décisives</message>
+    <message id="player_details_statistic_shoots">Tentatives de but</message>
+    <message id="player_details_statistic_grade">Note moyenne</message>
+    <message id="player_details_statistic_passquota">Précision des passes</message>
+    
+    <message id="player_details_statistic_opendetails">Afficher plus de statistiques</message>
+    <message id="player_details_statistic_detailstitle">Statistiques du joueur</message>
+    <message id="player_details_statistic_nomatchesplayed">Le joueur n’a encore disputé aucun match.</message>
+    
+    <message id="player_details_grades_title">Note lors des derniers matchs</message>
+    <message id="player_details_nogradesavailable">Aucune note n’est encore disponible pour ce joueur.</message>
+    <message id="player_details_grade_last_match">Note du dernier match</message>
+    <message id="player_details_grade_average">Note moyenne</message>
+    <message id="player_details_nohistoryavailable">Aucun historique disponible.</message>
+    
+    <message id="player_details_avaiable_on_transfermarket">Le joueur est actuellement en vente sur le marché des transferts.</message>
+    <message id="player_details_unsellable">L’entraîneur du club a déclaré le joueur intransférable.</message>
+    
+    <message id="player_mainposition_T">GB</message>
+    <message id="player_mainposition_LV">AG</message>
+    <message id="player_mainposition_RV">AD</message>
+    <message id="player_mainposition_IV">DC</message>
+    <message id="player_mainposition_LM">MG</message>
+    <message id="player_mainposition_RM">MD</message>
+    <message id="player_mainposition_ZM">MC</message>
+    <message id="player_mainposition_LS">AG</message>
+    <message id="player_mainposition_MS">AC</message>
+    <message id="player_mainposition_RS">AD</message>
+    <message id="player_mainposition_OM">MO</message>
+    <message id="player_mainposition_DM">MDf</message>
+    
+    <message id="player_button_to_pitch">Aligner</message>
+    <message id="player_button_to_bench">Banque</message>
+    <message id="player_button_remove_from_pitch">Retirer</message>
+    
+    <message id="topstrikers_navlabel">Classement des buteurs</message>
+    <message id="topstrikers_title">Meilleurs buteurs</message>
+    
+    <message id="topscorers_navlabel">Meilleur buteur</message>
+    <message id="topscorers_head_score">Score</message>
+    
+    <message id="entity_player_is_on_watchlist">Dans la liste de suivi</message>
+    
+    <message id="player_scouting_talent_result">Talent (recruteur)</message>
+	<message id="player_scounting_no_scout_no_watchlist">*) Tu as besoin d’un recruteur et le joueur doit figurer dans ta liste de suivi.</message>
+
+
+    <message id="player_talent_unknown">Talent inconnu</message>
+    <message id="player_talent_label_low">faible</message>
+    <message id="player_talent_label_fair">correct</message>
+    <message id="player_talent_label_good">bon</message>
+    <message id="player_talent_label_high">élevé</message>
+    <message id="player_talent_label_exceptional">exceptionnel</message>
+    <message id="player_talent_source_own">Joueur du club</message>
+    <message id="player_talent_source_partnership">Visible grâce à un partenariat actif entre clubs</message>
+    <message id="player_talent_source_scout">Évaluation du recruteur</message>
+    <message id="player_talent_source_watchlist">Liste de suivi</message>
+    <message id="player_talent_accuracy_label">Précision</message>
+    <message id="player_talent_accuracy_very_high">très élevée</message>
+    <message id="player_talent_accuracy_high">élevé</message>
+    <message id="player_talent_accuracy_medium">moyen</message>
+    <message id="player_talent_accuracy_low">faible</message>
+    <message id="player_talent_access_exact">exact</message>
+    <message id="player_talent_hint_matching_scout_required">Un recruteur %s adapté est nécessaire pour obtenir une évaluation.</message>
+    <message id="player_talent_hint_scout_too_weak">Le recruteur adapté est encore trop inexpérimenté pour fournir une évaluation fiable du talent.</message>
+    <message id="player_talent_hint_add_watchlist">Ajoute le joueur à ta liste de suivi pour rendre les informations sur son talent visibles grâce au recrutement ou à un partenariat.</message>
+    <message id="player_partnership_active_title">Partenariat entre clubs actif</message>
+    <message id="player_partnership_active_intro">Le club du joueur</message>
+    <message id="player_partnership_active_with">est lié à ton club en tant que</message>
+    <message id="player_partnership_role_parent">Club principal</message>
+    <message id="player_partnership_role_partner">Club partenaire</message>
+    <message id="player_partnership_effect_shared_scouting">Recrutement partagé : les détails du talent peuvent être visibles.</message>
+    <message id="player_partnership_effect_preferred_loans">Prêts préférentiels entre les deux clubs.</message>
+    <message id="player_partnership_effect_first_option">Priorité sur les transferts adaptés.</message>
+    <message id="player_partnership_effect_development_bonus">Bonus de développement pour les prêts adaptés : %s pour cent.</message>
+
+    <message id="player_personality_unknown">Inconnue</message>
+    <message id="player_personality_leader">Leader</message>
+    <message id="player_personality_professional">Professionnel</message>
+    <message id="player_personality_injury_prone">Sujet aux blessures</message>
+    <message id="player_personality_inconsistent">Irrégulier</message>
+    <message id="player_personality_loyal">Loyal</message>
+    <message id="player_personality_ambitious">Ambitieux</message>
+    <message id="player_personality_big_game_player">Joueur des grands matchs</message>
+    <message id="player_personality_troublemaker">Fauteur de troubles</message>
+
+    <message id="playertable_head_traits">Capacités spéciales</message>
+    <message id="player_traits_title">Capacités spéciales</message>
+    <message id="player_traits_none">Aucune capacité spéciale enregistrée.</message>
+    <message id="player_traits_none_short">aucune</message>
+    <message id="player_traits_value">Niveau</message>
+    <message id="player_trait_level_tooltip">Niveau : %s sur 3</message>
+    <message id="player_trait_torinstinkt">Instinct de buteur</message>
+    <message id="player_trait_spielmacher">Meneur de jeu</message>
+    <message id="player_trait_ballzauberer">Magicien du ballon</message>
+    <message id="player_trait_flankenspezialist">Spécialiste des centres</message>
+    <message id="player_trait_kopfballstaerke">Jeu de tête</message>
+    <message id="player_trait_viererkette">Défense à quatre</message>
+    <message id="player_trait_laufstaerke">Volume de course</message>
+    <message id="player_trait_freistossspezialist">Spécialiste des coups francs</message>
+    <message id="player_trait_elfmeterschuetze">Tireur de penalties</message>
+    <message id="player_trait_dribbler">Dribbleur</message>
+    <message id="player_trait_elfmetertoeter">Arrêteur de penalties</message>
+    <message id="player_trait_reflexe">Réflexes</message>
+</messages>

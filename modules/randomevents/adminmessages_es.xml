@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_randomevents_interval_days">Eventos aleatorios: intervalo</message>
+    <message id="settings_label_randomevents_interval_days_help">Número de días tras los que puede producirse un nuevo evento inmediato para el usuario. Introduzca 0 para desactivar los antiguos eventos aleatorios inmediatos.</message>
+    <message id="settings_label_randomevent_chain_enabled">Activar cadenas de eventos</message>
+    <message id="settings_label_randomevent_chain_enabled_help">Activa nuevos eventos del club con decisiones del entrenador.</message>
+    <message id="settings_label_randomevent_chain_chance_percent">Cadenas de eventos: probabilidad por jornada</message>
+    <message id="settings_label_randomevent_chain_chance_percent_help">Probabilidad porcentual de que se genere un nuevo evento al abrir la oficina después de una jornada. Recomendación: 15.</message>
+    <message id="settings_label_randomevent_chain_expire_matchdays">Cadenas de eventos: vencimiento tras jornadas</message>
+    <message id="settings_label_randomevent_chain_expire_matchdays_help">Número de jornadas tras las que una cadena de eventos abierta vence automáticamente con la decisión predeterminada.</message>
+</messages>

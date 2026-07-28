@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="teamoftheday_navlabel">Onze do dia</message>
+    <message id="teamoftheday_no_matches_in_season">Ainda não foi disputado qualquer jogo nesta época.</message>
+    <message id="teamoftheday_openmatchesexist">Existem jogos nesta jornada que ainda não foram disputados.</message>
+    <message id="teamoftheday_known_member_tooltip">Já integrou o onze do dia %d vezes nesta época.</message>
+    <message id="teamoftheday_matchreport_tooltip">Integra o onze da jornada.</message>
+    <message id="teamoftheday_teamoftheseason">Onze da época</message>
+</messages>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="settings_tab_scouting">Ojeo</message>
+
+    <message id="settings_label_scouting_enabled">Activar sistema de ojeo</message>
+    <message id="settings_label_scouting_enabled_help">Activa la nueva página de ojeo en el mercado de fichajes. Los usuarios pueden crear departamentos de ojeo, contratar ojeadores, abrir concentraciones y recibir propuestas de jugadores.</message>
+
+    <message id="settings_label_max_scouts_per_team">Máximo de ojeadores por club</message>
+    <message id="settings_label_max_scouts_per_team_help">Límite máximo global de ojeadores contratados simultáneamente por club. Los niveles del departamento de ojeo también pueden establecer sus propios límites.</message>
+
+    <message id="settings_label_scouts_matches">Duración estándar de los ojeadores</message>
+    <message id="settings_label_scouts_matches_help">Número de partidos por los que se contrata de forma estándar a un ojeador. Esta cifra se reduce después de cada jornada relevante.</message>
+
+    <message id="settings_label_scout_hire_matches">Comisión de contratación del ojeador en jornadas</message>
+    <message id="settings_label_scout_hire_matches_help">Número de honorarios del ojeador que se cobran inmediatamente como comisión de contratación no reembolsable. Predeterminado: 3.</message>
+
+    <message id="settings_label_scouting_default_department_build_cost">Coste estándar de construcción del departamento de ojeo</message>
+    <message id="settings_label_scouting_default_department_build_cost_help">Valor alternativo si no se encuentra un nivel adecuado en la tabla scouting_department_level.</message>
+
+    <message id="settings_label_scouting_default_department_maintenance_fee">Mantenimiento estándar del departamento de ojeo</message>
+    <message id="settings_label_scouting_default_department_maintenance_fee_help">Coste alternativo por jornada si no se encuentra un nivel adecuado en la tabla scouting_department_level.</message>
+
+    <message id="settings_label_scouting_proposal_min_matches">Espera mínima hasta propuesta de jugador</message>
+    <message id="settings_label_scouting_proposal_min_matches_help">Número mínimo de partidos antes de que una concentración de ojeo activa pueda generar una nueva propuesta de jugador.</message>
+
+    <message id="settings_label_scouting_proposal_max_matches">Espera máxima hasta propuesta de jugador</message>
+    <message id="settings_label_scouting_proposal_max_matches_help">Número máximo de partidos antes de que una concentración de ojeo activa pueda generar una nueva propuesta de jugador. El valor real se elige aleatoriamente entre el mínimo y el máximo.</message>
+
+    <message id="settings_label_scouting_proposal_expire_matches">Validez de las propuestas de jugadores</message>
+    <message id="settings_label_scouting_proposal_expire_matches_help">Número de partidos durante los que un jugador propuesto permanece disponible. Después, la propuesta vence automáticamente.</message>
+
+    <message id="settings_label_scouting_max_open_proposals_per_team">Máximo de propuestas de jugadores abiertas por club</message>
+    <message id="settings_label_scouting_max_open_proposals_per_team_help">Cuando un club alcanza este número de propuestas abiertas, las concentraciones dejan temporalmente de generar nuevos jugadores.</message>
+
+    <message id="settings_label_scouting_same_country_cost_percent">Factor de coste nacional</message>
+    <message id="settings_label_scouting_same_country_cost_percent_help">Valor porcentual para concentraciones de ojeo en el propio país. 100 significa coste normal; 75 significa un 25 por ciento más barato.</message>
+
+    <message id="settings_label_scouting_abroad_cost_percent">Factor de coste en el extranjero</message>
+    <message id="settings_label_scouting_abroad_cost_percent_help">Valor porcentual para concentraciones de ojeo en el extranjero. 100 significa coste normal; 125 significa un 25 por ciento más caro.</message>
+
+</messages>

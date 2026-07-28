@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="trainingcamp_navlabel">Estágio de treino</message>
+    
+    <message id="trainingcamp_nocamps">Atualmente, não existem estágios disponíveis.</message>
+    
+    <message id="trainingcamp_bookedcamp">Estágio reservado</message>
+    
+    <message id="trainingcamp_startdate">Chegada</message>
+    <message id="trainingcamp_enddate">Partida</message>
+    
+    <message id="trainingcamp_delete">Cancelar</message>
+    <message id="trainingcamp_delete_note">Pode cancelar esta reserva, mas os custos não serão reembolsados.</message>
+    
+    <message id="trainingcamp_cancel_illegalid">A reserva já não foi encontrada. Poderá já ter sido cancelada ou estar no passado.</message>
+    <message id="trainingcamp_cancel_success">A reserva foi cancelada com sucesso.</message>
+    
+    
+    <message id="camp-details_navlabel">Reservar estágio</message>
+    
+    <message id="camp-detail_form_title">Reservar</message>
+    
+    <message id="camp-detail_start_date">Data de chegada</message>
+    <message id="camp-detail_days">Dias</message>
+    <message id="camp-detail_days_help">Tem de estar entre %d e %d.</message>
+    
+    <message id="trainingcamp_booking_err_invaliddays">A estadia no estágio tem de durar entre %d e %d dias.</message>
+    <message id="trainingcamp_booking_err_dateinpast">A data de chegada tem de ser futura.</message>
+    <message id="trainingcamp_booking_err_datetoofar">A data de chegada tem de estar dentro dos próximos %d dias.</message>
+    <message id="trainingcamp_booking_err_existingbookings">Já tem um estágio reservado. Só pode reservar um estágio de cada vez.</message>
+    <message id="trainingcamp_booking_err_tooexpensive">Neste momento, não pode suportar o custo do estágio.</message>
+    <message id="trainingcamp_booking_err_matcheswithintimeframe">A sua equipa disputa jogos durante este período.</message>
+    
+    <message id="trainingcamp_booking_costs_subject">Estágio de treino</message>
+    
+    <message id="trainingcamp_booking_success">O estágio foi reservado com sucesso!</message>
+    
+    <message id="trainingcamp_type_balanced">Equilibrado</message>
+    <message id="trainingcamp_type_fitness">Condição física</message>
+    <message id="trainingcamp_type_recovery">Recuperação</message>
+    <message id="trainingcamp_type_technique">Técnica</message>
+    <message id="trainingcamp_type_teambuilding">Coesão da equipa</message>
+    <message id="trainingcamp_type_tactics">Tática</message>
+    <message id="trainingcamp_type_youth">Desenvolvimento juvenil</message>
+    <message id="trainingcamp_type_mental">Mental</message>
+    <message id="trainingcamp_players_included">Jogadores no estágio</message>
+    <message id="trainingcamp_total_costs">Custo total</message>
+    <message id="trainingcamp_estimated_min_costs">Custo com a duração mínima</message>
+    <message id="trainingcamp_all_players_note">O estágio aplica-se a todos os jogadores ativos do plantel. Os efeitos só são aplicados após o regresso.</message>
+    <message id="trainingcamp_last_report">Último relatório de estágio</message>
+    <message id="trainingcamp_report_completed_title">Estágio concluído</message>
+    <message id="trainingcamp_report_completed_text">Os efeitos foram aplicados ao plantel e foi criado um relatório.</message>
+    <message id="trainingcamp_report_period">Período</message>
+    <message id="trainingcamp_report_players_costs">Jogadores / custos</message>
+    <message id="trainingcamp_report_effects">Efeitos totais</message>
+    <message id="trainingcamp_special_effects">Atributos adicionais</message>
+    <message id="trainingcamp_report_special_effects">Total de atributos adicionais</message>
+    <message id="trainingcamp_report_injuries">Novas lesões</message>
+</messages>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_messages_enabled">Les utilisateurs peuvent s’envoyer des messages.</message> 
+	<message id="settings_label_messages_break_minutes">Délai entre deux messages</message> 
+	<message id="settings_label_messages_break_minutes_help">En minutes. Afin d’éviter le spam, les utilisateurs ne peuvent envoyer un autre message qu’après X minutes.</message> 
+</messages>

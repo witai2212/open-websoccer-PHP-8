@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="category_country_navlabel">Pays</message>
+	<message id="entity_country">Pays</message>
+	
+</messages>

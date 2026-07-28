@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="office_navlabel">Oficina</message>
+    <message id="office_title">Mi oficina</message>
+    
+    <message id="feature_requires_team">Debe ser entrenador de un club para utilizar esta función.</message>
+    
+    <message id="myteam_navlabel">Mi plantilla</message>
+    <message id="myteam_title">Mis jugadores</message>
+    
+    <message id="myteam_player_sell">Vender</message>
+    <message id="myteam_player_extend_contract">Renovar contrato</message>
+    <message id="myteam_player_contract_is_ending">El contrato vence pronto</message>
+    
+    <message id="myteam_unsellable">Marcar como intransferible</message>
+    <message id="myteam_unsellable_tooltip">A partir de entonces no se aceptarán ofertas de compra por este jugador.</message>
+    <message id="myteam_unsellable_player_success">El jugador se ha marcado como intransferible.</message>
+    <message id="myteam_unsellable_unmark_tooltip">Eliminar estado de intransferible</message>
+    <message id="myteam_remove_unsellable_player_success">Volverán a aceptarse ofertas de compra por este jugador.</message>
+    
+    <message id="myteam_action_button">Acción</message>
+    
+    <message id="myteam_captain_tooltip">Es el capitán y responsable de la moral cuando el equipo va perdiendo</message>
+    <message id="myteam_player_select_as_captain">Nombrar capitán</message>
+    <message id="myteam_player_select_as_captain_success">¡El capitán se ha seleccionado correctamente!</message>
+    <message id="myteam_player_select_as_captain_warning_old_captain">Su anterior capitán, %s, está muy decepcionado con esta decisión.</message>
+    
+    <message id="extend-contract_navlabel">Renovación de contrato</message>
+    <message id="extend-contract_title">Negociación con %s</message>
+    
+    <message id="extend-contract_existing_contract_title">Contrato actual</message>
+    <message id="extend-contract_link_profile">Ir al perfil del jugador</message>
+    
+    <message id="extend-contract_offer_title">Su oferta</message>
+    
+    <message id="extend-contract_decrease_satisfaction_hint">Tenga en cuenta que cada oferta demasiado baja reduce la satisfacción del jugador.</message>
+    
+    <message id="extend-contract_success">¡El contrato se ha renovado correctamente con las nuevas condiciones!</message>
+    <message id="extend-contract_counteroffer_success">Se ha presentado la contraoferta. El jugador revisará ahora todas las ofertas para la próxima temporada.</message>
+    
+    <message id="extend-contract_player_is_unhappy">El jugador ya no se siente a gusto en su club y, por tanto, no quiere renovar el contrato en este momento.</message>
+    <message id="extend-contract_lower_than_current_salary">El jugador no acepta una reducción salarial.</message>
+    
+    <message id="extend-contract_salary_too_low">El salario ofrecido es demasiado bajo para el jugador. Exige un salario por partido más alto.</message>
+    
+    <message id="extend-contract_cannot_afford_offer">Con su presupuesto actual, no puede permitirse este salario.</message>
+    
+    <message id="extend-contract_goalbonus_too_low">La prima por gol es demasiado baja para el jugador.</message>
+    <message id="extend-contract_matches_too_high">El contrato no puede durar más de %d partidos.</message>
+    <message id="extend-contract_matches_max_help">Máximo %d partidos.</message>
+    
+    <message id="finances_navlabel">Finanzas</message>
+    
+    <message id="account_statement_date">Fecha</message>
+    <message id="account_statement_sender">Remitente / destinatario</message>
+    <message id="account_statement_subject">Asunto</message>
+    <message id="account_statement_amount">Importe</message>
+    <message id="account_statement_revenues">Ingresos</message>
+    <message id="account_statement_expenses">Gastos</message>
+    
+    <message id="tickets_navlabel">Precios de las entradas</message>
+    
+    <message id="tickets_stands">Localidades de pie</message>
+    <message id="tickets_seats">Asientos</message>
+    <message id="tickets_stands_grand">Localidades de pie (tribuna principal)</message>
+    <message id="tickets_seats_grand">Asientos (tribuna principal)</message>
+    <message id="tickets_vip">Palcos V.I.P.</message>
+    
+    <message id="tickets_sold_last_match">Vendidas en el último partido</message>
+    
+    <message id="tickets_info_homefieldadvantage"><strong>Consejo:</strong> su equipo está especialmente motivado en los partidos en casa cuando el estadio está lleno. ¡Téngalo en cuenta al establecer los precios de las entradas!</message>
+    
+    <message id="notification_soon_ending_playercontracts">¡Algunos contratos de jugadores vencen pronto!</message>
+
+    <message id="dailybriefing_title">Hoy en el club</message>
+    <message id="dailybriefing_intro">Tu resumen diario de la directiva, los aficionados, los medios, el ojeo, la cantera, las cesiones y los últimos cambios.</message>
+    <message id="dailybriefing_generated">Actualizado:</message>
+    <message id="dailybriefing_items_title">Bandeja del entrenador</message>
+    <message id="dailybriefing_no_items">Hoy no hay avisos urgentes.</message>
+
+    <message id="dailybriefing_card_board">Directiva</message>
+    <message id="dailybriefing_card_fans">Afición</message>
+    <message id="dailybriefing_card_media">Medios</message>
+    <message id="dailybriefing_card_chemistry">Química del equipo</message>
+    <message id="dailybriefing_status_critical">crítico</message>
+    <message id="dailybriefing_status_attention">vigilar</message>
+    <message id="dailybriefing_status_stable">estable</message>
+    <message id="dailybriefing_status_positive">positivo</message>
+    <message id="dailybriefing_status_calm">tranquilo</message>
+
+    <message id="dailybriefing_priority_critical">Crítico</message>
+    <message id="dailybriefing_priority_important">Importante</message>
+    <message id="dailybriefing_priority_hint">Aviso</message>
+    <message id="dailybriefing_priority_positive">Positivo</message>
+
+    <message id="dailybriefing_action_board">Ir a los objetivos</message>
+    <message id="dailybriefing_action_fanpressure">Aficionados y medios</message>
+    <message id="dailybriefing_action_interview">Responder entrevista</message>
+    <message id="dailybriefing_action_scouting">Ir al ojeo</message>
+    <message id="dailybriefing_action_youth_academy">Ir a la academia juvenil</message>
+    <message id="dailybriefing_action_loans">Ir a las cesiones</message>
+    <message id="dailybriefing_action_transfers">Ir al mercado de fichajes</message>
+    <message id="dailybriefing_action_whatchanged">¿Qué ha cambiado?</message>
+    <message id="dailybriefing_action_formation">Ir a la alineación</message>
+    <message id="dailybriefing_action_training">Ir al entrenamiento</message>
+    <message id="dailybriefing_action_finances">Ir a las finanzas</message>
+
+    <message id="dailybriefing_item_board_low_title">La directiva espera respuestas</message>
+    <message id="dailybriefing_item_board_low_text">La satisfacción de la directiva es crítica. Los resultados, los objetivos y la evolución económica deben ser ahora la prioridad.</message>
+    <message id="dailybriefing_item_board_high_title">La directiva está satisfecha</message>
+    <message id="dailybriefing_item_board_high_text">La dirección del club valora positivamente tu trabajo actual.</message>
+    <message id="dailybriefing_item_fans_low_title">El ánimo de los aficionados está cambiando</message>
+    <message id="dailybriefing_item_fans_low_text">Los aficionados esperan señales visibles: buenos resultados, comunicación clara o una reacción deportiva.</message>
+    <message id="dailybriefing_item_fans_high_title">Los aficionados están contigo</message>
+    <message id="dailybriefing_item_fans_high_text">El ambiente en torno al club es muy positivo. Esto puede favorecer los partidos en casa y el impacto de los patrocinadores.</message>
+    <message id="dailybriefing_item_media_high_title">Alta presión mediática</message>
+    <message id="dailybriefing_item_media_high_text">Los medios esperan una reacción. Una entrevista abierta o una señal deportiva clara pueden ayudar.</message>
+    <message id="dailybriefing_item_chemistry_low_title">El vestuario necesita estabilidad</message>
+    <message id="dailybriefing_item_chemistry_low_text">La química del equipo es baja. Deben revisarse el entrenamiento, la alineación y unos roles claros.</message>
+    <message id="dailybriefing_item_chemistry_high_title">El equipo parece unido</message>
+    <message id="dailybriefing_item_chemistry_high_text">La química del equipo es fuerte. El ambiente del vestuario favorece la evolución deportiva.</message>
+
+    <message id="dailybriefing_item_interview_title">Pregunta pendiente de los medios</message>
+    <message id="dailybriefing_item_scouting_title">Nuevo aviso de ojeo</message>
+    <message id="dailybriefing_item_scouting_text">Tu ojeador ha sugerido a %s.</message>
+    <message id="dailybriefing_strength_short">Fuerza</message>
+    <message id="dailybriefing_talent_short">Talento</message>
+    <message id="dailybriefing_item_youth_payment_title">La academia juvenil bajo presión</message>
+    <message id="dailybriefing_item_youth_payment_text">Hay pagos pendientes en la academia juvenil. Esto puede perjudicar el desarrollo y la reputación.</message>
+    <message id="dailybriefing_item_youth_reputation_title">Buen trabajo de cantera</message>
+    <message id="dailybriefing_item_youth_reputation_text">La reputación de la academia juvenil es del %s%%. La directiva valora positivamente el trabajo de cantera.</message>
+    <message id="dailybriefing_item_youth_log_positive_title">Evolución positiva de la cantera</message>
+    <message id="dailybriefing_item_youth_log_warning_title">Aviso de la academia juvenil</message>
+    <message id="dailybriefing_item_loan_unused_title">Jugador cedido sin ritmo de competición</message>
+    <message id="dailybriefing_item_loan_unused_text">%s ha tenido muy pocos minutos en varios partidos durante su cesión.</message>
+    <message id="dailybriefing_item_loan_borrower_suffix">Club de cesión actual: %s.</message>
+    <message id="dailybriefing_item_transfer_offer_title">Nueva oferta de fichaje</message>
+    <message id="dailybriefing_item_transfer_offer_text">%s ha presentado una oferta por %s.</message>
+    <message id="dailybriefing_item_loan_request_title">Nueva solicitud de cesión</message>
+    <message id="dailybriefing_item_loan_request_text">%s quiere obtener la cesión de %s.</message>
+    <message id="dailybriefing_item_whatchanged_title">Últimos cambios</message>
+    <message id="dailybriefing_item_whatchanged_loss_title">Análisis tras la derrota</message>
+    <message id="dailybriefing_item_whatchanged_win_title">Evolución positiva tras la victoria</message>
+    <message id="dailybriefing_item_nextmatch_title">Atención al próximo partido</message>
+    <message id="dailybriefing_item_nextmatch_text">Se acerca el próximo partido contra %s. Revisa la alineación, la frescura y el planteamiento táctico.</message>
+    <message id="dailybriefing_item_fallback_training_title">Revisar el entrenamiento</message>
+    <message id="dailybriefing_item_fallback_training_text">No hay avisos urgentes. Aun así, puede ser útil revisar brevemente el entrenamiento y la frescura.</message>
+    <message id="dailybriefing_item_fallback_scouting_title">Supervisar el ojeo</message>
+    <message id="dailybriefing_item_fallback_scouting_text">El mercado sigue en movimiento. Comprueba si serían útiles nuevos perfiles de búsqueda o concentraciones de ojeo.</message>
+    <message id="dailybriefing_item_fallback_finance_title">Revisar las finanzas</message>
+    <message id="dailybriefing_item_fallback_finance_text">Aprovecha los días tranquilos para revisar el presupuesto, los salarios y las próximas cargas.</message>
+
+
+    <message id="dailybriefing_youthacademy_log_built">Se construyó la academia juvenil</message>
+    <message id="dailybriefing_youthacademy_log_upgraded">Se amplió la academia juvenil</message>
+    <message id="dailybriefing_youthacademy_log_downgraded">Se redujo el nivel de la academia juvenil</message>
+    <message id="dailybriefing_youthacademy_log_auto_downgraded">Se redujo automáticamente el nivel de la academia juvenil</message>
+    <message id="dailybriefing_youthacademy_log_development_bonus">Bonificación de desarrollo de la academia juvenil</message>
+    <message id="dailybriefing_youthacademy_log_scouting_bonus">Bonificación de ojeo de la academia juvenil</message>
+    <message id="dailybriefing_youthacademy_log_generic">Nuevo mensaje de la academia juvenil</message>
+
+
+    <message id="manager-notes_navlabel">Mis notas</message>
+    <message id="manager_notes_title">Mis notas</message>
+    <message id="manager_notes_intro">Notas privadas para tu planificación. El contenido pertenece a tu cuenta de usuario y se conserva cuando cambias de club.</message>
+    <message id="manager_notes_placeholder">Ideas tácticas, objetivos de fichaje, recordatorios o tareas personales...</message>
+    <message id="manager_notes_last_saved">Último guardado:</message>
+    <message id="manager_notes_not_saved_yet">Todavía no se ha guardado.</message>
+    <message id="manager_notes_saving">Guardando...</message>
+    <message id="manager_notes_saved">Guardado.</message>
+    <message id="manager_notes_save_error">Error al guardar.</message>
+</messages>

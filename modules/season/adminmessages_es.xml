@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="category_season_navlabel">Temporadas</message>
+	<message id="complete-season_navlabel">Finalizar temporada</message>
+    <message id="season_complete_title">Finalizar temporadas</message>
+	<message id="season_complete_introduction">Al seleccionar una temporada, se marcará como "finalizada", se actualizarán las estadísticas y se abonarán las primas de los patrocinadores. Ya no quedan partidos de liga por calcular en las siguientes temporadas:</message>
+    <message id="season_complete_noseasons">No hay ninguna temporada que pueda finalizarse.</message>
+	<message id="season_complete_submit">Finalizar temporada</message>
+    <message id="season_complete_label_playerdisableage">Edad de retirada de los jugadores</message>
+	<message id="season_complete_label_playerdisableage_help">Los jugadores se desactivarán a partir de esta edad.</message>
+	
+	<message id="season_complete_label_target_missed_firemanager">Despedir automáticamente al mánager si no se alcanza el objetivo de la temporada.</message>
+	<message id="season_complete_label_target_missed_popularityreduction">Pérdida de popularidad entre la afición</message>
+	<message id="season_complete_label_target_missed_popularityreduction_help">si no se alcanza el objetivo de la temporada. 0 para que no tenga efecto.</message>
+	
+	<message id="season_complete_label_target_missed_penalty">Pago de penalización</message>
+	<message id="season_complete_label_target_missed_penalty_help">si no se alcanza el objetivo de la temporada. 0 para que no tenga efecto.</message>
+	
+	<message id="season_complete_label_target_accomplished_reward">Prima por alcanzar el objetivo</message>
+	<message id="season_complete_label_target_accomplished_reward_help">si se alcanza el objetivo de la temporada. 0 para que no tenga efecto.</message>
+	
+	<message id="schedulegenerator_navlabel">Generar calendario</message>
+	<message id="schedulegenerator_label">Generar una temporada completa</message>
+	
+	<message id="schedulegenerator_label_league">Liga</message>
+	<message id="schedulegenerator_label_seasonname">Nombre de la nueva temporada</message>
+	<message id="schedulegenerator_label_rounds">Número de vueltas</message>
+	<message id="schedulegenerator_label_rounds_help">2 significa ida y vuelta</message>
+	<message id="schedulegenerator_label_firstmatchday">Fecha de la primera jornada</message>
+	<message id="schedulegenerator_label_timebreak">Pausa entre dos jornadas</message>
+	<message id="schedulegenerator_label_timebreak_help">en días. Los partidos siempre se disputarán a la misma hora que en la primera jornada.</message>
+	
+	<message id="schedulegenerator_label_timebreak_rounds">Pausa adicional entre dos vueltas</message>
+	<message id="schedulegenerator_label_timebreak_rounds_help">en días.</message>
+	
+	<message id="schedulegenerator_err_noteams">No hay equipos en la liga.</message>
+	<message id="schedulegenerator_err_invalidrounds">El número de vueltas debe estar entre 1 y 10.</message>
+	<message id="schedulegenerator_err_invalidtimebreak">El número de días entre dos vueltas debe estar entre 1 y 50.</message>
+	
+	<message id="new-season_navlabel">Crear nueva temporada</message>
+	
+	
+</messages>

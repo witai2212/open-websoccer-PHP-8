@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="register_navlabel">S'inscrire</message>
+    <message id="registration_disabled">L'inscription des utilisateurs est actuellement désactivée par l'administrateur.</message>
+    <message id="registration_title">S'inscrire comme utilisateur</message>
+    <message id="registration_password_repeat">Répéter le mot de passe</message>
+    <message id="registration_email_repeat">Répéter l'adresse e-mail</message>
+    <message id="registration_submit_button">S'inscrire</message>
+    
+    <message id="registration_illegal_username">Le nom d'utilisateur indiqué n'est pas autorisé.</message>
+    <message id="registration_repeated_password_notmatching">Le mot de passe répété ne correspond pas au premier mot de passe saisi.</message>
+    <message id="registration_repeated_email_notmatching">L'adresse e-mail répétée ne correspond pas à la première adresse saisie.</message>
+    <message id="registration_user_exists">Le nom d'utilisateur ou l'adresse e-mail est déjà utilisé.</message>
+    <message id="registration_max_number_users_exceeded">Aucun autre utilisateur ne peut s'inscrire actuellement.</message>
+    
+    <message id="registration_invalidcaptcha">Le code de sécurité (« Captcha ») a été saisi incorrectement.</message>
+    
+    
+    <message id="register-success_navlabel">Inscription envoyée</message>
+    <message id="register-success_message_title">Inscription envoyée - consultez vos e-mails</message>
+    <message id="register-success_message_content">Afin de vérifier l'authenticité de l'adresse e-mail fournie, le système vous a automatiquement envoyé un message contenant un lien d'activation.</message>
+	<message id="register-success_nextstep">Consultez maintenant vos e-mails et suivez les instructions du message que nous vous avons envoyé. Il peut arriver avec un léger retard.</message>
+    
+	<message id="activation_email_subject">Finalisation de votre inscription</message>
+	<message id="activation_email_greeting">Bonjour,</message>
+	<message id="activation_email_introduction">pour finaliser votre inscription, veuillez ouvrir l'adresse Internet suivante :</message>
+	<message id="activation_email_ending">Si vous ne vous êtes pas inscrit chez nous et soupçonnez une utilisation abusive de votre adresse e-mail, veuillez répondre à cet e-mail.</message>
+	
+</messages>

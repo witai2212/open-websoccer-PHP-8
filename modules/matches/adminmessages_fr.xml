@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="match_manage_reportitems">Messages du rapport</message>
+    <message id="match_manage_playerstatistics">Composition et statistiques des joueurs</message>
+    <message id="match_manage_complete">Terminer sans simulation</message>
+    
+    <message id="match_manage_reportitems_noitems">Aucun message de rapport de match n’est encore disponible pour ce match.</message>
+    <message id="match_manage_playerstatistics_noitems">Aucun joueur n’a encore été aligné pour ce match.</message>
+	
+    <message id="match_manage_minuten_gespielt">Minutes jouées</message>
+    <message id="match_manage_note">Note</message>
+    <message id="match_manage_tore">Buts</message>
+    <message id="match_manage_assists">Passes décisives</message>
+    <message id="match_manage_karte_gelb">Cartons jaunes</message>
+    <message id="match_manage_karte_rot">Carton rouge</message>
+    <message id="match_manage_verletzt">Matchs blessé</message>
+    <message id="match_manage_gesperrt">Matchs suspendu</message>
+    <message id="match_manage_ballcontacts">Touches de balle</message>
+    <message id="match_manage_wontackles">Duels gagnés</message>
+    <message id="match_manage_shoots">Tirs</message>
+    <message id="match_manage_passes_successed">Passes réussies</message>
+    <message id="match_manage_passes_failed">Passes manquées</message>
+    
+    <message id="match_manage_position_field_1">Sur le terrain</message>
+    <message id="match_manage_position_field_bench">Banc des remplaçants</message>
+    <message id="match_manage_position_field_substituted">Remplacé</message>
+    
+    <message id="match_manage_createplayer_title">Ajouter un joueur</message>
+    <message id="match_manage_createplayer_label_playerid">Joueur</message>
+    
+    <message id="formation_home_offensive">Mentalité offensive</message>
+    <message id="formation_home_longpasses">Longues passes</message>
+    <message id="formation_home_counterattacks">Contre-attaques</message>
+    <message id="formation_guest_offensive">Mentalité offensive</message>
+    <message id="formation_guest_longpasses">Longues passes</message>
+    <message id="formation_guest_counterattacks">Contre-attaques</message>
+    
+    <message id="match_manage_playerstatistics_createfromfrmation">Générer à partir de la composition actuelle</message>
+    <message id="match_manage_playerstatistics_noformationavailable">Aucune composition n’a été définie pour ce club.</message>
+    
+    <message id="match_manage_substitutions">Remplacement de joueur</message>
+    <message id="match_manage_substitutions_out">Sortie</message>
+    <message id="match_manage_substitutions_in">Entrée</message>
+    <message id="match_manage_substitutions_minute">Minute</message>
+    <message id="match_manage_substitutions_condition">Condition</message>
+    
+    <message id="match_manage_substitutions_condition_tie">En cas d’égalité</message>
+    <message id="match_manage_substitutions_condition_leading">En cas d’avantage</message>
+    <message id="match_manage_substitutions_condition_deficit">En cas de retard</message>
+    
+    <message id="match_manage_createmessage_title">Ajouter un message</message>
+    <message id="match_manage_reportitems_noitems">Aucun message de rapport de match n’a encore été ajouté.</message>
+    <message id="match_manage_reportmsg_minute">Minute</message>
+    <message id="match_manage_reportmsg_playernames">Joueur</message>
+    <message id="match_manage_reportmsg_playernames_help">Séparés par des points-virgules (;). Le premier nom correspond à {sp1}, le second à {sp2}.</message>
+    <message id="match_manage_reportmsg_intermediateresult">Score actuel</message>
+    <message id="match_manage_reportmsg_message_id">Message</message>
+    
+    <message id="match_manage_complete_alreadysimulated">Le match a déjà été marqué comme simulé.</message>
+    <message id="match_manage_complete_intro">Lorsque le match est terminé en cliquant sur le bouton ci-dessous, les actions suivantes sont effectuées :
+        <ul>
+            <li>Le match est marqué comme simulé.</li>
+            <li>Si l’option est activée, le nombre de spectateurs est calculé et les recettes correspondantes sont créditées.</li>
+            <li>Pour les matchs de championnat, les points sont attribués. Pour les matchs de coupe, le système vérifie si les équipes accèdent à un nouveau tour, puis génère les rencontres correspondantes.</li>
+            <li>L’endurance, la forme, les salaires des joueurs et les statistiques sont mis à jour.</li>
+        </ul>
+    </message>
+    <message id="match_manage_complete_computetickets">Calculer les ventes de billets.</message>
+    <message id="match_manage_complete_button">Terminer le match</message>
+    <message id="match_manage_complete_success">Le match a été terminé avec succès.</message>
+</messages>

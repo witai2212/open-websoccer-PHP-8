@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	
-	<message id="settings_label_upload_clublogo_max_size">Club Logo Upload: Maximum size</message> 
-	<message id="settings_label_upload_clublogo_max_size_help">If users are allowed to upload a new club logo, specify a maximum file size here. 0 if picture upload shall be disabled.</message> 
+	<message id="settings_label_upload_clublogo_max_size">Club logo upload: maximum size</message> 
+	<message id="settings_label_upload_clublogo_max_size_help">If users are allowed to upload their own club logo, you can specify the maximum image file size in KBytes here. Enter 0 to disable image uploads.</message> 
 </messages>

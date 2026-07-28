@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="tablehistory_navlabel">Evolução da época</message>
+    <message id="tablehistory_title">Evolução da época de %s</message>
+</messages>

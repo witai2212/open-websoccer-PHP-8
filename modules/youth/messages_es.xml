@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="youth-team_navlabel">Equipo juvenil</message>
+    <message id="youth-scouting_navlabel">Ojeo de juveniles</message>
+    <message id="youth-matchrequests_navlabel">Solicitudes de partido</message>
+    <message id="youth-matches_navlabel">Partidos</message>
+    <message id="youth-marketplace_navlabel">Mercado</message>
+    
+    <message id="youthteam_title">Mi plantilla juvenil</message>
+    <message id="youthteam_no_players">Actualmente no tiene jugadores en su plantilla juvenil.</message>
+    <message id="youthteam_scout_button">Buscar nuevos talentos</message>
+    
+    <message id="youthteam_showstatistics_tooltip">Mostrar u ocultar estadísticas</message>
+    
+    <message id="youthteam_min_age_info">Un jugador debe tener al menos %d años para incorporarse a la primera plantilla.</message>
+    
+    <message id="youthteam_action_make_professional">Ofrecer contrato profesional</message>
+    <message id="youthteam_action_sell">Poner a la venta en el mercado</message>
+    <message id="youthteam_action_fire">Despedir</message>
+    <message id="youthteam_action_removefrommarket">En venta. Retirar del mercado.</message>
+    <message id="youthteam_action_buy">Comprar</message>
+    
+    <message id="youthplayer-sell_navlabel">Poner a la venta a un jugador juvenil</message>
+    <message id="youthplayer-sell_formlabel">Establecer el importe de traspaso deseado</message>
+    
+    <message id="youthteam_err_notownplayer">El jugador no pertenece (o ya no pertenece) a su equipo.</message>
+    <message id="youthteam_sell_err_alreadyonmarket">El jugador ya está en venta.</message>
+    
+    <message id="youthteam_sell_success">Otros mánagers ya pueden comprar al jugador.</message>
+    <message id="youthteam_removefrommarket_success">El jugador ya no está disponible en el mercado.</message>
+    <message id="youthteam_fire_success">El jugador ha sido despedido.</message>
+    <message id="youthteam_buy_success">¡El jugador ahora pertenece a su equipo!</message>
+    
+    <message id="youthplayer-fire_navlabel">Despedir a un jugador juvenil</message>
+    <message id="youthplayer-fire_formlabel">Retirar de la plantilla</message>
+    <message id="youthplayer-fire_confirmationmsg">¿Realmente desea despedir al jugador? Esta acción no se puede deshacer.</message>
+
+    <message id="youthplayer-buy_navlabel">Comprar jugador juvenil</message>
+    <message id="youthplayer-buy_formlabel">Fichar a este jugador</message>
+    <message id="youthplayer-buy_confirmationmsg">¿Realmente desea comprar al jugador? Se incorporará inmediatamente a su equipo por el importe de traspaso indicado.</message>
+    
+    <message id="youthteam_buy_err_ownplayer">El jugador ya está en su selección.</message>
+    <message id="youthteam_buy_err_ownplayer_otherteam">No puede comprar jugadores de uno de sus otros clubes.</message>
+    <message id="youthteam_buy_err_notonmarket">Este jugador juvenil ya no está disponible en el mercado.</message>
+    <message id="youthteam_buy_err_notenoughbudget">En este momento no puede permitirse el importe del traspaso.</message>
+    
+    <message id="youthteam_transferfee_subject">Importe de traspaso por jugador juvenil</message>
+    <message id="youthteam_transfer_notification">El jugador juvenil <strong>{player}</strong> se marcha a <strong>{newteam}</strong>.</message>
+    <message id="youth_transfer_violation">Infracción de las normas de traspasos juveniles</message>
+    <message id="youth_transfer_violation_notification">El organismo supervisor de traspasos ha revisado el traspaso juvenil de <strong>{player}</strong>. Importe: <strong>{amount}</strong>, valor de referencia: <strong>{fairvalue}</strong>. La sanción asciende a: <strong>{penalty}</strong></message>
+    <message id="youth_transfer_violation_front">El organismo supervisor de traspasos ha registrado una sanción: %s.</message>
+    
+    <message id="youthplayer-makeprofessional_navlabel">Fichar como profesional</message>
+    <message id="youthplayer-makeprofessional_formlabel">Incorporar al primer equipo</message>
+    <message id="youthplayer-makeprofessional_form_intro">¿Cuál debe ser la posición principal del jugador? <strong>Atención:</strong> esta selección no podrá modificarse más adelante.</message>
+    
+    <message id="youthteam_makeprofessional_err_tooyoung">El jugador debe tener al menos %d años.</message>
+    <message id="youthteam_makeprofessional_err_invalidmainposition">Se ha indicado una posición principal no válida.</message>
+    <message id="youthteam_makeprofessional_err_budgettooless">En este momento no podría pagar el salario del jugador.</message>
+    
+    <message id="youthteam_makeprofessional_success">¡El jugador ya está en el primer equipo!</message>
+    
+	<message id="team_details_tab_youthplayers">Plantilla juvenil</message>
+	<message id="youthteam_no_players_in_team">Este equipo no tiene actualmente jugadores juveniles.</message>
+	
+	<message id="youthteam_scouting_lastexecution">Último ojeo juvenil</message>
+	<message id="youthteam_scouting_lastexecution_never">Nunca realizado</message>
+	<message id="youthteam_scouting_nextpossibleexecution">El próximo ojeo juvenil no será posible hasta el %s</message>
+	
+	<message id="youthteam_scouting_schoosescout">Elija a su ojeador de juveniles</message>
+	<message id="youthteam_scouting_noscoutavailable">Actualmente no tiene ningún ojeador de juveniles disponible.</message>
+	<message id="youthteam_scouting_schoosecountry">¿En qué país deben buscarse talentos?</message>
+	
+	<message id="youthteam_scouting_err_breakviolation">No podrá volver a realizar un ojeo hasta: %s</message>
+	<message id="youthteam_scouting_err_invalidcountry">No se pueden buscar jugadores en el país seleccionado. Póngase en contacto con el administrador.</message>
+	<message id="youthteam_scouting_err_invalidscout">El ojeador seleccionado no existe (o ya no existe).</message>
+	<message id="youthteam_scouting_err_notenoughbudget">En este momento no puede pagar los honorarios del ojeador.</message>
+
+	<message id="youthteam_scouting_fee_subject">Ojeo de jugadores juveniles</message>
+	<message id="youthteam_scouting_failure">Por desgracia, el ojeador no encontró ningún talento durante su viaje.</message>
+	
+	<message id="youthteam_scouting_success">¡Enhorabuena! El ojeador ha encontrado un talento.</message>
+	<message id="youthteam_scouting_success_details">¡Dé la bienvenida a %s en su equipo juvenil!</message>
+	
+	<message id="youthteam_matchrequest_createnew">Publicar solicitud</message>
+	<message id="youthteam_matchrequest_none_available">Actualmente no hay solicitudes de partido abiertas.</message>
+	<message id="youthteam_matchrequest_accept">Aceptar</message>
+	<message id="youthteam_matchrequest_cancel">Retirar</message>
+	
+	<message id="youth-matchrequests-create_navlabel">Publicar solicitud de partido juvenil</message>
+	<message id="youthteam_matchrequest_create_date">Fecha y hora</message>
+	<message id="youthteam_matchrequest_reward">Recompensa</message>
+	
+	<message id="youthteam_matchrequest_create_err_invaliddate">La fecha indicada no es válida. Si ha cumplimentado correctamente el formulario, póngase en contacto con un administrador.</message>
+	<message id="youthteam_matchrequest_create_err_too_many_open_requests">Solo puede tener %d solicitudes de partido abiertas. Retire sus otras solicitudes o espere a que caduquen.</message>
+	<message id="youthteam_matchrequest_create_err_budgetnotenough">Su presupuesto no es suficiente para la recompensa.</message>
+	<message id="youthteam_matchrequest_create_err_notenoughplayers">No tiene suficientes jugadores juveniles para disputar un partido.</message>
+	
+	<message id="youthteam_matchrequest_create_success">Su solicitud se ha publicado correctamente.</message>
+	
+	<message id="youthteam_matchrequest_cancel_err_notfound">La solicitud no existe (o ya no existe). Probablemente ya se haya aceptado o retirado.</message>
+	<message id="youthteam_matchrequest_cancel_success">La oferta se ha retirado correctamente.</message>
+	
+	<message id="youthteam_matchrequest_accept_err_ownrequest">No puede jugar contra usted mismo.</message>
+	
+	<message id="youthteam_matchrequest_err_maxperday_violated">Solo se pueden disputar %d partido(s) juvenil(es) al día.</message>
+	
+	<message id="youthteam_matchrequest_accept_success">¡El partido se ha programado correctamente!</message>
+	<message id="youthteam_matchrequest_accept_success_details">Prepare ahora la alineación para el partido.</message>
+	
+	<message id="youthteam_matchrequest_reward_subject">Recompensa por participar en un partido juvenil</message>
+	<message id="youthteam_matchrequest_accept_notification">El equipo <strong>{team}</strong> ha aceptado su solicitud de amistoso juvenil para el {date}.</message>
+
+	<message id="youthmatches_title">Partidos de mi equipo juvenil</message>
+	<message id="youthmatches_no_matches">Aún no se ha programado ningún partido para su equipo.</message>
+	
+	<message id="youthmarketplace_no_players">Actualmente no hay jugadores juveniles a la venta.</message>
+	
+	<message id="youth-formation_navlabel">Alineación</message>
+	<message id="youthformation_setup_development">Alinear automáticamente para el desarrollo</message>
+	<message id="youthformation_setup_balanced">Alinear automáticamente de forma equilibrada</message>
+	<message id="youthformation_setup_winning">Alinear automáticamente para buscar el resultado</message>
+	<message id="youthformation_err_matchexpired">Ya no se puede enviar una alineación para el partido seleccionado porque ya se ha simulado o está a punto de simularse.</message>
+	<message id="youthformation_err_invalidplayer">Al menos un jugador juvenil seleccionado no pertenece a su plantilla juvenil o no cumple la edad mínima.</message>
+	<message id="youthformation_err_invalidposition">Al menos una posición seleccionada no es válida.</message>
+
+	<message id="youthteam_salarypayment_subject">Pago de salarios de la plantilla juvenil</message>
+	
+	<message id="youth-match_navlabel">Partido juvenil</message>
+	
+	<message id="youthmatch_statistic_avg_strength">Nivel medio</message>
+	
+	<message id="ymreport_goal"><strong>¡Gol de {scorer}!</strong></message>
+	<message id="ymreport_attempt">Disparo de {scorer}.</message>
+	<message id="ymreport_tackle">Duelo entre {winner} y {loser}. ¡Gana {winner}!</message>
+	<message id="ymreport_injury">{player} se ha lesionado y debe abandonar el terreno de juego.</message>
+	<message id="ymreport_card_yellowred">{player} recibe una tarjeta amarilla-roja.</message>
+	<message id="ymreport_card_yellow">{player} recibe una tarjeta amarilla.</message>
+	<message id="ymreport_card_red">{player} recibe una tarjeta roja y debe abandonar el campo.</message>
+	<message id="ymreport_penalty_success"><strong>¡{player} marca de penalti!</strong></message>
+	<message id="ymreport_penalty_failure"><em>¡{player} falla un penalti!</em></message>
+	<message id="ymreport_substitution">¡Cambio! Entra <strong>{in}</strong> por <strong>{out}</strong>.</message>
+</messages>

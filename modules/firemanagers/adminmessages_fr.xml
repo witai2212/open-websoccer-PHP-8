@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="firemanagers_navlabel">Licencier des entraîneurs</message> 
+	<message id="firemanagers_introduction">Recherchez ici les clubs dont vous souhaitez licencier l'entraîneur. Un licenciement signifie que l'entraîneur perd le club. Les comptes utilisateurs correspondants ne sont <strong>pas</strong> supprimés, mais peuvent être désactivés si vous le souhaitez. Si un utilisateur a ruiné son club, le système peut le rendre à nouveau attractif pour d'autres utilisateurs.</message>
+
+	<message id="firemanagers_search_label">Rechercher des clubs</message>
+	
+	<message id="firemanagers_search_maxbudget">Budget minimal</message>
+	<message id="firemanagers_search_maxbudget_help">Trouver les clubs dont le solde est inférieur.</message>
+	
+	<message id="firemanagers_search_lastlogindays">Dernière connexion</message>
+	<message id="firemanagers_search_lastlogindays_help">Jours. Trouver les clubs dont l'entraîneur ne s'est pas connecté au cours des X derniers jours.</message>
+	
+	<message id="firemanagers_search_maxplayers">Taille minimale de l'effectif</message>
+	<message id="firemanagers_search_maxplayers_help">Trouver les clubs comptant moins de X joueurs dans l'équipe.</message>
+	
+	<message id="firemanagers_search_userid">Utilisateur</message>
+	
+	<message id="firemanagers_search_nohits">Aucun club trouvé.</message>
+	<message id="firemanagers_dismiss_button">Licencier les utilisateurs sélectionnés</message>
+	
+	<message id="firemanagers_dismiss_noneselected">Vous devez sélectionner au moins un club.</message>
+	
+	<message id="firemanagers_dismiss_label">Options de licenciement des entraîneurs</message>
+	<message id="firemanagers_dismiss_disableusers">Désactiver les comptes utilisateurs</message>
+	<message id="firemanagers_dismiss_minbudget">Budget minimal du club</message>
+	<message id="firemanagers_dismiss_minbudget_help">Si le club d'un entraîneur licencié dispose d'un budget inférieur, celui-ci sera complété.</message>
+	<message id="firemanagers_dismiss_message_subject">Message à l'utilisateur : objet</message>
+	<message id="firemanagers_dismiss_message_subject_help">Si un message privé doit être envoyé à l'utilisateur. Veuillez noter que les utilisateurs désactivés ne peuvent pas consulter ce message.</message>
+	<message id="firemanagers_dismiss_message_content">Message à l'utilisateur : contenu</message>
+	
+	<message id="firemanagers_dismiss_label_players">Effets sur l'effectif</message>
+	<message id="firemanagers_dismiss_strength_min_freshness">Niveau minimal : fraîcheur</message>
+	<message id="firemanagers_dismiss_strength_min_stamina">Niveau minimal : endurance</message>
+	<message id="firemanagers_dismiss_strength_min_satisfaction">Niveau minimal : satisfaction</message>
+	<message id="firemanagers_dismiss_mincontractmatches">Durée minimale du contrat</message>
+	
+	<message id="firemanagers_dismiss_label_minteamsize">Taille minimale de l'effectif : compléter l'effectif</message>
+	<message id="firemanagers_dismiss_label_minteamsize_intro">S'il y a moins de joueurs à un poste que le nombre indiqué ci-dessous, de nouveaux joueurs seront générés automatiquement.</message>
+
+	<message id="firemanagers_dismiss_success">Les utilisateurs ont été retirés de leurs clubs avec succès.</message>
+</messages>

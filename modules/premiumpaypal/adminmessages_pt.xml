@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_paypal_enabled">Adquirir crédito premium através de pagamentos via PayPal.</message> 
+	<message id="settings_label_paypal_receiver_email">PayPal: nome da conta (correio eletrónico)</message>
+	<message id="settings_label_paypal_receiver_email_help">Correio eletrónico do destinatário. Tem de ser o endereço registado no PayPal.</message>
+	<message id="settings_label_paypal_host">PayPal: anfitrião</message>
+	<message id="settings_label_paypal_host_help">Normalmente <em>www.paypal.com</em>. Para testes: <em>www.sandbox.paypal.com</em></message>
+	<message id="settings_label_paypal_url">URL do PayPal</message>
+	<message id="settings_label_paypal_url_help">URL interno para verificação do pagamento. Normalmente <em>ssl://www.paypal.com</em>. Para testes: <em>ssl://www.sandbox.paypal.com</em>.</message>
+	<message id="settings_label_paypal_buttonhtml">PayPal: código do botão (HTML)</message>
+	<message id="settings_label_paypal_buttonhtml_help">Código HTML <strong>não alterado</strong> do botão que gerou através do portal de comerciantes do PayPal. O botão tem de incluir as opções de carregamento configuradas acima na moeda indicada. Consulte também a documentação do produto.</message>
+</messages>

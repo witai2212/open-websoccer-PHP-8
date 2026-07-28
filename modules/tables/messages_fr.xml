@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="tablehistory_navlabel">Évolution de la saison</message>
+    <message id="tablehistory_title">Évolution de la saison de %s</message>
+</messages>

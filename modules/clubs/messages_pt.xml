@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="team_navlabel">Perfil do clube</message>
+    
+    <message id="team_details_tab_general">Resumo</message>
+    <message id="team_details_tab_statistic">Estatísticas</message>
+    <message id="team_details_tab_victories">Conquistas</message>
+    <message id="team_details_tab_players">Plantel</message>
+    
+    <message id="team_details_manager">Treinador</message>
+    <message id="team_details_parent_club">Clube principal</message>
+    <message id="team_details_affiliate_clubs">Clubes parceiros</message>
+    <message id="team_details_parent_club_suspended">suspenso</message>
+    <message id="parentclub_suspended_reason_same_division">Conflito de divisão</message>
+    <message id="parentclub_suspended_reason_same_division_no_lower_league">Conflito de divisão, não foi encontrada uma liga inferior</message>
+
+    <message id="team_details_strength_raw">Força da equipa: %s</message>
+    <message id="team_details_strength_global_rank">Força da equipa a nível mundial: %d/%d (topo %d%%)</message>
+    <message id="team_details_strength_league_rank">Força da equipa na liga: %d/%d</message>
+    
+    <message id="team_details_statistic_season">Esta época</message>
+    <message id="team_details_statistic_total">Total</message>
+    
+    <message id="team_details_statistic_goals">Golos</message>
+	<message id="team_details_statistic_againsts">Golos sofridos</message>
+	<message id="team_details_statistic_matches">Jogos</message>
+	<message id="team_details_statistic_wins">Vitórias</message>
+	<message id="team_details_statistic_losses">Derrotas</message>
+	<message id="team_details_statistic_draws">Empates</message>
+	<message id="team_details_statistic_score">Pontos</message>
+	
+	<message id="team_details_noleaguevictories">Ainda não existem conquistas na liga.</message>
+    
+	<message id="team_details_season_place">Posição %d</message>
+    <message id="team_details_tab_halloffame">Galeria da Fama</message>
+    
+    <message id="club_hof_overview">Visão geral</message>
+    <message id="club_hof_titles">Títulos</message>
+    <message id="club_hof_official_matches">Jogos oficiais</message>
+    <message id="club_hof_balance">Saldo</message>
+    <message id="club_hof_wdl">V / E / D</message>
+    <message id="club_hof_goals">Golos</message>
+    <message id="club_hof_highest_win">Maior vitória</message>
+    <message id="club_hof_worst_defeat">Maior derrota</message>
+    <message id="club_hof_competition">Competição</message>
+    <message id="club_hof_title_league_prefix">Campeonato</message>
+    <message id="club_hof_title_cup_prefix">Taça</message>
+    <message id="club_hof_best_players">Melhores jogadores de sempre</message>
+    <message id="club_hof_best_players_min_matches">Ordenados pela classificação média, com pelo menos %d jogos oficiais.</message>
+    <message id="club_hof_matches">Jogos</message>
+    <message id="club_hof_goals_short">Golos</message>
+    <message id="club_hof_assists_short">Assistências</message>
+    <message id="club_hof_avg_grade">Classificação média</message>
+    <message id="club_hof_most_goals">Mais golos</message>
+    <message id="club_hof_most_assists">Mais assistências</message>
+    <message id="club_hof_most_appearances">Mais jogos</message>
+    <message id="club_hof_record_transfers">Transferências recorde</message>
+    <message id="club_hof_record_incoming">Contratação mais cara</message>
+    <message id="club_hof_record_outgoing">Saída mais cara</message>
+    <message id="club_hof_from">de</message>
+    <message id="club_hof_to">para</message>
+    <message id="club_hof_league_positions">Classificações históricas na liga</message>
+    <message id="club_hof_matchday">Jornada %d</message>
+    <message id="club_hof_no_data">Ainda não existem dados históricos disponíveis para este clube.</message>
+    <message id="club_hof_no_record">Ainda não existe qualquer recorde.</message>
+    <message id="club_hof_no_titles">Ainda não existem títulos.</message>
+    <message id="club_hof_no_players">Ainda não existem dados de jogadores.</message>
+    <message id="club_hof_no_league_positions">Ainda não existe histórico da liga.</message>
+
+	
+	
+	
+    <message id="managerprofile_cpu_manager">Treinador controlado pela CPU</message>
+    <message id="managerprofile_competence">Competência do treinador</message>
+    <message id="managerprofile_peak">Melhor valor</message>
+    <message id="managerprofile_character">Estilo</message>
+    <message id="managerprofile_salary">Salário</message>
+    <message id="managerprofile_matchday">Jornada</message>
+    <message id="managerprofile_since">Desde</message>
+    <message id="managerprofile_notification_competence_changed">A tua competência como treinador passou de {old}/20 para {new}/20. Motivo: {reason}.</message>
+    <message id="managerprofile_competence_log_message">Competência do treinador alterada: {old}/20 -&gt; {new}/20. Motivo: {reason}.</message>
+    <message id="managerprofile_reason_team_view">Atualização no perfil do clube</message>
+    <message id="managerprofile_reason_recalculation">Novo cálculo</message>
+    <message id="managerprofile_reason_sacked">Despedimento</message>
+    <message id="managerprofile_reason_joined">Novo clube</message>
+    <message id="managerprofile_reason_job_offer">Mudança de cargo</message>
+    <message id="managerprofile_reason_free_club">Assunção do clube</message>
+    <message id="managerprofile_reason_additional_club">Clube adicional</message>
+    <message id="managerprofile_reason_manual_application">Candidatura</message>
+    <message id="managerprofile_account_salary_subject">Salário do treinador</message>
+    <message id="managerprofile_account_sender">Direção do clube</message>
+    <message id="managerprofile_cpu_news_title">Mudança de treinador no {team}</message>
+    <message id="managerprofile_cpu_news_message">Após uma crise desportiva prolongada, o {team} separou-se de {old}. {new} assume o cargo como sucessor. Motivo: {reason}. O novo treinador apresenta uma competência de {competence}/20 e o estilo {character}.</message>
+    <message id="managerprofile_cpu_news_link">Ir para o perfil do clube</message>
+    <message id="managerprofile_cpu_reason_board_crisis">satisfação crítica da direção</message>
+    <message id="managerprofile_cpu_reason_loss_streak_3">três derrotas consecutivas</message>
+    <message id="managerprofile_cpu_reason_loss_streak_5">cinco derrotas consecutivas</message>
+    <message id="managerprofile_cpu_reason_media_pressure">elevada pressão mediática</message>
+    <message id="managerprofile_cpu_reason_poor_form">má forma prolongada</message>
+
+</messages>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="what-changed_navlabel">¿Qué ha pasado?</message>
+    <message id="whatchanged_navlabel">¿Qué ha pasado?</message>
+    <message id="whatchanged_title">¿Qué ha pasado?</message>
+    <message id="whatchanged_office_block_title">¿Qué ha pasado?</message>
+    <message id="whatchanged_office_latest">Último resumen de jornada</message>
+    <message id="whatchanged_open_latest">Ver resumen</message>
+    <message id="whatchanged_intro">El resumen de jornada muestra de forma compacta qué ha cambiado después de tu último partido.</message>
+    <message id="whatchanged_disabled">El resumen de jornada está desactivado actualmente.</message>
+    <message id="whatchanged_only_human">Este resumen solo está disponible para clubes dirigidos por personas.</message>
+    <message id="whatchanged_no_summary">Todavía no hay ningún resumen. Se creará una entrada automáticamente tras el próximo partido calculado de tu club.</message>
+    <message id="whatchanged_recent_summaries">Últimos resúmenes</message>
+    <message id="whatchanged_current_summary">Resumen actual</message>
+    <message id="whatchanged_match_result">Resultado del partido</message>
+    <message id="whatchanged_budget">Presupuesto</message>
+    <message id="whatchanged_training">Entrenamiento</message>
+    <message id="whatchanged_scouting">Ojeo</message>
+    <message id="whatchanged_fan_mood">Ánimo de la afición</message>
+    <message id="whatchanged_chemistry">Química del equipo</message>
+    <message id="whatchanged_board">Directiva</message>
+    <message id="whatchanged_injuries_suspensions">Lesiones y sanciones</message>
+
+    <message id="whatchanged_tactical_style">Identidad táctica</message>
+    <message id="formation_tacticalstyle_fit">Compatibilidad</message>
+    <message id="tacticalstyle_balanced">Equilibrado</message>
+    <message id="tacticalstyle_possession">Posesión</message>
+    <message id="tacticalstyle_counterattack">Contraataque</message>
+    <message id="tacticalstyle_pressing">Presión</message>
+    <message id="tacticalstyle_defensive_block">Bloque defensivo</message>
+    <message id="tacticalstyle_defensive">Defensivo</message>
+    <message id="tacticalstyle_wing_play">Juego por bandas</message>
+    <message id="tacticalstyle_set_pieces">Balón parado</message>
+    <message id="tacticalstyle_youth_focused">Enfoque juvenil</message>
+    <message id="tacticalstyle_physical">Físico</message>
+    <message id="whatchanged_messages_news">Mensajes y noticias</message>
+    <message id="whatchanged_missions">Objetivos de temporada</message>
+    <message id="whatchanged_match_link">Ir al informe del partido</message>
+    <message id="whatchanged_created_at">Creado el</message>
+    <message id="whatchanged_previous_match">Partido anterior</message>
+    <message id="whatchanged_no_previous_match">No se ha encontrado ningún partido anterior.</message>
+    <message id="whatchanged_win">Victoria</message>
+    <message id="whatchanged_draw">Empates</message>
+    <message id="whatchanged_loss">Derrota</message>
+    <message id="whatchanged_budget_before">Antes</message>
+    <message id="whatchanged_budget_after">Después</message>
+    <message id="whatchanged_budget_change">Cambio</message>
+    <message id="whatchanged_budget_no_entries">No hay movimientos desde el último partido.</message>
+    <message id="whatchanged_training_none">No se ha registrado ninguna sesión de entrenamiento para la jornada.</message>
+    <message id="whatchanged_training_players">Jugadores entrenados</message>
+    <message id="whatchanged_training_best_player">Mejor efecto de entrenamiento</message>
+    <message id="whatchanged_training_injuries">Lesiones en el entrenamiento</message>
+    <message id="whatchanged_training_chemistry">Efecto sobre la química</message>
+    <message id="whatchanged_scouting_none">No hay nuevas propuestas de scouting desde el último partido.</message>
+    <message id="whatchanged_scouting_new">Nuevas propuestas</message>
+    <message id="whatchanged_open_proposal">abierta</message>
+    <message id="whatchanged_fan_no_change">No se ha guardado ningún cambio en el ánimo de la afición para este partido.</message>
+    <message id="whatchanged_chemistry_no_change">No se ha guardado ningún cambio de química para este partido.</message>
+    <message id="whatchanged_old_new">Anterior / Nuevo</message>
+    <message id="whatchanged_effect">Efecto</message>
+    <message id="whatchanged_board_no_change">No se ha encontrado ningún cambio específico de la directiva.</message>
+    <message id="whatchanged_injuries_none">No se han registrado nuevas lesiones o sanciones.</message>
+    <message id="whatchanged_messages_new">Nuevos mensajes privados</message>
+    <message id="whatchanged_news_new">Nuevas noticias</message>
+    <message id="whatchanged_no_messages_news">No hay nuevos mensajes ni noticias desde el último partido.</message>
+    <message id="whatchanged_missions_none">No se han encontrado objetivos de temporada.</message>
+    <message id="whatchanged_missions_summary">Progreso</message>
+    <message id="whatchanged_notification">Nuevo resumen de jornada disponible: {match}</message>
+    <message id="whatchanged_news_title">¿Qué ha cambiado en {team}?</message>
+    <message id="whatchanged_news_message">Tras el partido {match}, hay un nuevo resumen para {team}: se han actualizado el resultado, el presupuesto, el entrenamiento, el scouting, el ánimo, la química, la identidad táctica, la directiva, las lesiones y los objetivos de temporada.</message>
+    <message id="whatchanged_news_link">Ir al resumen</message>
+    <message id="settings_label_what_changed_enabled">Activar panel ¿Qué ha pasado?</message>
+    <message id="settings_label_what_changed_enabled_help">Crea un resumen compacto con una noticia y una notificación después de cada partido de un club dirigido por una persona.</message>
+    
+    <message id="whatchanged_news_title">¿Qué ha cambiado en {team}?</message>
+    <message id="whatchanged_news_message">Tras el partido {match}, hay un nuevo resumen para {team}: se han actualizado el resultado, el presupuesto, el entrenamiento, el scouting, el ánimo, la química, la identidad táctica, la directiva, las lesiones y los objetivos de temporada.</message>
+    <message id="whatchanged_news_link">Ir al resumen</message>
+    <message id="whatchanged_trait_highlights">Habilidades especiales en el partido</message>
+    <message id="whatchanged_trait">Habilidad especial</message>
+    <message id="whatchanged_trait_reason">Hecho destacado</message>
+
+</messages>

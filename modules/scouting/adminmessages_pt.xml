@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="settings_tab_scouting">Observação</message>
+
+    <message id="settings_label_scouting_enabled">Ativar sistema de prospeção</message>
+    <message id="settings_label_scouting_enabled_help">Ativa a nova página de prospeção no mercado de transferências. Os utilizadores podem construir departamentos de prospeção, contratar olheiros, abrir estágios e receber sugestões de jogadores.</message>
+
+    <message id="settings_label_max_scouts_per_team">Máximo de olheiros por clube</message>
+    <message id="settings_label_max_scouts_per_team_help">Limite máximo global de olheiros contratados em simultâneo por clube. Os níveis do departamento de prospeção também podem definir limites próprios.</message>
+
+    <message id="settings_label_scouts_matches">Duração predefinida dos olheiros</message>
+    <message id="settings_label_scouts_matches_help">Número de jogos pelos quais um olheiro é contratado por predefinição. Este número diminui após cada jornada relevante.</message>
+
+    <message id="settings_label_scout_hire_matches">Taxa de contratação do olheiro em jornadas</message>
+    <message id="settings_label_scout_hire_matches_help">Número de honorários do olheiro cobrados de imediato como taxa de contratação não reembolsável. Predefinição: 3.</message>
+
+    <message id="settings_label_scouting_default_department_build_cost">Custo predefinido de construção do departamento de prospeção</message>
+    <message id="settings_label_scouting_default_department_build_cost_help">Valor de recurso caso não seja encontrado um nível adequado na tabela scouting_department_level.</message>
+
+    <message id="settings_label_scouting_default_department_maintenance_fee">Manutenção predefinida do departamento de prospeção</message>
+    <message id="settings_label_scouting_default_department_maintenance_fee_help">Custo de recurso por jornada caso não seja encontrado um nível adequado na tabela scouting_department_level.</message>
+
+    <message id="settings_label_scouting_proposal_min_matches">Espera mínima até sugestão de jogador</message>
+    <message id="settings_label_scouting_proposal_min_matches_help">Número mínimo de jogos antes de um estágio de prospeção ativo poder gerar uma nova sugestão de jogador.</message>
+
+    <message id="settings_label_scouting_proposal_max_matches">Espera máxima até sugestão de jogador</message>
+    <message id="settings_label_scouting_proposal_max_matches_help">Número máximo de jogos antes de um estágio de prospeção ativo poder gerar uma nova sugestão de jogador. O valor efetivo é escolhido aleatoriamente entre o mínimo e o máximo.</message>
+
+    <message id="settings_label_scouting_proposal_expire_matches">Validade das sugestões de jogadores</message>
+    <message id="settings_label_scouting_proposal_expire_matches_help">Número de jogos durante os quais um jogador sugerido permanece disponível. Depois, a sugestão expira automaticamente.</message>
+
+    <message id="settings_label_scouting_max_open_proposals_per_team">Máximo de sugestões de jogadores abertas por clube</message>
+    <message id="settings_label_scouting_max_open_proposals_per_team_help">Quando um clube atinge este número de sugestões abertas, os estágios deixam temporariamente de gerar novos jogadores.</message>
+
+    <message id="settings_label_scouting_same_country_cost_percent">Fator de custo nacional</message>
+    <message id="settings_label_scouting_same_country_cost_percent_help">Valor percentual para estágios de prospeção no próprio país. 100 significa custo normal; 75 significa 25 por cento mais barato.</message>
+
+    <message id="settings_label_scouting_abroad_cost_percent">Fator de custo no estrangeiro</message>
+    <message id="settings_label_scouting_abroad_cost_percent_help">Valor percentual para estágios de prospeção no estrangeiro. 100 significa custo normal; 125 significa 25 por cento mais caro.</message>
+
+</messages>

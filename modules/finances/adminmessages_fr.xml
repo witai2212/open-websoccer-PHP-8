@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_bank_loans_enabled">Activer le module bancaire et de crédit</message>
+    <message id="settings_label_bank_loans_enabled_help">Active les offres de crédit, les remboursements automatiques après les matchs, le remboursement anticipé, la notation de crédit et les avertissements du conseil.</message>
+</messages>

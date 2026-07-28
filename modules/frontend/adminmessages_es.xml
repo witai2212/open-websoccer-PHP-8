@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_tab_frontend">Interfaz pública</message> 
+	
+	<message id="imprint_navlabel">Aviso legal</message>
+	<message id="imprint_label_content">Contenido de la página</message>
+	<message id="imprint_label_content_help">Se permite HTML. Los saltos de línea se convierten automáticamente.</message>
+	<message id="imprint_introduction">Por motivos legales, normalmente es necesario indicar públicamente en el sitio web al operador responsable. Introduce abajo los datos de contacto del operador. Aparecerán en el sitio bajo «Aviso legal».</message>
+	
+	<message id="imprint_validationerror_content">Debe indicarse un contenido.</message>
+	
+	<message id="settings_label_head_code">Código HTML para la sección &lt;head&gt;</message>
+	
+</messages>

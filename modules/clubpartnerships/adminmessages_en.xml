@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+  <message id="club_partnerships_navlabel">Club partnerships</message>
+  <message id="clubpartnership_admin_title">Club partnerships</message>
+  <message id="clubpartnership_admin_intro">Control centre for active, open, suspended and ended club partnerships.</message>
+  <message id="clubpartnership_admin_open">Active and open partnerships</message>
+  <message id="clubpartnership_admin_closed">Recently ended or rejected</message>
+  <message id="clubpartnership_admin_logs">History</message>
+  <message id="clubpartnership_admin_actions">Actions</message>
+  <message id="clubpartnership_admin_run_check">Run automatic check</message>
+  <message id="clubpartnership_admin_suspend">Suspend</message>
+  <message id="clubpartnership_admin_reactivate">Reactivate</message>
+  <message id="clubpartnership_admin_stop">End</message>
+  <message id="clubpartnership_admin_delete">Delete</message>
+  <message id="clubpartnership_admin_delete_confirm">Really delete this partnership?</message>
+  <message id="clubpartnership_admin_done">The action has been completed.</message>
+  <message id="clubpartnership_admin_no_items">No entries available.</message>
+  <message id="clubpartnership_admin_conflict">Conflict</message>
+  <message id="clubpartnership_admin_manager_left">Manager change detected</message>
+  <message id="clubpartnerships_date">Date</message>
+
+  <message id="settings_label_club_partnership_minimum_matches">Minimum partnership duration</message>
+  <message id="settings_label_club_partnership_minimum_matches_help">Number of matches completed by both clubs before the partnership can be ended without a fee.</message>
+  <message id="settings_label_club_partnership_termination_fee_percent">Termination compensation in percent</message>
+  <message id="settings_label_club_partnership_termination_fee_percent_help">Share of the current club budget charged for early termination.</message>
+  <message id="settings_label_club_partnership_termination_fee_max">Maximum termination compensation</message>
+  <message id="settings_label_club_partnership_termination_fee_max_help">Maximum amount the other partner club receives in the event of early termination.</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers">Enable CPU partner offers</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers_help">CPU partner clubs may send rejectable direct offers to user-managed clubs.</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance">Chance of a CPU partner offer</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance_help">Percentage chance per processed matchday and active mixed partnership.</message>
+
+</messages>

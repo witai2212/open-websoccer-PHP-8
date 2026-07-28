@@ -1,16 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="entity_league">League</message>
-	<message id="entity_league_name">Name</message>
-	<message id="entity_league_kurz">Short</message>
+	<message id="entity_country">Countries</message>
+	<message id="entity_country_name">Country</message>
+	<message id="entity_league_kurz">Abbreviation</message>
 	<message id="entity_league_land">Country</message>
-	<message id="entity_league_p_steh">Avg. utilisation of stands</message>
-	<message id="entity_league_p_sitz">Avg. utilisation of seats</message>
-	<message id="entity_league_p_haupt_steh">Avg. utilisation of stands (grandstand)</message>
-	<message id="entity_league_p_haupt_sitz">Avg. utilisation of seats (grandstand)</message>
-	<message id="entity_league_p_vip">Avg. utilisation of VIP seats</message>
-	<message id="entity_league_preis_steh">Avg. price for stands</message>
-	<message id="entity_league_preis_sitz">Avg. price for seats</message>
-	<message id="entity_league_preis_vip">Avg. price for VIP seats</message>
+	<message id="entity_league_p_steh">Avg. standing occupancy</message>
+	<message id="entity_league_p_sitz">Avg. seated occupancy</message>
+	<message id="entity_league_p_haupt_steh">Avg. standing occupancy (main stand)</message>
+	<message id="entity_league_p_haupt_sitz">Avg. seated occupancy (main stand)</message>
+	<message id="entity_league_p_vip">Avg. VIP box occupancy</message>
+	<message id="entity_league_preis_steh">Avg. standing ticket price</message>
+	<message id="entity_league_preis_sitz">Avg. seated ticket price</message>
+	<message id="entity_league_preis_vip">Avg. VIP box price</message>
+	<message id="entity_country_uefa_s1">UEFA S1</message>
+	<message id="entity_country_uefa_s2">UEFA S2</message>
+	<message id="entity_country_uefa_s3">UEFA S3</message>
+	<message id="entity_country_uefa_s4">UEFA S4</message>
+	<message id="entity_country_uefa_s5">UEFA S5</message>
+	<message id="entity_country_uefa_cl">Champions League places</message>
+	<message id="entity_country_uefa_ul">UEFA League places</message>
+	<message id="entity_country_uefa_conf">Conference League places</message>
+	<message id="entity_country_coeff">UEFA coefficient</message>
+	<message id="entity_uefa_coeff">UEFA coefficient</message>
+	<message id="entity_country_uefa_coeff">UEFA coefficient</message>
+	
+    <message id="uefa_navlabel">UEFA</message>
+    <message id="uefa_ranking_navlabel">UEFA ranking</message>
+    <message id="uefa_ranking_title">UEFA ranking</message>    
+    <message id="uefatable_land">Country</message>
+	<message id="uefatable_uefa_s1">S1</message>
+	<message id="uefatable_uefa_s2">S2</message>
+	<message id="uefatable_uefa_s3">S3</message>
+	<message id="uefatable_uefa_s4">S4</message>
+	<message id="uefatable_uefa_s5">S5</message>
+	<message id="uefatable_uefa_total">UEFA total</message>
+	<message id="uefatable_uefa_cl">Champions League places</message>
+	<message id="uefatable_uefa_ul">UL places</message>
+	<message id="uefatable_uefa_conf">Conference League places</message>
+
+
+	<message id="entity_country_continent">Confederation</message>
+	<message id="entity_country_conmebol_s1">CONMEBOL S1</message>
+	<message id="entity_country_conmebol_s2">CONMEBOL S2</message>
+	<message id="entity_country_conmebol_s3">CONMEBOL S3</message>
+	<message id="entity_country_conmebol_s4">CONMEBOL S4</message>
+	<message id="entity_country_conmebol_s5">CONMEBOL S5</message>
+	<message id="entity_country_conmebol_lib">Libertadores places</message>
+	<message id="entity_country_conmebol_sud">Sudamericana places</message>
+	<message id="entity_country_conmebol_coeff">CONMEBOL coefficient</message>
+	<message id="entity_country_concacaf_s1">CONCACAF S1</message>
+	<message id="entity_country_concacaf_s2">CONCACAF S2</message>
+	<message id="entity_country_concacaf_s3">CONCACAF S3</message>
+	<message id="entity_country_concacaf_s4">CONCACAF S4</message>
+	<message id="entity_country_concacaf_s5">CONCACAF S5</message>
+	<message id="entity_country_concacaf_champions">Champions Cup places</message>
+	<message id="entity_country_concacaf_coeff">CONCACAF coefficient</message>
 </messages>

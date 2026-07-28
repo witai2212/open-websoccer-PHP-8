@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="finance_regulation_center_navlabel">Finance Regulation Center</message>
+    <message id="finance_regulation_center_title">Finance Regulation Center</message>
+    <message id="finance_regulation_center_intro">Admin tool for reviewing, simulating and carefully correcting the game economy. Simulations are read-only; actual corrections automatically create a snapshot and a log entry.</message>
+
+    <message id="finance_regulation_tab_overview">Overview</message>
+    <message id="finance_regulation_tab_clubs">Clubs</message>
+    <message id="finance_regulation_tab_simulation">Simulation</message>
+    <message id="finance_regulation_tab_correction">Apply correction</message>
+    <message id="finance_regulation_tab_export">Report / Export</message>
+
+    <message id="finance_regulation_season">Season</message>
+    <message id="finance_regulation_all_bookings">All transactions</message>
+    <message id="finance_regulation_core_metrics">Key metrics</message>
+    <message id="finance_regulation_metric">Metric</message>
+    <message id="finance_regulation_all">All</message>
+    <message id="finance_regulation_human">Human</message>
+    <message id="finance_regulation_cpu">CPU</message>
+    <message id="finance_regulation_club_count">Clubs</message>
+    <message id="finance_regulation_avg_budget">Avg. club budget</message>
+    <message id="finance_regulation_avg_income_matchday">Avg. income per matchday</message>
+    <message id="finance_regulation_avg_player_salary">Avg. player salary</message>
+    <message id="finance_regulation_salary_income_ratio">Salary/Income</message>
+    <message id="finance_regulation_recurring_income_ratio">Fixed costs/Income</message>
+    <message id="finance_regulation_transfer_spending">Transfer spending</message>
+    <message id="finance_regulation_recommendations">Recommended correction</message>
+    <message id="finance_regulation_recommendation">Recommendation</message>
+    <message id="finance_regulation_suggestion">Suggestion</message>
+    <message id="finance_regulation_secondary_costs_breakdown">Additional costs per matchday</message>
+    <message id="finance_regulation_cost_type">Cost type</message>
+    <message id="finance_regulation_amount_all">All</message>
+    <message id="finance_regulation_amount_human">Human</message>
+    <message id="finance_regulation_amount_cpu">CPU</message>
+
+    <message id="finance_regulation_richest_clubs">Richest clubs</message>
+    <message id="finance_regulation_poorest_clubs">Poorest clubs</message>
+    <message id="finance_regulation_salary_pressure">Salary-to-income pressure</message>
+
+    <message id="finance_regulation_simulation_intro">Simulations do not change any database values. They only show the calculated effect of the selected factors.</message>
+    <message id="finance_regulation_simulation_result">Simulation result</message>
+    <message id="finance_regulation_correction_intro">This function changes actual database values. A snapshot is created automatically before each application and the action is saved in the log.</message>
+    <message id="finance_regulation_form_title">Correction values</message>
+    <message id="finance_regulation_player_salaries">Player salaries</message>
+    <message id="finance_regulation_player_salaries_help">Applies to all active players at all clubs.</message>
+    <message id="finance_regulation_secondary_costs">Staff &#38; additional costs</message>
+    <message id="finance_regulation_secondary_costs_help">Staff, scouts, scouting, youth academy, training camps, stadium construction and merchandising purchases.</message>
+    <message id="finance_regulation_sponsors">Sponsors</message>
+    <message id="finance_regulation_sponsor_scope_future">future offers only</message>
+    <message id="finance_regulation_sponsor_scope_active">active contracts only</message>
+    <message id="finance_regulation_sponsor_scope_both">both</message>
+    <message id="finance_regulation_club_budgets">Club budgets</message>
+    <message id="finance_regulation_budget_scope_above">only above threshold</message>
+    <message id="finance_regulation_budget_scope_all">all</message>
+    <message id="finance_regulation_budget_scope_human">human only</message>
+    <message id="finance_regulation_budget_scope_cpu">CPU only</message>
+    <message id="finance_regulation_budget_threshold">Threshold</message>
+    <message id="finance_regulation_ticket_prices">Ticket prices</message>
+    <message id="finance_regulation_ticket_prices_help">Changes the clubs' base prices without retroactively changing old stadium logs.</message>
+    <message id="finance_regulation_market_values">Market value formula</message>
+    <message id="finance_regulation_market_values_help">Sets a global formula factor and scales existing market values.</message>
+    <message id="finance_regulation_confirm_checkbox">I confirm that actual database values should be changed.</message>
+    <message id="finance_regulation_simulate_button">Start simulation</message>
+    <message id="finance_regulation_apply_button">Apply correction</message>
+    <message id="finance_regulation_apply_confirm">This correction changes actual database values. A snapshot will be created automatically beforehand. Continue?</message>
+    <message id="finance_regulation_apply_success">Correction applied</message>
+    <message id="finance_regulation_apply_success_detail">A snapshot was created automatically before the change.</message>
+    <message id="finance_regulation_missing_confirmation">Please confirm the actual database changes.</message>
+
+    <message id="finance_regulation_target">Target</message>
+    <message id="finance_regulation_table">Standings</message>
+    <message id="finance_regulation_old_total">Old</message>
+    <message id="finance_regulation_new_total">New</message>
+    <message id="finance_regulation_delta">Difference</message>
+    <message id="finance_regulation_affected_rows">Records</message>
+
+    <message id="finance_regulation_export">Report / Export</message>
+    <message id="finance_regulation_export_intro">Create snapshots for later comparisons or export the current analysis as a CSV file.</message>
+    <message id="finance_regulation_create_snapshot">Save snapshot</message>
+    <message id="finance_regulation_download_csv">Export CSV</message>
+    <message id="finance_regulation_latest_snapshots">Latest snapshots</message>
+    <message id="finance_regulation_latest_logs">Latest actions</message>
+    <message id="finance_regulation_manual_snapshot">Manual financial snapshot</message>
+    <message id="finance_regulation_snapshot_created">Snapshot created</message>
+</messages>

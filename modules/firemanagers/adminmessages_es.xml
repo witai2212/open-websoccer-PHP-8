@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="firemanagers_navlabel">Despedir mánagers</message> 
+	<message id="firemanagers_introduction">Busca aquí clubes cuyos mánagers quieras despedir. Un despido significa que el mánager pierde el club. Las cuentas de usuario correspondientes <strong>no</strong> se eliminan, pero pueden desactivarse si se desea. Si un usuario ha arruinado su club, el sistema puede volver a hacerlo atractivo para otros usuarios.</message>
+
+	<message id="firemanagers_search_label">Buscar clubes</message>
+	
+	<message id="firemanagers_search_maxbudget">Presupuesto mínimo</message>
+	<message id="firemanagers_search_maxbudget_help">Encuentra clubes con un saldo inferior.</message>
+	
+	<message id="firemanagers_search_lastlogindays">Último inicio de sesión</message>
+	<message id="firemanagers_search_lastlogindays_help">Días. Encuentra clubes cuyo mánager no haya iniciado sesión en los últimos X días.</message>
+	
+	<message id="firemanagers_search_maxplayers">Tamaño mínimo de la plantilla</message>
+	<message id="firemanagers_search_maxplayers_help">Encuentra clubes con menos de X jugadores en el equipo.</message>
+	
+	<message id="firemanagers_search_userid">Usuario</message>
+	
+	<message id="firemanagers_search_nohits">No se encontraron clubes.</message>
+	<message id="firemanagers_dismiss_button">Despedir usuarios seleccionados</message>
+	
+	<message id="firemanagers_dismiss_noneselected">Debes seleccionar al menos un club.</message>
+	
+	<message id="firemanagers_dismiss_label">Opciones de despido del mánager</message>
+	<message id="firemanagers_dismiss_disableusers">Desactivar cuentas de usuario</message>
+	<message id="firemanagers_dismiss_minbudget">Presupuesto mínimo del club</message>
+	<message id="firemanagers_dismiss_minbudget_help">Si el club de un mánager despedido tiene un presupuesto inferior, se incrementará.</message>
+	<message id="firemanagers_dismiss_message_subject">Mensaje al usuario: asunto</message>
+	<message id="firemanagers_dismiss_message_subject_help">Si se debe enviar un mensaje privado al usuario. Ten en cuenta que los usuarios desactivados no pueden consultar este mensaje.</message>
+	<message id="firemanagers_dismiss_message_content">Mensaje al usuario: contenido</message>
+	
+	<message id="firemanagers_dismiss_label_players">Efectos sobre la plantilla</message>
+	<message id="firemanagers_dismiss_strength_min_freshness">Fuerza mínima: frescura</message>
+	<message id="firemanagers_dismiss_strength_min_stamina">Fuerza mínima: resistencia</message>
+	<message id="firemanagers_dismiss_strength_min_satisfaction">Fuerza mínima: satisfacción</message>
+	<message id="firemanagers_dismiss_mincontractmatches">Duración mínima del contrato</message>
+	
+	<message id="firemanagers_dismiss_label_minteamsize">Tamaño mínimo de plantilla: completar plantilla</message>
+	<message id="firemanagers_dismiss_label_minteamsize_intro">Si hay menos jugadores en una posición de los indicados abajo, se generarán automáticamente nuevos jugadores.</message>
+
+	<message id="firemanagers_dismiss_success">Los usuarios se han eliminado correctamente de sus clubes.</message>
+</messages>

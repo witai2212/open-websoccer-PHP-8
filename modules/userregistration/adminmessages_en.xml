@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="settings_label_allow_userregistration">Allow user registration for any guest.</message> 
-    <message id="settings_label_illegal_usernames">Illegal user names</message> 
-    <message id="settings_label_illegal_usernames_help">comma separated</message> 
-    <message id="settings_label_max_number_of_users">Maximum number of approved users</message> 
+    <message id="settings_label_allow_userregistration">Enable user registration for every guest.</message> 
+    <message id="settings_label_illegal_usernames">Forbidden usernames</message> 
+    <message id="settings_label_illegal_usernames_help">Comma-separated</message> 
+    <message id="settings_label_max_number_of_users">Maximum number of permitted users</message> 
     <message id="settings_label_max_number_of_users_help">0 for unlimited</message> 
     
-    <message id="settings_label_register_use_captcha">Use reCAPTCHA security code, in order to prevent Spam registrations. This requires a free registration at <a href="https://www.google.com/recaptcha/admin/create" target="_blank">www.google.com/recaptcha</a>.</message> 
+    <message id="settings_label_register_use_captcha">Use the reCAPTCHA security code to prevent spam registrations. This requires registration at <a href="https://www.google.com/recaptcha/admin/create" target="_blank">www.google.com/recaptcha</a>.</message> 
     
-    <message id="settings_label_register_captcha_publickey">Public Key</message>
-    <message id="settings_label_register_captcha_publickey_help">Take this key from the reCAPTCHA-registration confirmation.</message>
-    <message id="settings_label_register_captcha_privatekey">Private Key</message>
-    <message id="settings_label_register_captcha_privatekey_help">Take this key from the reCAPTCHA-registration confirmation.</message>
+    <message id="settings_label_register_captcha_publickey">Public key</message>
+    <message id="settings_label_register_captcha_publickey_help">Use the value from the reCAPTCHA registration confirmation.</message>
+    <message id="settings_label_register_captcha_privatekey">Private key</message>
+    <message id="settings_label_register_captcha_privatekey_help">Use the value from the reCAPTCHA registration confirmation.</message>
 
-	<message id="settings_label_registration_url">Registration URL</message>
-	<message id="settings_label_registration_url_help">If users must register their account at a different website, you can specify the URL to the registration form here.</message>
+    <message id="settings_label_registration_url">Registration URL</message>
+	<message id="settings_label_registration_url_help">If users should register their account on another website, you can enter the URL of the registration form here.</message>
 </messages>

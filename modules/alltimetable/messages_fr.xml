@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="alltimetable_navlabel">Classement historique</message>
+    <message id="alltimetable_title">Classement historique</message>
+    
+</messages>

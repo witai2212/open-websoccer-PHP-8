@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_frontend_ads_hide_for_premiumusers">Masquer les publicités pour les utilisateurs premium.</message> 
+	<message id="settings_label_frontend_ads_code_sidebar">Code HTML publicitaire : barre latérale</message>
+	<message id="settings_label_frontend_ads_code_top">Code HTML publicitaire : zone supérieure</message>
+	<message id="settings_label_frontend_ads_code_bottom">Code HTML publicitaire : zone inférieure</message>
+</messages>

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="concacaf_navlabel">CONCACAF</message>
+    <message id="concacaf_ranking_navlabel">Classificação CONCACAF</message>
+    <message id="concacaf_ranking_title">Classificação CONCACAF</message>
+
+    <message id="concacaftable_land">País</message>
+    <message id="concacaftable_s1">S1</message>
+    <message id="concacaftable_s2">S2</message>
+    <message id="concacaftable_s3">S3</message>
+    <message id="concacaftable_s4">S4</message>
+    <message id="concacaftable_s5">S5</message>
+    <message id="concacaftable_total">Total CONCACAF</message>
+    <message id="concacaftable_champions">Vagas na Champions Cup</message>
+
+    <message id="concacafchampionscup_navlabel">CONCACAF Champions Cup</message>
+    <message id="concacafchampionscup_title">CONCACAF Champions Cup</message>
+    <message id="concacafchampionscup_intro">Todos os grupos, eliminatórias, resultados e próximos jogos da CONCACAF Champions Cup num só local.</message>
+    <message id="concacafchampionscup_no_cup_found">A CONCACAF Champions Cup não foi encontrada na configuração das taças.</message>
+    <message id="concacafchampionscup_current_phase">Vista atual</message>
+    <message id="concacafchampionscup_matches_played">Jogos disputados</message>
+    <message id="concacafchampionscup_participants">Participantes</message>
+    <message id="concacafchampionscup_teams">Clubes</message>
+    <message id="concacafchampionscup_rounds">Rondas</message>
+    <message id="concacafchampionscup_rounds_subtitle">incluindo a fase de grupos</message>
+    <message id="concacafchampionscup_winner">Detentor do título</message>
+    <message id="concacafchampionscup_winner_open">ainda por decidir</message>
+    <message id="concacafchampionscup_prize_winner">Prémio do vencedor</message>
+    <message id="concacafchampionscup_my_club">O meu clube</message>
+    <message id="concacafchampionscup_still_in_competition">Participantes</message>
+    <message id="concacafchampionscup_not_participating">não participa na competição</message>
+    <message id="concacafchampionscup_my_group">Grupo</message>
+    <message id="concacafchampionscup_my_next_match">Próximo jogo</message>
+    <message id="concacafchampionscup_my_last_match">Último jogo</message>
+    <message id="concacafchampionscup_standings">Classificação</message>
+    <message id="concacafchampionscup_fixtures">Calendário</message>
+    <message id="concacafchampionscup_latest_results">Resultados mais recentes</message>
+    <message id="concacafchampionscup_next_matches">Próximos jogos</message>
+    <message id="concacafchampionscup_no_group_table">Ainda não existe uma classificação para este grupo.</message>
+    <message id="concacafchampionscup_grouptable_team">Clube</message>
+    <message id="concacafchampionscup_grouptable_matches">J</message>
+    <message id="concacafchampionscup_grouptable_points">Pontos</message>
+    <message id="concacafchampionscup_grouptable_wins">Vitórias</message>
+    <message id="concacafchampionscup_grouptable_draws">Emp.</message>
+    <message id="concacafchampionscup_grouptable_losses">Der.</message>
+    <message id="concacafchampionscup_grouptable_goals">Golos</message>
+    <message id="concacafchampionscup_grouptable_goalsreceived">Golos sofridos</message>
+    <message id="concacafchampionscup_grouptable_goaldiff">Dif.</message>
+</messages>

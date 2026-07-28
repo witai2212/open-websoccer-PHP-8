@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Equipa técnica</message>
+    <message id="club-staff_navlabel">Equipa técnica</message>
+    <message id="clubstaff_title">Equipa técnica</message>
+    <message id="clubstaff_intro">Contrata especialistas que concedem pequenos bónus ao teu clube. Cada clube pode empregar exatamente um membro da equipa técnica por função.</message>
+    <message id="clubstaff_only_human">A equipa técnica só está disponível para clubes geridos por utilizadores.</message>
+    <message id="clubstaff_disabled">A equipa técnica está atualmente desativada.</message>
+
+    <message id="clubstaff_current_staff">Equipa técnica atual</message>
+    <message id="clubstaff_available_staff">Equipa técnica disponível</message>
+    <message id="clubstaff_effects">Bónus ativos</message>
+    <message id="clubstaff_no_staff_hired">Ainda não contrataste qualquer membro adicional para a equipa técnica.</message>
+    <message id="clubstaff_no_staff_available">Não existem atualmente membros adequados da equipa técnica disponíveis.</message>
+    <message id="clubstaff_total_salary">Custo total por jornada</message>
+    <message id="clubstaff_salary">Salário por jornada</message>
+    <message id="clubstaff_bonus">Bónus</message>
+    <message id="clubstaff_level">Nível</message>
+    <message id="clubstaff_role">Função</message>
+    <message id="clubstaff_name">Nome</message>
+    <message id="clubstaff_description">Descrição</message>
+    <message id="clubstaff_action">Ação</message>
+    <message id="clubstaff_hired_since">Contratado desde</message>
+    <message id="clubstaff_budget">Orçamento do clube</message>
+    <message id="clubstaff_info_costs">Os salários são contabilizados automaticamente após os novos jogos disputados e aparecem nas finanças.</message>
+    <message id="clubstaff_info_simple">Os bónus são deliberadamente reduzidos para que a equipa técnica continue a ser um complemento e não se transforme num peso administrativo.</message>
+
+    <message id="clubstaff_role_assistant_manager">Treinador-adjunto</message>
+    <message id="clubstaff_role_goalkeeping_coach">Treinador de guarda-redes</message>
+    <message id="clubstaff_role_fitness_coach">Preparador físico</message>
+    <message id="clubstaff_role_youth_coach">Treinador da formação</message>
+    <message id="clubstaff_role_physio">Fisioterapeuta</message>
+    <message id="clubstaff_role_marketing_manager">Responsável de marketing</message>
+    <message id="clubstaff_role_financial_advisor">Consultor financeiro</message>
+
+    <message id="clubstaff_effect_assistant_manager">Melhora ligeiramente a química da equipa e a eficácia do treino tático.</message>
+    <message id="clubstaff_effect_goalkeeping_coach">Melhora ligeiramente o treino de guarda-redes e a defesa de grandes penalidades.</message>
+    <message id="clubstaff_effect_fitness_coach">Melhora ligeiramente a resistência, a velocidade e a frescura no treino.</message>
+    <message id="clubstaff_effect_youth_coach">Melhora ligeiramente o desenvolvimento dos jogadores da formação e a observação de jovens.</message>
+    <message id="clubstaff_effect_physio">Reduz ligeiramente as consequências das lesões e apoia a recuperação.</message>
+    <message id="clubstaff_effect_marketing_manager">Melhora ligeiramente o interesse dos espetadores e o merchandising.</message>
+    <message id="clubstaff_effect_financial_advisor">Melhora ligeiramente a capacidade de crédito e as condições de financiamento.</message>
+
+    <message id="hire-club-staff">Contratar</message>
+    <message id="fire-club-staff">Despedir</message>
+    <message id="hire_club_staff_message">Membro da equipa técnica contratado.</message>
+    <message id="fire_club_staff_message">Membro da equipa técnica despedido.</message>
+
+    <message id="clubstaff_error_disabled">A equipa técnica está atualmente desativada.</message>
+    <message id="clubstaff_error_no_team">Não tens clube.</message>
+    <message id="clubstaff_error_human_only">Só os clubes geridos por utilizadores podem contratar membros da equipa técnica.</message>
+    <message id="clubstaff_error_staff_not_found">Este membro da equipa técnica não foi encontrado.</message>
+    <message id="clubstaff_error_staff_inactive">Este membro da equipa técnica não está disponível.</message>
+    <message id="clubstaff_error_role_taken">Esta função já está preenchida.</message>
+    <message id="clubstaff_error_not_hired">Esta função não está preenchida no teu clube.</message>
+    <message id="clubstaff_error_invalid_role">Função da equipa técnica inválida.</message>
+
+    <message id="clubstaff_account_salary_subject">Salários da equipa técnica</message>
+    <message id="clubstaff_account_sender">Equipa técnica</message>
+
+    <message id="teamchemistry_factor_staff">Equipa técnica</message>
+    <message id="teamchemistry_source_staff">Equipa técnica</message>
+
+</messages>

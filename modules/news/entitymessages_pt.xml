@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_news">Notícias</message>
+    <message id="entity_news_autor_id">Autor</message>
+	<message id="entity_news_titel">Títulos</message>
+	<message id="entity_news_datum">Data</message>
+	<message id="entity_news_nachricht">Mensagem</message>
+	<message id="entity_news_linktext1">Ligação relevante 1 (texto)</message>
+	<message id="entity_news_linkurl1">Ligação relevante 1 (URL)</message>
+	<message id="entity_news_linktext2">Ligação relevante 2 (texto)</message>
+	<message id="entity_news_linkurl2">Ligação relevante 2 (URL)</message>
+	<message id="entity_news_linktext3">Ligação relevante 3 (texto)</message>
+	<message id="entity_news_linkurl3">Ligação relevante 3 (URL)</message>
+	<message id="entity_news_c_smilies">Converter emoticons</message>
+	<message id="entity_news_c_br">Mostrar quebras de linha</message>
+	<message id="entity_news_c_links">Converter URL em ligações HTML</message>
+	<message id="entity_news_status">Ativo</message>
+</messages>

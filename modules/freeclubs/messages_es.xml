@@ -1,16 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="freeclubs_navlabel">Clubs Libres</message>
-    <message id="freeclubs_title">Equipos sin Manager</message>
+    <message id="freeclubs_navlabel">Clubes libres</message>
+    <message id="freeclubs_title">Clubes sin mánager</message>
     <message id="freeclubs_no_free_clubs_available">Actualmente no hay clubes libres.</message>
     <message id="freeclubs_head_choose">Selección</message>
-    <message id="freeclubs_button_choose">Seleccione Equipo</message>
-    <message id="freeclubs_button_choose_another">Escoja otro equipo</message>
-    <message id="freeclubs_msg_success">¡Felicitaciones! Usted es ahora Manager del equipo seleccionado.</message>
-    <message id="freeclubs_msg_error">El equipo probablemente ya esta asignado a otro usuario.</message>
-    <message id="freeclubs_msg_error_user_is_already_manager">Tú ya eres manager de un equipo.</message>
-    <message id="freeclubs_msg_error_max_number_of_teams">Usted no puede manejar más de %d equipos en este momento</message>
-    <message id="freeclubs_msg_error_no_club_from_same_league">Usted no puede manejar varios equipos de la misma liga.</message>
-    <message id="freeclubs_msg_error_minhighscore">Es necesario un mejor puntaje de al menos %d  con el fin de gestionar un equipo adicional.</message>
+    <message id="freeclubs_button_choose">Hacerse cargo del equipo</message>
+    <message id="freeclubs_button_choose_another">Hacerse cargo de otro equipo</message>
+    <message id="freeclubs_msg_success">¡Enhorabuena! Ahora eres el mánager del equipo seleccionado.</message>
+    <message id="freeclubs_msg_error">Es probable que el equipo ya haya sido asignado.</message>
+    <message id="freeclubs_msg_error_user_is_already_manager">Ya eres el mánager de un equipo.</message>
+    <message id="freeclubs_msg_error_max_number_of_teams">Actualmente solo puedes gestionar un máximo de %d equipos.</message>
+    <message id="freeclubs_msg_error_no_club_from_same_league">No puedes gestionar varios equipos de la misma liga.</message>
+    <message id="freeclubs_msg_error_minhighscore">Necesitas una puntuación máxima de al menos %d para gestionar otro club.</message>
+    <message id="freeclubs_reputation_intro">Los clubes más fuertes requieren una reputación de mánager más alta. Los clubes más débiles siguen disponibles para mánagers nuevos o sin club.</message>
+    <message id="freeclubs_locked_hint">Reputación demasiado baja</message>
+    <message id="freeclubs_msg_error_reputation_required">Necesitas al menos {required} de reputación de mánager para este club. Tu reputación actual: {score}.</message>
+    <message id="freeclubs_button_switch">Cambiar a este club</message>
+    <message id="freeclubs_msg_switch_success">¡Enhorabuena! Has cambiado de club.</message>
 </messages>

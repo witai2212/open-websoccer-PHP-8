@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="cup_firstround_only_date">Data</message>
+    <message id="cup_firstround">Primeira mão</message>
+    <message id="cup_secondround">Segunda mão</message>
+    <message id="cup_created_from_winners_of_round">Vencedor de <strong>%s</strong>.</message>
+    <message id="cup_created_from_loosers_of_round">Vencido de <strong>%s</strong>.</message>
+    <message id="cup_cuproundaward_perround_subject">Prémio da eliminatória da taça</message>
+    <message id="cup_cuproundaward_winner_subject">Vitória na taça</message>
+    <message id="cup_cuproundaward_second_subject">Prémio pelo segundo lugar</message>
+    
+    <message id="cup_title_groups">Grupos</message>
+    <message id="cup_group_noteamsavailable">Ainda não foram atribuídas equipas a este grupo.</message>
+    <message id="cup_group_select_group_placeholder">Seleciona um grupo.</message>
+	
+	<message id="cups_navlabel">Taça</message>
+	<message id="cups_title">Taça</message>
+	<message id="select_cup">Selecionar taça</message>
+	<message id="cup_select_choose">Seleciona uma taça</message>
+	
+	<message id="entity_match_cup_round">Eliminatória da taça</message>
+	
+	<message id="uefatempgenerator_navlabel">Gerar tabela temporária da UEFA</message>
+    
+</messages>

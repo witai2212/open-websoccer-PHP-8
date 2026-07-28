@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_tab_simulation">Simulation</message> 
+	<message id="settings_tab_simulation_expert">Simulation (experts)</message> 
+	
+	<message id="settings_label_sim_interval">Intervalle de simulation</message> 
+	<message id="settings_label_sim_interval_help">Minutes ; nombre de minutes de match à simuler par exécution. 150 signifie que l'intégralité du match est calculée en une seule fois.</message> 
+	
+	<message id="settings_label_sim_max_matches_per_run">Matches max. par minute</message> 
+	<message id="settings_label_sim_max_matches_per_run_help">Nombre maximal de matches simulés par cycle de calcul. Sur les serveurs lents, cette valeur doit être réduite afin d'éviter d'importants retards de calcul.</message> 
+	
+	<message id="settings_label_sim_noformation_oneteam">Aucune composition soumise par l'utilisateur</message> 
+	<message id="settings_label_sim_noformation_oneteam_help">Conséquence lorsqu'un utilisateur n'a soumis aucune composition pour le match.</message>
+	
+	<message id="settings_label_sim_noformation_bothteams">Aucune composition pour les deux équipes</message> 
+	<message id="settings_label_sim_noformation_bothteams_help">Conséquence lorsqu'aucune des deux équipes d'un match n'a de composition définie.</message>
+	
+	<message id="option_computer">Générer la composition par le système</message> 
+	<message id="option_0_0">Enregistrer le match sur le score de 0-0</message> 
+	<message id="option_3_0">Attribuer le match 3-0 à l'équipe adverse</message> 
+	
+	<message id="settings_label_sim_createformation_without_manager">Le système doit générer automatiquement une composition si l'équipe n'a pas de manager.</message> 
+	
+	<message id="settings_label_sim_createformation_without_manager_offensive">Tactique offensive des compositions automatiques</message> 
+	<message id="settings_label_sim_createformation_without_manager_offensive_help">Niveau offensif en pourcentage pour les compositions générées par le système.</message> 
+	
+	<message id="settings_label_sim_income_trough_friendly">Autoriser également la vente de billets pour les matches amicaux. Les clubs peuvent ainsi générer des revenus grâce aux matches amicaux.</message>
+	
+	<message id="settings_label_sim_strategy">Stratégie de simulation</message> 
+	<message id="settings_label_sim_strategy_help">Nom de classe d'un calcul de match personnalisé.</message> 
+	
+	<message id="settings_label_sim_goaly_influence">Influence du gardien</message> 
+	<message id="settings_label_sim_goaly_influence_help">en pourcentage ; influence du niveau du gardien sur les tirs.</message> 
+	
+	<message id="settings_label_sim_shootprobability">Fréquence des tirs</message>
+	<message id="settings_label_sim_shootprobability_help">en pourcentage ; 100 % correspond à la fréquence normale.</message>
+	
+	<message id="settings_label_sim_cardsprobability">Fréquence des cartons après les fautes</message>
+	<message id="settings_label_sim_cardsprobability_help">en pourcentage ; 100 % correspond à la fréquence normale.</message>
+	
+	<message id="settings_label_sim_injuredprobability">Fréquence des blessures</message>
+	<message id="settings_label_sim_injuredprobability_help">en pourcentage ; 100 % correspond à la fréquence normale.</message>
+	
+	<message id="settings_label_sim_weight_strength">Pondération du niveau</message> 
+	<message id="settings_label_sim_weight_strength_help">en pourcentage ; part de l'attribut de niveau du joueur dans son niveau global.</message> 
+	
+	<message id="settings_label_sim_weight_strengthTech">Pondération de la technique</message> 
+	<message id="settings_label_sim_weight_strengthTech_help">en pourcentage ; part de l'attribut technique du joueur dans son niveau global.</message> 
+
+	<message id="settings_label_sim_weight_strengthStamina">Pondération de l'endurance</message> 
+	<message id="settings_label_sim_weight_strengthStamina_help">en pourcentage ; part de l'attribut endurance du joueur dans son niveau global.</message> 
+
+	<message id="settings_label_sim_weight_strengthFreshness">Pondération de la fraîcheur</message> 
+	<message id="settings_label_sim_weight_strengthFreshness_help">en pourcentage ; part de l'attribut fraîcheur du joueur dans son niveau global.</message>
+
+	<message id="settings_label_sim_weight_strengthSatisfaction">Pondération de la satisfaction</message> 
+	<message id="settings_label_sim_weight_strengthSatisfaction_help">en pourcentage ; part de l'attribut satisfaction du joueur dans son niveau global.</message>
+
+	<message id="settings_label_sim_shootstrength_defense">Puissance de tir : défenseurs</message> 
+	<message id="settings_label_sim_shootstrength_defense_help">en pourcentage du niveau global du joueur.</message> 
+	
+	<message id="settings_label_sim_shootstrength_midfield">Puissance de tir : milieux</message> 
+	<message id="settings_label_sim_shootstrength_midfield_help">en pourcentage du niveau global du joueur.</message>
+	
+	<message id="settings_label_sim_shootstrength_striker">Puissance de tir : attaquants</message> 
+	<message id="settings_label_sim_shootstrength_striker_help">en pourcentage du niveau global du joueur.</message> 
+	
+	<message id="settings_label_sim_played_min_minutes">Minutes de jeu minimales pour les effets sur le niveau</message> 
+	<message id="settings_label_sim_played_min_minutes_help">en minutes ; nombre de minutes à partir duquel un joueur est considéré comme ayant « joué ». Influe sur la satisfaction et l'endurance.</message> 
+	
+	<message id="settings_label_sim_block_player_after_yellowcards">Suspension après un nombre de cartons jaunes</message> 
+	<message id="settings_label_sim_block_player_after_yellowcards_help">Nombre de cartons jaunes après lequel un joueur est suspendu pour un match. 0 pour ne jamais suspendre. La suspension se répète à chaque multiple (p. ex. valeur=5 : suspension après 5, 10, 15, ... cartons).</message> 
+
+	<message id="settings_label_sim_allow_livechanges">Autoriser les utilisateurs à modifier la tactique pendant une simulation de match en direct.</message> 
+	<message id="settings_label_sim_allow_offensivechanges">Modifications tactiques autorisées en direct</message>
+	<message id="settings_label_sim_allow_offensivechanges_help">Nombre de fois qu'un utilisateur peut modifier la tactique offensive et d'autres options pendant un match. 0 signifie aucune fois.</message>
+
+	<message id="settings_label_sim_decrease_freshness">Les joueurs se fatiguent (perdent de la fraîcheur) lorsqu'ils jouent. La baisse dépend des minutes jouées, de l'âge, de l'endurance et du niveau offensif.</message> 
+	<message id="settings_label_sim_strengthchange_stamina">Évolution de l'endurance</message> 
+	<message id="settings_label_sim_strengthchange_stamina_help">Nombre de points que le joueur gagne ou perd selon qu'il joue ou non.</message> 
+	<message id="settings_label_sim_strengthchange_satisfaction">Évolution de la satisfaction</message> 
+	<message id="settings_label_sim_strengthchange_satisfaction_help">Nombre de points que le joueur gagne ou perd selon qu'il joue ou non.</message> 
+	<message id="settings_label_sim_strengthchange_freshness_notplayed">Gain de fraîcheur sans temps de jeu</message> 
+	<message id="settings_label_sim_strengthchange_freshness_notplayed_help">Nombre de points gagnés par le joueur s'il n'a pas joué.</message> 
+
+	<message id="settings_label_sim_strength_reduction_secondary">Réduction du niveau au poste secondaire</message>
+	<message id="settings_label_sim_strength_reduction_secondary_help">en pourcentage ; réduction appliquée aux joueurs évoluant à leur poste secondaire.</message>
+	
+	<message id="settings_label_sim_strength_reduction_wrongposition">Réduction du niveau hors poste</message>
+	<message id="settings_label_sim_strength_reduction_wrongposition_help">en pourcentage ; réduction appliquée aux joueurs n'évoluant ni à leur poste principal ni à leur poste secondaire.</message>
+	
+	<message id="settings_label_sim_home_field_advantage">Avantage à domicile</message>
+	<message id="settings_label_sim_home_field_advantage_help">Nombre de points de niveau gagnés par les joueurs de l'équipe à domicile lorsque le stade est complet. 0 signifie aucun avantage à domicile.</message>
+	
+	<message id="settings_label_sim_maxmatches_injured">Matches d'absence max.</message>
+	<message id="settings_label_sim_maxmatches_injured_help">Nombre maximal de matches qu'un joueur peut manquer sur blessure. Notez que la probabilité qu'un joueur soit indisponible pendant plus de 7 matches n'est que de 1 %.</message>
+	
+	<message id="settings_label_sim_maxmatches_blocked">Matches de suspension max.</message>
+	<message id="settings_label_sim_maxmatches_blocked_help">Nombre maximal de matches de suspension d'un joueur après un carton rouge.</message>
+
+	<message id="settings_label_sim_injured_after_friendly">Les joueurs peuvent également se blesser lors d'un match amical et manquer ensuite plusieurs matches.</message>
+	
+	<message id="settings_label_sim_simulation_observers">Observateurs de simulation</message>
+	<message id="settings_label_sim_simulation_observers_help">Liste de classes PHP séparées par des virgules qui implémentent l'interface <em>ISimulationObserver</em> et doivent être actives dans la simulation des matches.</message>
+	
+	<message id="settings_label_sim_simulator_observers">Observateurs du simulateur</message>
+	<message id="settings_label_sim_simulator_observers_help">Liste de classes PHP séparées par des virgules qui implémentent l'interface <em>ISimulatorObserver</em> et doivent être actives dans la simulation des matches.</message>
+
+	<message id="settings_label_sim_createformation_on_invalidsubmission">Générer une nouvelle composition si l'utilisateur a aligné moins de 11 joueurs (p. ex. parce qu'un joueur s'est blessé entre-temps).</message>
+	
+	<message id="settings_label_sim_tiredness_through_friendly">Les joueurs perdent également de la fraîcheur et peuvent améliorer leur endurance lors des matches amicaux.</message>
+	
+	<message id="settings_label_sim_createformation_strength">Niveau des joueurs dans les compositions automatiques</message>
+	<message id="settings_label_sim_createformation_strength_help">en pourcentage ; moins de 100 % signifie que les joueurs alignés par le système sont affaiblis.</message>
+	
+	<message id="settings_label_sim_playerupdate_through_nationalteam">La fraîcheur, l'endurance et la satisfaction des joueurs évoluent également lors des matches en sélection nationale.</message>
+</messages>

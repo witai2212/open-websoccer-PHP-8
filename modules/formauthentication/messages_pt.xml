@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="formlogin_block_title">Iniciar sessão</message>
+    <message id="formlogin_option_rememberme">Manter sessão iniciada</message>
+    <message id="formlogin_submit_button">Iniciar sessão</message>
+    <message id="formlogin_link_register">Registar</message>
+    <message id="formlogin_link_forgot_password">Esqueceu-se da palavra-passe?</message>
+    
+    <message id="formlogin_invalid_data">Dados incorretos</message>
+    
+    <message id="login_navlabel">Iniciar sessão</message>
+    <message id="login_title">Iniciar sessão</message>
+    
+    <message id="forgot-password_navlabel">Enviar nova palavra-passe</message>
+    <message id="forgot-password_title">Gerar nova palavra-passe</message>
+    <message id="forgot-password_submit_button">Enviar nova palavra-passe</message>
+    
+    <message id="forgot-password_email-not-found">Não foi encontrado nenhum utilizador ativo com este endereço de correio eletrónico. Verifica os dados introduzidos.</message>
+    <message id="forgot-password_already-sent">Já pediste uma nova palavra-passe nas últimas 24 horas. Só pode ser pedida uma nova palavra-passe por dia.</message>
+    
+    <message id="forgot-password_message_title">Foi enviada uma nova palavra-passe.</message>
+    <message id="forgot-password_message_content">Verifica agora o teu correio eletrónico e a pasta de spam</message>
+    
+    <message id="activate-user_navlabel">Ativar conta</message>
+    <message id="activate-user_title">Ativar conta</message>
+    <message id="activate-user_content">Tens dificuldades com a tua conta? Basta contactares-nos.</message>
+    <message id="activate-user_user-not-found">A tua conta já está ativa ou introduziste um endereço de correio eletrónico incorreto. Verifica novamente o URL de ativação no correio eletrónico.</message>
+    <message id="activate-user_message_title">A tua conta foi ativada com êxito.</message>
+    <message id="activate-user_message_content">Já podes iniciar sessão com o teu correio eletrónico e palavra-passe. Diverte-te!</message>
+</messages>

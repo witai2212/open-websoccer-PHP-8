@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="playerssearch_navlabel">Búsqueda de jugadores</message>
+    <message id="playerssearch_submit">Buscar jugadores</message>
+    <message id="playerssearch_hits">%d jugadores encontrados</message>
+    <message id="playerssearch_no_players">No se encontraron jugadores.</message>
+    <message id="playerssearch_transfer_status">Estado de fichaje</message>
+    <message id="playerssearch_status_on_transferlist">En la lista de transferibles</message>
+    <message id="playerssearch_status_not_on_transferlist">No está en la lista de transferibles</message>
+    <message id="playerssearch_actions">Acciones</message>
+    <message id="playerssearch_profile">Perfil</message>
+    <message id="playerssearch_add_to_watchlist">Observar</message>
+    <message id="playerssearch_already_on_watchlist">Ya está en la lista de seguimiento</message>
+    <message id="contract_unit_matches">Partidos de contrato</message>
+</messages>

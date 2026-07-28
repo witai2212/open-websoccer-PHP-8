@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+    <message id="settings_tab_premium">Comptes premium</message>
+	<message id="settings_label_premium_enabled">Activer les comptes utilisateur premium. Les utilisateurs peuvent acheter du crédit et l’utiliser pour des fonctions spéciales.</message> 
+	<message id="settings_label_premium_credit_unit">Nom de la monnaie de crédit</message>
+	<message id="settings_label_premium_infopage">Page d’information</message>
+	<message id="settings_label_premium_infopage_help">Page affichée lorsqu’un utilisateur souhaite utiliser une fonction premium mais ne dispose pas d’un crédit suffisant (ou d’aucun crédit). Il peut s’agir d’un identifiant de page interne ou d’une URL complète (http://...).<br/>
+	    <strong>Attention :</strong> si vous avez activé les paiements automatiques par des prestataires tiers (comme PayPal), la page par défaut (<em>premium-feature-requested</em>) doit être utilisée.</message>
+	<message id="settings_label_premium_price_options">Options de dépôt</message>
+	<message id="settings_label_premium_price_options_help">Si le crédit peut être acheté par paiement, plusieurs taux de conversion peuvent être indiqués. Par exemple, 5.00:10 signifie que 5,00 EUR d’argent réel donnent 10 unités de crédit premium. Veuillez saisir les décimales avec un point (par ex. 4.99 au lieu de 4,99).</message>
+	<message id="settings_label_premium_currency">Devise (réelle)</message>
+	
+	<message id="settings_label_premium_exchangerate_gamecurrency">Taux de change de la monnaie du jeu</message>
+	<message id="settings_label_premium_exchangerate_gamecurrency_help">Si les utilisateurs doivent pouvoir échanger leur crédit premium contre de l’argent du jeu pour leur club, indiquez ici la valeur par unité premium. Saisissez 0 si aucun échange ne doit être possible.</message>
+
+	<message id="settings_label_premium_initial_credit">Crédit initial</message>
+	<message id="settings_label_premium_initial_credit_help">Crédit premium automatiquement accordé à un nouvel utilisateur lors de son inscription.</message>
+</messages>

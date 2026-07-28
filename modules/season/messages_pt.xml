@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="seasonpicker_currentmachday">Jornada atual</message>
+	<message id="seasonpicker_previous">Voltar</message>
+	<message id="seasonpicker_next">Seguinte</message>
+	
+	<message id="seasontarget_failed_penalty_subject">Penalização por não alcançar o objetivo da época</message>
+	<message id="seasontarget_accomplished_reward_subject">Prémio por alcançar o objetivo da época</message>
+	
+</messages>

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<messages>
+    <message id="tacticaldna_navlabel">ADN tactique</message>
+    <message id="tacticaldna_team_tab">ADN tactique</message>
+    <message id="tacticaldna_title">ADN tactique</message>
+    <message id="tacticaldna_intro">L'ADN tactique décrit le style de jeu préféré du club. Il évalue l'adéquation de l'effectif à ce style, influence la cohésion de l'équipe et a un léger effet sur la simulation des matches.</message>
+    <message id="tacticaldna_schema_missing">Les colonnes de base de données pour l'ADN tactique sont encore manquantes. Veuillez d'abord exécuter la mise à jour SQL.</message>
+    <message id="tacticaldna_current_style">Style actuel</message>
+    <message id="tacticaldna_style_comparison">Comparaison des styles</message>
+    <message id="tacticaldna_transition_effect">Adaptation de la cohésion</message>
+    <message id="tacticaldna_change_preview">Cohésion après changement</message>
+    <message id="tacticaldna_change_help">Un changement de style peut améliorer la cohésion si le nouveau style correspond mieux à l'effectif. Si l'adéquation est mauvaise, la cohésion baisse et ne se rétablit qu'avec les matches ou un style plus approprié.</message>
+    <message id="tacticaldna_recommended">Recommandé</message>
+    <message id="tacticaldna_staff_advice_title">Recommandation du staff</message>
+    <message id="tacticaldna_staff_recommendation">L'entraîneur adjoint recommande de passer au style {style}. L'adéquation de l'effectif serait de {fit} %, soit {diff} points de plus.</message>
+    <message id="tacticaldna_staff_no_change">Le staff ne voit actuellement aucune nécessité impérative de changer de style.</message>
+    <message id="tacticaldna_staff_missing">Sans entraîneur adjoint, aucune recommandation du staff n'est disponible pour l'ADN tactique.</message>
+    <message id="tacticaldna_saved_positive">ADN tactique enregistré : {style}. Adéquation de l'effectif : {fit} %. Effet sur la cohésion : {chemistry}.</message>
+    <message id="tacticaldna_saved_negative">ADN tactique enregistré : {style}. Adéquation de l'effectif : {fit} %. La transition pénalise d'abord la cohésion ({chemistry}).</message>
+    <message id="tacticaldna_saved_no_change">ADN tactique mis à jour. Aucun changement de style nécessaire.</message>
+    <message id="tacticaldna_invalid_style">Style de jeu non valide.</message>
+    <message id="tacticaldna_no_permission">Vous n'êtes pas autorisé à modifier l'ADN tactique de ce club.</message>
+    <message id="tacticaldna_no_team">Club introuvable.</message>
+    <message id="tacticaldna_not_enabled">L'ADN tactique est désactivé.</message>
+
+    <message id="formation_tacticalstyle_title">ADN tactique</message>
+    <message id="formation_tacticalstyle_select">Style de jeu</message>
+    <message id="formation_tacticalstyle_fit">Adéquation</message>
+    <message id="formation_tacticalstyle_effect_help">L'ADN tactique n'a qu'un faible effet en match et récompense surtout une bonne adéquation entre le style, l'effectif, l'entraînement et le staff.</message>
+    <message id="tacticalstyle_balanced">Équilibré</message>
+    <message id="tacticalstyle_balanced_help">Style neutre sans spécialisation marquée. Le niveau de base, la technique, l'endurance, les passes, les tacles et la fraîcheur comptent de façon égale.</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_pressing_help">L'endurance, la vitesse, les tacles et le mental renforcent l'efficacité de ce style exigeant physiquement.</message>
+    <message id="tacticalstyle_possession">Possession</message>
+    <message id="tacticalstyle_possession_help">Les passes, la créativité et la technique aident à contrôler le jeu.</message>
+    <message id="tacticalstyle_defensive">Défensif</message>
+    <message id="tacticalstyle_defensive_help">Les tacles, le jeu de tête, l'endurance et les joueurs influents renforcent un style défensif compact.</message>
+    <message id="tacticalstyle_physical">Physique</message>
+    <message id="tacticalstyle_physical_help">Le niveau général, le jeu de tête, l'endurance et les tacles rendent ce style plus efficace.</message>
+    <message id="tacticalstyle_counterattack">Contre-attaque</message>
+    <message id="tacticalstyle_counterattack_help">La vitesse, la finition, les passes et la fraîcheur conviennent particulièrement aux transitions rapides.</message>
+    <message id="tacticalstyle_fit_good">Ton effectif convient très bien à ce style.</message>
+    <message id="tacticalstyle_fit_neutral">Ton effectif convient assez bien à ce style.</message>
+    <message id="tacticalstyle_fit_bad">Ce style ne convient actuellement que partiellement à ton effectif.</message>
+    <message id="tacticalstyle_news_title">Nouvel ADN tactique</message>
+    <message id="tacticalstyle_news_message">{team} fait évoluer son ADN tactique de {oldstyle} à {newstyle}. L'adéquation actuelle de l'effectif est de {fit} %, avec un effet direct sur la cohésion de {chemistry}.</message>
+    <message id="tacticalstyle_news_link">Voir le club</message>
+
+    <message id="teamchemistry_factor_tactical_style">ADN tactique</message>
+    <message id="teamchemistry_source_tactical_style">ADN tactique</message>
+</messages>

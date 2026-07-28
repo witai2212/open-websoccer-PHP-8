@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="managercareer_admin_navlabel">Carrière d'entraîneur</message>
+    <message id="managercareer_admin_title">Carrière d'entraîneur</message>
+    <message id="managercareer_admin_intro">Surveillez les candidatures, les risques de licenciement, les contrats des entraîneurs et les récompenses.</message>
+    <message id="managercareer_admin_tab_applications">Candidatures</message>
+    <message id="managercareer_admin_tab_sackrisk">Risque de licenciement</message>
+    <message id="managercareer_admin_tab_awards">Récompenses</message>
+    <message id="managercareer_admin_tab_settings">Paramètres</message>
+    <message id="managercareer_admin_open_applications">Candidatures ouvertes</message>
+    <message id="managercareer_admin_recent_applications">Dernières décisions</message>
+    <message id="managercareer_admin_no_open_applications">Il n'y a actuellement aucune candidature ouverte.</message>
+    <message id="managercareer_admin_no_recent_applications">Aucune candidature traitée pour le moment.</message>
+    <message id="managercareer_admin_application_accepted">Candidature acceptée et offre d'emploi créée.</message>
+    <message id="managercareer_admin_application_rejected">Candidature refusée.</message>
+    <message id="managercareer_admin_reject">Refuser</message>
+    <message id="managercareer_admin_sackrisk_title">Risque de licenciement</message>
+    <message id="managercareer_admin_sackrisk_help">Les entraîneurs dont la satisfaction du conseil est très faible reçoivent des avertissements et peuvent être licenciés automatiquement si l'option est activée.</message>
+    <message id="managercareer_admin_no_sackrisk">Aucun entraîneur actif trouvé.</message>
+    <message id="managercareer_admin_awards_title">Dernières récompenses des entraîneurs</message>
+    <message id="managercareer_admin_settings_title">Paramètres de carrière</message>
+    <message id="managercareer_admin_settings_help">Les valeurs sont gérées dans les paramètres généraux. Cet aperçu présente les paramètres actuellement actifs.</message>
+    <message id="managercareer_admin_open_settings">Ouvrir les paramètres généraux</message>
+
+    <message id="settings_label_mgr_career_enabled">Activer la carrière d'entraîneur</message>
+    <message id="settings_label_mgr_job_offers">Activer les offres d'emploi automatiques</message>
+    <message id="settings_label_freeclub_rep_check">Activer le contrôle de réputation pour les clubs libres</message>
+    <message id="settings_label_mgr_offer_limit">Nombre maximal d'offres d'emploi actives par entraîneur</message>
+    <message id="settings_label_mgr_offer_exp_days">Validité des offres d'emploi en jours</message>
+    <message id="settings_label_mgr_applications_enabled">Activer les candidatures manuelles</message>
+    <message id="settings_label_mgr_application_limit">Nombre maximal de candidatures ouvertes par entraîneur</message>
+    <message id="settings_label_mgr_application_decision_min_days">Décision de candidature au plus tôt après X jours</message>
+    <message id="settings_label_mgr_application_decision_max_days">Décision de candidature au plus tard après X jours</message>
+    <message id="settings_label_mgr_application_exp_days">La candidature expire après X jours</message>
+    <message id="settings_label_mgr_auto_sacking_enabled">Activer les licenciements automatiques</message>
+    <message id="settings_label_mgr_contract_days">Durée standard du contrat d'entraîneur en jours</message>
+
+    <message id="managercareer_application_chance">Chance</message>
+    <message id="managercareer_decision_date">Décision</message>
+    <message id="managercareer_status">Statut</message>
+    <message id="managercareer_date">Date</message>
+    <message id="managercareer_board_satisfaction">Satisfaction du conseil</message>
+    <message id="managercareer_sack_risk">Risque de licenciement</message>
+    <message id="managercareer_low_board_checks">Contrôles de crise</message>
+    <message id="managercareer_award">Récompense</message>
+    <message id="managercareer_no_awards">Aucune récompense d'entraîneur pour le moment.</message>
+    <message id="managercareer_button_accept">Accepter</message>
+    <message id="managercareer_application_status_open">Ouvert</message>
+    <message id="managercareer_application_status_accepted">Acceptée</message>
+    <message id="managercareer_application_status_rejected">Refusé</message>
+    <message id="managercareer_application_status_withdrawn">Retirée</message>
+    <message id="managercareer_application_status_expired">Expiré</message>
+    <message id="managercareer_application_error_invalid">Cette candidature n'est plus disponible.</message>
+    <message id="managercareer_application_accepted_subject">Candidature réussie : {team}</message>
+    <message id="managercareer_application_accepted_body">Le club {team} a évalué positivement ta candidature et t'a présenté une offre d'emploi officielle.
+
+Ligue : {league}
+Valable jusqu'au : {expires}
+
+Tu peux accepter ou refuser l'offre ici :
+{url}</message>
+    <message id="managercareer_application_rejected_subject">Candidature refusée : {team}</message>
+    <message id="managercareer_application_rejected_body">Le club {team} a refusé ta candidature après l'avoir examinée. Une meilleure réputation, de meilleurs résultats ou une plus grande notoriété dans ce pays pourront améliorer tes chances à l'avenir.</message>
+    <message id="managercareer_application_notification_accepted">{team} a accepté ta candidature.</message>
+    <message id="managercareer_application_notification_rejected">{team} a refusé ta candidature.</message>
+    <message id="managercareer_message_sender">Carrière d'entraîneur</message>
+</messages>

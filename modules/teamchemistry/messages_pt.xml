@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="teamchemistry_navlabel">Química da equipa</message>
+    <message id="teamchemistry_title">Química da equipa</message>
+    <message id="teamchemistry_intro">A química da equipa mostra como o seu plantel funciona como uma unidade. É calculada com base na nacionalidade, no entrosamento, na formação, no capitão, nas transferências, na satisfação e no caráter.</message>
+    <message id="teamchemistry_schema_missing">Ainda faltam as colunas da base de dados para a química da equipa. Execute primeiro a atualização SQL.</message>
+
+    <message id="teamchemistry_score">Química</message>
+    <message id="teamchemistry_match_effect">Efeito no jogo</message>
+    <message id="teamchemistry_match_effect_help">Pequeno efeito no passe, na moral e na estabilidade.</message>
+    <message id="teamchemistry_factor">Fator</message>
+    <message id="teamchemistry_value">Valor</message>
+    <message id="teamchemistry_detail">Detalhes</message>
+    <message id="teamchemistry_recent_development">Evolução mais recente</message>
+    <message id="teamchemistry_no_log">Ainda não foi registada qualquer evolução da química.</message>
+    <message id="teamchemistry_date">Data</message>
+    <message id="teamchemistry_source">Motivo</message>
+    <message id="teamchemistry_old_new">Anterior / Novo</message>
+    <message id="teamchemistry_change">Alteração</message>
+
+    <message id="teamchemistry_value_good">bem entrosada</message>
+    <message id="teamchemistry_value_neutral">razoável</message>
+    <message id="teamchemistry_value_bad">instável</message>
+    <message id="teamchemistry_hint_good">A sua equipa parece bem entrosada. Isto pode proporcionar pequenas vantagens no passe, na moral e na estabilidade durante os jogos.</message>
+    <message id="teamchemistry_hint_neutral">A química é sólida. Maior continuidade na formação, no plantel e no capitão pode melhorar o valor.</message>
+    <message id="teamchemistry_hint_bad">A química é baixa. Muitas transferências novas, jogadores insatisfeitos ou pouco entrosamento podem tornar a sua equipa mais instável.</message>
+
+    <message id="teamchemistry_factor_nationality">Nacionalidade</message>
+    <message id="teamchemistry_factor_settled">Tempo no clube</message>
+    <message id="teamchemistry_factor_formation">Formação</message>
+    <message id="teamchemistry_factor_captain">Capitão</message>
+    <message id="teamchemistry_factor_transfers">Novas transferências</message>
+    <message id="teamchemistry_factor_happiness">Satisfação</message>
+    <message id="teamchemistry_factor_personality">Criatividade individual</message>
+
+    <message id="teamchemistry_source_page">Visualização da página</message>
+    <message id="teamchemistry_source_match">Preparação do jogo</message>
+    <message id="teamchemistry_source_runtime">Simulação em direto</message>
+    <message id="teamchemistry_source_match_completed">Jogo terminado</message>
+    <message id="teamchemistry_source_manual">Atualização</message>
+    <message id="teamchemistry_factor_trainingcamp">Estágio de treino</message>
+    <message id="teamchemistry_source_trainingcamp">Estágio de treino</message>
+    
+    <message id="teamchemistry_factor_training">Treino</message>
+    <message id="teamchemistry_factor_tactical_style">ADN tático</message>
+    <message id="teamchemistry_factor_manager_profile">Competência do treinador</message>
+    <message id="teamchemistry_source_tactical_style">ADN tático</message>
+    <message id="teamchemistry_source_manager_character">Perfil do treinador</message>
+</messages>

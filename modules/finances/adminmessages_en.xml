@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_bank_loans_enabled">Enable bank and loan module</message>
+    <message id="settings_label_bank_loans_enabled_help">Enables loan offers, automatic instalments after matches, early repayment, credit rating and board warnings.</message>
+</messages>

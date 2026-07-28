@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="absence_navlabel">Absence</message>
+    <message id="absence_intro">Vous partez en vacances ou ne pouvez pas participer pendant une courte période pour une autre raison ? Signalez votre absence ici et désignez un remplaçant. Il pourra gérer vos équipes jusqu'à votre retour.</message>
+    
+    <message id="absence_label_days">Jours</message>
+    <message id="absence_label_days_help">(prévu)</message>
+    
+    <message id="absence_err_invaliddeputy">Aucun utilisateur portant le nom saisi n'a été trouvé. Vérifiez l'orthographe.</message>
+    <message id="absence_err_deputyisself">Désolé, vous ne pouvez pas vous désigner vous-même comme remplaçant.</message>
+    
+    <message id="absence_report_success">Absence signalée avec succès !</message>
+    
+    <message id="absence_reportinfo">Vous êtes signalé absent jusqu'au %s. Votre remplaçant est <strong>%s</strong>.</message>
+    <message id="absence_return_button">Je suis de retour</message>
+    <message id="absence_return_success">Vous pouvez de nouveau gérer vos équipes !</message>
+    
+    <message id="absence_warning">Vous êtes actuellement considéré comme absent et ne pouvez donc pas gérer vos équipes.</message>
+    
+    <message id="absence_profile_info">L'utilisateur est absent jusqu'au %s.</message>
+    
+    <message id="absence_notification">{user} a signalé son absence et vous a désigné comme remplaçant pour ses équipes.</message>
+    <message id="absence_comeback_notification">{user} est revenu de son absence et gère de nouveau ses équipes.</message>
+</messages>

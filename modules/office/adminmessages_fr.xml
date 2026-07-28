@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_contract_max_number_of_remaining_matches">Nombre de matchs restants à partir duquel une prolongation de contrat est possible</message> 
+	<message id="settings_label_max_number_of_contract_matches">Durée maximale du contrat d’un joueur en matchs</message> 
+	
+</messages>

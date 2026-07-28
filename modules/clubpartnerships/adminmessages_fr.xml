@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+  <message id="club_partnerships_navlabel">Partenariats entre clubs</message>
+  <message id="clubpartnership_admin_title">Partenariats entre clubs</message>
+  <message id="clubpartnership_admin_intro">Centre de contrôle des partenariats entre clubs actifs, ouverts, suspendus et terminés.</message>
+  <message id="clubpartnership_admin_open">Partenariats actifs et ouverts</message>
+  <message id="clubpartnership_admin_closed">Récemment terminés ou refusés</message>
+  <message id="clubpartnership_admin_logs">Historique</message>
+  <message id="clubpartnership_admin_actions">Actions</message>
+  <message id="clubpartnership_admin_run_check">Exécuter le contrôle automatique</message>
+  <message id="clubpartnership_admin_suspend">Suspendre</message>
+  <message id="clubpartnership_admin_reactivate">Réactiver</message>
+  <message id="clubpartnership_admin_stop">Terminer</message>
+  <message id="clubpartnership_admin_delete">Supprimer</message>
+  <message id="clubpartnership_admin_delete_confirm">Voulez-vous vraiment supprimer ce partenariat ?</message>
+  <message id="clubpartnership_admin_done">L’action a été exécutée.</message>
+  <message id="clubpartnership_admin_no_items">Aucune entrée disponible.</message>
+  <message id="clubpartnership_admin_conflict">Conflit</message>
+  <message id="clubpartnership_admin_manager_left">Changement d’entraîneur détecté</message>
+  <message id="clubpartnerships_date">Date</message>
+
+  <message id="settings_label_club_partnership_minimum_matches">Durée minimale d’un partenariat</message>
+  <message id="settings_label_club_partnership_minimum_matches_help">Nombre de matches disputés par les deux clubs avant de pouvoir mettre fin au partenariat sans frais.</message>
+  <message id="settings_label_club_partnership_termination_fee_percent">Indemnité de résiliation en pourcentage</message>
+  <message id="settings_label_club_partnership_termination_fee_percent_help">Part du budget actuel du club prélevée en cas de résiliation anticipée.</message>
+  <message id="settings_label_club_partnership_termination_fee_max">Indemnité de résiliation maximale</message>
+  <message id="settings_label_club_partnership_termination_fee_max_help">Montant maximal reçu par l’autre club partenaire en cas de résiliation anticipée.</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers">Activer les offres des clubs partenaires gérés par l’ordinateur</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers_help">Les clubs partenaires gérés par l’ordinateur peuvent envoyer aux clubs gérés par des utilisateurs des offres directes qu’ils peuvent refuser.</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance">Probabilité d’une offre d’un club partenaire géré par l’ordinateur</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance_help">Probabilité en pourcentage par journée traitée et partenariat mixte actif.</message>
+
+</messages>

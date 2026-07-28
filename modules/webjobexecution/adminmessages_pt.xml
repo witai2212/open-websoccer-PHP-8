@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_webjobexecution_enabled">Executar a simulação de jogos através de sítios Web externos em vez de tarefas.</message>
+	<message id="settings_label_webjobexecution_key">Chave de segurança para execução externa da simulação</message>
+	<message id="settings_label_webjobexecution_key_help">Chave de token para obter acesso externo, por exemplo, a tarefas.</message>
+</messages>

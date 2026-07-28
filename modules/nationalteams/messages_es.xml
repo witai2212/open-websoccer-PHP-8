@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="nationalteam_navlabel">Selección nacional</message>
+    <message id="nationalmatches_navlabel">Partidos</message>
+    <message id="nominate-national-players_navlabel">Convocar jugadores</message>
+    <message id="nationalteams_user_requires_team">Debe ser seleccionador de una selección nacional para utilizar esta función.</message>
+	<message id="nationalteams_no_players">Todavía no ha convocado a ningún jugador.</message>
+	<message id="nationalteams_addplayer">Convocar</message>
+	<message id="nationalteams_addplayer_err_alreadyinteam">El jugador ya está en su selección.</message>
+	<message id="nationalteams_addplayer_err_toomanyplayer">Puede convocar como máximo a %d jugadores para la selección nacional.</message>
+	<message id="nationalteams_addplayer_success">El jugador se ha añadido correctamente a la selección.</message>
+	<message id="nationalteams_remove_from_team">Eliminar</message>
+	<message id="nationalteams_removeplayer_success">El jugador se ha eliminado correctamente de la selección.</message>
+	<message id="nationalteams_team_label">Selección nacional</message>
+	<message id="nationalmatches_title">Partidos de la selección nacional</message>
+	<message id="nationalmatches_next_title">Próximos partidos</message>
+	<message id="nationalmatches_results_title">Resultados</message>
+	
+	<message id="nationalmatches_nextmatch_title">Próximo partido internacional</message>
+</messages>

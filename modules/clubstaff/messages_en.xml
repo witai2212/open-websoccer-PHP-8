@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Club staff</message>
+    <message id="club-staff_navlabel">Club staff</message>
+    <message id="clubstaff_title">Club staff</message>
+    <message id="clubstaff_intro">Hire simple specialists who provide small bonuses to your club. Each club can employ exactly one staff member per role.</message>
+    <message id="clubstaff_only_human">Club staff are available only to user-managed clubs.</message>
+    <message id="clubstaff_disabled">Club staff are currently disabled.</message>
+
+    <message id="clubstaff_current_staff">Current staff</message>
+    <message id="clubstaff_available_staff">Available staff</message>
+    <message id="clubstaff_effects">Active bonuses</message>
+    <message id="clubstaff_no_staff_hired">You have not hired any additional staff yet.</message>
+    <message id="clubstaff_no_staff_available">No suitable staff members are currently available.</message>
+    <message id="clubstaff_total_salary">Total cost per matchday</message>
+    <message id="clubstaff_salary">Salary per matchday</message>
+    <message id="clubstaff_bonus">Bonus</message>
+    <message id="clubstaff_level">Level</message>
+    <message id="clubstaff_role">Role</message>
+    <message id="clubstaff_name">Name</message>
+    <message id="clubstaff_description">Description</message>
+    <message id="clubstaff_action">Action</message>
+    <message id="clubstaff_hired_since">Hired since</message>
+    <message id="clubstaff_budget">Club budget</message>
+    <message id="clubstaff_info_costs">Salaries are booked automatically after newly completed matches and appear in the finances.</message>
+    <message id="clubstaff_info_simple">The bonuses are deliberately small so that club staff remain an enhancement rather than becoming an administrative burden.</message>
+
+    <message id="clubstaff_role_assistant_manager">Assistant manager</message>
+    <message id="clubstaff_role_goalkeeping_coach">Goalkeeping coach</message>
+    <message id="clubstaff_role_fitness_coach">Fitness coach</message>
+    <message id="clubstaff_role_youth_coach">Youth coach</message>
+    <message id="clubstaff_role_physio">Physiotherapist</message>
+    <message id="clubstaff_role_marketing_manager">Marketing manager</message>
+    <message id="clubstaff_role_financial_advisor">Financial adviser</message>
+
+    <message id="clubstaff_effect_assistant_manager">Slightly improves team chemistry and the effectiveness of tactical training.</message>
+    <message id="clubstaff_effect_goalkeeping_coach">Slightly improves goalkeeper training and penalty saving.</message>
+    <message id="clubstaff_effect_fitness_coach">Slightly improves stamina, pace and freshness in training.</message>
+    <message id="clubstaff_effect_youth_coach">Slightly improves youth-player development and youth scouting.</message>
+    <message id="clubstaff_effect_physio">Slightly reduces the consequences of injuries and supports recovery.</message>
+    <message id="clubstaff_effect_marketing_manager">Slightly improves spectator interest and merchandising.</message>
+    <message id="clubstaff_effect_financial_advisor">Slightly improves creditworthiness and financing terms.</message>
+
+    <message id="hire-club-staff">Hire</message>
+    <message id="fire-club-staff">Dismiss</message>
+    <message id="hire_club_staff_message">Staff member hired.</message>
+    <message id="fire_club_staff_message">Staff member dismissed.</message>
+
+    <message id="clubstaff_error_disabled">Club staff are currently disabled.</message>
+    <message id="clubstaff_error_no_team">You do not have a club.</message>
+    <message id="clubstaff_error_human_only">Only user-managed clubs can hire staff members.</message>
+    <message id="clubstaff_error_staff_not_found">This staff member was not found.</message>
+    <message id="clubstaff_error_staff_inactive">This staff member is not available.</message>
+    <message id="clubstaff_error_role_taken">This role is already filled.</message>
+    <message id="clubstaff_error_not_hired">This role is not filled at your club.</message>
+    <message id="clubstaff_error_invalid_role">Invalid staff role.</message>
+
+    <message id="clubstaff_account_salary_subject">Staff salaries</message>
+    <message id="clubstaff_account_sender">Club staff</message>
+
+    <message id="teamchemistry_factor_staff">Club staff</message>
+    <message id="teamchemistry_source_staff">Club staff</message>
+
+</messages>

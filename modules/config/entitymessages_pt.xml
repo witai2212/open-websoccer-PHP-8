@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_config">Configuração</message>
+	<message id="entity_config_name">Designação</message>
+	<message id="entity_config_timestamp">Carimbo de data/hora</message>
+	<message id="entity_config_zeitstempel">Carimbo de data/hora</message>
+	<message id="entity_config_descr">Valor/descrição</message>
+   	
+</messages>

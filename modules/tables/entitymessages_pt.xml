@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_tablemarker">Marcação da classificação</message>
+	<message id="entity_tablemarker_bezeichnung">Designação</message>
+	<message id="entity_tablemarker_bezeichnung_help">Também pode ser uma chave de mensagem.</message>
+	<message id="entity_tablemarker_liga_id">Liga</message>
+	<message id="entity_tablemarker_platz_von">Classificação de</message>
+	<message id="entity_tablemarker_platz_bis">Classificação até</message>
+	<message id="entity_tablemarker_farbe">Cor</message>
+	<message id="entity_tablemarker_farbe_help">Valor de cor HTML. Se o navegador não apresentar um seletor de cores, pode <a href="http://html-color-codes.info/webfarben_hexcodes/" target="_blank">selecionar um valor online</a>.</message>
+	<message id="entity_tablemarker_target_league_id">Liga de destino</message>
+	<message id="entity_tablemarker_target_league_id_help">Os clubes nestas classificações são automaticamente transferidos para a liga de destino selecionada no fim da época (por exemplo, promovidos e despromovidos).</message>
+</messages>

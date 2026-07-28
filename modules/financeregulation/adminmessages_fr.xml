@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="finance_regulation_center_navlabel">Centre de régulation financière</message>
+    <message id="finance_regulation_center_title">Centre de régulation financière</message>
+    <message id="finance_regulation_center_intro">Outil d'administration permettant d'examiner, de simuler et de corriger prudemment l'économie du jeu. Les simulations sont en lecture seule ; les corrections réelles créent automatiquement un instantané et une entrée de journal.</message>
+
+    <message id="finance_regulation_tab_overview">Vue d’ensemble</message>
+    <message id="finance_regulation_tab_clubs">Clubs</message>
+    <message id="finance_regulation_tab_simulation">Simulation</message>
+    <message id="finance_regulation_tab_correction">Appliquer une correction</message>
+    <message id="finance_regulation_tab_export">Rapport / Export</message>
+
+    <message id="finance_regulation_season">Saison</message>
+    <message id="finance_regulation_all_bookings">Toutes les écritures</message>
+    <message id="finance_regulation_core_metrics">Indicateurs clés</message>
+    <message id="finance_regulation_metric">Indicateur</message>
+    <message id="finance_regulation_all">Toutes</message>
+    <message id="finance_regulation_human">Humain</message>
+    <message id="finance_regulation_cpu">IA</message>
+    <message id="finance_regulation_club_count">Clubs</message>
+    <message id="finance_regulation_avg_budget">Budget moyen du club</message>
+    <message id="finance_regulation_avg_income_matchday">Recettes moyennes par journée</message>
+    <message id="finance_regulation_avg_player_salary">Salaire moyen des joueurs</message>
+    <message id="finance_regulation_salary_income_ratio">Salaires/Recettes</message>
+    <message id="finance_regulation_recurring_income_ratio">Coûts fixes/Recettes</message>
+    <message id="finance_regulation_transfer_spending">Dépenses de transferts</message>
+    <message id="finance_regulation_recommendations">Correction recommandée</message>
+    <message id="finance_regulation_recommendation">Recommandation</message>
+    <message id="finance_regulation_suggestion">Suggestion</message>
+    <message id="finance_regulation_secondary_costs_breakdown">Frais annexes par journée</message>
+    <message id="finance_regulation_cost_type">Type de coût</message>
+    <message id="finance_regulation_amount_all">Toutes</message>
+    <message id="finance_regulation_amount_human">Humain</message>
+    <message id="finance_regulation_amount_cpu">IA</message>
+
+    <message id="finance_regulation_richest_clubs">Clubs les plus riches</message>
+    <message id="finance_regulation_poorest_clubs">Clubs les plus pauvres</message>
+    <message id="finance_regulation_salary_pressure">Pression du ratio salaires/recettes</message>
+
+    <message id="finance_regulation_simulation_intro">Les simulations ne modifient aucune valeur de la base de données. Elles montrent uniquement l'effet calculé des facteurs sélectionnés.</message>
+    <message id="finance_regulation_simulation_result">Résultat de la simulation</message>
+    <message id="finance_regulation_correction_intro">Cette fonction modifie réellement les valeurs de la base de données. Un instantané est automatiquement créé avant chaque application et l'action est enregistrée dans le journal.</message>
+    <message id="finance_regulation_form_title">Valeurs de correction</message>
+    <message id="finance_regulation_player_salaries">Salaires des joueurs</message>
+    <message id="finance_regulation_player_salaries_help">S'applique à tous les joueurs actifs de tous les clubs.</message>
+    <message id="finance_regulation_secondary_costs">Personnel et frais annexes</message>
+    <message id="finance_regulation_secondary_costs_help">Personnel, recruteurs, recrutement, centre de formation, stages, construction du stade et achats de merchandising.</message>
+    <message id="finance_regulation_sponsors">Sponsors</message>
+    <message id="finance_regulation_sponsor_scope_future">offres futures uniquement</message>
+    <message id="finance_regulation_sponsor_scope_active">contrats actifs uniquement</message>
+    <message id="finance_regulation_sponsor_scope_both">les deux</message>
+    <message id="finance_regulation_club_budgets">Budgets des clubs</message>
+    <message id="finance_regulation_budget_scope_above">uniquement au-dessus du seuil</message>
+    <message id="finance_regulation_budget_scope_all">tous</message>
+    <message id="finance_regulation_budget_scope_human">humains uniquement</message>
+    <message id="finance_regulation_budget_scope_cpu">IA uniquement</message>
+    <message id="finance_regulation_budget_threshold">Seuil</message>
+    <message id="finance_regulation_ticket_prices">Prix des billets</message>
+    <message id="finance_regulation_ticket_prices_help">Modifie la base tarifaire des clubs sans modifier rétroactivement les anciens journaux du stade.</message>
+    <message id="finance_regulation_market_values">Formule de la valeur marchande</message>
+    <message id="finance_regulation_market_values_help">Définit un facteur global pour la formule et met à l'échelle les valeurs marchandes existantes.</message>
+    <message id="finance_regulation_confirm_checkbox">Je confirme que les valeurs réelles de la base de données doivent être modifiées.</message>
+    <message id="finance_regulation_simulate_button">Démarrer la simulation</message>
+    <message id="finance_regulation_apply_button">Appliquer une correction</message>
+    <message id="finance_regulation_apply_confirm">Cette correction modifie réellement les valeurs de la base de données. Un instantané sera automatiquement créé au préalable. Continuer ?</message>
+    <message id="finance_regulation_apply_success">Correction appliquée</message>
+    <message id="finance_regulation_apply_success_detail">Un instantané a été créé automatiquement avant la modification.</message>
+    <message id="finance_regulation_missing_confirmation">Veuillez confirmer les modifications réelles de la base de données.</message>
+
+    <message id="finance_regulation_target">Cible</message>
+    <message id="finance_regulation_table">Classement</message>
+    <message id="finance_regulation_old_total">Ancien</message>
+    <message id="finance_regulation_new_total">Nouveau</message>
+    <message id="finance_regulation_delta">Écart</message>
+    <message id="finance_regulation_affected_rows">Enregistrements</message>
+
+    <message id="finance_regulation_export">Rapport / Export</message>
+    <message id="finance_regulation_export_intro">Créez des instantanés pour de futures comparaisons ou exportez l'analyse actuelle au format CSV.</message>
+    <message id="finance_regulation_create_snapshot">Enregistrer l'instantané</message>
+    <message id="finance_regulation_download_csv">Exporter en CSV</message>
+    <message id="finance_regulation_latest_snapshots">Derniers instantanés</message>
+    <message id="finance_regulation_latest_logs">Dernières actions</message>
+    <message id="finance_regulation_manual_snapshot">Instantané financier manuel</message>
+    <message id="finance_regulation_snapshot_created">Instantané créé</message>
+</messages>

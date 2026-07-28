@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="admin_game_health_navlabel">System check</message>
+    <message id="admin_game_health_title">Admin Game Health Check</message>
+    <message id="admin_game_health_intro">Live check of important game and system data. Repairs are deliberately conservative and change only clearly invalid or expired records.</message>
+</messages>

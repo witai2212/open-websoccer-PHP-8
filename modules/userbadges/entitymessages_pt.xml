@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_badge">Distintivo</message>
+    <message id="entity_badge_name">Designação</message>
+    <message id="entity_badge_name_help">Também pode ser uma chave de mensagem.</message>
+    <message id="entity_badge_description">Explicação</message>
+    <message id="entity_badge_description_help">Também pode ser uma chave de mensagem.</message>
+    <message id="entity_badge_level">Nível</message>
+    <message id="entity_badge_event">Acontecimento</message>
+    <message id="entity_badge_event_benchmark">Valor de ativação</message>
+    <message id="entity_badge_event_benchmark_help">O "X" nos eventos com a variável "X".</message>
+
+    <message id="option_bronze">Bronze</message>
+    <message id="option_silver">Prata</message>
+    <message id="option_gold">Ouro</message>
+    
+    <message id="option_membership_since_x_days">É membro há X dias</message>
+    <message id="option_win_with_x_goals_difference">Vitória por X golos de diferença</message>
+    <message id="option_completed_season_at_x">Terminou uma época na classificação X</message>
+    <message id="option_x_trades">Realizou pelo menos X transferências</message>
+    <message id="option_cupwinner">Ganhou uma taça</message>
+    <message id="option_stadium_construction_by_x">O estádio foi expandido em X lugares de uma só vez</message>
+    <message id="option_derby_wins">Ganhou pelo menos X dérbis</message>
+    <message id="option_youth_developer">Promoveu pelo menos X jogadores jovens</message>
+    <message id="option_giant_killer">Venceu pelo menos X adversários claramente mais fortes</message>
+    <message id="option_comeback_king">Ganhou pelo menos X jogos depois de estar em desvantagem</message>
+    <message id="option_financial_genius">Terminou pelo menos X épocas completas com saldo positivo</message>
+    <message id="option_transfer_master">Vendeu um jogador com pelo menos X por cento de lucro</message>
+</messages>

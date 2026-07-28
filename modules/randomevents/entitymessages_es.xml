@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_randomevent">Eventos aleatorios</message>
+    <message id="entity_randomevent_message">Mensaje</message>
+    <message id="entity_randomevent_message_help">También puede ser una clave de mensaje. En eventos específicos de jugadores, el mensaje puede contener el marcador "{playername}".</message>
+    <message id="entity_randomevent_effect">Efecto</message>
+    <message id="entity_randomevent_effect_money_amount">Efecto: cantidad de dinero</message>
+    <message id="entity_randomevent_effect_money_amount_help">Cantidad positiva o negativa que se carga o abona en la cuenta del club cuando se produce el evento correspondiente.</message>
+    <message id="entity_randomevent_effect_blocked_matches">Efecto: número de partidos sancionado</message>
+    <message id="entity_randomevent_effect_skillchange">Efecto: cambio de calidad</message>
+    <message id="entity_randomevent_effect_skillchange_help">Cambio positivo o negativo del atributo correspondiente del jugador.</message>
+    <message id="entity_randomevent_weight">Ponderación</message>
+    <message id="entity_randomevent_weight_help">Afecta a la probabilidad de que ocurra. 1 significa probabilidad normal; 5 significa que puede ocurrir cinco veces más a menudo. 0 desactiva el evento.</message>
+
+    <message id="entity_randomeventchain">Cadenas de eventos</message>
+    <message id="entity_randomeventchain_event_key">Clave</message>
+    <message id="entity_randomeventchain_title">Títulos</message>
+    <message id="entity_randomeventchain_message">Mensaje</message>
+    <message id="entity_randomeventchain_event_type">Tipo de evento</message>
+    <message id="entity_randomeventchain_weight">Ponderación</message>
+    <message id="entity_randomeventchain_active">Activo</message>
+
+    <message id="entity_randomeventchainchoice">Decisiones de cadenas de eventos</message>
+    <message id="entity_randomeventchainchoice_chain_id">Cadena de eventos</message>
+    <message id="entity_randomeventchainchoice_choice_key">Clave</message>
+    <message id="entity_randomeventchainchoice_label">Etiqueta</message>
+    <message id="entity_randomeventchainchoice_description">Descripción</message>
+    <message id="entity_randomeventchainchoice_effect_money_amount">Efecto económico</message>
+    <message id="entity_randomeventchainchoice_effect_player_happiness">Satisfacción del jugador</message>
+    <message id="entity_randomeventchainchoice_effect_player_fitness">Frescura del jugador</message>
+    <message id="entity_randomeventchainchoice_effect_player_stamina">Resistencia del jugador</message>
+    <message id="entity_randomeventchainchoice_effect_blocked_matches">Partidos de sanción</message>
+    <message id="entity_randomeventchainchoice_effect_injured_matches">Partidos de lesión</message>
+    <message id="entity_randomeventchainchoice_effect_board_satisfaction">Satisfacción de la directiva</message>
+    <message id="entity_randomeventchainchoice_effect_fanpopularity">Popularidad entre la afición</message>
+    <message id="entity_randomeventchainchoice_effect_stadium_attendance">Efecto en la asistencia %</message>
+    <message id="entity_randomeventchainchoice_set_player_transfermarket">Poner al jugador en el mercado de fichajes</message>
+    <message id="entity_randomeventchainchoice_create_youthplayer">Crear jugador juvenil</message>
+    <message id="entity_randomeventchainchoice_keep_open">Mantener abierto</message>
+    <message id="entity_randomeventchainchoice_is_default">Predeterminado al vencer</message>
+    <message id="entity_randomeventchainchoice_sort_order">Orden</message>
+
+    <message id="option_money">Se modifica la cuenta del club</message>
+    <message id="option_player_injured">Un jugador queda de baja por lesión</message>
+    <message id="option_player_blocked">Un jugador queda de baja por sanción</message>
+    <message id="option_player_happiness">Cambia la satisfacción de un jugador</message>
+    <message id="option_player_fitness">Cambia la frescura de un jugador</message>
+    <message id="option_player_stamina">Cambia la resistencia de un jugador</message>
+
+    <message id="option_player_unhappy">Jugador descontento</message>
+    <message id="option_sponsor_scandal">Escándalo de patrocinador</message>
+    <message id="option_youth_discovered">Jugador juvenil descubierto</message>
+    <message id="option_stadium_damage">Daños en el estadio</message>
+</messages>

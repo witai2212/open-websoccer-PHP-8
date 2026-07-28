@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<messages>
+    <message id="tacticaldna_navlabel">Tactical DNA</message>
+    <message id="tacticaldna_team_tab">Tactical DNA</message>
+    <message id="tacticaldna_title">Tactical DNA</message>
+    <message id="tacticaldna_intro">Tactical DNA describes the club's preferred playing style. It assesses how well the squad fits that style, influences team chemistry and has a small effect on match simulation.</message>
+    <message id="tacticaldna_schema_missing">The database columns for tactical DNA are still missing. Please run the SQL update first.</message>
+    <message id="tacticaldna_current_style">Current style</message>
+    <message id="tacticaldna_style_comparison">Style comparison</message>
+    <message id="tacticaldna_transition_effect">Chemistry transition</message>
+    <message id="tacticaldna_change_preview">Chemistry after change</message>
+    <message id="tacticaldna_change_help">Changing style can improve chemistry if the new style fits the squad better. If the fit is poor, chemistry decreases and only recovers through matches or a more suitable style.</message>
+    <message id="tacticaldna_recommended">Recommended</message>
+    <message id="tacticaldna_staff_advice_title">Staff recommendation</message>
+    <message id="tacticaldna_staff_recommendation">The assistant manager recommends switching to {style}. Squad fit would be {fit}%, which is {diff} points higher.</message>
+    <message id="tacticaldna_staff_no_change">The staff currently sees no compelling reason to change style.</message>
+    <message id="tacticaldna_staff_missing">Without an assistant manager, there is no staff recommendation for tactical DNA.</message>
+    <message id="tacticaldna_saved_positive">Tactical DNA saved: {style}. Squad fit: {fit}%. Chemistry effect: {chemistry}.</message>
+    <message id="tacticaldna_saved_negative">Tactical DNA saved: {style}. Squad fit: {fit}%. The transition initially harms chemistry ({chemistry}).</message>
+    <message id="tacticaldna_saved_no_change">Tactical DNA updated. No style change required.</message>
+    <message id="tacticaldna_invalid_style">Invalid playing style.</message>
+    <message id="tacticaldna_no_permission">You are not allowed to change this club's tactical DNA.</message>
+    <message id="tacticaldna_no_team">Club not found.</message>
+    <message id="tacticaldna_not_enabled">Tactical DNA is disabled.</message>
+
+    <message id="formation_tacticalstyle_title">Tactical DNA</message>
+    <message id="formation_tacticalstyle_select">Playing style</message>
+    <message id="formation_tacticalstyle_fit">Fit</message>
+    <message id="formation_tacticalstyle_effect_help">Tactical DNA has only a small effect in matches and mainly rewards a good fit between style, squad, training and staff.</message>
+    <message id="tacticalstyle_balanced">Balanced</message>
+    <message id="tacticalstyle_balanced_help">Neutral style without strict specialisation. Base strength, technique, stamina, passing, tackling and freshness are weighted evenly.</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_pressing_help">Stamina, pace, tackling and mentality increase the effect of this high-intensity style.</message>
+    <message id="tacticalstyle_possession">Possession</message>
+    <message id="tacticalstyle_possession_help">Passing, creativity and technique help control the game.</message>
+    <message id="tacticalstyle_defensive">Defensive</message>
+    <message id="tacticalstyle_defensive_help">Tackling, heading, stamina and influential players strengthen a compact defensive style.</message>
+    <message id="tacticalstyle_physical">Physical</message>
+    <message id="tacticalstyle_physical_help">Overall strength, heading, stamina and tackling make this style more effective.</message>
+    <message id="tacticalstyle_counterattack">Counterattack</message>
+    <message id="tacticalstyle_counterattack_help">Pace, finishing, passing and freshness are especially well suited to quick transitions.</message>
+    <message id="tacticalstyle_fit_good">Your squad is very well suited to this style.</message>
+    <message id="tacticalstyle_fit_neutral">Your squad is reasonably well suited to this style.</message>
+    <message id="tacticalstyle_fit_bad">This style is currently only partly suited to your squad.</message>
+    <message id="tacticalstyle_news_title">New tactical DNA</message>
+    <message id="tacticalstyle_news_message">{team} changes its tactical DNA from {oldstyle} to {newstyle}. Current squad fit is {fit}%, with a direct chemistry effect of {chemistry}.</message>
+    <message id="tacticalstyle_news_link">Go to club</message>
+
+    <message id="teamchemistry_factor_tactical_style">Tactical DNA</message>
+    <message id="teamchemistry_source_tactical_style">Tactical DNA</message>
+</messages>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="termsandconditions_navlabel">Conditions de participation</message>
+	
+	<message id="termsandconditions_introduction">Modifiez ici les conditions de participation qui doivent être acceptées à chaque inscription. <strong>Attention :</strong> le texte par défaut fourni avec l'installation du logiciel n'a pas été vérifié par un avocat et peut comporter des lacunes juridiques ou ne pas convenir à votre usage.</message>
+	<message id="termsandconditions_label_language">Version linguistique</message>
+	
+	<message id="termsandconditions_err_filenotwritable">Le fichier <em>%s</em> n'est pas accessible en écriture !</message>
+</messages>

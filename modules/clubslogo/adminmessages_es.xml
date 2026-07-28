@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_upload_clublogo_max_size">Subida del escudo del club: tamaño máximo</message> 
+	<message id="settings_label_upload_clublogo_max_size_help">Si los usuarios pueden subir su propio escudo del club, aquí puede indicar el tamaño máximo del archivo de imagen en KBytes. Introduzca 0 para desactivar la subida de imágenes.</message> 
+</messages>

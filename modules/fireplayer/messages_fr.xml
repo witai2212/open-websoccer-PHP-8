@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="fireplayer_button">Licencier</message>
+    
+    <message id="fireplayer_modal_title">Libérer le joueur ?</message>
+    <message id="fireplayer_modal_content">Voulez-vous vraiment résilier le contrat de %s avec effet immédiat ?</message>
+    <message id="fireplayer_modal_confirm">Oui, le libérer</message>
+    
+    <message id="fireplayer_modal_compensation">Le joueur exige une indemnité de <strong>%s %s</strong> !</message>
+    <message id="fireplayer_tooexpensive">Vous ne pouvez actuellement pas payer l'indemnité demandée.</message>
+    
+    <message id="fireplayer_success">Le joueur a été libéré avec succès.</message>
+    
+    <message id="fireplayer_compensation_subject">Indemnité pour licenciement anticipé</message>
+    
+    
+</messages>

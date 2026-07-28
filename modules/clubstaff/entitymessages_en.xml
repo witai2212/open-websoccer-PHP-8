@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Club staff</message>
+    <message id="entity_clubstaff">Staff member</message>
+    <message id="entity_clubstaff_name">Name</message>
+    <message id="entity_clubstaff_name_help">Name of the staff member displayed to users.</message>
+    <message id="entity_clubstaff_role">Role</message>
+    <message id="entity_clubstaff_role_help">Defines the small bonus provided by this staff member.</message>
+    <message id="entity_clubstaff_level">Level</message>
+    <message id="entity_clubstaff_level_help">Internal quality level. Primarily intended as guidance for administrators.</message>
+    <message id="entity_clubstaff_salary">Salary per matchday</message>
+    <message id="entity_clubstaff_salary_help">Amount charged for each relevant matchday while the staff member is employed.</message>
+    <message id="entity_clubstaff_bonus">Bonus</message>
+    <message id="entity_clubstaff_bonus_help">Small bonus value in percentage points. Depending on the role, it is applied to the relevant systems.</message>
+    <message id="entity_clubstaff_description">Description</message>
+    <message id="entity_clubstaff_description_help">Brief note describing what this staff member does particularly well.</message>
+    <message id="entity_clubstaff_active">Active</message>
+    <message id="entity_clubstaff_active_help">Only active staff members can be hired by clubs.</message>
+
+</messages>

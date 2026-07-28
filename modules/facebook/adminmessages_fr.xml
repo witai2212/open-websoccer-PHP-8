@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_facebook_enable_login">Activer la connexion via Facebook. Nécessite un identifiant d'application et une clé secrète Facebook (voir ci-dessous). L'extension PHP CURL doit également être activée sur le serveur.</message> 
+
+	<message id="settings_label_facebook_appid">Identifiant d'application Facebook</message> 
+	<message id="settings_label_facebook_appid_help">Vous l'obtenez lorsque vous <a href="https://developers.facebook.com/apps" target="_blank">enregistrez votre site web comme application sur Facebook</a>.</message> 
+	
+	<message id="settings_label_facebook_appsecret">Clé secrète de l'application Facebook</message> 
+	<message id="settings_label_facebook_appsecret_help">Vous l'obtenez également lors de l'enregistrement de votre site web sur Facebook.</message> 
+	
+	<message id="settings_label_facebook_enable_comments">Autoriser les discussions (par exemple dans les actualités et les comptes rendus de match) via un plugin Facebook. Nécessite un identifiant d'application Facebook (voir ci-dessus).</message>
+	
+	<message id="settings_label_facebook_enable_likebutton">Afficher le bouton J'aime de Facebook sur certaines pages.</message>
+</messages>

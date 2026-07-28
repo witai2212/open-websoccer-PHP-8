@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_micropayment_enabled">Adquirir crédito premium através de pagamentos via <a href="https://www.micropayment.de" target="_blank">micropayment</a>. Os serviços pretendidos têm de ser ativados e configurados junto do fornecedor (Serviço: Event). <br/>
+	    <strong>Atenção:</strong> por razões de segurança, a utilização só deve ser ativada em servidores web Apache.<br/>
+	    Os pagamentos só podem ser registados se as opções de carregamento indicadas acima se aplicarem a EUR. Outras moedas não são atualmente suportadas.
+	    <br/><br/>Definições de configuração necessárias para os serviços de pagamento:<br/>
+	        URL da API: <em>http://www.meinedomain.de/websoccer/</em><strong>webservices/micropayment/index.php</strong><br/>
+	        Parâmetros GET:<br/>
+	        amount=__amount__<br/>
+	        free=__$freeparam__
+	    </message> 
+	
+	<message id="settings_label_micropayment_project">micropayment: código do projeto</message> 
+	<message id="settings_label_micropayment_project_help">É fornecido ao configurar um projeto em <a href="https://www.micropayment.de" target="_blank">www.micropayment.de</a>.</message>
+	
+	<message id="settings_label_micropayment_accesskey">micropayment: AccessKey</message> 
+	<message id="settings_label_micropayment_accesskey_help">É fornecido quando inicia sessão em micropayment.de e acede a "Gestão de projetos e pagamentos".</message> 
+	
+	<message id="settings_label_micropayment_call2pay_enabled">Ativar serviço micropayment: Call2Pay</message>
+	<message id="settings_label_micropayment_handypay_enabled">Ativar serviço micropayment: HandyPay</message>
+	<message id="settings_label_micropayment_ebank2pay_enabled">Ativar serviço micropayment: eBank2Pay</message>
+	<message id="settings_label_micropayment_creditcard_enabled">Ativar serviço micropayment: CreditCard</message>
+</messages>

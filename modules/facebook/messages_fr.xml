@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="facebooklogin_failure">La connexion via Facebook a été annulée.</message>
+    <message id="facebooklogin_success">Connexion via Facebook réussie !</message>
+    <message id="facebook_login_button">Se connecter avec Facebook</message>
+    
+    <message id="facebooklogout_failure">La déconnexion a échoué ! Veuillez réessayer.</message>
+    <message id="facebooklogout_success">Déconnexion réussie !</message>
+    <message id="facebooklogout_success_details">Veuillez noter que, pour des raisons de sécurité, vous avez également été déconnecté de Facebook.</message>
+</messages>

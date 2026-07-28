@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="player_salary_repair_navlabel">Comprobar salarios de jugadores</message>
+    <message id="player_salary_repair_title">Comprobar salarios de jugadores</message>
+    <message id="player_salary_repair_intro">Comprueba específicamente el conocido error de factor 100. Antes de cada corrección automática, los valores anteriores se guardan en una tabla de registro independiente.</message>
+    <message id="player_salary_repair_error">Error</message>
+    <message id="player_salary_repair_demo_blocked">Los cambios en la base de datos están bloqueados en modo de demostración.</message>
+    <message id="player_salary_repair_confirmation_required">Marque la confirmación de seguridad.</message>
+    <message id="player_salary_repair_success">Corrección completada</message>
+    <message id="player_salary_repair_success_detail">Se guardaron y dividieron entre 100 los salarios de %d jugadores.</message>
+    <message id="player_salary_repair_nothing_to_do">No se encontraron registros que coincidan con el error de factor 100.</message>
+    <message id="player_salary_repair_candidates">Registros sospechosos</message>
+    <message id="player_salary_repair_old_total">Suma de salarios anterior</message>
+    <message id="player_salary_repair_new_total">Suma de salarios posterior</message>
+    <message id="player_salary_repair_rule">Regla de comprobación</message>
+    <message id="player_salary_repair_rule_detail">Activo, con club, valor de mercado positivo, salario de al menos 100.000 EUR y resultado tras la división entre 500 y 50.000 EUR.</message>
+    <message id="player_salary_repair_confirm_dialog">Los salarios mostrados se guardarán y se dividirán entre 100. ¿Continuar?</message>
+    <message id="player_salary_repair_confirm_checkbox">Confirmo la corrección de los registros de factor 100 mostrados.</message>
+    <message id="player_salary_repair_execute">Corregir automáticamente los salarios con factor 100</message>
+    <message id="player_salary_repair_preview">Vista previa</message>
+    <message id="player_salary_repair_player">Jugador</message>
+    <message id="player_salary_repair_club">Club</message>
+    <message id="player_salary_repair_league">Liga</message>
+    <message id="player_salary_repair_position">Posición</message>
+    <message id="player_salary_repair_strength">Fuerza</message>
+    <message id="player_salary_repair_market_value">Valor de mercado</message>
+    <message id="player_salary_repair_old_salary">Salario anterior</message>
+    <message id="player_salary_repair_new_salary">Salario posterior</message>
+    <message id="player_salary_repair_clean">Actualmente no se encontraron salarios con el error de factor 100.</message>
+    <message id="player_salary_repair_history">Últimas correcciones</message>
+    <message id="player_salary_repair_date">Fecha</message>
+    <message id="player_salary_repair_no_history">Todavía no se ha registrado ninguna corrección.</message>
+</messages>

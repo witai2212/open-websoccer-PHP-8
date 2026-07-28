@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_lending_enabled">Les utilisateurs peuvent emprunter des joueurs à d'autres clubs.</message> 
+	<message id="settings_label_lending_matches_min">Durée minimale du prêt</message>
+	<message id="settings_label_lending_matches_min_help">Nombre de matchs</message>  
+	<message id="settings_label_lending_matches_max">Durée maximale du prêt</message> 
+	<message id="settings_label_lending_matches_max_help">Nombre de matchs</message> 
+
+	<message id="settings_label_lending_cpu_offer_duration_days">Durée des mises en prêt de l'IA</message>
+	<message id="settings_label_lending_cpu_offer_duration_days_help">Nombre de jours calendaires avant qu'une mise en prêt créée par un club contrôlé par l'IA ne prenne fin automatiquement.</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days">Délai avant une nouvelle mise en prêt par l'IA</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days_help">Nombre de jours calendaires avant que le même joueur puisse être à nouveau proposé par un club contrôlé par l'IA.</message>
+	<message id="settings_label_lending_cpu_request_expiry_days">Validité des demandes de prêt de l'IA</message>
+	<message id="settings_label_lending_cpu_request_expiry_days_help">Nombre de jours calendaires avant l'expiration d'une demande de prêt ouverte de l'IA.</message>
+	<message id="settings_label_max_number_of_players_on_loan_list">Nombre maximal de joueurs de l'IA sur la liste des prêts</message>
+	<message id="settings_label_max_number_of_players_on_loan_list_help">Nombre maximal de joueurs proposés simultanément en prêt par chaque club contrôlé par l'IA.</message>
+</messages>

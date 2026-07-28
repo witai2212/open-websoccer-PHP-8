@@ -1,23 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	<message id="activities_tab">Actividad</message>
-	<message id="activities_none_available_for_user">El usuario no ha hecho ninguna actividad especial últimamente.</message>
-	<message id="activitylog_box_title">Actividades del Usuario</message>
+	<message id="activities_none_available_for_user">El usuario no ha realizado ninguna actividad destacada últimamente.</message>
+	<message id="activitylog_box_title">Actividad del usuario</message>
 	
-	<message id="activitylog_save-formation">%s ha enviado sus tácticas.</message>
-	<message id="activitylog_select-captain">%s ha seleccionado a un nuevo capitán del equipo.</message>
-	<message id="activitylog_extend-contract">%s ha ampliado el contrato de un jugador.</message>
-	<message id="activitylog_save-tickets">%s ha cambiado los precios de las entradas.</message>
-	<message id="activitylog_sell-player">%s ofrece uno de sus jugadores en el mercado de fichajes.</message>
-	<message id="activitylog_transfer-bid">%s ha echo una oferta en el mercado de fichajes.</message>
-	<message id="activitylog_extend-stadium">%s ha realizado un pedido de la mejora de su estadio.</message>
-	<message id="activitylog_upgrade-stadium">%s ha ordenado el mantenimiento de su estadio.</message>
+	<message id="activitylog_save-formation">%s ha presentado una alineación.</message>
+	<message id="activitylog_select-captain">%s ha elegido un nuevo capitán.</message>
+	<message id="activitylog_extend-contract">%s ha renovado el contrato de un jugador.</message>
+	<message id="activitylog_save-tickets">%s ha fijado nuevos precios para las entradas.</message>
+	<message id="activitylog_sell-player">%s ha puesto a un jugador en el mercado de fichajes.</message>
+	<message id="activitylog_transfer-bid">%s ha presentado una oferta por un jugador en el mercado de fichajes.</message>
+	<message id="activitylog_player-precontract">%s ha ofrecido a un jugador un contrato para la próxima temporada.</message>
+	<message id="activitylog_extend-stadium">%s ha encargado la ampliación del estadio.</message>
+	<message id="activitylog_upgrade-stadium">%s ha realizado trabajos de mantenimiento en el estadio.</message>
 	<message id="activitylog_execute-training">%s ha entrenado a su equipo.</message>
-	<message id="activitylog_book-camp">%s ha reservado un campo de entrenamiento.</message>
-	<message id="activitylog_create-youthmatch-request">%s ha publicado una solicitud de partido de Juveniles.</message>
-	<message id="activitylog_sell-youthplayer">%s ofrece uno de sus jugadores juveniles para vender.</message>
-	<message id="activitylog_directtransfer-offer">%s ha echo una oferta para un jugador.</message>
-	<message id="activitylog_report-absence">%s ha informado que estara ausente.</message>
-	<message id="activitylog_return-from-absence">%s está de vuelta otra vez.</message>
+	<message id="activitylog_dismiss-trainer">%s ha despedido a un entrenador.</message>
+	<message id="activitylog_book-camp">%s ha reservado una concentración.</message>
+	<message id="activitylog_create-youthmatch-request">%s ha publicado una solicitud de partido para el equipo juvenil.</message>
+	<message id="activitylog_sell-youthplayer">%s ofrece a un jugador juvenil en venta.</message>
+	<message id="activitylog_directtransfer-offer">%s ha presentado una oferta de compra por un jugador.</message>
+	<message id="activitylog_report-absence">%s ha comunicado una ausencia.</message>
+	<message id="activitylog_return-from-absence">%s ha regresado.</message>
+	<message id="activitylog_save-training-plan">%s ha ajustado su plan de entrenamiento.</message>
+	<message id="activitylog_save-individual-training">%s ha ajustado el entrenamiento individual.</message>
+	<message id="activitylog_hire-club-staff">%s ha contratado a un miembro del personal.</message>
+	<message id="activitylog_fire-club-staff">%s ha despedido a un miembro del personal.</message>
+	<message id="activitylog_managercareer_job_change">%s ha aceptado un nuevo puesto de entrenador.</message>
+	<message id="activitylog_apply-medical-treatment">%s ha aplicado un tratamiento médico.</message>
+	<message id="activitylog_clear-player-risk">%s ha autorizado a un jugador a jugar pese al riesgo.</message>
+	<message id="activitylog_build-youth-academy">%s ha construido una academia juvenil.</message>
+	<message id="activitylog_upgrade-youth-academy">%s ha ampliado su academia juvenil.</message>
+	<message id="activitylog_downgrade-youth-academy">%s ha reducido el nivel de su academia juvenil.</message>
+	<message id="activitylog_save-youth-academy-settings">%s ha ajustado la configuración de la academia juvenil.</message>
+	
+	<message id="activitylog_sign-stadium-naming-contract">%s ha firmado un contrato de derechos de denominación del estadio.</message>
+	<message id="activitylog_rename-stadium">%s ha cambiado el nombre de su estadio.</message>
+	
+
+	<message id="activitylog_create-club-partnership-request">%s ha solicitado una asociación entre clubes.</message>
+	<message id="activitylog_stop-club-partnership">%s ha finalizado una asociación entre clubes.</message>
 </messages>

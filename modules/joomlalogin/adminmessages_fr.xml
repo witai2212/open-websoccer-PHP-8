@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_joomlalogin_tableprefix">Connexion via Joomla : préfixe des tables</message>
+    <message id="settings_label_joomlalogin_tableprefix_help">Préfixe des tables de la base de données de votre installation Joomla si les utilisateurs doivent se connecter uniquement avec le nom d'utilisateur et le mot de passe de leur compte Joomla. <em>Remarque :</em> activez la connexion via Joomla en saisissant « JoomlaUserLoginMethod » dans « Méthode de connexion » ci-dessus.</message>
+</messages>

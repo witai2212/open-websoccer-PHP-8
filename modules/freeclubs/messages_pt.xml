@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="freeclubs_navlabel">Clubes livres</message>
+    <message id="freeclubs_title">Clubes sem treinador</message>
+    <message id="freeclubs_no_free_clubs_available">Atualmente não existem clubes livres.</message>
+    <message id="freeclubs_head_choose">Seleção</message>
+    <message id="freeclubs_button_choose">Assumir equipa</message>
+    <message id="freeclubs_button_choose_another">Assumir outra equipa</message>
+    <message id="freeclubs_msg_success">Parabéns! És agora o treinador da equipa selecionada.</message>
+    <message id="freeclubs_msg_error">A equipa provavelmente já foi atribuída entretanto.</message>
+    <message id="freeclubs_msg_error_user_is_already_manager">Já és o treinador de uma equipa.</message>
+    <message id="freeclubs_msg_error_max_number_of_teams">Atualmente só podes gerir no máximo %d equipas.</message>
+    <message id="freeclubs_msg_error_no_club_from_same_league">Não podes gerir várias equipas da mesma liga.</message>
+    <message id="freeclubs_msg_error_minhighscore">Precisas de uma pontuação máxima de pelo menos %d para gerir outro clube.</message>
+    <message id="freeclubs_reputation_intro">Os clubes mais fortes exigem uma reputação de treinador mais elevada. Os clubes mais fracos continuam acessíveis a treinadores novos ou sem clube.</message>
+    <message id="freeclubs_locked_hint">Reputação demasiado baixa</message>
+    <message id="freeclubs_msg_error_reputation_required">Precisas de pelo menos {required} de reputação de treinador para este clube. A tua reputação atual: {score}.</message>
+    <message id="freeclubs_button_switch">Mudar para este clube</message>
+    <message id="freeclubs_msg_switch_success">Parabéns! Mudaste de clube.</message>
+</messages>

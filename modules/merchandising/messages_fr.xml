@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="merchandising_navlabel">Merchandising</message>
+    <message id="merchandising_intro_v2">Développez vos propres collections, commandez des marchandises, gérez les stocks et profitez des opportunités saisonnières. Les ventes ont lieu au stade et dans la boutique en ligne des supporters. Les achats, le développement et la publicité sont payés lors de leur commande.</message>
+
+    <message id="merchandising_tab_overview">Vue d’ensemble</message>
+    <message id="merchandising_tab_collections">Assortiment</message>
+    <message id="merchandising_tab_development">Progression</message>
+    <message id="merchandising_tab_warehouse">Stock et commandes</message>
+    <message id="merchandising_tab_players">Maillots de joueurs</message>
+    <message id="merchandising_tab_marketing">Marketing</message>
+    <message id="merchandising_tab_statistics">Statistiques</message>
+
+    <message id="merchandising_summary_units_sold">Articles vendus</message>
+    <message id="merchandising_summary_demand">Demande</message>
+    <message id="merchandising_summary_missed">Demande non satisfaite</message>
+    <message id="merchandising_summary_revenue">Chiffre d’affaires</message>
+    <message id="merchandising_summary_costs">Coût des marchandises</message>
+    <message id="merchandising_summary_profit">Marge sur coûts variables</message>
+    <message id="merchandising_summary_stock_value">Valeur du stock</message>
+    <message id="merchandising_summary_incoming_value">Valeur des marchandises commandées</message>
+    <message id="merchandising_summary_open_collections">Collections ouvertes</message>
+    <message id="merchandising_summary_fulfilment">Taux de satisfaction</message>
+
+    <message id="merchandising_management_status">Gestion actuelle</message>
+    <message id="merchandising_management_mode">Mode de gestion</message>
+    <message id="merchandising_strategy">Stratégie</message>
+    <message id="merchandising_marketing_manager">Responsable marketing</message>
+    <message id="merchandising_staff_level">Niveau</message>
+    <message id="merchandising_no_marketing_manager">Non employé</message>
+    <message id="merchandising_next_steps">Prochaine étape recommandée</message>
+    <message id="merchandising_hint_start_development">Commencez par développer une collection permanente ou saisonnière.</message>
+    <message id="merchandising_hint_order_stock">Au moins une collection est prête. Commandez maintenant un stock initial prudent.</message>
+    <message id="merchandising_hint_missed_sales">Une partie de la demande n’a pas été satisfaite. Vérifiez les seuils de réapprovisionnement et les nouvelles commandes.</message>
+    <message id="merchandising_hint_running">L’assortiment est actif. Surveillez le stock, les prix et les échéances saisonnières.</message>
+
+    <message id="merchandising_recent_sales_title">Dernières ventes</message>
+    <message id="merchandising_recent_sales_date">Date</message>
+    <message id="merchandising_no_recent_sales">Aucune vente n’a encore été enregistrée.</message>
+    <message id="merchandising_product_name">Produit</message>
+    <message id="merchandising_channel">Canal de vente</message>
+    <message id="merchandising_channel_legacy">Anciennes données</message>
+    <message id="merchandising_channel_stadium">Boutique des supporters au stade</message>
+    <message id="merchandising_channel_online">Boutique en ligne des supporters</message>
+    <message id="merchandising_channel_clearance">Soldes de liquidation</message>
+
+    <message id="merchandising_collections_title">Collections actuelles</message>
+    <message id="merchandising_collections_intro">Les prix, les seuils de réapprovisionnement, l’état des ventes et les nouvelles commandes de chaque collection du club sont gérés ici.</message>
+    <message id="merchandising_no_collections">Aucune collection n’a encore été développée.</message>
+    <message id="merchandising_quality_simple">Simple</message>
+    <message id="merchandising_quality_standard">Standard</message>
+    <message id="merchandising_quality_premium">Premium</message>
+    <message id="merchandising_status_development">En développement</message>
+    <message id="merchandising_status_ready">Prête pour la production</message>
+    <message id="merchandising_status_active">En vente</message>
+    <message id="merchandising_status_clearance">Soldes de liquidation</message>
+    <message id="merchandising_status_closed">Terminé</message>
+    <message id="merchandising_stock">Stock</message>
+    <message id="merchandising_incoming_short">en cours de livraison</message>
+    <message id="merchandising_stock_value">Valeur du stock</message>
+    <message id="merchandising_margin">Marge</message>
+    <message id="merchandising_forecast">Prévision de la demande</message>
+    <message id="merchandising_units_per_period">Articles par période de vente</message>
+    <message id="merchandising_development_ready">Développement terminé</message>
+    <message id="merchandising_sales_until">Vente régulière jusqu’au</message>
+    <message id="merchandising_selling_price">Prix de vente</message>
+    <message id="merchandising_reorder_point">Seuil de réapprovisionnement</message>
+    <message id="merchandising_collection_status">État des ventes</message>
+    <message id="merchandising_order_stock">Commander des marchandises</message>
+    <message id="merchandising_development_in_progress">La collection est encore en développement. Les marchandises pourront être commandées une fois celui-ci terminé.</message>
+    <message id="merchandising_liquidate">Liquider le stock restant</message>
+
+    <message id="merchandising_development_title">Développer de nouveaux produits</message>
+    <message id="merchandising_development_intro">Les modèles de produits sont gérés par l’administrateur. Les produits saisonniers peuvent être préparés peu avant l’ouverture de leur période de vente.</message>
+    <message id="merchandising_sales_window">Période de vente</message>
+    <message id="merchandising_development_cost">Coût de développement</message>
+    <message id="merchandising_action">Action</message>
+    <message id="merchandising_not_available_yet">Actuellement indisponible</message>
+    <message id="merchandising_already_developed">Déjà créée</message>
+    <message id="merchandising_start_development">Lancer le développement</message>
+    <message id="merchandising_quality_explanation">La qualité simple est moins chère et plus rapide, mais se vend un peu moins bien. La qualité premium coûte plus cher, demande plus de temps et augmente à la fois la demande et le coût unitaire.</message>
+
+    <message id="merchandising_warehouse_title">Stock et flux de marchandises</message>
+    <message id="merchandising_warehouse_intro">Les commandes sont payées immédiatement et ajoutées au stock après le délai de livraison défini. Les ventes sont toujours limitées au stock réellement disponible.</message>
+    <message id="merchandising_current_stock">Stock actuel</message>
+    <message id="merchandising_incoming">Commandé</message>
+    <message id="merchandising_unit_cost">Coût unitaire</message>
+    <message id="merchandising_order_history">Historique des commandes</message>
+    <message id="merchandising_order_date">Date de commande</message>
+    <message id="merchandising_quantity">Quantité</message>
+    <message id="merchandising_total_cost">Coût total</message>
+    <message id="merchandising_delivery">Livraison</message>
+    <message id="merchandising_status">Statut</message>
+    <message id="merchandising_order_status_pending">En transit</message>
+    <message id="merchandising_order_status_delivered">Livrée</message>
+    <message id="merchandising_order_status_cancelled">Annulée</message>
+    <message id="merchandising_no_orders">Aucune marchandise n’a encore été commandée.</message>
+
+    <message id="merchandising_players_title">Maillots de joueurs vedettes</message>
+    <message id="merchandising_players_intro">Seuls les joueurs actuels les plus forts et les plus populaires peuvent avoir leur propre collection de maillots. La valeur en étoiles tient compte du niveau, des performances de la saison, des apparitions, du capitanat, de l’équipe nationale et de la personnalité.</message>
+    <message id="merchandising_star_score">Valeur en étoiles</message>
+    <message id="merchandising_star_status">Autorisation</message>
+    <message id="merchandising_star_eligible">Star du merchandising</message>
+    <message id="merchandising_star_not_eligible">Non autorisé</message>
+    <message id="merchandising_launch_player_shirt">Développer un maillot de joueur</message>
+    <message id="merchandising_no_player_product">Aucun modèle actif de maillot de joueur n’est configuré dans l’espace d’administration.</message>
+    <message id="merchandising_player_ranking">Classement des ventes par joueur</message>
+    <message id="merchandising_no_player_sales">Aucun maillot de joueur n’a encore été vendu.</message>
+
+    <message id="merchandising_marketing_title">Gestion et campagnes</message>
+    <message id="merchandising_forecast_accuracy">Écart de prévision</message>
+    <message id="merchandising_staff_missing_info">Un responsable marketing doit être employé pour le mode conseil ou délégué. Sans lui, la gestion reste entièrement manuelle.</message>
+    <message id="merchandising_open_staff_page">Accéder à la gestion du personnel</message>
+    <message id="merchandising_mode_manual">Manuel</message>
+    <message id="merchandising_mode_advisory">Conseil</message>
+    <message id="merchandising_mode_delegated">Délégué</message>
+    <message id="merchandising_strategy_conservative">Prudente</message>
+    <message id="merchandising_strategy_balanced">Équilibré</message>
+    <message id="merchandising_strategy_ambitious">Offensive</message>
+    <message id="merchandising_budget_limit">Montant maximal par décision</message>
+    <message id="merchandising_budget_limit_help">Limite individuellement chaque développement, commande ou campagne.</message>
+    <message id="merchandising_max_stock_value">Valeur maximale du stock</message>
+    <message id="merchandising_min_margin">Marge minimale souhaitée</message>
+    <message id="merchandising_auto_reorder">Autoriser le responsable marketing à passer des commandes de réapprovisionnement</message>
+    <message id="merchandising_campaigns_title">Campagnes marketing</message>
+    <message id="merchandising_all_collections">Tout l’assortiment</message>
+    <message id="merchandising_start_campaign">Lancer la campagne</message>
+    <message id="merchandising_campaign">Campagne</message>
+    <message id="merchandising_campaign_target">Cible</message>
+    <message id="merchandising_duration">Durée</message>
+    <message id="merchandising_campaign_bonus">Bonus de demande</message>
+    <message id="merchandising_campaign_status_active">Actif</message>
+    <message id="merchandising_campaign_status_completed">Terminé</message>
+    <message id="merchandising_campaign_status_cancelled">Annulée</message>
+
+    <message id="merchandising_statistics_title">Statistiques de vente</message>
+    <message id="merchandising_no_sales_statistics">Aucune statistique de vente n’est encore disponible.</message>
+    <message id="merchandising_sales_details">Périodes de vente individuelles</message>
+
+    <message id="merchandising_settings_saved">Gestion du merchandising enregistrée</message>
+    <message id="merchandising_development_started">Développement du produit lancé</message>
+    <message id="merchandising_order_placed">Commande de marchandises passée</message>
+    <message id="merchandising_collection_saved">Collection mise à jour</message>
+    <message id="merchandising_collection_liquidated">Stock restant liquidé</message>
+    <message id="merchandising_collection_liquidated_amount">Produit : %s</message>
+    <message id="merchandising_campaign_started">Campagne marketing lancée</message>
+
+    <message id="merchandising_error_invalid_mode">Mode de gestion non valide.</message>
+    <message id="merchandising_error_invalid_strategy">Stratégie de merchandising non valide.</message>
+    <message id="merchandising_error_staff_required">Un responsable marketing est requis pour le mode conseil ou délégué.</message>
+    <message id="merchandising_error_product_unavailable">Le produit sélectionné n’est pas disponible.</message>
+    <message id="merchandising_error_player_not_star">Ce joueur ne remplit pas les conditions requises pour un maillot personnalisé.</message>
+    <message id="merchandising_error_product_not_in_window">Ce produit saisonnier ou lié à un événement ne peut pas être développé actuellement.</message>
+    <message id="merchandising_error_collection_exists">Cette collection a déjà été créée pour la période actuelle.</message>
+    <message id="merchandising_error_collection_not_orderable">Aucune marchandise ne peut être commandée actuellement pour cette collection.</message>
+    <message id="merchandising_error_minimum_order">La quantité minimale de commande n’a pas été atteinte.</message>
+    <message id="merchandising_error_collection_not_found">La collection n’a pas été trouvée.</message>
+    <message id="merchandising_error_price_range">Le prix de vente est hors de la plage autorisée.</message>
+    <message id="merchandising_error_stock_must_be_liquidated">Une collection avec du stock ou des livraisons en cours ne peut pas être fermée.</message>
+    <message id="merchandising_error_pending_order">Les livraisons en cours doivent être terminées avant la liquidation.</message>
+    <message id="merchandising_error_campaign_unavailable">La campagne sélectionnée n’est pas disponible.</message>
+    <message id="merchandising_error_campaign_limit">Deux campagnes au maximum peuvent être actives simultanément.</message>
+    <message id="merchandising_error_budget_limit">Le montant maximal défini pour une décision individuelle serait dépassé.</message>
+    <message id="merchandising_error_stock_limit">La valeur maximale du stock définie serait dépassée.</message>
+    <message id="merchandising_error_not_affordable">Le club ne peut actuellement pas financer cette dépense.</message>
+    <message id="merchandising_error_human_team_required">Merchandising 2.0 est uniquement disponible pour les clubs dirigés par des utilisateurs.</message>
+    <message id="merchandising_error_not_your_team">Ce club ne peut pas être géré.</message>
+
+    <message id="merchandising_development_cost_subject">Développement d’une collection de merchandising</message>
+    <message id="merchandising_order_cost_subject">Achat de marchandises de merchandising</message>
+    <message id="merchandising_campaign_cost_subject">Campagne marketing de merchandising</message>
+    <message id="merchandising_liquidation_income_subject">Liquidation du stock de merchandising restant</message>
+    <message id="merchandising_stadium_revenue_subject">Chiffre d’affaires de la boutique du stade</message>
+    <message id="merchandising_online_revenue_subject">Chiffre d’affaires de la boutique en ligne</message>
+    <message id="merchandising_matchday_profit_subject">Recettes de merchandising du jour de match</message>
+
+    <message id="merchandising_notification_development_ready">Le développement d’une collection de merchandising est terminé et des marchandises peuvent maintenant être commandées.</message>
+    <message id="merchandising_notification_delivery">Une livraison de {quantity} articles est arrivée.</message>
+    <message id="merchandising_notification_clearance">Une collection saisonnière est passée en liquidation.</message>
+    <message id="merchandising_notification_player_left">Après le départ d’un joueur, sa collection de maillots est passée en liquidation.</message>
+    <message id="merchandising_notification_missed_sales">Pour {product}, {units} achats n’ont pas pu être satisfaits faute de stock.</message>
+    <message id="merchandising_notification_low_stock">Le stock de {product} est tombé à {stock} articles.</message>
+
+    <message id="activitylog_save-merchandising-settings">%s a modifié la gestion du merchandising.</message>
+    <message id="activitylog_start-merchandising-development">%s a développé une collection de merchandising.</message>
+    <message id="activitylog_order-merchandising-stock">%s a commandé des marchandises de merchandising.</message>
+    <message id="activitylog_update-merchandising-collection">%s a modifié une collection de merchandising.</message>
+    <message id="activitylog_liquidate-merchandising-collection">%s a liquidé un stock de merchandising restant.</message>
+    <message id="activitylog_start-merchandising-campaign">%s a lancé une campagne de merchandising.</message>
+
+</messages>

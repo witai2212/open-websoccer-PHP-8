@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_admin">Administrateurs</message>
+	<message id="entity_admin_name">Nom d’utilisateur</message>
+	<message id="entity_admin_passwort">Mot de passe</message>
+	<message id="entity_admin_email">E-mail</message>
+	<message id="entity_admin_r_admin">Est administrateur</message>
+	<message id="entity_admin_r_adminuser">Droits : peut gérer les administrateurs</message>
+	<message id="entity_admin_r_user">Droits : peut gérer les utilisateurs</message>
+	<message id="entity_admin_r_daten">Droits : peut gérer les données du jeu</message>
+	<message id="entity_admin_r_staerken">Droits : peut consulter et modifier les niveaux des joueurs</message>
+	<message id="entity_admin_r_spiele">Droits : peut gérer les matchs</message>
+	<message id="entity_admin_r_news">Droits : peut gérer les actualités</message>
+	<message id="entity_admin_r_kalender">Droits : peut gérer le calendrier</message>
+	<message id="entity_admin_r_design">Droits : peut modifier les fichiers de design</message>
+	<message id="entity_admin_r_demo"><em>Est un utilisateur de démonstration</em> (ne peut pas enregistrer de modifications)</message>
+</messages>

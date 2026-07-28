@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_youth">Jovens</message>
+    <message id="settings_label_youth_academy_enabled">Ativar a academia de jovens</message>
+    <message id="settings_label_youth_academy_enabled_help">Ativa a academia de jovens com níveis de academia, foco de desenvolvimento, capitão dos jovens e relatórios de progresso.</message>
+    <message id="settings_label_youth_academy_report_days">Intervalo dos relatórios da academia de jovens</message>
+    <message id="settings_label_youth_academy_report_days_help">Número de dias entre os relatórios automáticos da academia enviados ao treinador.</message>
+    <message id="settings_label_youth_academy_captain_bonus">Bónus do capitão dos jovens</message>
+    <message id="settings_label_youth_academy_captain_bonus_help">Pequeno bónus para o capitão dos jovens escolhido. O efeito é deliberadamente limitado.</message>
+    <message id="settings_label_youth_academy_computer_manage_enabled">Os clubes da CPU gerem academias de jovens</message>
+    <message id="settings_label_youth_academy_computer_manage_enabled_help">Permite aos clubes da CPU construir, melhorar ou reduzir automaticamente as academias.</message>
+</messages>

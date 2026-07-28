@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="transfermarket_navlabel">Marché des transferts</message>
+    <message id="transfermarket_title">Marché des transferts</message>
+    <message id="transfermarket_player_marker_on_list">Le joueur figure sur la liste des transferts</message>
+    
+    <message id="sell-player_navlabel">Vendre le joueur</message>
+    <message id="sell_player_title">Vendre %s</message>
+    <message id="sell_player_put_on_list_title">Placer sur la liste des transferts</message>
+    
+    <message id="transfermarket_min_bid">Offre minimale</message>
+    
+    <message id="sell_player_min_bid_too_low">L'offre minimale doit représenter au moins la moitié de la valeur marchande.</message>
+    <message id="sell_player_already_on_list">Le joueur figure déjà sur la liste des transferts.</message>
+    
+    <message id="sell_player_teamsize_too_small">Votre effectif (%d joueurs) est trop réduit. Vous ne pouvez pas vendre d'autres joueurs actuellement.</message>
+    
+    <message id="sell_player_success">Le joueur est désormais disponible sur le marché des transferts.</message>
+    
+    <message id="transfermarket_tab_overview">Liste actuelle des transferts</message>
+    <message id="transfermarket_tab_mybids">Mes offres</message>
+    <message id="transfermarket_tab_mytransfers">Mes transferts</message>
+    <message id="transfermarket_tab_lasttransfers">Derniers transferts</message>
+    
+    <message id="transfermarket_filter_by_position">Filtrer par poste</message>
+    <message id="transfermarket_filter_advanced">Recherche avancée</message>
+    <message id="transfermarket_filter_attribute">Attribut</message>
+    <message id="transfermarket_filter_min">Min.</message>
+    <message id="transfermarket_filter_max">Max.</message>
+    <message id="transfermarket_no_players">Aucun joueur n'a été trouvé sur le marché des transferts.</message>
+	<message id="transfermarket_playerscount">%d joueurs trouvés</message>
+	<message id="transfermarket_offerscount">%d offres pour le joueur</message>
+    
+    
+    <message id="transfermarket_head_deadline">Fin de l'enchère</message>
+    <message id="transfermarket_head_highestbid">Offre la plus élevée</message>
+    <message id="transfermarket_bid">Faire une offre</message>
+    
+    <message id="transfermarket_without_team">sans club</message>
+    
+    <message id="transfer-bid_navlabel">Faire une offre</message>
+    
+    <message id="transfer_bid_title">Offre pour %s</message>
+    
+    <message id="transfer_bid_playerinfo">Informations sur le joueur</message>
+    
+    <message id="transfer_bid_existing_max_bid">Offre maximale actuelle</message>
+    <message id="transfer_bid_no_existing_max_bid">Aucune offre n'a encore été faite pour ce joueur !</message>
+    <message id="transfer_bid_yourbid">Votre offre</message>
+    
+    <message id="transfer_bid_amount">Indemnité de transfert</message>
+    <message id="transfer_bid_handmoney">Prime à la signature</message>
+    <message id="transfer_bid_date">Date</message>
+    <message id="transfer_bid_withoutfee">sans indemnité</message>
+    
+    <message id="transfer_bid_on_own_player">Vous ne pouvez pas faire d'offre pour votre propre joueur.</message>
+    <message id="transfer_bid_auction_ended">L'enchère est déjà terminée.</message>
+    <message id="transfer_bid_player_not_on_list">Le joueur ne figure plus sur la liste des transferts.</message>
+    <message id="transfer_bid_salary_too_less">Le joueur ne souhaite pas vous rejoindre pour ce salaire.</message>
+    <message id="transfer_bid_goalbonus_too_less">Le joueur souhaite une prime de but plus élevée.</message>
+    <message id="transfer_bid_too_many_transactions_with_user">Vous avez déjà conclu %d transferts avec le vendeur au cours des 30 derniers jours. Aucun autre transfert n'est actuellement autorisé.</message>
+    <message id="transfer_bid_amount_must_be_higher">L'indemnité de transfert doit être supérieure à %d.</message>
+    <message id="transfer_bid_contract_conditions_too_low">Les conditions contractuelles proposées sont moins bonnes que celles de l'offre la plus élevée actuelle.</message>
+    <message id="transfer_bid_budget_too_less">Le budget de votre club est insuffisant pour une offre aussi élevée.</message>
+    <message id="transfer_bid_budget_for_all_bids_too_less">Le budget de votre club ne suffit pas pour couvrir toutes vos offres maximales actuelles.</message>
+    
+    <message id="transfer_bid_notification_outbidden">Votre offre pour {player} sur le marché des transferts a été dépassée.</message>
+    <message id="transfer_bid_notification_transfered">Le joueur {player} a rejoint votre équipe.</message>
+    
+    <message id="transfer_bid_success">Votre offre a été enregistrée avec succès.</message>
+    
+    <message id="transfermarket_countdown_days">Jours</message>
+    
+    <message id="transfer_bids_nobids">Aucune offre disponible.</message>
+    <message id="transfer_bids_ishighest">Offre la plus élevée actuellement</message>
+    <message id="transfer_bids_overbidden">Dépassée</message>
+    
+    <message id="transfers_no_transfers">Aucun transfert disponible.</message>
+    
+    <message id="transfer_date">Date</message>
+    <message id="transfer_from">De</message>
+    <message id="transfer_to">Vers</message>
+    
+    <message id="transfers_tab">Transferts</message>
+    
+    <message id="transfer_transaction_subject_handmoney">Paiement de la prime à la signature</message>
+    <message id="transfer_transaction_subject_fee">Indemnité pour le transfert du joueur</message>
+    
+    <message id="transfermarket_remove_label">Retirer du marché des transferts</message>
+    <message id="transfermarket_remove_err_bidexists">Une offre a déjà été faite pour le joueur. Il ne peut plus être retiré du marché des transferts.</message>
+    <message id="transfermarket_remove_success">Le joueur n'est plus à vendre.</message>
+    
+    <message id="transferoffers_offer_withdraw_success">L'offre a été retirée avec succès</message>
+    <message id="transferoffers_offer_withdraw">Retirer l'offre</message>
+	
+	<message id="received_offer_for_player">Vous avez reçu une offre pour <strong>{player}</strong>.</message>
+	<message id="player_on_watchlist_notification">Le joueur <strong>{player}</strong> est désormais sur le marché des transferts</message>
+    <message id="player-precontract_navlabel">Précontrat</message>
+    <message id="precontract_title">Précontrat pour %s</message>
+    <message id="precontract_explanation">Le joueur prendra sa décision après quelques journées supplémentaires. Le salaire, la prime à la signature, la qualité du club et de la ligue ainsi que les perspectives sportives influencent son choix.</message>
+    <message id="precontract_submit">Soumettre une offre pour la saison prochaine</message>
+    <message id="precontract_offer_success">L'offre de contrat a été soumise. Le joueur examine toutes les offres.</message>
+    <message id="precontract_not_eligible">Le joueur ne peut pas encore être approché pour la saison prochaine.</message>
+    <message id="precontract_accepted">{player} a accepté votre contrat pour la saison prochaine.</message>
+    <message id="precontract_locked">Le joueur a déjà signé dans un autre club pour la saison prochaine.</message>
+    <message id="precontract_player_button">Approcher pour la saison prochaine</message>
+    <message id="precontract_outgoing_hint">Rejoindra %s la saison prochaine</message>
+    <message id="precontract_incoming_title">Arrivées la saison prochaine</message>
+    <message id="precontract_own_offer_open">Votre club a déjà soumis une offre. Le joueur examine les offres en cours.</message>
+    <message id="precontract_adjust_offer">Modifier l'offre</message>
+    <message id="precontract_existing_offer_hint">Vous modifiez l'offre déjà soumise. L'enregistrement redémarre la période d'examen.</message>
+    <message id="precontract_update_submit">Mettre à jour l'offre</message>
+    <message id="precontract_watchlist_own_offer">Votre offre est en cours d'examen</message>
+    <message id="precontract_watchlist_negotiations">Des négociations sont en cours pour la saison prochaine</message>
+    <message id="precontract_watchlist_moving">Rejoindra %s la saison prochaine</message>
+
+    <message id="transfermarket_tab_myoffers">Mes offres</message>
+    <message id="transfermarket_combined_intro">Marché des transferts, offres reçues, vos propres offres et transferts réunis au même endroit.</message>
+    <message id="transfermarket_players_short">Joueurs sur le marché</message>
+    <message id="transfermarket_received_short">offres reçues</message>
+    <message id="transfermarket_no_received_offers">Aucune offre n'est actuellement disponible pour vos joueurs.</message>
+    <message id="transfermarket_no_sent_offers">Vous n'avez actuellement aucune offre ouverte.</message>
+    <message id="transfermarket_no_own_listed_players">Aucun joueur de votre club ne figure actuellement sur la liste des transferts.</message>
+    <message id="transfermarket_myoffers_moved">La vue d'ensemble des offres a été intégrée au marché des transferts.</message>
+    <message id="transfermarket_open_myoffers">Ouvrir mes offres</message>
+</messages>

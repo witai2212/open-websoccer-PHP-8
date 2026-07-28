@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Personnel du club</message>
+    <message id="entity_clubstaff">Membre du personnel</message>
+    <message id="entity_clubstaff_name">Nom</message>
+    <message id="entity_clubstaff_name_help">Nom du membre du personnel affiché aux utilisateurs.</message>
+    <message id="entity_clubstaff_role">Rôle</message>
+    <message id="entity_clubstaff_role_help">Définit le petit bonus accordé par ce membre du personnel.</message>
+    <message id="entity_clubstaff_level">Niveau</message>
+    <message id="entity_clubstaff_level_help">Niveau de qualité interne. Sert principalement de repère aux administrateurs.</message>
+    <message id="entity_clubstaff_salary">Salaire par journée</message>
+    <message id="entity_clubstaff_salary_help">Montant prélevé à chaque journée concernée tant que le membre du personnel est employé.</message>
+    <message id="entity_clubstaff_bonus">Bonus</message>
+    <message id="entity_clubstaff_bonus_help">Petite valeur de bonus en points de pourcentage. Selon le rôle, elle s’applique aux systèmes concernés.</message>
+    <message id="entity_clubstaff_description">Description</message>
+    <message id="entity_clubstaff_description_help">Courte indication sur les points forts particuliers de ce membre du personnel.</message>
+    <message id="entity_clubstaff_active">Actif</message>
+    <message id="entity_clubstaff_active_help">Seuls les membres du personnel actifs peuvent être recrutés par les clubs.</message>
+
+</messages>

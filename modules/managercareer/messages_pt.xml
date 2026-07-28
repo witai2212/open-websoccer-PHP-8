@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="managercareer_navlabel">Carreira de treinador</message>
+    <message id="alert_warning_title">Nota</message>
+    <message id="managercareer_tab">Carreira de treinador</message>
+    <message id="managercareer_page_title">Carreira de treinador</message>
+    <message id="managercareer_page_intro">Gere a tua carreira de treinador, ofertas de trabalho, candidaturas, reputação, contratos e objetivos da época.</message>
+    <message id="managercareer_install_hint">As tabelas avançadas de carreira ainda não parecem estar instaladas. Executa primeiro o ficheiro SQL fornecido.</message>
+
+    <message id="managercareer_subtab_overview">Visão geral</message>
+    <message id="managercareer_subtab_history">Histórico de carreira</message>
+    <message id="managercareer_subtab_applications">Candidaturas</message>
+    <message id="managercareer_subtab_offers">Ofertas de trabalho</message>
+    <message id="managercareer_subtab_objectives">Objetivos</message>
+    <message id="managercareer_subtab_reputation">Reputação</message>
+    <message id="managercareer_subtab_awards">Prémios</message>
+
+    <message id="managercareer_reputation">Reputação do treinador</message>
+    <message id="managercareer_reputation_help">Calculada com base na pontuação máxima do utilizador, popularidade entre os adeptos, satisfação da direção e dados da carreira.</message>
+    <message id="managercareer_board_average">Média da direção</message>
+    <message id="managercareer_board_satisfaction">Satisfação da direção</message>
+    <message id="managercareer_current_teams">Clubes atuais</message>
+    <message id="managercareer_no_current_team">Este treinador não tem atualmente nenhum clube.</message>
+
+    <message id="managercareer_stat_matches">Jogos</message>
+    <message id="managercareer_stat_winrate">Percentagem de vitórias</message>
+    <message id="managercareer_stat_titles">Títulos</message>
+
+    <message id="managercareer_contracts_title">Contrato de treinador</message>
+    <message id="managercareer_contract_until">Contrato até</message>
+    <message id="managercareer_no_contracts">Ainda não foi guardado nenhum contrato de treinador. Os treinadores existentes receberão automaticamente um contrato no próximo processo de carreira.</message>
+    <message id="managercareer_contract_status_active">Ativo</message>
+    <message id="managercareer_contract_status_ended">Terminado</message>
+    <message id="managercareer_contract_status_terminated">Rescindido</message>
+    <message id="managercareer_contract_status_sacked">Despedir</message>
+
+    <message id="managercareer_sack_risk_title">Risco de despedimento</message>
+    <message id="managercareer_sack_risk">Risco de despedimento</message>
+    <message id="managercareer_low_board_checks">Verificações de crise</message>
+
+    <message id="managercareer_offers_title">Ofertas de trabalho ativas</message>
+    <message id="managercareer_no_open_offers">Atualmente não existem ofertas de trabalho ativas.</message>
+    <message id="managercareer_offers_disabled">As ofertas de trabalho automáticas estão atualmente desativadas.</message>
+    <message id="managercareer_offer_until">Válida até</message>
+    <message id="managercareer_button_accept">Aceitar</message>
+    <message id="managercareer_button_decline">Rejeitar</message>
+    <message id="managercareer_open_offer">Ir para a oferta de trabalho</message>
+
+    <message id="managercareer_freeclubs_title">Clubes livres por reputação</message>
+    <message id="managercareer_freeclubs_help">Aqui podes ver uma pequena seleção de clubes livres e se a tua reputação de treinador é suficiente para uma contratação direta.</message>
+    <message id="managercareer_show_all_freeclubs">Mostrar todos os clubes livres</message>
+    <message id="managercareer_club_score">Prestígio do clube</message>
+    <message id="managercareer_required_score">Necessário</message>
+    <message id="managercareer_status">Estado</message>
+    <message id="managercareer_available">disponível</message>
+    <message id="managercareer_locked">bloqueado</message>
+
+    <message id="managercareer_history_title">Histórico de carreira</message>
+    <message id="managercareer_no_history">Ainda não existem mudanças de carreira.</message>
+    <message id="managercareer_date">Data</message>
+    <message id="managercareer_old_club">Clube anterior</message>
+    <message id="managercareer_new_club">Novo clube</message>
+    <message id="managercareer_origin">Tipo</message>
+    <message id="managercareer_bonus">Bónus</message>
+    <message id="managercareer_origin_job_offer">Oferta de trabalho</message>
+    <message id="managercareer_origin_free_club">Clube livre</message>
+    <message id="managercareer_origin_additional_club">Clube adicional</message>
+    <message id="managercareer_origin_manual_application">Candidatura</message>
+    <message id="managercareer_origin_sacked">Despedimento</message>
+
+    <message id="managercareer_applications_title">Candidaturas manuais</message>
+    <message id="managercareer_applications_help">Podes candidatar-te a clubes livres ou geridos interinamente, mesmo que a tua reputação ainda não seja suficiente para uma contratação direta. Após alguns dias, o clube decide com base na reputação, país, liga, nível do clube e situação da direção.</message>
+    <message id="managercareer_applications_disabled">As candidaturas manuais estão atualmente desativadas.</message>
+    <message id="managercareer_applications_limit_hint">Candidaturas em aberto:</message>
+    <message id="managercareer_application_candidates_title">Possíveis clubes de destino</message>
+    <message id="managercareer_application_search_placeholder">Procurar clube, liga ou país</message>
+    <message id="button_search">Pesquisar</message>
+    <message id="managercareer_application_chance">Probabilidade</message>
+    <message id="managercareer_decision_date">Decisão</message>
+    <message id="managercareer_no_applications">Ainda não existem candidaturas.</message>
+    <message id="managercareer_no_application_candidates">Atualmente não foram encontrados clubes de destino adequados.</message>
+    <message id="managercareer_already_applied">Candidatura enviada</message>
+    <message id="managercareer_application_limit_reached">Limite atingido</message>
+    <message id="managercareer_button_apply">Candidatar</message>
+    <message id="managercareer_button_withdraw">Retirar</message>
+    <message id="managercareer_application_status_open">Aberto</message>
+    <message id="managercareer_application_status_accepted">Aceite</message>
+    <message id="managercareer_application_status_rejected">Rejeitado</message>
+    <message id="managercareer_application_status_withdrawn">Retirada</message>
+    <message id="managercareer_application_status_expired">Expirado</message>
+    <message id="managercareer_confirm_apply">Enviar mesmo uma candidatura a este clube?</message>
+    <message id="managercareer_confirm_withdraw_application">Retirar mesmo a candidatura?</message>
+    <message id="managercareer_application_msg_success">Candidatura enviada ao {team}. O clube deverá decidir dentro de {days} dias. Probabilidade atual: {chance}%.</message>
+    <message id="managercareer_application_msg_withdrawn">Candidatura retirada.</message>
+    <message id="managercareer_application_error_disabled">As candidaturas manuais estão atualmente desativadas.</message>
+    <message id="managercareer_application_error_limit">Só podes ter no máximo {limit} candidaturas em aberto ao mesmo tempo.</message>
+    <message id="managercareer_application_error_duplicate">Já existe uma candidatura em aberto para este clube.</message>
+    <message id="managercareer_application_error_club_not_available">Este clube não está atualmente disponível para candidaturas.</message>
+    <message id="managercareer_application_error_own_club">Não te podes candidatar ao teu clube atual.</message>
+    <message id="managercareer_application_error_invalid">Esta candidatura já não está disponível.</message>
+    <message id="managercareer_application_message_sent_subject">Candidatura ao {team}</message>
+    <message id="managercareer_application_message_sent_body">A tua candidatura foi enviada.
+
+Clube: {team}
+Liga: {league}
+Decisão prevista: dentro de {days} dias
+Avaliação atual: {chance}%</message>
+    <message id="managercareer_application_accepted_subject">Candidatura bem-sucedida: {team}</message>
+    <message id="managercareer_application_accepted_body">O clube {team} avaliou positivamente a tua candidatura e apresentou-te uma oferta de trabalho oficial.
+
+Liga: {league}
+Válida até: {expires}
+
+Podes aceitar ou rejeitar a oferta aqui:
+{url}</message>
+    <message id="managercareer_application_rejected_subject">Candidatura rejeitada: {team}</message>
+    <message id="managercareer_application_rejected_body">O clube {team} rejeitou a tua candidatura após análise. Uma reputação mais forte, melhores resultados ou maior notoriedade neste país poderão melhorar as tuas hipóteses no futuro.</message>
+    <message id="managercareer_application_notification_accepted">{team} aceitou a tua candidatura.</message>
+    <message id="managercareer_application_notification_rejected">{team} rejeitou a tua candidatura.</message>
+
+    <message id="managercareer_objectives_title">Novos objetivos do clube</message>
+    <message id="managercareer_objectives_help">Após uma mudança de clube, são criados automaticamente objetivos de época adequados. Aqui podes ver o resumo atual; os detalhes encontram-se na página da direção.</message>
+    <message id="managercareer_no_objectives">Ainda não existem objetivos.</message>
+    <message id="managercareer_objective_type">Tipo de objetivo</message>
+    <message id="managercareer_open_objectives_page">Abrir objetivos da época</message>
+    <message id="manager_mission_type_league_rank">Objetivo de classificação</message>
+    <message id="manager_mission_type_highscore">Objetivo de pontuação máxima</message>
+    <message id="manager_mission_type_salary_reduce">Reduzir salários</message>
+    <message id="manager_mission_type_youth_promotion_played">Utilizar jogador da formação</message>
+    <message id="manager_mission_type_cup_round">Alcançar eliminatória da taça</message>
+    <message id="manager_mission_type_board_satisfaction">Manter satisfação da direção</message>
+
+    <message id="managercareer_country_reputation_title">Reputação por país</message>
+    <message id="managercareer_country_reputation_help">Vitórias, bons resultados e mudanças de clube aumentam a tua notoriedade no respetivo país. Esta reputação melhora as hipóteses de candidatura e emprego em ligas adequadas.</message>
+    <message id="managercareer_no_country_reputation">Ainda não existe reputação específica por país.</message>
+    <message id="managercareer_last_change">Última alteração</message>
+
+    <message id="managercareer_awards_title">Prémios de treinador</message>
+    <message id="managercareer_award">Prémio</message>
+    <message id="managercareer_no_awards">Ainda não existem prémios de treinador.</message>
+    <message id="managercareer_award_month_title">Treinador do mês</message>
+    <message id="managercareer_award_month_description">Melhor pontuação do mês.</message>
+    <message id="managercareer_award_season_title">Treinador da época</message>
+    <message id="managercareer_award_season_description">Título de campeão ou desempenho excecional na época.</message>
+
+    <message id="managercareer_msg_accept_success">Oferta de trabalho aceite. Mudaste de clube.</message>
+    <message id="managercareer_msg_accept_bonus">Bónus de reputação: +{bonus} à pontuação máxima.</message>
+    <message id="managercareer_msg_decline_success">Oferta de trabalho rejeitada.</message>
+    <message id="managercareer_error_disabled">A carreira de treinador está atualmente desativada.</message>
+    <message id="managercareer_error_offer_invalid">Esta oferta de trabalho já não está disponível.</message>
+    <message id="managercareer_error_offer_expired">Esta oferta de trabalho já expirou.</message>
+    <message id="managercareer_notification_new_offer">Nova oferta de trabalho do {team}</message>
+    <message id="managercareer_notification_job_accepted">És agora o treinador do {team}.</message>
+    <message id="managercareer_notification_sacked">Foste despedido do {team}.</message>
+    <message id="managercareer_message_sender">Carreira de treinador</message>
+    <message id="managercareer_message_offer_subject">Oferta de trabalho do {team}</message>
+    <message id="managercareer_message_offer_body">Recebeste uma nova oferta de trabalho.
+
+Clube: {team}
+Liga: {league}
+Prestígio do clube: {clubscore}
+A tua reputação de treinador: {managerscore}
+Válida até: {expires}
+
+Podes abrir a oferta na tua carreira de treinador e aceitá-la ou rejeitá-la:
+{url}</message>
+    <message id="managercareer_history_moved">Mudança de {old} para {new}</message>
+    <message id="managercareer_history_joined">Entrada em funções no {new}</message>
+    <message id="managercareer_history_bonus">Bónus de reputação: +{bonus} à pontuação máxima.</message>
+    <message id="managercareer_news_title">{manager} assume o {team}</message>
+    <message id="managercareer_news_message_move">{manager} muda de {old} para {new}.</message>
+    <message id="managercareer_news_message_join">{manager} assume o clube livre {new}.</message>
+    <message id="managercareer_news_message_bonus">A mudança para um clube maior acrescenta +{bonus} à pontuação máxima.</message>
+    <message id="managercareer_news_link">Ir para a carreira de treinador</message>
+    <message id="managercareer_confirm_accept">Aceitar a oferta de trabalho e mudar de clube?</message>
+    <message id="managercareer_confirm_switch">Mudar mesmo para este clube livre?</message>
+    <message id="managercareer_sack_warning_subject">Reunião de crise no {team}</message>
+    <message id="managercareer_sack_warning_body">A direção do {team} está muito insatisfeita. Se não houver uma reação desportiva, poderá ocorrer um despedimento. Verificações críticas consecutivas: {checks}</message>
+    <message id="managercareer_sacked_subject">Despedimento no {team}</message>
+    <message id="managercareer_sacked_body">A direção do {team} despediu-te devido à satisfação extremamente baixa.
+
+Satisfação da direção: {board}%
+
+Estás agora sem clube e podes candidatar-te a clubes adequados.</message>
+</messages>

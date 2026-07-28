@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Personal del club</message>
+    <message id="entity_clubstaff">Miembro del personal</message>
+    <message id="entity_clubstaff_name">Nombre</message>
+    <message id="entity_clubstaff_name_help">Nombre del miembro del personal que se muestra a los usuarios.</message>
+    <message id="entity_clubstaff_role">Función</message>
+    <message id="entity_clubstaff_role_help">Define la pequeña bonificación que proporciona este miembro del personal.</message>
+    <message id="entity_clubstaff_level">Nivel</message>
+    <message id="entity_clubstaff_level_help">Nivel de calidad interno. Sirve principalmente como orientación para los administradores.</message>
+    <message id="entity_clubstaff_salary">Salario por jornada</message>
+    <message id="entity_clubstaff_salary_help">Importe que se carga por cada jornada relevante mientras el miembro del personal esté contratado.</message>
+    <message id="entity_clubstaff_bonus">Bonificación</message>
+    <message id="entity_clubstaff_bonus_help">Pequeño valor de bonificación en puntos porcentuales. Según la función, se aplica a los sistemas correspondientes.</message>
+    <message id="entity_clubstaff_description">Descripción</message>
+    <message id="entity_clubstaff_description_help">Breve indicación de lo que este miembro del personal hace especialmente bien.</message>
+    <message id="entity_clubstaff_active">Activo</message>
+    <message id="entity_clubstaff_active_help">Los clubes solo pueden contratar a miembros del personal activos.</message>
+
+</messages>

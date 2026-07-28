@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="fanpressure_navlabel">Estado de espírito dos adeptos e comunicação social</message>
+    <message id="fanpressure_title">Estado de espírito dos adeptos e comunicação social</message>
+    <message id="fanpressure_intro">Aqui podes ver como os adeptos e a comunicação social reagem atualmente ao teu trabalho. Estes valores influenciam a assistência, os patrocinadores baseados nos adeptos e, indiretamente, a satisfação da direção.</message>
+
+    <message id="fanpressure_fan_mood">Estado de espírito dos adeptos</message>
+    <message id="fanpressure_media_pressure">Pressão mediática</message>
+    <message id="fanpressure_board_satisfaction">Satisfação da direção</message>
+    <message id="fanpressure_attendance_effect">Efeito na assistência</message>
+    <message id="fanpressure_sponsor_effect">Efeito nos patrocinadores baseados nos adeptos</message>
+    <message id="fanpressure_recent_development">Evolução mais recente</message>
+    <message id="fanpressure_no_log">Ainda não existem acontecimentos relativos ao estado de espírito.</message>
+    <message id="fanpressure_value_good">positivo</message>
+    <message id="fanpressure_value_neutral">neutro</message>
+    <message id="fanpressure_value_bad">crítico</message>
+    <message id="fanpressure_points">Pontos</message>
+    <message id="fanpressure_change">Alteração</message>
+    <message id="fanpressure_date">Data</message>
+    <message id="fanpressure_reason">Motivo</message>
+    <message id="fanpressure_old_new">Anterior / Novo</message>
+    <message id="fanpressure_media_old_new">Pressão mediática anterior / nova</message>
+    <message id="fanpressure_match_link">Ir para o jogo</message>
+    <message id="fanpressure_low_hint">O ambiente está tenso. Preços elevados dos bilhetes, derrotas e vendas de jogadores importantes podem aumentar ainda mais a pressão.</message>
+    <message id="fanpressure_high_hint">Os adeptos estão com o clube. Isto pode melhorar a assistência e os bónus dos patrocinadores baseados nos adeptos.</message>
+    <message id="fanpressure_neutral_hint">A situação está tranquila. Resultados, transferências e preços dos bilhetes podem alterar rapidamente o estado de espírito.</message>
+
+    <message id="fanpressure_reason_match_win">Vitória</message>
+    <message id="fanpressure_reason_match_draw">Empates</message>
+    <message id="fanpressure_reason_match_loss">Derrota</message>
+    <message id="fanpressure_reason_big_win">Vitória expressiva</message>
+    <message id="fanpressure_reason_big_loss">Derrota pesada</message>
+    <message id="fanpressure_reason_derby_win">Vitória no dérbi</message>
+    <message id="fanpressure_reason_derby_draw">Empate no dérbi</message>
+    <message id="fanpressure_reason_derby_loss">Derrota no dérbi</message>
+    <message id="fanpressure_reason_youth_used">Jovens jogadores utilizados</message>
+    <message id="fanpressure_reason_ticket_prices_high">Preços elevados dos bilhetes</message>
+    <message id="fanpressure_reason_ticket_prices_low">Preços de bilhetes acessíveis aos adeptos</message>
+    <message id="fanpressure_reason_transfer_signing">Novo reforço</message>
+    <message id="fanpressure_reason_transfer_sale">Venda de jogador</message>
+    <message id="fanpressure_reason_mission_completed">Objetivo da direção alcançado</message>
+    <message id="fanpressure_reason_mission_failed">Objetivo da direção falhado</message>
+    <message id="fanpressure_reason_board_mood_bonus">Excelente situação entre os adeptos</message>
+    <message id="fanpressure_reason_board_mood_penalty">Situação crítica entre os adeptos</message>
+
+    <message id="fanpressure_notification_big_change">O estado de espírito dos adeptos alterou-se significativamente: {reason} ({change} pontos, atualmente {mood}%).</message>
+    <message id="fanpressure_news_low_title">Crise entre os adeptos do {team}</message>
+    <message id="fanpressure_news_low_message">O estado de espírito dos adeptos do {team} é crítico. O valor atual desceu para apenas {mood} por cento.</message>
+    <message id="fanpressure_news_high_title">Euforia no {team}</message>
+    <message id="fanpressure_news_high_message">Os adeptos do {team} estão entusiasmados. O valor atual do estado de espírito está nos excelentes {mood} por cento.</message>
+
+    <message id="fanpressure_open_interviews">Perguntas em aberto da comunicação social</message>
+    <message id="fanpressure_interview_intro">A comunicação social, os adeptos ou a direção esperam uma reação clara. A tua resposta afeta diretamente o estado de espírito, a pressão, a direção e a química da equipa.</message>
+    <message id="fanpressure_interview_context">Motivo</message>
+    <message id="fanpressure_interview_effect_preview">Efeito</message>
+    <message id="fanpressure_interview_answer_saved">A tua resposta foi publicada. As reações foram processadas.</message>
+    <message id="fanpressure_interview_invalid_answer">Resposta inválida.</message>
+    <message id="fanpressure_interview_not_found">Esta pergunta da comunicação social já não está em aberto.</message>
+    <message id="fanpressure_interview_expired">Esta pergunta da comunicação social expirou.</message>
+    <message id="fanpressure_interview_notification">A imprensa espera uma declaração: {reason}.</message>
+    <message id="fanpressure_no_open_interviews">Atualmente não existem perguntas em aberto da comunicação social.</message>
+    <message id="fanpressure_answer">Responder</message>
+    <message id="fanpressure_story_events">Acontecimentos da história</message>
+    <message id="fanpressure_no_story_events">Ainda não existem acontecimentos da história.</message>
+    <message id="fanpressure_story_title">Notícia</message>
+    <message id="fanpressure_story_effects">Efeitos</message>
+    <message id="fanpressure_team_chemistry">Química da equipa</message>
+    <message id="fanpressure_story_notification">Reação da comunicação social: {reason}. Adeptos {moodchange}, comunicação social {pressurechange}, direção {boardchange}, equipa {chemistrychange}. Atualmente: adeptos {mood}%, comunicação social {pressure}%, direção {board}%.</message>
+    <message id="fanpressure_board_crisis_notification">A direção está alarmada. A satisfação desceu para apenas {board}%.</message>
+    <message id="fanpressure_board_support_notification">A direção apoia-te. A satisfação está nos {board}%.</message>
+
+    <message id="fanpressure_reason_win_streak_3">Três vitórias consecutivas</message>
+    <message id="fanpressure_reason_loss_streak_3">Três derrotas consecutivas</message>
+    <message id="fanpressure_reason_loss_streak_5">Cinco derrotas consecutivas</message>
+    <message id="fanpressure_reason_cup_upset_win">Surpresa na taça frente a um adversário mais forte</message>
+    <message id="fanpressure_reason_cup_elimination_weaker">Eliminação da taça frente a um adversário mais fraco</message>
+    <message id="fanpressure_reason_interview_answer">Resposta à entrevista</message>
+    <message id="fanpressure_reason_board_crisis">Crise da direção</message>
+    <message id="fanpressure_reason_board_support">Apoio da direção</message>
+
+    <message id="fanpressure_story_title_derby_win">Os adeptos festejam a vitória do {team} no dérbi</message>
+    <message id="fanpressure_story_message_derby_win">Os adeptos do {team} festejam efusivamente a vitória no dérbi. O ambiente em redor do clube é eufórico.</message>
+    <message id="fanpressure_story_title_derby_loss">Frustração após o dérbi no {team}</message>
+    <message id="fanpressure_story_message_derby_loss">A derrota no dérbi atinge duramente os adeptos e o ambiente do clube. A comunicação social aumenta significativamente a pressão sobre o {team}.</message>
+    <message id="fanpressure_story_title_big_win">{team} deixa uma marca</message>
+    <message id="fanpressure_story_message_big_win">A vitória expressiva dá novo impulso. Os adeptos e a direção consideram que o {team} está no bom caminho.</message>
+    <message id="fanpressure_story_title_big_loss">Perguntas críticas após derrota pesada</message>
+    <message id="fanpressure_story_message_big_loss">Após a derrota clara do {team}, a comunicação social e os adeptos exigem uma reação.</message>
+    <message id="fanpressure_story_title_win_streak_3">{team} vive uma onda de sucesso</message>
+    <message id="fanpressure_story_message_win_streak_3">Três vitórias consecutivas criam euforia. Os adeptos voltam a acreditar mais na evolução desportiva.</message>
+    <message id="fanpressure_story_title_loss_streak_3">A pressão sobre o {team} aumenta</message>
+    <message id="fanpressure_story_message_loss_streak_3">Após três derrotas consecutivas, a direção e os adeptos esperam uma reação clara.</message>
+    <message id="fanpressure_story_title_loss_streak_5">Ambiente de crise no {team}</message>
+    <message id="fanpressure_story_message_loss_streak_5">Cinco derrotas consecutivas causam enorme inquietação. A comunicação social fala abertamente de uma crise.</message>
+    <message id="fanpressure_story_title_cup_upset_win">{team} causa surpresa na taça</message>
+    <message id="fanpressure_story_message_cup_upset_win">A vitória frente a um adversário mais forte entusiasma os adeptos e a comunicação social. A direção valoriza a noite de taça.</message>
+    <message id="fanpressure_story_title_cup_elimination_weaker">Humilhação na taça</message>
+    <message id="fanpressure_story_message_cup_elimination_weaker">A eliminação da taça frente a um adversário mais fraco provoca críticas em redor do {team}.</message>
+    <message id="fanpressure_story_title_transfer_sale">Adeptos discutem venda no {team}</message>
+    <message id="fanpressure_story_message_transfer_sale">A venda de {player} ocupa os adeptos e a comunicação social. A reação depende da forma convincente como o clube explicar a decisão.</message>
+    <message id="fanpressure_story_title_transfer_signing">Novo reforço aumenta as expectativas</message>
+    <message id="fanpressure_story_message_transfer_signing">A contratação de {player} cria novas expectativas entre os adeptos e a direção.</message>
+    <message id="fanpressure_story_title_mission_completed">Objetivo da direção alcançado</message>
+    <message id="fanpressure_story_message_mission_completed">{team} alcança um objetivo importante da direção. Isto reforça a posição do treinador.</message>
+    <message id="fanpressure_story_title_mission_failed">Objetivo da direção falhado</message>
+    <message id="fanpressure_story_message_mission_failed">{team} falha um objetivo da direção. A direção espera correções visíveis.</message>
+    <message id="fanpressure_story_title_interview_answer">Reações à resposta da entrevista</message>
+    <message id="fanpressure_story_message_interview_answer">A resposta à pergunta da comunicação social foi avaliada. Os adeptos, a comunicação social, a direção e a equipa reagem de formas diferentes.</message>
+    <message id="fanpressure_story_title_board_crisis">A direção fica inquieta</message>
+    <message id="fanpressure_story_message_board_crisis">A satisfação da direção no {team} desceu para apenas {board}%. O nervosismo aumenta dentro do clube.</message>
+    <message id="fanpressure_story_title_board_support">A direção apoia o treinador</message>
+    <message id="fanpressure_story_message_board_support">Com {board}% de satisfação da direção, o treinador goza de forte apoio no {team}.</message>
+
+    <message id="fanpressure_reason_trait_star_performance">Especialista convence</message>
+    <message id="fanpressure_reason_trait_big_moment">Capacidade especial decide o jogo</message>
+    <message id="fanpressure_story_title_trait_star_performance">{player} convence como {trait}</message>
+    <message id="fanpressure_story_message_trait_star_performance">{player} demonstra no {team} a sua capacidade especial {trait}. {reason}. Os adeptos e a direção encaram esta evolução de forma positiva.</message>
+    <message id="fanpressure_story_title_trait_big_moment">{player} marca o jogo com {trait}</message>
+    <message id="fanpressure_story_message_trait_big_moment">{player} proporciona um momento especial ao {team} como {trait}. {reason}. A comunicação social destaca esta capacidade especial.</message>
+
+</messages>

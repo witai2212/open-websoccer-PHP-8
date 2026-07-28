@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	
-	<message id="settings_label_training_min_hours_between_execution">Time break between training sessions</message> 
-	<message id="settings_label_training_min_hours_between_execution_help">in hours. Minimum number of hours which must be between two executed training units.</message> 
+    <message id="settings_label_training_min_hours_between_execution">Rest period between training sessions</message> 
+    <message id="settings_label_training_min_hours_between_execution_help">in hours. Minimum number of hours required between two manual training sessions.</message>
+    <message id="settings_label_advanced_training_enabled">Enable automatic advanced training</message>
+    <message id="settings_label_advanced_training_enabled_help">If enabled, the next slot in the saved training plan is carried out once per human-controlled club within the specified hourly period, even on days without matches.</message>
+    <message id="settings_label_training_max_trainers_per_team">Maximum coaches per club</message>
+    <message id="settings_label_training_max_trainers_per_team_help">One head coach and up to three specialist coaches make a maximum of four active coaches.</message>
 </messages>

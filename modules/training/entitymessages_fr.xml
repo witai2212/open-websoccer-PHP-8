@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_trainer">Entraîneur</message>
+    <message id="entity_trainer_name">Nom</message>
+    <message id="entity_trainer_salary">Salaire par séance</message>
+    <message id="entity_trainer_specialization">Spécialisation</message>
+    <message id="entity_trainer_p_technique">Efficacité de l'entraînement technique</message>
+    <message id="entity_trainer_p_stamina">Efficacité de l'entraînement physique</message>
+    <message id="entity_trainer_p_offense">Attaque</message>
+    <message id="entity_trainer_p_defense">Défense</message>
+    <message id="entity_trainer_p_tactics">Tactique</message>
+    <message id="entity_trainer_p_goalkeeping">Entraînement des gardiens</message>
+    <message id="entity_trainer_p_mental">Mental</message>
+    <message id="entity_trainer_premiumfee">Frais premium</message>
+
+    <message id="entity_trainer_reputation">Réputation</message>
+    <message id="entity_trainer_min_club_strength">Niveau minimal du club</message>
+    <message id="entity_trainer_min_league_rating">Réputation minimale de la ligue</message>
+    <message id="entity_trainer_signing_fee">Prime à la signature</message>
+    <message id="entity_trainer_available">Disponible</message>
+</messages>

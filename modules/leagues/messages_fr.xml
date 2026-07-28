@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="leagues_navlabel">Ligues</message>
+    <message id="leagues_title">Classements</message>
+    
+    <message id="league_navlabel">Classement</message>
+    
+    <message id="leaguetable_block_title">Classement actuel</message>
+    <message id="leaguetable_block_noteamsavailable">Cette ligue ne compte aucune équipe.</message>
+    
+    <message id="leaguetable_head_place">Position</message>
+    <message id="leaguetable_head_place_abbr">Pos.</message>
+    <message id="leaguetable_head_club">Club</message>
+    <message id="leaguetable_head_matches">Matches</message>
+    <message id="leaguetable_head_matches_abbr">MJ</message>
+    <message id="leaguetable_head_wins">Victoires</message>
+    <message id="leaguetable_head_wins_abbr">V</message>
+    <message id="leaguetable_head_draws">Matches nuls</message>
+    <message id="leaguetable_head_draws_abbr">N</message>
+    <message id="leaguetable_head_defeats">Défaites</message>
+    <message id="leaguetable_head_defeats_abbr">D</message>
+    <message id="leaguetable_head_goals">Buts</message>
+    <message id="leaguetable_head_goalsdiff">Différence de buts</message>
+    <message id="leaguetable_head_goalsdiff_abbr">DB</message>
+    <message id="leaguetable_head_score">Points</message>
+    
+    <message id="leaguetable_button_type">Type de classement</message>
+    <message id="leaguetable_button_type_total">Classement général</message>
+    <message id="leaguetable_button_type_home">Classement à domicile</message>
+    <message id="leaguetable_button_type_guest">Classement à l'extérieur</message>
+    
+    <message id="leaguetable_timedelay_info">Les scores en direct peuvent être affichés avec un léger décalage.</message>
+    
+    
+</messages>

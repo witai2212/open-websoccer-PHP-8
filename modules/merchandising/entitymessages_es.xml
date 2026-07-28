@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_merchandisingproduct">Productos de merchandising</message>
+    <message id="entity_merchandisingproduct_name">Nombre del producto</message>
+    <message id="entity_merchandisingproduct_name_help">Puede ser una clave de mensaje alemana o el nombre directo del producto.</message>
+    <message id="entity_merchandisingproduct_description">Descripción</message>
+    <message id="entity_merchandisingproduct_description_help">Puede ser una clave de mensaje alemana o un texto descriptivo directo.</message>
+    <message id="entity_merchandisingproduct_category">Categoría</message>
+    <message id="entity_merchandisingproduct_category_help">Controla la agrupación en la tienda de aficionados.</message>
+    <message id="entity_merchandisingproduct_season_type">Tipo de temporada</message>
+    <message id="entity_merchandisingproduct_season_type_help">Determina si el producto está disponible de forma permanente, por calendario, por temporada o por evento.</message>
+    <message id="entity_merchandisingproduct_season_start">Inicio del periodo de venta</message>
+    <message id="entity_merchandisingproduct_season_start_help">Formato MM-DD, por ejemplo 11-15.</message>
+    <message id="entity_merchandisingproduct_season_end">Fin del periodo de venta</message>
+    <message id="entity_merchandisingproduct_season_end_help">Formato MM-DD, por ejemplo 01-06.</message>
+    <message id="entity_merchandisingproduct_purchase_price">Precio de compra</message>
+    <message id="entity_merchandisingproduct_purchase_price_help">Coste básico por artículo pedido.</message>
+    <message id="entity_merchandisingproduct_sales_price">Precio de venta recomendado</message>
+    <message id="entity_merchandisingproduct_sales_price_help">Punto de partida para los límites de precio y el cálculo de la demanda.</message>
+    <message id="entity_merchandisingproduct_base_demand">Demanda base</message>
+    <message id="entity_merchandisingproduct_base_demand_help">Ejemplo: 0,0100 corresponde a una demanda base del uno por ciento del alcance.</message>
+    <message id="entity_merchandisingproduct_development_cost">Coste de desarrollo</message>
+    <message id="entity_merchandisingproduct_development_cost_help">Coste único de una nueva colección del club.</message>
+    <message id="entity_merchandisingproduct_development_days">Tiempo de desarrollo</message>
+    <message id="entity_merchandisingproduct_development_days_help">Días naturales hasta que esté listo para producción.</message>
+    <message id="entity_merchandisingproduct_delivery_days">Plazo de entrega</message>
+    <message id="entity_merchandisingproduct_delivery_days_help">Días naturales entre el pedido y la recepción de la mercancía.</message>
+    <message id="entity_merchandisingproduct_minimum_order">Cantidad mínima de pedido</message>
+    <message id="entity_merchandisingproduct_minimum_order_help">Pedido mínimo permitido.</message>
+    <message id="entity_merchandisingproduct_liquidation_percent">Valor de liquidación</message>
+    <message id="entity_merchandisingproduct_liquidation_percent_help">Porcentaje del coste unitario que se recupera al liquidar las existencias restantes.</message>
+    <message id="entity_merchandisingproduct_player_product">Producto de jugador</message>
+    <message id="entity_merchandisingproduct_player_product_help">Actívelo solo si la plantilla debe vincularse a una estrella de merchandising.</message>
+    <message id="entity_merchandisingproduct_event_type">Tipo de evento</message>
+    <message id="entity_merchandisingproduct_event_type_help">Requisito opcional para productos relacionados con eventos.</message>
+    <message id="entity_merchandisingproduct_stadium_factor">Factor de ventas en el estadio</message>
+    <message id="entity_merchandisingproduct_stadium_factor_help">Factor de demanda específico del producto en el estadio.</message>
+    <message id="entity_merchandisingproduct_online_factor">Factor de ventas en línea</message>
+    <message id="entity_merchandisingproduct_online_factor_help">Factor de demanda específico del producto en la tienda de aficionados en línea.</message>
+    <message id="entity_merchandisingproduct_max_price_factor">Factor de precio máximo</message>
+    <message id="entity_merchandisingproduct_max_price_factor_help">Límite superior respecto al precio de venta recomendado.</message>
+    <message id="entity_merchandisingproduct_active">Activo</message>
+    <message id="entity_merchandisingproduct_active_help">Solo las plantillas activas están disponibles para los clubes.</message>
+
+    <message id="entity_merchandisingcampaigntype">Campañas de merchandising</message>
+    <message id="entity_merchandisingcampaigntype_name">Nombre de la campaña</message>
+    <message id="entity_merchandisingcampaigntype_name_help">Nombre alemán de la campaña.</message>
+    <message id="entity_merchandisingcampaigntype_description">Descripción</message>
+    <message id="entity_merchandisingcampaigntype_description_help">Breve explicación de la campaña.</message>
+    <message id="entity_merchandisingcampaigntype_cost">Coste</message>
+    <message id="entity_merchandisingcampaigntype_cost_help">Coste único al iniciarla.</message>
+    <message id="entity_merchandisingcampaigntype_duration_days">Plazo</message>
+    <message id="entity_merchandisingcampaigntype_duration_days_help">Días naturales durante los que dura el efecto.</message>
+    <message id="entity_merchandisingcampaigntype_demand_bonus">Bonificación de demanda</message>
+    <message id="entity_merchandisingcampaigntype_demand_bonus_help">Bonificación porcentual durante la campaña.</message>
+    <message id="entity_merchandisingcampaigntype_active">Activo</message>
+    <message id="entity_merchandisingcampaigntype_active_help">Solo pueden iniciarse campañas activas.</message>
+
+    <message id="entity_stadiumbuilding_effect_merchandising">Efecto: merchandising</message>
+    <message id="entity_stadiumbuilding_effect_merchandising_help">Bonificación porcentual para las ventas en la tienda de aficionados del estadio.</message>
+</messages>

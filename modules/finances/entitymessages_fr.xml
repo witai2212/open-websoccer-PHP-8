@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_news">Actualités</message>
+    <message id="entity_news_autor_id">Auteur</message>
+	<message id="entity_news_titel">Titres</message>
+	<message id="entity_news_datum">Date</message>
+	<message id="entity_news_nachricht">Message</message>
+	<message id="entity_news_linktext1">Lien pertinent 1 (texte)</message>
+	<message id="entity_news_linkurl1">Lien pertinent 1 (URL)</message>
+	<message id="entity_news_linktext2">Lien pertinent 2 (texte)</message>
+	<message id="entity_news_linkurl2">Lien pertinent 2 (URL)</message>
+	<message id="entity_news_linktext3">Lien pertinent 3 (texte)</message>
+	<message id="entity_news_linkurl3">Lien pertinent 3 (URL)</message>
+	<message id="entity_news_c_smilies">Convertir les émoticônes</message>
+	<message id="entity_news_c_br">Afficher les sauts de ligne</message>
+	<message id="entity_news_c_links">Convertir les URL en liens HTML</message>
+	<message id="entity_news_status">Activé</message>
+
+    <message id="entity_bankloans">Crédits bancaires</message>
+    <message id="bankloans_navlabel">Crédits bancaires</message>
+    <message id="entity_bankloans_id">ID</message>
+    <message id="entity_bankloans_verein_id">ID du club</message>
+    <message id="entity_bankloans_original_amount">Montant du crédit</message>
+    <message id="entity_bankloans_remaining_principal">Capital restant</message>
+    <message id="entity_bankloans_interest_rate">Taux d’intérêt</message>
+    <message id="entity_bankloans_remaining_interest">Intérêts restants</message>
+    <message id="entity_bankloans_remaining_amount">Solde restant dû</message>
+    <message id="entity_bankloans_matches_left">Matchs restants</message>
+    <message id="entity_bankloans_status">Statut</message>
+    <message id="entity_bankloans_credit_rating">Notation de crédit</message>
+    <message id="entity_bankloans_created_date">Souscrit le</message>
+    <message id="entity_bankloans_board_warning_sent">Avertissement du conseil envoyé</message>
+</messages>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_wordpresslogin_tableprefix">Início de sessão através do WordPress (desde 2.5): prefixo das tabelas</message>
+    <message id="settings_label_wordpresslogin_tableprefix_help">Prefixo das tabelas da base de dados da sua instalação do WordPress, caso os utilizadores devam iniciar sessão apenas com o nome de utilizador e a palavra-passe da conta WordPress. <em>Nota:</em> ative o início de sessão através do WordPress introduzindo "WordpressUserLoginMethod" em "Método de início de sessão" acima.</message>
+</messages>

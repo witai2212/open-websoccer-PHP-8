@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="what-changed_navlabel">What happened?</message>
+    <message id="whatchanged_navlabel">What happened?</message>
+    <message id="whatchanged_title">What happened?</message>
+    <message id="whatchanged_office_block_title">What happened?</message>
+    <message id="whatchanged_office_latest">Latest matchday summary</message>
+    <message id="whatchanged_open_latest">View summary</message>
+    <message id="whatchanged_intro">The matchday summary gives you a compact overview of what changed after your latest match.</message>
+    <message id="whatchanged_disabled">The matchday summary is currently disabled.</message>
+    <message id="whatchanged_only_human">This overview is only available to human-managed clubs.</message>
+    <message id="whatchanged_no_summary">No summary available yet. An entry will be created automatically after your club's next calculated match.</message>
+    <message id="whatchanged_recent_summaries">Recent summaries</message>
+    <message id="whatchanged_current_summary">Current summary</message>
+    <message id="whatchanged_match_result">Match result</message>
+    <message id="whatchanged_budget">Budget</message>
+    <message id="whatchanged_training">Training</message>
+    <message id="whatchanged_scouting">Scouting</message>
+    <message id="whatchanged_fan_mood">Fan mood</message>
+    <message id="whatchanged_chemistry">Team chemistry</message>
+    <message id="whatchanged_board">Board</message>
+    <message id="whatchanged_injuries_suspensions">Injuries and suspensions</message>
+
+    <message id="whatchanged_tactical_style">Tactical identity</message>
+    <message id="formation_tacticalstyle_fit">Fit</message>
+    <message id="tacticalstyle_balanced">Balanced</message>
+    <message id="tacticalstyle_possession">Possession</message>
+    <message id="tacticalstyle_counterattack">Counterattack</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_defensive_block">Defensive block</message>
+    <message id="tacticalstyle_defensive">Defensive</message>
+    <message id="tacticalstyle_wing_play">Wing play</message>
+    <message id="tacticalstyle_set_pieces">Set pieces</message>
+    <message id="tacticalstyle_youth_focused">Youth focus</message>
+    <message id="tacticalstyle_physical">Physical</message>
+    <message id="whatchanged_messages_news">Messages and news</message>
+    <message id="whatchanged_missions">Season objectives</message>
+    <message id="whatchanged_match_link">Go to match report</message>
+    <message id="whatchanged_created_at">Created on</message>
+    <message id="whatchanged_previous_match">Previous match</message>
+    <message id="whatchanged_no_previous_match">No previous match found.</message>
+    <message id="whatchanged_win">Victory</message>
+    <message id="whatchanged_draw">Draws</message>
+    <message id="whatchanged_loss">Defeat</message>
+    <message id="whatchanged_budget_before">Before</message>
+    <message id="whatchanged_budget_after">After</message>
+    <message id="whatchanged_budget_change">Change</message>
+    <message id="whatchanged_budget_no_entries">No transactions since the last match.</message>
+    <message id="whatchanged_training_none">No training session recorded for the matchday.</message>
+    <message id="whatchanged_training_players">Players trained</message>
+    <message id="whatchanged_training_best_player">Best training effect</message>
+    <message id="whatchanged_training_injuries">Training injuries</message>
+    <message id="whatchanged_training_chemistry">Chemistry effect</message>
+    <message id="whatchanged_scouting_none">No new scouting proposals since the last match.</message>
+    <message id="whatchanged_scouting_new">New proposals</message>
+    <message id="whatchanged_open_proposal">open</message>
+    <message id="whatchanged_fan_no_change">No saved change in fan mood for this match.</message>
+    <message id="whatchanged_chemistry_no_change">No saved chemistry change for this match.</message>
+    <message id="whatchanged_old_new">Old / New</message>
+    <message id="whatchanged_effect">Effect</message>
+    <message id="whatchanged_board_no_change">No separate board change found.</message>
+    <message id="whatchanged_injuries_none">No new injuries or suspensions recorded.</message>
+    <message id="whatchanged_messages_new">New private messages</message>
+    <message id="whatchanged_news_new">New news</message>
+    <message id="whatchanged_no_messages_news">No new messages or news since the last match.</message>
+    <message id="whatchanged_missions_none">No season targets found.</message>
+    <message id="whatchanged_missions_summary">Progress</message>
+    <message id="whatchanged_notification">New matchday summary available: {match}</message>
+    <message id="whatchanged_news_title">What changed at {team}?</message>
+    <message id="whatchanged_news_message">After the match {match}, a new summary is available for {team}: result, budget, training, scouting, mood, team chemistry, tactical identity, board, injuries and season targets have been updated.</message>
+    <message id="whatchanged_news_link">Go to summary</message>
+    <message id="settings_label_what_changed_enabled">Enable What Happened dashboard</message>
+    <message id="settings_label_what_changed_enabled_help">Creates a compact summary with news and a notification after every match of a human-managed club.</message>
+    
+    <message id="whatchanged_news_title">What changed at {team}?</message>
+    <message id="whatchanged_news_message">After the match {match}, a new summary is available for {team}: result, budget, training, scouting, mood, team chemistry, tactical identity, board, injuries and season targets have been updated.</message>
+    <message id="whatchanged_news_link">Go to summary</message>
+    <message id="whatchanged_trait_highlights">Special abilities in the match</message>
+    <message id="whatchanged_trait">Special ability</message>
+    <message id="whatchanged_trait_reason">Notable event</message>
+
+</messages>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_manager_missions_enabled">Activar misiones del mánager</message>
+    <message id="settings_label_manager_missions_reward_board">Bonificación de la directiva por misión cumplida</message>
+    <message id="settings_label_manager_missions_reward_highscore">Bonificación de puntuación máxima por misión cumplida</message>
+    <message id="settings_label_manager_missions_penalty_board">Penalización de la directiva por misión fallida</message>
+    <message id="settings_label_manager_missions_salary_reduce_percent">Objetivo de reducción salarial en porcentaje</message>
+</messages>

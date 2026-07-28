@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_tab_youth">Área juvenil</message> 
+	
+	<message id="settings_label_youth_enabled">Ativar equipas jovens. Os utilizadores podem observar jogadores jovens e contratá-los para a equipa principal.</message>
+	<message id="settings_label_youth_scouting_enabled">Os utilizadores podem procurar novos talentos.</message>
+	<message id="settings_label_youth_matchrequests_enabled">Os utilizadores podem publicar e aceitar pedidos de jogo.</message>
+	
+	<message id="settings_label_youth_salary_per_strength">Salário por ponto de força</message>
+	<message id="settings_label_youth_salary_per_strength_help">Montante do salário do jogador por jogo e por ponto de força.</message>
+	
+	<message id="settings_label_youth_min_age_professional">Idade mínima para a equipa principal</message>
+	
+	<message id="settings_label_youth_scouting_break_hours">Intervalo entre prospeções</message>
+	<message id="settings_label_youth_scouting_break_hours_help">em horas; número de horas que têm de decorrer após uma prospeção antes de ser permitida outra. 0 significa sem intervalo.</message>
+
+	<message id="settings_label_youth_professionalmove_matches">Jogos do contrato profissional</message>
+	<message id="settings_label_youth_professionalmove_matches_help">Número de jogos de contrato quando um jogador jovem é contratado para a equipa principal.</message>
+	
+	<message id="settings_label_youth_professionalmove_technique">Força profissional: técnica</message>
+	<message id="settings_label_youth_professionalmove_technique_help">%; quando um jogador jovem é contratado para a equipa principal.</message>
+	
+	<message id="settings_label_youth_professionalmove_stamina">Força profissional: condição física</message>
+	<message id="settings_label_youth_professionalmove_stamina_help">%</message>
+	
+	<message id="settings_label_youth_professionalmove_freshness">Força profissional: frescura</message>
+	<message id="settings_label_youth_professionalmove_freshness_help">%</message>
+	
+	<message id="settings_label_youth_professionalmove_satisfaction">Nível profissional: satisfação</message>
+	<message id="settings_label_youth_professionalmove_satisfaction_help">%</message>
+	
+	<message id="settings_label_youth_scouting_success_probability">Observação: probabilidade de sucesso</message>
+	<message id="settings_label_youth_scouting_success_probability_help">em percentagem; Probabilidade de um olheiro encontrar algum jogador (independentemente do nível).</message>
+	
+	<message id="settings_label_youth_scouting_min_strength">Observação: nível mínimo do jogador</message>
+	<message id="settings_label_youth_scouting_min_strength_help">em percentagem; Nível mínimo que um jogador encontrado pode ter.</message>
+	
+	<message id="settings_label_youth_scouting_max_strength">Observação: nível máximo do jogador</message>
+	<message id="settings_label_youth_scouting_max_strength_help">em percentagem; Nível máximo que um jogador encontrado pode ter.</message>
+	
+	<message id="settings_label_youth_scouting_standard_deviation">Observação: desvio-padrão</message>
+	<message id="settings_label_youth_scouting_standard_deviation_help">em percentagem; Quanto o nível real do jogador pode desviar-se aleatoriamente do nível calculado com precisão. 0 para nenhum desvio.</message>
+	
+	<message id="settings_label_youth_scouting_min_age">Observação: idade mínima</message>
+	
+	<message id="settings_label_youth_matchrequest_max_open_requests">Pedidos de jogo: máximo por equipa</message>
+	<message id="settings_label_youth_matchrequest_max_open_requests_help">Quantos pedidos de jogo em aberto uma equipa pode ter ao mesmo tempo.</message>
+	
+	<message id="settings_label_youth_matchrequest_max_futuredays">Pedidos de jogo: dias de antecedência</message>
+	<message id="settings_label_youth_matchrequest_max_futuredays_help">Com quantos dias de antecedência pode ser publicado um pedido.</message>
+	
+	<message id="settings_label_youth_matchrequest_allowedtimes">Pedidos de jogo: horários permitidos</message>
+	<message id="settings_label_youth_matchrequest_allowedtimes_help">separados por vírgulas (por exemplo, '14:00,17:00'). Destina-se a evitar uma sobrecarga do servidor quando também decorrem jogos da liga à mesma hora.</message>
+
+	<message id="settings_label_youth_matchrequest_accept_hours_in_advance">Pedidos de jogo: aceitação mais tardia</message>
+	<message id="settings_label_youth_matchrequest_accept_hours_in_advance_help">em horas; Quantas horas antes do início o pedido deve ser aceite. Os participantes devem ainda ter tempo suficiente para definir a formação.</message>
+
+	<message id="settings_label_youth_match_maxperday">Máximo de jogos permitidos por equipa e por dia</message>
+	
+	<message id="settings_label_youth_strengthchange_verygood">Alteração do nível: desempenho muito bom</message>
+	<message id="settings_label_youth_strengthchange_verygood_help">Alteração do nível do jogador em pontos com uma classificação de 1,3 ou melhor.</message>
+	
+	<message id="settings_label_youth_strengthchange_good">Alteração do nível: bom desempenho</message>
+	<message id="settings_label_youth_strengthchange_good_help">Alteração do nível do jogador em pontos com uma classificação entre 1,4 e 2,3.</message>
+	
+	<message id="settings_label_youth_strengthchange_bad">Alteração do nível: mau desempenho</message>
+	<message id="settings_label_youth_strengthchange_bad_help">Alteração do nível do jogador em pontos com uma classificação entre 4,3 e 5.</message>
+	
+	<message id="settings_label_youth_strengthchange_verybad">Alteração do nível: desempenho muito fraco</message>
+	<message id="settings_label_youth_strengthchange_verybad_help">Alteração do nível do jogador em pontos com uma classificação pior do que 5.</message>
+
+	<message id="season_complete_label_youthplayers_age_delete">Idade máxima dos jogadores jovens</message>
+	<message id="season_complete_label_youthplayers_age_delete_help">Os jogadores jovens são eliminados a partir desta idade.</message>
+
+	<message id="settings_label_computer_youth_max_players_on_transfer_list">Máximo de jogadores jovens da CPU na lista de transferências</message>
+	<message id="settings_label_computer_youth_max_players_on_transfer_list_help">Número máximo de jogadores jovens listados simultaneamente por clube da CPU.</message>
+	<message id="settings_label_computer_youth_transfer_list_duration_days">Duração das listagens de jogadores jovens da CPU</message>
+	<message id="settings_label_computer_youth_transfer_list_duration_days_help">Dias de calendário até uma listagem da CPU ser automaticamente decidida ou removida.</message>
+	<message id="settings_label_computer_youth_max_offers_per_player">Máximo de propostas da CPU por jogador jovem</message>
+	<message id="settings_label_computer_youth_max_offers_per_player_help">Número máximo de propostas da CPU em aberto simultaneamente para cada jogador jovem listado.</message>
+	<message id="settings_label_computer_youth_offer_decision_hours">Tempo de avaliação das propostas por jovens</message>
+	<message id="settings_label_computer_youth_offer_decision_hours_help">Horas até as propostas abertas da CPU serem avaliadas, o mais tardar, salvo se o limite de propostas for atingido antes.</message>
+    <message id="settings_label_computer_youth_active_buy_below_players">Compras ativas de jovens pela CPU abaixo do tamanho do plantel</message>
+    <message id="settings_label_computer_youth_targeted_buy_max_players">Compras direcionadas de jovens pela CPU até ao tamanho do plantel</message>
+    <message id="settings_label_computer_youth_sell_above_players">Vendas de jovens pela CPU acima do tamanho do plantel</message>
+    <message id="settings_label_computer_youth_global_max_players_on_transfer_list">Máximo de jogadores da CPU no mercado de jovens</message>
+</messages>

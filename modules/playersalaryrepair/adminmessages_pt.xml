@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="player_salary_repair_navlabel">Verificar salários dos jogadores</message>
+    <message id="player_salary_repair_title">Verificar salários dos jogadores</message>
+    <message id="player_salary_repair_intro">Verifica especificamente o conhecido erro de fator 100. Antes de cada correção automática, os valores anteriores são guardados numa tabela de registo própria.</message>
+    <message id="player_salary_repair_error">Erro</message>
+    <message id="player_salary_repair_demo_blocked">As alterações à base de dados estão bloqueadas no modo de demonstração.</message>
+    <message id="player_salary_repair_confirmation_required">Selecione a confirmação de segurança.</message>
+    <message id="player_salary_repair_success">Correção concluída</message>
+    <message id="player_salary_repair_success_detail">Foram guardados e divididos por 100 os salários de %d jogadores.</message>
+    <message id="player_salary_repair_nothing_to_do">Não foram encontrados registos correspondentes ao erro de fator 100.</message>
+    <message id="player_salary_repair_candidates">Registos suspeitos</message>
+    <message id="player_salary_repair_old_total">Total de salários antes</message>
+    <message id="player_salary_repair_new_total">Total de salários depois</message>
+    <message id="player_salary_repair_rule">Regra de verificação</message>
+    <message id="player_salary_repair_rule_detail">Ativo, clube existente, valor de mercado positivo, salário de pelo menos 100 000 EUR e resultado após a divisão entre 500 e 50 000 EUR.</message>
+    <message id="player_salary_repair_confirm_dialog">Os salários apresentados serão guardados e divididos por 100. Continuar?</message>
+    <message id="player_salary_repair_confirm_checkbox">Confirmo a correção dos registos de fator 100 apresentados.</message>
+    <message id="player_salary_repair_execute">Corrigir automaticamente os salários com fator 100</message>
+    <message id="player_salary_repair_preview">Pré-visualização</message>
+    <message id="player_salary_repair_player">Jogador</message>
+    <message id="player_salary_repair_club">Clube</message>
+    <message id="player_salary_repair_league">Liga</message>
+    <message id="player_salary_repair_position">Posição</message>
+    <message id="player_salary_repair_strength">Força</message>
+    <message id="player_salary_repair_market_value">Valor de mercado</message>
+    <message id="player_salary_repair_old_salary">Salário antes</message>
+    <message id="player_salary_repair_new_salary">Salário depois</message>
+    <message id="player_salary_repair_clean">Neste momento não foram encontrados salários com o erro de fator 100.</message>
+    <message id="player_salary_repair_history">Últimas correções</message>
+    <message id="player_salary_repair_date">Data</message>
+    <message id="player_salary_repair_no_history">Ainda não foi registada nenhuma correção.</message>
+</messages>

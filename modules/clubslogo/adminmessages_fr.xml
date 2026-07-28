@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_upload_clublogo_max_size">Téléversement du logo du club : taille maximale</message> 
+	<message id="settings_label_upload_clublogo_max_size_help">Si les utilisateurs sont autorisés à téléverser leur propre logo de club, vous pouvez indiquer ici la taille maximale du fichier image en Ko. Saisissez 0 pour désactiver le téléversement d’images.</message> 
+</messages>

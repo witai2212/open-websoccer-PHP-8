@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+    <message id="settings_tab_premium">Cuentas premium</message>
+	<message id="settings_label_premium_enabled">Activar cuentas de usuario premium. Los usuarios pueden comprar saldo y utilizarlo para funciones especiales.</message> 
+	<message id="settings_label_premium_credit_unit">Nombre de la moneda de saldo</message>
+	<message id="settings_label_premium_infopage">Página de información</message>
+	<message id="settings_label_premium_infopage_help">Página que se muestra cuando un usuario quiere utilizar una función premium, pero no dispone de saldo suficiente (o no tiene saldo). Puede ser un ID de página interno o una URL completa (http://...).<br/>
+	    <strong>Atención:</strong> si ha activado pagos automáticos mediante proveedores externos (como PayPal), debe utilizarse la página predeterminada (<em>premium-feature-requested</em>).</message>
+	<message id="settings_label_premium_price_options">Opciones de ingreso</message>
+	<message id="settings_label_premium_price_options_help">Si el saldo puede adquirirse mediante pagos, pueden indicarse varios tipos de conversión. Por ejemplo, 5.00:10 significa que 5,00 EUR de dinero real proporcionan 10 unidades de saldo premium. Tenga en cuenta que los decimales deben indicarse con punto (p. ej., 4.99 en lugar de 4,99).</message>
+	<message id="settings_label_premium_currency">Moneda (real)</message>
+	
+	<message id="settings_label_premium_exchangerate_gamecurrency">Tipo de cambio de la moneda del juego</message>
+	<message id="settings_label_premium_exchangerate_gamecurrency_help">Si los usuarios deben poder cambiar saldo premium por dinero del juego para su club, indique aquí el valor por unidad premium. Introduzca 0 si no debe permitirse el cambio.</message>
+
+	<message id="settings_label_premium_initial_credit">Saldo inicial</message>
+	<message id="settings_label_premium_initial_credit_help">Saldo premium que un usuario nuevo recibe automáticamente al registrarse.</message>
+</messages>

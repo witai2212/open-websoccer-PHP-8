@@ -1,9 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="settings_label_fanpressure_enabled">Enable fan mood and media pressure</message>
+    <message id="settings_label_fanpressure_enabled">Enable fan mood &#38; media pressure</message>
     <message id="settings_label_fanpressure_attendance_max_effect">Maximum attendance effect of fan mood in percent</message>
-    <message id="settings_label_fanpressure_sponsor_max_effect">Maximum fan-sponsor effect in percent</message>
-    <message id="settings_label_fanpressure_notification_threshold">Notify from mood change of X points</message>
+    <message id="settings_label_fanpressure_sponsor_max_effect">Maximum effect on fan-based sponsors in percent</message>
+    <message id="settings_label_fanpressure_notification_threshold">Notification from a mood change of X points</message>
     <message id="settings_label_fanpressure_create_extreme_news">Create news for extreme fan mood</message>
+    <message id="fanpressure_admin_navlabel">Story Engine</message>
+    <message id="fanpressure_admin_title">Board, Fan &#38; Media Story Engine</message>
+    <message id="fanpressure_admin_intro">Here you configure how events affect fans, media, the board and team chemistry. The rules are applied automatically after matches, transfers, objectives and interviews.</message>
+    <message id="fanpressure_admin_rules">Event rules</message>
+    <message id="fanpressure_admin_questions">Interview questions</message>
+    <message id="fanpressure_admin_recent_logs">Recent story events</message>
+    <message id="fanpressure_admin_event">Event</message>
+    <message id="fanpressure_admin_source">Source</message>
+    <message id="fanpressure_admin_active">Active</message>
+    <message id="fanpressure_admin_fans">Fans</message>
+    <message id="fanpressure_admin_media">Media</message>
+    <message id="fanpressure_admin_board">Board</message>
+    <message id="fanpressure_admin_team">Team</message>
+    <message id="fanpressure_admin_notification">Notification</message>
+    <message id="fanpressure_admin_news">News</message>
+    <message id="fanpressure_admin_interview_chance">Interview %</message>
+    <message id="fanpressure_admin_rules_saved">Event rules saved.</message>
+    <message id="fanpressure_admin_question_saved">Interview question saved.</message>
+    <message id="fanpressure_admin_question_deleted">Interview question deleted.</message>
+    <message id="fanpressure_admin_new_question">New question</message>
+    <message id="fanpressure_admin_question">Question</message>
+    <message id="fanpressure_admin_answer_a">Answer A</message>
+    <message id="fanpressure_admin_answer_b">Answer B</message>
+    <message id="fanpressure_admin_answer_c">Answer C</message>
+    <message id="fanpressure_admin_weight">Weighting</message>
+    <message id="settings_label_fanpressure_interview_expiry_days">Media questions expire after X days</message>
+
 </messages>

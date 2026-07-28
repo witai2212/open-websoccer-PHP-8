@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_clubstaff">Equipa técnica</message>
+    <message id="settings_label_club_staff_enabled">Ativar equipa técnica</message>
+    <message id="settings_label_club_staff_enabled_help">Ativa a página Equipa técnica. Os clubes geridos por utilizadores podem contratar um membro da equipa técnica para cada função.</message>
+</messages>

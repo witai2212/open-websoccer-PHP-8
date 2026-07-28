@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="admin_game_health_navlabel">Contrôle du système</message>
+    <message id="admin_game_health_title">Contrôle de santé du jeu pour l'administration</message>
+    <message id="admin_game_health_intro">Contrôle en direct des principales données du jeu et du système. Les réparations sont volontairement prudentes et ne modifient que les enregistrements clairement invalides ou expirés.</message>
+</messages>

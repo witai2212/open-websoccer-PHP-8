@@ -1,45 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="lending_player_marker_tooltip">Player is borrowed</message>
-    <message id="lending_player_marker_lendable">Player can be borrowed</message>
+    <message id="lending_player_marker_tooltip">El jugador está cedido</message>
+    <message id="lending_player_marker_lendable">El jugador está disponible para cesión</message>
     
-    <message id="lending_lend_button">Offer to borrow</message>
-    <message id="lending_lendable_unmark">Player is offered for borrowing (Fee: %d). Cancel lending offer.</message>
+    <message id="lending_lend_button">Ofrecer en cesión</message>
+    <message id="lending_lendable_unmark">El jugador está ofrecido en cesión (cuota de cesión: %d). Retirar oferta.</message>
     
-    <message id="lend-player_navlabel">Lend player</message>
-    <message id="lend-player_intro">Offer this player for borrowing. Any interested club can hire the player for the specified lending fee and at a maximum duration of <strong>%d</strong> matches. The trade will be automatically done as soon as a club accepts the conditions. The salary will be paid by the borrower.</message>
+    <message id="lend-player_navlabel">Ceder jugador</message>
+    <message id="lend-player_intro">Pon aquí al jugador disponible para cesión. Cualquier club interesado podrá contratarlo durante un máximo de <strong>%d</strong> partidos pagando la cuota de cesión indicada. La cesión se completa inmediatamente cuando un club acepta las condiciones. La parte del salario y las posibles opciones de compra se definen en la oferta de cesión.</message>
 
-	<message id="lend_player_success">The player is now ready for lending.</message>
+	<message id="lend_player_success">El jugador ya está disponible para cesión.</message>
 	
-	<message id="lending_err_notownplayer">The player dow not belong to your team (anymore).</message>
-	<message id="lending_err_alreadyoffered">The player is already marked as ready for lending.</message>
-	<message id="lending_err_borrowed_player">You cannot lend this player since you only borrowed him.</message>
-	<message id="lending_err_on_transfermarket">The player is currently on the transfer market. Hence, you cannot lend him.</message>
-	<message id="lending_err_teamsize_too_small">You currently have an insufficient number of players in your team (%d) for giving away more players.</message>
-	<message id="lending_err_contract_too_short">The player's contract is ending soon. Hence, you cannot lend him anymore.</message>
+	<message id="lending_err_notownplayer">El jugador ya no pertenece a tu plantilla.</message>
+	<message id="lending_err_alreadyoffered">El jugador ya está disponible para cesión.</message>
+	<message id="lending_err_borrowed_player">No puedes ceder al jugador porque tú mismo lo tienes cedido.</message>
+	<message id="lending_err_on_transfermarket">El jugador está actualmente en el mercado de traspasos. Por tanto, no puedes cederlo ni tomarlo cedido.</message>
+	<message id="lending_err_teamsize_too_small">Actualmente tienes muy pocos jugadores en la plantilla (%d) para dejar salir a más.</message>
+	<message id="lending_err_contract_too_short">El contrato del jugador termina pronto. Por tanto, ya no puedes cederlo.</message>
 
-	<message id="lending_lendable_unmark_success">The player is not lendable anymore.</message>
+	<message id="lending_lendable_unmark_success">El jugador ya no está disponible para cesión.</message>
 	
-	<message id="lending_player_lendable_info">The player can be borrowed for <strong>%s</strong> per match.</message>
-	<message id="lending_player_hire_button">Hire</message>
+	<message id="lending_player_lendable_info">El jugador puede ser cedido por <strong>%s</strong> por jornada.</message>
+	<message id="lending_player_hire_button">Ceder</message>
 	
-	<message id="borrow-player_navlabel">Hire player</message>
-	<message id="borrow-player_intro">Enter the desired number of matches and the player is going to move in your team for this duration. The lending fee for the whole duration will be deducted immediately. Additionally you will need to pay the player's salary.</message>
+	<message id="borrow-player_navlabel">Tomar jugador cedido</message>
+	<message id="borrow-player_intro">Indica el número de partidos deseado y el jugador se incorporará inmediatamente a tu equipo durante ese periodo. La cuota de cesión de toda la duración se paga de inmediato. También pagarás la parte del salario indicada en la oferta.</message>
 
-	<message id="lending_matches_durationhelp">Number between %d and %d.</message>
+	<message id="lending_matches_durationhelp">Número entre %d y %d.</message>
 	
-	<message id="lending_hire_err_ownplayer">The player belongs already to your team.</message>
-	<message id="lending_hire_err_borrowed_player">The player is already lent to another team. Probably someone else has been faster than you.</message>
-	<message id="lending_hire_err_notoffered">The player is not offered (anymore) for hiring.</message>
-	<message id="lending_hire_err_illegalduration">The rental period must be between %d and %d matches.</message>
-	<message id="lending_hire_err_contractendingtoosoon">The player's contract is going to end after %d matches. Hence, the rental period must be shorter.</message>
-	<message id="lending_hire_err_budget_too_low">You cannot afford the player's salary and lending fee at the moment.</message>
+	<message id="lending_hire_err_ownplayer">El jugador ya está en tu equipo.</message>
+	<message id="lending_hire_err_borrowed_player">El jugador ya está cedido a otro equipo. Probablemente otro mánager se adelantó.</message>
+	<message id="lending_hire_err_notoffered">El jugador ya no se ofrece en cesión.</message>
+	<message id="lending_hire_err_illegalduration">La duración de la cesión debe ser de entre %d y %d partidos.</message>
+	<message id="lending_hire_err_contractendingtoosoon">El contrato del jugador termina dentro de %d partidos. Por tanto, la cesión debe ser más corta.</message>
+	<message id="lending_hire_err_budget_too_low">Actualmente no puedes permitirte la cuota de cesión y el salario del jugador.</message>
 	
-	<message id="lending_hire_success">The player is now temporarily playing for your team!</message>
+	<message id="lending_hire_success">El jugador juega ahora temporalmente en tu equipo.</message>
 	
-	<message id="lending_fee_subject">Player Lending Fee</message>
+	<message id="lending_fee_subject">Cuota de cesión del jugador</message>
 	
-	<message id="lending_notification_lent">The player <strong>{player}</strong> is lent for <em>{matches}</em> matches to <strong>{newteam}</strong>.</message>
-	<message id="lending_notification_return">The borrowed player <strong>{player}</strong> returned from <strong>{borrower}</strong> to <strong>{lender}</strong>.</message>
+	<message id="lending_notification_lent">El jugador <strong>{player}</strong> es cedido durante <em>{matches}</em> partidos a <strong>{newteam}</strong>.</message>
+	<message id="lending_notification_return">El jugador cedido <strong>{player}</strong> ha regresado de <strong>{borrower}</strong> a <strong>{lender}</strong>.</message>
+	
+	<message id="lent_players">Jugadores cedidos</message>
+
+    <message id="loans_navlabel">Cesiones</message>
+    <message id="loans_intro">Aquí puedes ver jugadores cedidos, jugadores recibidos, tus propias ofertas y los jugadores disponibles para cesión. Los informes registran tiempo de juego, notas, evolución y posibles opciones de compra.</message>
+    <message id="loans_tab_loaned_out">Cedidos por nosotros</message>
+    <message id="loans_tab_borrowed">Recibidos por nosotros</message>
+    <message id="loans_tab_own_offers">Nuestras ofertas de cesión</message>
+    <message id="loans_tab_available">Jugadores disponibles para cesión</message>
+    <message id="loans_no_loaned_out">Actualmente tu club no tiene ningún jugador cedido.</message>
+    <message id="loans_no_borrowed">Actualmente tu club no tiene ningún jugador recibido en cesión.</message>
+    <message id="loans_no_offers">Actualmente no ofreces ningún jugador en cesión.</message>
+    <message id="loans_no_available">Actualmente no hay jugadores adecuados disponibles para cesión.</message>
+    <message id="loans_borrower">Club cesionario</message>
+    <message id="loans_lender">Club de origen</message>
+    <message id="loans_performance">Rendimiento</message>
+    <message id="loans_development">Evolución</message>
+    <message id="loans_destination_quality">Calidad de la cesión</message>
+    <message id="loans_minutes">Minutos</message>
+    <message id="loans_avg_grade">Nota media</message>
+    <message id="loans_salary_share">Parte salarial del club cesionario</message>
+    <message id="loans_salary_share_help">Entre el 50 % y el 100 %. El club cedente paga el resto por jornada.</message>
+    <message id="loans_buy_option">Condiciones de compra</message>
+    <message id="loans_buy_fee">Precio de compra</message>
+    <message id="loans_option_none">Sin opción de compra</message>
+    <message id="loans_option_buy_option">Opción de compra</message>
+    <message id="loans_option_buy_obligation">Compra obligatoria</message>
+    <message id="loans_recall_button">Recuperar</message>
+    <message id="loans_recall_not_available">La recuperación aún no está disponible</message>
+    <message id="loans_buy_button">Comprar</message>
+    <message id="lending_lendable_unmark_short">Retirar oferta</message>
+    <message id="lending_terms_limits">Cuota máxima de cesión por jornada: <strong>%s %s</strong>. Con opción de compra o compra obligatoria, el precio debe estar entre <strong>%s %s</strong> y <strong>%s %s</strong>.</message>
+    <message id="lending_err_fee_invalid">La cuota de cesión debe ser superior a 0.</message>
+    <message id="lending_err_fee_too_high">La cuota de cesión es demasiado alta. El máximo permitido es %s por jornada.</message>
+    <message id="lending_err_buy_fee_invalid">El precio de compra está fuera del intervalo permitido (%s a %s).</message>
+    <message id="lending_salary_share_subject">Parte salarial de la cesión</message>
+    <message id="lending_buy_fee_subject">Precio de compra de la cesión</message>
+    <message id="lending_recall_err_not_allowed">No puedes recuperar este jugador cedido.</message>
+    <message id="lending_recall_err_too_early">Solo se puede recuperar al jugador después de al menos 5 jornadas y si ha jugado demasiado poco.</message>
+    <message id="lending_recall_success">El jugador ha sido recuperado de la cesión.</message>
+    <message id="lending_buy_err_not_allowed">No puedes ejercer esta opción de compra.</message>
+    <message id="lending_buy_err_no_option">No se acordó ninguna opción de compra para esta cesión.</message>
+    <message id="lending_buy_err_budget">No se pudo completar la compra. El presupuesto es insuficiente.</message>
+    <message id="lending_buy_success">El jugador ha sido fichado de forma permanente.</message>
+    <message id="lending_notification_recalled">El jugador cedido <strong>{player}</strong> fue recuperado de <strong>{borrower}</strong> por <strong>{lender}</strong>.</message>
+    <message id="lending_notification_bought">El jugador cedido <strong>{player}</strong> fue fichado definitivamente por <strong>{borrower}</strong>. Su club de origen era <strong>{lender}</strong>.</message>
+    <message id="lending_notification_development">El jugador cedido <strong>{player}</strong> ha mejorado gracias a la práctica: +{bonus} en {attribute}.</message>
+    <message id="lending_notification_obligation_failed">No se pudo ejecutar la compra obligatoria de <strong>{player}</strong>. El presupuesto del club cesionario es insuficiente.</message>
+
+    <message id="borrow-player_request_intro">Indica el número de partidos deseado. Como el jugador pertenece a un club gestionado por un mánager, primero se creará una solicitud de cesión. El jugador solo se trasladará si el mánager cedente la acepta.</message>
+    <message id="lending_player_request_button">Enviar solicitud de cesión</message>
+    <message id="lending_request_send_success">La solicitud de cesión se ha creado. El mánager cedente puede aceptarla o rechazarla.</message>
+    <message id="lending_request_accept_success">La solicitud de cesión ha sido aceptada. El jugador ha sido cedido.</message>
+    <message id="lending_request_reject_success">La solicitud de cesión ha sido rechazada.</message>
+    <message id="lending_request_accept_button">Aceptar</message>
+    <message id="lending_request_reject_button">Rechazar</message>
+    <message id="lending_request_err_not_allowed">Esta solicitud de cesión ya no está disponible o no pertenece a tu club.</message>
+    <message id="lending_request_err_no_longer_available">El jugador ya no está disponible para esta cesión.</message>
+    <message id="lending_request_notification_received"><strong>{borrower}</strong> quiere tomar cedido a <strong>{player}</strong> durante <em>{matches}</em> partidos. Cuota: <strong>{fee}</strong> por jornada.</message>
+    <message id="lending_request_notification_accepted">Tu solicitud de cesión de <strong>{player}</strong> ha sido aceptada. El jugador será cedido durante <em>{matches}</em> partidos a <strong>{newteam}</strong>.</message>
+    <message id="lending_request_notification_rejected">Tu solicitud de cesión de <strong>{player}</strong> ha sido rechazada.</message>
+    <message id="loans_tab_incoming_requests">Solicitudes de cesión recibidas</message>
+    <message id="loans_tab_outgoing_requests">Nuestras solicitudes de cesión abiertas</message>
+    <message id="loans_no_incoming_requests">Actualmente no hay solicitudes de cesión abiertas para tus jugadores.</message>
+    <message id="loans_no_outgoing_requests">Actualmente no tienes solicitudes de cesión abiertas.</message>
+    <message id="loans_total_fee">Total</message>
+    <message id="settings_label_lending_cpu_offer_duration_days">Ofertas de cesión de CPU: duración en días</message>
+    <message id="settings_label_lending_cpu_offer_cooldown_days">Ofertas de cesión de CPU: bloqueo de nueva oferta en días</message>
+    <message id="settings_label_lending_cpu_request_expiry_days">Solicitudes de cesión de CPU: caducidad en días</message>
+
 </messages>

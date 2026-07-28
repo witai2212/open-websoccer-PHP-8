@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Equipa técnica</message>
+    <message id="entity_clubstaff">Membro da equipa técnica</message>
+    <message id="entity_clubstaff_name">Nome</message>
+    <message id="entity_clubstaff_name_help">Nome do membro da equipa técnica apresentado aos utilizadores.</message>
+    <message id="entity_clubstaff_role">Função</message>
+    <message id="entity_clubstaff_role_help">Define o pequeno bónus concedido por este membro da equipa técnica.</message>
+    <message id="entity_clubstaff_level">Nível</message>
+    <message id="entity_clubstaff_level_help">Nível de qualidade interno. Serve sobretudo de orientação para os administradores.</message>
+    <message id="entity_clubstaff_salary">Salário por jornada</message>
+    <message id="entity_clubstaff_salary_help">Montante cobrado por cada jornada relevante enquanto o membro da equipa técnica estiver contratado.</message>
+    <message id="entity_clubstaff_bonus">Bónus</message>
+    <message id="entity_clubstaff_bonus_help">Pequeno valor de bónus em pontos percentuais. Consoante a função, é aplicado aos sistemas correspondentes.</message>
+    <message id="entity_clubstaff_description">Descrição</message>
+    <message id="entity_clubstaff_description_help">Breve indicação sobre aquilo que este membro da equipa técnica faz particularmente bem.</message>
+    <message id="entity_clubstaff_active">Ativo</message>
+    <message id="entity_clubstaff_active_help">Os clubes só podem contratar membros da equipa técnica ativos.</message>
+
+</messages>

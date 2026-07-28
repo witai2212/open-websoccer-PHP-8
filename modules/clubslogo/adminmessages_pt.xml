@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_upload_clublogo_max_size">Carregamento do emblema do clube: tamanho máximo</message> 
+	<message id="settings_label_upload_clublogo_max_size_help">Se os utilizadores puderem carregar o seu próprio emblema do clube, pode indicar aqui o tamanho máximo do ficheiro de imagem em KBytes. Introduza 0 para desativar o carregamento de imagens.</message> 
+</messages>

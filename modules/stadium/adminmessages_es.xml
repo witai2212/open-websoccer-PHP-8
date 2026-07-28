@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_stadium">Estadios</message>
+    <message id="settings_label_stadium_max_side">Máx. grada lateral</message>
+	<message id="settings_label_stadium_max_side_help">Número máximo de plazas en las gradas laterales.</message>
+	
+	<message id="settings_label_stadium_max_grand">Máx. grada principal</message>
+	<message id="settings_label_stadium_max_grand_help">Número máximo de plazas en la grada principal.</message>
+
+	<message id="settings_label_stadium_max_vip">Máx. palcos VIP</message>
+	<message id="settings_label_stadium_max_vip_help">Número máximo de palcos VIP.</message>
+	
+	<message id="settings_label_stadium_cost_standing">Coste de ampliación de plaza de pie en grada lateral</message>
+	<message id="settings_label_stadium_cost_standing_help">por plaza. Estos costes se suman a los precios individuales de los distintos constructores.</message>
+	<message id="settings_label_stadium_cost_seats">Coste de ampliación de asiento en grada lateral</message>
+	<message id="settings_label_stadium_cost_seats_help">por plaza</message>
+	<message id="settings_label_stadium_cost_standing_grand">Coste de ampliación de plaza de pie en grada principal</message>
+	<message id="settings_label_stadium_cost_standing_grand_help">por plaza</message>
+	<message id="settings_label_stadium_cost_seats_grand">Coste de ampliación de asiento en grada principal</message>
+	<message id="settings_label_stadium_cost_seats_grand_help">por plaza</message>
+	<message id="settings_label_stadium_cost_vip">Coste de ampliación de palco VIP</message>
+	<message id="settings_label_stadium_cost_vip_help">por plaza</message>
+	
+	<message id="settings_label_stadium_construction_delay">Retraso de construcción en días</message>
+	<message id="settings_label_stadium_construction_delay_help">Posible retraso en la finalización de una ampliación del estadio si se elige un constructor poco fiable. Debe ser lo bastante alto como para que, al elegir constructor, también resulten atractivos los proveedores más caros pero fiables.</message>
+
+	<message id="settings_label_stadium_hide_builders_reliability">Ocultar la fiabilidad de los constructores en las ofertas.</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_pitch">Intervalo de mantenimiento del césped</message>
+	<message id="settings_label_stadium_maintenanceinterval_pitch_help">Partidos en casa. Número de partidos en casa tras el que disminuye la calidad del césped.</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_videowall">Intervalo de mantenimiento de la pantalla gigante</message>
+	<message id="settings_label_stadium_maintenanceinterval_videowall_help">Partidos en casa</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_seatsquality">Intervalo de mantenimiento de asientos</message>
+	<message id="settings_label_stadium_maintenanceinterval_seatsquality_help">Partidos en casa</message>
+	
+	<message id="settings_label_stadium_maintenanceinterval_vipquality">Intervalo de mantenimiento de palcos VIP</message>
+	<message id="settings_label_stadium_maintenanceinterval_vipquality_help">Partidos en casa</message>
+	
+	<message id="settings_label_stadium_pitch_price">Costes de mantenimiento del césped</message>
+	<message id="settings_label_stadium_pitch_price_help">Coste de mejora al primer nivel. Para los niveles posteriores se aplica el recargo indicado abajo.</message>
+	
+	<message id="settings_label_stadium_videowall_price">Costes de mantenimiento de la pantalla gigante</message>
+	<message id="settings_label_stadium_seatsquality_price">Costes de mantenimiento de asientos (por asiento)</message>
+	<message id="settings_label_stadium_vipquality_price">Costes de mantenimiento de palcos VIP (por palco)</message>
+	
+	<message id="settings_label_stadium_maintenance_priceincrease_per_level">Recargo de mantenimiento por nivel</message>
+	<message id="settings_label_stadium_maintenance_priceincrease_per_level_help">Porcentaje; recargo acumulado sobre los costes de mantenimiento. Ejemplo: 10% significa un recargo del 40% al mejorar al nivel 5 (coste del nivel 1 + 10% + 10% + 10% + 10%). 0 para no aplicar recargo.</message>
+
+	<message id="settings_label_stadium_pitch_effect">Efecto del estado del césped</message>
+	<message id="settings_label_stadium_pitch_effect_help">Puntos porcentuales de técnica que pierde el equipo local por cada nivel que falta en los partidos en casa.</message>
+	
+	<message id="settings_label_stadium_videowall_effect">Efecto de la pantalla gigante</message>
+	<message id="settings_label_stadium_videowall_effect_help">Puntos porcentuales de espectadores adicionales que acuden a los partidos en casa por nivel.</message>
+	
+	<message id="settings_label_stadium_seatsquality_effect">Efecto del estado de los asientos</message>
+	<message id="settings_label_stadium_seatsquality_effect_help">Puntos porcentuales de espectadores menos que acuden a los partidos en casa por cada nivel que falta.</message>
+	
+	<message id="settings_label_stadium_vipquality_effect">Efecto del estado de los palcos VIP</message>
+	<message id="settings_label_stadium_vipquality_effect_help">Puntos porcentuales de espectadores menos que acuden a los partidos en casa por cada nivel que falta.</message>
+</messages>

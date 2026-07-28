@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<messages>
+    <message id="tacticaldna_navlabel">ADN táctico</message>
+    <message id="tacticaldna_team_tab">ADN táctico</message>
+    <message id="tacticaldna_title">ADN táctico</message>
+    <message id="tacticaldna_intro">El ADN táctico describe el estilo de juego preferido del club. Evalúa cómo encaja la plantilla con ese estilo, influye en la química del equipo y tiene un pequeño efecto en la simulación de partidos.</message>
+    <message id="tacticaldna_schema_missing">Todavía faltan las columnas de base de datos para el ADN táctico. Ejecuta primero la actualización SQL.</message>
+    <message id="tacticaldna_current_style">Estilo actual</message>
+    <message id="tacticaldna_style_comparison">Comparación de estilos</message>
+    <message id="tacticaldna_transition_effect">Adaptación de química</message>
+    <message id="tacticaldna_change_preview">Química tras el cambio</message>
+    <message id="tacticaldna_change_help">Cambiar de estilo puede mejorar la química si el nuevo estilo encaja mejor con la plantilla. Si encaja mal, la química baja y solo se recupera con partidos o un estilo más adecuado.</message>
+    <message id="tacticaldna_recommended">Recomendado</message>
+    <message id="tacticaldna_staff_advice_title">Recomendación del cuerpo técnico</message>
+    <message id="tacticaldna_staff_recommendation">El segundo entrenador recomienda cambiar a {style}. El ajuste de la plantilla sería del {fit}%, {diff} puntos más alto.</message>
+    <message id="tacticaldna_staff_no_change">El cuerpo técnico no ve actualmente ninguna necesidad clara de cambiar de estilo.</message>
+    <message id="tacticaldna_staff_missing">Sin segundo entrenador no hay recomendación del cuerpo técnico sobre el ADN táctico.</message>
+    <message id="tacticaldna_saved_positive">ADN táctico guardado: {style}. Ajuste de plantilla: {fit}%. Efecto sobre la química: {chemistry}.</message>
+    <message id="tacticaldna_saved_negative">ADN táctico guardado: {style}. Ajuste de plantilla: {fit}%. La adaptación perjudica inicialmente la química ({chemistry}).</message>
+    <message id="tacticaldna_saved_no_change">ADN táctico actualizado. No es necesario cambiar de estilo.</message>
+    <message id="tacticaldna_invalid_style">Estilo de juego no válido.</message>
+    <message id="tacticaldna_no_permission">No tienes permiso para cambiar el ADN táctico de este club.</message>
+    <message id="tacticaldna_no_team">Club no encontrado.</message>
+    <message id="tacticaldna_not_enabled">El ADN táctico está desactivado.</message>
+
+    <message id="formation_tacticalstyle_title">ADN táctico</message>
+    <message id="formation_tacticalstyle_select">Estilo de juego</message>
+    <message id="formation_tacticalstyle_fit">Compatibilidad</message>
+    <message id="formation_tacticalstyle_effect_help">El ADN táctico solo tiene un pequeño efecto en los partidos y premia sobre todo un buen ajuste entre estilo, plantilla, entrenamiento y cuerpo técnico.</message>
+    <message id="tacticalstyle_balanced">Equilibrado</message>
+    <message id="tacticalstyle_balanced_help">Estilo neutral sin especialización estricta. La fuerza base, la técnica, la resistencia, el pase, la entrada y la frescura cuentan por igual.</message>
+    <message id="tacticalstyle_pressing">Presión</message>
+    <message id="tacticalstyle_pressing_help">La resistencia, la velocidad, las entradas y la mentalidad aumentan el efecto de este estilo de alta intensidad.</message>
+    <message id="tacticalstyle_possession">Posesión</message>
+    <message id="tacticalstyle_possession_help">El pase, la creatividad y la técnica ayudan a controlar el partido.</message>
+    <message id="tacticalstyle_defensive">Defensivo</message>
+    <message id="tacticalstyle_defensive_help">La entrada, el cabeceo, la resistencia y los jugadores influyentes refuerzan un estilo defensivo compacto.</message>
+    <message id="tacticalstyle_physical">Físico</message>
+    <message id="tacticalstyle_physical_help">La fuerza general, el juego aéreo, la resistencia y las entradas hacen este estilo más eficaz.</message>
+    <message id="tacticalstyle_counterattack">Contraataque</message>
+    <message id="tacticalstyle_counterattack_help">La velocidad, la definición, el pase y la frescura encajan especialmente bien con las transiciones rápidas.</message>
+    <message id="tacticalstyle_fit_good">Tu plantilla encaja muy bien con este estilo.</message>
+    <message id="tacticalstyle_fit_neutral">Tu plantilla encaja razonablemente bien con este estilo.</message>
+    <message id="tacticalstyle_fit_bad">Actualmente este estilo solo encaja parcialmente con tu plantilla.</message>
+    <message id="tacticalstyle_news_title">Nuevo ADN táctico</message>
+    <message id="tacticalstyle_news_message">{team} cambia su ADN táctico de {oldstyle} a {newstyle}. El ajuste actual de la plantilla es del {fit}% y el efecto directo sobre la química es de {chemistry}.</message>
+    <message id="tacticalstyle_news_link">Ir al club</message>
+
+    <message id="teamchemistry_factor_tactical_style">ADN táctico</message>
+    <message id="teamchemistry_source_tactical_style">ADN táctico</message>
+</messages>

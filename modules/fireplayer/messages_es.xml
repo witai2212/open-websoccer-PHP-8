@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
+    
     <message id="fireplayer_button">Despedir</message>
     
-    <message id="fireplayer_modal_title">Realmente quiere despedir a este jugador?</message>
-    <message id="fireplayer_modal_content">¿De verdad quieres renunciar al contrato de %s</message>
-    <message id="fireplayer_modal_confirm">Sí, Despedir</message>
+    <message id="fireplayer_modal_title">¿Despedir al jugador?</message>
+    <message id="fireplayer_modal_content">¿Realmente quieres rescindir de inmediato el contrato de %s?</message>
+    <message id="fireplayer_modal_confirm">Sí, despedir</message>
     
-    <message id="fireplayer_modal_compensation">El jugador reclama una compensación de <strong>%s %s</strong>!</message>
-    <message id="fireplayer_tooexpensive">No se puede pagar la indemnización solicitada en este momento.</message>
+    <message id="fireplayer_modal_compensation">El jugador exige una indemnización de <strong>%s %s</strong>.</message>
+    <message id="fireplayer_tooexpensive">Actualmente no puedes permitirte la indemnización solicitada.</message>
     
-    <message id="fireplayer_success">El jugador ha sido despedido con éxito.</message>
+    <message id="fireplayer_success">El jugador ha sido despedido correctamente.</message>
     
-    <message id="fireplayer_compensation_subject">Indemnización por pérdida de trabajo</message>
+    <message id="fireplayer_compensation_subject">Indemnización por despido anticipado</message>
+    
     
 </messages>

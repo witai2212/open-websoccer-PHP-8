@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="lending_player_marker_tooltip">O jogador está emprestado</message>
+    <message id="lending_player_marker_lendable">O jogador está disponível para empréstimo</message>
+    
+    <message id="lending_lend_button">Disponibilizar para empréstimo</message>
+    <message id="lending_lendable_unmark">O jogador está disponível para empréstimo (taxa de empréstimo: %d). Remover oferta.</message>
+    
+    <message id="lend-player_navlabel">Emprestar jogador</message>
+    <message id="lend-player_intro">Disponibiliza aqui o jogador para empréstimo. Qualquer clube interessado poderá então contratá-lo por até <strong>%d</strong> jogos mediante a taxa de empréstimo indicada. O empréstimo entra imediatamente em vigor assim que um clube aceitar as condições. A percentagem salarial e eventuais opções de compra são definidas na oferta de empréstimo.</message>
+
+	<message id="lend_player_success">O jogador está agora disponível para empréstimo.</message>
+	
+	<message id="lending_err_notownplayer">O jogador já não pertence ao teu plantel.</message>
+	<message id="lending_err_alreadyoffered">O jogador já está disponível para empréstimo.</message>
+	<message id="lending_err_borrowed_player">Não podes emprestar o jogador porque tu próprio apenas o recebeste por empréstimo.</message>
+	<message id="lending_err_on_transfermarket">O jogador está atualmente no mercado de transferências. Por isso, não o podes emprestar nem receber por empréstimo.</message>
+	<message id="lending_err_teamsize_too_small">Atualmente tens poucos jogadores no plantel (%d) para deixares sair mais jogadores.</message>
+	<message id="lending_err_contract_too_short">O contrato do jogador termina em breve. Por isso, já não o podes emprestar.</message>
+
+	<message id="lending_lendable_unmark_success">O jogador já não está disponível para empréstimo.</message>
+	
+	<message id="lending_player_lendable_info">O jogador pode ser recebido por empréstimo por <strong>%s</strong> por jornada.</message>
+	<message id="lending_player_hire_button">Receber por empréstimo</message>
+	
+	<message id="borrow-player_navlabel">Receber jogador por empréstimo</message>
+	<message id="borrow-player_intro">Indica o número de jogos pretendido e o jogador juntar-se-á imediatamente à tua equipa durante esse período. A taxa de empréstimo para toda a duração é devida de imediato. Também pagas a percentagem salarial definida na oferta de empréstimo.</message>
+
+	<message id="lending_matches_durationhelp">Número entre %d e %d.</message>
+	
+	<message id="lending_hire_err_ownplayer">O jogador já está na tua equipa.</message>
+	<message id="lending_hire_err_borrowed_player">O jogador já está emprestado a outra equipa. Provavelmente outro treinador foi mais rápido.</message>
+	<message id="lending_hire_err_notoffered">O jogador já não está disponível para empréstimo.</message>
+	<message id="lending_hire_err_illegalduration">A duração do empréstimo tem de ser entre %d e %d jogos.</message>
+	<message id="lending_hire_err_contractendingtoosoon">O contrato do jogador termina dentro de %d jogos. A duração do empréstimo tem, por isso, de ser inferior.</message>
+	<message id="lending_hire_err_budget_too_low">Atualmente não podes pagar a taxa de empréstimo e o salário do jogador.</message>
+	
+	<message id="lending_hire_success">O jogador joga agora temporariamente na tua equipa!</message>
+	
+	<message id="lending_fee_subject">Taxa de empréstimo do jogador</message>
+	
+	<message id="lending_notification_lent">O jogador <strong>{player}</strong> é emprestado por <em>{matches}</em> jogos ao <strong>{newteam}</strong>.</message>
+	<message id="lending_notification_return">O jogador emprestado <strong>{player}</strong> regressou do <strong>{borrower}</strong> ao <strong>{lender}</strong>.</message>
+	
+	<message id="lent_players">Jogadores emprestados</message>
+
+    <message id="loans_navlabel">Empréstimos</message>
+    <message id="loans_intro">Aqui podes ver jogadores emprestados, jogadores recebidos por empréstimo, as tuas próprias ofertas e jogadores disponíveis. Os relatórios de empréstimo registam tempo de jogo, notas, evolução e eventuais opções de compra.</message>
+    <message id="loans_tab_loaned_out">Emprestados por nós</message>
+    <message id="loans_tab_borrowed">Recebidos por nós</message>
+    <message id="loans_tab_own_offers">As nossas ofertas de empréstimo</message>
+    <message id="loans_tab_available">Jogadores disponíveis para empréstimo</message>
+    <message id="loans_no_loaned_out">Atualmente nenhum jogador do teu clube está emprestado.</message>
+    <message id="loans_no_borrowed">Atualmente o teu clube não tem nenhum jogador recebido por empréstimo.</message>
+    <message id="loans_no_offers">Atualmente não disponibilizas nenhum jogador para empréstimo.</message>
+    <message id="loans_no_available">Atualmente não existem jogadores adequados disponíveis para empréstimo.</message>
+    <message id="loans_borrower">Clube que recebe</message>
+    <message id="loans_lender">Clube de origem</message>
+    <message id="loans_performance">Desempenho</message>
+    <message id="loans_development">Evolução</message>
+    <message id="loans_destination_quality">Qualidade do empréstimo</message>
+    <message id="loans_minutes">Minutos</message>
+    <message id="loans_avg_grade">Nota média</message>
+    <message id="loans_salary_share">Percentagem salarial do clube que recebe</message>
+    <message id="loans_salary_share_help">Entre 50% e 100%. O clube de origem paga o restante por jornada.</message>
+    <message id="loans_buy_option">Condições de compra</message>
+    <message id="loans_buy_fee">Preço de compra</message>
+    <message id="loans_option_none">Sem opção de compra</message>
+    <message id="loans_option_buy_option">Opção de compra</message>
+    <message id="loans_option_buy_obligation">Obrigação de compra</message>
+    <message id="loans_recall_button">Rechamar</message>
+    <message id="loans_recall_not_available">Rechamada ainda indisponível</message>
+    <message id="loans_buy_button">Comprar</message>
+    <message id="lending_lendable_unmark_short">Remover oferta</message>
+    <message id="lending_terms_limits">Taxa máxima de empréstimo por jornada: <strong>%s %s</strong>. Com opção ou obrigação de compra, o preço tem de ficar entre <strong>%s %s</strong> e <strong>%s %s</strong>.</message>
+    <message id="lending_err_fee_invalid">A taxa de empréstimo tem de ser superior a 0.</message>
+    <message id="lending_err_fee_too_high">A taxa de empréstimo é demasiado elevada. O máximo permitido é %s por jornada.</message>
+    <message id="lending_err_buy_fee_invalid">O preço de compra está fora do intervalo permitido (%s a %s).</message>
+    <message id="lending_salary_share_subject">Percentagem salarial do empréstimo</message>
+    <message id="lending_buy_fee_subject">Preço de compra do empréstimo</message>
+    <message id="lending_recall_err_not_allowed">Não tens autorização para rechamar este empréstimo.</message>
+    <message id="lending_recall_err_too_early">Uma rechamada só é possível após pelo menos 5 jornadas e apenas se o jogador tiver sido pouco utilizado.</message>
+    <message id="lending_recall_success">O jogador foi rechamado do empréstimo.</message>
+    <message id="lending_buy_err_not_allowed">Não tens autorização para exercer esta opção de compra.</message>
+    <message id="lending_buy_err_no_option">Não foi acordada qualquer opção de compra para este empréstimo.</message>
+    <message id="lending_buy_err_budget">A compra não pôde ser concluída. O orçamento é insuficiente.</message>
+    <message id="lending_buy_success">O jogador foi contratado em definitivo.</message>
+    <message id="lending_notification_recalled">O jogador emprestado <strong>{player}</strong> foi rechamado do <strong>{borrower}</strong> para o <strong>{lender}</strong>.</message>
+    <message id="lending_notification_bought">O jogador emprestado <strong>{player}</strong> foi contratado em definitivo pelo <strong>{borrower}</strong>. O clube de origem era o <strong>{lender}</strong>.</message>
+    <message id="lending_notification_development">O jogador emprestado <strong>{player}</strong> melhorou com a prática de jogo: +{bonus} em {attribute}.</message>
+    <message id="lending_notification_obligation_failed">A obrigação de compra de <strong>{player}</strong> não pôde ser executada. O orçamento do clube que recebeu o jogador é insuficiente.</message>
+
+    <message id="borrow-player_request_intro">Indica o número de jogos pretendido. Como o jogador pertence a um clube gerido por um treinador, será primeiro criado um pedido de empréstimo. O jogador só mudará se o treinador do clube de origem aceitar o pedido.</message>
+    <message id="lending_player_request_button">Enviar pedido de empréstimo</message>
+    <message id="lending_request_send_success">O pedido de empréstimo foi criado. O treinador do clube de origem pode agora aceitá-lo ou rejeitá-lo.</message>
+    <message id="lending_request_accept_success">O pedido de empréstimo foi aceite. O jogador foi emprestado.</message>
+    <message id="lending_request_reject_success">O pedido de empréstimo foi rejeitado.</message>
+    <message id="lending_request_accept_button">Aceitar</message>
+    <message id="lending_request_reject_button">Rejeitar</message>
+    <message id="lending_request_err_not_allowed">Este pedido de empréstimo já não está disponível ou não pertence ao teu clube.</message>
+    <message id="lending_request_err_no_longer_available">O jogador já não está disponível para este empréstimo.</message>
+    <message id="lending_request_notification_received">O <strong>{borrower}</strong> pretende receber <strong>{player}</strong> por empréstimo durante <em>{matches}</em> jogos. Taxa: <strong>{fee}</strong> por jornada.</message>
+    <message id="lending_request_notification_accepted">O teu pedido de empréstimo de <strong>{player}</strong> foi aceite. O jogador será emprestado por <em>{matches}</em> jogos ao <strong>{newteam}</strong>.</message>
+    <message id="lending_request_notification_rejected">O teu pedido de empréstimo de <strong>{player}</strong> foi rejeitado.</message>
+    <message id="loans_tab_incoming_requests">Pedidos de empréstimo recebidos</message>
+    <message id="loans_tab_outgoing_requests">Os nossos pedidos de empréstimo em aberto</message>
+    <message id="loans_no_incoming_requests">Atualmente não existem pedidos de empréstimo em aberto pelos teus jogadores.</message>
+    <message id="loans_no_outgoing_requests">Atualmente não tens pedidos de empréstimo em aberto.</message>
+    <message id="loans_total_fee">Total</message>
+    <message id="settings_label_lending_cpu_offer_duration_days">Ofertas de empréstimo da CPU: duração em dias</message>
+    <message id="settings_label_lending_cpu_offer_cooldown_days">Ofertas de empréstimo da CPU: bloqueio de nova listagem em dias</message>
+    <message id="settings_label_lending_cpu_request_expiry_days">Pedidos de empréstimo da CPU: expiração após dias</message>
+
+</messages>

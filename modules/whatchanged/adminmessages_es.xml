@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_what_changed_enabled">Activar panel ¿Qué ha pasado?</message>
+    <message id="settings_label_what_changed_enabled_help">Crea un resumen compacto con una noticia y una notificación después de cada partido de un club dirigido por una persona.</message>
+</messages>

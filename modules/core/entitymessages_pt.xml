@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_admin">Administradores</message>
+	<message id="entity_admin_name">Nome de utilizador</message>
+	<message id="entity_admin_passwort">Palavra-passe</message>
+	<message id="entity_admin_email">Correio eletrónico</message>
+	<message id="entity_admin_r_admin">É administrador</message>
+	<message id="entity_admin_r_adminuser">Permissões: pode gerir administradores</message>
+	<message id="entity_admin_r_user">Permissões: pode gerir utilizadores</message>
+	<message id="entity_admin_r_daten">Permissões: pode gerir os dados do jogo</message>
+	<message id="entity_admin_r_staerken">Permissões: pode ver e editar as capacidades dos jogadores</message>
+	<message id="entity_admin_r_spiele">Permissões: pode gerir jogos</message>
+	<message id="entity_admin_r_news">Permissões: pode gerir notícias</message>
+	<message id="entity_admin_r_kalender">Permissões: pode gerir o calendário</message>
+	<message id="entity_admin_r_design">Permissões: pode alterar ficheiros de design</message>
+	<message id="entity_admin_r_demo"><em>É utilizador de demonstração</em> (não pode guardar alterações)</message>
+</messages>

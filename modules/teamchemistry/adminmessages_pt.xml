@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_team_chemistry_enabled">Ativar química da equipa</message>
+    <message id="settings_label_team_chemistry_enabled_help">Ativa o valor de química da equipa, a página de química e os pequenos efeitos na simulação.</message>
+    <message id="settings_label_team_chemistry_max_match_effect">Efeito máximo da química na simulação</message>
+    <message id="settings_label_team_chemistry_max_match_effect_help">Predefinição: 3. O valor é utilizado como um pequeno efeito percentual/em pontos sobre o passe, a moral e a estabilidade.</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days">Período para novas transferências</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days_help">As transferências neste período reduzem ligeiramente a química, para que demasiados jogadores novos não funcionem imediatamente em perfeita harmonia.</message>
+    <message id="settings_label_team_chemistry_formation_history_count">Número de alinhamentos para entrosamento</message>
+    <message id="settings_label_team_chemistry_formation_history_count_help">Este número de alinhamentos recentes é verificado para avaliar o entrosamento com a formação.</message>
+    <message id="teamchemistry_factor_tactical_style">ADN tático</message>
+    <message id="teamchemistry_source_tactical_style">ADN tático</message>
+    <message id="teamchemistry_score">Química</message>
+    <message id="teamchemistry_match_effect">Efeito no jogo</message>
+</messages>

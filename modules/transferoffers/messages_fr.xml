@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="transferoffer_button">Faire une offre d'achat</message>
+    
+    <message id="transferoffer_modal_title">Offre de transfert</message>
+    
+    <message id="transferoffer_label_amount">Indemnité de transfert</message>
+    <message id="transferoffer_label_comment">Commentaire</message>
+    <message id="transferoffer_label_fieldset_playerexchange">Échange de joueurs (facultatif)</message>
+    <message id="transferoffer_label_exchangeplayer1">Joueur</message>
+    <message id="transferoffer_label_exchangeplayer2">2e joueur</message>
+    
+    <message id="transferoffer_label_fieldset_contract">Conditions contractuelles</message>
+    
+    <message id="transferoffer_err_ownplayer">Le joueur fait déjà partie de votre équipe.</message>
+    <message id="transferoffer_err_nomanager">Le club du joueur n'a actuellement aucun manager. Les offres de transfert ne peuvent donc pas être traitées.</message>
+    <message id="transferoffer_err_unsellable">Le joueur a été marqué comme non transférable par son manager ou a déjà été placé sur le marché des transferts.</message>
+    
+    <message id="transferoffer_err_open_offers_exist">Le manager a encore des offres d'achat de votre part sans réponse. Vous ne pouvez envoyer qu'une seule demande d'achat par manager à la fois. Attendez qu'il accepte ou refuse votre demande précédente.</message>
+    
+    <message id="transferoffer_err_noalternative_allowed">Le manager a indiqué qu'il ne souhaitait plus recevoir d'offre de votre part pour ce joueur.</message>
+    
+    <message id="transferoffer_err_transferstop">Le joueur ne peut actuellement pas changer d'équipe en raison d'une interdiction de transfert de %d jours.</message>
+    
+    <message id="transferoffer_err_exchangeplayer_on_transfermarket">Le joueur proposé en échange, %s, figure actuellement sur le marché des transferts et n'est donc pas disponible pour un échange.</message>
+    <message id="transferoffer_err_exchangeplayer_involved_in_other_offers">Le joueur d'échange, %s, a déjà été proposé dans une autre offre. Retirez cette offre ou choisissez un autre joueur.</message>
+	<message id="transferoffer_err_exchangeplayer_transferstop">Le joueur d'échange, %s, ne peut pas encore changer d'équipe en raison d'une interdiction de transfert.</message>
+    
+	<message id="transferoffer_err_totaloffers_too_high">Votre budget ne suffit pas pour cette offre. Réduisez-la ou retirez d'autres offres ouvertes.</message>
+
+	<message id="transferoffer_err_salary_too_high">Vous ne pouvez pas actuellement financer le salaire du joueur.</message>
+	
+	<message id="transferoffer_submitted_title">Offre soumise avec succès !</message>
+	<message id="transferoffer_submitted_message">Le manager du joueur reçoit une notification et doit accepter ou refuser votre offre.</message>
+
+	<message id="transferoffers_navlabel">Offres de transfert</message>
+	<message id="transferoffers_tab_received">Offres reçues</message>
+	<message id="transferoffers_tab_sent">Offres envoyées</message>
+	
+	<message id="transferoffers_no_received_offers">Aucune offre ouverte d'autres managers n'est actuellement disponible.</message>
+	<message id="transferoffers_no_sent_offers">Vous n'avez actuellement aucune offre ouverte.</message>
+	
+	<message id="transferoffers_offer_reaction">Réponse</message>
+	<message id="transferoffers_offer_reaction_accept">Accepter</message>
+	<message id="transferoffers_offer_reaction_reject">Refuser</message>
+	<message id="transferoffers_offer_status_adminapprovalpending">En attente de validation</message>
+	<message id="transferoffers_offer_status_rejected">refusée</message>
+	
+	<message id="transferoffers_offer_showcomment">Afficher le commentaire</message>
+	<message id="transferoffers_offer_comment_title">%s a écrit :</message>
+	<message id="transferoffers_offer_accept_success">L'offre a été acceptée.</message>
+	
+	<message id="transferoffer_accepted_title">L'offre a été acceptée !</message>
+	<message id="transferoffer_accepted_message">Le joueur a changé d'équipe avec succès.</message>
+	<message id="transferoffer_accepted_message_approvalpending">La validation manuelle d'un administrateur est encore en attente.</message>
+
+	<message id="transferoffer_accept_err_exchangeplayer_on_transfermarket">Le joueur d'échange proposé, %s, a depuis été placé sur le marché des transferts. Le transfert ne peut donc pas être effectué actuellement.</message>
+	<message id="transferoffer_accept_err_exchangeplayer_notinteam">Le joueur d'échange proposé, %s, ne fait plus partie de l'équipe du manager ayant fait l'offre. Celle-ci ne peut donc pas être exécutée en l'état.</message>
+	<message id="transferoffer_accept_err_exchangeplayer_salarytoohigh">Vous ne pouvez pas actuellement financer le salaire du joueur d'échange %s.</message>
+
+	<message id="transferoffers_sent_cancellation">Retrait</message>
+	<message id="transferoffers_offer_cancellation_button">Retirer</message>
+	<message id="transferoffers_offer_cancellation_notfound">L'offre a été supprimée ou déjà exécutée.</message>
+	<message id="transferoffers_offer_cancellation_success">L'offre a été retirée avec succès.</message>
+	
+	<message id="transferoffer_reject_modal_title">Refuser l'offre</message>
+	<message id="transferoffer_reject_label_comment">Motif (facultatif)</message>
+	<message id="transferoffer_reject_label_allow_alternative">L'utilisateur peut soumettre une offre alternative.</message>
+	<message id="transferoffers_offer_reject_success">L'offre a été refusée avec succès.</message>
+	
+	<message id="directtransfer_subject">Transfert de joueur</message>
+	
+	<message id="transferoffer_notification_offerreceived"><strong>{sendername}</strong> vous a fait une offre d'achat pour un joueur.</message>
+	<message id="transferoffer_notification_executed">Le transfert convenu du joueur <strong>{playername}</strong> a été effectué.</message>
+	<message id="transferoffer_notification_rejected"><strong>{receivername}</strong> a refusé votre offre d'achat pour <strong>{playername}</strong>.</message>
+	
+	<message id="myoffers_navlabel">Offres de transfert</message>
+	<message id="myoffers_title">Offres de transfert</message>
+	<message id="offertable_head_player">Joueur</message>
+	<message id="offertable_head_position">Poste</message>
+	<message id="offertable_head_transfer_fee">Indemnité de transfert</message>
+	<message id="offertable_head_market_value">Valeur marchande</message>
+	<message id="offertable_head_enddate">Fin de l'offre</message>
+	<message id="offertable_bidder">Enchérisseur</message>
+	<message id="offer_accept">Accepter</message>
+	<message id="offer_reject">Refuser</message>
+	<message id="offertable_team_name">Club</message>
+	
+	<message id="mybids_navlabel">Mes offres</message>
+	<message id="mybids_title">Mes offres</message>
+	
+	<message id="player_bought_message">Joueur acheté.</message>
+	<message id="player_sold_message">Joueur vendu.</message>
+	<message id="player_transfer_message">Transfert de joueur</message>
+	
+	<message id="myplayers_on_transferlist">Vos joueurs sur le marché des transferts</message>
+	<message id="remove-player-from-transfermarket">Retirer le joueur du marché des transferts</message>
+	
+	<message id="transfer_violation">Infraction aux règles de transfert</message>
+	<message id="transfer_violation_notification">Vous avez enfreint les règles de transfert. La sanction est de : <strong>{penalty}</strong></message>
+
+    <message id="transferoffer_partner_cpu_cash_only">Seules les offres entièrement en espèces sont possibles avec un club partenaire contrôlé par l'IA.</message>
+    <message id="transferoffer_partner_cpu_accepted">Le club partenaire contrôlé par l'IA a accepté l'offre. Le transfert a été effectué immédiatement.</message>
+    <message id="transferoffer_partner_cpu_rejected">Le club partenaire contrôlé par l'IA a refusé l'offre. Un message contenant la décision a été envoyé.</message>
+    <message id="transferoffer_partner_cpu_rejection_reason">L'offre ne correspond pas à la planification actuelle de l'effectif et de la valeur marchande du club partenaire.</message>
+</messages>

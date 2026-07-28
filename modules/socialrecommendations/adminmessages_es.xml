@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_social_likebutton_twitter">Incluir el botón de recomendación de Twitter.</message> 
+	<message id="settings_label_social_likebutton_werkenntwen">Incluir el botón de recomendación de wer-kennt-wen.de.</message> 
+	<message id="settings_label_social_likebutton_xing">Incluir el botón de recomendación de XING.</message> 
+</messages>

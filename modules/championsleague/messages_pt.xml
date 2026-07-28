@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="championsleague_navlabel">Liga dos Campeões</message>
+	<message id="championsleague_title">Liga dos Campeões</message>
+
+	<message id="champions_league_select_phase">Selecionar grupo ou fase</message>
+	<message id="champions_select_choose">Selecione</message>
+	<message id="champions_league_groupa">Grupo A</message>
+	<message id="champions_league_groupb">Grupo B</message>
+	<message id="champions_league_groupc">Grupo C</message>
+	<message id="champions_league_groupd">Grupo D</message>
+	<message id="champions_league_round1">Primeira ronda</message>
+	<message id="champions_league_afinal">Oitavos de final</message>
+	<message id="champions_league_qfinal">Quartos de final</message>
+	<message id="champions_league_sfinal">Meias-finais</message>
+	<message id="champions_league_final">Final</message>
+
+	<message id="group_title_a">Grupo A</message>
+	<message id="group_title_b">Grupo B</message>
+	<message id="group_title_c">Grupo C</message>
+	<message id="group_title_d">Grupo D</message>
+	<message id="1round_title">Primeira ronda</message>
+	<message id="afinal_title">Oitavos de final</message>
+	<message id="qfinal_title">Quartos de final</message>
+	<message id="sfinal_title">Meias-finais</message>
+	<message id="final_title">Final</message>
+
+	<message id="championsleague_intro">Todos os grupos, eliminatórias, resultados e próximos jogos da Liga dos Campeões num só local.</message>
+	<message id="championsleague_no_cup_found">A Liga dos Campeões não foi encontrada na configuração das taças.</message>
+	<message id="championsleague_current_phase">Vista atual</message>
+	<message id="championsleague_matches_played">Jogos disputados</message>
+	<message id="championsleague_participants">Participantes</message>
+	<message id="championsleague_teams">Clubes</message>
+	<message id="championsleague_rounds">Rondas</message>
+	<message id="championsleague_rounds_subtitle">incluindo a fase de grupos</message>
+	<message id="championsleague_winner">Detentor do título</message>
+	<message id="championsleague_winner_open">ainda por decidir</message>
+	<message id="championsleague_prize_winner">Prémio do vencedor</message>
+	<message id="championsleague_my_club">O meu clube</message>
+	<message id="championsleague_still_in_competition">Participantes</message>
+	<message id="championsleague_not_participating">não participa na competição</message>
+	<message id="championsleague_my_group">Grupo</message>
+	<message id="championsleague_my_next_match">Próximo jogo</message>
+	<message id="championsleague_my_last_match">Último jogo</message>
+	<message id="championsleague_standings">Classificação</message>
+	<message id="championsleague_fixtures">Calendário</message>
+	<message id="championsleague_latest_results">Resultados mais recentes</message>
+	<message id="championsleague_next_matches">Próximos jogos</message>
+	<message id="championsleague_no_group_table">Ainda não existe uma classificação para este grupo.</message>
+
+	<message id="championsleague_grouptable_team">Clube</message>
+	<message id="championsleague_grouptable_matches">J</message>
+	<message id="championsleague_grouptable_points">Pontos</message>
+	<message id="championsleague_grouptable_wins">Vitórias</message>
+	<message id="championsleague_grouptable_draws">Emp.</message>
+	<message id="championsleague_grouptable_losses">Der.</message>
+	<message id="championsleague_grouptable_goals">Golos</message>
+	<message id="championsleague_grouptable_goalsreceived">Golos sofridos</message>
+	<message id="championsleague_grouptable_goaldiff">Dif.</message>
+</messages>

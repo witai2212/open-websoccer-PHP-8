@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_enable_player_resignation">Les utilisateurs peuvent libérer des joueurs.</message> 
+	<message id="settings_label_player_resignation_compensation_matches">Indemnité de licenciement</message> 
+	<message id="settings_label_player_resignation_compensation_matches_help">Nombre de matchs pour lesquels une indemnité doit être versée au joueur en cas de licenciement anticipé. 0 signifie aucune indemnité.</message> 
+</messages>

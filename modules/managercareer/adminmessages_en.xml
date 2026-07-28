@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="managercareer_admin_navlabel">Manager career</message>
+    <message id="managercareer_admin_title">Manager career</message>
+    <message id="managercareer_admin_intro">Monitor applications, dismissal risks, manager contracts and awards.</message>
+    <message id="managercareer_admin_tab_applications">Applications</message>
+    <message id="managercareer_admin_tab_sackrisk">Dismissal risk</message>
+    <message id="managercareer_admin_tab_awards">Awards</message>
+    <message id="managercareer_admin_tab_settings">Settings</message>
+    <message id="managercareer_admin_open_applications">Open applications</message>
+    <message id="managercareer_admin_recent_applications">Latest decisions</message>
+    <message id="managercareer_admin_no_open_applications">There are currently no open applications.</message>
+    <message id="managercareer_admin_no_recent_applications">No decided applications are available yet.</message>
+    <message id="managercareer_admin_application_accepted">Application accepted and job offer created.</message>
+    <message id="managercareer_admin_application_rejected">Application rejected.</message>
+    <message id="managercareer_admin_reject">Reject</message>
+    <message id="managercareer_admin_sackrisk_title">Dismissal risk</message>
+    <message id="managercareer_admin_sackrisk_help">Managers with very low board satisfaction receive warnings and can be dismissed automatically if the setting is enabled.</message>
+    <message id="managercareer_admin_no_sackrisk">No active managers found.</message>
+    <message id="managercareer_admin_awards_title">Latest manager awards</message>
+    <message id="managercareer_admin_settings_title">Career settings</message>
+    <message id="managercareer_admin_settings_help">The values are maintained through the general settings. This overview shows the currently active parameters.</message>
+    <message id="managercareer_admin_open_settings">Open general settings</message>
+
+    <message id="settings_label_mgr_career_enabled">Enable manager career</message>
+    <message id="settings_label_mgr_job_offers">Enable automatic job offers</message>
+    <message id="settings_label_freeclub_rep_check">Enable reputation check for available clubs</message>
+    <message id="settings_label_mgr_offer_limit">Maximum active job offers per manager</message>
+    <message id="settings_label_mgr_offer_exp_days">Job offer validity in days</message>
+    <message id="settings_label_mgr_applications_enabled">Enable manual applications</message>
+    <message id="settings_label_mgr_application_limit">Maximum open applications per manager</message>
+    <message id="settings_label_mgr_application_decision_min_days">Earliest application decision after days</message>
+    <message id="settings_label_mgr_application_decision_max_days">Latest application decision after days</message>
+    <message id="settings_label_mgr_application_exp_days">Application expires after days</message>
+    <message id="settings_label_mgr_auto_sacking_enabled">Enable automatic dismissals</message>
+    <message id="settings_label_mgr_contract_days">Default manager contract duration in days</message>
+
+    <message id="managercareer_application_chance">Chance</message>
+    <message id="managercareer_decision_date">Decision</message>
+    <message id="managercareer_status">Status</message>
+    <message id="managercareer_date">Date</message>
+    <message id="managercareer_board_satisfaction">Board satisfaction</message>
+    <message id="managercareer_sack_risk">Dismissal risk</message>
+    <message id="managercareer_low_board_checks">Crisis checks</message>
+    <message id="managercareer_award">Award</message>
+    <message id="managercareer_no_awards">No manager awards are available yet.</message>
+    <message id="managercareer_button_accept">Accept</message>
+    <message id="managercareer_application_status_open">Open</message>
+    <message id="managercareer_application_status_accepted">Accepted</message>
+    <message id="managercareer_application_status_rejected">Rejected</message>
+    <message id="managercareer_application_status_withdrawn">Withdrawn</message>
+    <message id="managercareer_application_status_expired">Expired</message>
+    <message id="managercareer_application_error_invalid">This application is no longer available.</message>
+    <message id="managercareer_application_accepted_subject">Application successful: {team}</message>
+    <message id="managercareer_application_accepted_body">The club {team} has reviewed your application positively and made you an official job offer.
+
+League: {league}
+Valid until: {expires}
+
+You can accept or reject the offer here:
+{url}</message>
+    <message id="managercareer_application_rejected_subject">Application rejected: {team}</message>
+    <message id="managercareer_application_rejected_body">The club {team} rejected your application after reviewing it. A stronger reputation, better results or greater recognition in this country may improve your chances in future.</message>
+    <message id="managercareer_application_notification_accepted">{team} accepted your application.</message>
+    <message id="managercareer_application_notification_rejected">{team} rejected your application.</message>
+    <message id="managercareer_message_sender">Manager career</message>
+</messages>

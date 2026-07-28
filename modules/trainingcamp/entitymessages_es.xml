@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_trainingcamp">Concentración</message>
+	<message id="entity_trainingcamp_name">Nombre</message>
+	<message id="entity_trainingcamp_land">País</message>
+	<message id="entity_trainingcamp_preis_spieler_tag">Coste por jugador y día</message>
+	<message id="entity_trainingcamp_p_staerke">Efecto sobre la fuerza</message>
+	<message id="entity_trainingcamp_p_technik">Efecto sobre la técnica</message>
+	<message id="entity_trainingcamp_p_kondition">Efecto sobre la resistencia</message>
+	<message id="entity_trainingcamp_p_frische">Efecto sobre la frescura</message>
+	<message id="entity_trainingcamp_p_zufriedenheit">Efecto sobre la satisfacción</message>
+	<message id="entity_trainingcamp_camp_type">Enfoque</message>
+	<message id="entity_trainingcamp_p_passing">Efecto sobre el pase</message>
+	<message id="entity_trainingcamp_p_shooting">Efecto sobre el disparo</message>
+	<message id="entity_trainingcamp_p_heading">Efecto sobre el juego aéreo</message>
+	<message id="entity_trainingcamp_p_tackling">Efecto sobre las entradas</message>
+	<message id="entity_trainingcamp_p_freekick">Efecto sobre las faltas</message>
+	<message id="entity_trainingcamp_p_pace">Efecto sobre la velocidad</message>
+	<message id="entity_trainingcamp_p_creativity">Efecto sobre la creatividad</message>
+	<message id="entity_trainingcamp_p_influence">Efecto sobre la influencia</message>
+	<message id="entity_trainingcamp_p_flair">Efecto sobre el talento</message>
+	<message id="entity_trainingcamp_p_penalty">Efecto sobre los penaltis</message>
+	<message id="entity_trainingcamp_p_penalty_killing">Efecto sobre las paradas de penalti</message>
+	<message id="entity_trainingcamp_p_team_chemistry">Efecto sobre la química del equipo</message>
+	<message id="entity_trainingcamp_injury_risk">Riesgo de lesión</message>
+</messages>

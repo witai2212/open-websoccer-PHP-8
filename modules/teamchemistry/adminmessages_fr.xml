@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_team_chemistry_enabled">Activer la cohésion d'équipe</message>
+    <message id="settings_label_team_chemistry_enabled_help">Active la valeur de cohésion d'équipe, la page de cohésion et les faibles effets sur la simulation.</message>
+    <message id="settings_label_team_chemistry_max_match_effect">Effet maximal de la cohésion sur la simulation</message>
+    <message id="settings_label_team_chemistry_max_match_effect_help">Valeur par défaut : 3. Cette valeur est utilisée comme un faible effet en pourcentage/points sur les passes, le moral et la stabilité.</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days">Période des nouveaux transferts</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days_help">Les transferts effectués pendant cette période réduisent légèrement la cohésion afin que trop de nouveaux joueurs ne s'entendent pas immédiatement à la perfection.</message>
+    <message id="settings_label_team_chemistry_formation_history_count">Nombre de compositions pour l'automatisation</message>
+    <message id="settings_label_team_chemistry_formation_history_count_help">Ce nombre de compositions récentes est examiné pour évaluer les automatismes tactiques.</message>
+    <message id="teamchemistry_factor_tactical_style">ADN tactique</message>
+    <message id="teamchemistry_source_tactical_style">ADN tactique</message>
+    <message id="teamchemistry_score">Cohésion</message>
+    <message id="teamchemistry_match_effect">Effet en match</message>
+</messages>

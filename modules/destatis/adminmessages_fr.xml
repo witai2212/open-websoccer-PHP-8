@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="category_statistics_navlabel">Statistiques</message>
+    <message id="financial_economy_stats_navlabel">Statistiques financières</message>
+    <message id="financial_economy_stats_admin_title">Statistiques financières / Régulation du marché</message>
+    <message id="financial_economy_stats_admin_intro">Cette page indique si l'économie du jeu dans son ensemble, et notamment les clubs gérés par des humains, génère trop de bénéfices ou de pertes. Les écritures comptables servent de base et les tables de fonctionnalités permettent d'effectuer des contrôles croisés.</message>
+    <message id="financial_economy_stats_filter_season">Saison</message>
+    <message id="financial_economy_stats_filter_matchday">Journée</message>
+    <message id="financial_economy_stats_filter_all">Toutes</message>
+    <message id="financial_economy_stats_humans">Clubs gérés par des humains</message>
+    <message id="financial_economy_stats_all_clubs">Tous les clubs</message>
+    <message id="financial_economy_stats_all_clubs_intro">Valeurs comparatives de tous les clubs actifs.</message>
+    <message id="financial_economy_stats_clubs">Clubs</message>
+    <message id="financial_economy_stats_bookings">Écritures</message>
+    <message id="financial_economy_stats_income">Recettes</message>
+    <message id="financial_economy_stats_avg_income">Recettes moy./club</message>
+    <message id="financial_economy_stats_expenses">Dépenses</message>
+    <message id="financial_economy_stats_avg_expenses">Dépenses moy./club</message>
+    <message id="financial_economy_stats_net">Solde</message>
+    <message id="financial_economy_stats_avg_net">Solde moyen/club</message>
+    <message id="financial_economy_stats_categories">Catégories</message>
+    <message id="financial_economy_stats_category">Catégorie</message>
+    <message id="financial_economy_stats_cross_checks">Contrôle croisé des tables de fonctionnalités</message>
+    <message id="financial_economy_stats_cross_checks_intro">Les écarts ne signalent pas automatiquement une erreur, mais ils aident à repérer les écritures comptables manquantes ou mal catégorisées.</message>
+    <message id="financial_economy_stats_feature">Fonctionnalité</message>
+    <message id="financial_economy_stats_feature_amount">Table de fonctionnalité</message>
+    <message id="financial_economy_stats_booked_amount">Comptabilisé sur le compte</message>
+    <message id="financial_economy_stats_difference">Écart</message>
+    <message id="financial_economy_stats_current_liabilities">Coûts actuels par journée</message>
+    <message id="financial_economy_stats_amount_per_matchday">Montant par journée</message>
+    <message id="financial_economy_stats_biggest_losses">Pertes les plus importantes</message>
+    <message id="financial_economy_stats_biggest_profits">Bénéfices les plus importants</message>
+
+    <message id="financial_economy_stats_recommendations">Recommandations pour la régulation du marché</message>
+    <message id="financial_economy_stats_recommendations_intro">Ces recommandations reposent sur le solde des clubs gérés par des humains, les catégories de recettes et de dépenses ainsi que les contrôles croisés. Les actions ne modifient pas directement les budgets des clubs, mais uniquement les futurs leviers de recettes ou de coûts.</message>
+    <message id="financial_economy_stats_status">Statut</message>
+    <message id="financial_economy_stats_recommendation">Recommandation</message>
+    <message id="financial_economy_stats_effect">Effet</message>
+    <message id="financial_economy_stats_action">Action</message>
+    <message id="financial_economy_stats_regulation_confirm">Cette régulation du marché ajuste plusieurs valeurs monétaires de 5 %. Continuer ?</message>
+    <message id="financial_economy_stats_regulation_success">Régulation du marché effectuée</message>
+    <message id="financial_economy_stats_table">Classement</message>
+    <message id="financial_economy_stats_columns">Colonnes</message>
+    <message id="financial_economy_stats_affected_rows">Enregistrements modifiés</message>
+</messages>

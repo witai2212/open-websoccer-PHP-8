@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="googlepluslogin_failure">O início de sessão através do Google+ foi cancelado.</message>
+    <message id="googlepluslogin_success">Início de sessão através do Google+ efetuado com êxito!</message>
+    <message id="googleplus_login_button">Iniciar sessão com o Google+</message>
+    
+</messages>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="halloffame_navlabel">Galeria da Fama</message>
+    <message id="halloffame_no_seasons">Ainda não foi concluída nenhuma época.</message>
+    <message id="halloffame_no_cups">Ainda não foi disputada nenhuma competição de taça.</message>
+    
+</messages>

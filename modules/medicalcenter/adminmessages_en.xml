@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_medcenter_enabled">Enable medical centre</message>
+    <message id="settings_label_medcenter_physio_fee">Physiotherapy cost</message>
+    <message id="settings_label_medcenter_spec_fee">Specialist treatment cost</message>
+    <message id="settings_label_medcenter_risk_fee">Risky treatment cost</message>
+    <message id="settings_label_medcenter_detect_pct">Detection risk for risky treatment in percent</message>
+</messages>

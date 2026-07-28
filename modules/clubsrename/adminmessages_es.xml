@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_rename_club_enabled">Los usuarios pueden cambiar el nombre de su propio club.</message> 
+</messages>

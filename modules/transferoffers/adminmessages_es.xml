@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_transferoffers_enabled">Permitir traspasos directos: los usuarios pueden enviar ofertas de fichaje directamente a otros mánageres fuera del mercado de fichajes.</message> 
+	<message id="settings_label_transferoffers_transfer_stop_days">Bloqueo de traspaso</message> 
+	<message id="settings_label_transferoffers_transfer_stop_days_help">en días. Los jugadores no pueden cambiar de club durante este periodo después de su último fichaje.</message> 
+	<message id="settings_label_transferoffers_adminapproval_required">Un traspaso directo acordado debe ser aprobado por un administrador.</message> 
+	<message id="settings_label_transferoffers_contract_matches">Duración del contrato en traspasos directos</message> 
+	<message id="settings_label_transferoffers_contract_matches_help">en número de partidos</message> 
+	
+	<message id="button_approve">Dar el alta</message> 
+	
+	<message id="transferoffer_approval_success">El traspaso se ha completado correctamente.</message> 
+</messages>

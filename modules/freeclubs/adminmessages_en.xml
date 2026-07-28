@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="settings_label_assign_team_automatically">Automatic Team Assignment: Users can choose any free club by themselves.</message> 
-    <message id="settings_label_max_number_teams_per_user">Max. number of teams per user</message> 
-    <message id="settings_label_max_number_teams_per_user_help">How many teams one user can manage with the same account.</message> 
-    <message id="settings_label_additional_team_min_highscore">Min. highscore for additional team</message>
-    <message id="settings_label_additional_team_min_highscore_help">Highscore which a user needs in order to be allowed to pick an additional team.</message>
+    <message id="settings_label_assign_team_automatically">Automatic team assignment: Users can select an available club themselves.</message> 
+    <message id="settings_label_max_number_teams_per_user">Maximum teams per user</message> 
+    <message id="settings_label_max_number_teams_per_user_help">How many teams a user may manage with one account.</message> 
+    <message id="settings_label_additional_team_min_highscore">Minimum high score for additional teams</message>
+    <message id="settings_label_additional_team_min_highscore_help">Minimum number of high-score points a user must have to take over another club.</message>
 </messages>

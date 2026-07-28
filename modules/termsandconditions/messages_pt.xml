@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="termsandconditions_navlabel">Condições de participação</message>
+    <message id="termsandconditions_err_notavilable">As condições de participação não estão disponíveis no seu idioma.</message>
+    
+    <message id="termsandconditions_accept">Li e aceito as <a href="%s" target="_blank">condições de participação</a>.</message>
+</messages>

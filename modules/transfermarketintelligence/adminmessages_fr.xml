@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="transfermarketintelligence_navlabel">Analyse du marché des transferts</message>
+    <message id="transfermarket_intelligence_admin_title">Analyse du marché des transferts</message>
+    <message id="transfermarket_intelligence_admin_intro">Surveille les indemnités, les salaires, les offres actives, le réalisme des offres de l'IA et une éventuelle surchauffe du marché.</message>
+
+    <message id="settings_label_transfermarket_intelligence_enabled">Activer l'analyse du marché des transferts</message>
+    <message id="settings_label_transfermarket_intelligence_enabled_help">Active la nouvelle page d'analyse pour les managers et les administrateurs.</message>
+    <message id="settings_label_transfermarket_intelligence_contract_days">Contrats arrivant à expiration</message>
+    <message id="settings_label_transfermarket_intelligence_contract_days_help">Nombre de journées à partir duquel un contrat est considéré comme arrivant bientôt à expiration.</message>
+    <message id="settings_label_transfermarket_intelligence_bargain_percent">Seuil de bonne affaire</message>
+    <message id="settings_label_transfermarket_intelligence_bargain_percent_help">Pourcentage sous la juste valeur à partir duquel un joueur est considéré comme une bonne affaire.</message>
+    <message id="settings_label_transfermarket_intelligence_overpriced_percent">Seuil de surévaluation</message>
+    <message id="settings_label_transfermarket_intelligence_overpriced_percent_help">Pourcentage au-dessus de la juste valeur à partir duquel un joueur est considéré comme surévalué.</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_min_percent">Ratio minimal des offres IA</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_min_percent_help">Limite inférieur en pourcentage de la valeur marchande pour des offres IA réalistes.</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_max_percent">Ratio maximal des offres IA</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_max_percent_help">Limite supérieur en pourcentage de la valeur marchande pour des offres IA réalistes.</message>
+
+    <message id="transfermarket_intelligence_admin_scope_global">Global</message>
+    <message id="transfermarket_intelligence_admin_scope_league">Ligue</message>
+    <message id="transfermarket_intelligence_admin_scope_country">Pays</message>
+    <message id="transfermarket_intelligence_admin_scope_club">Club</message>
+    <message id="transfermarket_intelligence_admin_market_health">Santé du marché</message>
+    <message id="transfermarket_intelligence_admin_filter">Filtre</message>
+    <message id="transfermarket_intelligence_admin_apply">Afficher</message>
+    <message id="transfermarket_intelligence_admin_club_search">Rechercher un club</message>
+    <message id="transfermarket_intelligence_admin_club_search_placeholder">Saisir un nom de club ou une ligue...</message>
+    <message id="transfermarket_intelligence_admin_club_search_help">La recherche filtre directement la liste des clubs dans le navigateur. Sélectionnez ensuite le club souhaité et cliquez sur Afficher.</message>
+    <message id="transfermarket_intelligence_admin_average_transfer_fee">Indemnité moyenne</message>
+    <message id="transfermarket_intelligence_admin_highest_fee">Indemnité la plus élevée</message>
+    <message id="transfermarket_intelligence_admin_average_salary">Salaire moyen</message>
+    <message id="transfermarket_intelligence_admin_number_offers">Nombre d'offres</message>
+    <message id="transfermarket_intelligence_admin_listed_players">Joueurs sur la liste des transferts</message>
+    <message id="transfermarket_intelligence_admin_market_ratio">Prix affiché moy. / valeur marchande</message>
+    <message id="transfermarket_intelligence_admin_cpu_realism">Réalisme des offres IA</message>
+    <message id="transfermarket_intelligence_admin_cpu_ratio">Offre IA moy. / valeur marchande</message>
+    <message id="transfermarket_intelligence_admin_overheating">Surchauffe du marché</message>
+    <message id="transfermarket_intelligence_admin_overheating_ok">Aucune surchauffe nette n'a été détectée.</message>
+    <message id="transfermarket_intelligence_admin_overheating_warning">Avertissement : le marché semble en surchauffe. Vérifiez les prix affichés, les offres de l'IA et le niveau des salaires.</message>
+    <message id="transfermarket_intelligence_admin_cpu_within_range">dans la plage cible</message>
+    <message id="transfermarket_intelligence_admin_cpu_below_range">sous la plage cible</message>
+    <message id="transfermarket_intelligence_admin_cpu_above_range">au-dessus de la plage cible</message>
+
+</messages>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_wordpresslogin_tableprefix">Connexion via WordPress (depuis 2.5) : préfixe des tables</message>
+    <message id="settings_label_wordpresslogin_tableprefix_help">Préfixe des tables de base de données de votre propre installation WordPress si les utilisateurs doivent se connecter uniquement avec le nom d'utilisateur et le mot de passe de leur compte WordPress. <em>Remarque :</em> activez la connexion via WordPress en saisissant « WordpressUserLoginMethod » sous « Méthode de connexion » ci-dessus.</message>
+</messages>

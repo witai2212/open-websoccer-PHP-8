@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="userprofile_block_notifications">Notificaciones</message>
+    <message id="userprofile_block_notifications_noneavailable">Actualmente no tiene notificaciones.</message>
+    <message id="notifications_grouped_count">Mostrar %d notificaciones</message>
+    <message id="notifications_new">Nuevo</message>
+    <message id="player_talent_transfer_changed">Evolución del talento tras el fichaje: {player} cambia de {old} a {new} ({change}).</message>
+</messages>

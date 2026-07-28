@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="premium-feature-requested_navlabel">Fonctions premium</message>
+	<message id="premium_info_title">Rechargez votre compte premium maintenant !</message>
+	<message id="premium_info_notenoughcredit_alert">La fonction demandée nécessite au moins %d %s sur votre compte premium.</message>
+	<message id="premium_info_description">
+		<p>La participation à ce jeu est gratuite. Certaines pages et fonctions ne sont toutefois disponibles que si votre compte utilisateur contient suffisamment de crédit premium.</p>
+	</message>
+	
+	<message id="premium_info_price_options">Options de dépôt</message>
+	
+	<message id="premiumaccount_navlabel">Compte premium</message>
+	<message id="premiumaccount_recharge_button">Acheter du crédit</message>
+	
+	<message id="premium-confirm-action_navlabel">Confirmer la fonction premium</message>
+	<message id="premium-confirm-action_title">Exécuter la fonction premium ?</message>
+	<message id="premium-confirm-action_question">Cette action débitera votre compte premium de <strong>%d %s</strong> ! Voulez-vous vraiment continuer ?</message>
+	<message id="premium-confirm-action_confirm">Confirmer le débit</message>
+	
+	<message id="premiumaccount_exchange_link">Échanger contre de l’argent du jeu</message>
+	
+	<message id="premium-exchange_navlabel">Échanger du crédit premium</message>
+	<message id="premium-exchange_intro">Vous pouvez convertir votre crédit premium en argent du jeu. Indiquez le montant de crédit que vous souhaitez échanger.</message>
+	<message id="premium-exchange_amount_label">Crédit à échanger</message>
+	
+	<message id="premium-exchange_err_balancenotenough">Votre crédit premium est malheureusement insuffisant pour le montant indiqué.</message>
+	
+	<message id="premium-exchange_success">Votre crédit premium a été échangé avec succès !</message>
+	
+	<message id="premium-exchange-confirm_navlabel">Confirmer l’échange</message>
+	<message id="premium-exchange-confirm_question">Veuillez confirmer cette transaction.</message>
+	
+	<message id="actionsubject_exchange-premium">Échange contre de l’argent du jeu</message>
+	<message id="premium-exchange_team_subject">Échange de crédit premium</message>
+	
+	<message id="premium_balance_notenough">Votre crédit premium est malheureusement insuffisant pour cette action. Veuillez recharger votre compte.</message>
+	<message id="premium_fature_fee_tooltip">Débite votre compte premium</message>
+	
+	<message id="actionsubject_choose-trainer">Engagement d’un entraîneur premium</message>
+	<message id="actionsubject_extend-stadium">Agrandissement du stade avec un constructeur premium</message>
+</messages>

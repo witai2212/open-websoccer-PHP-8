@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     
     <message id="projectstatistics_title">Statistics</message>
-    <message id="projectstatistics_onlineusers"><strong>%d managers are online</strong></message>
-    <message id="projectstatistics_onlineusers_single"><strong>One manager is online</strong></message>
-    <message id="projectstatistics_totalusers">We have <strong>%d</strong> registered users</message>
+    <message id="projectstatistics_onlineusers"><strong>%d managers are online now</strong></message>
+    <message id="projectstatistics_onlineusers_single"><strong>One manager is online now</strong></message>
+    <message id="projectstatistics_totalusers">A total of <strong>%d</strong> users are registered</message>
     
-    <message id="projectstatistics_leagues">We play with <strong>%d</strong> leagues</message>
-    <message id="projectstatistics_freeteams"><strong>%d</strong> clubs do not have any manager, yet</message>
+    <message id="projectstatistics_leagues">We play in <strong>%d</strong> leagues</message>
+    <message id="projectstatistics_freeteams"><strong>%d</strong> clubs are currently available</message>
 </messages>

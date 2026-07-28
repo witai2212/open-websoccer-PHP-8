@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_facebook_enable_login">Activa el inicio de sesión mediante Facebook. Requiere un ID de aplicación y el secreto de Facebook (véase abajo). La extensión PHP CURL también debe estar activada en el servidor.</message> 
+
+	<message id="settings_label_facebook_appid">ID de aplicación de Facebook</message> 
+	<message id="settings_label_facebook_appid_help">Lo obtendrás al <a href="https://developers.facebook.com/apps" target="_blank">registrar tu sitio web como aplicación en Facebook</a>.</message> 
+	
+	<message id="settings_label_facebook_appsecret">Secreto de la aplicación de Facebook</message> 
+	<message id="settings_label_facebook_appsecret_help">También lo obtendrás al registrar tu sitio web en Facebook.</message> 
+	
+	<message id="settings_label_facebook_enable_comments">Permite debates (por ejemplo, en noticias y crónicas de partidos) mediante un complemento de Facebook. Requiere un ID de aplicación de Facebook (véase arriba).</message>
+	
+	<message id="settings_label_facebook_enable_likebutton">Muestra el botón Me gusta de Facebook en determinadas páginas.</message>
+</messages>

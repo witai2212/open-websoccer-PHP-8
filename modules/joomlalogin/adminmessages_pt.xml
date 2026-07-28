@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_joomlalogin_tableprefix">Início de sessão através do Joomla: prefixo das tabelas</message>
+    <message id="settings_label_joomlalogin_tableprefix_help">Prefixo das tabelas da base de dados da tua instalação Joomla caso os utilizadores devam iniciar sessão apenas com o nome de utilizador e a palavra-passe da conta Joomla. <em>Nota:</em> ativa o início de sessão através do Joomla introduzindo "JoomlaUserLoginMethod" em "Método de início de sessão" acima.</message>
+</messages>

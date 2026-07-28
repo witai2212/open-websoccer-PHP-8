@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="entity_youthplayer">Youth Player</message>
+    <message id="entity_youthplayer">Youth player</message>
 	<message id="entity_youthplayer_lastname">Last name</message>
 	<message id="entity_youthplayer_firstname">First name</message>
 	<message id="entity_youthplayer_team_id">Club</message>
-	<message id="entity_youthplayer_position">Position</message>
+	<message id="entity_youthplayer_position">Playing position</message>
 	<message id="entity_youthplayer_age">Age</message>
-	<message id="entity_youthplayer_strength">Skill</message>
-	<message id="entity_youthplayer_strength_last_change">Change in strength since last match</message>
+	<message id="entity_youthplayer_strength">Strength</message>
+	<message id="entity_youthplayer_strength_last_change">Strength change since the last match</message>
 	<message id="entity_youthplayer_nation">Nationality</message>
 	<message id="entity_youthplayer_nation_ehlp">Country name</message>
 	
@@ -18,20 +18,22 @@
 	<message id="entity_youthplayer_st_cards_yellow">Yellow cards</message>
 	<message id="entity_youthplayer_st_cards_yellow_red">Yellow-red cards</message>
 	<message id="entity_youthplayer_st_cards_red">Red cards</message>
+	<message id="entity_youthplayer_market_value">Automatic market value</message>
+	<message id="entity_youthplayer_market_value_help">Automatically calculated from strength, age, performance, special abilities, league, club and the overall economy.</message>
 	<message id="entity_youthplayer_transfer_fee">Transfer fee</message>
-	<message id="entity_youthplayer_transfer_fee_help">If higher than 0, the player will be offered for this amount at the marketplace.</message>
+	<message id="entity_youthplayer_transfer_fee_help">If greater than 0, the player is offered on the marketplace for this amount.</message>
 
-	<message id="entity_youthscout">Talent Scout</message>
+	<message id="entity_youthscout">Youth scout</message>
 	<message id="entity_youthscout_name">Name</message>
-	<message id="entity_youthscout_expertise">Expertise</message>
+	<message id="entity_youthscout_expertise">Competence</message>
 	<message id="entity_youthscout_fee">Fee</message>
 	<message id="entity_youthscout_speciality">Speciality</message>
 	
-	<message id="entity_youthmatch">Youth Match</message>
+	<message id="entity_youthmatch">Youth match</message>
 	<message id="entity_youthmatch_matchdate">Date</message>
-	<message id="entity_youthmatch_home_team_id">Home Team</message>
-	<message id="entity_youthmatch_guest_team_id">Guest Team</message>
-	<message id="entity_youthmatch_simulated">Simulated</message>
-	<message id="entity_youthmatch_home_goals">Goals home</message>
-	<message id="entity_youthmatch_guest_goals">Goals guest</message>
+	<message id="entity_youthmatch_home_team_id">Home team</message>
+	<message id="entity_youthmatch_guest_team_id">Away team</message>
+	<message id="entity_youthmatch_simulated">Calculated</message>
+	<message id="entity_youthmatch_home_goals">Home team goals</message>
+	<message id="entity_youthmatch_guest_goals">Away team goals</message>
 </messages>

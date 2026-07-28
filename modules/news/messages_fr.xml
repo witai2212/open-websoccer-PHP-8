@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="news_navlabel">Actualités</message>
+    <message id="news-details_navlabel">lire</message>
+    <message id="news_title">Actualités</message>
+    <message id="news_no_items">Aucune actualité n’est encore disponible.</message>
+    <message id="news_read_more">Lire la suite</message>
+    <message id="news_author">écrit par %s</message>
+    <message id="news_related_links">Liens connexes</message>
+    
+    <message id="news_block_title">Actualités</message>
+    
+</messages>

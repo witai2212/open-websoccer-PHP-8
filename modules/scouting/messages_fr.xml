@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <!-- Navigation / page -->
+    <message id="scouting_navlabel">Recrutement</message>
+    <message id="scouting_title">Recrutement</message>
+    <message id="scouting_message">Recrutement</message>
+    <message id="scouting_intro">Développez votre cellule de recrutement, engagez des recruteurs et organisez des camps de détection dans le monde entier afin de découvrir de nouveaux joueurs.</message>
+
+    <!-- Sections -->
+    <message id="scouting_department">Cellule de recrutement</message>
+    <message id="scouting_department_missing">Votre club ne possède pas encore de cellule de recrutement.</message>
+    <message id="scouting_department_missing_info">Sans cellule de recrutement, vous ne pouvez ni engager de recruteurs ni ouvrir de camps de détection.</message>
+    <message id="scouting_department_build">Créer la cellule de recrutement</message>
+    <message id="scouting_department_upgrade">Améliorer la cellule de recrutement</message>
+    <message id="scouting_department_level">Niveau</message>
+    <message id="scouting_department_status">Statut</message>
+    <message id="scouting_department_active">Actif</message>
+    <message id="scouting_department_inactive">Inactif</message>
+    <message id="scouting_department_maintenance_fee">Entretien par journée</message>
+    <message id="scouting_department_maintenance_fee">Entretien de la cellule de recrutement</message>
+    <message id="scouting_scout_fee">Honoraires du recruteur</message>
+    <message id="scouting_scout_hire_fee">Frais d'embauche du recruteur</message>
+    <message id="scouting_camp_fee">Coûts du camp de détection</message>
+    <message id="scouting_department_build_cost">Coût de construction</message>
+    <message id="scouting_department_max_scouts">Recruteurs max.</message>
+    <message id="scouting_department_max_camps">Camps max.</message>
+    <message id="scouting_department_next_level">Niveau d'amélioration suivant</message>
+    <message id="scouting_department_no_next_level">Le niveau d'amélioration maximal a été atteint.</message>
+
+    <!-- Scouts -->
+    <message id="scouting_team_scouts">Recruteurs engagés</message>
+    <message id="scouting_free_scouts">Recruteurs disponibles</message>
+    <message id="scouting_scout">Recruteur</message>
+    <message id="scouting_name">Nom</message>
+    <message id="scouting_nation">Pays</message>
+    <message id="scouting_speciality">Spécialité</message>
+    <message id="scouting_fee">Coût par journée</message>
+    <message id="scouting_hire_fee">Frais d'embauche</message>
+    <message id="scouting_hire_fee_info">Des frais d'embauche non remboursables sont dus immédiatement lors du recrutement. Les honoraires du recruteur par journée s'ajoutent à cette somme.</message>
+    <message id="scouting_team_matches">Matchs restants</message>
+    <message id="scouting_profile">Évaluation</message>
+    <message id="scouting_profile_unknown">Inconnue</message>
+    <message id="scouting_profile_junior">Recruteur junior</message>
+    <message id="scouting_profile_solid">Recruteur fiable</message>
+    <message id="scouting_profile_experienced">Recruteur expérimenté</message>
+    <message id="scouting_profile_renowned">Recruteur renommé</message>
+    <message id="scouting_competence_hidden">La compétence réelle d'un recruteur n'est pas visible. Vous ne découvrirez sa qualité qu'à travers ses résultats.</message>
+    <message id="no_scouts">Aucun recruteur n'est actuellement disponible.</message>
+    <message id="no_scouts_hired">Vous n'avez engagé aucun recruteur.</message>
+    <message id="no_free_scouts">Aucun recruteur libre n'est disponible.</message>
+    <message id="scouting_scout_speciality_already_covered">Poste déjà couvert</message>
+    <message id="scouting_max_scouts_reached">Vous avez déjà engagé le nombre maximal de recruteurs.</message>
+
+    <!-- Camps -->
+    <message id="scouting_camps">Camps de détection</message>
+    <message id="scouting_create_camp">Ouvrir un camp de détection</message>
+    <message id="scouting_active_camps">Camps de détection actifs</message>
+    <message id="scouting_no_camps">Vous ne gérez actuellement aucun camp de détection.</message>
+    <message id="scouting_camp_location">Lieu</message>
+    <message id="scouting_camp_country">Pays</message>
+    <message id="scouting_camp_continent">Continent</message>
+    <message id="scouting_camp_scout">Recruteur affecté</message>
+    <message id="scouting_camp_position">Poste</message>
+    <message id="scouting_camp_any_position">Tous les postes</message>
+    <message id="scouting_camp_age_range">Âge</message>
+    <message id="scouting_camp_strength_range">Plage de niveau</message>
+    <message id="scouting_camp_budget_range">Budget des transferts</message>
+    <message id="scouting_camp_fee_per_matchday">Coût par journée</message>
+    <message id="scouting_camp_next_proposal">Prochaine proposition</message>
+    <message id="scouting_camp_matches">Matches</message>
+    <message id="scouting_camp_status">Statut</message>
+    <message id="scouting_camp_active">Actif</message>
+    <message id="scouting_camp_inactive">Inactif</message>
+    <message id="scouting_camp_no_locations">Aucun lieu de camp approprié n'est disponible.</message>
+    <message id="scouting_camp_requires_department">Vous devez d'abord disposer d'une cellule de recrutement pour organiser des camps de détection.</message>
+    <message id="scouting_camp_requires_scout">Un recruteur doit être affecté à chaque camp de détection.</message>
+    <message id="scouting_camp_limit_reached">Vous avez atteint le nombre maximal de camps de détection actifs.</message>
+    <message id="scouting_camp_strength_hidden_info">Le niveau maximal réel reste caché. La plage de niveau choisie sert uniquement à déterminer les joueurs recherchés.</message>
+
+    <!-- Proposals -->
+    <message id="scouting_proposals">Propositions de joueurs</message>
+    <message id="scouting_open_proposals">Propositions de joueurs ouvertes</message>
+    <message id="scouting_no_proposals">Il n'y a actuellement aucune proposition de joueur.</message>
+    <message id="scouting_proposal_player">Joueur</message>
+    <message id="scouting_proposal_age">Âge</message>
+    <message id="scouting_proposal_nation">Nation</message>
+    <message id="scouting_proposal_position">Poste</message>
+    <message id="scouting_proposal_strength">Niveau estimé</message>
+    <message id="scouting_proposal_potential">Potentiel estimé</message>
+    <message id="scouting_proposal_talent">Talent estimé</message>
+    <message id="scouting_proposal_traits">Aptitudes spéciales détectées</message>
+    <message id="scouting_proposal_no_traits_reported">aucune détectée</message>
+    <message id="scouting_proposal_summary">Rapport du recruteur</message>
+    <message id="scouting_proposal_transfer_fee">Indemnité de transfert</message>
+    <message id="scouting_proposal_salary">Salaire</message>
+    <message id="scouting_proposal_contract_matches">Durée du contrat</message>
+    <message id="scouting_proposal_expires_after_matches">Disponible pendant</message>
+    <message id="scouting_proposal_generated_by">Trouvé par</message>
+    <message id="scouting_proposal_status">Statut</message>
+    <message id="scouting_proposal_status_open">Ouvert</message>
+    <message id="scouting_proposal_status_accepted">Recruté</message>
+    <message id="scouting_proposal_status_rejected">Refusé</message>
+    <message id="scouting_proposal_status_expired">Expiré</message>
+    <message id="scouting_proposal_report_uncertain">Ce rapport est incertain. Les valeurs réelles peuvent s'en écarter fortement.</message>
+    <message id="scouting_proposal_report_reliable">Ce rapport est considéré comme relativement fiable, mais il reste une estimation.</message>
+
+    <!-- Talent / potential labels -->
+    <message id="scouting_unknown">Inconnue</message>
+    <message id="scouting_low">Faible</message>
+    <message id="scouting_medium">Moyen</message>
+    <message id="scouting_high">Élevé</message>
+    <message id="scouting_very_high">Très élevé</message>
+    <message id="scouting_exceptional">Exceptionnel</message>
+    <message id="scouting_approx">env.</message>
+    <message id="scouting_range_separator">jusqu'au</message>
+
+    <!-- Actions / buttons -->
+    <message id="build-scouting-department">Créer la cellule de recrutement</message>
+    <message id="upgrade-scouting-department">Améliorer la cellule de recrutement</message>
+    <message id="hire-scout">Recruter</message>
+    <message id="fire-scout">Licencier</message>
+    <message id="create-scouting-camp">Ouvrir le camp</message>
+    <message id="close-scouting-camp">Fermer le camp</message>
+    <message id="accept-scouting-proposal">Recruter le joueur</message>
+    <message id="reject-scouting-proposal">Refuser la proposition</message>
+
+    <!-- Success messages -->
+    <message id="build_scouting_department_message">La cellule de recrutement a été créée.</message>
+    <message id="upgrade_scouting_department_message">La cellule de recrutement a été améliorée.</message>
+    <message id="hire_scout_message">Le recruteur a été engagé.</message>
+    <message id="fire_scout_message">Le recruteur a été licencié.</message>
+    <message id="create_scouting_camp_message">Le camp de détection a été ouvert.</message>
+    <message id="close_scouting_camp_message">Le camp de détection a été fermé.</message>
+    <message id="accept_scouting_proposal_message">Le joueur a été recruté.</message>
+    <message id="reject_scouting_proposal_message">La proposition de joueur a été refusée.</message>
+
+    <!-- Error messages -->
+    <message id="scouting_error_not_enabled">Le recrutement est actuellement désactivé.</message>
+    <message id="scouting_error_no_team">Tu n’as pas de club.</message>
+    <message id="scouting_error_no_department">Vous ne possédez pas encore de cellule de recrutement.</message>
+    <message id="scouting_error_department_exists">Votre club possède déjà une cellule de recrutement.</message>
+    <message id="scouting_error_department_max_level">La cellule de recrutement ne peut plus être améliorée.</message>
+    <message id="scouting_error_not_enough_budget">Votre club ne dispose pas d'un budget suffisant.</message>
+    <message id="scouting_error_scout_not_available">Ce recruteur n'est pas disponible.</message>
+    <message id="scouting_error_scout_limit_reached">Vous ne pouvez pas engager d'autres recruteurs.</message>
+    <message id="scouting_error_scout_speciality_exists">Vous disposez déjà d'un recruteur pour ce poste.</message>
+    <message id="scouting_error_scout_not_owned">Ce recruteur n'appartient pas à votre club.</message>
+    <message id="scouting_error_location_not_available">Ce lieu de camp n'est pas disponible.</message>
+    <message id="scouting_error_location_level_required">La cellule de recrutement doit être davantage améliorée pour ce lieu.</message>
+    <message id="scouting_error_invalid_age_range">La tranche d'âge sélectionnée n'est pas valide.</message>
+    <message id="scouting_error_invalid_strength_range">La plage de niveau sélectionnée n'est pas valide.</message>
+    <message id="scouting_error_invalid_budget_range">La plage budgétaire sélectionnée n'est pas valide.</message>
+    <message id="scouting_error_camp_not_found">Le camp de détection est introuvable.</message>
+    <message id="scouting_error_camp_not_owned">Ce camp de détection n'appartient pas à votre club.</message>
+    <message id="scouting_error_proposal_not_found">La proposition de joueur est introuvable.</message>
+    <message id="scouting_error_proposal_not_owned">Cette proposition de joueur n'appartient pas à votre club.</message>
+    <message id="scouting_error_proposal_not_open">Cette proposition de joueur n'est plus ouverte.</message>
+    <message id="scouting_error_proposal_expired">Cette proposition de joueur a expiré.</message>
+    <message id="scouting_error_player_create_failed">Le joueur n'a pas pu être créé.</message>
+
+    <!-- Info texts -->
+    <message id="info">Info : la compétence réelle d'un recruteur est cachée. Les recruteurs coûtent de l'argent par journée et ne sont disponibles que pour un nombre limité de matches.</message>
+    <message id="info_fire_scout">Attention : si vous licenciez un recruteur, son activité prend fin immédiatement.</message>
+    <message id="scouting_info_hidden_values">Le talent et le niveau maximal sont toujours cachés et ne sont qu'approximativement estimés dans les rapports des recruteurs.</message>
+    <message id="scouting_info_matchday_costs">La cellule de recrutement, les recruteurs et les camps entraînent des coûts récurrents par journée.</message>
+    <message id="scouting_info_proposals">Les camps de détection proposent de nouveaux joueurs à intervalles irréguliers. La qualité et la précision peuvent fortement varier selon le lieu, le recruteur et le budget.</message>
+
+
+
+    <!-- Additional page labels -->
+    <message id="scouting_current_budget">Budget actuel du club</message>
+    <message id="scouting_budget">Budget</message>
+    <message id="scouting_available_locations">Lieux disponibles</message>
+    <message id="scouting_filter">Filtres de recherche</message>
+    <message id="scouting_camp_open_count">Camps actifs</message>
+    <message id="scouting_err_department_exists">Votre club possède déjà une cellule de recrutement.</message>
+    <message id="scouting_err_department_missing">Vous devez d'abord disposer d'une cellule de recrutement active.</message>
+    <message id="scouting_err_department_max_level">La cellule de recrutement a déjà atteint le niveau maximal.</message>
+    <message id="scouting_err_not_enough_budget">Le budget du club ne suffit pas pour cette action.</message>
+    <message id="scouting_err_max_scouts_reached">Vous avez déjà engagé le nombre maximal de recruteurs.</message>
+    <message id="scouting_err_scout_not_available">Ce recruteur n'est plus disponible.</message>
+    <message id="scouting_err_scout_speciality_exists">Vous disposez déjà d'un recruteur pour ce poste.</message>
+    <message id="scouting_err_scout_not_owned">Ce recruteur n'appartient pas à votre club.</message>
+    <message id="scouting_err_max_camps_reached">Vous avez déjà atteint le nombre maximal de camps de détection actifs.</message>
+    <message id="scouting_err_location_not_available">Ce lieu de détection n'est pas disponible pour votre cellule.</message>
+    <message id="scouting_err_proposal_not_available">Cette proposition de joueur n'est plus disponible.</message>
+    <message id="scouting_department_build_cost">Coût de construction</message>
+    <message id="scouting_department_upgrade_cost">Coûts d'amélioration</message>
+    <message id="scouting_proposal_transfer_fee">Recruter le joueur détecté</message>
+    <message id="option_Torwart">Gardien</message>
+    <message id="option_Abwehr">Défense</message>
+    <message id="option_Mittelfeld">Milieu</message>
+    <message id="option_Sturm">Attaque</message>
+    
+    <message id="activitylog_build-scouting-department">%s a créé une cellule de recrutement.</message>
+    <message id="activitylog_upgrade-scouting-department">%s a amélioré sa cellule de recrutement.</message>
+    <message id="activitylog_hire-scout">%s a engagé un recruteur.</message>
+    <message id="activitylog_fire-scout">%s a licencié un recruteur.</message>
+    <message id="activitylog_create-scouting-camp">%s a ouvert un camp de détection.</message>
+    <message id="activitylog_close-scouting-camp">%s a fermé un camp de détection.</message>
+    <message id="activitylog_accept-scouting-proposal">%s a recruté un joueur détecté.</message>
+    <message id="activitylog_reject-scouting-proposal">%s a refusé une proposition de recrutement.</message>
+    
+    <!-- Account statement texts -->
+    <message id="scouting_camp">Camp de détection</message>
+    <message id="scouting_camp_fee">Coûts du camp de détection</message>
+
+</messages>

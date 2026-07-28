@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="mywatchlist_navlabel">Liste de suivi</message>
+    <message id="mywatchlist_title">Liste de suivi</message>
+    <message id="mywatchlist_playername">Joueur</message>
+	<message id="mywatchlist_verein">Club</message>
+	<message id="mywatchlist_alter">Âge</message>
+	<message id="mywatchlist_vertrag_spiele">Durée du contrat</message>
+	<message id="mywatchlist_position_main">Poste</message>
+	<message id="mywatchlist_position_second">Poste 2</message>
+	<message id="mywatchlist_marktwert">Valeur marchande</message>
+	<message id="mywatchlist_scout_recommendation">Recommandation du recruteur</message>
+	<message id="mywatchlist_scout_score">Score</message>
+	<message id="mywatchlist_scout_recommend_yes">Recommandé</message>
+	<message id="mywatchlist_scout_recommend_watch">Surveiller</message>
+	<message id="mywatchlist_scout_recommend_no">Non recommandé</message>
+	<message id="mywatchlist_scout_no_data">Aucune donnée de recruteur</message>
+	<message id="mywatchlist_scout_no_data_short">-</message>
+	<message id="mywatchlist_scout_no_matching_position">Aucun recruteur adapté</message>
+	<message id="mywatchlist_noten_druchschnitt">Notes</message>
+	<message id="no_items">Aucun joueur dans la liste de suivi</message>
+	<message id="mywatchlist_delete">Supprimer</message>
+	
+	<message id="watchlist_remove_label">retirer de la liste de suivi</message>
+	<message id="watchlist_remove_success">Le joueur ne figure plus dans la liste de suivi.</message>
+	
+	<message id="mywatchlist_player_on_transferlist">Sur le marché des transferts</message>
+	<message id="mywatchlist_player_has_offer">Offre soumise</message>
+	
+	<message id="button_put_on_watchlist">Ajouter le joueur à la liste de suivi</message>
+	<message id="button_delete_from_watchlist">Retirer le joueur de la liste de suivi</message>
+	<message id="watchlist_put_on_success">Le joueur figure maintenant dans ta liste de suivi</message>
+    
+</messages>

@@ -1,37 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
+    <message id="entity_merchandisingproduct">Merchandising products</message>
+    <message id="entity_merchandisingproduct_name">Product name</message>
+    <message id="entity_merchandisingproduct_name_help">May be a German message key or a direct product name.</message>
+    <message id="entity_merchandisingproduct_description">Description</message>
+    <message id="entity_merchandisingproduct_description_help">May be a German message key or direct description text.</message>
+    <message id="entity_merchandisingproduct_category">Category</message>
+    <message id="entity_merchandisingproduct_category_help">Controls grouping in the fan shop.</message>
+    <message id="entity_merchandisingproduct_season_type">Season type</message>
+    <message id="entity_merchandisingproduct_season_type_help">Determines whether the product is available permanently, by calendar, by season or by event.</message>
+    <message id="entity_merchandisingproduct_season_start">Sales window start</message>
+    <message id="entity_merchandisingproduct_season_start_help">Format MM-DD, for example 11-15.</message>
+    <message id="entity_merchandisingproduct_season_end">Sales window end</message>
+    <message id="entity_merchandisingproduct_season_end_help">Format MM-DD, for example 01-06.</message>
+    <message id="entity_merchandisingproduct_purchase_price">Purchase price</message>
+    <message id="entity_merchandisingproduct_purchase_price_help">Base cost per item ordered.</message>
+    <message id="entity_merchandisingproduct_sales_price">Recommended sale price</message>
+    <message id="entity_merchandisingproduct_sales_price_help">Starting point for price limits and demand calculations.</message>
+    <message id="entity_merchandisingproduct_base_demand">Base demand</message>
+    <message id="entity_merchandisingproduct_base_demand_help">Example: 0.0100 corresponds to base demand equal to one percent of reach.</message>
+    <message id="entity_merchandisingproduct_development_cost">Development cost</message>
+    <message id="entity_merchandisingproduct_development_cost_help">One-off cost for a new club collection.</message>
+    <message id="entity_merchandisingproduct_development_days">Development time</message>
+    <message id="entity_merchandisingproduct_development_days_help">Calendar days until production readiness.</message>
+    <message id="entity_merchandisingproduct_delivery_days">Delivery time</message>
+    <message id="entity_merchandisingproduct_delivery_days_help">Calendar days between ordering and receipt of goods.</message>
+    <message id="entity_merchandisingproduct_minimum_order">Minimum order quantity</message>
+    <message id="entity_merchandisingproduct_minimum_order_help">Smallest permitted order.</message>
+    <message id="entity_merchandisingproduct_liquidation_percent">Liquidation value</message>
+    <message id="entity_merchandisingproduct_liquidation_percent_help">Percentage of unit costs recovered when remaining stock is liquidated.</message>
+    <message id="entity_merchandisingproduct_player_product">Player product</message>
+    <message id="entity_merchandisingproduct_player_product_help">Only enable if the template must be linked to a merchandising star.</message>
+    <message id="entity_merchandisingproduct_event_type">Event type</message>
+    <message id="entity_merchandisingproduct_event_type_help">Optional requirement for event-related products.</message>
+    <message id="entity_merchandisingproduct_stadium_factor">Stadium sales factor</message>
+    <message id="entity_merchandisingproduct_stadium_factor_help">Product-specific demand factor in the stadium.</message>
+    <message id="entity_merchandisingproduct_online_factor">Online sales factor</message>
+    <message id="entity_merchandisingproduct_online_factor_help">Product-specific demand factor in the online fan shop.</message>
+    <message id="entity_merchandisingproduct_max_price_factor">Maximum price factor</message>
+    <message id="entity_merchandisingproduct_max_price_factor_help">Upper limit relative to the recommended sale price.</message>
+    <message id="entity_merchandisingproduct_active">Active</message>
+    <message id="entity_merchandisingproduct_active_help">Only active templates are available to clubs.</message>
 
-	<message id="entity_merchandisingproduct">Merchandising products</message>
+    <message id="entity_merchandisingcampaigntype">Merchandising campaigns</message>
+    <message id="entity_merchandisingcampaigntype_name">Campaign name</message>
+    <message id="entity_merchandisingcampaigntype_name_help">German name of the campaign.</message>
+    <message id="entity_merchandisingcampaigntype_description">Description</message>
+    <message id="entity_merchandisingcampaigntype_description_help">Brief explanation of the campaign.</message>
+    <message id="entity_merchandisingcampaigntype_cost">Cost</message>
+    <message id="entity_merchandisingcampaigntype_cost_help">One-off cost at launch.</message>
+    <message id="entity_merchandisingcampaigntype_duration_days">Term</message>
+    <message id="entity_merchandisingcampaigntype_duration_days_help">Calendar days for which the effect lasts.</message>
+    <message id="entity_merchandisingcampaigntype_demand_bonus">Demand bonus</message>
+    <message id="entity_merchandisingcampaigntype_demand_bonus_help">Percentage bonus during the campaign.</message>
+    <message id="entity_merchandisingcampaigntype_active">Active</message>
+    <message id="entity_merchandisingcampaigntype_active_help">Only active campaigns can be launched.</message>
 
-	<message id="entity_merchandisingproduct_name">Product name</message>
-	<message id="entity_merchandisingproduct_name_help">
-		May also be a messages key.
-	</message>
-
-	<message id="entity_merchandisingproduct_description">Description</message>
-	<message id="entity_merchandisingproduct_description_help">
-		May also be a messages key.
-	</message>
-
-	<message id="entity_merchandisingproduct_purchase_price">Purchase price</message>
-	<message id="entity_merchandisingproduct_purchase_price_help">
-		Production or purchase costs per sold item.
-	</message>
-
-	<message id="entity_merchandisingproduct_sales_price">Base sales price</message>
-	<message id="entity_merchandisingproduct_sales_price_help">
-		Default sales price before the club-specific pricing strategy is applied.
-	</message>
-
-	<message id="entity_merchandisingproduct_base_demand">Base demand</message>
-	<message id="entity_merchandisingproduct_base_demand_help">
-		Share of spectators who generally buy this product. Example: 0.0100 equals 1.00 percent.
-	</message>
-
-	<message id="entity_merchandisingproduct_active">Active</message>
-	<message id="entity_merchandisingproduct_active_help">
-		Only active products are available to managers.
-	</message>
-
+    <message id="entity_stadiumbuilding_effect_merchandising">Effect: merchandising</message>
+    <message id="entity_stadiumbuilding_effect_merchandising_help">Percentage bonus for sales in the stadium fan shop.</message>
 </messages>

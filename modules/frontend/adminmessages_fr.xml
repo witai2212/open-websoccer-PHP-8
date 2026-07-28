@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_tab_frontend">Interface publique</message> 
+	
+	<message id="imprint_navlabel">Mentions légales</message>
+	<message id="imprint_label_content">Contenu de la page</message>
+	<message id="imprint_label_content_help">Le HTML est autorisé. Les sauts de ligne sont convertis automatiquement.</message>
+	<message id="imprint_introduction">Pour des raisons juridiques, il est généralement nécessaire d'indiquer publiquement sur le site l'identité de son responsable. Saisissez ci-dessous les coordonnées de l'exploitant du site. Elles apparaîtront sous « Mentions légales ».</message>
+	
+	<message id="imprint_validationerror_content">Un contenu doit être indiqué.</message>
+	
+	<message id="settings_label_head_code">Code HTML pour la section &lt;head&gt;</message>
+	
+</messages>

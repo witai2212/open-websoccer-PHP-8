@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="clubstaff_navlabel">Personal del club</message>
+    <message id="club-staff_navlabel">Personal del club</message>
+    <message id="clubstaff_title">Personal del club</message>
+    <message id="clubstaff_intro">Contrata especialistas que proporcionen pequeñas bonificaciones a tu club. Cada club puede emplear exactamente a un miembro del personal por función.</message>
+    <message id="clubstaff_only_human">El personal del club solo está disponible para clubes gestionados por usuarios.</message>
+    <message id="clubstaff_disabled">El personal del club está desactivado actualmente.</message>
+
+    <message id="clubstaff_current_staff">Personal actual</message>
+    <message id="clubstaff_available_staff">Personal disponible</message>
+    <message id="clubstaff_effects">Bonificaciones activas</message>
+    <message id="clubstaff_no_staff_hired">Todavía no has contratado personal adicional.</message>
+    <message id="clubstaff_no_staff_available">Actualmente no hay miembros del personal adecuados disponibles.</message>
+    <message id="clubstaff_total_salary">Coste total por jornada</message>
+    <message id="clubstaff_salary">Salario por jornada</message>
+    <message id="clubstaff_bonus">Bonificación</message>
+    <message id="clubstaff_level">Nivel</message>
+    <message id="clubstaff_role">Función</message>
+    <message id="clubstaff_name">Nombre</message>
+    <message id="clubstaff_description">Descripción</message>
+    <message id="clubstaff_action">Acción</message>
+    <message id="clubstaff_hired_since">Contratado desde</message>
+    <message id="clubstaff_budget">Presupuesto del club</message>
+    <message id="clubstaff_info_costs">Los salarios se contabilizan automáticamente después de los nuevos partidos disputados y aparecen en las finanzas.</message>
+    <message id="clubstaff_info_simple">Las bonificaciones son deliberadamente pequeñas para que el personal del club siga siendo un complemento y no se convierta en una carga administrativa.</message>
+
+    <message id="clubstaff_role_assistant_manager">Segundo entrenador</message>
+    <message id="clubstaff_role_goalkeeping_coach">Entrenador de porteros</message>
+    <message id="clubstaff_role_fitness_coach">Preparador físico</message>
+    <message id="clubstaff_role_youth_coach">Entrenador juvenil</message>
+    <message id="clubstaff_role_physio">Fisioterapeuta</message>
+    <message id="clubstaff_role_marketing_manager">Responsable de marketing</message>
+    <message id="clubstaff_role_financial_advisor">Asesor financiero</message>
+
+    <message id="clubstaff_effect_assistant_manager">Mejora ligeramente la química del equipo y la eficacia del entrenamiento táctico.</message>
+    <message id="clubstaff_effect_goalkeeping_coach">Mejora ligeramente el entrenamiento de porteros y la parada de penaltis.</message>
+    <message id="clubstaff_effect_fitness_coach">Mejora ligeramente la resistencia, la velocidad y la frescura en el entrenamiento.</message>
+    <message id="clubstaff_effect_youth_coach">Mejora ligeramente el desarrollo de jugadores juveniles y la ojeación juvenil.</message>
+    <message id="clubstaff_effect_physio">Reduce ligeramente las consecuencias de las lesiones y favorece la recuperación.</message>
+    <message id="clubstaff_effect_marketing_manager">Mejora ligeramente el interés de los espectadores y el merchandising.</message>
+    <message id="clubstaff_effect_financial_advisor">Mejora ligeramente la solvencia y las condiciones de financiación.</message>
+
+    <message id="hire-club-staff">Contratar</message>
+    <message id="fire-club-staff">Despedir</message>
+    <message id="hire_club_staff_message">Miembro del personal contratado.</message>
+    <message id="fire_club_staff_message">Miembro del personal despedido.</message>
+
+    <message id="clubstaff_error_disabled">El personal del club está desactivado actualmente.</message>
+    <message id="clubstaff_error_no_team">No tienes club.</message>
+    <message id="clubstaff_error_human_only">Solo los clubes gestionados por usuarios pueden contratar personal.</message>
+    <message id="clubstaff_error_staff_not_found">No se ha encontrado a este miembro del personal.</message>
+    <message id="clubstaff_error_staff_inactive">Este miembro del personal no está disponible.</message>
+    <message id="clubstaff_error_role_taken">Esta función ya está ocupada.</message>
+    <message id="clubstaff_error_not_hired">Esta función no está ocupada en tu club.</message>
+    <message id="clubstaff_error_invalid_role">Función de personal no válida.</message>
+
+    <message id="clubstaff_account_salary_subject">Salarios del personal</message>
+    <message id="clubstaff_account_sender">Personal del club</message>
+
+    <message id="teamchemistry_factor_staff">Personal del club</message>
+    <message id="teamchemistry_source_staff">Personal del club</message>
+
+</messages>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="mywatchlist_navlabel">Watchlist</message>
+    <message id="mywatchlist_title">Watchlist</message>
+    <message id="mywatchlist_playername">Player</message>
+	<message id="mywatchlist_verein">Club</message>
+	<message id="mywatchlist_alter">Age</message>
+	<message id="mywatchlist_vertrag_spiele">Contract length</message>
+	<message id="mywatchlist_position_main">Position</message>
+	<message id="mywatchlist_position_second">Pos. 2</message>
+	<message id="mywatchlist_marktwert">Market value</message>
+	<message id="mywatchlist_scout_recommendation">Scout recommendation</message>
+	<message id="mywatchlist_scout_score">Score</message>
+	<message id="mywatchlist_scout_recommend_yes">Recommended</message>
+	<message id="mywatchlist_scout_recommend_watch">Watch</message>
+	<message id="mywatchlist_scout_recommend_no">Not recommended</message>
+	<message id="mywatchlist_scout_no_data">No scout data</message>
+	<message id="mywatchlist_scout_no_data_short">-</message>
+	<message id="mywatchlist_scout_no_matching_position">No suitable scout</message>
+	<message id="mywatchlist_noten_druchschnitt">Ratings</message>
+	<message id="no_items">No players on the watchlist</message>
+	<message id="mywatchlist_delete">Delete</message>
+	
+	<message id="watchlist_remove_label">remove from watchlist</message>
+	<message id="watchlist_remove_success">The player is no longer on the watchlist.</message>
+	
+	<message id="mywatchlist_player_on_transferlist">On the transfer market</message>
+	<message id="mywatchlist_player_has_offer">Offer submitted</message>
+	
+	<message id="button_put_on_watchlist">Add player to watchlist</message>
+	<message id="button_delete_from_watchlist">Remove player from watchlist</message>
+	<message id="watchlist_put_on_success">The player is now on your watchlist</message>
+    
+</messages>

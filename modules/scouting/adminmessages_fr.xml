@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="settings_tab_scouting">Recrutement</message>
+
+    <message id="settings_label_scouting_enabled">Activer le système de recrutement</message>
+    <message id="settings_label_scouting_enabled_help">Active la nouvelle page de recrutement sur le marché des transferts. Les utilisateurs peuvent construire des cellules de recrutement, engager des recruteurs, ouvrir des camps et recevoir des suggestions de joueurs.</message>
+
+    <message id="settings_label_max_scouts_per_team">Nombre maximal de recruteurs par club</message>
+    <message id="settings_label_max_scouts_per_team_help">Limite globale du nombre de recruteurs employés simultanément par club. Les niveaux de la cellule de recrutement peuvent aussi imposer leurs propres limites.</message>
+
+    <message id="settings_label_scouts_matches">Durée par défaut du contrat des recruteurs</message>
+    <message id="settings_label_scouts_matches_help">Nombre de matchs pour lesquels un recruteur est engagé par défaut. Ce nombre est réduit après chaque journée pertinente.</message>
+
+    <message id="settings_label_scout_hire_matches">Frais d’engagement du recruteur en journées</message>
+    <message id="settings_label_scout_hire_matches_help">Nombre d’honoraires du recruteur facturés immédiatement comme frais d’engagement non remboursables. Valeur par défaut : 3.</message>
+
+    <message id="settings_label_scouting_default_department_build_cost">Coût de construction par défaut de la cellule de recrutement</message>
+    <message id="settings_label_scouting_default_department_build_cost_help">Valeur de repli si aucun niveau adapté n’est trouvé dans la table scouting_department_level.</message>
+
+    <message id="settings_label_scouting_default_department_maintenance_fee">Entretien par défaut de la cellule de recrutement</message>
+    <message id="settings_label_scouting_default_department_maintenance_fee_help">Coût de repli par journée si aucun niveau adapté n’est trouvé dans la table scouting_department_level.</message>
+
+    <message id="settings_label_scouting_proposal_min_matches">Attente minimale avant une suggestion de joueur</message>
+    <message id="settings_label_scouting_proposal_min_matches_help">Nombre minimal de matchs avant qu’un camp de recrutement actif puisse générer une nouvelle suggestion de joueur.</message>
+
+    <message id="settings_label_scouting_proposal_max_matches">Attente maximale avant une suggestion de joueur</message>
+    <message id="settings_label_scouting_proposal_max_matches_help">Nombre maximal de matchs avant qu’un camp de recrutement actif puisse générer une nouvelle suggestion de joueur. La valeur réelle est choisie aléatoirement entre le minimum et le maximum.</message>
+
+    <message id="settings_label_scouting_proposal_expire_matches">Validité des suggestions de joueurs</message>
+    <message id="settings_label_scouting_proposal_expire_matches_help">Nombre de matchs pendant lesquels un joueur suggéré reste disponible. La suggestion expire ensuite automatiquement.</message>
+
+    <message id="settings_label_scouting_max_open_proposals_per_team">Nombre maximal de suggestions de joueurs ouvertes par club</message>
+    <message id="settings_label_scouting_max_open_proposals_per_team_help">Lorsqu’un club atteint ce nombre de suggestions ouvertes, les camps cessent temporairement de générer de nouveaux joueurs.</message>
+
+    <message id="settings_label_scouting_same_country_cost_percent">Facteur de coût national</message>
+    <message id="settings_label_scouting_same_country_cost_percent_help">Valeur en pourcentage pour les camps de recrutement dans le pays du club. 100 correspond au coût normal ; 75 signifie 25 pour cent moins cher.</message>
+
+    <message id="settings_label_scouting_abroad_cost_percent">Facteur de coût à l’étranger</message>
+    <message id="settings_label_scouting_abroad_cost_percent_help">Valeur en pourcentage pour les camps de recrutement à l’étranger. 100 correspond au coût normal ; 125 signifie 25 pour cent plus cher.</message>
+
+</messages>

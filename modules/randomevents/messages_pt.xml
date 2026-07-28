@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="random-events_navlabel">Eventos</message>
+    <message id="random-events_title">Eventos do clube</message>
+    <message id="random-events_intro">Aqui podes ver os eventos ativos que exigem uma decisão do treinador. Algumas decisões têm efeito imediato, enquanto outras permanecem ativas até expirarem.</message>
+
+    <message id="randomevent_chain_notification">Novo evento do clube: {event}</message>
+    <message id="randomevent_chain_no_open_events">Neste momento não existem eventos do clube em aberto.</message>
+    <message id="randomevent_chain_expires_matchday">Expira após a jornada</message>
+    <message id="randomevent_chain_choice">Decisão</message>
+    <message id="randomevent_chain_effect">Efeito</message>
+    <message id="randomevent_chain_choose">Selecionar</message>
+    <message id="randomevent_chain_choice_selected">Reação escolhida</message>
+    <message id="randomevent_chain_waiting_until_expiry">Esta reação permanece ativa até o evento expirar.</message>
+    <message id="randomevent_chain_resolved_success">A decisão foi executada.</message>
+    <message id="randomevent_chain_already_resolved">Este evento já foi concluído.</message>
+    <message id="randomevent_chain_already_selected">Já foi escolhida uma reação para este evento.</message>
+
+    <message id="randomevent_chain_player_unhappy_title">Jogador insatisfeito</message>
+    <message id="randomevent_chain_player_unhappy_message">{playername} parece cada vez mais insatisfeito. A situação pode afetar a sua satisfação e o ambiente no clube.</message>
+    <message id="randomevent_chain_choice_talk">Falar com o jogador</message>
+    <message id="randomevent_chain_choice_talk_desc">Custa algum dinheiro para uma conversa de esclarecimento e acompanhamento, mas aumenta a sua satisfação.</message>
+    <message id="randomevent_chain_choice_ignore">Ignorar</message>
+    <message id="randomevent_chain_choice_ignore_desc">Sem custos diretos, mas a satisfação diminui e a direção fica ligeiramente irritada.</message>
+    <message id="randomevent_chain_choice_sell">Colocar na lista de transferências</message>
+    <message id="randomevent_chain_choice_sell_desc">O jogador é colocado no mercado de transferências. A sua satisfação diminui ligeiramente.</message>
+
+    <message id="randomevent_chain_sponsor_scandal_title">Escândalo de patrocinador</message>
+    <message id="randomevent_chain_sponsor_scandal_message">O teu patrocinador {sponsorname} está a ser alvo de críticas públicas. O clube tem de decidir como reagir.</message>
+    <message id="randomevent_chain_choice_distance">Distanciar-se</message>
+    <message id="randomevent_chain_choice_distance_desc">Custa dinheiro, mas protege a satisfação dos adeptos e da direção.</message>
+    <message id="randomevent_chain_choice_support">Apoiar o patrocinador</message>
+    <message id="randomevent_chain_choice_support_desc">Gera dinheiro a curto prazo, mas prejudica os adeptos e a direção.</message>
+    <message id="randomevent_chain_choice_silent">Não fazer declarações</message>
+    <message id="randomevent_chain_choice_silent_desc">Sem custos diretos, mas os adeptos e a direção reagem negativamente.</message>
+
+    <message id="randomevent_chain_youth_discovered_title">Jogador jovem descoberto</message>
+    <message id="randomevent_chain_youth_discovered_message">Um olheiro local recomenda-te {youthplayer}, de {youth_age} anos, posição {youth_position}. O jogador poderá juntar-se à tua equipa de formação.</message>
+    <message id="randomevent_chain_choice_sign_youth">Contratar jogador jovem</message>
+    <message id="randomevent_chain_choice_sign_youth_desc">O jogador junta-se à tua equipa de formação. É paga uma pequena compensação de formação.</message>
+    <message id="randomevent_chain_choice_let_go">Não contratar</message>
+    <message id="randomevent_chain_choice_let_go_desc">Sem efeito.</message>
+
+    <message id="randomevent_chain_stadium_damage_title">Danos no estádio</message>
+    <message id="randomevent_chain_stadium_damage_message">Foram detetados danos no estádio de {teamname}. Podes repará-los de imediato ou arriscar uma redução da assistência.</message>
+    <message id="randomevent_chain_choice_repair_now">Reparar de imediato</message>
+    <message id="randomevent_chain_choice_repair_now_desc">Custos de reparação elevados, mas sem outras limitações.</message>
+    <message id="randomevent_chain_choice_risk_attendance">Adiar a reparação</message>
+    <message id="randomevent_chain_choice_risk_attendance_desc">Sem custos imediatos, mas a assistência diminui até o evento expirar.</message>
+    <message id="randomevent_chain_choice_emergency_repair">Reparação de emergência</message>
+    <message id="randomevent_chain_choice_emergency_repair_desc">Se não houver uma reação atempada, será necessária uma reparação de emergência dispendiosa e a direção ficará insatisfeita.</message>
+    
+    <message id="activitylog_resolve-random-event-chain">%s reagiu a um evento do clube.</message>
+    <message id="activitylog_resolve-random-event-chain">%s reagiu a um evento do clube.</message>
+</messages>

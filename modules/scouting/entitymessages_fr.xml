@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <!-- Admin navigation labels for scouting admin pages -->
+    <message id="scout_navlabel">Recruteurs</message>
+    <message id="scoutingdepartmentlevel_navlabel">Cellules de recrutement</message>
+    <message id="scoutingcamplocation_navlabel">Lieux des camps de recrutement</message>
+    <message id="scoutingproposal_navlabel">Suggestions de joueurs du recrutement</message>
+
+    <!-- Existing scout entity -->
+    <message id="entity_scout">Recruteur</message>
+    <message id="entity_scout_name">Nom</message>
+    <message id="entity_scout_name_help">Nom du recruteur affiché aux utilisateurs dans le jeu.</message>
+    <message id="entity_scout_nation">Nation</message>
+    <message id="entity_scout_nation_help">Pays d’origine du recruteur. Pourra être utilisé ultérieurement pour des avantages régionaux de recrutement.</message>
+    <message id="entity_scout_speciality">Spécialité</message>
+    <message id="entity_scout_speciality_help">Poste pour lequel ce recruteur doit fournir des évaluations particulièrement précises.</message>
+    <message id="entity_scout_expertise">Expertise interne</message>
+    <message id="entity_scout_expertise_help">Valeur interne de 1 à 100. Elle n’est pas affichée directement aux entraîneurs, mais influence la qualité et la précision des rapports de recrutement.</message>
+    <message id="entity_scout_fee">Coût par journée</message>
+    <message id="entity_scout_fee_help">Montant facturé au club par journée pertinente tant que le recruteur est employé.</message>
+    <message id="entity_scout_team_id">Club</message>
+    <message id="entity_scout_team_id_help">Club qui emploie actuellement le recruteur. 0 ou vide signifie que le recruteur est disponible.</message>
+    <message id="entity_scout_team_matches">Matchs restants</message>
+    <message id="entity_scout_team_matches_help">Nombre de matchs pendant lesquels le recruteur restera employé par le club.</message>
+
+    <!-- Scouting department level -->
+    <message id="entity_scoutingdepartmentlevel">Niveau de la cellule de recrutement</message>
+    <message id="entity_scoutingdepartmentlevel_level">Niveau</message>
+    <message id="entity_scoutingdepartmentlevel_level_help">Niveau interne de la cellule de recrutement. Les niveaux supérieurs permettent des activités de recrutement meilleures et plus étendues.</message>
+    <message id="entity_scoutingdepartmentlevel_name">Nom</message>
+    <message id="entity_scoutingdepartmentlevel_name_help">Nom affiché du niveau d’amélioration, par exemple Petite cellule de recrutement ou Réseau international de recrutement.</message>
+    <message id="entity_scoutingdepartmentlevel_build_cost">Coût de construction</message>
+    <message id="entity_scoutingdepartmentlevel_build_cost_help">Coût unique de construction ou d’amélioration jusqu’à ce niveau.</message>
+    <message id="entity_scoutingdepartmentlevel_maintenance_fee">Entretien par journée</message>
+    <message id="entity_scoutingdepartmentlevel_maintenance_fee_help">Coût permanent par journée pour ce niveau de cellule de recrutement.</message>
+    <message id="entity_scoutingdepartmentlevel_max_scouts">Recruteurs max.</message>
+    <message id="entity_scoutingdepartmentlevel_max_scouts_help">Nombre maximal de recruteurs qu’un club peut employer simultanément avec ce niveau de cellule.</message>
+    <message id="entity_scoutingdepartmentlevel_max_camps">Camps max.</message>
+    <message id="entity_scoutingdepartmentlevel_max_camps_help">Nombre maximal de camps de recrutement actifs. Des valeurs très élevées permettent aux clubs riches d’exploiter un nombre correspondant de camps.</message>
+    <message id="entity_scoutingdepartmentlevel_status">Actif</message>
+    <message id="entity_scoutingdepartmentlevel_status_help">Seuls les niveaux actifs peuvent être utilisés par les clubs.</message>
+
+    <!-- Scouting camp location -->
+    <message id="entity_scoutingcamplocation">Lieu du camp de recrutement</message>
+    <message id="entity_scoutingcamplocation_name">Nom</message>
+    <message id="entity_scoutingcamplocation_name_help">Nom du lieu ou de la région, par exemple Allemagne, Brésil ou Afrique de l’Ouest.</message>
+    <message id="entity_scoutingcamplocation_country">Pays</message>
+    <message id="entity_scoutingcamplocation_country_help">Pays facultatif du lieu. Laisser vide s’il s’agit d’une région ou d’un continent.</message>
+    <message id="entity_scoutingcamplocation_continent">Continent</message>
+    <message id="entity_scoutingcamplocation_continent_help">Continent ou région du lieu. Les valeurs possibles incluent EU, AF, AS, NA, SA ou OC.</message>
+    <message id="entity_scoutingcamplocation_base_fee">Coût de base par journée</message>
+    <message id="entity_scoutingcamplocation_base_fee_help">Montant de base facturé par journée pour un camp actif à cet endroit.</message>
+    <message id="entity_scoutingcamplocation_travel_cost_modifier">Modificateur des frais de voyage</message>
+    <message id="entity_scoutingcamplocation_travel_cost_modifier_help">Supplément ou réduction en pourcentage pour ce lieu. Les valeurs positives rendent le camp plus cher, les valeurs négatives moins cher.</message>
+    <message id="entity_scoutingcamplocation_quality_modifier">Modificateur de qualité</message>
+    <message id="entity_scoutingcamplocation_quality_modifier_help">Influence la qualité moyenne des joueurs trouvés à cet endroit.</message>
+    <message id="entity_scoutingcamplocation_talent_modifier">Modificateur de talent</message>
+    <message id="entity_scoutingcamplocation_talent_modifier_help">Influence la probabilité de trouver des joueurs plus talentueux ou dotés d’un meilleur potentiel.</message>
+    <message id="entity_scoutingcamplocation_min_department_level">Niveau minimal de la cellule de recrutement</message>
+    <message id="entity_scoutingcamplocation_min_department_level_help">Niveau minimal requis pour qu’un club puisse ouvrir un camp à cet endroit.</message>
+    <message id="entity_scoutingcamplocation_status">Actif</message>
+    <message id="entity_scoutingcamplocation_status_help">Seuls les lieux actifs peuvent être sélectionnés par les entraîneurs.</message>
+
+    <!-- Scouting proposal overview -->
+    <message id="entity_scoutingproposal">Suggestion de joueur du recrutement</message>
+    <message id="entity_scoutingproposal_created_date">Créé le</message>
+    <message id="entity_scoutingproposal_team_id">Club</message>
+    <message id="entity_scoutingproposal_camp_id">Camp</message>
+    <message id="entity_scoutingproposal_scout_id">Recruteur</message>
+    <message id="entity_scoutingproposal_location_id">Lieu</message>
+    <message id="entity_scoutingproposal_name">Joueur</message>
+    <message id="entity_scoutingproposal_firstname">Prénom</message>
+    <message id="entity_scoutingproposal_lastname">Nom de famille</message>
+    <message id="entity_scoutingproposal_birthday">Date de naissance</message>
+    <message id="entity_scoutingproposal_age">Âge</message>
+    <message id="entity_scoutingproposal_nation">Nation</message>
+    <message id="entity_scoutingproposal_position">Poste</message>
+    <message id="entity_scoutingproposal_position_main">Poste principal</message>
+    <message id="entity_scoutingproposal_position_second">Poste secondaire</message>
+
+    <!-- Real hidden proposal values, admin only -->
+    <message id="entity_scoutingproposal_real_w_staerke">Niveau réel</message>
+    <message id="entity_scoutingproposal_real_w_staerke_max">Niveau maximal réel</message>
+    <message id="entity_scoutingproposal_real_w_talent">Talent réel</message>
+    <message id="entity_scoutingproposal_real_w_technik">Technique réelle</message>
+    <message id="entity_scoutingproposal_real_w_kondition">Endurance réelle</message>
+    <message id="entity_scoutingproposal_real_w_frische">Fraîcheur réelle</message>
+    <message id="entity_scoutingproposal_real_w_zufriedenheit">Satisfaction réelle</message>
+    <message id="entity_scoutingproposal_real_w_passing">Qualité de passe réelle</message>
+    <message id="entity_scoutingproposal_real_w_shooting">Frappe réelle</message>
+    <message id="entity_scoutingproposal_real_w_heading">Jeu de tête réel</message>
+    <message id="entity_scoutingproposal_real_w_tackling">Tacle réel</message>
+    <message id="entity_scoutingproposal_real_w_freekick">Coups francs réels</message>
+    <message id="entity_scoutingproposal_real_w_pace">Vitesse réelle</message>
+    <message id="entity_scoutingproposal_real_w_creativity">Créativité réelle</message>
+    <message id="entity_scoutingproposal_real_w_influence">Influence réelle</message>
+    <message id="entity_scoutingproposal_real_w_flair">Inspiration réelle</message>
+    <message id="entity_scoutingproposal_real_w_penalty">Penalties réels</message>
+    <message id="entity_scoutingproposal_real_w_penalty_killing">Arrêts sur penalty réels</message>
+
+    <!-- Reported proposal values shown to managers -->
+    <message id="entity_scoutingproposal_reported_strength">Niveau estimé</message>
+    <message id="entity_scoutingproposal_reported_talent">Talent estimé</message>
+    <message id="entity_scoutingproposal_reported_potential">Potentiel estimé</message>
+    <message id="entity_scoutingproposal_reported_summary">Rapport du recruteur</message>
+
+    <message id="entity_scoutingproposal_transfer_fee">Indemnité de transfert</message>
+    <message id="entity_scoutingproposal_salary">Salaire</message>
+    <message id="entity_scoutingproposal_contract_matches">Durée du contrat</message>
+    <message id="entity_scoutingproposal_expires_date">Date d'expiration</message>
+    <message id="entity_scoutingproposal_expires_after_matches">Matchs restants</message>
+    <message id="entity_scoutingproposal_status">Statut</message>
+    <message id="entity_scoutingproposal_accepted_date">Recruté le</message>
+    <message id="entity_scoutingproposal_rejected_date">Refusé le</message>
+    <message id="entity_scoutingproposal_created_player_id">Joueur créé</message>
+
+</messages>

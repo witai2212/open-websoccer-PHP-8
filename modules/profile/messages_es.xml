@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="userprofile_block_title">Mi perfil</message>
+    <message id="userprofile_block_loggedin_as">Sesión iniciada como:</message>
+    <message id="userprofile_block_link_logout">Cerrar sesión</message>
+    <message id="userprofile_block_link_profile">Editar perfil</message>
+    <message id="userprofile_block_popularity">Popularidad entre la afición</message>
+    <message id="userprofile_block_highscore">Puntuación máxima</message>
+    <message id="userprofile_block_reputation">Reputación</message>
+    <message id="userprofile_block_link_table">Clasificación</message>
+
+    <message id="userprofile_block_current_association">Confederación actual</message>
+    <message id="userprofile_block_other_associations">Otras federaciones</message>
+    
+    <message id="userprofile_block_tooltip_popularity">Depende de su éxito e influye en la asistencia a los partidos en casa.</message>
+    <message id="userprofile_block_tooltip_reputation">Su reputación como entrenador se basa en la puntuación máxima, la popularidad entre los aficionados y la satisfacción de la directiva. Influye en las ofertas de trabajo y los clubes vacantes disponibles.</message>
+    
+    <message id="profile_navlabel">Perfil de usuario</message>
+    <message id="profile_title">Editar perfil</message>
+    
+    <message id="profile_field_newemail">Nuevo correo electrónico</message>
+    <message id="profile_field_newpassword">Nueva contraseña</message>
+    
+    <message id="profile_changedemail_message_title">Confirme la nueva dirección de correo electrónico</message>
+    <message id="profile_changedemail_message_content">Su cuenta de usuario se ha bloqueado temporalmente. Consulte su correo electrónico y siga las instrucciones del mensaje que le hemos enviado.</message>
+    
+    <message id="activation_changedemail_subject">Activación tras cambiar la dirección de correo electrónico</message>
+	<message id="activation_changedemail_greeting">Hola:</message>
+	<message id="activation_changedemail_introduction">para reactivar su cuenta de usuario, abra la siguiente dirección de Internet:</message>
+	<message id="activation_changedemail_ending">Si no se registró con nosotros y sospecha un uso indebido de su dirección de correo electrónico, responda a este mensaje.</message>
+	
+	<message id="sendpassword_email_subject">Su nueva contraseña</message>
+	<message id="sendpassword_email_greeting">Hola:</message>
+	<message id="sendpassword_email_introduction">esta es la nueva contraseña que solicitó a través de nuestro sitio web y que puede y debe cambiar en su perfil:</message>
+	<message id="sendpassword_email_newpassword_label">Tu nueva contraseña:</message>
+	<message id="sendpassword_email_ending">Si no solicitó una nueva contraseña y sospecha un uso indebido de su dirección de correo electrónico, responda a este mensaje. Tenga en cuenta que la nueva contraseña solo se activará cuando inicie sesión con ella por primera vez.</message>
+	
+	<message id="enter-username_navlabel">Introducir nombre de usuario</message>
+	<message id="enter-username_intro">Ahora solo necesitamos un nombre que le identifique en el sitio web, ¡y podrá empezar!</message>
+
+	<message id="change-profile-picture_navlabel">Subir imagen de perfil</message>
+	<message id="change-profile-picture_intro">Aquí puede subir una imagen PNG o JPEG. Debe ser <strong>rectangular</strong>, tener una anchura mínima de <strong>120 píxeles</strong> y un tamaño máximo de archivo de <strong>%d KBytes</strong>.</message>
+	<message id="change-profile-picture_success">¡La nueva imagen de perfil se ha subido correctamente!</message>
+	
+	<message id="change-profile-picture_err_notprovied">Debe seleccionar una imagen.</message>
+	<message id="change-profile-picture_err_illegalfiletype">Solo puede seleccionar una imagen PNG o JPEG.</message>
+	<message id="change-profile-picture_err_illegalfilesize">El archivo seleccionado es demasiado grande.</message>
+	<message id="change-profile-picture_err_failed">No se pudo subir la imagen. Inténtelo de nuevo.</message>
+	
+	<message id="user_deletepicture_button">Eliminar imagen</message>
+	<message id="delete-profile-picture_success">La imagen de perfil se ha eliminado correctamente.</message>
+	
+	<message id="board_satisfaction_title">Satisfacción de la directiva</message>
+	<message id="board_info_season_target">Objetivos de temporada</message>
+	<message id="board_info_season_ranking">Posición</message>
+	<message id="board_info_season_targethighscore">Puntuación máxima</message>
+	<message id="userprofile_block_board_title">Directiva</message>
+	<message id="userprofile_block_board_details">Ir a los objetivos de temporada</message>
+	<message id="userprofile_block_board_no_active_season">Actualmente no hay ninguna temporada activa para tu club.</message>
+	<message id="userprofile_block_club_highscore">Puntuación máxima del club</message>
+	
+
+	<message id="manager_character_sidebar_title">Carácter del entrenador</message>
+	<message id="manager_character_section_title">Carácter del entrenador</message>
+	<message id="manager_character_intro">Tu carácter como entrenador describe tu filosofía de liderazgo. Cada estilo tiene fortalezas y debilidades claras.</message>
+	<message id="manager_character_current">Carácter actual</message>
+	<message id="manager_character_not_set">Todavía no elegido</message>
+	<message id="manager_character_first_choice_hint">Todavía no has definido tu carácter como entrenador. La primera elección es gratuita y no tiene desventajas.</message>
+	<message id="manager_character_select_label">Elegir carácter del entrenador</message>
+	<message id="manager_character_select_empty">Sin cambios</message>
+	<message id="manager_character_change_penalty_hint">Los cambios posteriores se consideran una reorientación y provocan un breve periodo de adaptación.</message>
+	<message id="manager_character_change_locked">Solo podrá realizarse otro cambio después de %d partidos oficiales más o en la próxima temporada.</message>
+	<message id="manager_character_saved_first_choice">Se ha definido el carácter del entrenador.</message>
+	<message id="manager_character_saved_changed">Se ha cambiado el carácter del entrenador. El equipo, los medios y la directiva reaccionan ante la nueva orientación.</message>
+	<message id="manager_character_error_schema_missing">Todavía faltan los campos de base de datos para el carácter del entrenador. Ejecute primero la actualización SQL.</message>
+	<message id="manager_character_error_change_not_allowed">Todavía no es posible realizar otro cambio. Faltan {matches} partidos oficiales.</message>
+
+	<message id="manager_character_balanced">Equilibrado</message>
+	<message id="manager_character_balanced_summary">Un perfil polivalente y sólido, sin debilidades claras, pero también sin bonificación especializada.</message>
+	<message id="manager_character_balanced_positive">Sin riesgos de adaptación y con un efecto estable en todas las áreas.</message>
+	<message id="manager_character_balanced_negative">Sin una fortaleza especial en crisis, cantera, táctica o finanzas.</message>
+
+	<message id="manager_character_motivator">Motivador</message>
+	<message id="manager_character_motivator_summary">Fuerte en crisis, partidos igualados y después de contratiempos.</message>
+	<message id="manager_character_motivator_positive">Mejor moral y mayor capacidad de remontada.</message>
+	<message id="manager_character_motivator_negative">Menor precisión táctica y no siempre es la opción preferida de la directiva.</message>
+
+	<message id="manager_character_tactician">Táctico</message>
+	<message id="manager_character_tactician_summary">Saca más partido de una idea de juego adecuada y una formación estable.</message>
+	<message id="manager_character_tactician_positive">Pequeñas ventajas en el juego de pase, el plan de partido y el encaje táctico.</message>
+	<message id="manager_character_tactician_negative">Menor impulso emocional; los aficionados a veces reaccionan con más frialdad.</message>
+
+	<message id="manager_character_disciplinarian">Disciplinario</message>
+	<message id="manager_character_disciplinarian_summary">Aporta orden, condición física y menos riesgos innecesarios.</message>
+	<message id="manager_character_disciplinarian_positive">Menor riesgo de tarjetas y mejor disciplina de entrenamiento.</message>
+	<message id="manager_character_disciplinarian_negative">La satisfacción y el entusiasmo de los jugadores pueden resentirse.</message>
+
+	<message id="manager_character_developer">Desarrollador de talentos</message>
+	<message id="manager_character_developer_summary">Ideal para la cantera, los jugadores jóvenes y la construcción de la plantilla a largo plazo.</message>
+	<message id="manager_character_developer_positive">Mejor desarrollo de la cantera y efectos de entrenamiento para los jugadores jóvenes.</message>
+	<message id="manager_character_developer_negative">Menor efecto a corto plazo en partidos de mucha presión y con estrellas veteranas.</message>
+
+	<message id="manager_character_media_friendly">Experto en medios</message>
+	<message id="manager_character_media_friendly_summary">Puede gestionar mejor la presión y aprovechar mejor las entrevistas.</message>
+	<message id="manager_character_media_friendly_positive">La presión mediática aumenta más despacio y los efectos de las entrevistas son más favorables.</message>
+	<message id="manager_character_media_friendly_negative">La directiva y el vestuario a veces consideran este estilo demasiado blando.</message>
+
+	<message id="manager_character_financial_strategist">Estratega financiero</message>
+	<message id="manager_character_financial_strategist_summary">Piensa en términos económicos y mejora la percepción de estabilidad financiera.</message>
+	<message id="manager_character_financial_strategist_positive">La directiva reacciona mejor a los fichajes, los objetivos y unas finanzas estables.</message>
+	<message id="manager_character_financial_strategist_negative">Los aficionados reaccionan con mayor sensibilidad a las ventas y a la falta de ambición deportiva.</message>
+
+	<message id="manager_character_club_icon">Hombre de club</message>
+	<message id="manager_character_club_icon_summary">Vive el club y disfruta de mayor apoyo de los aficionados.</message>
+	<message id="manager_character_club_icon_positive">Mayor lealtad de los aficionados, ventaja de campo y efecto en los derbis.</message>
+	<message id="manager_character_club_icon_negative">Las ventas impopulares y los entornos ajenos resultan más difíciles.</message>
+
+	<message id="manager_character_risk_taker">Entrenador arriesgado</message>
+	<message id="manager_character_risk_taker_summary">Valiente, ofensivo y capaz de dar sorpresas.</message>
+	<message id="manager_character_risk_taker_positive">Mayor potencial con un planteamiento ofensivo y acontecimientos positivos.</message>
+	<message id="manager_character_risk_taker_negative">Más volatilidad, mayor presión y una penalización más fuerte por los fracasos.</message>
+
+</messages>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="teamsgenerator_navlabel">Gerar clubes</message>
+    
+    <message id="teamsgenerator_intro">Regra geral, as federações de futebol reconhecidas não permitem a utilização de nomes reais em jogos, salvo se o operador tiver obtido a licença correspondente junto da respetiva federação. Com esta ferramenta podes criar facilmente clubes com nomes fictícios gerados aleatoriamente que, em casos pontuais, podem assemelhar-se aos nomes originais, mas que não são, em princípio, idênticos.</message>
+    
+    <message id="generator_label_league">Liga</message>
+    <message id="generator_label_numberofteams">Número de equipas</message>
+    <message id="generator_label_budget">Orçamento por equipa</message>
+    <message id="generator_label_generatestadium">Gerar também um estádio para cada equipa</message>
+    <message id="generator_label_stadiumpattern">Nome do estádio</message>
+    <message id="generator_label_stadiumpattern_help">em que "%s" é um marcador para o nome da cidade.</message>
+    
+    <message id="generator_label">Gerar registos automaticamente</message>
+    <message id="generator_button">Gerar</message>
+    
+    <message id="generator_label_stadium_p_stands">Lugares em pé, bancada lateral</message>
+    <message id="generator_label_stadium_p_seats">Lugares sentados, bancada lateral</message>
+    <message id="generator_label_stadium_p_stands_grand">Lugares em pé, bancada principal</message>
+    <message id="generator_label_stadium_p_seats_grand">Lugares sentados, bancada principal</message>
+    <message id="generator_label_stadium_p_vip">Camarotes VIP</message>
+    
+    <message id="generator_validationerror_numberofitems">Tens de gerar pelo menos um registo.</message>
+    <message id="generator_validationerror_numberofitems_max">Podes gerar no máximo 100 registos de cada vez.</message>
+    <message id="generator_validationerror_noleague">Tem de ser selecionada uma liga.</message>
+    
+    <message id="generator_success">Dados gerados com êxito.</message>
+    <message id="generator_error">Os dados NÃO foram gerados com êxito!</message>
+    
+	<message id="generator_err_filedoesnotexist">Para gerar dados para esta liga, precisas do ficheiro: %s</message>
+	<message id="generator_err_emptyfile">O seguinte ficheiro não contém entradas válidas: %s</message>
+	
+	<message id="playersgenerator_navlabel">Gerar jogadores</message>
+	<message id="playersgenerator_noteams">Ainda não existem equipas na liga selecionada.</message>
+	<message id="playersgenerator_create_for_all_teams">Gerar jogadores para todas as equipas</message>
+	<message id="playersgenerator_create_for_single_teams">Gerar jogadores separadamente para as equipas selecionadas</message>
+	
+	<message id="playersgenerator_label_deviation">Desvio máximo de força</message>
+	<message id="playersgenerator_label_deviation_help">Se os valores de força variarem aleatoriamente, pode selecionar-se, por exemplo, 10% para desvios entre -10 e +10 pontos de força.</message>
+	
+	<message id="playersgenerator_head_playerscount">Número de jogadores existentes</message>
+	<message id="player_age">Idade do jogador</message>
+	<message id="player_age_help">em anos</message>
+	
+	<message id="player_age_deviation">Desvio máximo de idade</message>
+	<message id="player_age_deviation_help">Se a idade dos jogadores variar aleatoriamente, pode selecionar-se, por exemplo, 5 para um desvio entre -5 e +5 anos.</message>
+	
+	<message id="playersgenerator_generator_for_transfermarket">Gerar para o mercado de transferências</message>
+	
+	<message id="groupmatchesgenerator_select_cups">Seleciona uma taça</message>
+	<message id="groupmatchesgenerator_label_firstmatchday">Data do primeiro jogo</message>
+	<message id="groupmatchesgenerator_label_timebreak">Intervalo entre cada jogo</message>
+	<message id="groupmatchesgenerator_label_matchesperteam">Jogos por equipa</message>
+
+	
+	<message id="seasonrollover_navlabel">Assistente de mudança de época</message>
+	<message id="seasonrollover_title">Assistente de mudança de época</message>
+	<message id="seasonrollover_intro">Este assistente reúne o fim da época, os dados temporários da UEFA, novas épocas, taças e calendários num processo controlado.</message>
+
+</messages>

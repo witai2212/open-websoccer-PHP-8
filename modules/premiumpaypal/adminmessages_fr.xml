@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_paypal_enabled">Acheter du crédit premium par paiement via PayPal.</message> 
+	<message id="settings_label_paypal_receiver_email">PayPal : nom du compte (e-mail)</message>
+	<message id="settings_label_paypal_receiver_email_help">Adresse e-mail du destinataire. Elle doit correspondre à l’adresse enregistrée sur PayPal.</message>
+	<message id="settings_label_paypal_host">PayPal : hôte</message>
+	<message id="settings_label_paypal_host_help">Généralement <em>www.paypal.com</em>. Pour les tests : <em>www.sandbox.paypal.com</em></message>
+	<message id="settings_label_paypal_url">URL vers PayPal</message>
+	<message id="settings_label_paypal_url_help">URL interne pour la vérification du paiement. Généralement <em>ssl://www.paypal.com</em>. Pour les tests : <em>ssl://www.sandbox.paypal.com</em>.</message>
+	<message id="settings_label_paypal_buttonhtml">PayPal : code du bouton (HTML)</message>
+	<message id="settings_label_paypal_buttonhtml_help">Code HTML <strong>non modifié</strong> du bouton que vous avez généré via le portail marchand de PayPal. Le bouton doit inclure les options de dépôt configurées ci-dessus dans la devise indiquée. Consultez également la documentation du produit.</message>
+</messages>

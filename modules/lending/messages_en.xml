@@ -1,47 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="lending_player_marker_tooltip">Player is borrowed</message>
-    <message id="lending_player_marker_lendable">Player can be borrowed</message>
+    <message id="lending_player_marker_tooltip">Player is on loan</message>
+    <message id="lending_player_marker_lendable">Player is available for loan</message>
     
-    <message id="lending_lend_button">Offer to borrow</message>
-    <message id="lending_lendable_unmark">Player is offered for borrowing (Fee: %d). Cancel lending offer.</message>
+    <message id="lending_lend_button">Offer for loan</message>
+    <message id="lending_lendable_unmark">Player is offered for loan (loan fee: %d). Remove offer.</message>
     
-    <message id="lend-player_navlabel">Lend player</message>
-    <message id="lend-player_intro">Offer this player for borrowing. Any interested club can hire the player for the specified lending fee and at a maximum duration of <strong>%d</strong> matches. The trade will be automatically done as soon as a club accepts the conditions. The salary will be paid by the borrower.</message>
+    <message id="lend-player_navlabel">Loan out player</message>
+    <message id="lend-player_intro">Make the player available for loan here. Any club can then sign the player for up to <strong>%d</strong> matches at the specified loan fee if interested. The loan takes effect immediately once a club accepts the conditions. The salary share and any purchase options are defined in the loan offer.</message>
 
-	<message id="lend_player_success">The player is now ready for lending.</message>
+	<message id="lend_player_success">The player is now available for loan.</message>
 	
-	<message id="lending_err_notownplayer">The player dow not belong to your team (anymore).</message>
-	<message id="lending_err_alreadyoffered">The player is already marked as ready for lending.</message>
-	<message id="lending_err_borrowed_player">You cannot lend this player since you only borrowed him.</message>
-	<message id="lending_err_on_transfermarket">The player is currently on the transfer market. Hence, you cannot lend him.</message>
-	<message id="lending_err_teamsize_too_small">You currently have an insufficient number of players in your team (%d) for giving away more players.</message>
-	<message id="lending_err_contract_too_short">The player's contract is ending soon. Hence, you cannot lend him anymore.</message>
+	<message id="lending_err_notownplayer">The player is no longer part of your squad.</message>
+	<message id="lending_err_alreadyoffered">The player is already available for loan.</message>
+	<message id="lending_err_borrowed_player">You cannot loan out the player because you have only borrowed him yourself.</message>
+	<message id="lending_err_on_transfermarket">The player is currently on the transfer market. You therefore cannot loan him in or out.</message>
+	<message id="lending_err_teamsize_too_small">Your squad currently has too few players (%d) to let any more players leave.</message>
+	<message id="lending_err_contract_too_short">The player's contract expires soon. You can therefore no longer loan him out.</message>
 
-	<message id="lending_lendable_unmark_success">The player is not lendable anymore.</message>
+	<message id="lending_lendable_unmark_success">The player is no longer available for loan.</message>
 	
-	<message id="lending_player_lendable_info">The player can be borrowed for <strong>%s</strong> per match.</message>
-	<message id="lending_player_hire_button">Hire</message>
+	<message id="lending_player_lendable_info">The player can be loaned for <strong>%s</strong> per matchday.</message>
+	<message id="lending_player_hire_button">Loan</message>
 	
-	<message id="borrow-player_navlabel">Hire player</message>
-	<message id="borrow-player_intro">Enter the desired number of matches and the player is going to move in your team for this duration. The lending fee for the whole duration will be deducted immediately. Additionally you will need to pay the player's salary.</message>
+	<message id="borrow-player_navlabel">Loan player</message>
+	<message id="borrow-player_intro">Enter the desired number of matches and the player will join your team immediately for that period. The loan fee for the entire duration is due immediately. You also pay the salary share specified in the loan offer.</message>
 
 	<message id="lending_matches_durationhelp">Number between %d and %d.</message>
 	
-	<message id="lending_hire_err_ownplayer">The player belongs already to your team.</message>
-	<message id="lending_hire_err_borrowed_player">The player is already lent to another team. Probably someone else has been faster than you.</message>
-	<message id="lending_hire_err_notoffered">The player is not offered (anymore) for hiring.</message>
-	<message id="lending_hire_err_illegalduration">The rental period must be between %d and %d matches.</message>
-	<message id="lending_hire_err_contractendingtoosoon">The player's contract is going to end after %d matches. Hence, the rental period must be shorter.</message>
-	<message id="lending_hire_err_budget_too_low">You cannot afford the player's salary and lending fee at the moment.</message>
+	<message id="lending_hire_err_ownplayer">The player is already in your team.</message>
+	<message id="lending_hire_err_borrowed_player">The player is already on loan at another team. Another manager was probably faster.</message>
+	<message id="lending_hire_err_notoffered">The player is no longer offered for loan.</message>
+	<message id="lending_hire_err_illegalduration">The loan duration must be between %d and %d matches.</message>
+	<message id="lending_hire_err_contractendingtoosoon">The player's contract ends after only %d matches. The loan duration must therefore be shorter.</message>
+	<message id="lending_hire_err_budget_too_low">You currently cannot afford the loan fee and the player's salary.</message>
 	
 	<message id="lending_hire_success">The player is now temporarily playing for your team!</message>
 	
-	<message id="lending_fee_subject">Player Lending Fee</message>
+	<message id="lending_fee_subject">Player loan fee</message>
 	
-	<message id="lending_notification_lent">The player <strong>{player}</strong> is lent for <em>{matches}</em> matches to <strong>{newteam}</strong>.</message>
-	<message id="lending_notification_return">The borrowed player <strong>{player}</strong> returned from <strong>{borrower}</strong> to <strong>{lender}</strong>.</message>
+	<message id="lending_notification_lent">The player <strong>{player}</strong> is loaned for <em>{matches}</em> matches to <strong>{newteam}</strong>.</message>
+	<message id="lending_notification_return">The loaned player <strong>{player}</strong> has returned from <strong>{borrower}</strong> to <strong>{lender}</strong>.</message>
 	
-	<message id="lent_players">Lent Players</message>
+	<message id="lent_players">Loaned-out players</message>
+
+    <message id="loans_navlabel">Loans</message>
+    <message id="loans_intro">Here you can see players loaned out, borrowed players, your own loan offers and available loan players. Loan reports record playing time, ratings, development and possible purchase options.</message>
+    <message id="loans_tab_loaned_out">Loaned out by us</message>
+    <message id="loans_tab_borrowed">Borrowed by us</message>
+    <message id="loans_tab_own_offers">Our loan offers</message>
+    <message id="loans_tab_available">Available loan players</message>
+    <message id="loans_no_loaned_out">No player is currently loaned out by your club.</message>
+    <message id="loans_no_borrowed">No player is currently on loan at your club.</message>
+    <message id="loans_no_offers">You are not currently offering any players for loan.</message>
+    <message id="loans_no_available">There are currently no suitable loan players available.</message>
+    <message id="loans_borrower">Borrowing club</message>
+    <message id="loans_lender">Parent club</message>
+    <message id="loans_performance">Performance</message>
+    <message id="loans_development">Development</message>
+    <message id="loans_destination_quality">Loan quality</message>
+    <message id="loans_minutes">Minutes</message>
+    <message id="loans_avg_grade">Avg. rating</message>
+    <message id="loans_salary_share">Borrowing club salary share</message>
+    <message id="loans_salary_share_help">Between 50% and 100%. The parent club pays the remainder per matchday.</message>
+    <message id="loans_buy_option">Purchase arrangement</message>
+    <message id="loans_buy_fee">Purchase price</message>
+    <message id="loans_option_none">No purchase option</message>
+    <message id="loans_option_buy_option">Purchase option</message>
+    <message id="loans_option_buy_obligation">Mandatory purchase</message>
+    <message id="loans_recall_button">Recall</message>
+    <message id="loans_recall_not_available">Recall not yet available</message>
+    <message id="loans_buy_button">Buy</message>
+    <message id="lending_lendable_unmark_short">Remove offer</message>
+    <message id="lending_terms_limits">Maximum loan fee per matchday: <strong>%s %s</strong>. With a purchase option or mandatory purchase, the purchase price must be between <strong>%s %s</strong> and <strong>%s %s</strong>.</message>
+    <message id="lending_err_fee_invalid">The loan fee must be greater than 0.</message>
+    <message id="lending_err_fee_too_high">The loan fee is too high. The maximum allowed is %s per matchday.</message>
+    <message id="lending_err_buy_fee_invalid">The purchase price is outside the permitted range (%s to %s).</message>
+    <message id="lending_salary_share_subject">Player loan salary share</message>
+    <message id="lending_buy_fee_subject">Purchase price from player loan</message>
+    <message id="lending_recall_err_not_allowed">You are not allowed to recall this loan.</message>
+    <message id="lending_recall_err_too_early">A recall is possible only after at least 5 matchdays and only if the player has not played enough.</message>
+    <message id="lending_recall_success">The player was recalled from loan.</message>
+    <message id="lending_buy_err_not_allowed">You are not allowed to exercise this purchase option.</message>
+    <message id="lending_buy_err_no_option">No purchase option was agreed for this loan.</message>
+    <message id="lending_buy_err_budget">The purchase could not be completed. The budget is insufficient.</message>
+    <message id="lending_buy_success">The player was signed permanently.</message>
+    <message id="lending_notification_recalled">The loaned player <strong>{player}</strong> was recalled from <strong>{borrower}</strong> to <strong>{lender}</strong>.</message>
+    <message id="lending_notification_bought">The loaned player <strong>{player}</strong> was signed permanently by <strong>{borrower}</strong>. His parent club was <strong>{lender}</strong>.</message>
+    <message id="lending_notification_development">The loaned player <strong>{player}</strong> improved through match practice: +{bonus} to {attribute}.</message>
+    <message id="lending_notification_obligation_failed">The mandatory purchase for <strong>{player}</strong> could not be completed. The borrowing club's budget is insufficient.</message>
+
+    <message id="borrow-player_request_intro">Enter the desired number of matches. Because the player belongs to a user-managed club, a loan request will be created first. The player will move only if the parent manager accepts the request.</message>
+    <message id="lending_player_request_button">Submit loan request</message>
+    <message id="lending_request_send_success">The loan request was created. The parent manager can now accept or reject it.</message>
+    <message id="lending_request_accept_success">The loan request was accepted. The player was loaned out.</message>
+    <message id="lending_request_reject_success">The loan request was rejected.</message>
+    <message id="lending_request_accept_button">Accept</message>
+    <message id="lending_request_reject_button">Reject</message>
+    <message id="lending_request_err_not_allowed">This loan request is no longer available or does not belong to your club.</message>
+    <message id="lending_request_err_no_longer_available">The player is no longer available for this loan.</message>
+    <message id="lending_request_notification_received"><strong>{borrower}</strong> wants to loan <strong>{player}</strong> for <em>{matches}</em> matches. Loan fee: <strong>{fee}</strong> per matchday.</message>
+    <message id="lending_request_notification_accepted">Your loan request for <strong>{player}</strong> was accepted. The player will be loaned for <em>{matches}</em> matches to <strong>{newteam}</strong>.</message>
+    <message id="lending_request_notification_rejected">Your loan request for <strong>{player}</strong> was rejected.</message>
+    <message id="loans_tab_incoming_requests">Incoming loan requests</message>
+    <message id="loans_tab_outgoing_requests">Our open loan requests</message>
+    <message id="loans_no_incoming_requests">There are currently no open loan requests for your players.</message>
+    <message id="loans_no_outgoing_requests">You currently have no open loan requests.</message>
+    <message id="loans_total_fee">Overall</message>
+    <message id="settings_label_lending_cpu_offer_duration_days">CPU loan offers: Duration in days</message>
+    <message id="settings_label_lending_cpu_offer_cooldown_days">CPU loan offers: Relisting lock in days</message>
+    <message id="settings_label_lending_cpu_request_expiry_days">CPU loan requests: Expiry after days</message>
+
 </messages>

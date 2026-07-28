@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_training_min_hours_between_execution">Período de descanso entre sessões de treino</message> 
+    <message id="settings_label_training_min_hours_between_execution_help">em horas. Número mínimo de horas que têm de decorrer entre duas sessões de treino manuais.</message>
+    <message id="settings_label_advanced_training_enabled">Ativar treino avançado automático</message>
+    <message id="settings_label_advanced_training_enabled_help">Se estiver ativo, o próximo bloco do plano de treino guardado é executado uma vez por clube humano dentro do período de horas definido, mesmo em dias sem jogos.</message>
+    <message id="settings_label_training_max_trainers_per_team">Máximo de treinadores por clube</message>
+    <message id="settings_label_training_max_trainers_per_team_help">Um treinador principal e até três treinadores especialistas perfazem um máximo de quatro treinadores ativos.</message>
+</messages>

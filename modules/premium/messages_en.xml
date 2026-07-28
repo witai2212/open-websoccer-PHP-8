@@ -1,42 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="premium-feature-requested_navlabel">Premium Features</message>
-	<message id="premium_info_title">Recharge your premium account now!</message>
-	<message id="premium_info_notenoughcredit_alert">The requested feature requires at leat %d %s in your premium account.</message>
+    <message id="premium-feature-requested_navlabel">Premium functions</message>
+	<message id="premium_info_title">Top up your premium account now!</message>
+	<message id="premium_info_notenoughcredit_alert">The requested function requires at least %d %s in your premium account.</message>
 	<message id="premium_info_description">
-		<p>You can play this game for free. However, some pages or features require enough premium balance in your user account.</p>
+		<p>Participation in this game is free. However, certain pages and functions are only available if your user account contains sufficient premium credit.</p>
 	</message>
 	
-	<message id="premium_info_price_options">Buy-in options</message>
+	<message id="premium_info_price_options">Deposit options</message>
 	
-	<message id="premiumaccount_navlabel">Premium Account</message>
-	<message id="premiumaccount_recharge_button">Get Credit</message>
+	<message id="premiumaccount_navlabel">Premium account</message>
+	<message id="premiumaccount_recharge_button">Purchase credit</message>
 	
-	<message id="premium-confirm-action_navlabel">Confirm premium feature</message>
-	<message id="premium-confirm-action_title">Execute premium feature?</message>
-	<message id="premium-confirm-action_question">This action will debit <strong>%d %s</strong> against your premium account! Do you want to continue?</message>
-	<message id="premium-confirm-action_confirm">Confirm debit entry</message>
+	<message id="premium-confirm-action_navlabel">Confirm premium function</message>
+	<message id="premium-confirm-action_title">Execute premium function?</message>
+	<message id="premium-confirm-action_question">This action will charge your premium account <strong>%d %s</strong>! Do you really want to continue?</message>
+	<message id="premium-confirm-action_confirm">Confirm charge</message>
 	
-	<message id="premiumaccount_exchange_link">Convert to play money</message>
+	<message id="premiumaccount_exchange_link">Exchange for in-game money</message>
 	
-	<message id="premium-exchange_navlabel">Convert premium credit</message>
-	<message id="premium-exchange_intro">You can convert your premium credit into play money for your team. Enter below the amount of premium credit you want to exchange.</message>
-	<message id="premium-exchange_amount_label">Amount to convert</message>
+	<message id="premium-exchange_navlabel">Exchange premium credit</message>
+	<message id="premium-exchange_intro">You can convert your premium credit into in-game money. Enter how much credit you wish to exchange.</message>
+	<message id="premium-exchange_amount_label">Credit to exchange</message>
 	
-	<message id="premium-exchange_err_balancenotenough">Your premium balance is not enough for the entered amount.</message>
+	<message id="premium-exchange_err_balancenotenough">Unfortunately, your premium credit is insufficient for the specified amount.</message>
 	
-	<message id="premium-exchange_success">Your premium credit has been successfully converted into play money!</message>
+	<message id="premium-exchange_success">Your premium credit was exchanged successfully!</message>
 	
-	<message id="premium-exchange-confirm_navlabel">Confirm converting</message>
+	<message id="premium-exchange-confirm_navlabel">Confirm exchange</message>
 	<message id="premium-exchange-confirm_question">Please confirm this transaction.</message>
 	
-	<message id="actionsubject_exchange-premium">Play Money</message>
-	<message id="premium-exchange_team_subject">Converting Premium Credit</message>
+	<message id="actionsubject_exchange-premium">Exchange for in-game money</message>
+	<message id="premium-exchange_team_subject">Premium credit exchange</message>
 	
-	<message id="premium_balance_notenough">Your premium balance is not enough for this action. Please recharge your account.</message>
+	<message id="premium_balance_notenough">Unfortunately, your premium credit is insufficient for this action. Please top up your account.</message>
 	<message id="premium_fature_fee_tooltip">Charges your premium account</message>
 	
-	<message id="actionsubject_choose-trainer">Booking of a premium trainer</message>
-	<message id="actionsubject_extend-stadium">Stadium improvement with premium builder</message>
+	<message id="actionsubject_choose-trainer">Booking a premium coach</message>
+	<message id="actionsubject_extend-stadium">Stadium expansion with premium contractor</message>
 </messages>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="manager-missions_navlabel">Directiva</message>
+    <message id="manager-missions_title">Directiva / Objetivos de temporada</message>
+    <message id="manager-missions_intro">La directiva evalúa tu temporada por algo más que la clasificación. Aquí puedes ver todos los objetivos actuales, el progreso y los posibles efectos sobre la satisfacción de la directiva y la puntuación máxima.</message>
+
+    <message id="manager_mission_no_active_season">Actualmente no hay ninguna temporada activa para tu club. Los objetivos se crearán automáticamente cuando haya una temporada activa.</message>
+    <message id="manager_mission_no_missions">Todavía no se han creado objetivos para esta temporada.</message>
+    <message id="manager_mission_season">Temporada</message>
+    <message id="manager_mission_summary">Progreso</message>
+    <message id="manager_mission_completed_short">cumplido</message>
+    <message id="manager_mission_board_satisfaction">Satisfacción de la directiva</message>
+    <message id="manager_mission_highscore">Puntuación máxima</message>
+    <message id="manager_mission_rewards_hint">Recompensa por cada objetivo cumplido:</message>
+    <message id="manager_mission_penalty_hint">Penalización por cada objetivo incumplido al final de la temporada:</message>
+    <message id="manager_mission_baseline">Valor inicial</message>
+    <message id="manager_mission_target">Objetivo</message>
+    <message id="manager_mission_current">Actual</message>
+
+    <message id="manager_mission_status_open">Abierto</message>
+    <message id="manager_mission_status_completed">Cumplido</message>
+    <message id="manager_mission_status_failed">Incumplido</message>
+    <message id="manager_mission_status_cancelled">Finalizado por cambio de club</message>
+
+    <message id="manager_mission_title_league_rank">Alcanzar el puesto {rank}</message>
+    <message id="manager_mission_desc_league_rank">La directiva espera que tu club termine la temporada al menos en el puesto {rank}.</message>
+
+    <message id="manager_mission_title_highscore">Aumentar la puntuación máxima a {target}</message>
+    <message id="manager_mission_desc_highscore">Mejora la puntuación máxima del club de {baseline} a al menos {target} puntos.</message>
+
+    <message id="manager_mission_title_salary_reduce">Reducir salarios de jugadores a {target}</message>
+    <message id="manager_mission_desc_salary_reduce">Reduce el total de salarios de jugadores de {baseline} a un máximo de {target}.</message>
+    <message id="manager_mission_salary_missing_detail">Ahorrar todavía {amount} en salarios.</message>
+
+    <message id="manager_mission_title_youth_promotion_played">Ascender y alinear a un jugador juvenil</message>
+    <message id="manager_mission_desc_youth_promotion_played">Asciende a un jugador juvenil al primer equipo y haz que dispute después al menos un partido oficial.</message>
+    <message id="manager_mission_youth_open_detail">Todavía no se ha ascendido a ningún jugador juvenil para este objetivo.</message>
+    <message id="manager_mission_youth_promoted_detail">{player} ha sido ascendido. Todavía debe disputar un partido oficial.</message>
+    <message id="manager_mission_youth_done_detail">{player} ha sido ascendido y alineado.</message>
+
+    <message id="manager_mission_title_cup_round">Alcanzar la ronda {round} de copa</message>
+    <message id="manager_mission_desc_cup_round">Alcanza al menos la ronda {round} en cualquier competición de copa.</message>
+
+    <message id="manager_mission_title_board_satisfaction">Mantener la satisfacción de la directiva por encima del {target}%</message>
+    <message id="manager_mission_desc_board_satisfaction">Mantén la satisfacción de la directiva en al menos el {target}% durante toda la temporada.</message>
+
+    <message id="manager_mission_value_rank">Puesto {rank}</message>
+    <message id="manager_mission_value_cup_round">Ronda {round}</message>
+    <message id="manager_mission_value_done">Completado</message>
+    <message id="manager_mission_value_open">Abierto</message>
+
+    <message id="manager_mission_completed_notification">Objetivo de temporada cumplido: {mission}</message>
+    <message id="manager_mission_failed_notification">Objetivo de temporada incumplido: {mission}</message>
+    <message id="manager_mission_news_completed_title">Objetivo de temporada cumplido en {team}</message>
+    <message id="manager_mission_news_completed_message">{manager} ha cumplido un objetivo de la directiva con {team}: {mission}. La directiva está satisfecha y premia la evolución del club.</message>
+    <message id="manager_mission_news_link">Ir a los objetivos de temporada</message>
+	
+	<message id="manager_mission_news_completed_title">Objetivo de temporada cumplido en {team}</message>
+	<message id="manager_mission_news_completed_message">{manager} ha cumplido un objetivo de la directiva con {team}: {mission}. La directiva está satisfecha y premia la evolución del club.</message>
+	<message id="manager_mission_news_link">Ir a los objetivos de temporada</message>
+</messages>

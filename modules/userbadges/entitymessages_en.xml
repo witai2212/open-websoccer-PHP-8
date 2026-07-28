@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="entity_badge">Badges</message>
-	<message id="entity_badge_name">Label</message>
-	<message id="entity_badge_name_help">Can be also a messages key.</message>
-	<message id="entity_badge_description">Description</message>
-	<message id="entity_badge_description_help">Can be also a messages key.</message>
-	<message id="entity_badge_level">Level</message>
-	<message id="entity_badge_event">Event</message>
-	<message id="entity_badge_event_benchmark">Benchmark</message>
-	<message id="entity_badge_event_benchmark_help">The "X" for events depending on variable "X".</message>
+    <message id="entity_badge">Badge</message>
+    <message id="entity_badge_name">Name</message>
+    <message id="entity_badge_name_help">Can also be a message key.</message>
+    <message id="entity_badge_description">Explanation</message>
+    <message id="entity_badge_description_help">Can also be a message key.</message>
+    <message id="entity_badge_level">Level</message>
+    <message id="entity_badge_event">Event</message>
+    <message id="entity_badge_event_benchmark">Trigger value</message>
+    <message id="entity_badge_event_benchmark_help">The "X" in events with variable "X".</message>
 
-	<message id="option_bronze">Bronze</message>
-	<message id="option_silver">Silver</message>
-	<message id="option_gold">Gold</message>
-	
-	<message id="option_membership_since_x_days">Is member for at least X days</message>
-	<message id="option_win_with_x_goals_difference">Wins with at least X goals difference</message>
-	<message id="option_completed_season_at_x">Completes league season at position X</message>
-	<message id="option_x_trades">Has traded players at least X times</message>
-	<message id="option_cupwinner">Has won a cup competition</message>
-	<message id="option_stadium_construction_by_x">The stadium has been extended by X seats at once</message>
-	<message id="option_derby_wins">Has won at least X derby matches</message>
-	<message id="option_youth_developer">Has promoted at least X youth players</message>
-	<message id="option_giant_killer">Has beaten at least X much stronger teams</message>
-	<message id="option_comeback_king">Has won at least X matches after trailing</message>
-	<message id="option_financial_genius">Has completed at least X full seasons with positive balance</message>
-	<message id="option_transfer_master">Has sold a player with at least X percent profit</message>
+    <message id="option_bronze">Bronze</message>
+    <message id="option_silver">Silver</message>
+    <message id="option_gold">Gold</message>
+    
+    <message id="option_membership_since_x_days">Has been a member for X days</message>
+    <message id="option_win_with_x_goals_difference">Win by X goals</message>
+    <message id="option_completed_season_at_x">Completed a season in position X</message>
+    <message id="option_x_trades">Has completed at least X transfers</message>
+    <message id="option_cupwinner">Has won a cup</message>
+    <message id="option_stadium_construction_by_x">The stadium was expanded by X places at once</message>
+    <message id="option_derby_wins">Has won at least X derbies</message>
+    <message id="option_youth_developer">Has promoted at least X youth players</message>
+    <message id="option_giant_killer">Has beaten at least X significantly stronger opponents</message>
+    <message id="option_comeback_king">Has won at least X matches after falling behind</message>
+    <message id="option_financial_genius">Has completed at least X full seasons with a positive balance</message>
+    <message id="option_transfer_master">Has sold a player for at least X percent profit</message>
 </messages>

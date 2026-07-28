@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_sponsor_matches">Jornadas do contrato de patrocínio</message>
+	<message id="settings_label_sponsor_matches_help">Só é relevante para contratos de patrocínio antigos baseados em jogos. Os novos contratos dinâmicos duram até ao fim da época.</message>
+
+	<message id="settings_label_sponsor_earliest_matchday">Propostas de patrocínio: primeira jornada</message>
+	<message id="settings_label_sponsor_earliest_matchday_help">Os treinadores só podem selecionar um patrocinador a partir desta jornada.</message>
+</messages>

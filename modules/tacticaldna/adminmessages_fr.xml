@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<messages>
+    <message id="tacticaldna_navlabel">ADN tactique</message>
+    <message id="tacticaldna_admin_title">ADN tactique</message>
+    <message id="tacticaldna_admin_intro">Vue d'ensemble administrateur de l'identité du club et des styles de jeu préférés. Vous pouvez y vérifier l'adéquation du style, corriger les clubs gérés par l'IA ou par un manager et définir le style recommandé.</message>
+    <message id="tacticaldna_admin_club_search">Rechercher un club</message>
+    <message id="tacticaldna_admin_club_search_placeholder">Saisir un nom, une ligue ou un pays...</message>
+    <message id="tacticaldna_admin_apply">Afficher</message>
+    <message id="tacticaldna_admin_selected_club">Club sélectionné</message>
+    <message id="tacticaldna_admin_save_recommended">Enregistrer le style recommandé</message>
+    <message id="tacticaldna_admin_saved">ADN tactique enregistré.</message>
+    <message id="tacticaldna_admin_recommended_saved">Style recommandé enregistré.</message>
+    <message id="tacticaldna_admin_overview">Vue d'ensemble des plus faibles adéquations</message>
+    <message id="tacticaldna_admin_overview_help">La liste affiche jusqu'à 200 clubs actifs, triés selon leur adéquation de style actuellement la plus faible. L'administrateur peut ainsi repérer rapidement les clubs dont l'identité pénalise l'effectif.</message>
+
+    <message id="tacticaldna_current_style">Style actuel</message>
+    <message id="tacticaldna_style_comparison">Comparaison des styles</message>
+    <message id="tacticaldna_transition_effect">Adaptation de la cohésion</message>
+    <message id="tacticaldna_change_preview">Cohésion après changement</message>
+    <message id="tacticaldna_recommended">Recommandé</message>
+
+    <message id="teamchemistry_score">Cohésion</message>
+    <message id="teamchemistry_match_effect">Effet en match</message>
+    <message id="team_details_manager">Entraîneur</message>
+    <message id="formation_tacticalstyle_select">Style de jeu</message>
+    <message id="formation_tacticalstyle_fit">Adéquation</message>
+    <message id="tacticalstyle_balanced">Équilibré</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_possession">Possession</message>
+    <message id="tacticalstyle_defensive">Défensif</message>
+    <message id="tacticalstyle_physical">Physique</message>
+    <message id="tacticalstyle_counterattack">Contre-attaque</message>
+    <message id="tacticalstyle_balanced_help">Style neutre sans spécialisation marquée.</message>
+    <message id="tacticalstyle_pressing_help">L'endurance, la vitesse, les tacles et le mental renforcent son efficacité.</message>
+    <message id="tacticalstyle_possession_help">Les passes, la créativité et la technique aident à contrôler le jeu.</message>
+    <message id="tacticalstyle_defensive_help">Les tacles, le jeu de tête, l'endurance et les leaders renforcent la défense.</message>
+    <message id="tacticalstyle_physical_help">Le niveau général, le jeu de tête, l'endurance et les tacles rendent ce style plus efficace.</message>
+    <message id="tacticalstyle_counterattack_help">La vitesse, la finition, les passes et la fraîcheur conviennent au jeu de transition.</message>
+</messages>

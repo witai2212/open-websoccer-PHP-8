@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="conmebol_navlabel">CONMEBOL</message>
+    <message id="conmebol_ranking_navlabel">CONMEBOL ranking</message>
+    <message id="conmebol_ranking_title">CONMEBOL ranking</message>
+
+    <message id="conmeboltable_land">Country</message>
+    <message id="conmeboltable_s1">S1</message>
+    <message id="conmeboltable_s2">S2</message>
+    <message id="conmeboltable_s3">S3</message>
+    <message id="conmeboltable_s4">S4</message>
+    <message id="conmeboltable_s5">S5</message>
+    <message id="conmeboltable_total">CONMEBOL total</message>
+    <message id="conmeboltable_lib">Libertadores places</message>
+    <message id="conmeboltable_sud">Sudamericana places</message>
+
+    <message id="copalibertadores_navlabel">Copa Libertadores</message>
+    <message id="copalibertadores_title">Copa Libertadores</message>
+    <message id="copalibertadores_intro">All Copa Libertadores groups, knockout rounds, results and upcoming matches at a glance.</message>
+    <message id="copalibertadores_no_cup_found">The Copa Libertadores was not found in the cup configuration.</message>
+    <message id="copalibertadores_current_phase">Current view</message>
+    <message id="copalibertadores_matches_played">Matches played</message>
+    <message id="copalibertadores_participants">Participants</message>
+    <message id="copalibertadores_teams">Clubs</message>
+    <message id="copalibertadores_rounds">Rounds</message>
+    <message id="copalibertadores_rounds_subtitle">including group stage</message>
+    <message id="copalibertadores_winner">Title holder</message>
+    <message id="copalibertadores_winner_open">not yet decided</message>
+    <message id="copalibertadores_prize_winner">Winner’s prize</message>
+    <message id="copalibertadores_my_club">My club</message>
+    <message id="copalibertadores_still_in_competition">Participants</message>
+    <message id="copalibertadores_not_participating">not in the competition</message>
+    <message id="copalibertadores_my_group">Group</message>
+    <message id="copalibertadores_my_next_match">Next match</message>
+    <message id="copalibertadores_my_last_match">Last match</message>
+    <message id="copalibertadores_standings">Standings</message>
+    <message id="copalibertadores_fixtures">Fixtures</message>
+    <message id="copalibertadores_latest_results">Latest results</message>
+    <message id="copalibertadores_next_matches">Upcoming matches</message>
+    <message id="copalibertadores_no_group_table">No standings are available for this group yet.</message>
+    <message id="copalibertadores_grouptable_team">Club</message>
+    <message id="copalibertadores_grouptable_matches">Pld</message>
+    <message id="copalibertadores_grouptable_points">Points</message>
+    <message id="copalibertadores_grouptable_wins">Wins</message>
+    <message id="copalibertadores_grouptable_draws">Draws</message>
+    <message id="copalibertadores_grouptable_losses">Losses</message>
+    <message id="copalibertadores_grouptable_goals">Goals</message>
+    <message id="copalibertadores_grouptable_goalsreceived">Goals conceded</message>
+    <message id="copalibertadores_grouptable_goaldiff">GD</message>
+
+    <message id="copasudamericana_navlabel">Copa Sudamericana</message>
+    <message id="copasudamericana_title">Copa Sudamericana</message>
+    <message id="copasudamericana_intro">All Copa Sudamericana groups, knockout rounds, results and upcoming matches at a glance.</message>
+    <message id="copasudamericana_no_cup_found">The Copa Sudamericana was not found in the cup configuration.</message>
+    <message id="copasudamericana_current_phase">Current view</message>
+    <message id="copasudamericana_matches_played">Matches played</message>
+    <message id="copasudamericana_participants">Participants</message>
+    <message id="copasudamericana_teams">Clubs</message>
+    <message id="copasudamericana_rounds">Rounds</message>
+    <message id="copasudamericana_rounds_subtitle">including group stage</message>
+    <message id="copasudamericana_winner">Title holder</message>
+    <message id="copasudamericana_winner_open">not yet decided</message>
+    <message id="copasudamericana_prize_winner">Winner’s prize</message>
+    <message id="copasudamericana_my_club">My club</message>
+    <message id="copasudamericana_still_in_competition">Participants</message>
+    <message id="copasudamericana_not_participating">not in the competition</message>
+    <message id="copasudamericana_my_group">Group</message>
+    <message id="copasudamericana_my_next_match">Next match</message>
+    <message id="copasudamericana_my_last_match">Last match</message>
+    <message id="copasudamericana_standings">Standings</message>
+    <message id="copasudamericana_fixtures">Fixtures</message>
+    <message id="copasudamericana_latest_results">Latest results</message>
+    <message id="copasudamericana_next_matches">Upcoming matches</message>
+    <message id="copasudamericana_no_group_table">No standings are available for this group yet.</message>
+    <message id="copasudamericana_grouptable_team">Club</message>
+    <message id="copasudamericana_grouptable_matches">Pld</message>
+    <message id="copasudamericana_grouptable_points">Points</message>
+    <message id="copasudamericana_grouptable_wins">Wins</message>
+    <message id="copasudamericana_grouptable_draws">Draws</message>
+    <message id="copasudamericana_grouptable_losses">Losses</message>
+    <message id="copasudamericana_grouptable_goals">Goals</message>
+    <message id="copasudamericana_grouptable_goalsreceived">Goals conceded</message>
+    <message id="copasudamericana_grouptable_goaldiff">GD</message>
+</messages>

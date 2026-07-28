@@ -1,9 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="settings_label_assign_team_automatically">Automatic Team Assignment: Users can choose any free club by themselves.</message> 
-    <message id="settings_label_max_number_teams_per_user">Max. number of teams per user</message> 
-    <message id="settings_label_max_number_teams_per_user_help">How many teams one user can manage with the same account.</message> 
-    <message id="settings_label_additional_team_min_highscore">Min. highscore for additional team</message>
-    <message id="settings_label_additional_team_min_highscore_help">Highscore which a user needs in order to be allowed to pick an additional team.</message>
+
+    <message id="category_statistics_navlabel">Statistics</message>
+    <message id="financial_economy_stats_navlabel">Financial statistics</message>
+    <message id="financial_economy_stats_admin_title">Financial statistics / Market regulation</message>
+    <message id="financial_economy_stats_admin_intro">This page shows whether the game economy as a whole, and particularly human-managed clubs, generates too much profit or loss. Account transactions provide the basis; feature tables are used for cross-checking.</message>
+    <message id="financial_economy_stats_filter_season">Season</message>
+    <message id="financial_economy_stats_filter_matchday">Matchday</message>
+    <message id="financial_economy_stats_filter_all">All</message>
+    <message id="financial_economy_stats_humans">Human-managed clubs</message>
+    <message id="financial_economy_stats_all_clubs">All clubs</message>
+    <message id="financial_economy_stats_all_clubs_intro">Comparison values for all active clubs.</message>
+    <message id="financial_economy_stats_clubs">Clubs</message>
+    <message id="financial_economy_stats_bookings">Transactions</message>
+    <message id="financial_economy_stats_income">Income</message>
+    <message id="financial_economy_stats_avg_income">Avg. income/club</message>
+    <message id="financial_economy_stats_expenses">Expenses</message>
+    <message id="financial_economy_stats_avg_expenses">Avg. expenses/club</message>
+    <message id="financial_economy_stats_net">Balance</message>
+    <message id="financial_economy_stats_avg_net">Avg. balance/club</message>
+    <message id="financial_economy_stats_categories">Categories</message>
+    <message id="financial_economy_stats_category">Category</message>
+    <message id="financial_economy_stats_cross_checks">Feature table cross-check</message>
+    <message id="financial_economy_stats_cross_checks_intro">Differences do not automatically indicate an error, but they help identify missing or incorrectly categorised account transactions.</message>
+    <message id="financial_economy_stats_feature">Feature</message>
+    <message id="financial_economy_stats_feature_amount">Feature table</message>
+    <message id="financial_economy_stats_booked_amount">Booked in account</message>
+    <message id="financial_economy_stats_difference">Difference</message>
+    <message id="financial_economy_stats_current_liabilities">Current costs per matchday</message>
+    <message id="financial_economy_stats_amount_per_matchday">Amount per matchday</message>
+    <message id="financial_economy_stats_biggest_losses">Biggest losses</message>
+    <message id="financial_economy_stats_biggest_profits">Biggest profits</message>
+
+    <message id="financial_economy_stats_recommendations">Market regulation recommendations</message>
+    <message id="financial_economy_stats_recommendations_intro">These recommendations are derived from the balance of human-managed clubs, income and expense categories, and cross-checks. Actions do not change club budgets directly; they only adjust future income or cost levers.</message>
+    <message id="financial_economy_stats_status">Status</message>
+    <message id="financial_economy_stats_recommendation">Recommendation</message>
+    <message id="financial_economy_stats_effect">Effect</message>
+    <message id="financial_economy_stats_action">Action</message>
+    <message id="financial_economy_stats_regulation_confirm">This market regulation adjusts several monetary values by 5%. Continue?</message>
+    <message id="financial_economy_stats_regulation_success">Market regulation completed</message>
+    <message id="financial_economy_stats_table">Standings</message>
+    <message id="financial_economy_stats_columns">Columns</message>
+    <message id="financial_economy_stats_affected_rows">Changed records</message>
 </messages>

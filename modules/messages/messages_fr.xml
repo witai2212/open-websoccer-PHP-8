@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="messages_navlabel">Messages</message>
+    
+    <message id="messages_err_messagesdisabled">L’administrateur a désactivé l’envoi de messages.</message>
+    
+    
+    <message id="messages_tab_inbox">Boîte de réception</message>
+    <message id="messages_tab_outbox">Messages envoyés</message>
+    
+    <message id="messages_empty_inbox">Il n’y a aucun message reçu.</message>
+    <message id="messages_empty_outbox">Il n’y a aucun message envoyé.</message>
+    
+    <message id="messages_date">Date</message>
+    <message id="messages_sender">Expéditeur</message>
+    <message id="messages_recipient">Destinataire</message>
+    <message id="messages_subject">Objet</message>
+    <message id="messages_content">Message</message>
+    
+    <message id="messages_delete">Supprimer ce message</message>
+    <message id="messages_delete_invalidid">Message non valide. Le message sélectionné a peut-être déjà été supprimé.</message>
+    <message id="messages_delete_success">Message supprimé</message>
+    
+    <message id="messages_details_title">Lire le message</message>
+    
+    <message id="messages_compose_button">Nouveau message</message>
+    <message id="messages_compose_title">Écrire un message</message>
+    
+    <message id="messages_send_err_invalidrecipient">Aucun utilisateur portant ce nom n’a été trouvé.</message>
+    <message id="messages_send_err_sendtoyourself">Vous ne pouvez pas vous envoyer de messages à vous-même.</message>
+    <message id="messages_send_err_timebreak">Au moins %d minutes doivent s’écouler depuis votre dernier message envoyé.</message>
+    
+    <message id="messages_reply_button">Répondre</message>
+    
+    <message id="messages_send_success">Message envoyé</message>
+    <message id="messages_send_button">Envoyer</message>
+    
+    <message id="messages_new_messages">Vous avez %d nouveaux messages</message>
+    
+</messages>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_formation_max_next_matches">Entrega da formação: próximos jogos</message> 
+	<message id="settings_label_formation_max_next_matches_help">Número de jogos futuros para os quais o utilizador pode entregar uma formação.</message>
+
+	<message id="settings_label_formation_max_templates">Entrega da formação: guardar modelos</message> 
+	<message id="settings_label_formation_max_templates_help">Número de formações que podem ser guardadas como modelos para reutilização. 0 desativa a funcionalidade.</message>
+	<message id="settings_label_tactical_style">Ativar identidade tática</message>
+	<message id="settings_label_tactical_style_help">Permite que os clubes geridos por pessoas adotem um estilo de jogo fixo com um pequeno efeito na simulação dos jogos. Os clubes CPU escolhem o estilo automaticamente.</message>
+
+</messages>

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="stadiumenvironment_navlabel">Entorno del estadio</message>
+    
+    <message id="stadiumenvironment_existingbuildings">Edificios existentes</message>
+    <message id="stadiumenvironment_existingbuildings_none">Todavía no se ha encargado ningún edificio.</message>
+    <message id="stadiumenvironment_existingbuildings_underconstruction">En construcción hasta %s</message>
+    
+    <message id="stadiumenvironment_availablebuildings">Edificios disponibles</message>
+    <message id="stadiumenvironment_availablebuildings_none">Actualmente no hay más edificios disponibles para construir en tu club.</message>
+
+	<message id="stadiumenvironment_build">Construir</message>
+	
+	<message id="stadiumenvironment_build_err_too_expensive">En este momento no puedes permitirte los costes de construcción.</message>
+	<message id="stadiumenvironment_build_err_already_exists">Ya tienes este edificio.</message>
+	<message id="stadiumenvironment_build_err_requires_building">Este edificio todavía no está disponible para ti.</message>
+	<message id="stadiumenvironment_build_err_premium_balance">Tu saldo premium no es suficiente para este edificio. Recarga tu cuenta premium.</message>
+	
+	<message id="stadiumenvironment_build_success">La construcción del edificio se ha encargado correctamente.</message>
+	
+	<message id="building_construction_fee_subject">Construcción de edificio en el entorno del estadio</message>
+	<message id="actionsubject_order-building">Construcción de un edificio premium</message>
+	<message id="activitylog_order-building">%s ha ampliado el entorno de su estadio.</message>
+	
+	<message id="stadiumenvironment_matchincome_subject">Ingresos del entorno del estadio</message>
+	<message id="stadiumenvironment_costs_per_match_subject">Costes del entorno del estadio</message>
+
+	<message id="stadiumenvironment_effect_injury_unit">partido(s)</message>
+	
+	<message id="stadiumfacility_youthacademy_name">Academia juvenil</message>
+	<message id="stadiumfacility_youthacademy_desc">Mejora la calidad de la cantera y aumenta la probabilidad de obtener juveniles más fuertes.</message>
+	<message id="stadiumfacility_medicalcenter_name">Centro médico</message>
+	<message id="stadiumfacility_medicalcenter_desc">Un mejor diagnóstico y rehabilitación reducen la duración de las lesiones.</message>
+	<message id="stadiumfacility_trainingcenter_name">Centro de entrenamiento</message>
+	<message id="stadiumfacility_trainingcenter_desc">Los campos de entrenamiento modernos y las zonas de análisis mejoran el efecto del entrenamiento.</message>
+	<message id="stadiumfacility_fanshop_name">Tienda del club</message>
+	<message id="stadiumfacility_fanshop_desc">Aumenta las ventas de merchandising en los partidos en casa y genera ingresos adicionales.</message>
+	<message id="stadiumfacility_mediacenter_name">Centro de medios</message>
+	<message id="stadiumfacility_mediacenter_desc">Una gestión de medios más profesional aumenta la popularidad entre la afición y los ingresos relacionados con patrocinadores en los partidos en casa.</message>
+	<message id="stadiumfacility_viplounge_name">Sala VIP</message>
+	<message id="stadiumfacility_viplounge_desc">Mejora la oferta de hospitalidad, la demanda de entradas y los ingresos en los partidos en casa.</message>
+	<message id="stadiumfacility_pitchheating_name">Calefacción del césped</message>
+	<message id="stadiumfacility_pitchheating_desc">Garantiza mejores condiciones del campo, una asistencia más estable y menos consecuencias por lesiones.</message>
+	<message id="stadiumfacility_scoutingoffice_name">Oficina de scouting</message>
+	<message id="stadiumfacility_scoutingoffice_desc">Mejora el scouting juvenil y la calidad de las nuevas propuestas de scouting.</message>
+</messages>

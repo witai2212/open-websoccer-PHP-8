@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="admin_game_health_navlabel">Comprobación del sistema</message>
+    <message id="admin_game_health_title">Comprobación de salud del juego para administración</message>
+    <message id="admin_game_health_intro">Comprobación en directo de datos importantes del juego y del sistema. Las reparaciones son deliberadamente conservadoras y solo modifican registros claramente no válidos o caducados.</message>
+</messages>

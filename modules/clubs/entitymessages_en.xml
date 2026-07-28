@@ -1,54 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_club">Club</message>
 	<message id="entity_club_name">Name</message>
-	<message id="entity_club_kurz">Short</message>
+	<message id="entity_club_kurz">Abbreviation</message>
 	<message id="entity_club_liga_id">League</message>
 	<message id="entity_club_user_id">User</message>
+	<message id="entity_club_parent_club_id">Parent club</message>
+	<message id="entity_club_parent_club_id_help">Optional parent club defined by an administrator only. The parent and partner clubs must not play in the same division.</message>
+	<message id="entity_club_parent_club_status">Parent-club status</message>
+	<message id="entity_club_parent_club_status_help">Active = the relationship can be used. Suspended = the relationship remains saved but cannot be used due to a rule conflict.</message>
+	<message id="entity_club_parent_club_suspended_reason">Reason for suspension</message>
+	<message id="option_active">Active</message>
+	<message id="option_suspended">Suspended</message>
+	<message id="parentclub_validation_invalid">Invalid parent club.</message>
+	<message id="parentclub_validation_parent_missing">The selected parent club does not exist.</message>
+	<message id="parentclub_validation_child_missing">The club does not exist.</message>
+	<message id="parentclub_validation_same_club">A club cannot be its own parent club.</message>
+	<message id="parentclub_validation_cycle">This selection would create a circular parent-club relationship.</message>
+	<message id="parentclub_validation_parent_nationalteam">National teams cannot be parent clubs.</message>
+	<message id="parentclub_validation_child_nationalteam">National teams cannot have a parent club.</message>
+	<message id="parentclub_validation_same_division">The parent club and partner club must not play in the same division.</message>
+
 	<message id="entity_club_user_id_actual">Actual manager</message>
-	<message id="entity_club_user_id_actual_help">In case manager is only deputy during actual manager's absence.</message>
+	<message id="entity_club_user_id_actual_help">If the user is only acting as a deputy during an absence.</message>
 	<message id="entity_club_bild">Logo</message>
 	<message id="entity_club_stadion_id">Stadium</message>
 	<message id="entity_club_sponsor_id">Sponsor</message>
-	<message id="entity_club_sponsor_spiele">Remaining matches with sponsor</message>
-	<message id="entity_club_training_id">Training Unit</message>
+	<message id="entity_club_sponsor_spiele">Matches remaining with sponsor</message>
+	<message id="entity_club_training_id">Training unit</message>
 	<message id="entity_club_finanz_budget">Budget</message>
-	<message id="entity_club_finanz_sponsor">Income through sponsor</message>
-	<message id="entity_club_finanz_transfer">Income through transfer of players</message>
+	<message id="entity_club_finanz_balance">Balance</message>
+	<message id="entity_club_finanz_sponsor">Sponsor revenue</message>
+	<message id="entity_club_finanz_transfer">Net transfer income</message>
 	<message id="entity_club_finanz_gehalt">Salary payments</message>
-	<message id="entity_club_finanz_zuschauer">Icome through tickets</message>
-	<message id="entity_club_finanz_sonstiges">Other Income</message>
-	<message id="entity_club_preis_stehen">Ticket fees standing</message>
-	<message id="entity_club_preis_sitz">Ticket fees seats</message>
-	<message id="entity_club_preis_haupt_stehen">Ticket fees standing (grandstand)</message>
-	<message id="entity_club_preis_haupt_sitze">Ticket fees seats (grandstand)</message>
-	<message id="entity_club_preis_vip">Ticket fees VIP lounge</message>
-	<message id="entity_club_last_steh">Previously sold tickets: Standing</message>
-	<message id="entity_club_last_sitz">Previously sold tickets: Seats</message>
-	<message id="entity_club_last_haupt_steh">Previously sold tickets: Standing (grandstand)</message>
-	<message id="entity_club_last_haupt_sitz">Previously sold tickets: Seats (grandstand)</message>
-	<message id="entity_club_last_vip">Previously sold tickets: Seats: VIP lounge</message>
-	<message id="entity_club_meisterschaften">Won Championships</message>
+	<message id="entity_club_finanz_zuschauer">Attendance revenue</message>
+	<message id="entity_club_finanz_sonstiges">Other income</message>
+	<message id="entity_club_preis_stehen">Standing ticket price</message>
+	<message id="entity_club_preis_sitz">Seated ticket price</message>
+	<message id="entity_club_preis_haupt_stehen">Standing ticket price (main stand)</message>
+	<message id="entity_club_preis_haupt_sitze">Seated ticket price (main stand)</message>
+	<message id="entity_club_preis_vip">VIP lounge ticket price</message>
+	<message id="entity_club_last_steh">Attendance at last match: standing</message>
+	<message id="entity_club_last_sitz">Attendance at last match: seated</message>
+	<message id="entity_club_last_haupt_steh">Attendance at last match: standing (main stand)</message>
+	<message id="entity_club_last_haupt_sitz">Attendance at last match: seated (main stand)</message>
+	<message id="entity_club_last_vip">Attendance at last match: VIP lounge</message>
+	<message id="entity_club_meisterschaften">Championships won</message>
 	<message id="entity_club_st_tore">Goals (total)</message>
-	<message id="entity_club_st_gegentore">Goals received (total)</message>
+	<message id="entity_club_st_gegentore">Goals conceded (total)</message>
 	<message id="entity_club_st_spiele">Matches (total)</message>
 	<message id="entity_club_st_siege">Wins (total)</message>
 	<message id="entity_club_st_niederlagen">Losses (total)</message>
 	<message id="entity_club_st_unentschieden">Draws (total)</message>
-	<message id="entity_club_st_punkte">Score (total)</message>
+	<message id="entity_club_st_punkte">Points (total)</message>
 	<message id="entity_club_sa_tore">Goals (season)</message>
-	<message id="entity_club_sa_gegentore">Goals received (season)</message>
+	<message id="entity_club_sa_gegentore">Goals conceded (season)</message>
 	<message id="entity_club_sa_spiele">Matches (season)</message>
 	<message id="entity_club_sa_siege">Wins (season)</message>
 	<message id="entity_club_sa_niederlagen">Losses (season)</message>
 	<message id="entity_club_sa_unentschieden">Draws (season)</message>
-	<message id="entity_club_sa_punkte">Score (season)</message>
+	<message id="entity_club_sa_punkte">Points (season)</message>
 	<message id="entity_club_history">History</message>
-	<message id="entity_club_status">Sctive</message>
-	<message id="entity_club_min_target_rank">Season Target</message>
-	<message id="entity_club_min_target_rank_help">Expecteded minimum rank in the league at the end of the season. 0 for no target rank. You can speciy the consequences of not hitting the target (fire manager, penalty fee, reducing fan popularity) when completing a season.</message>
-	<message id="entity_club_nationalteam">Is national team</message>
+	<message id="entity_club_status">Active</message>
+	<message id="entity_club_min_target_rank">Season objective</message>
+	<message id="entity_club_min_target_rank_help">Expected minimum league position at the end of the season. Enter 0 for no season objective. When ending a season, the consequences of failing to achieve it can be defined (reduced fan popularity, penalty payment, dismissal).</message>
+	<message id="entity_club_nationalteam">Is a national team</message>
 	<message id="entity_club_captain_id">Captain</message>
-	<message id="entity_club_interimmanager">Is managed by an interim manager</message>
+	<message id="entity_club_interimmanager">Managed by an interim manager</message>
+	<message id="entity_club_highscore">High score</message>
+	
+	<message id="entity_club_finanz_bilanz_summe">Balance-sheet total</message>
+	
 </messages>

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="managercareer_admin_navlabel">Carrera del mánager</message>
+    <message id="managercareer_admin_title">Carrera del mánager</message>
+    <message id="managercareer_admin_intro">Supervisa solicitudes, riesgos de despido, contratos de mánager y premios.</message>
+    <message id="managercareer_admin_tab_applications">Solicitudes</message>
+    <message id="managercareer_admin_tab_sackrisk">Riesgo de despido</message>
+    <message id="managercareer_admin_tab_awards">Premios</message>
+    <message id="managercareer_admin_tab_settings">Configuración</message>
+    <message id="managercareer_admin_open_applications">Solicitudes abiertas</message>
+    <message id="managercareer_admin_recent_applications">Últimas decisiones</message>
+    <message id="managercareer_admin_no_open_applications">Actualmente no hay solicitudes abiertas.</message>
+    <message id="managercareer_admin_no_recent_applications">Todavía no hay solicitudes decididas.</message>
+    <message id="managercareer_admin_application_accepted">Solicitud aceptada y oferta de trabajo creada.</message>
+    <message id="managercareer_admin_application_rejected">Solicitud rechazada.</message>
+    <message id="managercareer_admin_reject">Rechazar</message>
+    <message id="managercareer_admin_sackrisk_title">Riesgo de despido</message>
+    <message id="managercareer_admin_sackrisk_help">Los mánagers con una satisfacción muy baja de la directiva reciben avisos y pueden ser despedidos automáticamente si la opción está activada.</message>
+    <message id="managercareer_admin_no_sackrisk">No se encontraron mánagers activos.</message>
+    <message id="managercareer_admin_awards_title">Últimos premios de mánager</message>
+    <message id="managercareer_admin_settings_title">Ajustes de carrera</message>
+    <message id="managercareer_admin_settings_help">Los valores se gestionan mediante los ajustes generales. Este resumen muestra los parámetros activos actualmente.</message>
+    <message id="managercareer_admin_open_settings">Abrir ajustes generales</message>
+
+    <message id="settings_label_mgr_career_enabled">Activar carrera del mánager</message>
+    <message id="settings_label_mgr_job_offers">Activar ofertas de trabajo automáticas</message>
+    <message id="settings_label_freeclub_rep_check">Activar comprobación de reputación para clubes libres</message>
+    <message id="settings_label_mgr_offer_limit">Máximo de ofertas de trabajo activas por mánager</message>
+    <message id="settings_label_mgr_offer_exp_days">Validez de ofertas de trabajo en días</message>
+    <message id="settings_label_mgr_applications_enabled">Activar solicitudes manuales</message>
+    <message id="settings_label_mgr_application_limit">Máximo de solicitudes abiertas por mánager</message>
+    <message id="settings_label_mgr_application_decision_min_days">Decisión de solicitud como pronto tras días</message>
+    <message id="settings_label_mgr_application_decision_max_days">Decisión de solicitud como tarde tras días</message>
+    <message id="settings_label_mgr_application_exp_days">La solicitud caduca tras días</message>
+    <message id="settings_label_mgr_auto_sacking_enabled">Activar despidos automáticos</message>
+    <message id="settings_label_mgr_contract_days">Duración predeterminada del contrato de mánager en días</message>
+
+    <message id="managercareer_application_chance">Probabilidad</message>
+    <message id="managercareer_decision_date">Decisión</message>
+    <message id="managercareer_status">Estado</message>
+    <message id="managercareer_date">Fecha</message>
+    <message id="managercareer_board_satisfaction">Satisfacción de la directiva</message>
+    <message id="managercareer_sack_risk">Riesgo de despido</message>
+    <message id="managercareer_low_board_checks">Comprobaciones de crisis</message>
+    <message id="managercareer_award">Premio</message>
+    <message id="managercareer_no_awards">Todavía no hay premios de mánager.</message>
+    <message id="managercareer_button_accept">Aceptar</message>
+    <message id="managercareer_application_status_open">Abierto</message>
+    <message id="managercareer_application_status_accepted">Aceptada</message>
+    <message id="managercareer_application_status_rejected">Rechazado</message>
+    <message id="managercareer_application_status_withdrawn">Retirada</message>
+    <message id="managercareer_application_status_expired">Caducado</message>
+    <message id="managercareer_application_error_invalid">Esta solicitud ya no está disponible.</message>
+    <message id="managercareer_application_accepted_subject">Solicitud aceptada: {team}</message>
+    <message id="managercareer_application_accepted_body">El club {team} ha valorado positivamente tu solicitud y te ha presentado una oferta de trabajo oficial.
+
+Liga: {league}
+Válida hasta: {expires}
+
+Puedes aceptar o rechazar la oferta aquí:
+{url}</message>
+    <message id="managercareer_application_rejected_subject">Solicitud rechazada: {team}</message>
+    <message id="managercareer_application_rejected_body">El club {team} ha rechazado tu solicitud tras revisarla. Una reputación mayor, mejores resultados o más reconocimiento en este país pueden mejorar tus opciones en el futuro.</message>
+    <message id="managercareer_application_notification_accepted">{team} ha aceptado tu solicitud.</message>
+    <message id="managercareer_application_notification_rejected">{team} ha rechazado tu solicitud.</message>
+    <message id="managercareer_message_sender">Carrera del mánager</message>
+</messages>

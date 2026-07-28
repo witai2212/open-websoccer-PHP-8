@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="rss-results_rss_title">Resultados dos jogos</message>
+    <message id="rss-results_rss_description">Resultados dos jogos simulados mais recentemente.</message>
+
+    <message id="rss_link_label">Subscrever feeds RSS</message>
+</messages>

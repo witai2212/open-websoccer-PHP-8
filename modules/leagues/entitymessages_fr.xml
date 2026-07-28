@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_league">Ligue</message>
+	<message id="entity_league_name">Nom</message>
+	<message id="entity_league_kurz">Abréviation</message>
+	<message id="entity_league_land">Pays</message>
+	<message id="entity_league_p_steh">Taux d'occupation moy. des places debout</message>
+	<message id="entity_league_p_sitz">Taux d'occupation moy. des places assises</message>
+	<message id="entity_league_p_haupt_steh">Taux d'occupation moy. des places debout (tribune principale)</message>
+	<message id="entity_league_p_haupt_sitz">Taux d'occupation moy. des places assises (tribune principale)</message>
+	<message id="entity_league_p_vip">Taux d'occupation moy. des loges VIP</message>
+	<message id="entity_league_preis_steh">Prix moyen des places debout</message>
+	<message id="entity_league_preis_sitz">Prix moyen des places assises</message>
+	<message id="entity_league_preis_vip">Prix moyen des loges VIP</message>
+</messages>

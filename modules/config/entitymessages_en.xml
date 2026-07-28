@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_config">Config</message>
+	<message id="entity_config_name">Name</message>
+	<message id="entity_config_timestamp">Timestamp</message>
+	<message id="entity_config_zeitstempel">Timestamp</message>
+	<message id="entity_config_descr">Value/description</message>
+   	
+</messages>

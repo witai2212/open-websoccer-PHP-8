@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="teamchemistry_navlabel">Cohésion de l'équipe</message>
+    <message id="teamchemistry_title">Cohésion de l'équipe</message>
+    <message id="teamchemistry_intro">La cohésion d'équipe indique dans quelle mesure votre effectif fonctionne comme une unité. Elle est calculée à partir de la nationalité, des automatismes, de la formation, du capitaine, des transferts, de la satisfaction et du caractère.</message>
+    <message id="teamchemistry_schema_missing">Les colonnes de base de données pour la cohésion d'équipe sont encore manquantes. Veuillez d'abord exécuter la mise à jour SQL.</message>
+
+    <message id="teamchemistry_score">Cohésion</message>
+    <message id="teamchemistry_match_effect">Effet en match</message>
+    <message id="teamchemistry_match_effect_help">Faible effet sur les passes, le moral et la stabilité.</message>
+    <message id="teamchemistry_factor">Facteur</message>
+    <message id="teamchemistry_value">Valeur</message>
+    <message id="teamchemistry_detail">Détails</message>
+    <message id="teamchemistry_recent_development">Dernière évolution</message>
+    <message id="teamchemistry_no_log">Aucune évolution de la cohésion n'a encore été enregistrée.</message>
+    <message id="teamchemistry_date">Date</message>
+    <message id="teamchemistry_source">Déclencheur</message>
+    <message id="teamchemistry_old_new">Ancien / Nouveau</message>
+    <message id="teamchemistry_change">Variation</message>
+
+    <message id="teamchemistry_value_good">bien rodée</message>
+    <message id="teamchemistry_value_neutral">correct</message>
+    <message id="teamchemistry_value_bad">instable</message>
+    <message id="teamchemistry_hint_good">Votre équipe semble bien rodée. Cela peut procurer de légers avantages en matière de passes, de moral et de stabilité pendant les matches.</message>
+    <message id="teamchemistry_hint_neutral">La cohésion est solide. Une plus grande continuité dans la formation, l'effectif et le choix du capitaine peut améliorer la valeur.</message>
+    <message id="teamchemistry_hint_bad">La cohésion est faible. De nombreux nouveaux transferts, des joueurs mécontents ou un manque d'automatismes peuvent rendre votre équipe plus instable.</message>
+
+    <message id="teamchemistry_factor_nationality">Nationalité</message>
+    <message id="teamchemistry_factor_settled">Ancienneté au club</message>
+    <message id="teamchemistry_factor_formation">Formation</message>
+    <message id="teamchemistry_factor_captain">Capitaine</message>
+    <message id="teamchemistry_factor_transfers">Nouveaux transferts</message>
+    <message id="teamchemistry_factor_happiness">Satisfaction</message>
+    <message id="teamchemistry_factor_personality">Caractère</message>
+
+    <message id="teamchemistry_source_page">Affichage de la page</message>
+    <message id="teamchemistry_source_match">Préparation du match</message>
+    <message id="teamchemistry_source_runtime">Simulation en direct</message>
+    <message id="teamchemistry_source_match_completed">Match terminé</message>
+    <message id="teamchemistry_source_manual">Mise à jour</message>
+    <message id="teamchemistry_factor_trainingcamp">Stage d’entraînement</message>
+    <message id="teamchemistry_source_trainingcamp">Stage d’entraînement</message>
+    
+    <message id="teamchemistry_factor_training">Entraînement</message>
+    <message id="teamchemistry_factor_tactical_style">ADN tactique</message>
+    <message id="teamchemistry_factor_manager_profile">Compétence de l’entraîneur</message>
+    <message id="teamchemistry_source_tactical_style">ADN tactique</message>
+    <message id="teamchemistry_source_manager_character">Caractère de l’entraîneur</message>
+</messages>

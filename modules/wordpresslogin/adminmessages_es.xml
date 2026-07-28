@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_wordpresslogin_tableprefix">Inicio de sesión mediante WordPress (desde 2.5): prefijo de tablas</message>
+    <message id="settings_label_wordpresslogin_tableprefix_help">Prefijo de las tablas de base de datos de tu propia instalación de WordPress si los usuarios deben iniciar sesión solo con el nombre de usuario y la contraseña de su cuenta de WordPress. <em>Nota:</em> activa el inicio mediante WordPress introduciendo "WordpressUserLoginMethod" en "Método de inicio de sesión" arriba.</message>
+</messages>

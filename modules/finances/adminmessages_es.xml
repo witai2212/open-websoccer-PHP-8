@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_bank_loans_enabled">Activar módulo bancario y de préstamos</message>
+    <message id="settings_label_bank_loans_enabled_help">Activa ofertas de préstamos, cuotas automáticas tras los partidos, amortización anticipada, calificación crediticia y avisos de la directiva.</message>
+</messages>

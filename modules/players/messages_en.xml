@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="player_navlabel">Player Details</message>
+    <message id="player_navlabel">Player profile</message>
     
     <message id="no_players_found">No players found.</message>
     
@@ -9,54 +9,78 @@
     <message id="playertable_head_position">Position</message>
     <message id="playertable_head_name">Name</message>
     <message id="playertable_head_personality">Personality</message>
-    <message id="playertable_head_strength_abbr">Ski</message>
-    <message id="playertable_head_strength">Skill</message>
+    <message id="playertable_head_strength_abbr">Abi</message>
+    <message id="playertable_head_strength">Strength</message>
     <message id="playertable_head_strength_technic_abbr">Tec</message>
     <message id="playertable_head_strength_technic">Technique</message>
     <message id="playertable_head_strength_freshness_abbr">Fit</message>
     <message id="playertable_head_strength_freshness">Fitness</message>
     <message id="playertable_head_strength_stamina_abbr">Sta</message>
     <message id="playertable_head_strength_stamina">Stamina</message>
-    <message id="playertable_head_strength_satisfaction_abbr">Mor</message>
-    <message id="playertable_head_strength_satisfaction">Morale</message>
+    <message id="playertable_head_strength_satisfaction_abbr">Sat</message>
+    <message id="playertable_head_strength_satisfaction">Satisfaction</message>
+    <message id="playertable_head_strength_talent_abbr">Tal</message>
+    <message id="playertable_head_strength_talent">Talent</message>
+
+    <message id="playertable_head_strength_shooting_abbr">Sho</message>
+    <message id="playertable_head_strength_shooting">Shooting</message>
+    <message id="playertable_head_strength_passing_abbr">Pas</message>
+    <message id="playertable_head_strength_passing">Passing</message>
+    <message id="playertable_head_strength_tackling_abbr">Tac</message>
+    <message id="playertable_head_strength_tackling">Tackling</message>
+    <message id="playertable_head_strength_freekick_abbr">FK</message>
+    <message id="playertable_head_strength_freekick">Free kicks</message>
+    <message id="playertable_head_strength_heading_abbr">Hea</message>
+    <message id="playertable_head_strength_heading">Heading</message>
+    <message id="playertable_head_strength_creativity_abbr">Cre</message>
+    <message id="playertable_head_strength_creativity">Creativity</message>
+    <message id="playertable_head_strength_influence_abbr">Inf</message>
+    <message id="playertable_head_strength_influence">Influence</message>
+    <message id="playertable_head_strength_flair_abbr">Fla</message>
+    <message id="playertable_head_strength_flair">Flair</message>
+    <message id="playertable_head_strength_penalty_abbr">PEN</message>
+    <message id="playertable_head_strength_penalty">Penalties</message>
+    <message id="playertable_head_strength_penalty_killing_abbr">PS</message>
+    <message id="playertable_head_strength_penalty_killing">Penalty saving</message>
+	
     <message id="playertable_head_age">Age</message>
-    <message id="playertable_head_blocked">Blocked</message>
+    <message id="playertable_head_blocked">Unavailable</message>
     <message id="playertable_head_matches_abbr">Matches</message>
     
     <message id="player_details_tab_general">Profile</message>
     <message id="player_details_tab_statistic">Statistics</message>
     <message id="player_details_tab_history">History</message>
     
-    <message id="player_details_unit_matches">matches</message>
+    <message id="player_details_unit_matches">Matches</message>
     
-    <message id="player_details_strength_title">Skill</message>
+    <message id="player_details_strength_title">Playing ability</message>
     
-    <message id="player_details_statistic_season">This Season</message>
-    <message id="player_details_statistic_total">Total</message>
+    <message id="player_details_statistic_season">This season</message>
+    <message id="player_details_statistic_total">Overall</message>
     
     <message id="player_details_statistic_goals">Goals</message>
     <message id="player_details_statistic_assists">Assists</message>
     <message id="player_details_statistic_matches">Matches</message>
-    <message id="player_details_statistic_yellow">Yellow Cards</message>
-    <message id="player_details_statistic_yellow_red">Yell.-R. Cards</message>
-    <message id="player_details_statistic_red">Red Cards</message>
+    <message id="player_details_statistic_yellow">Yellow cards</message>
+    <message id="player_details_statistic_yellow_red">2nd yellow cards</message>
+    <message id="player_details_statistic_red">Red cards</message>
     <message id="player_details_statistic_assists">Assists</message>
-    <message id="player_details_statistic_shoots">Goal Attempts</message>
-    <message id="player_details_statistic_grade">Average Grade</message>
-    <message id="player_details_statistic_passquota">Pass Quota</message>
+    <message id="player_details_statistic_shoots">Shots</message>
+    <message id="player_details_statistic_grade">Average rating</message>
+    <message id="player_details_statistic_passquota">Pass completion</message>
     
-    <message id="player_details_statistic_opendetails">Show More Statistics</message>
-    <message id="player_details_statistic_detailstitle">Player Statistics</message>
-    <message id="player_details_statistic_nomatchesplayed">The player has not played in any matches yet.</message>
+    <message id="player_details_statistic_opendetails">Show more statistics</message>
+    <message id="player_details_statistic_detailstitle">Player statistics</message>
+    <message id="player_details_statistic_nomatchesplayed">The player has not played any matches yet.</message>
     
-    <message id="player_details_grades_title">Grading of the last matches</message>
-    <message id="player_details_nogradesavailable">There are no grades available for this player, yet.</message>
-    <message id="player_details_grade_last_match">Grade in last match</message>
-    <message id="player_details_grade_average">Average grade</message>
+    <message id="player_details_grades_title">Rating in recent matches</message>
+    <message id="player_details_nogradesavailable">No ratings are available for this player yet.</message>
+    <message id="player_details_grade_last_match">Rating in last match</message>
+    <message id="player_details_grade_average">Average rating</message>
     <message id="player_details_nohistoryavailable">No history available.</message>
     
-    <message id="player_details_avaiable_on_transfermarket">The player is currently available on the transfer market.</message>
-    <message id="player_details_unsellable">The manager of the player's club marked the player as unsellable.</message>
+    <message id="player_details_avaiable_on_transfermarket">The player is currently listed for sale on the transfer market.</message>
+    <message id="player_details_unsellable">The club’s manager has marked the player as not for sale.</message>
     
     <message id="player_mainposition_T">GK</message>
     <message id="player_mainposition_LV">LB</message>
@@ -71,15 +95,50 @@
     <message id="player_mainposition_OM">AM</message>
     <message id="player_mainposition_DM">DM</message>
     
-    <message id="player_button_to_pitch">Pitch</message>
-    <message id="player_button_to_bench">Bench</message>
+    <message id="player_button_to_pitch">Select</message>
+    <message id="player_button_to_bench">Bank</message>
     <message id="player_button_remove_from_pitch">Remove</message>
     
-    <message id="topstrikers_navlabel">Top Strikers</message>
-    <message id="topstrikers_title">Best Strikers in Game</message>
+    <message id="topstrikers_navlabel">Top scorers</message>
+    <message id="topstrikers_title">Top goalscorers</message>
     
-    <message id="topscorers_navlabel">Top Scorers</message>
+    <message id="topscorers_navlabel">Top scorer</message>
     <message id="topscorers_head_score">Score</message>
+    
+    <message id="entity_player_is_on_watchlist">On the watchlist</message>
+    
+    <message id="player_scouting_talent_result">Talent (scout)</message>
+	<message id="player_scounting_no_scout_no_watchlist">*) You need a scout and the player must be on your watchlist.</message>
+
+
+    <message id="player_talent_unknown">Talent unknown</message>
+    <message id="player_talent_label_low">low</message>
+    <message id="player_talent_label_fair">decent</message>
+    <message id="player_talent_label_good">good</message>
+    <message id="player_talent_label_high">high</message>
+    <message id="player_talent_label_exceptional">exceptional</message>
+    <message id="player_talent_source_own">Own player</message>
+    <message id="player_talent_source_partnership">Visible through an active club partnership</message>
+    <message id="player_talent_source_scout">Scout assessment</message>
+    <message id="player_talent_source_watchlist">Watchlist</message>
+    <message id="player_talent_accuracy_label">Accuracy</message>
+    <message id="player_talent_accuracy_very_high">very high</message>
+    <message id="player_talent_accuracy_high">high</message>
+    <message id="player_talent_accuracy_medium">medium</message>
+    <message id="player_talent_accuracy_low">low</message>
+    <message id="player_talent_access_exact">exact</message>
+    <message id="player_talent_hint_matching_scout_required">A suitable %s scout is required for an assessment.</message>
+    <message id="player_talent_hint_scout_too_weak">The suitable scout is still too inexperienced to provide a reliable talent assessment.</message>
+    <message id="player_talent_hint_add_watchlist">Add the player to your watchlist to make talent information visible through scouting or a partnership.</message>
+    <message id="player_partnership_active_title">Club partnership active</message>
+    <message id="player_partnership_active_intro">The player’s club</message>
+    <message id="player_partnership_active_with">is linked to your club as</message>
+    <message id="player_partnership_role_parent">Parent club</message>
+    <message id="player_partnership_role_partner">Partner club</message>
+    <message id="player_partnership_effect_shared_scouting">Shared scouting: talent details may be visible.</message>
+    <message id="player_partnership_effect_preferred_loans">Preferred loans between both clubs.</message>
+    <message id="player_partnership_effect_first_option">First option on suitable transfers.</message>
+    <message id="player_partnership_effect_development_bonus">Development bonus on suitable loans: %s percent.</message>
 
     <message id="player_personality_unknown">Unknown</message>
     <message id="player_personality_leader">Leader</message>
@@ -90,4 +149,23 @@
     <message id="player_personality_ambitious">Ambitious</message>
     <message id="player_personality_big_game_player">Big-game player</message>
     <message id="player_personality_troublemaker">Troublemaker</message>
+
+    <message id="playertable_head_traits">Special abilities</message>
+    <message id="player_traits_title">Special abilities</message>
+    <message id="player_traits_none">No special ability recorded.</message>
+    <message id="player_traits_none_short">none</message>
+    <message id="player_traits_value">Level</message>
+    <message id="player_trait_level_tooltip">Level: %s of 3</message>
+    <message id="player_trait_torinstinkt">Goal instinct</message>
+    <message id="player_trait_spielmacher">Playmaker</message>
+    <message id="player_trait_ballzauberer">Ball magician</message>
+    <message id="player_trait_flankenspezialist">Crossing specialist</message>
+    <message id="player_trait_kopfballstaerke">Aerial ability</message>
+    <message id="player_trait_viererkette">Back four</message>
+    <message id="player_trait_laufstaerke">Work rate</message>
+    <message id="player_trait_freistossspezialist">Free-kick specialist</message>
+    <message id="player_trait_elfmeterschuetze">Penalty taker</message>
+    <message id="player_trait_dribbler">Dribbler</message>
+    <message id="player_trait_elfmetertoeter">Penalty stopper</message>
+    <message id="player_trait_reflexe">Reflexes</message>
 </messages>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_googleplus_enable_login">Activer la connexion via Google+. Nécessite de remplir les champs ci-dessous. L'extension PHP CURL doit également être activée sur le serveur.</message> 
+
+	<message id="settings_label_googleplus_appname">Nom du projet Google+</message> 
+	
+	<message id="settings_label_googleplus_clientid">Identifiant client Google+</message> 
+	<message id="settings_label_googleplus_clientid_help">Vous l'obtenez lorsque vous <a href="https://code.google.com/apis/console?api=plus" target="_blank">enregistrez votre site web comme application sur Google+</a>. Cliquez sur « API Access », puis sur « Create an OAuth 2.0 client ID ». Dans « Redirect URIs », saisissez l'URL complète sous la forme suivante : <strong>http://www.monDomaine.fr/dossierwebsoccer/?page=home&#38;action=googleplus-login</strong>.</message> 
+	
+	<message id="settings_label_googleplus_clientsecret">Secret client Google+</message> 
+	<message id="settings_label_googleplus_clientsecret_help">Vous l'obtenez également lors de l'enregistrement de votre site web sur Google+.</message> 
+	
+	<message id="settings_label_googleplus_developerkey">Clé API Google+</message> 
+	<message id="settings_label_googleplus_developerkey_help">Vous l'obtenez également lors de l'enregistrement de votre site web sur Google+. Elle est affichée comme « API key » sous « Simple API Access ».</message> 
+	
+	
+	<message id="settings_label_googleplus_enable_likebutton">Afficher le bouton +1 (Google+) sur certaines pages.</message>
+</messages>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_paypal_enabled">Adquirir saldo premium mediante pagos por PayPal.</message> 
+	<message id="settings_label_paypal_receiver_email">PayPal: nombre de la cuenta (correo electrónico)</message>
+	<message id="settings_label_paypal_receiver_email_help">Correo electrónico del destinatario. Debe ser la dirección registrada en PayPal.</message>
+	<message id="settings_label_paypal_host">PayPal: host</message>
+	<message id="settings_label_paypal_host_help">Normalmente <em>www.paypal.com</em>. Para pruebas: <em>www.sandbox.paypal.com</em></message>
+	<message id="settings_label_paypal_url">URL de PayPal</message>
+	<message id="settings_label_paypal_url_help">URL interna para verificar el pago. Normalmente <em>ssl://www.paypal.com</em>. Para pruebas: <em>ssl://www.sandbox.paypal.com</em>.</message>
+	<message id="settings_label_paypal_buttonhtml">PayPal: código del botón (HTML)</message>
+	<message id="settings_label_paypal_buttonhtml_help">Código HTML <strong>sin modificar</strong> del botón que generó mediante el portal para vendedores de PayPal. El botón debe incluir las opciones de ingreso configuradas arriba en la moneda indicada. Consulte también la documentación del producto.</message>
+</messages>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="highscore_navlabel">Meilleur score</message>
+	<message id="highscore_title">Classement highscore des utilisateurs</message>
+	
+	<message id="highscore_rank">Rang</message>
+	<message id="highscore_user">Utilisateur</message>
+	<message id="highscore_registration_date">Date d'inscription</message>
+	<message id="highscore_score">Points</message>
+	
+	<message id="user_navlabel">Profil utilisateur</message>
+	
+	<message id="user_tab_profile">Profil</message>
+	
+	<message id="user_visit_website">visiter</message>
+	
+	<message id="user_changepicture_button">Télécharger l'image</message>
+	
+	<message id="history_tab">Historique</message>
+	<message id="history_no_records">Aucun historique de carrière ou de saison n'est encore disponible pour cet utilisateur.</message>
+
+	<message id="user_profile_online">En ligne</message>
+	<message id="user_profile_clubs_title">Clubs</message>
+	<message id="user_profile_no_club">Actuellement affecté à aucun club.</message>
+	<message id="user_profile_activity_title">Activité</message>
+	<message id="user_profile_membership_days">Membre depuis</message>
+	<message id="user_profile_profile_completed">Profil complété</message>
+	<message id="user_profile_personal_title">Informations personnelles</message>
+	<message id="user_profile_no_personal_details">Aucune information personnelle renseignée.</message>
+	<message id="unit_days">Jours</message>
+	<message id="user_history_career_moves">Changements de club</message>
+	<message id="user_history_seasons">Saisons</message>
+	<message id="user_history_cups">Parcours en coupe</message>
+	<message id="user_history_manager_timeline">Carrière de manager</message>
+	<message id="user_history_no_previous_club">Aucun club précédent</message>
+	<message id="user_history_competition_timeline">Historique des ligues</message>
+	<message id="user_history_cup_results">Historique des coupes</message>
+    <message id="user_profile_manager_competence">Compétence de l’entraîneur</message>
+</messages>

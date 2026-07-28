@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="sponsor_navlabel">Sponsor</message>
+    <message id="sponsor_contractduraction_info">Choisissez un contrat de sponsoring valable jusqu'à la fin de la saison. Vous pouvez négocier les offres, mais le sponsor peut se retirer si le risque devient trop élevé.</message>
+    <message id="sponsor_no_offers">Aucune entreprise n'est actuellement intéressée par un sponsoring.</message>
+    
+    <message id="sponsor_choose_tooearly">Vous ne pouvez sélectionner un nouveau sponsor qu'à partir de la %de journée.</message>
+    
+    <message id="sponsor_choose_novalidsponsor">Le sponsor sélectionné ne souhaite finalement plus collaborer avec vous. Une autre équipe a probablement été plus rapide ou l'offre n'est plus valable.</message>
+    <message id="sponsor_choose_stillcontract">Vous avez encore un contrat avec un sponsor. Il court jusqu'à la fin de la saison.</message>
+    <message id="sponsor_choose_success">Félicitations, vous avez désormais un nouveau sponsor !</message>
+    
+    <message id="sponsor_championship_bonus_subject">Prime de sponsor pour le titre de champion</message>
+    <message id="sponsor_cup_bonus_subject">Prime de sponsor pour un tour de coupe</message>
+
+    <message id="sponsor_offer_type">Type de contrat</message>
+    <message id="sponsor_offer_type_safe">Sûr</message>
+    <message id="sponsor_offer_type_risky">Risqué</message>
+    <message id="sponsor_offer_type_fan">Basé sur les supporters</message>
+    <message id="sponsor_offer_type_cup">Coupe</message>
+    <message id="sponsor_offer_type_legacy">Ancien contrat</message>
+
+    <message id="sponsor_offer_description_safe">Paiement fixe élevé, mais primes de performance plus faibles.</message>
+    <message id="sponsor_offer_description_risky">Paiement fixe faible, mais primes de victoire et de titre élevées.</message>
+    <message id="sponsor_offer_description_fan">Prime supplémentaire dépendant du taux de remplissage du stade lors des matches à domicile.</message>
+    <message id="sponsor_offer_description_cup">Accent plus important sur les matches de coupe et les tours atteints.</message>
+
+    <message id="sponsor_attendance_bonus_percent">Prime d'affluence</message>
+    <message id="sponsor_contract_duration">Durée</message>
+    <message id="sponsor_contract_duration_season">jusqu'à la fin de la saison</message>
+    <message id="sponsor_negotiate_button">Négocier</message>
+    <message id="sponsor_negotiation_level">Niveau de négociation %d</message>
+    <message id="sponsor_withdraw_chance">Risque de retrait en cas de poursuite des négociations : %d %%</message>
+    <message id="sponsor_negotiation_success">La négociation a réussi. L'offre a été améliorée.</message>
+    <message id="sponsor_negotiation_withdrawn">Le sponsor s'est retiré. Cette offre n'est plus disponible.</message>
+    
+
+    <message id="sponsor_page_title">Centre de sponsoring</message>
+    <message id="sponsor_page_intro">Aperçu du contrat, des primes, des négociations et des revenus attendus.</message>
+    <message id="sponsor_remaining_matches">matches restants servant de base au calcul</message>
+    <message id="sponsor_earned_so_far">Gagné jusqu'à présent</message>
+    <message id="sponsor_payments">Versements</message>
+    <message id="sponsor_estimated_remaining">Revenus supplémentaires estimés</message>
+    <message id="sponsor_estimate_hint">Estimation fondée sur les matches restants</message>
+    <message id="sponsor_negotiation_status">Niveau de négociation</message>
+    <message id="sponsor_signed_contract">Contrat signé</message>
+    <message id="sponsor_estimated_income">Volume estimé</message>
+    <message id="sponsor_naming_title">Sponsor du nom du stade</message>
+    <message id="sponsor_naming_sponsor">Partenaire</message>
+    <message id="sponsor_naming_stadium">Nom du stade</message>
+    <message id="sponsor_naming_per_match">Par match à domicile</message>
+</messages>

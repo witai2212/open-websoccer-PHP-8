@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+  <message id="club_partnerships_navlabel">Parcerias entre clubes</message>
+  <message id="clubpartnership_admin_title">Parcerias entre clubes</message>
+  <message id="clubpartnership_admin_intro">Centro de controlo de parcerias entre clubes ativas, abertas, suspensas e terminadas.</message>
+  <message id="clubpartnership_admin_open">Parcerias ativas e abertas</message>
+  <message id="clubpartnership_admin_closed">Terminadas ou rejeitadas recentemente</message>
+  <message id="clubpartnership_admin_logs">Histórico</message>
+  <message id="clubpartnership_admin_actions">Ações</message>
+  <message id="clubpartnership_admin_run_check">Executar verificação automática</message>
+  <message id="clubpartnership_admin_suspend">Suspender</message>
+  <message id="clubpartnership_admin_reactivate">Reativar</message>
+  <message id="clubpartnership_admin_stop">Terminar</message>
+  <message id="clubpartnership_admin_delete">Eliminar</message>
+  <message id="clubpartnership_admin_delete_confirm">Pretende mesmo eliminar esta parceria?</message>
+  <message id="clubpartnership_admin_done">A ação foi executada.</message>
+  <message id="clubpartnership_admin_no_items">Não existem registos.</message>
+  <message id="clubpartnership_admin_conflict">Conflito</message>
+  <message id="clubpartnership_admin_manager_left">Mudança de treinador detetada</message>
+  <message id="clubpartnerships_date">Data</message>
+
+  <message id="settings_label_club_partnership_minimum_matches">Duração mínima de uma parceria</message>
+  <message id="settings_label_club_partnership_minimum_matches_help">Número de jogos disputados por ambos os clubes antes de a parceria poder ser terminada sem custos.</message>
+  <message id="settings_label_club_partnership_termination_fee_percent">Indemnização por cessação em percentagem</message>
+  <message id="settings_label_club_partnership_termination_fee_percent_help">Parcela do orçamento atual do clube cobrada em caso de cessação antecipada.</message>
+  <message id="settings_label_club_partnership_termination_fee_max">Indemnização máxima por cessação</message>
+  <message id="settings_label_club_partnership_termination_fee_max_help">Montante máximo que o outro clube parceiro recebe em caso de cessação antecipada.</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers">Ativar propostas de clubes parceiros controlados pela CPU</message>
+  <message id="settings_label_club_partnership_cpu_direct_offers_help">Os clubes parceiros controlados pela CPU podem enviar propostas diretas, que podem ser recusadas, a clubes geridos por utilizadores.</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance">Probabilidade de uma proposta de um clube parceiro controlado pela CPU</message>
+  <message id="settings_label_club_partnership_cpu_offer_chance_help">Probabilidade percentual por jornada processada e parceria mista ativa.</message>
+
+</messages>

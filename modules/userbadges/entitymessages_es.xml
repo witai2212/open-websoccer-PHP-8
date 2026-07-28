@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_badge">Insignia</message>
+    <message id="entity_badge_name">Denominación</message>
+    <message id="entity_badge_name_help">También puede ser una clave de mensaje.</message>
+    <message id="entity_badge_description">Explicación</message>
+    <message id="entity_badge_description_help">También puede ser una clave de mensaje.</message>
+    <message id="entity_badge_level">Nivel</message>
+    <message id="entity_badge_event">Acontecimiento</message>
+    <message id="entity_badge_event_benchmark">Valor de activación</message>
+    <message id="entity_badge_event_benchmark_help">La "X" en eventos con la variable "X".</message>
+
+    <message id="option_bronze">Bronce</message>
+    <message id="option_silver">Plata</message>
+    <message id="option_gold">Oro</message>
+    
+    <message id="option_membership_since_x_days">Es miembro desde hace X días</message>
+    <message id="option_win_with_x_goals_difference">Victoria por X goles de diferencia</message>
+    <message id="option_completed_season_at_x">Terminó una temporada en la posición X</message>
+    <message id="option_x_trades">Ha realizado al menos X fichajes</message>
+    <message id="option_cupwinner">Ha ganado una copa</message>
+    <message id="option_stadium_construction_by_x">El estadio se amplió en X plazas de una vez</message>
+    <message id="option_derby_wins">Ha ganado al menos X derbis</message>
+    <message id="option_youth_developer">Ha ascendido al menos X juveniles</message>
+    <message id="option_giant_killer">Ha vencido al menos a X rivales claramente más fuertes</message>
+    <message id="option_comeback_king">Ha ganado al menos X partidos tras ir perdiendo</message>
+    <message id="option_financial_genius">Ha terminado al menos X temporadas completas con saldo positivo</message>
+    <message id="option_transfer_master">Ha vendido un jugador con al menos un X por ciento de beneficio</message>
+</messages>

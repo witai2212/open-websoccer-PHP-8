@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="highscore_navlabel">Puntuación máxima</message>
+	<message id="highscore_title">Clasificación de highscore de usuarios</message>
+	
+	<message id="highscore_rank">Posición</message>
+	<message id="highscore_user">Usuario</message>
+	<message id="highscore_registration_date">Fecha de registro</message>
+	<message id="highscore_score">Puntos</message>
+	
+	<message id="user_navlabel">Perfil de usuario</message>
+	
+	<message id="user_tab_profile">Perfil</message>
+	
+	<message id="user_visit_website">visitar</message>
+	
+	<message id="user_changepicture_button">Subir imagen</message>
+	
+	<message id="history_tab">Historial</message>
+	<message id="history_no_records">Todavía no hay historial de carrera o temporada para este usuario.</message>
+
+	<message id="user_profile_online">Conectado</message>
+	<message id="user_profile_clubs_title">Clubes</message>
+	<message id="user_profile_no_club">Actualmente no está asignado a ningún club.</message>
+	<message id="user_profile_activity_title">Actividad</message>
+	<message id="user_profile_membership_days">Miembro desde</message>
+	<message id="user_profile_profile_completed">Perfil completado</message>
+	<message id="user_profile_personal_title">Información personal</message>
+	<message id="user_profile_no_personal_details">No se han proporcionado datos personales.</message>
+	<message id="unit_days">Días</message>
+	<message id="user_history_career_moves">Cambios de club</message>
+	<message id="user_history_seasons">Temporadas</message>
+	<message id="user_history_cups">Trayectoria en copas</message>
+	<message id="user_history_manager_timeline">Carrera de mánager</message>
+	<message id="user_history_no_previous_club">Sin club anterior</message>
+	<message id="user_history_competition_timeline">Historial de ligas</message>
+	<message id="user_history_cup_results">Historial de copas</message>
+    <message id="user_profile_manager_competence">Competencia del entrenador</message>
+</messages>

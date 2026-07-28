@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_users">Utilisateur</message>
+	<message id="entity_users_nick">Nom d’utilisateur</message>
+	<message id="entity_users_lastonline">Dernière connexion</message>
+	<message id="entity_users_lastaction">Dernière action</message>
+	<message id="entity_users_highscore">Meilleur score</message>
+	<message id="entity_users_clubname">Club</message>
+	<message id="entity_users_datum_anmeldung">Date d'inscription</message>
+	<message id="entity_users_email">E-mail</message>
+	
+    <message id="entity_users_passwort">Mot de passe</message>
+    <message id="entity_users_wunschverein">Clubs souhaités</message>
+    <message id="entity_users_name">Nom</message>
+    <message id="entity_users_wohnort">Lieu de résidence</message>
+    <message id="entity_users_land">Pays</message>
+    <message id="entity_users_geburtstag">Date de naissance</message>
+    <message id="entity_users_beruf">Profession</message>
+    <message id="entity_users_interessen">Centres d'intérêt</message>
+    <message id="entity_users_lieblingsverein">Club préféré</message>
+    <message id="entity_users_homepage">Page d'accueil</message>
+    <message id="entity_users_fanbeliebtheit">Popularité auprès des supporters</message>
+    <message id="entity_users_history">Historique</message>
+    <message id="entity_users_status">Actif</message>
+    
+    <message id="entity_users_reputation">Réputation</message>
+    
+    <message id="entity_users_c_hideinonlinelist">Masquer votre activité dans la liste « Qui est où ? ».</message>
+    <message id="entity_users_premium_balance">Solde premium</message>
+    
+    <message id="entity_users_picture">Photo de profil</message>
+	<message id="entity_users_picture_help">Doit mesurer exactement 120 px x 120 px.</message>
+	
+	<message id="entity_user_inactivity">Inactivité</message>
+	<message id="entity_user_inactivity_login">Connexions au site</message>
+   	<message id="entity_user_inactivity_aufstellung">Composition soumise</message>
+   	<message id="entity_user_inactivity_transfer">Transferts effectués</message>
+   	<message id="entity_user_inactivity_vertragsauslauf">Contrats de joueurs prolongés</message>
+   	<message id="entity_user_inactivity_transfer_check">Dernière action le %s</message>
+   	
+</messages>

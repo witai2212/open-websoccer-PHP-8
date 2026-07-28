@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_webjobexecution_enabled">Exécuter la simulation des matches via des sites externes plutôt que par des tâches.</message>
+	<message id="settings_label_webjobexecution_key">Clé de sécurité pour l'exécution externe de la simulation</message>
+	<message id="settings_label_webjobexecution_key_help">Clé de jeton permettant d'obtenir un accès externe, par exemple aux tâches.</message>
+</messages>

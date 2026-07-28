@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_allow_userregistration">Activer l'inscription des utilisateurs pour tous les visiteurs.</message> 
+    <message id="settings_label_illegal_usernames">Noms d'utilisateur interdits</message> 
+    <message id="settings_label_illegal_usernames_help">Séparées par des virgules</message> 
+    <message id="settings_label_max_number_of_users">Nombre maximal d'utilisateurs autorisés</message> 
+    <message id="settings_label_max_number_of_users_help">0 pour illimité</message> 
+    
+    <message id="settings_label_register_use_captcha">Utiliser le code de sécurité reCAPTCHA pour empêcher les inscriptions indésirables. Cela nécessite une inscription sur <a href="https://www.google.com/recaptcha/admin/create" target="_blank">www.google.com/recaptcha</a>.</message> 
+    
+    <message id="settings_label_register_captcha_publickey">Clé publique</message>
+    <message id="settings_label_register_captcha_publickey_help">Utilisez cette valeur depuis la confirmation d'inscription reCAPTCHA.</message>
+    <message id="settings_label_register_captcha_privatekey">Clé privée</message>
+    <message id="settings_label_register_captcha_privatekey_help">Utilisez cette valeur depuis la confirmation d'inscription reCAPTCHA.</message>
+
+    <message id="settings_label_registration_url">URL d'inscription</message>
+	<message id="settings_label_registration_url_help">Si les utilisateurs doivent créer leur compte sur un autre site, vous pouvez saisir ici l'URL du formulaire d'inscription.</message>
+</messages>

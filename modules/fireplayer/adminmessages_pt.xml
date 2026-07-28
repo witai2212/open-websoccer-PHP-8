@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_enable_player_resignation">Os utilizadores podem dispensar jogadores.</message> 
+	<message id="settings_label_player_resignation_compensation_matches">Indemnização por dispensa</message> 
+	<message id="settings_label_player_resignation_compensation_matches_help">Número de jogos pelos quais deve ser paga uma indemnização ao jogador em caso de dispensa antecipada. 0 significa sem indemnização.</message> 
+</messages>

@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="userprofile_block_notifications">Notifications</message>
     <message id="userprofile_block_notifications_noneavailable">There are currently no notifications for you.</message>
+    <message id="notifications_grouped_count">Show %d notifications</message>
+    <message id="notifications_new">New</message>
+    <message id="player_talent_transfer_changed">Talent development after transfer: {player} changes from {old} to {new} ({change}).</message>
 </messages>

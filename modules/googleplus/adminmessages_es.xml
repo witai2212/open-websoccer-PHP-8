@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_googleplus_enable_login">Activa el inicio de sesión mediante Google+. Requiere completar los campos siguientes. La extensión PHP CURL también debe estar activada en el servidor.</message> 
+
+	<message id="settings_label_googleplus_appname">Nombre del proyecto de Google+</message> 
+	
+	<message id="settings_label_googleplus_clientid">ID de cliente de Google+</message> 
+	<message id="settings_label_googleplus_clientid_help">Lo obtendrás al <a href="https://code.google.com/apis/console?api=plus" target="_blank">registrar tu sitio web como aplicación en Google+</a>. Haz clic en "API Access" y después en "Create an OAuth 2.0 client ID". En "Redirect URIs", introduce la URL completa con el siguiente formato: <strong>http://www.miDominio.es/carpetawebsoccer/?page=home&#38;action=googleplus-login</strong>.</message> 
+	
+	<message id="settings_label_googleplus_clientsecret">Secreto de cliente de Google+</message> 
+	<message id="settings_label_googleplus_clientsecret_help">También lo obtendrás al registrar tu sitio web en Google+.</message> 
+	
+	<message id="settings_label_googleplus_developerkey">Clave de API de Google+</message> 
+	<message id="settings_label_googleplus_developerkey_help">También lo obtendrás al registrar tu sitio web en Google+. Aparece como "API key" en "Simple API Access".</message> 
+	
+	
+	<message id="settings_label_googleplus_enable_likebutton">Muestra el botón +1 (Google+) en determinadas páginas.</message>
+</messages>

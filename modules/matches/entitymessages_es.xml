@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_match">Juego</message>
+	<message id="entity_match_spieltag">Jornada</message>
+	
+	<message id="entity_match_datum">Fecha</message>
+	<message id="entity_match_home_verein">Equipo local</message>
+	<message id="entity_match_gast_verein">Equipo visitante</message>
+	
+	<message id="entity_match_saison_id">Temporada</message>
+	<message id="entity_match_pokalname">Copa</message>
+	<message id="entity_match_pokalrunde">Ronda de copa</message>
+	<message id="entity_match_pokalgruppe">Grupo de copa</message>
+	<message id="entity_match_berechnet">Está simulado</message>
+	
+	<message id="entity_match_spieltyp">Tipo</message>
+	<message id="entity_match_elfmeter">Tanda de penaltis en caso de empate</message>
+	<message id="entity_match_home_tore">Goles (local)</message>
+	<message id="entity_match_gast_tore">Goles (visitante)</message>
+	<message id="entity_match_zuschauer">Asistencia</message>
+	<message id="entity_match_bericht">Informe del partido</message>
+	<message id="entity_match_bericht_help">Indíquelo solo si no debe mostrarse el informe generado automáticamente.</message>
+	
+	<message id="entity_match_soldout">agotado</message>
+	<message id="entity_match_blocked">Está bloqueado para la simulación. Si esta opción no se estableció manualmente, el partido se está simulando en este momento o se produjo un error durante la simulación. Desmarque la casilla si el partido debe simularse en la próxima ocasión.</message>
+	
+	<message id="option_Ligaspiel">Partido de liga</message>
+	<message id="option_Pokalspiel">Partido de copa</message>
+	<message id="option_Freundschaft">Partido amistoso</message>
+	
+	<message id="entity_matchtext">Mensaje del informe del partido</message>
+	<message id="entity_matchtext_aktion">Tipo de acción</message>
+	<message id="entity_matchtext_nachricht">Noticia</message>
+	<message id="entity_matchtext_nachricht_help">También puede ser únicamente una clave de mensaje. Puede traducir los mensajes añadiéndolos a un archivo de configuración Messages. Encontrará ejemplos en el archivo <em>/modules/matches/messages_en.xml</em>.</message>
+	
+	<message id="option_Tor">Gol</message>
+	<message id="option_Auswechslung">Sustitución</message>
+	<message id="option_Zweikampf_gewonnen">Duelo: ganado</message>
+	<message id="option_Zweikampf_verloren">Duelo: perdido</message>
+	<message id="option_Pass_daneben">Pase: fallado</message>
+	<message id="option_Torschuss_daneben">Disparo sin éxito: fuera</message>
+	<message id="option_Torschuss_auf_Tor">Disparo sin éxito: a portería</message>
+	<message id="option_Karte_gelb">Tarjeta amarilla</message>
+	<message id="option_Karte_rot">Tarjeta roja</message>
+	<message id="option_Karte_gelb_rot">Segunda tarjeta amarilla</message>
+	<message id="option_Verletzung">Lesión</message>
+	<message id="option_Elfmeter_erfolg">Penalti: marcado</message>
+	<message id="option_Elfmeter_verschossen">Penalti: fallado</message>
+	<message id="option_Taktikaenderung">El entrenador cambia la táctica</message>
+	<message id="option_Ecke">Córner</message>
+	<message id="option_Freistoss_daneben">Falta: fuera</message>
+	<message id="option_Freistoss_treffer">Falta: gol</message>
+	<message id="option_Tor_mit_vorlage">Gol con asistencia</message>
+	
+	<message id="entity_match_matchreportitems">Informe del partido</message>
+	
+	<message id="entity_match_stadion_id">Estadio</message>
+	<message id="entity_match_stadion_id_help">Si no se selecciona ninguna sede, el partido se disputa en el estadio del equipo local. Si se selecciona expresamente un estadio, no habrá ingresos ni posible ventaja de campo.</message>
+</messages>

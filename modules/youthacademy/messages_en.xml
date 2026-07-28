@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="youth-academy_navlabel">Youth academy</message>
+    <message id="youthacademy_title">Youth academy</message>
+    <message id="youthacademy_intro">The youth academy connects youth development, youth scouting, the scouting department and club staff. It enhances existing systems but does not replace them.</message>
+
+    <message id="youthacademy_tab_overview">Overview</message>
+    <message id="youthacademy_tab_focus">Development focus</message>
+    <message id="youthacademy_tab_report">Progress report</message>
+    <message id="youthacademy_tab_recommendations">Recommendations</message>
+    <message id="youthacademy_tab_upgrade">Academy upgrade</message>
+    <message id="youthacademy_top">Back to top</message>
+    <message id="youthacademy_date">Date</message>
+
+    <message id="youthacademy_current_budget">Current budget</message>
+    <message id="youthacademy_expected_income">Expected income per matchday</message>
+    <message id="youthacademy_effective_income">Effective income including financial advisor</message>
+    <message id="youthacademy_financial_advisor">Financial adviser</message>
+    <message id="youthacademy_budget_after">Budget after construction/upgrade</message>
+
+    <message id="youthacademy_missing">This club does not yet operate a youth academy.</message>
+    <message id="youthacademy_missing_help">Youth players and youth scouting continue to work as before. The academy unlocks additional development, scouting and reporting features.</message>
+    <message id="youthacademy_settings_requires_academy">This feature becomes available once the club operates a youth academy.</message>
+
+    <message id="youthacademy_level">Level</message>
+    <message id="youthacademy_levels">Academy level</message>
+    <message id="youthacademy_next_level">Next level</message>
+    <message id="youthacademy_no_next_level">The academy is already at the highest active level.</message>
+    <message id="youthacademy_build_cost">Construction cost</message>
+    <message id="youthacademy_maintenance_fee">Cost per matchday</message>
+    <message id="youthacademy_development_bonus">Development bonus</message>
+    <message id="youthacademy_scouting_bonus">Scouting bonus</message>
+    <message id="youthacademy_stagnation_reduction">Stagnation protection</message>
+    <message id="youthacademy_reputation">Academy reputation</message>
+    <message id="youthacademy_focus">Focus</message>
+    <message id="youthacademy_captain">Youth captain</message>
+    <message id="youthacademy_focus_help">The focus influences the academy's direction. Its effect is deliberately kept small to prevent development from becoming excessive.</message>
+    <message id="youthacademy_captain_help">The youth captain receives a small development and stability bonus. Older or stronger youth players are suitable.</message>
+
+    <message id="youthacademy_focus_balanced">Balanced</message>
+    <message id="youthacademy_focus_technique">Technique</message>
+    <message id="youthacademy_focus_physical">Physical</message>
+    <message id="youthacademy_focus_mental">Mentality</message>
+
+    <message id="youthacademy_integration">Interaction with existing systems</message>
+    <message id="youthacademy_integration_youthcoach">Youth coach bonus</message>
+    <message id="youthacademy_integration_scouting_department">Scouting department</message>
+    <message id="youthacademy_integration_combined_scouting">Combined youth scouting modifier</message>
+
+    <message id="youthacademy_report_development">Development gain in the last 30 days</message>
+    <message id="youthacademy_report_scouting">Scouting bonuses in the last 30 days</message>
+    <message id="youthacademy_report_days">Reporting period in days</message>
+    <message id="youthacademy_recent_events">Recent academy events</message>
+    <message id="youthacademy_no_recent_events">No academy events are available yet.</message>
+    <message id="youthacademy_event">Event</message>
+    <message id="youthacademy_change">Change</message>
+
+    <message id="youthacademy_talent_risk">Talent risk</message>
+    <message id="youthacademy_loan_recommendation">Loan recommendation</message>
+    <message id="youthacademy_risk_high">Risk of stagnation</message>
+    <message id="youthacademy_risk_medium">Watch</message>
+    <message id="youthacademy_risk_low">All right</message>
+    <message id="youthacademy_loan_none_too_young">Still too young for a loan.</message>
+    <message id="youthacademy_loan_competitive_lower_league">A loan to a smaller club with a chance of regular starts is recommended.</message>
+    <message id="youthacademy_loan_regular_minutes">Consider a loan if regular playing time is lacking.</message>
+    <message id="youthacademy_loan_stay_academy">Continue development in the academy for now.</message>
+
+    <message id="youthacademy_lineup_modes">Youth line-up modes</message>
+    <message id="youthacademy_lineup_modes_help">The existing automatic youth line-ups remain available and are only classified within the academy recommendations.</message>
+
+    <message id="youthacademy_affordability_help">Construction and upgrades are only possible if the budget does not become negative after payment and expected regular income can cover the academy's ongoing costs. A financial advisor slightly improves this forecast.</message>
+    <message id="youthacademy_downgrade_help">There is no refund when downgrading. Ongoing costs are reduced from the next matchday.</message>
+
+    <message id="build-youth-academy">Build youth academy</message>
+    <message id="upgrade-youth-academy">Upgrade youth academy</message>
+    <message id="downgrade-youth-academy">Downgrade youth academy</message>
+    <message id="save-youth-academy-settings">Save youth academy</message>
+    <message id="youthacademy_build_success">The youth academy was built.</message>
+    <message id="youthacademy_upgrade_success">The youth academy was upgraded.</message>
+    <message id="youthacademy_downgrade_success">The youth academy was downgraded.</message>
+    <message id="youthacademy_settings_success">The youth academy settings were saved.</message>
+
+    <message id="youthacademy_err_disabled">The youth academy is disabled.</message>
+    <message id="youthacademy_err_exists">This club already has a youth academy.</message>
+    <message id="youthacademy_err_missing">This club does not yet have a youth academy.</message>
+    <message id="youthacademy_err_no_level">No valid academy level was found.</message>
+    <message id="youthacademy_err_max_level">The youth academy has already reached the highest level.</message>
+    <message id="youthacademy_err_min_level">The youth academy cannot be downgraded any further.</message>
+    <message id="youthacademy_err_invalid_focus">Invalid development focus.</message>
+    <message id="youthacademy_err_invalid_captain">The selected youth captain does not belong to this club.</message>
+    <message id="youthacademy_err_not_enough_budget">The club cannot afford the construction/upgrade costs without immediately going into the red.</message>
+    <message id="youthacademy_err_income_too_low">Expected regular income is insufficient to cover the academy's ongoing costs.</message>
+
+    <message id="youthacademy_account_sender">Youth academy</message>
+    <message id="youthacademy_account_build_subject">Youth academy construction</message>
+    <message id="youthacademy_account_upgrade_subject">Youth academy upgrade</message>
+    <message id="youthacademy_account_maintenance_subject">Youth academy operation</message>
+
+    <message id="youthacademy_log_built">Academy built</message>
+    <message id="youthacademy_log_upgraded">Academy upgraded</message>
+    <message id="youthacademy_log_downgraded">Academy downgraded</message>
+    <message id="youthacademy_log_auto_downgraded">Academy automatically downgraded</message>
+    <message id="youthacademy_log_development_bonus">Academy development bonus</message>
+    <message id="youthacademy_log_scouting_bonus">Academy scouting bonus</message>
+
+    <message id="youthacademy_message_sender">Youth academy</message>
+    <message id="youthacademy_message_report_subject">Youth academy report</message>
+    <message id="youthacademy_message_report_body">Your monthly youth academy report is available. Development: {development}, scouting: {scouting}, talents at risk: {risk}. Go to the academy: {url}</message>
+
+    <message id="youthacademy_youth_scouting_bonus_title">Academy and scouting bonuses</message>
+    <message id="youthacademy_youth_scouting_bonus_info">The classic youth scouting page now takes academy level, academy reputation, youth coach and the new scouting department into account.</message>
+    <message id="youthacademy_youth_scouting_combined_bonus">Combined bonus</message>
+    <message id="youthacademy_youth_scouting_strength_bonus">Potential strength bonus</message>
+
+    <message id="entity_youthacademylevel_level">Level</message>
+    <message id="entity_youthacademylevel_name">Name</message>
+    <message id="entity_youthacademylevel_build_cost">Construction cost</message>
+    <message id="entity_youthacademylevel_maintenance_fee">Cost per matchday</message>
+    <message id="entity_youthacademylevel_development_bonus">Development bonus</message>
+    <message id="entity_youthacademylevel_scouting_bonus">Scouting bonus</message>
+    <message id="entity_youthacademylevel_status">Active</message>
+    <message id="youthacademy_log_trait_discovered">Special ability identified in youth player</message>
+</messages>

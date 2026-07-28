@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="highscore_navlabel">Highscore</message>
-	<message id="highscore_title">Users Highscore Ranking</message>
+	<message id="highscore_navlabel">High score</message>
+	<message id="highscore_title">User highscore ranking</message>
 	
 	<message id="highscore_rank">Rank</message>
 	<message id="highscore_user">User</message>
-	<message id="highscore_registration_date">Registration Date</message>
-	<message id="highscore_score">Score</message>
+	<message id="highscore_registration_date">Registration date</message>
+	<message id="highscore_score">Points</message>
 	
-	<message id="user_navlabel">User Profile</message>
+	<message id="user_navlabel">User profile</message>
 	
 	<message id="user_tab_profile">Profile</message>
 	
@@ -18,5 +18,23 @@
 	<message id="user_changepicture_button">Upload picture</message>
 	
 	<message id="history_tab">History</message>
-	<message id="history_no_records">The user has not completed any season, yet.</message>
+	<message id="history_no_records">No career or season history is available for this user yet.</message>
+
+	<message id="user_profile_online">Online</message>
+	<message id="user_profile_clubs_title">Clubs</message>
+	<message id="user_profile_no_club">Currently not assigned to a club.</message>
+	<message id="user_profile_activity_title">Activity</message>
+	<message id="user_profile_membership_days">Member since</message>
+	<message id="user_profile_profile_completed">Profile completed</message>
+	<message id="user_profile_personal_title">Personal information</message>
+	<message id="user_profile_no_personal_details">No personal details provided.</message>
+	<message id="unit_days">Days</message>
+	<message id="user_history_career_moves">Club changes</message>
+	<message id="user_history_seasons">Seasons</message>
+	<message id="user_history_cups">Cup career</message>
+	<message id="user_history_manager_timeline">Manager career</message>
+	<message id="user_history_no_previous_club">No previous club</message>
+	<message id="user_history_competition_timeline">League history</message>
+	<message id="user_history_cup_results">Cup history</message>
+    <message id="user_profile_manager_competence">Manager competence</message>
 </messages>

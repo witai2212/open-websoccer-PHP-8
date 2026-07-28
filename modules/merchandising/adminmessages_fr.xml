@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_merchandising_enabled">Activer le merchandising</message>
+    <message id="settings_label_merchandising_enabled_help">Active le système complet de merchandising pour les clubs dirigés par des utilisateurs.</message>
+    <message id="settings_label_merchandising_star_threshold">Valeur minimale des stars du merchandising</message>
+    <message id="settings_label_merchandising_star_threshold_help">Valeur minimale en étoiles à partir de laquelle un joueur peut en principe avoir son propre maillot.</message>
+    <message id="settings_label_merchandising_max_player_collections">Nombre maximal de maillots de joueurs par club</message>
+    <message id="settings_label_merchandising_max_player_collections_help">Limite le nombre de stars du merchandising activées simultanément.</message>
+</messages>

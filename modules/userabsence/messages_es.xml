@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="absence_navlabel">Ausencia</message>
+    <message id="absence_intro">¿Te vas de vacaciones o no puedes participar durante un breve periodo por otro motivo? Informa aquí de tu ausencia e indica un sustituto. Podrá dirigir tus equipos hasta que regreses.</message>
+    
+    <message id="absence_label_days">Días</message>
+    <message id="absence_label_days_help">(previsto)</message>
+    
+    <message id="absence_err_invaliddeputy">No se ha encontrado ningún usuario con el nombre indicado. Comprueba la ortografía.</message>
+    <message id="absence_err_deputyisself">Lo sentimos, no puedes designarte a ti mismo como sustituto.</message>
+    
+    <message id="absence_report_success">¡Ausencia registrada correctamente!</message>
+    
+    <message id="absence_reportinfo">Estás registrado como ausente hasta %s. Tu sustituto es <strong>%s</strong>.</message>
+    <message id="absence_return_button">Ya he vuelto</message>
+    <message id="absence_return_success">¡Ya puedes volver a dirigir tus equipos!</message>
+    
+    <message id="absence_warning">Actualmente constas como ausente y por eso no puedes dirigir tus equipos.</message>
+    
+    <message id="absence_profile_info">El usuario está ausente hasta %s.</message>
+    
+    <message id="absence_notification">{user} ha informado de su ausencia y te ha designado sustituto para sus equipos.</message>
+    <message id="absence_comeback_notification">{user} ha regresado de su ausencia y vuelve a dirigir sus equipos.</message>
+</messages>

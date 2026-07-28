@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	
-	<message id="settings_label_login_type">Log-In Type</message>  
+	<message id="settings_label_login_type">Login type</message>  
 	
-	<message id="option_email">Authentication by E-Mail</message>  
-	<message id="option_username">Authentication by Username</message>  
+	<message id="option_email">Login by email</message>  
+	<message id="option_username">Login by username</message>  
 	
-	<message id="settings_label_login_method">Log-In method</message>
-	<message id="settings_label_login_method_help">Name of class which implement IUserLoginMethod. Enables the integration of other software products.</message>
-
-	<message id="settings_label_login_allow_sendingpassword">Users can request a new password. Should be disabled if you do not use the standard log-in method.</message>
+	<message id="settings_label_login_method">Login method</message>
+	<message id="settings_label_login_method_help">Name of the class that implements IUserLoginMethod. Allows integration with other software products.</message>
+	
+	<message id="settings_label_login_allow_sendingpassword">Users can have a new password sent to them. This should be disabled when the default login method is not used.</message>
 </messages>

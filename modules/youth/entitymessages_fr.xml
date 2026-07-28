@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_youthplayer">Jeune joueur</message>
+	<message id="entity_youthplayer_lastname">Nom de famille</message>
+	<message id="entity_youthplayer_firstname">Prénom</message>
+	<message id="entity_youthplayer_team_id">Club</message>
+	<message id="entity_youthplayer_position">Poste</message>
+	<message id="entity_youthplayer_age">Âge</message>
+	<message id="entity_youthplayer_strength">Niveau</message>
+	<message id="entity_youthplayer_strength_last_change">Évolution du niveau depuis le dernier match</message>
+	<message id="entity_youthplayer_nation">Nationalité</message>
+	<message id="entity_youthplayer_nation_ehlp">Nom du pays</message>
+	
+	<message id="entity_youthplayer_st_goals">Buts</message>
+	<message id="entity_youthplayer_st_matches">Matches</message>
+	<message id="entity_youthplayer_st_assists">Passes décisives</message>
+	<message id="entity_youthplayer_st_cards_yellow">Cartons jaunes</message>
+	<message id="entity_youthplayer_st_cards_yellow_red">Cartons jaunes-rouges</message>
+	<message id="entity_youthplayer_st_cards_red">Cartons rouges</message>
+	<message id="entity_youthplayer_market_value">Valeur marchande automatique</message>
+	<message id="entity_youthplayer_market_value_help">Calculée automatiquement à partir du niveau, de l'âge, des performances, des aptitudes spéciales, du championnat, du club et de l'économie globale.</message>
+	<message id="entity_youthplayer_transfer_fee">Indemnité de transfert</message>
+	<message id="entity_youthplayer_transfer_fee_help">Si la valeur est supérieure à 0, le joueur est proposé sur le marché pour ce montant.</message>
+
+	<message id="entity_youthscout">Recruteur de jeunes</message>
+	<message id="entity_youthscout_name">Nom</message>
+	<message id="entity_youthscout_expertise">Compétence</message>
+	<message id="entity_youthscout_fee">Honoraires</message>
+	<message id="entity_youthscout_speciality">Spécialité</message>
+	
+	<message id="entity_youthmatch">Match de jeunes</message>
+	<message id="entity_youthmatch_matchdate">Date</message>
+	<message id="entity_youthmatch_home_team_id">Équipe à domicile</message>
+	<message id="entity_youthmatch_guest_team_id">Équipe visiteuse</message>
+	<message id="entity_youthmatch_simulated">Calculé</message>
+	<message id="entity_youthmatch_home_goals">Buts de l'équipe à domicile</message>
+	<message id="entity_youthmatch_guest_goals">Buts de l'équipe visiteuse</message>
+</messages>

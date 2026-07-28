@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="offline_title">We are temporarily offline</message>
-	<message id="error_action_required_team">You need to be manager of a team in order to execute this action.</message>
+	<message id="offline_title">We are temporarily unavailable</message>
+	<message id="error_action_required_team">You must be the manager of a team to perform this action.</message>
 	
 	<message id="requireslogin_box_title">Access denied</message>
-	<message id="requireslogin_box_message">You need to be logged on in order to see the site content.</message>
+	<message id="requireslogin_box_message">You must be logged in to view the requested page.</message>
 	
 	<message id="date_yesterday">Yesterday</message>
 	<message id="date_today">Today</message>
 	<message id="date_tomorrow">Tomorrow</message>
 	
 	<message id="privacypolicy_navlabel">Privacy policy</message>
+	
+	<message id="settings_label_fix_term_deposit_interest">Std. interest rate/match</message>
 </messages>

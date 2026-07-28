@@ -1,31 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="home_navlabel">Home</message>
     
     <message id="errorpage_title">Error</message>
     
-    <message id="error_page_not_found">The requested page does not exist (anymore). Plese check the entered address.</message>
+    <message id="error_page_not_found">The requested page does not exist (any more). Check the address you entered.</message>
     
-    <message id="error_double_submit">You just executed this action a couple of seconds ago. Please try it soon again.</message>
+    <message id="error_double_submit">You performed this action only a few seconds ago. Please try again shortly.</message>
     
-    <message id="validation_error_box_title">Invalid Input</message>
-    <message id="validation_error_box_message">Please correct the marked fields.</message>
-    <message id="validation_error_required">must be provided.</message>
-    <message id="validation_error_min_length">must have a minimum length of %d characters.</message>
-    <message id="validation_error_max_length">must not be longer than %d characters.</message>
-    <message id="validation_error_not_a_number">must be a number.</message>
-    <message id="validation_error_email">is not a valid e-mail address.</message>
-    <message id="validation_error_password">is too unsafe. It must contain both letters and numbers.</message>
+    <message id="validation_error_box_title">Invalid input</message>
+    <message id="validation_error_box_message">Please correct the highlighted fields.</message>
+    <message id="validation_error_required">is required.</message>
+    <message id="validation_error_min_length">must be at least %d characters long.</message>
+    <message id="validation_error_max_length">may be no more than %d characters long.</message>
+    
     <message id="validation_error_min_number">must be at least %d.</message>
-    <message id="validation_error_max_number">must not be higher than %d.</message>
+    <message id="validation_error_max_number">may be no more than %d.</message>
+    
+    <message id="validation_error_not_a_number">must be a number.</message>
+    <message id="validation_error_email">is not a valid email address.</message>
+    <message id="validation_error_password">is too weak. The password must contain both numbers and letters.</message>
     
     <message id="validation_error_not_a_url">must be a valid URL (starting with http://...).</message>
-    <message id="validation_error_invaliddate">must match pattern '%s'.</message>
+    <message id="validation_error_invaliddate">must use the format '%s'</message>
+    
     
     <message id="home_title">%s</message>
-	<message id="home_teaser">Become the manager of a virtual football club, lead your team against other users and win the championship!</message>
-	<message id="home_teaser_link_register">Register Now</message>
+	<message id="home_teaser">Become the manager of a virtual football club and lead your team to the championship against other users!</message>
+	<message id="home_teaser_link_register">Register now</message>
 	
 	<message id="button_save">Save</message>
 	<message id="button_cancel">Cancel</message>
@@ -36,16 +39,18 @@
 	<message id="button_submit">Submit</message>
 	<message id="button_close">Close</message>
 	<message id="button_edit">Edit</message>
-	<message id="button_choose">Choose</message>
+	<message id="button_choose">Select</message>
 	<message id="button_confirm">Confirm</message>
 	<message id="button_delete">Delete</message>
+	<message id="button_buy">Buy</message>
 	
-	<message id="saved_message_title">Successfully saved.</message>
+	<message id="saved_message_title">Saved successfully.</message>
 	
-	<message id="imprint_navlabel">Imprint</message>
-	<message id="imprint_title">Imprint</message>
+	<message id="imprint_navlabel">Legal notice</message>
+	<message id="imprint_title">Legal notice</message>
 	
-	<message id="results_block_title">Latest Results</message>
+	<message id="results_block_title">Latest results</message>
 	
-	<message id="unit_percent">Per cent</message>
+	
+	<message id="unit_percent">Percent</message>
 </messages>

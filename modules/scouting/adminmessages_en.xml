@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <message id="settings_tab_scouting">Scouting</message>
+
+    <message id="settings_label_scouting_enabled">Enable scouting system</message>
+    <message id="settings_label_scouting_enabled_help">Enables the new scouting page in the transfer market. Users can build scouting departments, hire scouts, open camps and receive player suggestions.</message>
+
+    <message id="settings_label_max_scouts_per_team">Maximum scouts per club</message>
+    <message id="settings_label_max_scouts_per_team_help">Global upper limit for scouts employed simultaneously per club. Scouting department levels may also impose their own limits.</message>
+
+    <message id="settings_label_scouts_matches">Default scout contract length</message>
+    <message id="settings_label_scouts_matches_help">Number of matches for which a scout is employed by default when hired. This number is reduced after each relevant matchday.</message>
+
+    <message id="settings_label_scout_hire_matches">Scout hiring fee in matchdays</message>
+    <message id="settings_label_scout_hire_matches_help">Number of scout fees charged immediately as a non-refundable hiring fee. Default: 3.</message>
+
+    <message id="settings_label_scouting_default_department_build_cost">Default scouting department construction cost</message>
+    <message id="settings_label_scouting_default_department_build_cost_help">Fallback value if no suitable level is found in the scouting_department_level table.</message>
+
+    <message id="settings_label_scouting_default_department_maintenance_fee">Default scouting department maintenance</message>
+    <message id="settings_label_scouting_default_department_maintenance_fee_help">Fallback cost per matchday if no suitable level is found in the scouting_department_level table.</message>
+
+    <message id="settings_label_scouting_proposal_min_matches">Minimum wait until player suggestion</message>
+    <message id="settings_label_scouting_proposal_min_matches_help">Minimum number of matches before an active scouting camp can generate a new player suggestion.</message>
+
+    <message id="settings_label_scouting_proposal_max_matches">Maximum wait until player suggestion</message>
+    <message id="settings_label_scouting_proposal_max_matches_help">Maximum number of matches before an active scouting camp can generate a new player suggestion. The actual value is chosen randomly between the minimum and maximum.</message>
+
+    <message id="settings_label_scouting_proposal_expire_matches">Validity of player suggestions</message>
+    <message id="settings_label_scouting_proposal_expire_matches_help">Number of matches for which a suggested player remains available. The suggestion then expires automatically.</message>
+
+    <message id="settings_label_scouting_max_open_proposals_per_team">Maximum open player suggestions per club</message>
+    <message id="settings_label_scouting_max_open_proposals_per_team_help">Once a club reaches this number of open suggestions, camps temporarily stop generating new players.</message>
+
+    <message id="settings_label_scouting_same_country_cost_percent">Domestic cost factor</message>
+    <message id="settings_label_scouting_same_country_cost_percent_help">Percentage value for scouting camps in the club’s own country. 100 means normal cost; 75 means 25 percent cheaper.</message>
+
+    <message id="settings_label_scouting_abroad_cost_percent">Foreign cost factor</message>
+    <message id="settings_label_scouting_abroad_cost_percent_help">Percentage value for scouting camps abroad. 100 means normal cost; 125 means 25 percent more expensive.</message>
+
+</messages>

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_club">Club</message>
+	<message id="entity_club_name">Nom</message>
+	<message id="entity_club_kurz">Abréviation</message>
+	<message id="entity_club_liga_id">Ligue</message>
+	<message id="entity_club_user_id">Utilisateur</message>
+	<message id="entity_club_parent_club_id">Club principal</message>
+	<message id="entity_club_parent_club_id_help">Club principal facultatif, défini uniquement par un administrateur. Le club principal et le club partenaire ne doivent pas évoluer dans la même division.</message>
+	<message id="entity_club_parent_club_status">Statut du club principal</message>
+	<message id="entity_club_parent_club_status_help">Actif = la relation peut être utilisée. Suspendu = la relation reste enregistrée, mais ne peut pas être utilisée en raison d’un conflit de règles.</message>
+	<message id="entity_club_parent_club_suspended_reason">Motif de la suspension</message>
+	<message id="option_active">Actif</message>
+	<message id="option_suspended">Suspendu</message>
+	<message id="parentclub_validation_invalid">Club principal non valide.</message>
+	<message id="parentclub_validation_parent_missing">Le club principal sélectionné n’existe pas.</message>
+	<message id="parentclub_validation_child_missing">Le club n’existe pas.</message>
+	<message id="parentclub_validation_same_club">Un club ne peut pas être son propre club principal.</message>
+	<message id="parentclub_validation_cycle">Cette sélection créerait une relation circulaire entre clubs principaux.</message>
+	<message id="parentclub_validation_parent_nationalteam">Les équipes nationales ne peuvent pas être des clubs principaux.</message>
+	<message id="parentclub_validation_child_nationalteam">Les équipes nationales ne peuvent pas avoir de club principal.</message>
+	<message id="parentclub_validation_same_division">Le club principal et le club partenaire ne doivent pas jouer dans la même division.</message>
+
+	<message id="entity_club_user_id_actual">Entraîneur titulaire</message>
+	<message id="entity_club_user_id_actual_help">Si l’utilisateur n’est que remplaçant pendant une absence.</message>
+	<message id="entity_club_bild">Logo</message>
+	<message id="entity_club_stadion_id">Stade</message>
+	<message id="entity_club_sponsor_id">Sponsor</message>
+	<message id="entity_club_sponsor_spiele">Matches restants avec le sponsor</message>
+	<message id="entity_club_training_id">Séance d’entraînement</message>
+	<message id="entity_club_finanz_budget">Budget</message>
+	<message id="entity_club_finanz_balance">Solde</message>
+	<message id="entity_club_finanz_sponsor">Revenus des sponsors</message>
+	<message id="entity_club_finanz_transfer">Solde des transferts</message>
+	<message id="entity_club_finanz_gehalt">Paiements des salaires</message>
+	<message id="entity_club_finanz_zuschauer">Recettes de billetterie</message>
+	<message id="entity_club_finanz_sonstiges">Autres revenus</message>
+	<message id="entity_club_preis_stehen">Prix des places debout</message>
+	<message id="entity_club_preis_sitz">Prix des places assises</message>
+	<message id="entity_club_preis_haupt_stehen">Prix des places debout (tribune principale)</message>
+	<message id="entity_club_preis_haupt_sitze">Prix des places assises (tribune principale)</message>
+	<message id="entity_club_preis_vip">Prix des billets pour la loge VIP</message>
+	<message id="entity_club_last_steh">Spectateurs au dernier match : places debout</message>
+	<message id="entity_club_last_sitz">Spectateurs au dernier match : places assises</message>
+	<message id="entity_club_last_haupt_steh">Spectateurs au dernier match : places debout (tribune principale)</message>
+	<message id="entity_club_last_haupt_sitz">Spectateurs au dernier match : places assises (tribune principale)</message>
+	<message id="entity_club_last_vip">Spectateurs au dernier match : loge VIP</message>
+	<message id="entity_club_meisterschaften">Championnats remportés</message>
+	<message id="entity_club_st_tore">Buts (total)</message>
+	<message id="entity_club_st_gegentore">Buts encaissés (total)</message>
+	<message id="entity_club_st_spiele">Matches (total)</message>
+	<message id="entity_club_st_siege">Victoires (total)</message>
+	<message id="entity_club_st_niederlagen">Défaites (total)</message>
+	<message id="entity_club_st_unentschieden">Matches nuls (total)</message>
+	<message id="entity_club_st_punkte">Points (total)</message>
+	<message id="entity_club_sa_tore">Buts (saison)</message>
+	<message id="entity_club_sa_gegentore">Buts encaissés (saison)</message>
+	<message id="entity_club_sa_spiele">Matches (saison)</message>
+	<message id="entity_club_sa_siege">Victoires (saison)</message>
+	<message id="entity_club_sa_niederlagen">Défaites (saison)</message>
+	<message id="entity_club_sa_unentschieden">Matches nuls (saison)</message>
+	<message id="entity_club_sa_punkte">Points (saison)</message>
+	<message id="entity_club_history">Historique</message>
+	<message id="entity_club_status">Actif</message>
+	<message id="entity_club_min_target_rank">Objectif de la saison</message>
+	<message id="entity_club_min_target_rank_help">Classement minimal attendu en championnat à la fin de la saison. Saisissez 0 pour ne définir aucun objectif. Lors de la clôture d’une saison, les conséquences d’un échec peuvent être configurées (baisse de la popularité auprès des supporters, pénalité financière, licenciement).</message>
+	<message id="entity_club_nationalteam">Est une équipe nationale</message>
+	<message id="entity_club_captain_id">Capitaine</message>
+	<message id="entity_club_interimmanager">Dirigé par un entraîneur intérimaire</message>
+	<message id="entity_club_highscore">Meilleur score</message>
+	
+	<message id="entity_club_finanz_bilanz_summe">Total du bilan</message>
+	
+</messages>

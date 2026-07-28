@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="facebooklogin_failure">O início de sessão através do Facebook foi cancelado.</message>
+    <message id="facebooklogin_success">Início de sessão através do Facebook efetuado com êxito!</message>
+    <message id="facebook_login_button">Iniciar sessão com o Facebook</message>
+    
+    <message id="facebooklogout_failure">Não foi possível terminar a sessão! Tenta novamente.</message>
+    <message id="facebooklogout_success">Sessão terminada com êxito!</message>
+    <message id="facebooklogout_success_details">Tem em atenção que, por motivos de segurança, a tua sessão do Facebook também foi terminada.</message>
+</messages>

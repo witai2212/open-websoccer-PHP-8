@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_tab_youth">Youth</message>
+    <message id="settings_label_youth_academy_enabled">Enable youth academy</message>
+    <message id="settings_label_youth_academy_enabled_help">Enables the youth academy with academy levels, development focus, youth captain and progress reports.</message>
+    <message id="settings_label_youth_academy_report_days">Youth academy reporting interval</message>
+    <message id="settings_label_youth_academy_report_days_help">Number of days between automatic academy reports to the manager.</message>
+    <message id="settings_label_youth_academy_captain_bonus">Youth captain bonus</message>
+    <message id="settings_label_youth_academy_captain_bonus_help">Small bonus for the selected youth captain. The effect is deliberately limited.</message>
+    <message id="settings_label_youth_academy_computer_manage_enabled">Computer clubs manage youth academies</message>
+    <message id="settings_label_youth_academy_computer_manage_enabled_help">Allows computer clubs to automatically build, upgrade or downgrade academies.</message>
+</messages>

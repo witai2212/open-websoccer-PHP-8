@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_news">Noticias</message>
+    <message id="entity_news_autor_id">Autor</message>
+	<message id="entity_news_titel">Títulos</message>
+	<message id="entity_news_datum">Fecha</message>
+	<message id="entity_news_nachricht">Mensaje</message>
+	<message id="entity_news_linktext1">Enlace relevante 1 (texto)</message>
+	<message id="entity_news_linkurl1">Enlace relevante 1 (URL)</message>
+	<message id="entity_news_linktext2">Enlace relevante 2 (texto)</message>
+	<message id="entity_news_linkurl2">Enlace relevante 2 (URL)</message>
+	<message id="entity_news_linktext3">Enlace relevante 3 (texto)</message>
+	<message id="entity_news_linkurl3">Enlace relevante 3 (URL)</message>
+	<message id="entity_news_c_smilies">Convertir emoticonos</message>
+	<message id="entity_news_c_br">Mostrar saltos de línea</message>
+	<message id="entity_news_c_links">Convertir URL en enlaces HTML</message>
+	<message id="entity_news_status">Activado</message>
+
+    <message id="entity_bankloans">Préstamos bancarios</message>
+    <message id="bankloans_navlabel">Préstamos bancarios</message>
+    <message id="entity_bankloans_id">ID</message>
+    <message id="entity_bankloans_verein_id">ID del club</message>
+    <message id="entity_bankloans_original_amount">Importe del préstamo</message>
+    <message id="entity_bankloans_remaining_principal">Capital pendiente</message>
+    <message id="entity_bankloans_interest_rate">Tipo de interés</message>
+    <message id="entity_bankloans_remaining_interest">Intereses pendientes</message>
+    <message id="entity_bankloans_remaining_amount">Deuda pendiente</message>
+    <message id="entity_bankloans_matches_left">Partidos restantes</message>
+    <message id="entity_bankloans_status">Estado</message>
+    <message id="entity_bankloans_credit_rating">Calificación crediticia</message>
+    <message id="entity_bankloans_created_date">Contratado el</message>
+    <message id="entity_bankloans_board_warning_sent">Aviso de la directiva enviado</message>
+</messages>

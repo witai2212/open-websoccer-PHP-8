@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="trainingcamp_navlabel">Concentración</message>
+    
+    <message id="trainingcamp_nocamps">Actualmente no hay concentraciones disponibles.</message>
+    
+    <message id="trainingcamp_bookedcamp">Concentración reservada</message>
+    
+    <message id="trainingcamp_startdate">Llegada</message>
+    <message id="trainingcamp_enddate">Salida</message>
+    
+    <message id="trainingcamp_delete">Cancelar</message>
+    <message id="trainingcamp_delete_note">Puedes cancelar esta reserva, pero los costes no se reembolsarán.</message>
+    
+    <message id="trainingcamp_cancel_illegalid">Ya no se ha podido encontrar la reserva. Puede que ya se haya cancelado o que esté en el pasado.</message>
+    <message id="trainingcamp_cancel_success">La reserva se ha cancelado correctamente.</message>
+    
+    
+    <message id="camp-details_navlabel">Reservar concentración</message>
+    
+    <message id="camp-detail_form_title">Reservar</message>
+    
+    <message id="camp-detail_start_date">Fecha de llegada</message>
+    <message id="camp-detail_days">Días</message>
+    <message id="camp-detail_days_help">Debe estar entre %d y %d.</message>
+    
+    <message id="trainingcamp_booking_err_invaliddays">La estancia en la concentración debe durar entre %d y %d días.</message>
+    <message id="trainingcamp_booking_err_dateinpast">La fecha de llegada debe estar en el futuro.</message>
+    <message id="trainingcamp_booking_err_datetoofar">La fecha de llegada debe estar dentro de los próximos %d días.</message>
+    <message id="trainingcamp_booking_err_existingbookings">Ya tienes una concentración reservada. Solo puedes reservar una concentración cada vez.</message>
+    <message id="trainingcamp_booking_err_tooexpensive">En este momento no puedes permitirte la concentración.</message>
+    <message id="trainingcamp_booking_err_matcheswithintimeframe">Tu equipo disputa partidos durante este periodo.</message>
+    
+    <message id="trainingcamp_booking_costs_subject">Concentración</message>
+    
+    <message id="trainingcamp_booking_success">¡La concentración se ha reservado correctamente!</message>
+    
+    <message id="trainingcamp_type_balanced">Equilibrado</message>
+    <message id="trainingcamp_type_fitness">Forma física</message>
+    <message id="trainingcamp_type_recovery">Recuperación</message>
+    <message id="trainingcamp_type_technique">Técnica</message>
+    <message id="trainingcamp_type_teambuilding">Cohesión de equipo</message>
+    <message id="trainingcamp_type_tactics">Táctica</message>
+    <message id="trainingcamp_type_youth">Desarrollo juvenil</message>
+    <message id="trainingcamp_type_mental">Mental</message>
+    <message id="trainingcamp_players_included">Jugadores en la concentración</message>
+    <message id="trainingcamp_total_costs">Coste total</message>
+    <message id="trainingcamp_estimated_min_costs">Coste con duración mínima</message>
+    <message id="trainingcamp_all_players_note">La concentración se aplica a todos los jugadores activos de la plantilla. Los efectos solo se aplican tras el regreso.</message>
+    <message id="trainingcamp_last_report">Último informe de concentración</message>
+    <message id="trainingcamp_report_completed_title">Concentración finalizada</message>
+    <message id="trainingcamp_report_completed_text">Los efectos se han aplicado a la plantilla y se ha creado un informe.</message>
+    <message id="trainingcamp_report_period">Periodo</message>
+    <message id="trainingcamp_report_players_costs">Jugadores / costes</message>
+    <message id="trainingcamp_report_effects">Efectos totales</message>
+    <message id="trainingcamp_special_effects">Atributos adicionales</message>
+    <message id="trainingcamp_report_special_effects">Total de atributos adicionales</message>
+    <message id="trainingcamp_report_injuries">Nuevas lesiones</message>
+</messages>

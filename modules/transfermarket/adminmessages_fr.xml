@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_tab_transfermarket">Marché des transferts</message> 
+	
+	<message id="settings_label_transfermarket_enabled">Activer le marché des transferts automatique.</message>
+	
+	<message id="settings_label_transfermarket_duration_days">Durée de présence d'un joueur sur la liste des transferts</message>
+	<message id="settings_label_transfermarket_duration_days_help">Jours. Si le joueur n'est pas vendu pendant cette période, la durée est prolongée du même nombre de jours.</message>
+	
+	<message id="settings_label_transfermarket_computed_marketvalue">Calculer automatiquement la valeur marchande. Elle dépend du niveau réel du joueur.</message>
+	
+	<message id="settings_label_transfermarket_value_per_strength">Valeur marchande par point de niveau</message>
+	<message id="settings_label_transfermarket_value_per_strength_help">si la valeur marchande doit être calculée automatiquement.</message>
+
+	<message id="settings_label_transfermarket_min_teamsize">Taille minimale de l'effectif</message>
+	<message id="settings_label_transfermarket_min_teamsize_help">Nombre minimal de joueurs dans l'équipe. Les joueurs ne peuvent pas être vendus si l'effectif descendrait sous cette taille minimale.</message>
+
+	<message id="settings_label_transfermarket_max_transactions_between_users">Transactions entre utilisateurs</message>
+	<message id="settings_label_transfermarket_max_transactions_between_users_help">Nombre maximal de transactions autorisées entre deux utilisateurs au cours des 30 derniers jours.</message>
+	<message id="settings_label_transfermarket_max_players_on_tl">Joueurs max. sur la liste</message>
+	<message id="settings_label_transferoffers_max_offer_deviation">Écart max. des transferts [%]</message>
+	<message id="settings_label_transferoffers_deviation_penalty">Sanction en cas d'écart</message>
+
+	<message id="settings_label_transfer_news_enabled">Publier les transferts importants dans les actualités</message>
+	<message id="settings_label_transfer_news_market_value_min">Valeur marchande minimale pour une actualité de transfert</message>
+	<message id="settings_label_transfer_news_market_value_min_help">À partir de cette valeur marchande, un joueur est considéré comme une vedette, quelle que soit l'indemnité. 0 désactive ce critère.</message>
+	<message id="settings_label_transfer_news_strength_min">Niveau minimal pour une actualité de transfert</message>
+	<message id="settings_label_transfer_news_strength_min_help">À partir de ce niveau, un changement de club est publié comme transfert important. 0 désactive ce critère.</message>
+	<message id="settings_label_transfer_news_fee_min">Indemnité minimale pour une actualité de transfert</message>
+	<message id="settings_label_transfer_news_fee_min_help">À partir de cette indemnité, le transfert est publié dans les actualités. 0 désactive ce critère.</message>
+	<message id="settings_label_transfer_news_top_percent">Pourcentage supérieur par valeur marchande</message>
+	<message id="settings_label_transfer_news_top_percent_help">Les joueurs appartenant à cette proportion des joueurs actifs les plus précieux déclenchent également une actualité de transfert.</message>
+
+
+	<message id="settings_label_computer_transfers_teams_per_run">Clubs IA par cycle de transferts</message>
+	<message id="settings_label_computer_transfers_teams_per_run_help">Nombre maximal de clubs contrôlés par l'IA qui examinent de nouvelles offres de transfert par cycle système.</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team">Offres IA maximales par club</message>
+	<message id="settings_label_computer_transfers_max_active_offers_per_team_help">Nombre maximal d'offres de transfert simultanément ouvertes d'un club contrôlé par l'IA.</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player">Offres IA maximales par joueur</message>
+	<message id="settings_label_computer_transfers_max_offers_per_player_help">Nombre maximal d'offres simultanément ouvertes de clubs contrôlés par l'IA pour un joueur.</message>
+
+	<message id="settings_label_player_talent_transfer_change_chance">Évolution du talent après transfert</message>
+	<message id="settings_label_player_talent_transfer_change_chance_help">Probabilité en pourcentage d'une variation unique du talent de +1 ou -1 après un transfert finalisé.</message>
+	<message id="settings_label_computer_budget_subsidy_floor">Budget de base des clubs IA</message>
+	<message id="settings_label_computer_budget_subsidy_floor_help">Les clubs contrôlés par l'IA sont automatiquement crédités jusqu'à ce montant minimal.</message>
+
+</messages>

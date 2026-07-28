@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="training_navlabel">Entrenamiento</message>
+    <message id="training_no_trainers_available">Actualmente no hay entrenadores disponibles.</message>
+    <message id="training_choose_trainer">Elige un entrenador</message>
+    <message id="training_trainer_filter_all">Todos los entrenadores</message>
+    
+    <message id="trainer-details_navlabel">Seleccionar entrenador</message>
+    
+    <message id="training_choose_trainer_title">Contratar este entrenador</message>
+    <message id="training_choose_trainer_units">Número de sesiones de entrenamiento</message>
+    
+    <message id="training_choose_trainer_err_existing_units">Este entrenador no puede contratarse actualmente.</message>
+    <message id="training_choose_trainer_err_too_expensive">En este momento no puedes permitirte este entrenador.</message>
+    
+    <message id="training_trainer_salary_subject">Sesiones de entrenamiento</message>
+    <message id="training_trainer_dismissal_subject">Indemnización del entrenador</message>
+    
+    <message id="training_units_count">Sesiones de entrenamiento pendientes</message>
+    <message id="training_last_execution">Última sesión de entrenamiento</message>
+    <message id="training_current_trainer">Entrenador actual</message>
+    <message id="training_staff_title">Cuerpo técnico</message>
+    <message id="training_staff_intro">Un entrenador principal y hasta %d entrenadores especialistas dirigen el entrenamiento diario. Según el tipo de entrenamiento, se asigna automáticamente al entrenador más adecuado.</message>
+    <message id="training_staff_role">Función</message>
+    <message id="training_staff_head">Entrenador principal</message>
+    <message id="training_staff_specialist">Entrenador especialista</message>
+    <message id="training_staff_open_units">Sesiones pendientes</message>
+    <message id="training_staff_empty">Todavía no hay ningún entrenador contratado. Sin sesiones de entrenamiento disponibles, no se realiza entrenamiento del equipo.</message>
+    <message id="training_staff_full">El cuerpo técnico ya está completo.</message>
+    <message id="training_staff_slots_available">Quedan %d plaza o plazas disponibles en el cuerpo técnico.</message>
+    <message id="training_add_units">Reservar más sesiones</message>
+    <message id="training_dismiss_trainer">Despedir</message>
+    <message id="training_dismiss_trainer_confirm">¿Seguro que quieres despedir a este entrenador? Se perderán todas sus sesiones pendientes. La indemnización asciende a %s %s.</message>
+    <message id="training_dismiss_trainer_success">Entrenador despedido. Se han perdido %d sesiones pendientes. Indemnización: %d.</message>
+    <message id="training_dismiss_trainer_not_found">Este entrenador no pertenece al cuerpo técnico actual.</message>
+    <message id="training_dismiss_trainer_too_expensive">La indemnización necesaria no puede pagarse actualmente.</message>
+    
+    <message id="training_trainer_details">Entrenador contratado</message>
+    <message id="training_execute_training_title">Entrenar al equipo ahora</message>
+    <message id="training_execute_button">Ejecutar entrenamiento</message>
+    
+    <message id="training_execute_focus">Enfoque</message>
+    <message id="training_execute_focus_technique">Técnica</message>
+    <message id="training_execute_focus_stamina">Resistencia</message>
+    <message id="training_execute_focus_motivation">Motivación</message>
+    <message id="training_execute_focus_regeneration">Recuperación</message>
+    
+    <message id="training_execute_intensity">Intensidad</message>
+    <message id="training_execute_training_note">El entrenamiento normal se ejecuta automáticamente aproximadamente una vez cada 24 horas mediante el plan guardado, independientemente de los partidos.</message>
+    
+    <message id="training_execute_success">El equipo ha entrenado.</message>
+    <message id="training_execute_err_already_executed">La sesión de entrenamiento ya se ha ejecutado. Recarga la página e inténtalo de nuevo.</message>
+    
+    <message id="training_execute_err_too_early">El descanso tras la última sesión es demasiado corto. El próximo entrenamiento podrá realizarse como pronto el: %s</message>
+    <message id="training_execute_err_match_simulating">El equipo está jugando un partido en este momento. Podrás volver a entrenar después.</message>
+    
+    <message id="training_execute_effects_title">Resultado de la sesión de entrenamiento</message>
+    
+    <message id="training_execute_err_team_in_training_camp">El equipo está actualmente en una concentración y por eso no puede realizar sesiones normales.</message>
+
+    <message id="training_plan_title">Plan de entrenamiento automático</message>
+    <message id="training_plan_intro">El plan también se procesa automáticamente en días sin partido. Aproximadamente cada 24 horas, el club consume una sesión pendiente, asigna al entrenador más adecuado y ejecuta el siguiente bloque.</message>
+    <message id="training_plan_no_units_warning">No hay sesiones de entrenamiento pendientes. El plan seguirá guardado, pero solo se ejecutará después de contratar un entrenador.</message>
+    <message id="training_plan_saved">El plan de entrenamiento se ha guardado.</message>
+    <message id="training_plan_slot">Bloque</message>
+    <message id="training_plan_type">Tipo de entrenamiento</message>
+
+    <message id="training_type_regeneration">Recuperación</message>
+    <message id="training_type_technique">Entrenamiento técnico</message>
+    <message id="training_type_passing">Pase</message>
+    <message id="training_type_finishing">Definición</message>
+    <message id="training_type_setpieces">Balón parado</message>
+    <message id="training_type_defense">Trabajo defensivo</message>
+    <message id="training_type_athletics">Preparación física</message>
+    <message id="training_type_teambuilding">Cohesión de equipo</message>
+    <message id="training_type_matchprep">Preparación del partido</message>
+    <message id="training_type_goalkeeper">Entrenamiento de porteros</message>
+
+    <message id="training_latest_report">Último informe de entrenamiento</message>
+    <message id="training_history_title">Historial de entrenamientos</message>
+    <message id="training_report_date">Fecha</message>
+    <message id="training_report_player_count">Jugador</message>
+    <message id="training_report_injuries">Lesiones</message>
+    <message id="training_report_injured">Lesionado</message>
+    <message id="training_report_chemistry">Química del equipo</message>
+    <message id="training_report_player_details">Desarrollo de jugadores</message>
+
+    <message id="trainer_specialization_balanced">Equilibrado</message>
+    <message id="trainer_specialization_technique">Técnica</message>
+    <message id="trainer_specialization_fitness">Forma física</message>
+    <message id="trainer_specialization_offense">Ataque</message>
+    <message id="trainer_specialization_defense">Defensa</message>
+    <message id="trainer_specialization_setpieces">Balón parado</message>
+    <message id="trainer_specialization_goalkeeper">Portero</message>
+    <message id="trainer_specialization_mental">Mentalidad</message>
+    <message id="trainer_specialization_tactics">Táctica</message>
+
+    <message id="training-calendar_navlabel">Calendario de entrenamiento</message>
+    <message id="trainingcalendar_title">Calendario de entrenamiento</message>
+    <message id="trainingcalendar_intro">El calendario de entrenamiento muestra en una sola página el siguiente enfoque, la intensidad, los efectos previstos, el riesgo de lesión, la química, los informes y las concentraciones.</message>
+    <message id="trainingcalendar_disabled">El entrenamiento avanzado está desactivado actualmente. El plan puede verse, pero no se aplican efectos automáticos.</message>
+    <message id="trainingcalendar_next_focus">Próximo enfoque de entrenamiento</message>
+    <message id="trainingcalendar_next">Próximo entrenamiento</message>
+    <message id="trainingcalendar_open_units">Sesiones pendientes</message>
+    <message id="trainingcalendar_team_chemistry">Química del equipo</message>
+    <message id="trainingcalendar_expected_effects">Efectos previstos</message>
+    <message id="trainingcalendar_expected_chemistry">Efecto sobre la química</message>
+    <message id="trainingcalendar_no_expected_effects">No se esperan efectos significativos.</message>
+    <message id="trainingcalendar_injury_risk">Riesgo de lesión</message>
+    <message id="trainingcalendar_per_player">por jugador</message>
+    <message id="trainingcalendar_current_trainer">Entrenador actual</message>
+    <message id="trainingcalendar_no_trainer">Todavía no hay entrenador contratado. La previsión usa valores medios.</message>
+    <message id="trainingcalendar_no_units_warning">No hay sesiones de entrenamiento pendientes. El plan seguirá guardado, pero solo se ejecutará después de contratar un entrenador.</message>
+    <message id="trainingcalendar_go_to_training">Ir al entrenamiento</message>
+    <message id="trainingcalendar_go_to_camps">Ir a concentraciones</message>
+    <message id="trainingcalendar_active_camp">Concentración activa</message>
+    <message id="trainingcalendar_active_camp_note">Las sesiones normales se omiten durante la concentración.</message>
+    <message id="trainingcalendar_plan_title">Editar plan de entrenamiento</message>
+    <message id="trainingcalendar_plan_intro">La fila resaltada es el siguiente bloque. El entrenamiento se realiza aproximadamente cada 24 horas y después pasa al siguiente bloque.</message>
+    <message id="trainingcalendar_last_report_title">Último informe de entrenamiento</message>
+    <message id="trainingcalendar_best_performer">Mejor jugador</message>
+    <message id="trainingcalendar_worst_performer">Jugador con peor rendimiento</message>
+    <message id="trainingcalendar_total_effect">Efecto total</message>
+    <message id="trainingcalendar_no_report">Todavía no hay ningún informe de entrenamiento.</message>
+    <message id="trainingcalendar_camps_title">Concentraciones en el calendario</message>
+    <message id="trainingcalendar_no_camps">No hay ninguna concentración activa o prevista.</message>
+    <message id="trainingcalendar_last_camp_report">Último informe de concentración</message>
+    <message id="trainingcalendar_status">Estado</message>
+    <message id="trainingcalendar_status_active">Activo</message>
+    <message id="trainingcalendar_status_upcoming">Previsto</message>
+    <message id="trainingcalendar_intensity_low">suave</message>
+    <message id="trainingcalendar_intensity_normal">normal</message>
+    <message id="trainingcalendar_intensity_high">alto</message>
+    <message id="trainingcalendar_intensity_extreme">extrema</message>
+    <message id="trainingcalendar_risk_none">sin riesgo</message>
+    <message id="trainingcalendar_risk_low">bajo</message>
+    <message id="trainingcalendar_risk_medium">medio</message>
+    <message id="trainingcalendar_risk_high">alto</message>
+    <message id="trainingcalendar_effect_strength">Fuerza</message>
+    <message id="trainingcalendar_effect_freshness">Frescura</message>
+    <message id="trainingcalendar_effect_technique">Técnica</message>
+    <message id="trainingcalendar_effect_stamina">Resistencia</message>
+    <message id="trainingcalendar_effect_satisfaction">Satisfacción</message>
+    <message id="trainingcalendar_effect_passing">Pase</message>
+    <message id="trainingcalendar_effect_shooting">Disparo</message>
+    <message id="trainingcalendar_effect_heading">Cabeceo</message>
+    <message id="trainingcalendar_effect_tackling">Entradas</message>
+    <message id="trainingcalendar_effect_freekick">Faltas</message>
+    <message id="trainingcalendar_effect_pace">Velocidad</message>
+    <message id="trainingcalendar_effect_creativity">Creatividad</message>
+    <message id="trainingcalendar_effect_influence">Influencia</message>
+    <message id="trainingcalendar_effect_flair">Talento</message>
+    <message id="trainingcalendar_effect_penalty">Penaltis</message>
+    <message id="trainingcalendar_effect_penalty_killing">Paradas de penalti</message>
+
+    <!-- Einzeltraining -->
+    <message id="individual-training_navlabel">Entrenamiento individual</message>
+    <message id="individual_training_title">Entrenamiento individual</message>
+    <message id="individual_training_intro">Define un enfoque de entrenamiento individual para cada jugador. Un jugador solo puede tener un entrenamiento individual activo. El progreso se produce con cada sesión diaria del equipo, incluso en días sin partido. Al alcanzar el objetivo, el entrenamiento individual termina y recibes un mensaje.</message>
+    <message id="individual_training_only_human">El entrenamiento individual solo está disponible para clubes con mánager humano.</message>
+    <message id="individual_training_no_trainer">Sin entrenador contratado</message>
+    <message id="individual_training_progress_hint_title">Progreso</message>
+    <message id="individual_training_progress_hint">La duración y el progreso dependen del jugador, la edad, el talento, la habilidad actual y la calidad del entrenador.</message>
+    <message id="individual_training_no_units_warning">No hay sesiones de entrenamiento pendientes. El entrenamiento individual seguirá guardado, pero solo progresará cuando vuelvan a procesarse sesiones normales.</message>
+    <message id="individual_training_recommendation">Valores débiles</message>
+    <message id="individual_training_current">Enfoque actual</message>
+    <message id="individual_training_selected">Entrenamiento individual</message>
+    <message id="individual_training_progress">Progreso</message>
+    <message id="individual_training_none">Sin entrenamiento individual</message>
+    <message id="individual_training_units_done">Sesiones</message>
+    <message id="individual_training_remaining_approx">aprox. restantes:</message>
+    <message id="individual_training_not_active">No activo</message>
+    <message id="individual_training_completed_title">Entrenamientos individuales completados</message>
+    <message id="individual_training_completed_date">Completado el</message>
+    <message id="individual_training_result">Resultado</message>
+    <message id="individual_training_saved">El entrenamiento individual se ha guardado.</message>
+    <message id="individual_training_cancelled">El entrenamiento individual se ha eliminado.</message>
+    <message id="individual_training_unchanged">El entrenamiento individual ya estaba configurado así.</message>
+    <message id="individual_training_error_player_not_found">El jugador no pertenece a tu club.</message>
+    <message id="individual_training_error_invalid_attribute">Esta habilidad no puede elegirse como entrenamiento individual para este jugador.</message>
+    <message id="individual_training_completed_notification">Entrenamiento individual completado: {player} ({attribute})</message>
+    <message id="individual_training_age_years">años</message>
+    <message id="individual_training_autosave_hint">Los cambios se guardan automáticamente en cuanto seleccionas o eliminas un entrenamiento individual.</message>
+    <message id="individual_training_autosave_saving">guardando...</message>
+
+
+    <message id="training_trainer_requirements">Requisitos</message>
+    <message id="training_trainer_not_realistic">no realista</message>
+    <message id="training_trainer_not_realistic_detail">Este entrenador no considera adecuado el club o la liga actualmente. Mejora la fuerza de la plantilla, la reputación de la liga o el presupuesto antes de poder contratarlo.</message>
+    <message id="training_trainer_err_club_too_weak">El entrenador quiere ir a un club más fuerte deportivamente.</message>
+    <message id="training_trainer_err_league_too_weak">El entrenador quiere trabajar en una liga más fuerte.</message>
+    <message id="training_trainer_err_budget_risk">La contratación sería demasiado arriesgada para el presupuesto actual.</message>
+</messages>

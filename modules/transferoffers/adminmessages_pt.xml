@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_transferoffers_enabled">Permitir transferências diretas: os utilizadores podem enviar propostas de transferência diretamente a outros treinadores fora do mercado de transferências.</message> 
+	<message id="settings_label_transferoffers_transfer_stop_days">Impedimento de transferência</message> 
+	<message id="settings_label_transferoffers_transfer_stop_days_help">em dias. Os jogadores não podem mudar de clube durante este período após a última transferência.</message> 
+	<message id="settings_label_transferoffers_adminapproval_required">Uma transferência direta acordada tem de ser aprovada por um administrador.</message> 
+	<message id="settings_label_transferoffers_contract_matches">Duração do contrato em transferências diretas</message> 
+	<message id="settings_label_transferoffers_contract_matches_help">em número de jogos</message> 
+	
+	<message id="button_approve">Autorizar</message> 
+	
+	<message id="transferoffer_approval_success">A transferência foi concluída com sucesso.</message> 
+</messages>

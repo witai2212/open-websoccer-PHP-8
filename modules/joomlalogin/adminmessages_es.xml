@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_joomlalogin_tableprefix">Inicio de sesión mediante Joomla: prefijo de tablas</message>
+    <message id="settings_label_joomlalogin_tableprefix_help">Prefijo de las tablas de la base de datos de tu instalación de Joomla si los usuarios deben iniciar sesión únicamente con el nombre de usuario y la contraseña de su cuenta de Joomla. <em>Nota:</em> activa el inicio de sesión mediante Joomla introduciendo "JoomlaUserLoginMethod" arriba en "Método de inicio de sesión".</message>
+</messages>

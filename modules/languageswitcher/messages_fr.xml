@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="langswitcher_block_title">Choisir la langue</message>
+    <message id="lang_label_de">Allemand</message>
+    <message id="lang_label_en">Anglais</message>
+    
+</messages>

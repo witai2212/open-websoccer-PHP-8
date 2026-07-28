@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_merchandising_enabled">Ativar o merchandising</message>
+    <message id="settings_label_merchandising_enabled_help">Ativa o sistema completo de merchandising para clubes geridos por utilizadores.</message>
+    <message id="settings_label_merchandising_star_threshold">Valor mínimo para estrelas de merchandising</message>
+    <message id="settings_label_merchandising_star_threshold_help">Valor mínimo em estrelas a partir do qual um jogador pode, em princípio, ter a sua própria camisola.</message>
+    <message id="settings_label_merchandising_max_player_collections">Máximo de camisolas de jogadores por clube</message>
+    <message id="settings_label_merchandising_max_player_collections_help">Limita o número de estrelas de merchandising disponibilizadas em simultâneo.</message>
+</messages>

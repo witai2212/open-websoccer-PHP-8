@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<messages>
+    <message id="tacticaldna_navlabel">Tactical DNA</message>
+    <message id="tacticaldna_admin_title">Tactical DNA</message>
+    <message id="tacticaldna_admin_intro">Admin overview for club identity and preferred playing styles. Here you can check style fit, correct CPU- or manager-controlled clubs and set the recommended style.</message>
+    <message id="tacticaldna_admin_club_search">Search club</message>
+    <message id="tacticaldna_admin_club_search_placeholder">Enter name, league or country...</message>
+    <message id="tacticaldna_admin_apply">Display</message>
+    <message id="tacticaldna_admin_selected_club">Selected club</message>
+    <message id="tacticaldna_admin_save_recommended">Save recommended style</message>
+    <message id="tacticaldna_admin_saved">Tactical DNA saved.</message>
+    <message id="tacticaldna_admin_recommended_saved">Recommended style saved.</message>
+    <message id="tacticaldna_admin_overview">Overview of weakest fits</message>
+    <message id="tacticaldna_admin_overview_help">The list shows up to 200 active clubs, sorted by their currently lowest style fit. This helps the admin quickly find clubs whose identity is hindering the squad.</message>
+
+    <message id="tacticaldna_current_style">Current style</message>
+    <message id="tacticaldna_style_comparison">Style comparison</message>
+    <message id="tacticaldna_transition_effect">Chemistry transition</message>
+    <message id="tacticaldna_change_preview">Chemistry after change</message>
+    <message id="tacticaldna_recommended">Recommended</message>
+
+    <message id="teamchemistry_score">Chemistry</message>
+    <message id="teamchemistry_match_effect">Match effect</message>
+    <message id="team_details_manager">Manager</message>
+    <message id="formation_tacticalstyle_select">Playing style</message>
+    <message id="formation_tacticalstyle_fit">Fit</message>
+    <message id="tacticalstyle_balanced">Balanced</message>
+    <message id="tacticalstyle_pressing">Pressing</message>
+    <message id="tacticalstyle_possession">Possession</message>
+    <message id="tacticalstyle_defensive">Defensive</message>
+    <message id="tacticalstyle_physical">Physical</message>
+    <message id="tacticalstyle_counterattack">Counterattack</message>
+    <message id="tacticalstyle_balanced_help">Neutral style without strong specialisation.</message>
+    <message id="tacticalstyle_pressing_help">Stamina, pace, tackling and mentality increase the effect.</message>
+    <message id="tacticalstyle_possession_help">Passing, creativity and technique help control the game.</message>
+    <message id="tacticalstyle_defensive_help">Tackling, heading, stamina and leaders strengthen the defence.</message>
+    <message id="tacticalstyle_physical_help">Overall strength, heading, stamina and tackling make this style more effective.</message>
+    <message id="tacticalstyle_counterattack_help">Pace, finishing, passing and fitness suit transition play.</message>
+</messages>

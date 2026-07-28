@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="trainingcamp_navlabel">Stage d’entraînement</message>
+    
+    <message id="trainingcamp_nocamps">Aucun stage n'est actuellement disponible.</message>
+    
+    <message id="trainingcamp_bookedcamp">Stage réservé</message>
+    
+    <message id="trainingcamp_startdate">Arrivée</message>
+    <message id="trainingcamp_enddate">Départ</message>
+    
+    <message id="trainingcamp_delete">Annuler</message>
+    <message id="trainingcamp_delete_note">Vous pouvez annuler cette réservation, mais les frais ne seront pas remboursés.</message>
+    
+    <message id="trainingcamp_cancel_illegalid">La réservation est introuvable. Elle a peut-être déjà été annulée ou appartient au passé.</message>
+    <message id="trainingcamp_cancel_success">La réservation a été annulée avec succès.</message>
+    
+    
+    <message id="camp-details_navlabel">Réserver un stage</message>
+    
+    <message id="camp-detail_form_title">Réserver</message>
+    
+    <message id="camp-detail_start_date">Date d'arrivée</message>
+    <message id="camp-detail_days">Jours</message>
+    <message id="camp-detail_days_help">Doit être compris entre %d et %d.</message>
+    
+    <message id="trainingcamp_booking_err_invaliddays">Le séjour au stage doit durer entre %d et %d jours.</message>
+    <message id="trainingcamp_booking_err_dateinpast">La date d'arrivée doit être future.</message>
+    <message id="trainingcamp_booking_err_datetoofar">La date d'arrivée doit se situer dans les %d prochains jours.</message>
+    <message id="trainingcamp_booking_err_existingbookings">Vous avez déjà réservé un stage. Vous ne pouvez réserver qu'un seul stage à la fois.</message>
+    <message id="trainingcamp_booking_err_tooexpensive">Vous ne pouvez pas actuellement financer ce stage.</message>
+    <message id="trainingcamp_booking_err_matcheswithintimeframe">Votre équipe dispute des matches pendant cette période.</message>
+    
+    <message id="trainingcamp_booking_costs_subject">Stage d’entraînement</message>
+    
+    <message id="trainingcamp_booking_success">Le stage a été réservé avec succès !</message>
+    
+    <message id="trainingcamp_type_balanced">Équilibré</message>
+    <message id="trainingcamp_type_fitness">Condition physique</message>
+    <message id="trainingcamp_type_recovery">Récupération</message>
+    <message id="trainingcamp_type_technique">Technique</message>
+    <message id="trainingcamp_type_teambuilding">Cohésion d'équipe</message>
+    <message id="trainingcamp_type_tactics">Tactique</message>
+    <message id="trainingcamp_type_youth">Développement des jeunes</message>
+    <message id="trainingcamp_type_mental">Mental</message>
+    <message id="trainingcamp_players_included">Joueurs au stage</message>
+    <message id="trainingcamp_total_costs">Coût total</message>
+    <message id="trainingcamp_estimated_min_costs">Coût pour la durée minimale</message>
+    <message id="trainingcamp_all_players_note">Le stage concerne tous les joueurs actifs de l'effectif. Les effets ne sont appliqués qu'après le retour.</message>
+    <message id="trainingcamp_last_report">Dernier rapport de stage</message>
+    <message id="trainingcamp_report_completed_title">Stage terminé</message>
+    <message id="trainingcamp_report_completed_text">Les effets ont été appliqués à l'effectif et un rapport a été créé.</message>
+    <message id="trainingcamp_report_period">Période</message>
+    <message id="trainingcamp_report_players_costs">Joueurs / coûts</message>
+    <message id="trainingcamp_report_effects">Effets totaux</message>
+    <message id="trainingcamp_special_effects">Attributs supplémentaires</message>
+    <message id="trainingcamp_report_special_effects">Total des attributs supplémentaires</message>
+    <message id="trainingcamp_report_injuries">Nouvelles blessures</message>
+</messages>

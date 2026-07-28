@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_player">Footballeurs</message>
+	<message id="entity_player_vorname">Prénom</message>
+	<message id="entity_player_nachname">Nom de famille</message>
+	<message id="entity_player_kunstname">Nom d’usage</message>
+	<message id="entity_player_verein_id">Club</message>
+	<message id="entity_player_status">Actif</message>
+	
+	<message id="entity_player_geburtstag">Date de naissance</message>
+	<message id="entity_player_geburtstag_help">Doit être renseigné si les joueurs doivent vieillir selon leur date de naissance. Voir les paramètres système.</message>
+	<message id="entity_player_age">Âge</message>
+	<message id="entity_player_age_help">En années. Doit être renseigné si les joueurs doivent vieillir à la fin d’une saison plutôt qu’à leur anniversaire.</message>
+	
+	
+	<message id="entity_player_position">Poste</message>
+	<message id="entity_player_position_main">Poste principal</message>
+	<message id="entity_player_position_main_help">Si aucun poste principal n’est indiqué, le joueur est polyvalent dans la ligne de jeu indiquée ci-dessus.</message>
+	<message id="entity_player_position_second">Poste secondaire</message>
+	<message id="entity_player_nation">Nationalité (pays)</message>
+	<message id="entity_player_personality">Personnalité</message>
+	<message id="entity_player_personality_help">Un trait de caractère principal du joueur. Visible par son propre club et après recrutement.</message>
+	<message id="entity_player_picture">Image</message>
+	<message id="entity_player_verletzt">Blessé</message>
+	<message id="entity_player_gesperrt">Suspendu</message>
+	<message id="entity_player_gesperrt_cups">Suspendu (coupes)</message>
+	<message id="entity_player_gesperrt_nationalteam">Suspendu (équipe nationale)</message>
+	<message id="entity_player_w_staerke">Niveau</message>
+	<message id="entity_player_w_technik">Technique</message>
+	<message id="entity_player_w_kondition">Endurance</message>
+	<message id="entity_player_w_frische">Fraîcheur</message>
+	<message id="entity_player_w_zufriedenheit">Satisfaction</message>
+	<message id="entity_player_w_talent">Talent</message>
+	
+	<message id="entity_player_w_passing">Passes</message>
+	<message id="entity_player_w_shooting">Tirs</message>
+	<message id="entity_player_w_tackling">Duels</message>
+	<message id="entity_player_w_heading">Jeu de tête</message>
+	<message id="entity_player_w_freekick">Coups francs</message>
+	<message id="entity_player_w_pace">Vitesse</message>
+	<message id="entity_player_w_creativity">Créativité</message>
+	<message id="entity_player_w_influence">Influence</message>
+	<message id="entity_player_w_flair">Caractère</message>
+	<message id="entity_player_w_penalty">Penalties</message>
+	<message id="entity_player_w_penalty_killing">Arrêt des penalties</message>
+	
+	<message id="entity_player_w_technik_abbrev">TE</message>
+	<message id="entity_player_w_kondition_abbrev">EN</message>
+	<message id="entity_player_w_frische_abbrev">FR</message>
+	<message id="entity_player_w_zufriedenheit_abbrev">SA</message>
+	<message id="entity_player_w_passing_abbrev">PA</message>
+	<message id="entity_player_w_shooting_abbrev">TIR</message>
+	<message id="entity_player_w_tackling_abbrev">DUE</message>
+	<message id="entity_player_w_heading_abbrev">TÊT</message>
+	<message id="entity_player_w_freekick_abbrev">CF</message>
+	<message id="entity_player_w_pace_abbrev">VIT</message>
+	<message id="entity_player_w_creativity_abbrev">CRÉ</message>
+	<message id="entity_player_w_influence_abbrev">INF</message>
+	<message id="entity_player_w_flair_abbrev">CAR</message>
+	<message id="entity_player_w_penalty_abbrev">PEN</message>
+	<message id="entity_player_w_penalty_killing_abbrev">AP</message>
+	
+	<message id="entity_player_transfermarkt">Est sur le marché des transferts</message>
+	<message id="entity_player_transfer_start">Sur le marché des transferts depuis</message>
+	<message id="entity_player_transfer_ende">Sur le marché des transferts jusqu’au</message>
+	<message id="entity_player_transfer_mindestgebot">Offre minimale</message>
+	<message id="entity_player_vertrag_gehalt">Salaire par match</message>
+	<message id="entity_player_marktwert">Valeur marchande</message>
+	<message id="entity_player_vertrag_spiele">Matchs restants au club</message>				
+	<message id="entity_player_vertrag_torpraemie">Prime de but</message>
+	<message id="entity_player_marktwert">Valeur marchande</message>	
+	<message id="entity_player_marktwert_help">Si la valeur marchande ne doit pas être calculée automatiquement (voir les paramètres système).</message>	
+	
+	<message id="entity_player_sa_tore">Buts (cette saison)</message>	
+	<message id="entity_player_sa_assists">Passes décisives (cette saison)</message>	
+	<message id="entity_player_sa_spiele">Matchs (cette saison)</message>	
+	<message id="entity_player_sa_karten_gelb">Cartons jaunes (cette saison)</message>	
+	<message id="entity_player_sa_karten_gelb_rot">Cartons jaune-rouge (cette saison)</message>	
+	<message id="entity_player_sa_karten_rot">Cartons rouges (cette saison)</message>	
+	
+	<message id="entity_player_st_tore">Buts (total)</message>	
+	<message id="entity_player_st_assists">Passes décisives (total)</message>	
+	<message id="entity_player_st_spiele">Matches (total)</message>	
+	<message id="entity_player_st_karten_gelb">Cartons jaunes (total)</message>	
+	<message id="entity_player_st_karten_gelb_rot">Cartons jaune-rouge (total)</message>	
+	<message id="entity_player_st_karten_rot">Cartons rouges (total)</message>	
+	
+	<message id="entity_player_history">Historique</message>		
+	
+	<message id="entity_player_unsellable">intransférable</message>	
+	
+	<message id="entity_player_lending_owner_id">Club prêteur</message>	
+	<message id="entity_player_lending_fee">Frais de prêt par journée</message>	
+	<message id="entity_player_lending_matches">Matchs en prêt</message>
+	
+	<message id="entity_player_talent">Talent</message>
+					
+    <message id="player_position_goaly">Gardien</message>
+    <message id="option_Torwart">Gardien</message>
+    <message id="player_position_defense">Défense</message>
+    <message id="option_Abwehr">Défense</message>
+    <message id="player_position_midfield">Milieu</message>
+    <message id="option_Mittelfeld">Milieu</message>
+    <message id="player_position_striker">Attaquant</message>
+    <message id="option_Sturm">Attaquant</message>
+    <message id="player_position_outsideforward">Ailier</message>
+    
+    <message id="player_position_field">Joueur de champ</message>
+    <message id="player_position_bench">Banc des remplaçants</message>
+    
+    <message id="option_T">Gardien</message>
+    <message id="option_LV">Arrière gauche</message>
+    <message id="option_RV">Arrière droit</message>
+    <message id="option_IV">Défenseur central</message>
+    <message id="option_LM">Milieu gauche</message>
+    <message id="option_RM">Milieu droit</message>
+    <message id="option_ZM">Milieu central</message>
+    <message id="option_LS">Ailier gauche</message>
+    <message id="option_MS">Avant-centre</message>
+    <message id="option_RS">Ailier droit</message>
+    <message id="option_OM">Milieu offensif</message>
+    <message id="option_DM">Milieu défensif</message>
+
+    <message id="option_leader">Leader</message>
+    <message id="option_professional">Professionnel</message>
+    <message id="option_injury_prone">Sujet aux blessures</message>
+    <message id="option_inconsistent">Irrégulier</message>
+    <message id="option_loyal">Loyal</message>
+    <message id="option_ambitious">Ambitieux</message>
+    <message id="option_big_game_player">Joueur des grands matchs</message>
+    <message id="option_troublemaker">Fauteur de troubles</message>
+
+    <message id="entity_player_trait">Capacité spéciale du joueur</message>
+    <message id="entity_player_trait_player_id">Joueur</message>
+    <message id="entity_player_trait_trait_key">Capacité spéciale</message>
+    <message id="entity_player_trait_trait_value">Niveau de 0 à 3</message>
+    <message id="entity_player_trait_trait_value_help">0 signifie absent. Les valeurs de 1 à 3 sont affichées et ont un effet modéré sur la valeur marchande et les situations de match correspondantes.</message>
+    <message id="option_torinstinkt">Instinct de buteur</message>
+    <message id="option_spielmacher">Meneur de jeu</message>
+    <message id="option_ballzauberer">Magicien du ballon</message>
+    <message id="option_flankenspezialist">Spécialiste des centres</message>
+    <message id="option_kopfballstaerke">Jeu de tête</message>
+    <message id="option_viererkette">Défense à quatre</message>
+    <message id="option_laufstaerke">Volume de course</message>
+    <message id="option_freistossspezialist">Spécialiste des coups francs</message>
+    <message id="option_elfmeterschuetze">Tireur de penalties</message>
+    <message id="option_dribbler">Dribbleur</message>
+    <message id="option_elfmetertoeter">Arrêteur de penalties</message>
+    <message id="option_reflexe">Réflexes</message>
+</messages>

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="transfermarketintelligence_navlabel">Análisis del mercado de fichajes</message>
+    <message id="transfermarket_intelligence_admin_title">Análisis del mercado de fichajes</message>
+    <message id="transfermarket_intelligence_admin_intro">Supervisa traspasos, salarios, ofertas activas, realismo de las ofertas CPU y posible sobrecalentamiento del mercado.</message>
+
+    <message id="settings_label_transfermarket_intelligence_enabled">Activar análisis del mercado de fichajes</message>
+    <message id="settings_label_transfermarket_intelligence_enabled_help">Activa la nueva página de análisis para mánageres y administradores.</message>
+    <message id="settings_label_transfermarket_intelligence_contract_days">Contratos próximos a vencer</message>
+    <message id="settings_label_transfermarket_intelligence_contract_days_help">Número de jornadas a partir del cual un contrato se considera próximo a vencer.</message>
+    <message id="settings_label_transfermarket_intelligence_bargain_percent">Umbral de oportunidad</message>
+    <message id="settings_label_transfermarket_intelligence_bargain_percent_help">Porcentaje por debajo del valor justo a partir del cual un jugador se considera una ganga.</message>
+    <message id="settings_label_transfermarket_intelligence_overpriced_percent">Umbral de sobreprecio</message>
+    <message id="settings_label_transfermarket_intelligence_overpriced_percent_help">Porcentaje por encima del valor justo a partir del cual un jugador se considera caro.</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_min_percent">Ratio mínimo de ofertas CPU</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_min_percent_help">Límite inferior como porcentaje del valor de mercado para ofertas CPU realistas.</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_max_percent">Ratio máximo de ofertas CPU</message>
+    <message id="settings_label_transfermarket_intelligence_cpu_max_percent_help">Límite superior como porcentaje del valor de mercado para ofertas CPU realistas.</message>
+
+    <message id="transfermarket_intelligence_admin_scope_global">Global</message>
+    <message id="transfermarket_intelligence_admin_scope_league">Liga</message>
+    <message id="transfermarket_intelligence_admin_scope_country">País</message>
+    <message id="transfermarket_intelligence_admin_scope_club">Club</message>
+    <message id="transfermarket_intelligence_admin_market_health">Salud del mercado</message>
+    <message id="transfermarket_intelligence_admin_filter">Filtro</message>
+    <message id="transfermarket_intelligence_admin_apply">Mostrar</message>
+    <message id="transfermarket_intelligence_admin_club_search">Buscar club</message>
+    <message id="transfermarket_intelligence_admin_club_search_placeholder">Introduce el nombre del club o la liga...</message>
+    <message id="transfermarket_intelligence_admin_club_search_help">La búsqueda filtra la lista de clubes directamente en el navegador. Después selecciona el club deseado y pulsa Mostrar.</message>
+    <message id="transfermarket_intelligence_admin_average_transfer_fee">Traspaso medio</message>
+    <message id="transfermarket_intelligence_admin_highest_fee">Traspaso más alto</message>
+    <message id="transfermarket_intelligence_admin_average_salary">Salario medio</message>
+    <message id="transfermarket_intelligence_admin_number_offers">Número de ofertas</message>
+    <message id="transfermarket_intelligence_admin_listed_players">Jugadores en la lista de transferibles</message>
+    <message id="transfermarket_intelligence_admin_market_ratio">Precio medio de lista / valor de mercado</message>
+    <message id="transfermarket_intelligence_admin_cpu_realism">Realismo de ofertas CPU</message>
+    <message id="transfermarket_intelligence_admin_cpu_ratio">Oferta CPU media / valor de mercado</message>
+    <message id="transfermarket_intelligence_admin_overheating">Sobrecalentamiento del mercado</message>
+    <message id="transfermarket_intelligence_admin_overheating_ok">No se detecta un sobrecalentamiento claro.</message>
+    <message id="transfermarket_intelligence_admin_overheating_warning">Advertencia: el mercado parece sobrecalentado. Revisa los precios de lista, las ofertas CPU y el nivel salarial.</message>
+    <message id="transfermarket_intelligence_admin_cpu_within_range">dentro del rango objetivo</message>
+    <message id="transfermarket_intelligence_admin_cpu_below_range">por debajo del rango objetivo</message>
+    <message id="transfermarket_intelligence_admin_cpu_above_range">por encima del rango objetivo</message>
+
+</messages>

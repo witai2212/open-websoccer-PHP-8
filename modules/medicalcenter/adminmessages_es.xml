@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_medcenter_enabled">Activar el centro médico</message>
+    <message id="settings_label_medcenter_physio_fee">Coste de fisioterapia</message>
+    <message id="settings_label_medcenter_spec_fee">Coste del tratamiento especializado</message>
+    <message id="settings_label_medcenter_risk_fee">Coste del tratamiento arriesgado</message>
+    <message id="settings_label_medcenter_detect_pct">Riesgo de detección del tratamiento arriesgado en porcentaje</message>
+</messages>

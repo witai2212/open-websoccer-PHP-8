@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="upload-clublogo_navlabel">Carregar novo emblema do clube</message>
+    
+    <message id="upload-clublogo_intro">Pode carregar aqui uma imagem PNG ou JPEG. Tem de ser <strong>retangular</strong>, ter uma largura mínima de <strong>120 píxeis</strong> e um tamanho máximo de ficheiro de <strong>%d KBytes</strong>.</message>
+	<message id="upload-clublogo_success">O novo emblema do clube foi carregado com sucesso!</message>
+	
+	<message id="activitylog_upload-club-picture">%s carregou um novo emblema do clube.</message>
+    
+</messages>

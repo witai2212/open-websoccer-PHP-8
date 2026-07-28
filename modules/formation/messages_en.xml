@@ -1,95 +1,127 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="formation_navlabel">Formation</message>
-    <message id="formation_title">Formation and Tactic</message>
+    <message id="formation_title">Formation and tactics</message>
     
-    <message id="next_match_block_title">Next Match</message>
-    <message id="next_match_block_previous_matches">Previous Matches</message>
-    <message id="next_match_block_no_previous_matches">You are playing for the first time against this team.</message>
-    <message id="next_match_block_no_nextmatch">There is currently no match scheduled for you.</message>
+    <message id="next_match_block_title">Next match</message>
+    <message id="next_match_block_previous_matches">Previous meetings</message>
+    <message id="next_match_block_no_previous_matches">This is your first match against this team.</message>
     
-    <message id="formation_playground_title">Set Formation</message>
-    <message id="formation_team_title">Your Team</message>
-    <message id="formation_team_noplayers">There are no players available.</message>
-    <message id="formation_bench">Bench</message>
+    <message id="next_match_block_no_nextmatch">No match is currently scheduled for you.</message>
+    
+    <message id="formation_playground_title">Set formation</message>
+    <message id="formation_team_title">Your squad</message>
+    <message id="formation_team_noplayers">No players are available.</message>
+    <message id="formation_bench">Bank</message>
     
     <message id="formation_team_collapsehead_tooltip">Expand or collapse list</message>
     
-    <message id="formation_team_blocked_cards">Blocked due to red or yellow cards</message>
+    <message id="formation_team_blocked_cards">Suspended for yellow or red cards</message>
     <message id="formation_team_blocked_injured">Player is injured</message>
     
-    <message id="formation_dragging_note_title">Instructions:</message>
-    <message id="formation_dragging_note">Drag players onto the playground in order to set them for the match, or just double-click on the player.</message>
+    <message id="formation_dragging_note_title">Usage note:</message>
+    <message id="formation_dragging_note">Drag players onto the pitch to field them, or double-click the player.</message>
     
     <message id="formation_substitutions_title">Substitutions</message>
-    <message id="formation_substitutions_out">Out</message>
-    <message id="formation_substitutions_in">In</message>
+    <message id="formation_substitutions_out">Off</message>
+    <message id="formation_substitutions_in">On</message>
     <message id="formation_substitutions_minute">Minute</message>
     
     <message id="formation_substitutions_condition">Condition</message>
     <message id="formation_substitutions_condition_none">None</message>
-    <message id="formation_substitutions_condition_tie">on tie</message>
-    <message id="formation_substitutions_condition_leading">on leading</message>
-    <message id="formation_substitutions_condition_deficit">on deficit</message>
+    <message id="formation_substitutions_condition_tie">when scores are level</message>
+    <message id="formation_substitutions_condition_leading">when leading</message>
+    <message id="formation_substitutions_condition_deficit">when trailing</message>
     
     <message id="formation_substitutions_position">Position</message>
-    <message id="formation_substitutions_position_default">(Player's main position)</message>
+    <message id="formation_substitutions_position_default">(player's main position)</message>
     
-    <message id="formation_err_player_already_set">This player is already set.</message>
-    <message id="formation_err_already_enough_players">There are already 11 players set.</message>
-    <message id="formation_err_only_one_goaly_allowed">Only one goalkeeper allowed.</message>
-    <message id="formation_err_only_x_players_per_area_allowed">You must not set more than {0} players per area.</message>
-    <message id="formation_err_only_x_players_on_bench_allowed">Not more than {0} players on the bench allowed.</message>
-    <message id="formation_err_no_goaly_set">You did not choose any goalkeeper.</message>
-    <message id="formation_err_not_enough_players">Less than 11 players are set so far.</message>
-    <message id="formation_tooltip_remove_player">Doubleclick in order to remove {0}</message>
+    <message id="formation_err_player_already_set">The player has already been selected.</message>
+    <message id="formation_err_already_enough_players">There are already 11 players on the pitch.</message>
+    <message id="formation_err_only_one_goaly_allowed">Only one goalkeeper may be selected.</message>
+    <message id="formation_err_only_x_players_per_area_allowed">A maximum of {0} outfield players may be selected in each area.</message>
+    <message id="formation_err_only_x_players_on_bench_allowed">A maximum of {0} substitutes may sit on the bench.</message>
+    <message id="formation_err_no_goaly_set">No goalkeeper has been selected.</message>
+    <message id="formation_err_not_enough_players">There are not exactly 11 players on the pitch.</message>
+    <message id="formation_tooltip_remove_player">Double-click to remove {0}</message>
     
-    <message id="formation_err_nonextmatch">There is no next match yet.</message>
-    <message id="formation_err_invalidplayer">Invalid players set.</message>
-    <message id="formation_err_duplicateplayer">Some players are set multiple times.</message>
-    <message id="formation_err_blockedplayer">Injured or blocked players set.</message>
+    <message id="formation_err_nonextmatch">The next match has not yet been determined.</message>
+    <message id="formation_err_invalidplayer">Invalid players have been selected.</message>
+    <message id="formation_err_duplicateplayer">Some players have been selected more than once.</message>
+    <message id="formation_err_blockedplayer">Suspended or injured players have been selected.</message>
     
-    <message id="formation_err_invalidsubstitutionminute">You are allowed to substitute players only between the second and 90th minute.</message>
+    <message id="formation_err_invalidsubstitutionminute">Substitutions are only allowed between the 2nd and 90th minute.</message>
     
-    <message id="formation_offensive_title">Playing offensive</message>
+    <message id="formation_offensive_title">Play attacking football</message>
     
-    <message id="formation_setup_title">Setup</message>
+    <message id="formation_setup_title">Formation</message>
     
     <message id="formation_bench_placeholder">Drag players here...</message>
-    <message id="formation_bench_sub_in">Substitute</message>
-    <message id="formation_bench_sub_title">Player Substitution</message>
+    <message id="formation_bench_sub_in">Bring on</message>
+    <message id="formation_bench_sub_title">Player substitution</message>
     
-    <message id="formation_setup_button">Set</message>
+    <message id="formation_setup_button">Select</message>
     <message id="formation_setup_strongest">Strongest players</message>
     <message id="formation_setup_freshest">Freshest players</message>
     <message id="formation_setup_motivated">Most motivated players</message>
     
-    <message id="formation_setup_altered_warn_title">The selected setup has been altered by the system!</message>
-    <message id="formation_setup_altered_warn_details">Your setup does not consist of 10 field players, hence the system automatically altered your selection.</message>
+    <message id="formation_setup_altered_warn_title">The specified formation was adjusted by the system!</message>
+    <message id="formation_setup_altered_warn_details">Your selected formation does not contain exactly 10 outfield players, so the system corrected your selection automatically.</message>
 
-	<message id="formation_clearall">Clear all</message>
+	<message id="formation_clearall">Clear pitch</message>
 	
 	<message id="formation_switch_on">On</message>
 	<message id="formation_switch_off">Off</message>
 	
-	<message id="formation_option_longpasses">Long Passes</message>
-	<message id="formation_option_longpasses_help">May lead to more goal shots, but also to more turnovers.</message>
+	<message id="formation_option_longpasses">Long passes</message>
+	<message id="formation_option_longpasses_help">Can lead to more shots, but also more turnovers.</message>
 	
-	<message id="formation_option_counterattacks">Counterattacks</message>
-	<message id="formation_option_counterattacks_help">May prevent opponent's goal attempts, but also reduces number of own attempts.</message>
+	<message id="formation_option_counterattacks">Counterattacking</message>
+	<message id="formation_option_counterattacks_help">Can prevent opposition counterattacks, but also reduces the number of your own chances.</message>
 	
-	<message id="formation_freekickplayer">Free Kick Taker</message>
+	<message id="formation_freekickplayer">Free-kick taker</message>
+	<message id="formation_cornerplayer">Corner taker</message>
 	
 	<message id="formation_templatename_field">Template name</message>
-	<message id="formation_templatename_field_help">Provide a name in order to save this formation aditionally as template.</message>
-	
+	<message id="formation_templatename_field_help">Enter a name to save this formation as a template as well.</message>
 	<message id="formation_load_from_template">Load template</message>
-	<message id="formation_load_from_template_none_available">There are no templates available. You can create a new template by providing a template name when saving a new formation.</message>
+	<message id="formation_load_from_template_none_available">No templates are available. To create a new template, enter a template name when saving a new formation.</message>
 	
-	<message id="formation_template_saving_failed_because_boundary_title">You may have only up to %d templates!</message>
-	<message id="formation_template_saving_failed_because_boundary_details">This formation has not been saved as template. Delete unused templates first.</message>
+	<message id="formation_template_saving_failed_because_boundary_title">You may save only %d templates!</message>
+	<message id="formation_template_saving_failed_because_boundary_details">The formation was not saved as a template. Delete templates you no longer need first.</message>
 	
 	<message id="formation_submitted_tooltip">Formation submitted</message>
 	<message id="formation_notsubmitted_tooltip">No formation submitted yet</message>
+	<message id="formation_tacticalstyle_title">Tactical identity</message>
+	<message id="formation_tacticalstyle_select">Playing style</message>
+	<message id="formation_tacticalstyle_fit">Fit</message>
+	<message id="formation_tacticalstyle_effect_help">Tactical identity has only a small effect in matches and mainly rewards a good fit between style, squad, training and staff.</message>
+	<message id="tacticalstyle_balanced">Balanced</message>
+	<message id="tacticalstyle_balanced_help">Neutral style without strict specialisation. Base strength, technique, stamina, passing, tackling and freshness are weighted evenly.</message>
+	<message id="tacticalstyle_defensive">Defensive</message>
+	<message id="tacticalstyle_defensive_help">Tackling, heading, stamina and influential players strengthen a compact defensive style.</message>
+	<message id="tacticalstyle_possession">Possession</message>
+	<message id="tacticalstyle_possession_help">Strong passing, technique, creativity and flair help this style.</message>
+	<message id="tacticalstyle_counterattack">Counterattack</message>
+	<message id="tacticalstyle_counterattack_help">Pace, finishing, passing and freshness are especially well suited to quick transitions.</message>
+	<message id="tacticalstyle_pressing">Pressing</message>
+	<message id="tacticalstyle_pressing_help">Stamina, pace, tackling and mentality make pressing more stable.</message>
+	<message id="tacticalstyle_defensive_block">Defensive block</message>
+	<message id="tacticalstyle_defensive_block_help">Tackling, heading, stamina and influence strengthen a compact block.</message>
+	<message id="tacticalstyle_wing_play">Wing play</message>
+	<message id="tacticalstyle_wing_play_help">Pace, passing, flair and creativity encourage attacks down the flanks.</message>
+	<message id="tacticalstyle_set_pieces">Set pieces</message>
+	<message id="tacticalstyle_set_pieces_help">Free kicks, heading, finishing and influence increase set-piece strength.</message>
+	<message id="tacticalstyle_youth_focused">Youth focus</message>
+	<message id="tacticalstyle_youth_focused_help">High potential, young players, freshness and leaders suit this style.</message>
+	<message id="tacticalstyle_physical">Physical</message>
+	<message id="tacticalstyle_physical_help">Stamina, heading, tackling and base strength are decisive here.</message>
+	<message id="tacticalstyle_fit_good">Your squad is very well suited to this style.</message>
+	<message id="tacticalstyle_fit_neutral">Your squad is reasonably well suited to this style.</message>
+	<message id="tacticalstyle_fit_bad">This style is currently only partly suited to your squad.</message>
+	<message id="tacticalstyle_news_title">New tactical identity</message>
+	<message id="tacticalstyle_news_message">{team} changes its tactical identity from {oldstyle} to {newstyle}. The current squad fit is {fit}%.</message>
+	<message id="tacticalstyle_news_link">Go to formation</message>
+
 </messages>

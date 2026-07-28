@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_sponsor_matches">Jornadas del contrato de patrocinio</message>
+	<message id="settings_label_sponsor_matches_help">Solo es relevante para los antiguos contratos de patrocinio basados en partidos. Los nuevos contratos dinámicos duran hasta el final de la temporada.</message>
+
+	<message id="settings_label_sponsor_earliest_matchday">Ofertas de patrocinio: primera jornada</message>
+	<message id="settings_label_sponsor_earliest_matchday_help">Los mánageres solo pueden elegir un patrocinador a partir de esta jornada.</message>
+</messages>

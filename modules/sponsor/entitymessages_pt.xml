@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_sponsor">Patrocinador</message>
+	<message id="entity_sponsor_name">Nome</message>
+	<message id="entity_sponsor_liga_id">Liga</message>
+	<message id="entity_sponsor_bild">Emblema</message>
+	<message id="entity_sponsor_b_spiel">Prémio por jogo</message>
+	<message id="entity_sponsor_b_heimzuschlag">Prémio por jogo em casa</message>
+	<message id="entity_sponsor_b_sieg">Prémio por vitória</message>
+	<message id="entity_sponsor_b_meisterschaft">Prémio pela conquista do campeonato</message>
+	<message id="entity_sponsor_b_cup">Prémio por eliminatória da taça</message>
+	<message id="entity_sponsor_max_teams">Número máximo de equipas</message>
+	<message id="entity_sponsor_min_platz">Classificação mínima</message>
+</messages>

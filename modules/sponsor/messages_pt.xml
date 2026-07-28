@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="sponsor_navlabel">Patrocinador</message>
+    <message id="sponsor_contractduraction_info">Selecione um contrato de patrocínio até ao fim da época. Pode negociar as propostas, mas se o risco for demasiado elevado o patrocinador pode desistir.</message>
+    <message id="sponsor_no_offers">Neste momento, nenhuma empresa está interessada num patrocínio.</message>
+    
+    <message id="sponsor_choose_tooearly">Só pode selecionar um novo patrocinador a partir da %d.ª jornada.</message>
+    
+    <message id="sponsor_choose_novalidsponsor">O patrocinador selecionado já não pretende trabalhar consigo. Provavelmente outra equipa foi mais rápida ou a proposta já não é válida.</message>
+    <message id="sponsor_choose_stillcontract">Ainda tem contrato com um patrocinador. O contrato dura até ao fim da época.</message>
+    <message id="sponsor_choose_success">Parabéns, tem agora um novo patrocinador!</message>
+    
+    <message id="sponsor_championship_bonus_subject">Prémio do patrocinador pela conquista do campeonato</message>
+    <message id="sponsor_cup_bonus_subject">Prémio do patrocinador pela eliminatória da taça</message>
+
+    <message id="sponsor_offer_type">Tipo de contrato</message>
+    <message id="sponsor_offer_type_safe">Seguro</message>
+    <message id="sponsor_offer_type_risky">Arriscado</message>
+    <message id="sponsor_offer_type_fan">Baseado nos adeptos</message>
+    <message id="sponsor_offer_type_cup">Taça</message>
+    <message id="sponsor_offer_type_legacy">Contrato antigo</message>
+
+    <message id="sponsor_offer_description_safe">Pagamento fixo elevado, mas prémios de desempenho mais baixos.</message>
+    <message id="sponsor_offer_description_risky">Pagamento fixo baixo, mas prémios elevados por vitórias e títulos.</message>
+    <message id="sponsor_offer_description_fan">Prémio adicional em função da ocupação do estádio nos jogos em casa.</message>
+    <message id="sponsor_offer_description_cup">Maior foco nos jogos da taça e nas eliminatórias alcançadas.</message>
+
+    <message id="sponsor_attendance_bonus_percent">Prémio de assistência</message>
+    <message id="sponsor_contract_duration">Prazo</message>
+    <message id="sponsor_contract_duration_season">até ao fim da época</message>
+    <message id="sponsor_negotiate_button">Negociar</message>
+    <message id="sponsor_negotiation_level">Nível de negociação %d</message>
+    <message id="sponsor_withdraw_chance">Risco de desistência se a negociação continuar: %d %%</message>
+    <message id="sponsor_negotiation_success">A negociação foi bem-sucedida. A proposta foi melhorada.</message>
+    <message id="sponsor_negotiation_withdrawn">O patrocinador desistiu. Esta proposta já não está disponível.</message>
+    
+
+    <message id="sponsor_page_title">Central de patrocínios</message>
+    <message id="sponsor_page_intro">Visão geral do contrato, prémios, negociações e receitas previstas.</message>
+    <message id="sponsor_remaining_matches">jogos restantes como base de cálculo</message>
+    <message id="sponsor_earned_so_far">Ganho até agora</message>
+    <message id="sponsor_payments">Pagamentos</message>
+    <message id="sponsor_estimated_remaining">Receitas adicionais estimadas</message>
+    <message id="sponsor_estimate_hint">Estimativa com base nos jogos restantes</message>
+    <message id="sponsor_negotiation_status">Nível de negociação</message>
+    <message id="sponsor_signed_contract">Contrato assinado</message>
+    <message id="sponsor_estimated_income">Volume estimado</message>
+    <message id="sponsor_naming_title">Patrocinador do nome do estádio</message>
+    <message id="sponsor_naming_sponsor">Parceiro</message>
+    <message id="sponsor_naming_stadium">Nome do estádio</message>
+    <message id="sponsor_naming_per_match">Por jogo em casa</message>
+</messages>

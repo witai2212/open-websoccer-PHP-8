@@ -1,20 +1,185 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="freeclubs_navlabel">Clubs Libres</message>
-    <message id="freeclubs_title">Equipos sin Manager</message>
-    <message id="freeclubs_no_free_clubs_available">Actualmente no hay clubes libres.</message>
-    <message id="freeclubs_head_choose">Selección</message>
-    <message id="freeclubs_button_choose">Seleccione Equipo</message>
-    <message id="freeclubs_button_choose_another">Escoja otro equipo</message>
-    <message id="freeclubs_msg_success">¡Felicitaciones! Usted es ahora Manager del equipo seleccionado.</message>
-    <message id="freeclubs_msg_error">El equipo probablemente ya esta asignado a otro usuario.</message>
-    <message id="freeclubs_msg_error_user_is_already_manager">Tú ya eres manager de un equipo.</message>
-    <message id="freeclubs_msg_error_max_number_of_teams">Usted no puede manejar más de %d equipos en este momento</message>
-    <message id="freeclubs_msg_error_no_club_from_same_league">Usted no puede manejar varios equipos de la misma liga.</message>
-    <message id="freeclubs_msg_error_minhighscore">Es necesario un mejor puntaje de al menos %d  con el fin de gestionar un equipo adicional.</message>
-    
+    <message id="stats_navlabel">CM|STATIS</message>
+    <message id="destatis_title">CM|STATIS</message>
+    <message id="stats_title">CM|STATIS</message>
+
+    <message id="destatis_dashboard_title">Panel de CM|STATIS</message>
+    <message id="destatis_dashboard_intro">Todas las clasificaciones, récords y cifras comparativas importantes de un vistazo.</message>
+    <message id="destatis_daily_link">Mostrar detalles</message>
+    <message id="destatis_card_best_player">Mejor jugador</message>
+    <message id="destatis_card_top_scorer">Máximo goleador</message>
+    <message id="destatis_card_richest_club">Club más rico</message>
+    <message id="destatis_card_highest_attendance">Mayor asistencia media</message>
+    <message id="destatis_card_most_valuable_team">Equipo más valioso</message>
+    <message id="destatis_card_largest_stadium">Estadio más grande</message>
+    <message id="destatis_card_best_manager">Mejor mánager</message>
+    <message id="destatis_card_quicklinks">Nuevas estadísticas</message>
+    <message id="destatis_my_club_title">Comparación de mi club</message>
+    <message id="destatis_compare_metric">Categoría</message>
+    <message id="destatis_compare_rank">Posición</message>
+    <message id="destatis_compare_value">Valor</message>
+    <message id="destatis_compare_top_percent">Clasificación relativa</message>
+    <message id="destatis_compare_strength">Fuerza del equipo a nivel mundial</message>
+    <message id="destatis_compare_budget">Presupuesto a nivel mundial</message>
+    <message id="destatis_compare_marketvalue">Valor de la plantilla a nivel mundial</message>
+    <message id="destatis_compare_stadium">Tamaño del estadio a nivel mundial</message>
+    <message id="destatis_compare_fanmood">Ánimo de la afición a nivel mundial</message>
+    <message id="destatis_compare_chemistry">Química del equipo a nivel mundial</message>
+    <message id="destatis_compare_highscore">Puntuación máxima del equipo a nivel mundial</message>
+    <message id="destatis_compare_attendance">Asistencia media a nivel mundial</message>
+    <message id="entity_strength">Fuerza</message>
+    <message id="destatis_categories_title">Secciones de estadísticas</message>
+    <message id="destatis_category_players">Jugador</message>
+    <message id="destatis_category_clubs">Clubes</message>
+    <message id="destatis_category_stadium_finance">Estadio y finanzas</message>
+
+    <message id="bestplayers_navlabel">Mejores jugadores del mundo</message>
+    <message id="bestplayers_title">Mejores jugadores del mundo</message>
+    <message id="bestplayers_name">Nombre</message>
+    <message id="bestplayers_verein">Club</message>
+    <message id="bestplayers_alter">Edad</message>
+    <message id="bestplayers_position_main">Posición</message>
+    <message id="bestplayers_position_second">Posición secundaria</message>
+    <message id="bestplayers_marktwert">Valor de mercado</message>
+
+    <message id="bestgoalscorers_navlabel">Mejores anotadores</message>
+    <message id="bestgoalscorers_title">Mejores anotadores</message>
+    <message id="bestgoalscorers_name">Nombre</message>
+    <message id="bestgoalscorers_verein">Club</message>
+    <message id="bestplayersbestgoalscorers_goals">Goles</message>
+    <message id="bestgoalscorers_position_assists">Asistencias</message>
+    <message id="bestgoalscorers_position_scores">Puntuación</message>
+    <message id="bestgoalscorers_note_schnitt">Nota media</message>
+
+    <message id="avg_gates_navlabel">Asistencia</message>
+    <message id="avg_gates_title">Asistencia media</message>
+    <message id="avg_gates_team_name">Club</message>
+    <message id="avg_gates_team_viewers">Asistencia media</message>
+    <message id="avg_gates_team_viewers_total">Número de espectadores</message>
+    <message id="avg_gates_position">Posición en la tabla</message>
+    <message id="ratings_by_club">Mayor asistencia (club)</message>
+    <message id="ratings_by_league">Mayor asistencia (liga)</message>
+
+    <message id="avg_ratings_navlabel">Notas de jugadores</message>
+    <message id="avg_ratings_title">Notas de jugadores</message>
+    <message id="avg_ratings_player_name">Jugador</message>
+    <message id="avg_ratings_players_rating_avg">Nota media</message>
+    <message id="avg_ratings_players_rating_last">Última nota</message>
+
+    <message id="worst_discipline_navlabel">Tarjetas</message>
+    <message id="worst_discipline_title">Coleccionistas de tarjetas</message>
+    <message id="worst_discipline_score">Puntuación de tarjetas</message>
+    <message id="worst_discipline_red_cards">Tarjetas rojas</message>
+    <message id="worst_discipline_yellow_red_cards">Tarjetas por doble amarilla</message>
+    <message id="worst_discipline_yellow_cards">Tarjetas amarillas</message>
+
+    <message id="richest_clubs_navlabel">Clubes más ricos</message>
+    <message id="richest_clubs_title">Clubes más ricos</message>
+    <message id="richest_clubs_money">Cuenta de depósito a plazo</message>
+
     <message id="halloffame_navlabel">Salón de la Fama</message>
-    <message id="halloffame_no_seasons">Todavía no hay temporadas completas.</message>
-    <message id="halloffame_no_cups">No hay competiciones de copa completadas.</message>
+    <message id="halloffame_no_seasons">Todavía no se ha completado ninguna temporada.</message>
+    <message id="halloffame_no_cups">Todavía no se ha disputado ninguna competición de copa.</message>
+
+    <message id="statistics_salary_navlabel">Estadísticas salariales</message>
+    <message id="stats_salary_title">Estadísticas salariales</message>
+
+    <message id="most_titles_navlabeltitle">Más títulos</message>
+    <message id="most_titles_title">Más títulos</message>
+
+    <message id="largest_stadiums_navlabel">Estadios más grandes</message>
+    <message id="largest_stadiums_title">Estadios más grandes</message>
+    <message id="largest_stadiums_name">Estadio</message>
+    <message id="largest_stadiums_club">Club</message>
+    <message id="largest_stadiums_capacity">Capacidad</message>
+
+    <message id="destatis_bestplayers_tooltip">Mejores jugadores del mundo</message>
+    <message id="destatis_richest_clubs_tooltip">Clubes más ricos</message>
+    <message id="destatis_statssalary_tooltip">Estadísticas salariales</message>
+    <message id="destatis_bestscorers_tooltip">Mejores anotadores</message>
+    <message id="destatis_avg_gates_tooltip">Estadísticas de asistencia</message>
+    <message id="destatis_avg_ratings_tooltip">Notas de jugadores</message>
+    <message id="destatis_trophy_collectors_tooltip">Más títulos</message>
+    <message id="destatis_worst_discipline_tooltip">Coleccionistas de tarjetas</message>
+    <message id="destatis_largest_stadiums_tooltip">Estadios más grandes</message>
+
+    <message id="most_valuable_teams_navlabel">Equipos más valiosos</message>
+    <message id="most_valuable_teams_title">Equipos más valiosos</message>
+    <message id="most_valuable_teams_league_title">Equipos más valiosos de la liga</message>
+    <message id="most_valuable_team_name">Club</message>
+    <message id="most_valuable_team_values">Valor de mercado</message>
+    <message id="most_valuable_team_avg_values">Valor de mercado medio</message>
+
+    <message id="highscore_teams_navlabel">Puntuación máxima del equipo</message>
+    <message id="highscore_teams_title">Puntuación máxima del equipo</message>
+    <message id="highscore_teams_rank">Posición</message>
+    <message id="highscore_teams_team">Equipo</message>
+    <message id="highscore_teams_league">Liga</message>
+    <message id="highscore_teams_manager">Entrenador</message>
+    <message id="highscore_teams_score">Puntuación máxima</message>
+
+    <message id="team_strength_ranking_navlabel">Fuerza del equipo</message>
+    <message id="team_strength_ranking_title">Equipos más fuertes</message>
+    <message id="team_strength_world">Mundial</message>
+    <message id="team_strength_league">Liga propia</message>
+    <message id="team_strength_avg_player">Fuerza media de los jugadores</message>
+    <message id="team_strength_players">Jugador</message>
+    <message id="avg_ratings_matches">Partidos</message>
+
+    <message id="player_attribute_ranking_navlabel">Atributos de jugadores</message>
+    <message id="player_attribute_ranking_title">Clasificaciones de atributos de jugadores</message>
+    <message id="player_attribute_ranking_filter">Valor</message>
+    <message id="destatis_attr_freekick">Faltas</message>
+    <message id="destatis_attr_penalty">Penaltis</message>
+    <message id="destatis_attr_pace">Velocidad</message>
+    <message id="destatis_attr_passing">Pase</message>
+    <message id="destatis_attr_shooting">Disparo</message>
+    <message id="destatis_attr_heading">Cabeceo</message>
+    <message id="destatis_attr_tackling">Entrada</message>
+    <message id="destatis_attr_creativity">Creatividad</message>
+    <message id="destatis_attr_influence">Influencia</message>
+    <message id="destatis_attr_flair">Talento</message>
+    <message id="destatis_attr_penalty_killing">Parada de penaltis</message>
+
+    <message id="stadium_efficiency_navlabel">Eficiencia del estadio</message>
+    <message id="stadium_efficiency_title">Eficiencia del estadio</message>
+    <message id="stadium_efficiency_occupancy">Ocupación</message>
+    <message id="stadium_efficiency_revenue">Ingresos por entradas</message>
+    <message id="stadium_efficiency_avg_price">Precio medio de entrada</message>
+
+    <message id="manager_rankings_navlabel">Clasificación de mánagers</message>
+    <message id="manager_rankings_title">Clasificación de mánagers</message>
+    <message id="manager_rankings_fanpopularity">Popularidad entre la afición</message>
+    <message id="manager_rankings_missions">Misiones cumplidas</message>
+    <message id="manager_rankings_club_changes">Cambios de club</message>
+
+    <message id="financial_economy_stats_navlabel">Estadísticas financieras</message>
+    <message id="financial_economy_stats_title">Estadísticas financieras</message>
+    <message id="financial_economy_stats_filter_season">Temporada</message>
+    <message id="financial_economy_stats_filter_matchday">Jornada</message>
+    <message id="financial_economy_stats_filter_all">Todas</message>
+    <message id="financial_economy_stats_humans">Clubes gestionados por personas</message>
+    <message id="financial_economy_stats_all_clubs">Todos los clubes</message>
+    <message id="financial_economy_stats_all_clubs_intro">A modo de comparación: beneficio/pérdida media de todos los clubes:</message>
+    <message id="financial_economy_stats_clubs">Clubes</message>
+    <message id="financial_economy_stats_bookings">Movimientos</message>
+    <message id="financial_economy_stats_income">Ingresos</message>
+    <message id="financial_economy_stats_avg_income">Ingresos medios/club</message>
+    <message id="financial_economy_stats_expenses">Gastos</message>
+    <message id="financial_economy_stats_avg_expenses">Gastos medios/club</message>
+    <message id="financial_economy_stats_net">Saldo</message>
+    <message id="financial_economy_stats_avg_net">Saldo medio/club</message>
+    <message id="financial_economy_stats_categories">Categorías</message>
+    <message id="financial_economy_stats_category">Categoría</message>
+
+
+    <message id="manager_rankings_intro">Clasificación de todos los mánagers humanos activos, ordenada por la misma reputación que aparece en el perfil del mánager.</message>
+    <message id="manager_rankings_reputation">Reputación</message>
+    <message id="manager_rankings_competence">Competencia</message>
+    <message id="manager_rankings_titles">Títulos</message>
+    <message id="manager_rankings_achievements">Logros</message>
+    <message id="manager_rankings_badges">Logros</message>
+    <message id="manager_rankings_awards">Premios</message>
 </messages>

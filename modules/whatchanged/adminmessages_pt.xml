@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_what_changed_enabled">Ativar painel O que aconteceu?</message>
+    <message id="settings_label_what_changed_enabled_help">Cria um resumo compacto com notícias e uma notificação após cada jogo de um clube gerido por um humano.</message>
+</messages>

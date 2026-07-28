@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_webjobexecution_enabled">Ejecutar la simulación de partidos mediante webs externas en lugar de trabajos.</message>
+	<message id="settings_label_webjobexecution_key">Clave de seguridad para ejecución externa de simulación</message>
+	<message id="settings_label_webjobexecution_key_help">Clave de token para obtener acceso externo, por ejemplo, a trabajos.</message>
+</messages>

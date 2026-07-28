@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="offline_title">Estamos temporariamente indisponíveis</message>
+	<message id="error_action_required_team">Tens de ser o treinador de uma equipa para executar esta ação.</message>
+	
+	<message id="requireslogin_box_title">Acesso negado</message>
+	<message id="requireslogin_box_message">Tens de iniciar sessão para veres a página pedida.</message>
+	
+	<message id="date_yesterday">Ontem</message>
+	<message id="date_today">Hoje</message>
+	<message id="date_tomorrow">Amanhã</message>
+	
+	<message id="privacypolicy_navlabel">Política de privacidade</message>
+	
+	<message id="settings_label_fix_term_deposit_interest">Taxa de juro padrão/jogo</message>
+</messages>

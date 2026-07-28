@@ -1,10 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	
-	<message id="settings_label_hide_strength_attributes">Hide the football players' strength attributes. Users cannot see the actual strength of any player then.</message> 
-	<message id="settings_label_players_aging">Aging of players</message>
+	<message id="settings_label_hide_strength_attributes">Hide football players’ ability attributes. Users will then not be able to see a player’s actual ability.</message> 
+	<message id="settings_label_players_aging">Player ageing</message>
 	
-	<message id="option_birthday">According to player's birthday</message>
-	<message id="option_static">When completing a season</message>
+	<message id="option_birthday">On the player’s birthday</message>
+	<message id="option_static">At the end of the season</message>
+
+    <message id="player-traits_navlabel">Special abilities</message>
+    <message id="settings_label_player_talent_probability_1">Talent 1 share in percent</message>
+    <message id="settings_label_player_talent_probability_2">Talent 2 share in percent</message>
+    <message id="settings_label_player_talent_probability_3">Talent 3 share in percent</message>
+    <message id="settings_label_player_talent_probability_4">Talent 4 share in percent</message>
+    <message id="settings_label_player_talent_probability_5">Talent 5 share in percent</message>
+    <message id="settings_label_player_talent_probability_6">Talent 6 share in percent</message>
+    <message id="settings_label_player_talent_probability_1_help">Probability for newly generated senior players. All six values are automatically normalised to total 100 percent.</message>
+    <message id="settings_label_player_talent_probability_2_help">Probability for newly generated senior players. All six values are automatically normalised to total 100 percent.</message>
+    <message id="settings_label_player_talent_probability_3_help">Probability for newly generated senior players. All six values are automatically normalised to total 100 percent.</message>
+    <message id="settings_label_player_talent_probability_4_help">Probability for newly generated senior players. All six values are automatically normalised to total 100 percent.</message>
+    <message id="settings_label_player_talent_probability_5_help">Probability for newly generated senior players. All six values are automatically normalised to total 100 percent.</message>
+    <message id="settings_label_player_talent_probability_6_help">Probability for newly generated senior players. Default: 0.5 percent. Existing players are not changed.</message>
 </messages>

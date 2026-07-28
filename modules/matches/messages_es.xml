@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="results_navlabel">Resultados y calendario</message>
+    <message id="match_navlabel">Detalles del partido</message>
+    
+    <message id="matchtype_league">Partido de liga</message>
+    <message id="matchtype_cup">Partido de copa</message>
+    <message id="matchtype_friendly">Partido amistoso</message>
+    
+    <message id="matchtype_Ligaspiel">Partido de liga</message>
+    <message id="matchtype_Pokalspiel">Partido de copa</message>
+    <message id="matchtype_Freundschaft">Partido amistoso</message>
+    
+    <message id="last_match_block_title">Mi último partido</message>
+    <message id="last_match_block_no_lastmatch">Su equipo todavía no ha disputado ningún partido.</message>
+    
+    <message id="match_details_date">Fecha</message>
+    <message id="match_details_type">Tipo</message>
+    <message id="match_details_stadium">Sede</message>
+    
+    <message id="match_details_matchday">Jornada %d</message>
+    <message id="match_details_audience">Asistencia</message>
+    
+    
+    <message id="match_details_notyetsimulated">El partido todavía no se ha disputado.</message>
+    <message id="match_details_match_completed">El partido ha terminado.</message>
+    
+    <message id="match_details_noformation">%s no presentó una alineación.</message>
+    
+    
+    <message id="match_details_report_title">Informe del partido</message>
+    
+    <message id="match_details_comments_title">Comentarios en directo</message>
+    <message id="match_details_players_title">Jugador</message>
+    <message id="match_details_statistic_title">Estadísticas</message>
+    
+    <message id="match_details_nostatistics_available">No hay estadísticas disponibles para este partido. Consulte el informe del partido.</message>
+    
+    <message id="match_details_noplayersset">No hay alineación disponible.</message>
+    <message id="match_details_no_players_on_bench">No se incluyó a ningún jugador en el banquillo.</message>
+    
+    <message id="match_details_commenttitle_penalty">Penaltis</message>
+    <message id="match_details_commenttitle_goal">¡Gol!</message>
+    
+    <message id="match_details_players_name">Nombre</message>
+    <message id="match_details_players_grade">Calificación</message>
+    <message id="match_details_players_grade_helptext">Calificaciones de 1,00 (muy bien) a 6,00 (muy mal)</message>
+    
+    <message id="match_details_statistic_shoots">Disparos</message>
+    <message id="match_details_statistic_tackles">Duelos</message>
+    <message id="match_details_statistic_ballcontacts">Posesión</message>
+    <message id="match_details_statistic_successfulpasses">Precisión de pase</message>
+    <message id="match_details_statistic_successfulfreekicks">Acierto en faltas</message>
+    
+    <message id="results_tab_leagues">Ligas</message>
+    <message id="results_tab_cups">Copas</message>
+    <message id="results_tab_latest_results">Últimos resultados</message>
+    
+    <message id="results_no_matches_found">No se encontraron partidos.</message>
+    <message id="match_result">Resultado</message>
+    
+    <message id="match_report_minute">Minuto %d</message>
+    
+    <message id="player_yellowcard">Ha recibido una tarjeta amarilla</message>
+    <message id="player_yellowredcard">Ha recibido una segunda tarjeta amarilla</message>
+    <message id="player_redcard">Ha recibido una tarjeta roja</message>
+    <message id="player_goalscorer">Ha marcado un gol</message>
+    <message id="player_assists">Ha dado una asistencia</message>
+    <message id="player_injured">Se ha lesionado</message>
+    <message id="player_substitute_out">Tuvo que abandonar el campo</message>
+    <message id="player_substitute_in">Entró como suplente</message>
+    
+    <message id="match_salarypayment_sender">Contabilidad</message>
+    <message id="match_salarypayment_subject">Salarios de jugadores</message>
+    
+    <message id="match_ticketrevenue_sender">Ventas</message>
+    <message id="match_ticketrevenue_subject">Venta de entradas</message>
+    
+    <message id="match_sponsorpayment_subject">Prima del patrocinador</message>
+    
+    <message id="match_details_button_changes">Intervenir</message>
+    
+    <message id="match-live-changes_navlabel">Intervenir en el partido</message>
+    
+    <message id="match_details_changes_max_help">Puede cambiarse %d veces por partido.</message>
+    <message id="match_details_changes_too_late">Una sustitución debe programarse con al menos %d minutos de antelación.</message>
+    <message id="match_details_changes_too_late_altered">La sustitución n.º %d se ha trasladado al siguiente momento posible.</message>
+	<message id="match_details_changes_too_often">Solo puede cambiar la táctica %d veces durante el partido.</message>
+    
+	<message id="match_details_report_halftime">¡Descanso! Marcador: %s</message>
+	<message id="match_details_report_extension">¡El partido se va a la prórroga! Marcador: %s</message>
+	<message id="match_details_report_penaltyshooting">¡Decisión por penaltis! Marcador: %s</message>
+	
+	<message id="match_details_statistic_ballcontacts_player">Toques de balón</message>
+	<message id="match_details_statistic_tackles_player">Duelos ganados</message>
+	<message id="match_details_players_age">Edad</message>
+	
+	<message id="match_livematch_title">¡En directo ahora!</message>
+	<message id="match_live_label">En juego</message>
+	
+	<message id="todaysmatches_navlabel">Partidos de hoy</message>
+	
+	<message id="myschedule_navlabel">Calendario</message>
+	
+	<message id="matchpreview_last_matches">Últimos partidos de la competición</message>
+	<message id="matchpreview_nolastmatches">%s todavía no ha jugado en esta competición.</message>
+	<message id="matchpreview_nouser">%s no tiene entrenador actualmente.</message>
+
+    <message id="matchanalytics_navlabel">Análisis</message>
+    <message id="matchanalytics_title">Análisis del partido</message>
+    <message id="matchanalytics_back_to_match">Volver al informe del partido</message>
+    <message id="matchanalytics_not_simulated">Este partido todavía no se ha calculado. El análisis solo está disponible al finalizar el partido.</message>
+    <message id="matchanalytics_deprecated_report">No hay datos de análisis detallados disponibles para los informes de partidos antiguos.</message>
+    <message id="matchanalytics_team_comparison">Comparación de equipos</message>
+    <message id="matchanalytics_metric">Valor</message>
+    <message id="matchanalytics_pass_success">Precisión de pase</message>
+    <message id="matchanalytics_tackle_success">Porcentaje de duelos ganados</message>
+    <message id="matchanalytics_tackles_won_lost">Duelos ganados/perdidos</message>
+    <message id="matchanalytics_shots">Disparos</message>
+    <message id="matchanalytics_ballcontacts">Toques de balón</message>
+    <message id="matchanalytics_assists">Asistencias</message>
+    <message id="matchanalytics_freekicks_success">Faltas acertadas/falladas</message>
+    <message id="matchanalytics_freekick_success">Porcentaje de acierto en faltas</message>
+    <message id="matchanalytics_average_grade">Calificación media</message>
+    <message id="matchanalytics_explanation_title">¿Por qué fue así el partido?</message>
+    <message id="matchanalytics_goalkeeper_note">Nota: los porteros se muestran con normalidad, pero los valores ofensivos como disparos o asistencias son menos significativos para ellos.</message>
+    <message id="matchanalytics_summary_pass_advantage">%s tuvo una estructura de pase más clara (%s%% frente a %s%%).</message>
+    <message id="matchanalytics_summary_tackle_advantage">%s fue más sólido en los duelos (%s%% frente a %s%%).</message>
+    <message id="matchanalytics_summary_shots_advantage">%s finalizó muchas más jugadas (%d disparos frente a %d).</message>
+    <message id="matchanalytics_summary_ball_advantage">%s tuvo más protagonismo y muchos más toques de balón.</message>
+    <message id="matchanalytics_summary_assists_advantage">%s generó más asistencias directas y pareció más peligroso en el último tercio.</message>
+    <message id="matchanalytics_summary_balanced">Las métricas principales estuvieron bastante equilibradas. Probablemente decidieron el resultado las acciones individuales, la eficacia de cara a puerta o las jugadas a balón parado.</message>
+    <message id="matchanalytics_rating_trend">Tendencia de calificaciones</message>
+    <message id="matchanalytics_rating_trend_help">El gráfico compara la calificación del partido actual con la última y con la media. En las calificaciones, 1,00 es muy bien y 6,00 es mal.</message>
+    <message id="matchanalytics_current_grade">Calificación del partido</message>
+    <message id="matchanalytics_last_grade">Última nota</message>
+    <message id="matchanalytics_top_performers">Mejores jugadores</message>
+    <message id="matchanalytics_best_grade">Mejor calificación</message>
+    <message id="matchanalytics_most_ballcontacts">Más toques de balón</message>
+    <message id="matchanalytics_best_passer">Mejor pasador</message>
+    <message id="matchanalytics_best_tackler">Mejor en los duelos</message>
+    <message id="matchanalytics_most_shots">Más disparos</message>
+    <message id="matchanalytics_most_assists">Más asistencias</message>
+    <message id="matchanalytics_minutes_short">Min.</message>
+    <message id="matchanalytics_trend">Tendencia</message>
+    <message id="matchanalytics_pass_success_short">Pase</message>
+    <message id="matchanalytics_tackles_short">Du.</message>
+    <message id="matchanalytics_shots_short">Dis.</message>
+    <message id="matchanalytics_ballcontacts_short">Balón</message>
+    <message id="matchanalytics_assists_short">Asis.</message>
+    <message id="matchanalytics_freekicks_short">FAL</message>
+    <message id="matchanalytics_bench">Banquillo</message>
+    <message id="matchanalytics_trend_better">mejor</message>
+    <message id="matchanalytics_trend_worse">peor</message>
+    <message id="matchanalytics_trend_stable">estable</message>
+    <message id="matchanalytics_no_player_data">No hay datos de jugadores disponibles.</message>
+
+</messages>

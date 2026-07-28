@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="validation_error_uniquecupname">Já existe uma taça ou jogos de taça com o nome indicado.</message> 
+	<message id="managecuprounds_navlabel">Gerir eliminatórias da taça</message>
+	
+	<message id="managecuprounds_infoalert_title">Cria primeiro todas as eliminatórias!</message>
+	<message id="managecuprounds_infoalert_msg">Todas as eliminatórias têm de ser criadas antes da simulação dos jogos para que o sistema possa gerar automaticamente partidas nas eliminatórias de vencedores ou vencidos.</message>
+	
+	<message id="managecuprounds_label_create">Criar nova eliminatória</message>
+	
+	<message id="managecuprounds_label_name">Nome</message>
+	<message id="managecuprounds_label_firstround_date">Data da primeira mão</message>
+	<message id="managecuprounds_label_secondround_date">Data da segunda mão</message>
+	<message id="managecuprounds_label_create_secondround">Será disputada uma segunda mão.</message>
+	<message id="managecuprounds_label_round_generation">Gerar jogos?</message>
+	<message id="managecuprounds_label_groupmatches">É composta por jogos da fase de grupos.</message>
+	<message id="managecuprounds_label_finalround">É a final (os prémios são pagos após o fim do jogo).</message>
+	<message id="managecuprounds_label_previous_round">Eliminatória anterior</message>
+	
+	<message id="managecuprounds_show_matches">Mostrar jogos</message>
+	<message id="managecuprounds_add_match">Adicionar jogo</message>
+	<message id="managecuprounds_generate_matches">Gerar a partir das equipas</message>
+	<message id="managecuprounds_manage_groups">Gerir grupos</message>
+	
+	<message id="managecuprounds_next_round_winners">O vencedor joga em</message>
+	<message id="managecuprounds_next_round_loosers">O vencido joga em</message>
+	
+	<message id="option_self">Adicionar jogos manualmente</message>
+	<message id="option_winners_from">Usar automaticamente os vencedores da eliminatória anterior</message>
+	<message id="option_loosers_from">Usar automaticamente os vencidos da eliminatória anterior</message>
+	<message id="option_generate_from_groups">Gerar a partir da fase de grupos</message>
+	
+	<message id="managecuprounds_generate_navlabel">Eliminatória da taça: gerar jogos</message>
+	<message id="managecuprounds_generate_formlabel">Selecionar equipas participantes</message>
+	<message id="managecuprounds_generate_submitbutton">Gerar jogos</message>
+	<message id="managecuprounds_generate_success">Jogos gerados com êxito!</message>
+	<message id="managecuprounds_generate_success_overviewlink">Ir para o resumo das eliminatórias</message>
+	
+	<message id="managecuprounds_generate_noroundspossible">Não é possível criar uma taça a eliminar com o número de equipas selecionado!</message>
+	<message id="managecuprounds_generate_possiblerounds">Eliminatórias possíveis</message>
+	
+	<message id="managecuprounds_groups_navlabel">Eliminatória da taça: gerir grupos</message>
+	<message id="managecuprounds_groups_back">Voltar ao resumo das eliminatórias</message>
+	<message id="managecuprounds_groups_nextrounds">Eliminatórias seguintes</message>
+	<message id="managecuprounds_groups_label_create">Criar novo grupo</message>
+	<message id="managecuprounds_group_label_name">Nome do grupo</message>
+	<message id="managecuprounds_group_label_teams">Clubes no grupo</message>
+	<message id="managecuprounds_groups_label_selectteams">Seleciona as equipas para este grupo.</message>
+	<message id="managecuprounds_groups_addteam">Adicionar equipa</message>
+	
+	<message id="managecuprounds_groups_open_generate_matches_popup">Gerar jogos</message>
+	
+	<message id="managecuprounds_groups_generate_title">Criar calendário de jogos</message>
+	<message id="managecuprounds_groups_generate_submit">Gerar</message>
+	<message id="managecuprounds_groups_generate_alert">Atenção: os jogos anteriormente agendados serão eliminados!</message>
+	<message id="managecuprounds_groups_created_matches">jogos agendados.</message>
+	
+	<message id="category_cup_navlabel">Taças internacionais</message>
+	<message id="groupmatchesgenerator_navlabel">Gerar jogos da fase de grupos</message>
+	<message id="uefatempgenerator_navlabel">Gerar tabela temporária da UEFA</message>
+	<message id="uefatempgenerator_label">Gerar tabela temporária</message>
+	
+</messages>

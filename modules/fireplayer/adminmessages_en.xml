@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
 	
-	<message id="settings_label_enable_player_resignation">Users may fire players.</message> 
-	<message id="settings_label_player_resignation_compensation_matches">Compensation for loss of job</message> 
-	<message id="settings_label_player_resignation_compensation_matches_help">Number of matches for which a player asks a compensation in case of contract resignation. 0 for no compensation.</message> 
-	
+	<message id="settings_label_enable_player_resignation">Users may release players.</message> 
+	<message id="settings_label_player_resignation_compensation_matches">Compensation upon release</message> 
+	<message id="settings_label_player_resignation_compensation_matches_help">Number of matches for which compensation must be paid to the player upon early release. 0 means no compensation.</message> 
 </messages>

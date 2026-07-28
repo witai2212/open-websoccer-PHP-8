@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="halloffame_navlabel">Temple de la renommée</message>
+    <message id="halloffame_no_seasons">Aucune saison n'a encore été terminée.</message>
+    <message id="halloffame_no_cups">Aucune compétition de coupe n'a encore été disputée.</message>
+    
+</messages>

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <!-- Admin navigation labels for scouting admin pages -->
+    <message id="scout_navlabel">Ojeadores</message>
+    <message id="scoutingdepartmentlevel_navlabel">Departamentos de ojeo</message>
+    <message id="scoutingcamplocation_navlabel">Ubicaciones de concentraciones de ojeo</message>
+    <message id="scoutingproposal_navlabel">Propuestas de jugadores del ojeo</message>
+
+    <!-- Existing scout entity -->
+    <message id="entity_scout">Ojeador</message>
+    <message id="entity_scout_name">Nombre</message>
+    <message id="entity_scout_name_help">Nombre del ojeador que se muestra a los usuarios en el juego.</message>
+    <message id="entity_scout_nation">Nación</message>
+    <message id="entity_scout_nation_help">País de origen del ojeador. Más adelante puede utilizarse para ventajas regionales de ojeo.</message>
+    <message id="entity_scout_speciality">Especialidad</message>
+    <message id="entity_scout_speciality_help">Posición para la que este ojeador debe ofrecer evaluaciones especialmente buenas.</message>
+    <message id="entity_scout_expertise">Competencia interna</message>
+    <message id="entity_scout_expertise_help">Valor interno de 1 a 100. No se muestra directamente a los entrenadores, pero influye en la calidad y precisión de los informes del ojeador.</message>
+    <message id="entity_scout_fee">Coste por jornada</message>
+    <message id="entity_scout_fee_help">Cantidad que se carga al club por cada jornada relevante mientras el ojeador está contratado.</message>
+    <message id="entity_scout_team_id">Club</message>
+    <message id="entity_scout_team_id_help">Club que emplea actualmente al ojeador. 0 o vacío significa que el ojeador está disponible.</message>
+    <message id="entity_scout_team_matches">Partidos restantes</message>
+    <message id="entity_scout_team_matches_help">Número de partidos durante los que el ojeador seguirá contratado por el club.</message>
+
+    <!-- Scouting department level -->
+    <message id="entity_scoutingdepartmentlevel">Nivel del departamento de ojeo</message>
+    <message id="entity_scoutingdepartmentlevel_level">Nivel</message>
+    <message id="entity_scoutingdepartmentlevel_level_help">Nivel interno del departamento de ojeo. Los niveles superiores permiten actividades de ojeo mejores y más amplias.</message>
+    <message id="entity_scoutingdepartmentlevel_name">Nombre</message>
+    <message id="entity_scoutingdepartmentlevel_name_help">Nombre mostrado del nivel de ampliación, p. ej., Departamento pequeño de ojeo o Red internacional de ojeo.</message>
+    <message id="entity_scoutingdepartmentlevel_build_cost">Coste de construcción</message>
+    <message id="entity_scoutingdepartmentlevel_build_cost_help">Coste único para construir o ampliar hasta este nivel.</message>
+    <message id="entity_scoutingdepartmentlevel_maintenance_fee">Mantenimiento por jornada</message>
+    <message id="entity_scoutingdepartmentlevel_maintenance_fee_help">Coste continuo por jornada para este nivel del departamento de ojeo.</message>
+    <message id="entity_scoutingdepartmentlevel_max_scouts">Máx. ojeadores</message>
+    <message id="entity_scoutingdepartmentlevel_max_scouts_help">Número máximo de ojeadores que un club puede contratar simultáneamente con este nivel de departamento.</message>
+    <message id="entity_scoutingdepartmentlevel_max_camps">Máx. concentraciones</message>
+    <message id="entity_scoutingdepartmentlevel_max_camps_help">Número máximo de concentraciones de ojeo activas. Los valores muy altos permiten a los clubes ricos mantener una cantidad correspondientemente elevada de concentraciones.</message>
+    <message id="entity_scoutingdepartmentlevel_status">Activo</message>
+    <message id="entity_scoutingdepartmentlevel_status_help">Los clubes solo pueden utilizar niveles activos.</message>
+
+    <!-- Scouting camp location -->
+    <message id="entity_scoutingcamplocation">Ubicación de concentración de ojeo</message>
+    <message id="entity_scoutingcamplocation_name">Nombre</message>
+    <message id="entity_scoutingcamplocation_name_help">Nombre de la ubicación o región, p. ej., Alemania, Brasil o África Occidental.</message>
+    <message id="entity_scoutingcamplocation_country">País</message>
+    <message id="entity_scoutingcamplocation_country_help">País opcional de la ubicación. Déjelo vacío si se trata de una región o continente.</message>
+    <message id="entity_scoutingcamplocation_continent">Continente</message>
+    <message id="entity_scoutingcamplocation_continent_help">Continente o región de la ubicación. Los valores posibles incluyen EU, AF, AS, NA, SA u OC.</message>
+    <message id="entity_scoutingcamplocation_base_fee">Coste base por jornada</message>
+    <message id="entity_scoutingcamplocation_base_fee_help">Cantidad base que se cobra por jornada por una concentración activa en esta ubicación.</message>
+    <message id="entity_scoutingcamplocation_travel_cost_modifier">Modificador de costes de viaje</message>
+    <message id="entity_scoutingcamplocation_travel_cost_modifier_help">Recargo o descuento porcentual para esta ubicación. Los valores positivos encarecen la concentración y los negativos la abaratan.</message>
+    <message id="entity_scoutingcamplocation_quality_modifier">Modificador de calidad</message>
+    <message id="entity_scoutingcamplocation_quality_modifier_help">Influye en la calidad media de los jugadores encontrados en esta ubicación.</message>
+    <message id="entity_scoutingcamplocation_talent_modifier">Modificador de talento</message>
+    <message id="entity_scoutingcamplocation_talent_modifier_help">Influye en la probabilidad de encontrar jugadores con más talento o mejor potencial.</message>
+    <message id="entity_scoutingcamplocation_min_department_level">Nivel mínimo del departamento de ojeo</message>
+    <message id="entity_scoutingcamplocation_min_department_level_help">Nivel mínimo que necesita un club para abrir una concentración en esta ubicación.</message>
+    <message id="entity_scoutingcamplocation_status">Activo</message>
+    <message id="entity_scoutingcamplocation_status_help">Los entrenadores solo pueden seleccionar ubicaciones activas.</message>
+
+    <!-- Scouting proposal overview -->
+    <message id="entity_scoutingproposal">Propuesta de jugador del ojeo</message>
+    <message id="entity_scoutingproposal_created_date">Creado el</message>
+    <message id="entity_scoutingproposal_team_id">Club</message>
+    <message id="entity_scoutingproposal_camp_id">Concentración</message>
+    <message id="entity_scoutingproposal_scout_id">Ojeador</message>
+    <message id="entity_scoutingproposal_location_id">Ubicación</message>
+    <message id="entity_scoutingproposal_name">Jugador</message>
+    <message id="entity_scoutingproposal_firstname">Nombre</message>
+    <message id="entity_scoutingproposal_lastname">Apellido</message>
+    <message id="entity_scoutingproposal_birthday">Fecha de nacimiento</message>
+    <message id="entity_scoutingproposal_age">Edad</message>
+    <message id="entity_scoutingproposal_nation">Nación</message>
+    <message id="entity_scoutingproposal_position">Posición</message>
+    <message id="entity_scoutingproposal_position_main">Posición principal</message>
+    <message id="entity_scoutingproposal_position_second">Posición secundaria</message>
+
+    <!-- Real hidden proposal values, admin only -->
+    <message id="entity_scoutingproposal_real_w_staerke">Calidad real</message>
+    <message id="entity_scoutingproposal_real_w_staerke_max">Calidad máxima real</message>
+    <message id="entity_scoutingproposal_real_w_talent">Talento real</message>
+    <message id="entity_scoutingproposal_real_w_technik">Técnica real</message>
+    <message id="entity_scoutingproposal_real_w_kondition">Resistencia real</message>
+    <message id="entity_scoutingproposal_real_w_frische">Frescura real</message>
+    <message id="entity_scoutingproposal_real_w_zufriedenheit">Satisfacción real</message>
+    <message id="entity_scoutingproposal_real_w_passing">Pase real</message>
+    <message id="entity_scoutingproposal_real_w_shooting">Disparo real</message>
+    <message id="entity_scoutingproposal_real_w_heading">Juego aéreo real</message>
+    <message id="entity_scoutingproposal_real_w_tackling">Entrada real</message>
+    <message id="entity_scoutingproposal_real_w_freekick">Faltas reales</message>
+    <message id="entity_scoutingproposal_real_w_pace">Velocidad real</message>
+    <message id="entity_scoutingproposal_real_w_creativity">Creatividad real</message>
+    <message id="entity_scoutingproposal_real_w_influence">Influencia real</message>
+    <message id="entity_scoutingproposal_real_w_flair">Talento real</message>
+    <message id="entity_scoutingproposal_real_w_penalty">Penaltis reales</message>
+    <message id="entity_scoutingproposal_real_w_penalty_killing">Paradas de penalti reales</message>
+
+    <!-- Reported proposal values shown to managers -->
+    <message id="entity_scoutingproposal_reported_strength">Fuerza informada</message>
+    <message id="entity_scoutingproposal_reported_talent">Talento informado</message>
+    <message id="entity_scoutingproposal_reported_potential">Potencial informado</message>
+    <message id="entity_scoutingproposal_reported_summary">Informe del ojeador</message>
+
+    <message id="entity_scoutingproposal_transfer_fee">Traspaso</message>
+    <message id="entity_scoutingproposal_salary">Salario</message>
+    <message id="entity_scoutingproposal_contract_matches">Duración del contrato</message>
+    <message id="entity_scoutingproposal_expires_date">Fecha de caducidad</message>
+    <message id="entity_scoutingproposal_expires_after_matches">Partidos restantes</message>
+    <message id="entity_scoutingproposal_status">Estado</message>
+    <message id="entity_scoutingproposal_accepted_date">Fichado el</message>
+    <message id="entity_scoutingproposal_rejected_date">Rechazado el</message>
+    <message id="entity_scoutingproposal_created_player_id">Jugador creado</message>
+
+</messages>

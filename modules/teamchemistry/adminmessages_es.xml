@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="settings_label_team_chemistry_enabled">Activar química del equipo</message>
+    <message id="settings_label_team_chemistry_enabled_help">Activa el valor de química del equipo, la página de química y los pequeños efectos en la simulación.</message>
+    <message id="settings_label_team_chemistry_max_match_effect">Efecto máximo de la química en la simulación</message>
+    <message id="settings_label_team_chemistry_max_match_effect_help">Predeterminado: 3. El valor se usa como un pequeño efecto porcentual/de puntos sobre el pase, la moral y la estabilidad.</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days">Periodo para nuevos fichajes</message>
+    <message id="settings_label_team_chemistry_recent_transfer_days_help">Los fichajes de este periodo reducen ligeramente la química para que demasiados jugadores nuevos no armonicen perfectamente de inmediato.</message>
+    <message id="settings_label_team_chemistry_formation_history_count">Número de alineaciones para compenetración</message>
+    <message id="settings_label_team_chemistry_formation_history_count_help">Se revisa este número de alineaciones recientes para evaluar la compenetración con la formación.</message>
+    <message id="teamchemistry_factor_tactical_style">ADN táctico</message>
+    <message id="teamchemistry_source_tactical_style">ADN táctico</message>
+    <message id="teamchemistry_score">Química</message>
+    <message id="teamchemistry_match_effect">Efecto en el partido</message>
+</messages>

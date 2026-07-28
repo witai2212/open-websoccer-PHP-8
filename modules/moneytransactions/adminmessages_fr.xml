@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_no_transactions_for_teams_without_user">Les clubs sans entraîneur ne doivent avoir ni recettes ni dépenses. Leur budget défini reste ainsi constant.</message> 
+</messages>

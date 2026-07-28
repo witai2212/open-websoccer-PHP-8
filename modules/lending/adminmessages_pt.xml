@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_lending_enabled">Os utilizadores podem receber jogadores emprestados de outros clubes.</message> 
+	<message id="settings_label_lending_matches_min">Duração mínima do empréstimo</message>
+	<message id="settings_label_lending_matches_min_help">Número de jogos</message>  
+	<message id="settings_label_lending_matches_max">Duração máxima do empréstimo</message> 
+	<message id="settings_label_lending_matches_max_help">Número de jogos</message> 
+
+	<message id="settings_label_lending_cpu_offer_duration_days">Duração das listagens de empréstimo da CPU</message>
+	<message id="settings_label_lending_cpu_offer_duration_days_help">Dias de calendário até uma listagem de empréstimo criada por um clube CPU terminar automaticamente.</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days">Espera para nova listagem de empréstimo da CPU</message>
+	<message id="settings_label_lending_cpu_offer_cooldown_days_help">Dias de calendário antes de o mesmo jogador poder ser novamente oferecido por um clube CPU.</message>
+	<message id="settings_label_lending_cpu_request_expiry_days">Validade dos pedidos de empréstimo da CPU</message>
+	<message id="settings_label_lending_cpu_request_expiry_days_help">Dias de calendário até um pedido de empréstimo aberto da CPU expirar.</message>
+	<message id="settings_label_max_number_of_players_on_loan_list">Máximo de jogadores CPU na lista de empréstimos</message>
+	<message id="settings_label_max_number_of_players_on_loan_list_help">Número máximo de jogadores oferecidos simultaneamente para empréstimo por cada clube CPU.</message>
+</messages>

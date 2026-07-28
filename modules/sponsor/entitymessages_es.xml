@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_sponsor">Patrocinador</message>
+	<message id="entity_sponsor_name">Nombre</message>
+	<message id="entity_sponsor_liga_id">Liga</message>
+	<message id="entity_sponsor_bild">Escudo</message>
+	<message id="entity_sponsor_b_spiel">Prima por partido</message>
+	<message id="entity_sponsor_b_heimzuschlag">Prima por partido en casa</message>
+	<message id="entity_sponsor_b_sieg">Prima por victoria</message>
+	<message id="entity_sponsor_b_meisterschaft">Prima por ganar el campeonato</message>
+	<message id="entity_sponsor_b_cup">Prima por ronda de copa</message>
+	<message id="entity_sponsor_max_teams">Número máximo de equipos</message>
+	<message id="entity_sponsor_min_platz">Posición mínima</message>
+</messages>

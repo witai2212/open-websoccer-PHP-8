@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="squadplanner_navlabel">Análise do plantel</message>
+    <message id="squadplanner_title">Análise do plantel</message>
+    <message id="squadplanner_intro">A análise do plantel avalia a profundidade, a estrutura etária, os riscos contratuais, os candidatos a venda ou empréstimo, os jovens e as necessidades por posição. A automatização apenas executa medidas internas recomendadas; não compra jogadores automaticamente.</message>
+    <message id="squadplanner_not_enabled">A análise do plantel está desativada.</message>
+    <message id="squadplanner_auto_button">Executar recomendações automaticamente</message>
+    <message id="squadplanner_auto_confirm">A automatização coloca os jogadores recomendados na lista de transferências, oferece candidatos a empréstimo e pode promover jovens adequados. Continuar?</message>
+    <message id="squadplanner_manual_actions">Ações</message>
+    <message id="squadplanner_apply_sell">Colocar na lista de transferências</message>
+    <message id="squadplanner_apply_loan">Disponibilizar para empréstimo</message>
+    <message id="squadplanner_apply_youth">Promover ao plantel principal</message>
+    <message id="squadplanner_open_player">Abrir jogador</message>
+    <message id="squadplanner_open_youth">Ver jogador jovem</message>
+
+    <message id="squadplanner_summary">Resumo</message>
+    <message id="squadplanner_team">Clube</message>
+    <message id="squadplanner_players">Jogadores profissionais</message>
+    <message id="squadplanner_avg_age">Idade média</message>
+    <message id="squadplanner_avg_strength">Força média</message>
+    <message id="squadplanner_contract_risk">Risco contratual</message>
+    <message id="squadplanner_contract_risk_help">Jogadores com, no máximo, 30 jogos de contrato restantes.</message>
+    <message id="squadplanner_age_structure">Estrutura etária</message>
+    <message id="squadplanner_age_old">demasiado velho</message>
+    <message id="squadplanner_age_young">demasiado jovem</message>
+    <message id="squadplanner_age_balanced">equilibrada</message>
+    <message id="squadplanner_depth">Profundidade do plantel</message>
+    <message id="squadplanner_target">Alvo</message>
+    <message id="squadplanner_count">Quantidade</message>
+    <message id="squadplanner_status">Estado</message>
+    <message id="squadplanner_ok">OK</message>
+    <message id="squadplanner_shortage">Necessidade</message>
+    <message id="squadplanner_surplus">Excesso de jogadores</message>
+
+    <message id="squadplanner_weaknesses">Pontos fracos</message>
+    <message id="squadplanner_no_weaknesses">Não foram encontrados pontos fracos estruturais claros.</message>
+    <message id="squadplanner_need_position">São necessários %d x %s.</message>
+    <message id="squadplanner_too_many_position">Demasiados jogadores em %s.</message>
+
+    <message id="squadplanner_sell_candidates">Candidatos a venda</message>
+    <message id="squadplanner_loan_candidates">Candidatos a empréstimo</message>
+    <message id="squadplanner_youth_candidates">Candidatos jovens</message>
+    <message id="squadplanner_no_candidates">Não foram encontrados candidatos adequados.</message>
+    <message id="squadplanner_reason">Motivo</message>
+    <message id="squadplanner_strength">Força</message>
+    <message id="squadplanner_age">Idade</message>
+    <message id="squadplanner_contract">Contrato</message>
+    <message id="squadplanner_salary">Salário</message>
+    <message id="squadplanner_marketvalue">Valor de mercado</message>
+    <message id="squadplanner_talent">Talento</message>
+    <message id="squadplanner_not_promotable_yet">Ainda não tem idade suficiente para o plantel principal.</message>
+
+    <message id="squadplanner_reason_old">jogador mais velho</message>
+    <message id="squadplanner_reason_contract">contrato termina em breve</message>
+    <message id="squadplanner_reason_weak">abaixo da média do plantel</message>
+    <message id="squadplanner_reason_surplus">posição com excesso de jogadores</message>
+    <message id="squadplanner_reason_salary">salário elevado em relação à função</message>
+    <message id="squadplanner_reason_young">jovem e com capacidade de evolução</message>
+    <message id="squadplanner_reason_talent">bom talento</message>
+    <message id="squadplanner_reason_depth">poucas oportunidades de jogar devido à profundidade do plantel</message>
+    <message id="squadplanner_reason_close">próximo do plantel principal</message>
+    <message id="squadplanner_reason_need">corresponde a um ponto fraco</message>
+
+    <message id="squadplanner_success_sell">O jogador foi colocado na lista de transferências.</message>
+    <message id="squadplanner_success_loan">O jogador foi disponibilizado para empréstimo.</message>
+    <message id="squadplanner_success_youth">O jogador jovem foi promovido ao plantel principal.</message>
+    <message id="squadplanner_auto_success">Automatização executada: %d jogadores na lista de transferências, %d propostas de empréstimo, %d jogadores jovens.</message>
+    <message id="squadplanner_auto_noop">Não foi necessária nem possível qualquer medida automática.</message>
+    <message id="squadplanner_err_not_candidate">Esta medida automática não é atualmente recomendada ou possível para este jogador.</message>
+    <message id="squadplanner_err_min_team_size">O plantel é demasiado pequeno para mais saídas.</message>
+    <message id="squadplanner_err_transfer_disabled">O mercado de transferências está desativado.</message>
+    <message id="squadplanner_err_lending_disabled">Os empréstimos estão desativados.</message>
+
+    <message id="squadplanner_admin_title">Análise do plantel</message>
+    <message id="squadplanner_admin_intro">Análise de administração para qualquer clube. As ações são aplicadas diretamente ao clube selecionado.</message>
+    <message id="squadplanner_admin_select_club">Selecionar clube</message>
+    <message id="squadplanner_admin_search">Pesquisar clube</message>
+    <message id="squadplanner_admin_execute">Apresentar</message>
+
+    <message id="squadplanner_trait_needs">Necessidades de traços</message>
+    <message id="squadplanner_no_trait_needs">Não foram encontradas lacunas claras de traços.</message>
+    <message id="squadplanner_trait">Habilidade especial</message>
+    <message id="squadplanner_recommended">Recomendado</message>
+    <message id="squadplanner_priority">Prioridade</message>
+    <message id="squadplanner_reason_trait_need">preenche uma lacuna de traços no plantel</message>
+
+    <message id="player_trait_torinstinkt">Instinto goleador</message>
+    <message id="player_trait_spielmacher">Organizador de jogo</message>
+    <message id="player_trait_ballzauberer">Mágico da bola</message>
+    <message id="player_trait_flankenspezialist">Especialista em cruzamentos</message>
+    <message id="player_trait_kopfballstaerke">Jogo aéreo</message>
+    <message id="player_trait_viererkette">Linha defensiva de quatro</message>
+    <message id="player_trait_laufstaerke">Capacidade de trabalho</message>
+    <message id="player_trait_freistossspezialist">Especialista em livres</message>
+    <message id="player_trait_elfmeterschuetze">Marcador de grandes penalidades</message>
+    <message id="player_trait_dribbler">Driblador</message>
+    <message id="player_trait_elfmetertoeter">Defensor de grandes penalidades</message>
+    <message id="player_trait_reflexe">Reflexos</message>
+
+    <!-- Fallbacks because the squadplanner module does not automatically load player-module table headers. -->
+    <message id="playertable_head_name">Nome</message>
+    <message id="playertable_head_position">Posição</message>
+
+</messages>

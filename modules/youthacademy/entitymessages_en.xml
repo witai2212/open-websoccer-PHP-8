@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="youthacademylevel_navlabel">Youth academy levels</message>
+
+    <message id="entity_youthacademylevel">Youth academy levels</message>
+    <message id="entity_youthacademylevel_level">Level</message>
+    <message id="entity_youthacademylevel_level_help">Internal upgrade level of the youth academy. Higher levels improve development, scouting and reputation.</message>
+    <message id="entity_youthacademylevel_name">Name</message>
+    <message id="entity_youthacademylevel_name_help">Display name of the academy level, e.g. Basic Academy or Elite Academy.</message>
+    <message id="entity_youthacademylevel_build_cost">Construction cost</message>
+    <message id="entity_youthacademylevel_build_cost_help">One-off cost to build or upgrade to this level.</message>
+    <message id="entity_youthacademylevel_maintenance_fee">Cost per matchday</message>
+    <message id="entity_youthacademylevel_maintenance_fee_help">Ongoing academy costs charged to the club on each relevant matchday.</message>
+    <message id="entity_youthacademylevel_development_bonus">Development bonus</message>
+    <message id="entity_youthacademylevel_development_bonus_help">Additional youth development bonus at this academy level.</message>
+    <message id="entity_youthacademylevel_scouting_bonus">Scouting bonus</message>
+    <message id="entity_youthacademylevel_scouting_bonus_help">Additional bonus for youth scouting and academy scouting.</message>
+    <message id="entity_youthacademylevel_stagnation_reduction">Stagnation protection</message>
+    <message id="entity_youthacademylevel_stagnation_reduction_help">Reduces the risk of youth players stagnating without sufficient match practice.</message>
+    <message id="entity_youthacademylevel_reputation_bonus">Reputation bonus</message>
+    <message id="entity_youthacademylevel_reputation_bonus_help">Additional contribution to the academy's appeal and reputation.</message>
+    <message id="entity_youthacademylevel_max_reputation">Maximum reputation</message>
+    <message id="entity_youthacademylevel_max_reputation_help">Maximum academy reputation for this upgrade level.</message>
+    <message id="entity_youthacademylevel_status">Active</message>
+    <message id="entity_youthacademylevel_status_help">Only active levels can be used by clubs.</message>
+</messages>

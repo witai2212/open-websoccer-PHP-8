@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_badge">Insigne</message>
+    <message id="entity_badge_name">Désignation</message>
+    <message id="entity_badge_name_help">Peut également être une clé de message.</message>
+    <message id="entity_badge_description">Explication</message>
+    <message id="entity_badge_description_help">Peut également être une clé de message.</message>
+    <message id="entity_badge_level">Niveau</message>
+    <message id="entity_badge_event">Événement</message>
+    <message id="entity_badge_event_benchmark">Valeur de déclenchement</message>
+    <message id="entity_badge_event_benchmark_help">Le « X » dans les événements comportant la variable « X ».</message>
+
+    <message id="option_bronze">Bronze</message>
+    <message id="option_silver">Argent</message>
+    <message id="option_gold">Or</message>
+    
+    <message id="option_membership_since_x_days">Est membre depuis X jours</message>
+    <message id="option_win_with_x_goals_difference">Victoire avec X buts d'écart</message>
+    <message id="option_completed_season_at_x">A terminé une saison à la Xe place</message>
+    <message id="option_x_trades">A effectué au moins X transferts</message>
+    <message id="option_cupwinner">A remporté une coupe</message>
+    <message id="option_stadium_construction_by_x">Le stade a été agrandi de X places en une seule fois</message>
+    <message id="option_derby_wins">A remporté au moins X derbies</message>
+    <message id="option_youth_developer">A promu au moins X jeunes joueurs</message>
+    <message id="option_giant_killer">A battu au moins X adversaires nettement plus forts</message>
+    <message id="option_comeback_king">A remporté au moins X matches après avoir été mené</message>
+    <message id="option_financial_genius">A terminé au moins X saisons complètes avec un solde positif</message>
+    <message id="option_transfer_master">A vendu un joueur avec au moins X pour cent de bénéfice</message>
+</messages>

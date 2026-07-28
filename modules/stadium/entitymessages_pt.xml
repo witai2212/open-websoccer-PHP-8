@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_stadium">Estádio</message>
+	<message id="entity_stadium_name">Nome</message>
+	<message id="entity_stadium_verein">Clube</message>
+	<message id="entity_stadium_stadt">Cidade</message>
+	<message id="entity_stadium_land">País</message>
+	<message id="entity_stadium_picture">Imagem</message>
+	<message id="entity_stadium_p_steh">Lugares em pé</message>
+	<message id="entity_stadium_p_sitz">Lugares sentados</message>
+	<message id="entity_stadium_p_haupt_steh">Lugares em pé (bancada principal)</message>
+	<message id="entity_stadium_p_haupt_sitz">Lugares sentados (bancada principal)</message>
+    <message id="entity_stadium_p_vip">Camarotes VIP</message>
+    
+    <message id="entity_stadiumbuilder">Construtor do estádio</message>
+    <message id="entity_stadiumbuilder_name">Nome</message>
+    <message id="entity_stadiumbuilder_picture">Logótipo da empresa</message>
+    <message id="entity_stadiumbuilder_fixedcosts">Custos fixos</message>
+    <message id="entity_stadiumbuilder_fixedcosts_help">Custos cobrados independentemente do número de lugares a construir.</message>
+    <message id="entity_stadiumbuilder_cost_per_seat">Custo por lugar</message>
+    <message id="entity_stadiumbuilder_cost_per_seat_help">É adicionado aos custos configurados em "Definições". Também pode ser negativo.</message>
+    <message id="entity_stadiumbuilder_construction_time_days">Tempo de construção por 5 000 lugares</message>
+    <message id="entity_stadiumbuilder_construction_time_days_help">em dias</message>
+    <message id="entity_stadiumbuilder_construction_time_days_min">Tempo mínimo de construção</message>
+    <message id="entity_stadiumbuilder_construction_time_days_min_help">em dias</message>
+    <message id="entity_stadiumbuilder_min_stadium_size">Dimensão mínima do estádio</message>
+    <message id="entity_stadiumbuilder_min_stadium_size_help">Número mínimo de lugares que o estádio já deve ter para que este construtor se interesse pela obra. Permite expandir os estádios gradualmente.</message>
+	<message id="entity_stadiumbuilder_max_stadium_size">Dimensão máxima do estádio</message>
+	<message id="entity_stadiumbuilder_max_stadium_size_help">0 para não aplicar qualquer restrição.</message>
+	<message id="entity_stadiumbuilder_reliability">Fiabilidade</message>
+	<message id="entity_stadiumbuilder_reliability_help">100% significa que a expansão do estádio estará certamente concluída após o prazo calculado. Com valores inferiores a 100%, a expansão pode sofrer atrasos, inclusivamente repetidos.</message>
+	<message id="entity_stadiumbuilder_premiumfee">Taxa premium</message>
+
+	<message id="entity_stadiumconstruction">Expansão do estádio</message>
+	<message id="entity_stadiumconstruction_team_id">Clube</message>
+	<message id="entity_stadiumconstruction_builder_id">Construtor</message>
+	<message id="entity_stadiumconstruction_started">Obra adjudicada</message>
+	<message id="entity_stadiumconstruction_deadline">Conclusão prevista</message>
+	<message id="entity_stadiumconstruction_p_steh">Número de lugares em pé</message>
+	<message id="entity_stadiumconstruction_p_sitz">Número de assentos</message>
+	<message id="entity_stadiumconstruction_p_haupt_steh">Número de lugares em pé (bancada principal)</message>
+	<message id="entity_stadiumconstruction_p_haupt_sitz">Número de assentos (bancada principal)</message>
+	<message id="entity_stadiumconstruction_p_vip">Número de camarotes VIP</message>
+	
+	<message id="entity_stadium_level_pitch">Estado do relvado</message>
+	<message id="entity_stadium_level_pitch_help">Entre 0 e 5.</message>
+	<message id="entity_stadium_level_videowall">Atualidade do ecrã gigante</message>
+	<message id="entity_stadium_level_videowall_help">Entre 0 e 5.</message>
+	<message id="entity_stadium_level_seatsquality">Estado dos assentos</message>
+	<message id="entity_stadium_level_seatsquality_help">Entre 0 e 5.</message>
+	<message id="entity_stadium_level_vipquality">Estado dos camarotes VIP</message>
+	<message id="entity_stadium_level_vipquality_help">Entre 0 e 5.</message>
+	
+	<message id="entity_stadium_maintenance_pitch">Próxima manutenção: relvado</message>
+	<message id="entity_stadium_maintenance_pitch_help">Número de jogos em casa.</message>
+	
+	<message id="entity_stadium_maintenance_videowall">Próxima manutenção: ecrã gigante</message>
+	<message id="entity_stadium_maintenance_videowall_help">Número de jogos em casa.</message>
+	
+	<message id="entity_stadium_maintenance_seatsquality">Próxima manutenção: assentos</message>
+	<message id="entity_stadium_maintenance_seatsquality_help">Número de jogos em casa.</message>
+	
+	<message id="entity_stadium_maintenance_vipquality">Próxima manutenção: camarotes VIP</message>
+	<message id="entity_stadium_maintenance_vipquality_help">Número de jogos em casa.</message>
+</messages>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_stadiumbuilding">Edifício</message>
+	<message id="entity_stadiumbuilding_name">Nome</message>
+	<message id="entity_stadiumbuilding_name_help">Também pode ser uma chave de mensagem.</message>
+	<message id="entity_stadiumbuilding_description">Descrição</message>
+	<message id="entity_stadiumbuilding_description_help">Também pode ser uma chave de mensagem.</message>
+	<message id="entity_stadiumbuilding_picture">Imagem</message>
+	
+	<message id="entity_stadiumbuilding_required_building_id">Edifício necessário</message>
+	<message id="entity_stadiumbuilding_required_building_id_help">Um edifício selecionado tem de ser construído primeiro. Tenha em atenção que o edifício anterior permanece após a construção do novo. Os efeitos introduzidos abaixo são depois somados.</message>
+	
+	<message id="entity_stadiumbuilding_costs">Custo de construção</message>
+	<message id="entity_stadiumbuilding_premiumfee">Custos premium</message>
+	<message id="entity_stadiumbuilding_premiumfee_help">A conta premium do utilizador é debitada adicionalmente à conta do clube.</message>
+	<message id="entity_stadiumbuilding_construction_time_days">Tempo de construção (dias)</message>
+	<message id="entity_stadiumbuilding_effect_training">Efeito: treino</message>
+	<message id="entity_stadiumbuilding_effect_training_help">Pontos adicionais de frescura e satisfação que podem ser ganhos por sessão de treino.</message>
+	<message id="entity_stadiumbuilding_effect_youthscouting">Efeito: prospeção juvenil</message>
+	<message id="entity_stadiumbuilding_effect_youthscouting_help">Bónus de força para jogadores jovens descobertos.</message>
+	<message id="entity_stadiumbuilding_effect_tickets">Efeito: espectadores</message>
+	<message id="entity_stadiumbuilding_effect_tickets_help">Pontos percentuais de bilhetes adicionais vendidos nos jogos em casa. O bónus não se aplica se, sem o bónus do edifício, não fossem vendidos bilhetes.</message>
+	<message id="entity_stadiumbuilding_effect_fanpopularity">Efeito: popularidade junto dos adeptos (após conclusão)</message>
+	<message id="entity_stadiumbuilding_effect_fanpopularity_help">Alteração única da popularidade do utilizador junto dos adeptos, em pontos percentuais. O efeito só é aplicado após a conclusão da construção.</message>
+    <message id="entity_stadiumbuilding_effect_injury">Efeito: lesões</message>
+    <message id="entity_stadiumbuilding_effect_injury_help">Número de jogos adicionais em que as lesões dos jogadores são reduzidas após cada jogo, além da recuperação normal. Exemplo: o valor 1 reduz para metade o tempo de recuperação.</message>
+    <message id="entity_stadiumbuilding_effect_income">Receitas/custos por jogo em casa</message>
+    <message id="entity_stadiumbuilding_effect_income_help">O montante é creditado ao clube em cada jogo em casa se for positivo, ou debitado se for negativo.</message>
+    <message id="entity_stadiumbuilding_effect_merchandising">Efeito: merchandising</message>
+    <message id="entity_stadiumbuilding_effect_merchandising_help">Bónus percentual sobre a procura de merchandising nos jogos em casa.</message>
+</messages>

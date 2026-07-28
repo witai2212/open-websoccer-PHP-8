@@ -1,71 +1,173 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="office_navlabel">Office</message>
-    <message id="office_title">My Office</message>
+    <message id="office_title">My office</message>
     
-    <message id="feature_requires_team">You need to be manager of a team in order to use this feature.</message>
+    <message id="feature_requires_team">You must be the manager of a club to use this function.</message>
     
-    <message id="myteam_navlabel">My Team</message>
-    <message id="myteam_title">My Players</message>
+    <message id="myteam_navlabel">My squad</message>
+    <message id="myteam_title">My players</message>
     
     <message id="myteam_player_sell">Sell</message>
-    <message id="myteam_player_extend_contract">Extend Contract</message>
-    <message id="myteam_player_contract_is_ending">The contract is about to end soon</message>
+    <message id="myteam_player_extend_contract">Extend contract</message>
+    <message id="myteam_player_contract_is_ending">The contract expires soon</message>
     
-    <message id="myteam_unsellable">Mask as unsellable</message>
-    <message id="myteam_unsellable_tooltip">No transfer offers will be accepted for this player.</message>
-    <message id="myteam_unsellable_player_success">Player has been marked as unsellable.</message>
-    <message id="myteam_unsellable_unmark_tooltip">Remove unsellable marker</message>
-    <message id="myteam_remove_unsellable_player_success">Unsellable flag has been removed.</message>
+    <message id="myteam_unsellable">Mark as not for sale</message>
+    <message id="myteam_unsellable_tooltip">No purchase offers will then be accepted for this player.</message>
+    <message id="myteam_unsellable_player_success">The player was marked as not for sale.</message>
+    <message id="myteam_unsellable_unmark_tooltip">Remove not-for-sale status</message>
+    <message id="myteam_remove_unsellable_player_success">Purchase offers will be accepted for this player again.</message>
     
     <message id="myteam_action_button">Action</message>
     
-    <message id="myteam_captain_tooltip">Is captain and shall bring morale when being in deficit during a match</message>
-    <message id="myteam_player_select_as_captain">Nominate as captain</message>
-    <message id="myteam_player_select_as_captain_success">Your new cpatain has been successfully selected!</message>
-    <message id="myteam_player_select_as_captain_warning_old_captain">Your previous captain, %s, is quite disappointed about your decision.</message>
+    <message id="myteam_captain_tooltip">Is captain and responsible for morale when the team is trailing</message>
+    <message id="myteam_player_select_as_captain">Appoint as captain</message>
+    <message id="myteam_player_select_as_captain_success">The captain was selected successfully!</message>
+    <message id="myteam_player_select_as_captain_warning_old_captain">Your previous captain, %s, is very disappointed by this decision.</message>
     
+    <message id="extend-contract_navlabel">Contract extension</message>
+    <message id="extend-contract_title">Negotiation with %s</message>
     
-    <message id="extend-contract_navlabel">Contract Extension</message>
-    <message id="extend-contract_title">Negotation with %s</message>
+    <message id="extend-contract_existing_contract_title">Current contract</message>
+    <message id="extend-contract_link_profile">Go to player profile</message>
     
-    <message id="extend-contract_existing_contract_title">Existing Contract</message>
-    <message id="extend-contract_link_profile">To Player Profile</message>
+    <message id="extend-contract_offer_title">Your offer</message>
     
-    <message id="extend-contract_decrease_satisfaction_hint">Note that the player's satisfaction will decrease for each offer that is too low.</message>
+    <message id="extend-contract_decrease_satisfaction_hint">Please note that every offer that is too poor reduces the player’s satisfaction.</message>
     
+    <message id="extend-contract_success">The contract was successfully extended under the new terms!</message>
+    <message id="extend-contract_counteroffer_success">The counteroffer was submitted. The player will now review all offers for next season.</message>
     
-    <message id="extend-contract_offer_title">Your Offer</message>
-    <message id="extend-contract_success">The contract has been successfully extended under the new conditions!</message>
+    <message id="extend-contract_player_is_unhappy">The player no longer feels comfortable at your club and therefore does not want to extend his contract at present.</message>
+    <message id="extend-contract_lower_than_current_salary">The player will not accept a pay cut.</message>
     
-    <message id="extend-contract_player_is_unhappy">The player does not feel comfortable in your team anymore and currently does not want to extend his contract.</message>
-    <message id="extend-contract_lower_than_current_salary">The player does not accept a salary decrease.</message>
+    <message id="extend-contract_salary_too_low">The offered salary is too low for the player. He demands a higher salary per match.</message>
     
-    <message id="extend-contract_salary_too_low">The offered salary is to less for the player. He asks for a higher salary per match.</message>
+    <message id="extend-contract_cannot_afford_offer">With your current budget, you cannot afford this salary.</message>
     
-    <message id="extend-contract_cannot_afford_offer">You cannot afford such a salary with your current budget.</message>
-    
-    <message id="extend-contract_goalbonus_too_low">The player wants a higher goal bonus.</message>
+    <message id="extend-contract_goalbonus_too_low">The goal bonus is too low for the player.</message>
+    <message id="extend-contract_matches_too_high">The contract may run for no more than %d matches.</message>
+    <message id="extend-contract_matches_max_help">Maximum %d matches.</message>
     
     <message id="finances_navlabel">Finances</message>
     
     <message id="account_statement_date">Date</message>
-    <message id="account_statement_sender">Sender / Recipient</message>
+    <message id="account_statement_sender">Sender / recipient</message>
     <message id="account_statement_subject">Subject</message>
     <message id="account_statement_amount">Amount</message>
+    <message id="account_statement_revenues">Income</message>
+    <message id="account_statement_expenses">Expenses</message>
     
-    <message id="tickets_navlabel">Tickets</message>
+    <message id="tickets_navlabel">Ticket prices</message>
     
-    <message id="tickets_stands">Standings</message>
+    <message id="tickets_stands">Standing places</message>
     <message id="tickets_seats">Seats</message>
-    <message id="tickets_stands_grand">Standings (grand)</message>
-    <message id="tickets_seats_grand">Seats (grand)</message>
-    <message id="tickets_vip">V.I.P. Lounges</message>
+    <message id="tickets_stands_grand">Standing places (main stand)</message>
+    <message id="tickets_seats_grand">Seats (main stand)</message>
+    <message id="tickets_vip">V.I.P. boxes</message>
     
-    <message id="tickets_sold_last_match">Last match sold</message>
+    <message id="tickets_sold_last_match">Sold in the last match</message>
     
-    <message id="tickets_info_homefieldadvantage"><strong>Hint:</strong> Your team will be extra motivated when playing at home and if all tickets are sold out. Consider this when choosing new ticket prices!</message>
+    <message id="tickets_info_homefieldadvantage"><strong>Tip:</strong> Your team is particularly motivated in home matches when the stadium is sold out. Take this into account when setting ticket prices!</message>
     
-    <message id="notification_soon_ending_playercontracts">There are player contracts which are ending soon!</message>
+    <message id="notification_soon_ending_playercontracts">Some player contracts are expiring soon!</message>
+
+    <message id="dailybriefing_title">Today at the club</message>
+    <message id="dailybriefing_intro">Your compact daily overview covering the board, fans, media, scouting, youth, loans and recent changes.</message>
+    <message id="dailybriefing_generated">Updated:</message>
+    <message id="dailybriefing_items_title">Manager inbox</message>
+    <message id="dailybriefing_no_items">There are no urgent notices today.</message>
+
+    <message id="dailybriefing_card_board">Board</message>
+    <message id="dailybriefing_card_fans">Fans</message>
+    <message id="dailybriefing_card_media">Media</message>
+    <message id="dailybriefing_card_chemistry">Team chemistry</message>
+    <message id="dailybriefing_status_critical">critical</message>
+    <message id="dailybriefing_status_attention">monitor</message>
+    <message id="dailybriefing_status_stable">stable</message>
+    <message id="dailybriefing_status_positive">positive</message>
+    <message id="dailybriefing_status_calm">calm</message>
+
+    <message id="dailybriefing_priority_critical">Critical</message>
+    <message id="dailybriefing_priority_important">Important</message>
+    <message id="dailybriefing_priority_hint">Notice</message>
+    <message id="dailybriefing_priority_positive">Positive</message>
+
+    <message id="dailybriefing_action_board">Go to objectives</message>
+    <message id="dailybriefing_action_fanpressure">Fans and media</message>
+    <message id="dailybriefing_action_interview">Answer interview</message>
+    <message id="dailybriefing_action_scouting">Go to scouting</message>
+    <message id="dailybriefing_action_youth_academy">Go to youth academy</message>
+    <message id="dailybriefing_action_loans">Go to loans</message>
+    <message id="dailybriefing_action_transfers">Go to transfer market</message>
+    <message id="dailybriefing_action_whatchanged">What has changed?</message>
+    <message id="dailybriefing_action_formation">Go to formation</message>
+    <message id="dailybriefing_action_training">Go to training</message>
+    <message id="dailybriefing_action_finances">Go to finances</message>
+
+    <message id="dailybriefing_item_board_low_title">The board expects answers</message>
+    <message id="dailybriefing_item_board_low_text">Board satisfaction is critical. Results, objectives and financial development should now be the main focus.</message>
+    <message id="dailybriefing_item_board_high_title">The board is satisfied</message>
+    <message id="dailybriefing_item_board_high_text">The club’s management views your current work positively.</message>
+    <message id="dailybriefing_item_fans_low_title">The mood among the fans is turning</message>
+    <message id="dailybriefing_item_fans_low_text">The fans expect visible signals: good results, clear communication or a sporting response.</message>
+    <message id="dailybriefing_item_fans_high_title">The fans are behind you</message>
+    <message id="dailybriefing_item_fans_high_text">The mood around the club is very positive. This can support home performances and sponsor impact.</message>
+    <message id="dailybriefing_item_media_high_title">High media pressure</message>
+    <message id="dailybriefing_item_media_high_text">The media expect a response. An open interview or a clear sporting signal may help.</message>
+    <message id="dailybriefing_item_chemistry_low_title">The dressing room needs stability</message>
+    <message id="dailybriefing_item_chemistry_low_text">Team chemistry is low. Training, the line-up and clearly defined roles should be reviewed.</message>
+    <message id="dailybriefing_item_chemistry_high_title">The squad looks united</message>
+    <message id="dailybriefing_item_chemistry_high_text">Team chemistry is strong. The dressing-room environment supports sporting development.</message>
+
+    <message id="dailybriefing_item_interview_title">Open media question</message>
+    <message id="dailybriefing_item_scouting_title">New scouting tip</message>
+    <message id="dailybriefing_item_scouting_text">Your scout has suggested %s.</message>
+    <message id="dailybriefing_strength_short">Strength</message>
+    <message id="dailybriefing_talent_short">Talent</message>
+    <message id="dailybriefing_item_youth_payment_title">Youth academy under pressure</message>
+    <message id="dailybriefing_item_youth_payment_text">There are outstanding payments at the youth academy. This can harm development and reputation.</message>
+    <message id="dailybriefing_item_youth_reputation_title">Good youth work</message>
+    <message id="dailybriefing_item_youth_reputation_text">The youth academy’s reputation is %s%%. The board views the youth work positively.</message>
+    <message id="dailybriefing_item_youth_log_positive_title">Positive youth development</message>
+    <message id="dailybriefing_item_youth_log_warning_title">Youth academy notice</message>
+    <message id="dailybriefing_item_loan_unused_title">Loan player lacking match rhythm</message>
+    <message id="dailybriefing_item_loan_unused_text">%s has received very little playing time in several loan matches.</message>
+    <message id="dailybriefing_item_loan_borrower_suffix">Current loan club: %s.</message>
+    <message id="dailybriefing_item_transfer_offer_title">New transfer offer</message>
+    <message id="dailybriefing_item_transfer_offer_text">%s has submitted an offer for %s.</message>
+    <message id="dailybriefing_item_loan_request_title">New loan request</message>
+    <message id="dailybriefing_item_loan_request_text">%s wants to loan %s.</message>
+    <message id="dailybriefing_item_whatchanged_title">Recent changes</message>
+    <message id="dailybriefing_item_whatchanged_loss_title">Analysis after the defeat</message>
+    <message id="dailybriefing_item_whatchanged_win_title">Positive development after the win</message>
+    <message id="dailybriefing_item_nextmatch_title">Focus on the next match</message>
+    <message id="dailybriefing_item_nextmatch_text">The next match against %s is approaching. Review the line-up, fitness and tactical approach.</message>
+    <message id="dailybriefing_item_fallback_training_title">Review training</message>
+    <message id="dailybriefing_item_fallback_training_text">There are no urgent warnings. A quick look at training and fitness may still help.</message>
+    <message id="dailybriefing_item_fallback_scouting_title">Monitor scouting</message>
+    <message id="dailybriefing_item_fallback_scouting_text">The market keeps moving. Check whether new search profiles or camps would be useful.</message>
+    <message id="dailybriefing_item_fallback_finance_title">Review finances</message>
+    <message id="dailybriefing_item_fallback_finance_text">Use quiet days to review the budget, salaries and upcoming commitments.</message>
+
+
+    <message id="dailybriefing_youthacademy_log_built">Youth academy was built</message>
+    <message id="dailybriefing_youthacademy_log_upgraded">Youth academy was upgraded</message>
+    <message id="dailybriefing_youthacademy_log_downgraded">Youth academy was downgraded</message>
+    <message id="dailybriefing_youthacademy_log_auto_downgraded">Youth academy was automatically downgraded</message>
+    <message id="dailybriefing_youthacademy_log_development_bonus">Development bonus from the youth academy</message>
+    <message id="dailybriefing_youthacademy_log_scouting_bonus">Scouting bonus from the youth academy</message>
+    <message id="dailybriefing_youthacademy_log_generic">New message from the youth academy</message>
+
+
+    <message id="manager-notes_navlabel">My notes</message>
+    <message id="manager_notes_title">My notes</message>
+    <message id="manager_notes_intro">Private notes for your planning. The content belongs to your user account and is retained when you change clubs.</message>
+    <message id="manager_notes_placeholder">Tactical ideas, transfer targets, reminders or personal tasks ...</message>
+    <message id="manager_notes_last_saved">Last saved:</message>
+    <message id="manager_notes_not_saved_yet">Not saved yet.</message>
+    <message id="manager_notes_saving">Saving ...</message>
+    <message id="manager_notes_saved">Saved.</message>
+    <message id="manager_notes_save_error">Saving failed.</message>
 </messages>

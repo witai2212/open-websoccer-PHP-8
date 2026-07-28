@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="mywatchlist_navlabel">Lista de seguimiento</message>
+    <message id="mywatchlist_title">Lista de seguimiento</message>
+    <message id="mywatchlist_playername">Jugador</message>
+	<message id="mywatchlist_verein">Club</message>
+	<message id="mywatchlist_alter">Edad</message>
+	<message id="mywatchlist_vertrag_spiele">Duración del contrato</message>
+	<message id="mywatchlist_position_main">Posición</message>
+	<message id="mywatchlist_position_second">Pos. 2</message>
+	<message id="mywatchlist_marktwert">Valor de mercado</message>
+	<message id="mywatchlist_scout_recommendation">Recomendación del ojeador</message>
+	<message id="mywatchlist_scout_score">Puntuación</message>
+	<message id="mywatchlist_scout_recommend_yes">Recomendado</message>
+	<message id="mywatchlist_scout_recommend_watch">Observar</message>
+	<message id="mywatchlist_scout_recommend_no">No recomendado</message>
+	<message id="mywatchlist_scout_no_data">Sin datos del ojeador</message>
+	<message id="mywatchlist_scout_no_data_short">-</message>
+	<message id="mywatchlist_scout_no_matching_position">Ningún ojeador adecuado</message>
+	<message id="mywatchlist_noten_druchschnitt">Calificaciones</message>
+	<message id="no_items">No hay jugadores en la lista de seguimiento</message>
+	<message id="mywatchlist_delete">Eliminar</message>
+	
+	<message id="watchlist_remove_label">eliminar de la lista de seguimiento</message>
+	<message id="watchlist_remove_success">El jugador ya no está en la lista de seguimiento.</message>
+	
+	<message id="mywatchlist_player_on_transferlist">En el mercado de fichajes</message>
+	<message id="mywatchlist_player_has_offer">Oferta presentada</message>
+	
+	<message id="button_put_on_watchlist">Añadir jugador a la lista de seguimiento</message>
+	<message id="button_delete_from_watchlist">Eliminar jugador de la lista de seguimiento</message>
+	<message id="watchlist_put_on_success">El jugador está ahora en tu lista de seguimiento</message>
+    
+</messages>

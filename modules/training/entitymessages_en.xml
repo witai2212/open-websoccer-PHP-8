@@ -1,10 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="entity_trainer">Trainer</message>
-	<message id="entity_trainer_name">Name</message>
-	<message id="entity_trainer_salary">Salary per Unit</message>
-	<message id="entity_trainer_p_technique">Effectivity Technique Training</message>
-	<message id="entity_trainer_p_stamina">Effectivity Stamina Training</message>
-	<message id="entity_trainer_premiumfee">Premium Fee</message>
+    <message id="entity_trainer">Coach</message>
+    <message id="entity_trainer_name">Name</message>
+    <message id="entity_trainer_salary">Salary per session</message>
+    <message id="entity_trainer_specialization">Specialisation</message>
+    <message id="entity_trainer_p_technique">Technical training effectiveness</message>
+    <message id="entity_trainer_p_stamina">Stamina training effectiveness</message>
+    <message id="entity_trainer_p_offense">Attack</message>
+    <message id="entity_trainer_p_defense">Defence</message>
+    <message id="entity_trainer_p_tactics">Tactics</message>
+    <message id="entity_trainer_p_goalkeeping">Goalkeeper training</message>
+    <message id="entity_trainer_p_mental">Mentality</message>
+    <message id="entity_trainer_premiumfee">Premium fee</message>
+
+    <message id="entity_trainer_reputation">Reputation</message>
+    <message id="entity_trainer_min_club_strength">Minimum club strength</message>
+    <message id="entity_trainer_min_league_rating">Minimum league reputation</message>
+    <message id="entity_trainer_signing_fee">Signing fee</message>
+    <message id="entity_trainer_available">Available</message>
 </messages>

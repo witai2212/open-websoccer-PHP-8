@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <!-- Admin navigation labels for scouting admin pages -->
+    <message id="scout_navlabel">Scouts</message>
+    <message id="scoutingdepartmentlevel_navlabel">Scouting departments</message>
+    <message id="scoutingcamplocation_navlabel">Scouting camp locations</message>
+    <message id="scoutingproposal_navlabel">Scouting player suggestions</message>
+
+    <!-- Existing scout entity -->
+    <message id="entity_scout">Scout</message>
+    <message id="entity_scout_name">Name</message>
+    <message id="entity_scout_name_help">Name of the scout displayed to users in the game.</message>
+    <message id="entity_scout_nation">Nation</message>
+    <message id="entity_scout_nation_help">Scout’s country of origin. May later be used for regional scouting advantages.</message>
+    <message id="entity_scout_speciality">Speciality</message>
+    <message id="entity_scout_speciality_help">Position for which this scout should provide particularly good assessments.</message>
+    <message id="entity_scout_expertise">Internal expertise</message>
+    <message id="entity_scout_expertise_help">Internal value from 1 to 100. This value is not shown directly to managers, but affects the quality and accuracy of scout reports.</message>
+    <message id="entity_scout_fee">Cost per matchday</message>
+    <message id="entity_scout_fee_help">Amount charged to the club per relevant matchday while the scout is employed.</message>
+    <message id="entity_scout_team_id">Club</message>
+    <message id="entity_scout_team_id_help">Club currently employing the scout. 0 or blank means the scout is available.</message>
+    <message id="entity_scout_team_matches">Remaining matches</message>
+    <message id="entity_scout_team_matches_help">Number of matches for which the scout will remain employed by the club.</message>
+
+    <!-- Scouting department level -->
+    <message id="entity_scoutingdepartmentlevel">Scouting department level</message>
+    <message id="entity_scoutingdepartmentlevel_level">Level</message>
+    <message id="entity_scoutingdepartmentlevel_level_help">Internal scouting department level. Higher levels enable better and more extensive scouting activities.</message>
+    <message id="entity_scoutingdepartmentlevel_name">Name</message>
+    <message id="entity_scoutingdepartmentlevel_name_help">Display name of the upgrade level, e.g. Small Scouting Department or International Scouting Network.</message>
+    <message id="entity_scoutingdepartmentlevel_build_cost">Construction cost</message>
+    <message id="entity_scoutingdepartmentlevel_build_cost_help">One-off cost to build or upgrade to this level.</message>
+    <message id="entity_scoutingdepartmentlevel_maintenance_fee">Maintenance per matchday</message>
+    <message id="entity_scoutingdepartmentlevel_maintenance_fee_help">Ongoing cost per matchday for this scouting department level.</message>
+    <message id="entity_scoutingdepartmentlevel_max_scouts">Max. scouts</message>
+    <message id="entity_scoutingdepartmentlevel_max_scouts_help">Maximum number of scouts a club may employ simultaneously with this department level.</message>
+    <message id="entity_scoutingdepartmentlevel_max_camps">Max. camps</message>
+    <message id="entity_scoutingdepartmentlevel_max_camps_help">Maximum number of active scouting camps. Very high values allow wealthy clubs to operate a correspondingly large number of camps.</message>
+    <message id="entity_scoutingdepartmentlevel_status">Active</message>
+    <message id="entity_scoutingdepartmentlevel_status_help">Only active levels can be used by clubs.</message>
+
+    <!-- Scouting camp location -->
+    <message id="entity_scoutingcamplocation">Scouting camp location</message>
+    <message id="entity_scoutingcamplocation_name">Name</message>
+    <message id="entity_scoutingcamplocation_name_help">Name of the location or region, e.g. Germany, Brazil or West Africa.</message>
+    <message id="entity_scoutingcamplocation_country">Country</message>
+    <message id="entity_scoutingcamplocation_country_help">Optional country of the location. Leave blank if it is a region or continent.</message>
+    <message id="entity_scoutingcamplocation_continent">Continent</message>
+    <message id="entity_scoutingcamplocation_continent_help">Continent or region of the location. Possible values include EU, AF, AS, NA, SA or OC.</message>
+    <message id="entity_scoutingcamplocation_base_fee">Base cost per matchday</message>
+    <message id="entity_scoutingcamplocation_base_fee_help">Base amount charged per matchday for an active camp at this location.</message>
+    <message id="entity_scoutingcamplocation_travel_cost_modifier">Travel cost modifier</message>
+    <message id="entity_scoutingcamplocation_travel_cost_modifier_help">Percentage surcharge or discount for this location. Positive values make the camp more expensive; negative values make it cheaper.</message>
+    <message id="entity_scoutingcamplocation_quality_modifier">Quality modifier</message>
+    <message id="entity_scoutingcamplocation_quality_modifier_help">Affects the average quality of players found at this location.</message>
+    <message id="entity_scoutingcamplocation_talent_modifier">Talent modifier</message>
+    <message id="entity_scoutingcamplocation_talent_modifier_help">Affects the chance of finding players with higher talent or better potential.</message>
+    <message id="entity_scoutingcamplocation_min_department_level">Minimum scouting department level</message>
+    <message id="entity_scoutingcamplocation_min_department_level_help">Minimum level a club requires to open a camp at this location.</message>
+    <message id="entity_scoutingcamplocation_status">Active</message>
+    <message id="entity_scoutingcamplocation_status_help">Only active locations can be selected by managers.</message>
+
+    <!-- Scouting proposal overview -->
+    <message id="entity_scoutingproposal">Scouting player suggestion</message>
+    <message id="entity_scoutingproposal_created_date">Created on</message>
+    <message id="entity_scoutingproposal_team_id">Club</message>
+    <message id="entity_scoutingproposal_camp_id">Camp</message>
+    <message id="entity_scoutingproposal_scout_id">Scout</message>
+    <message id="entity_scoutingproposal_location_id">Location</message>
+    <message id="entity_scoutingproposal_name">Player</message>
+    <message id="entity_scoutingproposal_firstname">First name</message>
+    <message id="entity_scoutingproposal_lastname">Last name</message>
+    <message id="entity_scoutingproposal_birthday">Date of birth</message>
+    <message id="entity_scoutingproposal_age">Age</message>
+    <message id="entity_scoutingproposal_nation">Nation</message>
+    <message id="entity_scoutingproposal_position">Position</message>
+    <message id="entity_scoutingproposal_position_main">Primary position</message>
+    <message id="entity_scoutingproposal_position_second">Secondary position</message>
+
+    <!-- Real hidden proposal values, admin only -->
+    <message id="entity_scoutingproposal_real_w_staerke">Actual ability</message>
+    <message id="entity_scoutingproposal_real_w_staerke_max">Actual maximum ability</message>
+    <message id="entity_scoutingproposal_real_w_talent">Actual talent</message>
+    <message id="entity_scoutingproposal_real_w_technik">Actual technique</message>
+    <message id="entity_scoutingproposal_real_w_kondition">Actual stamina</message>
+    <message id="entity_scoutingproposal_real_w_frische">Actual fitness</message>
+    <message id="entity_scoutingproposal_real_w_zufriedenheit">Actual satisfaction</message>
+    <message id="entity_scoutingproposal_real_w_passing">Actual passing</message>
+    <message id="entity_scoutingproposal_real_w_shooting">Actual shooting</message>
+    <message id="entity_scoutingproposal_real_w_heading">Actual heading</message>
+    <message id="entity_scoutingproposal_real_w_tackling">Actual tackling</message>
+    <message id="entity_scoutingproposal_real_w_freekick">Actual free kicks</message>
+    <message id="entity_scoutingproposal_real_w_pace">Actual pace</message>
+    <message id="entity_scoutingproposal_real_w_creativity">Actual creativity</message>
+    <message id="entity_scoutingproposal_real_w_influence">Actual influence</message>
+    <message id="entity_scoutingproposal_real_w_flair">Actual flair</message>
+    <message id="entity_scoutingproposal_real_w_penalty">Actual penalties</message>
+    <message id="entity_scoutingproposal_real_w_penalty_killing">Actual penalty saving</message>
+
+    <!-- Reported proposal values shown to managers -->
+    <message id="entity_scoutingproposal_reported_strength">Reported strength</message>
+    <message id="entity_scoutingproposal_reported_talent">Reported talent</message>
+    <message id="entity_scoutingproposal_reported_potential">Reported potential</message>
+    <message id="entity_scoutingproposal_reported_summary">Scout report</message>
+
+    <message id="entity_scoutingproposal_transfer_fee">Transfer fee</message>
+    <message id="entity_scoutingproposal_salary">Salary</message>
+    <message id="entity_scoutingproposal_contract_matches">Contract length</message>
+    <message id="entity_scoutingproposal_expires_date">Expiry date</message>
+    <message id="entity_scoutingproposal_expires_after_matches">Remaining matches</message>
+    <message id="entity_scoutingproposal_status">Status</message>
+    <message id="entity_scoutingproposal_accepted_date">Signed on</message>
+    <message id="entity_scoutingproposal_rejected_date">Rejected on</message>
+    <message id="entity_scoutingproposal_created_player_id">Created player</message>
+
+</messages>

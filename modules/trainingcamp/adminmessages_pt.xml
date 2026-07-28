@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_trainingcamp_min_days">Duração mínima do estágio</message> 
+	<message id="settings_label_trainingcamp_min_days_help">em dias</message> 
+	
+	<message id="settings_label_trainingcamp_max_days">Duração máxima do estágio</message> 
+	<message id="settings_label_trainingcamp_max_days_help">em dias</message> 
+	
+	<message id="settings_label_trainingcamp_booking_max_days_in_future">Reserva mais tardia</message> 
+	<message id="settings_label_trainingcamp_booking_max_days_in_future_help">em dias; até quantos dias no futuro pode ser reservado um estágio.</message> 
+</messages>

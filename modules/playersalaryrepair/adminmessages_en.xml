@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="player_salary_repair_navlabel">Check player salaries</message>
+    <message id="player_salary_repair_title">Check player salaries</message>
+    <message id="player_salary_repair_intro">Specifically checks for the known factor-100 error. Before every automatic correction, the old values are backed up in a dedicated log table.</message>
+    <message id="player_salary_repair_error">Error</message>
+    <message id="player_salary_repair_demo_blocked">Database changes are blocked in demo mode.</message>
+    <message id="player_salary_repair_confirmation_required">Please select the safety confirmation.</message>
+    <message id="player_salary_repair_success">Correction completed</message>
+    <message id="player_salary_repair_success_detail">%d player salaries were backed up and divided by 100.</message>
+    <message id="player_salary_repair_nothing_to_do">No matching factor-100 records were found.</message>
+    <message id="player_salary_repair_candidates">Suspicious records</message>
+    <message id="player_salary_repair_old_total">Salary total before</message>
+    <message id="player_salary_repair_new_total">Salary total after</message>
+    <message id="player_salary_repair_rule">Check rule</message>
+    <message id="player_salary_repair_rule_detail">Active, club present, positive market value, salary of at least EUR 100,000 and a result after division between EUR 500 and EUR 50,000.</message>
+    <message id="player_salary_repair_confirm_dialog">The displayed salaries will be backed up and divided by 100. Continue?</message>
+    <message id="player_salary_repair_confirm_checkbox">I confirm the correction of the displayed factor-100 records.</message>
+    <message id="player_salary_repair_execute">Automatically correct factor-100 salaries</message>
+    <message id="player_salary_repair_preview">Preview</message>
+    <message id="player_salary_repair_player">Player</message>
+    <message id="player_salary_repair_club">Club</message>
+    <message id="player_salary_repair_league">League</message>
+    <message id="player_salary_repair_position">Position</message>
+    <message id="player_salary_repair_strength">Strength</message>
+    <message id="player_salary_repair_market_value">Market value</message>
+    <message id="player_salary_repair_old_salary">Salary before</message>
+    <message id="player_salary_repair_new_salary">Salary after</message>
+    <message id="player_salary_repair_clean">No factor-100 salaries were found at present.</message>
+    <message id="player_salary_repair_history">Recent corrections</message>
+    <message id="player_salary_repair_date">Date</message>
+    <message id="player_salary_repair_no_history">No correction has been logged yet.</message>
+</messages>

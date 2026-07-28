@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="register_navlabel">Registar</message>
+    <message id="registration_disabled">O registo de utilizadores está atualmente desativado pelo administrador.</message>
+    <message id="registration_title">Registar-se como utilizador</message>
+    <message id="registration_password_repeat">Repetir palavra-passe</message>
+    <message id="registration_email_repeat">Repetir correio eletrónico</message>
+    <message id="registration_submit_button">Registar</message>
+    
+    <message id="registration_illegal_username">O nome de utilizador indicado não é permitido.</message>
+    <message id="registration_repeated_password_notmatching">A palavra-passe repetida não corresponde à palavra-passe introduzida inicialmente.</message>
+    <message id="registration_repeated_email_notmatching">O endereço de correio eletrónico repetido não corresponde ao endereço introduzido inicialmente.</message>
+    <message id="registration_user_exists">O nome de utilizador ou o endereço de correio eletrónico já está a ser utilizado.</message>
+    <message id="registration_max_number_users_exceeded">Neste momento, não podem registar-se mais utilizadores.</message>
+    
+    <message id="registration_invalidcaptcha">O código de segurança ("Captcha") foi introduzido incorretamente.</message>
+    
+    
+    <message id="register-success_navlabel">Registo enviado</message>
+    <message id="register-success_message_title">Registo enviado - verifique o correio eletrónico</message>
+    <message id="register-success_message_content">Para verificar a autenticidade do endereço de correio eletrónico indicado, o sistema enviou-lhe automaticamente uma mensagem com uma ligação de ativação.</message>
+	<message id="register-success_nextstep">Verifique agora o seu correio eletrónico e siga as instruções da mensagem que enviámos. A mensagem poderá chegar com algum atraso.</message>
+    
+	<message id="activation_email_subject">Concluir o seu registo</message>
+	<message id="activation_email_greeting">Bom dia,</message>
+	<message id="activation_email_introduction">para concluir o seu registo de utilizador, aceda ao seguinte endereço da Internet:</message>
+	<message id="activation_email_ending">Se não se registou connosco e suspeita de uma utilização indevida do seu endereço de correio eletrónico, responda a esta mensagem.</message>
+	
+</messages>

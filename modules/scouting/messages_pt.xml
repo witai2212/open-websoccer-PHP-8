@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <!-- Navigation / page -->
+    <message id="scouting_navlabel">Observação</message>
+    <message id="scouting_title">Observação</message>
+    <message id="scouting_message">Observação</message>
+    <message id="scouting_intro">Desenvolva o seu departamento de prospeção, contrate olheiros e organize campos de prospeção em todo o mundo para descobrir novos jogadores.</message>
+
+    <!-- Sections -->
+    <message id="scouting_department">Departamento de prospeção</message>
+    <message id="scouting_department_missing">O seu clube ainda não possui um departamento de prospeção.</message>
+    <message id="scouting_department_missing_info">Sem um departamento de prospeção, não pode contratar olheiros nem abrir campos de prospeção.</message>
+    <message id="scouting_department_build">Criar departamento de prospeção</message>
+    <message id="scouting_department_upgrade">Melhorar departamento de prospeção</message>
+    <message id="scouting_department_level">Nível</message>
+    <message id="scouting_department_status">Estado</message>
+    <message id="scouting_department_active">Ativo</message>
+    <message id="scouting_department_inactive">Inativo</message>
+    <message id="scouting_department_maintenance_fee">Manutenção por jornada</message>
+    <message id="scouting_department_maintenance_fee">Manutenção do departamento de prospeção</message>
+    <message id="scouting_scout_fee">Honorários do olheiro</message>
+    <message id="scouting_scout_hire_fee">Taxa de contratação do olheiro</message>
+    <message id="scouting_camp_fee">Custos do campo de prospeção</message>
+    <message id="scouting_department_build_cost">Custo de construção</message>
+    <message id="scouting_department_max_scouts">Máx. olheiros</message>
+    <message id="scouting_department_max_camps">Máx. estágios</message>
+    <message id="scouting_department_next_level">Próximo nível de melhoria</message>
+    <message id="scouting_department_no_next_level">Foi atingido o nível máximo de melhoria.</message>
+
+    <!-- Scouts -->
+    <message id="scouting_team_scouts">Olheiros contratados</message>
+    <message id="scouting_free_scouts">Olheiros disponíveis</message>
+    <message id="scouting_scout">Olheiro</message>
+    <message id="scouting_name">Nome</message>
+    <message id="scouting_nation">País</message>
+    <message id="scouting_speciality">Especialidade</message>
+    <message id="scouting_fee">Custo por jornada</message>
+    <message id="scouting_hire_fee">Taxa de contratação</message>
+    <message id="scouting_hire_fee_info">Ao contratar, é cobrada de imediato uma taxa de contratação não reembolsável. Os honorários do olheiro por jornada são cobrados adicionalmente.</message>
+    <message id="scouting_team_matches">Jogos restantes</message>
+    <message id="scouting_profile">Avaliação</message>
+    <message id="scouting_profile_unknown">Desconhecida</message>
+    <message id="scouting_profile_junior">Olheiro júnior</message>
+    <message id="scouting_profile_solid">Olheiro competente</message>
+    <message id="scouting_profile_experienced">Olheiro experiente</message>
+    <message id="scouting_profile_renowned">Olheiro de renome</message>
+    <message id="scouting_competence_hidden">A competência real de um olheiro não é visível. Só reconhecerá a sua qualidade pelos resultados.</message>
+    <message id="no_scouts">De momento, não há olheiros disponíveis.</message>
+    <message id="no_scouts_hired">Não contratou nenhum olheiro.</message>
+    <message id="no_free_scouts">Não há olheiros livres disponíveis.</message>
+    <message id="scouting_scout_speciality_already_covered">Posição já coberta</message>
+    <message id="scouting_max_scouts_reached">Já contratou o número máximo de olheiros.</message>
+
+    <!-- Camps -->
+    <message id="scouting_camps">Campos de prospeção</message>
+    <message id="scouting_create_camp">Abrir campo de prospeção</message>
+    <message id="scouting_active_camps">Campos de prospeção ativos</message>
+    <message id="scouting_no_camps">Atualmente, não gere nenhum campo de prospeção.</message>
+    <message id="scouting_camp_location">Local</message>
+    <message id="scouting_camp_country">País</message>
+    <message id="scouting_camp_continent">Continente</message>
+    <message id="scouting_camp_scout">Olheiro atribuído</message>
+    <message id="scouting_camp_position">Posição</message>
+    <message id="scouting_camp_any_position">Todas as posições</message>
+    <message id="scouting_camp_age_range">Idade</message>
+    <message id="scouting_camp_strength_range">Intervalo de força</message>
+    <message id="scouting_camp_budget_range">Orçamento de transferências</message>
+    <message id="scouting_camp_fee_per_matchday">Custo por jornada</message>
+    <message id="scouting_camp_next_proposal">Próxima proposta</message>
+    <message id="scouting_camp_matches">Jogos</message>
+    <message id="scouting_camp_status">Estado</message>
+    <message id="scouting_camp_active">Ativo</message>
+    <message id="scouting_camp_inactive">Inativo</message>
+    <message id="scouting_camp_no_locations">Não há locais adequados disponíveis para o campo.</message>
+    <message id="scouting_camp_requires_department">Para organizar campos de prospeção, precisa primeiro de um departamento de prospeção.</message>
+    <message id="scouting_camp_requires_scout">É necessário atribuir um olheiro ao campo de prospeção.</message>
+    <message id="scouting_camp_limit_reached">Atingiu o número máximo de campos de prospeção ativos.</message>
+    <message id="scouting_camp_strength_hidden_info">A força máxima real permanece oculta. O intervalo de força escolhido apenas determina os jogadores procurados.</message>
+
+    <!-- Proposals -->
+    <message id="scouting_proposals">Propostas de jogadores</message>
+    <message id="scouting_open_proposals">Propostas de jogadores em aberto</message>
+    <message id="scouting_no_proposals">Atualmente, não há propostas de jogadores.</message>
+    <message id="scouting_proposal_player">Jogador</message>
+    <message id="scouting_proposal_age">Idade</message>
+    <message id="scouting_proposal_nation">Nação</message>
+    <message id="scouting_proposal_position">Posição</message>
+    <message id="scouting_proposal_strength">Força estimada</message>
+    <message id="scouting_proposal_potential">Potencial estimado</message>
+    <message id="scouting_proposal_talent">Talento estimado</message>
+    <message id="scouting_proposal_traits">Capacidades especiais detetadas</message>
+    <message id="scouting_proposal_no_traits_reported">nenhuma detetada</message>
+    <message id="scouting_proposal_summary">Relatório do olheiro</message>
+    <message id="scouting_proposal_transfer_fee">Indemnização</message>
+    <message id="scouting_proposal_salary">Salário</message>
+    <message id="scouting_proposal_contract_matches">Duração do contrato</message>
+    <message id="scouting_proposal_expires_after_matches">Disponível durante</message>
+    <message id="scouting_proposal_generated_by">Encontrado por</message>
+    <message id="scouting_proposal_status">Estado</message>
+    <message id="scouting_proposal_status_open">Aberto</message>
+    <message id="scouting_proposal_status_accepted">Contratado</message>
+    <message id="scouting_proposal_status_rejected">Rejeitado</message>
+    <message id="scouting_proposal_status_expired">Expirado</message>
+    <message id="scouting_proposal_report_uncertain">Este relatório é incerto. Os valores reais podem diferir significativamente.</message>
+    <message id="scouting_proposal_report_reliable">Este relatório é considerado relativamente fiável, mas continua a ser uma estimativa.</message>
+
+    <!-- Talent / potential labels -->
+    <message id="scouting_unknown">Desconhecida</message>
+    <message id="scouting_low">Baixo</message>
+    <message id="scouting_medium">Médio</message>
+    <message id="scouting_high">Alto</message>
+    <message id="scouting_very_high">Muito alto</message>
+    <message id="scouting_exceptional">Excecional</message>
+    <message id="scouting_approx">aprox.</message>
+    <message id="scouting_range_separator">até</message>
+
+    <!-- Actions / buttons -->
+    <message id="build-scouting-department">Criar departamento de prospeção</message>
+    <message id="upgrade-scouting-department">Melhorar departamento de prospeção</message>
+    <message id="hire-scout">Contratar</message>
+    <message id="fire-scout">Despedir</message>
+    <message id="create-scouting-camp">Abrir campo</message>
+    <message id="close-scouting-camp">Fechar campo</message>
+    <message id="accept-scouting-proposal">Contratar jogador</message>
+    <message id="reject-scouting-proposal">Rejeitar proposta</message>
+
+    <!-- Success messages -->
+    <message id="build_scouting_department_message">O departamento de prospeção foi criado.</message>
+    <message id="upgrade_scouting_department_message">O departamento de prospeção foi melhorado.</message>
+    <message id="hire_scout_message">O olheiro foi contratado.</message>
+    <message id="fire_scout_message">O olheiro foi despedido.</message>
+    <message id="create_scouting_camp_message">O campo de prospeção foi aberto.</message>
+    <message id="close_scouting_camp_message">O campo de prospeção foi fechado.</message>
+    <message id="accept_scouting_proposal_message">O jogador foi contratado.</message>
+    <message id="reject_scouting_proposal_message">A proposta de jogador foi rejeitada.</message>
+
+    <!-- Error messages -->
+    <message id="scouting_error_not_enabled">A prospeção está atualmente desativada.</message>
+    <message id="scouting_error_no_team">Não tens clube.</message>
+    <message id="scouting_error_no_department">Ainda não possui um departamento de prospeção.</message>
+    <message id="scouting_error_department_exists">O seu clube já possui um departamento de prospeção.</message>
+    <message id="scouting_error_department_max_level">O departamento de prospeção não pode ser melhorado mais.</message>
+    <message id="scouting_error_not_enough_budget">O seu clube não tem orçamento suficiente.</message>
+    <message id="scouting_error_scout_not_available">Este olheiro não está disponível.</message>
+    <message id="scouting_error_scout_limit_reached">Não pode contratar mais olheiros.</message>
+    <message id="scouting_error_scout_speciality_exists">Já possui um olheiro para esta posição.</message>
+    <message id="scouting_error_scout_not_owned">Este olheiro não pertence ao seu clube.</message>
+    <message id="scouting_error_location_not_available">Este local de campo não está disponível.</message>
+    <message id="scouting_error_location_level_required">Para este local, o departamento de prospeção tem de ser melhorado.</message>
+    <message id="scouting_error_invalid_age_range">O intervalo etário selecionado é inválido.</message>
+    <message id="scouting_error_invalid_strength_range">O intervalo de força selecionado é inválido.</message>
+    <message id="scouting_error_invalid_budget_range">O intervalo de orçamento selecionado é inválido.</message>
+    <message id="scouting_error_camp_not_found">O campo de prospeção não foi encontrado.</message>
+    <message id="scouting_error_camp_not_owned">Este campo de prospeção não pertence ao seu clube.</message>
+    <message id="scouting_error_proposal_not_found">A proposta de jogador não foi encontrada.</message>
+    <message id="scouting_error_proposal_not_owned">Esta proposta de jogador não pertence ao seu clube.</message>
+    <message id="scouting_error_proposal_not_open">Esta proposta de jogador já não está em aberto.</message>
+    <message id="scouting_error_proposal_expired">Esta proposta de jogador expirou.</message>
+    <message id="scouting_error_player_create_failed">Não foi possível criar o jogador.</message>
+
+    <!-- Info texts -->
+    <message id="info">Informação: a competência real de um olheiro está oculta. Os olheiros têm custos por jornada e só estão disponíveis durante um número limitado de jogos.</message>
+    <message id="info_fire_scout">Tenha em atenção: se despedir um olheiro, a sua atividade termina imediatamente.</message>
+    <message id="scouting_info_hidden_values">O talento e a força máxima estão sempre ocultos e são apenas estimados de forma aproximada pelos relatórios dos olheiros.</message>
+    <message id="scouting_info_matchday_costs">O departamento de prospeção, os olheiros e os campos geram custos contínuos por jornada.</message>
+    <message id="scouting_info_proposals">Os campos de prospeção apresentam novas propostas de jogadores em intervalos irregulares. A qualidade e a precisão podem variar muito consoante o local, o olheiro e o orçamento.</message>
+
+
+
+    <!-- Additional page labels -->
+    <message id="scouting_current_budget">Orçamento atual do clube</message>
+    <message id="scouting_budget">Orçamento</message>
+    <message id="scouting_available_locations">Locais disponíveis</message>
+    <message id="scouting_filter">Filtros de pesquisa</message>
+    <message id="scouting_camp_open_count">Campos ativos</message>
+    <message id="scouting_err_department_exists">O seu clube já possui um departamento de prospeção.</message>
+    <message id="scouting_err_department_missing">Precisa primeiro de um departamento de prospeção ativo.</message>
+    <message id="scouting_err_department_max_level">O departamento de prospeção já atingiu o nível máximo.</message>
+    <message id="scouting_err_not_enough_budget">O orçamento do clube não é suficiente para esta ação.</message>
+    <message id="scouting_err_max_scouts_reached">Já contratou o número máximo de olheiros.</message>
+    <message id="scouting_err_scout_not_available">Este olheiro já não está disponível.</message>
+    <message id="scouting_err_scout_speciality_exists">Já possui um olheiro para esta posição.</message>
+    <message id="scouting_err_scout_not_owned">Este olheiro não pertence ao seu clube.</message>
+    <message id="scouting_err_max_camps_reached">Já atingiu o número máximo de campos de prospeção ativos.</message>
+    <message id="scouting_err_location_not_available">Este local de prospeção não está disponível para o seu departamento.</message>
+    <message id="scouting_err_proposal_not_available">Esta proposta de jogador já não está disponível.</message>
+    <message id="scouting_department_build_cost">Custo de construção</message>
+    <message id="scouting_department_upgrade_cost">Custos de melhoria</message>
+    <message id="scouting_proposal_transfer_fee">Contratar jogador observado</message>
+    <message id="option_Torwart">Guarda-redes</message>
+    <message id="option_Abwehr">Defesa</message>
+    <message id="option_Mittelfeld">Meio-campo</message>
+    <message id="option_Sturm">Ataque</message>
+    
+    <message id="activitylog_build-scouting-department">%s criou um departamento de prospeção.</message>
+    <message id="activitylog_upgrade-scouting-department">%s melhorou o seu departamento de prospeção.</message>
+    <message id="activitylog_hire-scout">%s contratou um olheiro.</message>
+    <message id="activitylog_fire-scout">%s despediu um olheiro.</message>
+    <message id="activitylog_create-scouting-camp">%s abriu um campo de prospeção.</message>
+    <message id="activitylog_close-scouting-camp">%s fechou um campo de prospeção.</message>
+    <message id="activitylog_accept-scouting-proposal">%s contratou um jogador observado.</message>
+    <message id="activitylog_reject-scouting-proposal">%s rejeitou uma proposta de prospeção.</message>
+    
+    <!-- Account statement texts -->
+    <message id="scouting_camp">Campo de prospeção</message>
+    <message id="scouting_camp_fee">Custos do campo de prospeção</message>
+
+</messages>

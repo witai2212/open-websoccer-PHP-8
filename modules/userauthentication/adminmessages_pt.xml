@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_authentication_mechanism">Mecanismos de autenticação</message> 
+	<message id="settings_label_authentication_mechanism_help">Lista de classes PHP que implementam IUserAuthentification. Por exemplo, <em>SessionBasedUserAuthentication</em> para o início de sessão através da sessão própria da aplicação.</message> 
+</messages>

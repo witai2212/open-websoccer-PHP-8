@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_rivalry">Rivalidade</message>
+    <message id="entity_rivalry_team1_id">Equipa 1</message>
+    <message id="entity_rivalry_team2_id">Equipa 2</message>
+    <message id="entity_rivalry_strength">Intensidade da rivalidade</message>
+    <message id="entity_rivalry_manual">Manual</message>
+    <message id="entity_rivalry_active">Ativa</message>
+    <message id="entity_rivalry_created_date">Data de criação</message>
+    <message id="entity_rivalry_updated_date">Data de atualização</message>
+</messages>

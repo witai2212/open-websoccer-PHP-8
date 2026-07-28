@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     
-    <message id="googlepluslogin_failure">The Log In via Google+ has been cancelled.</message>
-    <message id="googlepluslogin_success">Successfully signed in!</message>
-    <message id="googleplus_login_button">Log In with Google+</message>
+    <message id="googlepluslogin_failure">Login via Google+ was cancelled.</message>
+    <message id="googlepluslogin_success">Successfully logged in via Google+!</message>
+    <message id="googleplus_login_button">Log in with Google+</message>
     
 </messages>

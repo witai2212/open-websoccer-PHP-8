@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="shoutbox_title">Shoutbox</message>
+    <message id="shoutbox_messageinput_placeholder">A sua mensagem...</message>
+    <message id="shoutbox_button_go">Enviar</message>
+    
+    <message id="shoutbox_hiddensubmit_note">Tem de iniciar sessão e abrir um relatório de jogo para poder escrever mensagens.</message>
+</messages>

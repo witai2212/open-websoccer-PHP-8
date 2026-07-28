@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="entity_stadium">Estadio</message>
+	<message id="entity_stadium_name">Nombre</message>
+	<message id="entity_stadium_verein">Club</message>
+	<message id="entity_stadium_stadt">Ciudad</message>
+	<message id="entity_stadium_land">País</message>
+	<message id="entity_stadium_picture">Imagen</message>
+	<message id="entity_stadium_p_steh">Localidades de pie</message>
+	<message id="entity_stadium_p_sitz">Asientos</message>
+	<message id="entity_stadium_p_haupt_steh">Localidades de pie (tribuna principal)</message>
+	<message id="entity_stadium_p_haupt_sitz">Asientos (tribuna principal)</message>
+    <message id="entity_stadium_p_vip">Palcos VIP</message>
+    
+    <message id="entity_stadiumbuilder">Constructor del estadio</message>
+    <message id="entity_stadiumbuilder_name">Nombre</message>
+    <message id="entity_stadiumbuilder_picture">Logotipo de la empresa</message>
+    <message id="entity_stadiumbuilder_fixedcosts">Costes fijos</message>
+    <message id="entity_stadiumbuilder_fixedcosts_help">Costes que se cobran independientemente del número de plazas que se construyan.</message>
+    <message id="entity_stadiumbuilder_cost_per_seat">Coste por plaza</message>
+    <message id="entity_stadiumbuilder_cost_per_seat_help">Se añade a los costes configurados en "Ajustes". También puede ser negativo.</message>
+    <message id="entity_stadiumbuilder_construction_time_days">Tiempo de construcción por 5.000 plazas</message>
+    <message id="entity_stadiumbuilder_construction_time_days_help">en días</message>
+    <message id="entity_stadiumbuilder_construction_time_days_min">Tiempo mínimo de construcción</message>
+    <message id="entity_stadiumbuilder_construction_time_days_min_help">en días</message>
+    <message id="entity_stadiumbuilder_min_stadium_size">Tamaño mínimo del estadio</message>
+    <message id="entity_stadiumbuilder_min_stadium_size_help">Número mínimo de plazas que debe tener ya el estadio para que este constructor se interese por el encargo. Permite ampliar los estadios por fases.</message>
+	<message id="entity_stadiumbuilder_max_stadium_size">Tamaño máximo del estadio</message>
+	<message id="entity_stadiumbuilder_max_stadium_size_help">0 para no aplicar ninguna limitación.</message>
+	<message id="entity_stadiumbuilder_reliability">Fiabilidad</message>
+	<message id="entity_stadiumbuilder_reliability_help">100% significa que la ampliación del estadio estará terminada con seguridad al finalizar el plazo calculado. Con valores inferiores al 100%, la ampliación puede retrasarse, incluso varias veces.</message>
+	<message id="entity_stadiumbuilder_premiumfee">Cuota premium</message>
+
+	<message id="entity_stadiumconstruction">Ampliación del estadio</message>
+	<message id="entity_stadiumconstruction_team_id">Club</message>
+	<message id="entity_stadiumconstruction_builder_id">Constructor</message>
+	<message id="entity_stadiumconstruction_started">Encargo realizado</message>
+	<message id="entity_stadiumconstruction_deadline">Finalización prevista</message>
+	<message id="entity_stadiumconstruction_p_steh">Número de localidades de pie</message>
+	<message id="entity_stadiumconstruction_p_sitz">Número de asientos</message>
+	<message id="entity_stadiumconstruction_p_haupt_steh">Número de localidades de pie (grada principal)</message>
+	<message id="entity_stadiumconstruction_p_haupt_sitz">Número de asientos (grada principal)</message>
+	<message id="entity_stadiumconstruction_p_vip">Número de palcos VIP</message>
+	
+	<message id="entity_stadium_level_pitch">Estado del césped</message>
+	<message id="entity_stadium_level_pitch_help">Entre 0 y 5.</message>
+	<message id="entity_stadium_level_videowall">Actualidad de la pantalla gigante</message>
+	<message id="entity_stadium_level_videowall_help">Entre 0 y 5.</message>
+	<message id="entity_stadium_level_seatsquality">Estado de los asientos</message>
+	<message id="entity_stadium_level_seatsquality_help">Entre 0 y 5.</message>
+	<message id="entity_stadium_level_vipquality">Estado de los palcos VIP</message>
+	<message id="entity_stadium_level_vipquality_help">Entre 0 y 5.</message>
+	
+	<message id="entity_stadium_maintenance_pitch">Próximo mantenimiento: césped</message>
+	<message id="entity_stadium_maintenance_pitch_help">Número de partidos en casa.</message>
+	
+	<message id="entity_stadium_maintenance_videowall">Próximo mantenimiento: pantalla gigante</message>
+	<message id="entity_stadium_maintenance_videowall_help">Número de partidos en casa.</message>
+	
+	<message id="entity_stadium_maintenance_seatsquality">Próximo mantenimiento: asientos</message>
+	<message id="entity_stadium_maintenance_seatsquality_help">Número de partidos en casa.</message>
+	
+	<message id="entity_stadium_maintenance_vipquality">Próximo mantenimiento: palcos VIP</message>
+	<message id="entity_stadium_maintenance_vipquality_help">Número de partidos en casa.</message>
+</messages>

@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+
+    <!-- Navigation / page -->
+    <message id="scouting_navlabel">Ojeo</message>
+    <message id="scouting_title">Ojeo</message>
+    <message id="scouting_message">Ojeo</message>
+    <message id="scouting_intro">Desarrolla tu departamento de ojeadores, contrata ojeadores y organiza campus de scouting por todo el mundo para descubrir nuevos jugadores.</message>
+
+    <!-- Sections -->
+    <message id="scouting_department">Departamento de ojeadores</message>
+    <message id="scouting_department_missing">Tu club todavía no dispone de un departamento de ojeadores.</message>
+    <message id="scouting_department_missing_info">Sin un departamento de ojeadores no puedes contratar ojeadores ni abrir campus de scouting.</message>
+    <message id="scouting_department_build">Crear departamento de ojeadores</message>
+    <message id="scouting_department_upgrade">Mejorar departamento de ojeadores</message>
+    <message id="scouting_department_level">Nivel</message>
+    <message id="scouting_department_status">Estado</message>
+    <message id="scouting_department_active">Activo</message>
+    <message id="scouting_department_inactive">Inactivo</message>
+    <message id="scouting_department_maintenance_fee">Mantenimiento por jornada</message>
+    <message id="scouting_department_maintenance_fee">Mantenimiento del departamento de ojeadores</message>
+    <message id="scouting_scout_fee">Honorarios del ojeador</message>
+    <message id="scouting_scout_hire_fee">Tasa de contratación del ojeador</message>
+    <message id="scouting_camp_fee">Costes del campus de scouting</message>
+    <message id="scouting_department_build_cost">Coste de construcción</message>
+    <message id="scouting_department_max_scouts">Máx. ojeadores</message>
+    <message id="scouting_department_max_camps">Máx. concentraciones</message>
+    <message id="scouting_department_next_level">Siguiente nivel de mejora</message>
+    <message id="scouting_department_no_next_level">Se ha alcanzado el nivel máximo de mejora.</message>
+
+    <!-- Scouts -->
+    <message id="scouting_team_scouts">Ojeadores contratados</message>
+    <message id="scouting_free_scouts">Ojeadores disponibles</message>
+    <message id="scouting_scout">Ojeador</message>
+    <message id="scouting_name">Nombre</message>
+    <message id="scouting_nation">País</message>
+    <message id="scouting_speciality">Especialidad</message>
+    <message id="scouting_fee">Coste por jornada</message>
+    <message id="scouting_hire_fee">Tasa de contratación</message>
+    <message id="scouting_hire_fee_info">Al contratar se cobra de inmediato una tasa de contratación no reembolsable. Además, seguirá cobrándose el honorario del ojeador por jornada.</message>
+    <message id="scouting_team_matches">Partidos restantes</message>
+    <message id="scouting_profile">Evaluación</message>
+    <message id="scouting_profile_unknown">Desconocida</message>
+    <message id="scouting_profile_junior">Ojeador juvenil</message>
+    <message id="scouting_profile_solid">Ojeador competente</message>
+    <message id="scouting_profile_experienced">Ojeador experimentado</message>
+    <message id="scouting_profile_renowned">Ojeador prestigioso</message>
+    <message id="scouting_competence_hidden">La competencia real de un ojeador no es visible. Solo podrás conocer su calidad por sus resultados.</message>
+    <message id="no_scouts">No hay ojeadores disponibles en este momento.</message>
+    <message id="no_scouts_hired">No has contratado ningún ojeador.</message>
+    <message id="no_free_scouts">No hay ojeadores libres disponibles.</message>
+    <message id="scouting_scout_speciality_already_covered">Posición ya cubierta</message>
+    <message id="scouting_max_scouts_reached">Ya has contratado el número máximo de ojeadores.</message>
+
+    <!-- Camps -->
+    <message id="scouting_camps">Campus de scouting</message>
+    <message id="scouting_create_camp">Abrir campus de scouting</message>
+    <message id="scouting_active_camps">Campus de scouting activos</message>
+    <message id="scouting_no_camps">Actualmente no gestionas ningún campus de scouting.</message>
+    <message id="scouting_camp_location">Ubicación</message>
+    <message id="scouting_camp_country">País</message>
+    <message id="scouting_camp_continent">Continente</message>
+    <message id="scouting_camp_scout">Ojeador asignado</message>
+    <message id="scouting_camp_position">Posición</message>
+    <message id="scouting_camp_any_position">Todas las posiciones</message>
+    <message id="scouting_camp_age_range">Edad</message>
+    <message id="scouting_camp_strength_range">Rango de fuerza</message>
+    <message id="scouting_camp_budget_range">Presupuesto de fichajes</message>
+    <message id="scouting_camp_fee_per_matchday">Coste por jornada</message>
+    <message id="scouting_camp_next_proposal">Siguiente propuesta</message>
+    <message id="scouting_camp_matches">Partidos</message>
+    <message id="scouting_camp_status">Estado</message>
+    <message id="scouting_camp_active">Activo</message>
+    <message id="scouting_camp_inactive">Inactivo</message>
+    <message id="scouting_camp_no_locations">No hay ubicaciones adecuadas disponibles para el campus.</message>
+    <message id="scouting_camp_requires_department">Para organizar campus de scouting primero necesitas un departamento de ojeadores.</message>
+    <message id="scouting_camp_requires_scout">Debe asignarse un ojeador al campus de scouting.</message>
+    <message id="scouting_camp_limit_reached">Has alcanzado el número máximo de campus de scouting activos.</message>
+    <message id="scouting_camp_strength_hidden_info">La fuerza máxima real permanece oculta. El rango de fuerza elegido solo determina qué jugadores se buscan.</message>
+
+    <!-- Proposals -->
+    <message id="scouting_proposals">Propuestas de jugadores</message>
+    <message id="scouting_open_proposals">Propuestas de jugadores abiertas</message>
+    <message id="scouting_no_proposals">Actualmente no hay propuestas de jugadores.</message>
+    <message id="scouting_proposal_player">Jugador</message>
+    <message id="scouting_proposal_age">Edad</message>
+    <message id="scouting_proposal_nation">Nación</message>
+    <message id="scouting_proposal_position">Posición</message>
+    <message id="scouting_proposal_strength">Fuerza estimada</message>
+    <message id="scouting_proposal_potential">Potencial estimado</message>
+    <message id="scouting_proposal_talent">Talento estimado</message>
+    <message id="scouting_proposal_traits">Habilidades especiales detectadas</message>
+    <message id="scouting_proposal_no_traits_reported">ninguna detectada</message>
+    <message id="scouting_proposal_summary">Informe del ojeador</message>
+    <message id="scouting_proposal_transfer_fee">Traspaso</message>
+    <message id="scouting_proposal_salary">Salario</message>
+    <message id="scouting_proposal_contract_matches">Duración del contrato</message>
+    <message id="scouting_proposal_expires_after_matches">Disponible durante</message>
+    <message id="scouting_proposal_generated_by">Encontrado por</message>
+    <message id="scouting_proposal_status">Estado</message>
+    <message id="scouting_proposal_status_open">Abierto</message>
+    <message id="scouting_proposal_status_accepted">Fichado</message>
+    <message id="scouting_proposal_status_rejected">Rechazado</message>
+    <message id="scouting_proposal_status_expired">Caducado</message>
+    <message id="scouting_proposal_report_uncertain">Este informe es poco fiable. Los valores reales pueden diferir considerablemente.</message>
+    <message id="scouting_proposal_report_reliable">Este informe se considera relativamente fiable, aunque sigue siendo una estimación.</message>
+
+    <!-- Talent / potential labels -->
+    <message id="scouting_unknown">Desconocida</message>
+    <message id="scouting_low">Bajo</message>
+    <message id="scouting_medium">Medio</message>
+    <message id="scouting_high">Alto</message>
+    <message id="scouting_very_high">Muy alto</message>
+    <message id="scouting_exceptional">Excepcional</message>
+    <message id="scouting_approx">aprox.</message>
+    <message id="scouting_range_separator">hasta</message>
+
+    <!-- Actions / buttons -->
+    <message id="build-scouting-department">Crear departamento de ojeadores</message>
+    <message id="upgrade-scouting-department">Mejorar departamento de ojeadores</message>
+    <message id="hire-scout">Contratar</message>
+    <message id="fire-scout">Despedir</message>
+    <message id="create-scouting-camp">Abrir campus</message>
+    <message id="close-scouting-camp">Cerrar campus</message>
+    <message id="accept-scouting-proposal">Fichar jugador</message>
+    <message id="reject-scouting-proposal">Rechazar propuesta</message>
+
+    <!-- Success messages -->
+    <message id="build_scouting_department_message">Se ha creado el departamento de ojeadores.</message>
+    <message id="upgrade_scouting_department_message">Se ha mejorado el departamento de ojeadores.</message>
+    <message id="hire_scout_message">El ojeador ha sido contratado.</message>
+    <message id="fire_scout_message">El ojeador ha sido despedido.</message>
+    <message id="create_scouting_camp_message">Se ha abierto el campus de scouting.</message>
+    <message id="close_scouting_camp_message">Se ha cerrado el campus de scouting.</message>
+    <message id="accept_scouting_proposal_message">El jugador ha sido fichado.</message>
+    <message id="reject_scouting_proposal_message">La propuesta de jugador ha sido rechazada.</message>
+
+    <!-- Error messages -->
+    <message id="scouting_error_not_enabled">El scouting está desactivado actualmente.</message>
+    <message id="scouting_error_no_team">No tienes club.</message>
+    <message id="scouting_error_no_department">Todavía no tienes un departamento de ojeadores.</message>
+    <message id="scouting_error_department_exists">Tu club ya dispone de un departamento de ojeadores.</message>
+    <message id="scouting_error_department_max_level">El departamento de ojeadores no puede mejorarse más.</message>
+    <message id="scouting_error_not_enough_budget">Tu club no tiene presupuesto suficiente.</message>
+    <message id="scouting_error_scout_not_available">Este ojeador no está disponible.</message>
+    <message id="scouting_error_scout_limit_reached">No puedes contratar más ojeadores.</message>
+    <message id="scouting_error_scout_speciality_exists">Ya tienes un ojeador para esta posición.</message>
+    <message id="scouting_error_scout_not_owned">Este ojeador no pertenece a tu club.</message>
+    <message id="scouting_error_location_not_available">Esta ubicación de campus no está disponible.</message>
+    <message id="scouting_error_location_level_required">Para esta ubicación debes mejorar más el departamento de ojeadores.</message>
+    <message id="scouting_error_invalid_age_range">El rango de edad seleccionado no es válido.</message>
+    <message id="scouting_error_invalid_strength_range">El rango de fuerza seleccionado no es válido.</message>
+    <message id="scouting_error_invalid_budget_range">El rango de presupuesto seleccionado no es válido.</message>
+    <message id="scouting_error_camp_not_found">No se ha encontrado el campus de scouting.</message>
+    <message id="scouting_error_camp_not_owned">Este campus de scouting no pertenece a tu club.</message>
+    <message id="scouting_error_proposal_not_found">No se ha encontrado la propuesta de jugador.</message>
+    <message id="scouting_error_proposal_not_owned">Esta propuesta de jugador no pertenece a tu club.</message>
+    <message id="scouting_error_proposal_not_open">Esta propuesta de jugador ya no está abierta.</message>
+    <message id="scouting_error_proposal_expired">Esta propuesta de jugador ha caducado.</message>
+    <message id="scouting_error_player_create_failed">No se ha podido crear el jugador.</message>
+
+    <!-- Info texts -->
+    <message id="info">Información: la competencia real de un ojeador está oculta. Los ojeadores cuestan dinero por jornada y solo están disponibles durante un número limitado de partidos.</message>
+    <message id="info_fire_scout">Ten en cuenta que, si despides a un ojeador, su trabajo terminará de inmediato.</message>
+    <message id="scouting_info_hidden_values">El talento y la fuerza máxima siempre están ocultos y los informes de los ojeadores solo ofrecen una estimación aproximada.</message>
+    <message id="scouting_info_matchday_costs">El departamento de ojeadores, los ojeadores y los campus generan costes continuos por jornada.</message>
+    <message id="scouting_info_proposals">Los campus de scouting generan nuevas propuestas de jugadores a intervalos irregulares. La calidad y la precisión pueden variar mucho según la ubicación, el ojeador y el presupuesto.</message>
+
+
+
+    <!-- Additional page labels -->
+    <message id="scouting_current_budget">Presupuesto actual del club</message>
+    <message id="scouting_budget">Presupuesto</message>
+    <message id="scouting_available_locations">Ubicaciones disponibles</message>
+    <message id="scouting_filter">Filtros de búsqueda</message>
+    <message id="scouting_camp_open_count">Campus activos</message>
+    <message id="scouting_err_department_exists">Tu club ya dispone de un departamento de ojeadores.</message>
+    <message id="scouting_err_department_missing">Primero necesitas un departamento de ojeadores activo.</message>
+    <message id="scouting_err_department_max_level">El departamento de ojeadores ya ha alcanzado el nivel máximo.</message>
+    <message id="scouting_err_not_enough_budget">El presupuesto del club no es suficiente para esta acción.</message>
+    <message id="scouting_err_max_scouts_reached">Ya has contratado el número máximo de ojeadores.</message>
+    <message id="scouting_err_scout_not_available">Este ojeador ya no está disponible.</message>
+    <message id="scouting_err_scout_speciality_exists">Ya tienes un ojeador para esta posición.</message>
+    <message id="scouting_err_scout_not_owned">Este ojeador no pertenece a tu club.</message>
+    <message id="scouting_err_max_camps_reached">Ya has alcanzado el número máximo de campus de scouting activos.</message>
+    <message id="scouting_err_location_not_available">Esta ubicación de scouting no está disponible para tu departamento.</message>
+    <message id="scouting_err_proposal_not_available">Esta propuesta de jugador ya no está disponible.</message>
+    <message id="scouting_department_build_cost">Coste de construcción</message>
+    <message id="scouting_department_upgrade_cost">Costes de mejora</message>
+    <message id="scouting_proposal_transfer_fee">Fichar jugador ojeado</message>
+    <message id="option_Torwart">Portero</message>
+    <message id="option_Abwehr">Defensa</message>
+    <message id="option_Mittelfeld">Centrocampo</message>
+    <message id="option_Sturm">Delantera</message>
+    
+    <message id="activitylog_build-scouting-department">%s ha creado un departamento de ojeadores.</message>
+    <message id="activitylog_upgrade-scouting-department">%s ha mejorado su departamento de ojeadores.</message>
+    <message id="activitylog_hire-scout">%s ha contratado un ojeador.</message>
+    <message id="activitylog_fire-scout">%s ha despedido un ojeador.</message>
+    <message id="activitylog_create-scouting-camp">%s ha abierto un campus de scouting.</message>
+    <message id="activitylog_close-scouting-camp">%s ha cerrado un campus de scouting.</message>
+    <message id="activitylog_accept-scouting-proposal">%s ha fichado un jugador ojeado.</message>
+    <message id="activitylog_reject-scouting-proposal">%s ha rechazado una propuesta de scouting.</message>
+    
+    <!-- Account statement texts -->
+    <message id="scouting_camp">Campus de scouting</message>
+    <message id="scouting_camp_fee">Costes del campus de scouting</message>
+
+</messages>

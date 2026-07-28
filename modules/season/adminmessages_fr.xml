@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="category_season_navlabel">Saisons</message>
+	<message id="complete-season_navlabel">Terminer la saison</message>
+    <message id="season_complete_title">Terminer les saisons</message>
+	<message id="season_complete_introduction">La sélection d'une saison la marque comme « terminée », met à jour les statistiques et verse les primes des sponsors. Il ne reste plus de matches de championnat à calculer pour les saisons suivantes :</message>
+    <message id="season_complete_noseasons">Aucune saison ne peut être terminée.</message>
+	<message id="season_complete_submit">Terminer la saison</message>
+    <message id="season_complete_label_playerdisableage">Âge de retraite des joueurs</message>
+	<message id="season_complete_label_playerdisableage_help">Les joueurs sont désactivés à partir de cet âge.</message>
+	
+	<message id="season_complete_label_target_missed_firemanager">Licencier automatiquement le manager si l'objectif de saison n'a pas été atteint.</message>
+	<message id="season_complete_label_target_missed_popularityreduction">Perte de popularité auprès des supporters</message>
+	<message id="season_complete_label_target_missed_popularityreduction_help">si l'objectif de saison n'est pas atteint. 0 pour aucun effet.</message>
+	
+	<message id="season_complete_label_target_missed_penalty">Pénalité financière</message>
+	<message id="season_complete_label_target_missed_penalty_help">si l'objectif de saison n'est pas atteint. 0 pour aucun effet.</message>
+	
+	<message id="season_complete_label_target_accomplished_reward">Prime en cas d'objectif atteint</message>
+	<message id="season_complete_label_target_accomplished_reward_help">si l'objectif de saison est atteint. 0 pour aucun effet.</message>
+	
+	<message id="schedulegenerator_navlabel">Générer le calendrier</message>
+	<message id="schedulegenerator_label">Générer une saison complète</message>
+	
+	<message id="schedulegenerator_label_league">Ligue</message>
+	<message id="schedulegenerator_label_seasonname">Nom de la nouvelle saison</message>
+	<message id="schedulegenerator_label_rounds">Nombre de tours</message>
+	<message id="schedulegenerator_label_rounds_help">2 signifie une phase aller et une phase retour</message>
+	<message id="schedulegenerator_label_firstmatchday">Date de la première journée</message>
+	<message id="schedulegenerator_label_timebreak">Pause entre deux journées</message>
+	<message id="schedulegenerator_label_timebreak_help">en jours. Les matches ont toujours lieu à la même heure que lors de la première journée.</message>
+	
+	<message id="schedulegenerator_label_timebreak_rounds">Pause supplémentaire entre deux tours</message>
+	<message id="schedulegenerator_label_timebreak_rounds_help">en jours.</message>
+	
+	<message id="schedulegenerator_err_noteams">La ligue ne contient aucune équipe.</message>
+	<message id="schedulegenerator_err_invalidrounds">Le nombre de tours doit être compris entre 1 et 10.</message>
+	<message id="schedulegenerator_err_invalidtimebreak">Le nombre de jours entre deux tours doit être compris entre 1 et 50.</message>
+	
+	<message id="new-season_navlabel">Créer une nouvelle saison</message>
+	
+	
+</messages>

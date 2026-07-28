@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    
+    <message id="error_access_denied">No tienes los permisos necesarios para esta página.</message>
+    <message id="logout_message_title">Has cerrado sesión correctamente. ¡Hasta la próxima!</message>
+    
+</messages>

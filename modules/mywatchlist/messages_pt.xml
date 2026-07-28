@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+    <message id="mywatchlist_navlabel">Lista de observação</message>
+    <message id="mywatchlist_title">Lista de observação</message>
+    <message id="mywatchlist_playername">Jogador</message>
+	<message id="mywatchlist_verein">Clube</message>
+	<message id="mywatchlist_alter">Idade</message>
+	<message id="mywatchlist_vertrag_spiele">Duração do contrato</message>
+	<message id="mywatchlist_position_main">Posição</message>
+	<message id="mywatchlist_position_second">Pos. 2</message>
+	<message id="mywatchlist_marktwert">Valor de mercado</message>
+	<message id="mywatchlist_scout_recommendation">Recomendação do olheiro</message>
+	<message id="mywatchlist_scout_score">Pontuação</message>
+	<message id="mywatchlist_scout_recommend_yes">Recomendado</message>
+	<message id="mywatchlist_scout_recommend_watch">Observar</message>
+	<message id="mywatchlist_scout_recommend_no">Não recomendado</message>
+	<message id="mywatchlist_scout_no_data">Sem dados do olheiro</message>
+	<message id="mywatchlist_scout_no_data_short">-</message>
+	<message id="mywatchlist_scout_no_matching_position">Nenhum olheiro adequado</message>
+	<message id="mywatchlist_noten_druchschnitt">Notas</message>
+	<message id="no_items">Não existem jogadores na lista de observação</message>
+	<message id="mywatchlist_delete">Eliminar</message>
+	
+	<message id="watchlist_remove_label">remover da lista de observação</message>
+	<message id="watchlist_remove_success">O jogador já não está na lista de observação.</message>
+	
+	<message id="mywatchlist_player_on_transferlist">No mercado de transferências</message>
+	<message id="mywatchlist_player_has_offer">Proposta apresentada</message>
+	
+	<message id="button_put_on_watchlist">Adicionar jogador à lista de observação</message>
+	<message id="button_delete_from_watchlist">Remover jogador da lista de observação</message>
+	<message id="watchlist_put_on_success">O jogador está agora na tua lista de observação</message>
+    
+</messages>

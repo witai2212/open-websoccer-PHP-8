@@ -1,43 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     
     <message id="category_season_navlabel">Seasons</message>
 	<message id="complete-season_navlabel">Complete season</message>
-	<message id="season_complete_title">End seasons</message>
-	<message id="season_complete_introduction">A selected season will be tagged as "completed", statistics will be updated and sponsor premiums will be payed. There are no open league matches anymore for the following seasons:</message>
-    <message id="season_complete_noseasons">No season available that can be ended.</message>
-    
-    <message id="season_complete_submit">End season</message>
-    
-    <message id="season_complete_label_playerdisableage">Players retirement age</message>
-	<message id="season_complete_label_playerdisableage_help">Players from this age will be disabled.</message>
+    <message id="season_complete_title">Complete seasons</message>
+	<message id="season_complete_introduction">Selecting a season marks it as "completed", updates statistics and pays out sponsor bonuses. There are no more league matches to calculate for the following seasons:</message>
+    <message id="season_complete_noseasons">No season can be completed.</message>
+	<message id="season_complete_submit">Complete season</message>
+    <message id="season_complete_label_playerdisableage">Player retirement age</message>
+	<message id="season_complete_label_playerdisableage_help">Players are disabled from this age onwards.</message>
 	
-	<message id="season_complete_label_target_missed_firemanager">Fire managers of teams which have not exceeded the season target.</message>
-	<message id="season_complete_label_target_missed_popularityreduction">Popularity Reduction</message>
-	<message id="season_complete_label_target_missed_popularityreduction_help">in case of not accomplished the season target. 0 for no consequences.</message>
+	<message id="season_complete_label_target_missed_firemanager">Automatically dismiss the manager if the season target was not achieved.</message>
+	<message id="season_complete_label_target_missed_popularityreduction">Loss of fan popularity</message>
+	<message id="season_complete_label_target_missed_popularityreduction_help">if the season target is not achieved. 0 for no effect.</message>
 	
-	<message id="season_complete_label_target_missed_penalty">Penalty</message>
-	<message id="season_complete_label_target_missed_penalty_help">in case of not accomplished the season target. 0 for no consequences.</message>
+	<message id="season_complete_label_target_missed_penalty">Penalty payment</message>
+	<message id="season_complete_label_target_missed_penalty_help">if the season target is not achieved. 0 for no effect.</message>
 	
-	<message id="season_complete_label_target_accomplished_reward">Reward for Accomplishment</message>
-	<message id="season_complete_label_target_accomplished_reward_help">in case of accomplished the season target. 0 for no consequences.</message>
+	<message id="season_complete_label_target_accomplished_reward">Reward for achieving target</message>
+	<message id="season_complete_label_target_accomplished_reward_help">if the season target is achieved. 0 for no effect.</message>
 	
-	<message id="schedulegenerator_navlabel">Generate Schedule</message>
-	<message id="schedulegenerator_label">Create a whole new season</message>
+	<message id="schedulegenerator_navlabel">Generate schedule</message>
+	<message id="schedulegenerator_label">Generate a complete season</message>
 	
 	<message id="schedulegenerator_label_league">League</message>
-	<message id="schedulegenerator_label_seasonname">The new season's name</message>
+	<message id="schedulegenerator_label_seasonname">Name of the new season</message>
 	<message id="schedulegenerator_label_rounds">Number of rounds</message>
-	<message id="schedulegenerator_label_rounds_help">2 means there will be a first and second round</message>
-	<message id="schedulegenerator_label_firstmatchday">Date of the first match day</message>
-	<message id="schedulegenerator_label_timebreak">Time break between two match days</message>
-	<message id="schedulegenerator_label_timebreak_help">in days. The matches are scheduled always at the same time of the first match day.</message>
-
+	<message id="schedulegenerator_label_rounds_help">2 means home and away rounds</message>
+	<message id="schedulegenerator_label_firstmatchday">Date of the first matchday</message>
+	<message id="schedulegenerator_label_timebreak">Break between two matchdays</message>
+	<message id="schedulegenerator_label_timebreak_help">in days. Matches always take place at the same time as on the first matchday.</message>
+	
 	<message id="schedulegenerator_label_timebreak_rounds">Additional break between two rounds</message>
 	<message id="schedulegenerator_label_timebreak_rounds_help">in days.</message>
 	
-	<message id="schedulegenerator_err_noteams">There are no teams in this league.</message>
+	<message id="schedulegenerator_err_noteams">There are no teams in the league.</message>
 	<message id="schedulegenerator_err_invalidrounds">The number of rounds must be between 1 and 10.</message>
-	<message id="schedulegenerator_err_invalidtimebreak">The number of daysbetween mach days must be between 1 and 50.</message>
+	<message id="schedulegenerator_err_invalidtimebreak">The number of days between two rounds must be between 1 and 50.</message>
+	
+	<message id="new-season_navlabel">Create new season</message>
+	
+	
 </messages>

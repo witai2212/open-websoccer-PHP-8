@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="activities_tab">Atividade</message>
+	<message id="activities_none_available_for_user">O utilizador não realizou nenhuma atividade relevante recentemente.</message>
+	<message id="activitylog_box_title">Atividade do utilizador</message>
+	
+	<message id="activitylog_save-formation">%s submeteu uma equipa titular.</message>
+	<message id="activitylog_select-captain">%s escolheu um novo capitão.</message>
+	<message id="activitylog_extend-contract">%s prolongou o contrato de um jogador.</message>
+	<message id="activitylog_save-tickets">%s definiu novos preços para os bilhetes.</message>
+	<message id="activitylog_sell-player">%s colocou um jogador no mercado de transferências.</message>
+	<message id="activitylog_transfer-bid">%s apresentou uma proposta por um jogador no mercado de transferências.</message>
+	<message id="activitylog_player-precontract">%s ofereceu a um jogador um contrato para a próxima época.</message>
+	<message id="activitylog_extend-stadium">%s encomendou a ampliação do estádio.</message>
+	<message id="activitylog_upgrade-stadium">%s mandou realizar trabalhos de manutenção no estádio.</message>
+	<message id="activitylog_execute-training">%s treinou a sua equipa.</message>
+	<message id="activitylog_dismiss-trainer">%s despediu um treinador.</message>
+	<message id="activitylog_book-camp">%s reservou um estágio de treino.</message>
+	<message id="activitylog_create-youthmatch-request">%s publicou um pedido de jogo para a equipa de formação.</message>
+	<message id="activitylog_sell-youthplayer">%s colocou um jogador da formação à venda.</message>
+	<message id="activitylog_directtransfer-offer">%s apresentou uma proposta de compra por um jogador.</message>
+	<message id="activitylog_report-absence">%s comunicou uma ausência.</message>
+	<message id="activitylog_return-from-absence">%s está de volta.</message>
+	<message id="activitylog_save-training-plan">%s ajustou o seu plano de treino.</message>
+	<message id="activitylog_save-individual-training">%s ajustou o treino individual.</message>
+	<message id="activitylog_hire-club-staff">%s contratou um membro da equipa técnica.</message>
+	<message id="activitylog_fire-club-staff">%s despediu um membro da equipa técnica.</message>
+	<message id="activitylog_managercareer_job_change">%s aceitou um novo cargo de treinador.</message>
+	<message id="activitylog_apply-medical-treatment">%s aplicou um tratamento médico.</message>
+	<message id="activitylog_clear-player-risk">%s autorizou um jogador a jogar apesar do risco.</message>
+	<message id="activitylog_build-youth-academy">%s construiu uma academia de formação.</message>
+	<message id="activitylog_upgrade-youth-academy">%s melhorou a sua academia de formação.</message>
+	<message id="activitylog_downgrade-youth-academy">%s reduziu o nível da sua academia de formação.</message>
+	<message id="activitylog_save-youth-academy-settings">%s ajustou as definições da academia de formação.</message>
+	
+	<message id="activitylog_sign-stadium-naming-contract">%s assinou um contrato de direitos de designação do estádio.</message>
+	<message id="activitylog_rename-stadium">%s alterou o nome do seu estádio.</message>
+	
+
+	<message id="activitylog_create-club-partnership-request">%s solicitou uma parceria entre clubes.</message>
+	<message id="activitylog_stop-club-partnership">%s terminou uma parceria entre clubes.</message>
+</messages>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="entity_league">Liga</message>
+	<message id="entity_league_name">Nome</message>
+	<message id="entity_league_kurz">Abreviatura</message>
+	<message id="entity_league_land">País</message>
+	<message id="entity_league_p_steh">Ocupação média dos lugares em pé</message>
+	<message id="entity_league_p_sitz">Ocupação média dos lugares sentados</message>
+	<message id="entity_league_p_haupt_steh">Ocupação média dos lugares em pé (bancada principal)</message>
+	<message id="entity_league_p_haupt_sitz">Ocupação média dos lugares sentados (bancada principal)</message>
+	<message id="entity_league_p_vip">Ocupação média dos camarotes VIP</message>
+	<message id="entity_league_preis_steh">Preço médio dos lugares em pé</message>
+	<message id="entity_league_preis_sitz">Preço médio dos lugares sentados</message>
+	<message id="entity_league_preis_vip">Preço médio dos camarotes VIP</message>
+</messages>

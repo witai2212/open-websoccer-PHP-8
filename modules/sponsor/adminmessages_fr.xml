@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_sponsor_matches">Journées du contrat de sponsoring</message>
+	<message id="settings_label_sponsor_matches_help">Uniquement pertinent pour les anciens contrats de sponsoring basés sur les matches. Les nouveaux contrats dynamiques courent jusqu'à la fin de la saison.</message>
+
+	<message id="settings_label_sponsor_earliest_matchday">Offres de sponsors : première journée possible</message>
+	<message id="settings_label_sponsor_earliest_matchday_help">Les managers ne peuvent sélectionner un sponsor qu'à partir de cette journée.</message>
+</messages>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="highscore_navlabel">Pontuação máxima</message>
+	<message id="highscore_title">Classificação de highscore dos utilizadores</message>
+	
+	<message id="highscore_rank">Posição</message>
+	<message id="highscore_user">Utilizador</message>
+	<message id="highscore_registration_date">Data de registo</message>
+	<message id="highscore_score">Pontos</message>
+	
+	<message id="user_navlabel">Perfil do utilizador</message>
+	
+	<message id="user_tab_profile">Perfil</message>
+	
+	<message id="user_visit_website">visitar</message>
+	
+	<message id="user_changepicture_button">Carregar imagem</message>
+	
+	<message id="history_tab">Histórico</message>
+	<message id="history_no_records">Ainda não existe histórico de carreira ou de épocas para este utilizador.</message>
+
+	<message id="user_profile_online">Online</message>
+	<message id="user_profile_clubs_title">Clubes</message>
+	<message id="user_profile_no_club">Atualmente não está associado a qualquer clube.</message>
+	<message id="user_profile_activity_title">Atividade</message>
+	<message id="user_profile_membership_days">Membro desde</message>
+	<message id="user_profile_profile_completed">Perfil preenchido</message>
+	<message id="user_profile_personal_title">Informações pessoais</message>
+	<message id="user_profile_no_personal_details">Não foram fornecidos dados pessoais.</message>
+	<message id="unit_days">Dias</message>
+	<message id="user_history_career_moves">Mudanças de clube</message>
+	<message id="user_history_seasons">Épocas</message>
+	<message id="user_history_cups">Percurso nas taças</message>
+	<message id="user_history_manager_timeline">Carreira de treinador</message>
+	<message id="user_history_no_previous_club">Sem clube anterior</message>
+	<message id="user_history_competition_timeline">Histórico das ligas</message>
+	<message id="user_history_cup_results">Histórico das taças</message>
+    <message id="user_profile_manager_competence">Competência do treinador</message>
+</messages>

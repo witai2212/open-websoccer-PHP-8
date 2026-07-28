@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	
+	<message id="settings_label_login_type">Type de connexion</message>  
+	
+	<message id="option_email">Connexion par e-mail</message>  
+	<message id="option_username">Connexion par nom d'utilisateur</message>  
+	
+	<message id="settings_label_login_method">Méthode de connexion</message>
+	<message id="settings_label_login_method_help">Nom de la classe qui implémente IUserLoginMethod. Permet l'intégration d'autres produits logiciels.</message>
+	
+	<message id="settings_label_login_allow_sendingpassword">Les utilisateurs peuvent demander l'envoi d'un nouveau mot de passe. Cette option doit être désactivée si la méthode de connexion standard n'est pas utilisée.</message>
+</messages>

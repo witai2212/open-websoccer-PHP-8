@@ -95,9 +95,56 @@ class LoanDataService {
         }
         $attribute = '';
         if ($bonus > 0) $attribute = self::applyDevelopmentBonus($cols, $info, $bonus);
+        /*
         $db->queryInsert(array('loan_id'=>(int)$loan['id'],'player_id'=>(int)$loan['player_id'],'match_id'=>(int)$match->id,'match_date'=>$websoccer->getNowAsTimestamp(),'minutes_played'=>$minutes,'grade'=>$grade,'goals'=>$goals,'assists'=>$assists,'destination_quality'=>$quality,'development_bonus'=>$bonus,'attribute_key'=>$attribute,'created_date'=>$websoccer->getNowAsTimestamp()), $websoccer->getConfig('db_prefix') . '_loan_report');
         self::settleSalaryShare($websoccer, $db, $loan, $info);
         $db->queryUpdate(array('remaining_matches'=>max(0,(int)$loan['remaining_matches']-1),'matches_completed'=>(int)$loan['matches_completed']+1,'total_development_bonus'=>(float)$loan['total_development_bonus']+$bonus), $websoccer->getConfig('db_prefix') . '_loan', 'id = %d', (int)$loan['id']);
+        */
+        $existing = $db->querySelect(
+            '*',
+            $websoccer->getConfig('db_prefix') . '_loan_report',
+            'loan_id = %d AND match_id = %d',
+            array((int)$loan['id'], (int)$match->id),
+            1
+        );
+        $existingReport = $existing ? $existing->fetch_array() : false;
+        if ($existing) {
+            $existing->free();
+        }
+        
+        if (!$existingReport) {
+        
+            $db->queryInsert(
+                array(
+                    'loan_id' => (int)$loan['id'],
+                    'player_id' => (int)$loan['player_id'],
+                    'match_id' => (int)$match->id,
+                    'match_date' => $websoccer->getNowAsTimestamp(),
+                    'minutes_played' => $minutes,
+                    'grade' => $grade,
+                    'goals' => $goals,
+                    'assists' => $assists,
+                    'destination_quality' => $quality,
+                    'development_bonus' => $bonus,
+                    'attribute_key' => $attribute,
+                    'created_date' => $websoccer->getNowAsTimestamp()
+                ),
+                $websoccer->getConfig('db_prefix') . '_loan_report'
+            );
+        
+            self::settleSalaryShare($websoccer, $db, $loan, $info);
+        
+            $db->queryUpdate(
+                array(
+                    'remaining_matches' => max(0, (int)$loan['remaining_matches'] - 1),
+                    'matches_completed' => (int)$loan['matches_completed'] + 1,
+                    'total_development_bonus' => (float)$loan['total_development_bonus'] + $bonus
+                ),
+                $websoccer->getConfig('db_prefix') . '_loan',
+                'id = %d',
+                (int)$loan['id']
+            );
+        }
         if ($bonus > 0) self::notifyDevelopment($websoccer, $db, $loan, $info, $bonus, $attribute);
     }
     private static function calculateDestinationQuality(WebSoccer $websoccer, DbConnection $db, $teamId, $minutes) {

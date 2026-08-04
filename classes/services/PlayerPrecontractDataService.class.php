@@ -240,6 +240,9 @@ class PlayerPrecontractDataService {
             throw new Exception('Ein Verein kann dem eigenen Spieler keinen Vorvertrag anbieten.');
         }
 
+        $i18n = I18n::getInstance($websoccer->getConfig('supported_languages'));
+        TransferBlockadeDataService::assertPermanentTransferAllowed($websoccer, $db, $i18n, $playerId);
+
         // CPU-Vereine dürfen nur die konfigurierte Anzahl aktiver externer
         // Vorverträge gleichzeitig besitzen. Ein vorhandenes Angebot darf
         // weiterhin aktualisiert werden, auch wenn das Limit bereits erreicht ist.
@@ -618,18 +621,21 @@ class PlayerPrecontractDataService {
                 'Spieler'
             );
 
+            $playerColumns = array(
+                'verein_id' => (int) $agreement['destination_team_id'],
+                'vertrag_gehalt' => (int) $agreement['contract_salary'],
+                'vertrag_torpraemie' => (int) $agreement['contract_goal_bonus'],
+                'vertrag_spiele' => self::normalizeContractMatches($websoccer, $agreement['contract_matches']),
+                'transfermarkt' => '0',
+                'transfer_start' => 0,
+                'transfer_ende' => 0,
+                'transfer_mindestgebot' => 0,
+                'lending_fee' => 0
+            );
+            TransferBlockadeDataService::addCompletedTransferColumns($websoccer, $playerColumns);
+
             $db->queryUpdate(
-                array(
-                    'verein_id' => (int) $agreement['destination_team_id'],
-                    'vertrag_gehalt' => (int) $agreement['contract_salary'],
-                    'vertrag_torpraemie' => (int) $agreement['contract_goal_bonus'],
-                    'vertrag_spiele' => self::normalizeContractMatches($websoccer, $agreement['contract_matches']),
-                    'transfermarkt' => '0',
-                    'transfer_start' => 0,
-                    'transfer_ende' => 0,
-                    'transfer_mindestgebot' => 0,
-                    'lending_fee' => 0
-                ),
+                $playerColumns,
                 $prefix . '_spieler',
                 'id = %d',
                 (int) $agreement['player_id']
@@ -756,6 +762,7 @@ class PlayerPrecontractDataService {
                   AND P.verein_id > 0
                   AND P.verein_id <> " . (int) $teamId . "
                   AND P.vertrag_spiele < " . (int) $limit . "
+                  AND P.transfer_blocked_until <= " . (int) $websoccer->getNowAsTimestamp() . "
                   AND NOT EXISTS (
                       SELECT 1
                       FROM {$prefix}_player_precontract A

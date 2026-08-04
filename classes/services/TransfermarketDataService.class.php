@@ -455,7 +455,7 @@ class TransfermarketDataService {
 		$columns['transfermarkt'] = 0;
 		$columns['transfer_start'] = 0;
 		$columns['transfer_ende'] = 0;
-		$columns['last_transfer'] = $websoccer->getNowAsTimestamp();
+        TransferBlockadeDataService::addCompletedTransferColumns($websoccer, $columns);
 		$columns['verein_id'] = $bid['team_id'];
 		
 		$columns['vertrag_spiele'] = $bid['contract_matches'];

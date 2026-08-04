@@ -106,6 +106,46 @@ class MessagesDataService {
 		return $messages;
 	}
 	
+    public static function deleteMessages(WebSoccer $websoccer, DbConnection $db, $messageIds, $folder) {
+        $ids = array();
+        foreach ($messageIds as $messageId) {
+            $messageId = (int) $messageId;
+            if ($messageId > 0) {
+                $ids[$messageId] = $messageId;
+            }
+        }
+
+        if (!count($ids)) {
+            return 0;
+        }
+
+        $ids = array_values($ids);
+        $placeholders = implode(',', array_fill(0, count($ids), '%d'));
+        $parameters = $ids;
+        $userId = (int) $websoccer->getUser()->id;
+
+        if ($folder === 'outbox') {
+            $ownershipCondition = "absender_id = %d AND typ = 'ausgang'";
+        } else {
+            $ownershipCondition = "empfaenger_id = %d AND typ = 'eingang'";
+        }
+        $parameters[] = $userId;
+
+        $whereCondition = 'id IN (' . $placeholders . ') AND ' . $ownershipCondition;
+        $table = $websoccer->getConfig('db_prefix') . '_briefe';
+
+        $result = $db->querySelect('COUNT(*) AS hits', $table, $whereCondition, $parameters, 1);
+        $row = $result->fetch_array();
+        $result->free();
+        $count = $row ? (int) $row['hits'] : 0;
+
+        if ($count > 0) {
+            $db->queryDelete($table, $whereCondition, $parameters);
+        }
+
+        return $count;
+    }
+
 	public static function countInboxMessages(WebSoccer $websoccer, DbConnection $db) {
 		$userId = $websoccer->getUser()->id;
 		

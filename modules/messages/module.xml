@@ -63,6 +63,11 @@
 	<action id="delete-message" controller="DeleteMessageController" role="user">
 	    <param id="id" type="number" required="true" min="1" max="2000000000" />
 	</action>
+
+    <action id="delete-messages" controller="DeleteMessagesController" role="user">
+        <param id="ids" type="text" required="true" min="1" max="5000" />
+        <param id="folder" type="text" required="true" min="5" max="6" />
+    </action>
       
 	<action id="send-message" controller="SendMessageController" role="user">
 	    <param id="nick" type="text" required="true" min="1" max="50" />

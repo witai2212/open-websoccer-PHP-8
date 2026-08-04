@@ -22,6 +22,11 @@
     <message id="messages_delete">Diese Nachricht löschen</message>
     <message id="messages_delete_invalidid">Ungültige Nachricht. Die ausgewählte Nachricht wurde eventuell bereits gelöscht.</message>
     <message id="messages_delete_success">Nachricht gelöscht</message>
+    <message id="messages_select_all">Alle Nachrichten auswählen</message>
+    <message id="messages_delete_selected">Ausgewählte löschen</message>
+    <message id="messages_delete_multiple_confirm">Sollen die ausgewählten Nachrichten wirklich dauerhaft gelöscht werden?</message>
+    <message id="messages_delete_multiple_empty">Bitte wählen Sie mindestens eine Nachricht aus.</message>
+    <message id="messages_delete_multiple_success">%d Nachricht(en) gelöscht</message>
     
     <message id="messages_details_title">Nachricht lesen</message>
     

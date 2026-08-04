@@ -9,6 +9,7 @@
   <settings>
       <setting id="transfermarket_enabled" category="transfermarket" type="boolean" default="1" />
       <setting id="transfermarket_duration_days" category="transfermarket" type="number" default="7" />
+      <setting id="min_transfer_window" category="transfermarket" type="number" default="30" />
       <setting id="transfermarket_computed_marketvalue" category="transfermarket" type="boolean" default="1" />
       <setting id="transfermarket_value_per_strength" category="transfermarket" type="number" default="10000" />
       <setting id="transfermarket_min_teamsize" category="transfermarket" type="number" default="18" />

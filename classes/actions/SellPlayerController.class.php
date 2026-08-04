@@ -46,6 +46,13 @@ class SellPlayerController implements IActionController {
 		if ($clubId != $player["team_id"]) {
 			throw new Exception("nice try");
 		}
+
+        TransferBlockadeDataService::assertPermanentTransferAllowed(
+            $this->_websoccer,
+            $this->_db,
+            $this->_i18n,
+            $player["player_id"]
+        );
 		
         if (PlayerPrecontractDataService::hasAcceptedAgreement($this->_websoccer, $this->_db, $player["player_id"])) {
             throw new Exception($this->_i18n->getMessage("precontract_locked"));

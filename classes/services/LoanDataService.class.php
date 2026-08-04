@@ -183,7 +183,10 @@ class LoanDataService {
         if ($loan['option_type'] != self::OPTION_BUY && $loan['option_type'] != self::OPTION_OBLIGATION) throw new Exception('no option');
         $fee = (int)$loan['buy_fee']; $b = TeamsDataService::getTeamSummaryById($websoccer,$db,$loan['borrower_team_id']); $l = TeamsDataService::getTeamSummaryById($websoccer,$db,$loan['lender_team_id']); if ((int)$b['team_budget'] < $fee) throw new Exception('budget');
         BankAccountDataService::debitAmount($websoccer,$db,$loan['borrower_team_id'],$fee,'lending_buy_fee_subject',$l['team_name']); BankAccountDataService::creditAmount($websoccer,$db,$loan['lender_team_id'],$fee,'lending_buy_fee_subject',$b['team_name']);
-        $now = $websoccer->getNowAsTimestamp(); $db->queryUpdate(array('lending_matches'=>0,'lending_owner_id'=>0,'lending_fee'=>0,'verein_id'=>(int)$loan['borrower_team_id'],'last_transfer'=>$now), $websoccer->getConfig('db_prefix') . '_spieler', 'id = %d', (int)$loan['player_id']);
+        $now = $websoccer->getNowAsTimestamp();
+        $playerColumns = array('lending_matches'=>0,'lending_owner_id'=>0,'lending_fee'=>0,'verein_id'=>(int)$loan['borrower_team_id']);
+        TransferBlockadeDataService::addCompletedTransferColumns($websoccer, $playerColumns);
+        $db->queryUpdate($playerColumns, $websoccer->getConfig('db_prefix') . '_spieler', 'id = %d', (int)$loan['player_id']);
         $db->queryInsert(array('spieler_id'=>(int)$loan['player_id'],'seller_user_id'=>(int)$l['user_id'],'seller_club_id'=>(int)$loan['lender_team_id'],'buyer_user_id'=>(int)$b['user_id'],'buyer_club_id'=>(int)$loan['borrower_team_id'],'datum'=>$now,'directtransfer_amount'=>$fee), $websoccer->getConfig('db_prefix') . '_transfer');
         self::completeLoan($websoccer,$db,$loan['id'],self::STATUS_BOUGHT);
         self::closeOffer($websoccer,$db,$loan['player_id'],'accepted');

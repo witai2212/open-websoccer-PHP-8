@@ -529,9 +529,10 @@ class RandomEventsDataService {
 		if ((int) $choice['effect_blocked_matches'] > 0) {
 			$columns['gesperrt'] = max((int) $player['gesperrt'], (int) $choice['effect_blocked_matches']);
 		}
-		if ($choice['set_player_transfermarket'] === '1') {
+		if ($choice['set_player_transfermarket'] === '1'
+                && !TransferBlockadeDataService::isBlocked($websoccer, $db, $playerId)) {
 			$columns['transfermarkt'] = '1';
-			$columns['transfer_start'] = time();
+			$columns['transfer_start'] = $websoccer->getNowAsTimestamp();
 		}
 
 		if (count($columns)) {

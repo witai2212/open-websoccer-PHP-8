@@ -59,6 +59,13 @@ class TransferBidController implements IActionController {
 		if ($user->id == $player['team_user_id']) {
 			throw new Exception($this->_i18n->getMessage('transfer_bid_on_own_player'));
 		}
+
+        TransferBlockadeDataService::assertPermanentTransferAllowed(
+            $this->_websoccer,
+            $this->_db,
+            $this->_i18n,
+            $playerId
+        );
 		
 		// check if player is still on transfer list
 		if (!$player['player_transfermarket']) {

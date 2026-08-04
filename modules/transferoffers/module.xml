@@ -114,7 +114,6 @@
     
 	<settings>
 	    <setting id="transferoffers_enabled" category="transfermarket" type="boolean" default="1" />
-	    <setting id="transferoffers_transfer_stop_days" category="transfermarket" type="number" default="30" />
 	    <setting id="transferoffers_adminapproval_required" category="transfermarket" type="boolean" default="0" />
 	    <setting id="transferoffers_contract_matches" category="transfermarket" type="number" default="20" />
 	    <setting id="transferoffers_max_offer_deviation" category="transfermarket" type="number" default="25" />

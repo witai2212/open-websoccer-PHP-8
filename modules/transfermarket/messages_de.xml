@@ -124,4 +124,5 @@
     <message id="transfermarket_no_own_listed_players">Von deinem Verein steht derzeit kein Spieler auf der Transferliste.</message>
     <message id="transfermarket_myoffers_moved">Die Angebotsübersicht wurde in den Transfermarkt integriert.</message>
     <message id="transfermarket_open_myoffers">Meine Angebote öffnen</message>
+    <message id="transfer_blockade_active">Für diesen Spieler gilt noch eine Transferblockade von %d Kalendertag(en). Er darf nicht verkauft, auf die Transferliste gesetzt oder verpflichtet werden. Eine Leihe ist weiterhin möglich.</message>
 </messages>

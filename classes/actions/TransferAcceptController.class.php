@@ -98,7 +98,7 @@ class TransferAcceptController implements IActionController {
 		$columns["transfermarkt"] = 0;
 		$columns["transfer_start"] = 0;
 		$columns["transfer_ende"] = 0;
-		$columns["last_transfer"] = $this->_websoccer->getNowAsTimestamp();
+        TransferBlockadeDataService::addCompletedTransferColumns($this->_websoccer, $columns);
 		$columns["vertrag_gehalt"] = $offer['vertrag_gehalt'];
 		$columns["vertrag_spiele"] = $offer['vertrag_spiele'];
 		$columns["vertrag_torpraemie"] = $offer['vertrag_torpraemie'];

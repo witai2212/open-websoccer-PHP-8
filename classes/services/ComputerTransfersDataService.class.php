@@ -238,11 +238,9 @@ class ComputerTransfersDataService {
 
         $squad = [];
 
-		$transfer_deadline = $websoccer->getNowAsTimestamp() - (1045*86400);
-
-        $sqlStr = "SELECT id, position, w_technik, w_staerke, w_kondition, w_frische
+        $sqlStr = "SELECT id, position, w_technik, w_staerke, w_kondition, w_frische, transfer_blocked_until
                     FROM ". $websoccer->getConfig("db_prefix") ."_spieler
-                    WHERE verein_id = '$teamId' AND last_transfer<='$transfer_deadline'";
+                    WHERE verein_id = '$teamId' AND status = '1'";
         $result = $db->executeQuery($sqlStr);
         //while ($player = $result->fetch_array())
         while ($player = $result->fetch_assoc()) {
@@ -258,7 +256,9 @@ class ComputerTransfersDataService {
         $players = [];
 
         $query = "
-            SELECT * FROM ". $websoccer->getConfig('db_prefix') ."_spieler WHERE transfermarkt = '1'";
+            SELECT * FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+            WHERE transfermarkt = '1'
+              AND transfer_blocked_until <= '". (int) $websoccer->getNowAsTimestamp() ."'";
         $result = $db->executeQuery($query);
 
         while ($player = $result->fetch_assoc()) {
@@ -393,6 +393,10 @@ class ComputerTransfersDataService {
 
     private static function placeBid(WebSoccer $websoccer, DbConnection $db, $teamId, $playerId, $bidAmount, $now, $salaryAmount, $goalAmount) {
 
+        if (TransferBlockadeDataService::isBlocked($websoccer, $db, $playerId)) {
+            return;
+        }
+
         if (class_exists('ClubPartnershipDataService')) {
             $firstOptionLock = ClubPartnershipDataService::getProfessionalFirstOptionLock($websoccer, $db, $playerId, $teamId);
             if ($firstOptionLock && (!isset($firstOptionLock['can_use']) || $firstOptionLock['can_use'] !== '1')) {
@@ -439,6 +443,10 @@ class ComputerTransfersDataService {
 
         $transferCandidates = [];
         foreach ($squad as $player) {
+            if (isset($player['transfer_blocked_until'])
+                    && (int) $player['transfer_blocked_until'] > $websoccer->getNowAsTimestamp()) {
+                continue;
+            }
             if (self::canListPlayerForTransfer($player, $positionsCount, $traitNeeds, $websoccer, $db)) {
                 $transferCandidates[] = $player;
             }
@@ -497,6 +505,10 @@ class ComputerTransfersDataService {
     }
 
     private static function listPlayerForTransfer(WebSoccer $websoccer, DbConnection $db, $playerId) {
+
+        if (TransferBlockadeDataService::isBlocked($websoccer, $db, $playerId)) {
+            return;
+        }
 
         $transfermarket_duration_days = $websoccer->getConfig("transfermarket_duration_days");
 

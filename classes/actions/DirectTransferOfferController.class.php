@@ -197,24 +197,12 @@ class DirectTransferOfferController implements IActionController {
 	}
 	
 	private function checkPlayersTransferStop($playerId) {
-		
-		// transfer stop configured?
-		if ($this->_websoccer->getConfig("transferoffers_transfer_stop_days") < 1) {
-			return;
-		}
-		
-		$transferBoundary = $this->_websoccer->getNowAsTimestamp() - 24 * 3600 * $this->_websoccer->getConfig("transferoffers_transfer_stop_days");
-		
-		$result = $this->_db->querySelect("COUNT(*) AS hits",
-				$this->_websoccer->getConfig("db_prefix") . "_transfer",
-				"spieler_id = %d AND datum > %d",
-				array($playerId, $transferBoundary));
-		$count = $result->fetch_array();
-		$result->free();
-	
-		if ($count["hits"]) {
-			throw new Exception($this->_i18n->getMessage("transferoffer_err_transferstop", $this->_websoccer->getConfig("transferoffers_transfer_stop_days")));
-		}
+        TransferBlockadeDataService::assertPermanentTransferAllowed(
+            $this->_websoccer,
+            $this->_db,
+            $this->_i18n,
+            (int) $playerId
+        );
 	}
 	
 	private function checkExchangePlayer($playerId, $targetPlayerId) {

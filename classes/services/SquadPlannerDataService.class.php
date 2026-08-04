@@ -186,6 +186,7 @@ class SquadPlannerDataService {
         }
 
         $player = self::getPlayerForAction($websoccer, $db, $teamId, $playerId);
+        TransferBlockadeDataService::assertPermanentTransferAllowed($websoccer, $db, $i18n, $playerId);
         if (!self::isSafeSellCandidate($websoccer, $db, $i18n, $teamId, $player)) {
             throw new Exception($i18n->getMessage('squadplanner_err_not_candidate'));
         }

@@ -254,9 +254,18 @@ class DirectTransfersDataService {
 	private static function _transferPlayer(WebSoccer $websoccer, DbConnection $db, $playerId, 
 			$targetClubId, $targetUserId, $currentUserId, $currentClubId, $amount, 
 			$exchangePlayer1 = 0, $exchangePlayer2 = 0) {
-		$db->queryUpdate(array("verein_id" => $targetClubId, 
-				"vertrag_spiele" => $websoccer->getConfig("transferoffers_contract_matches")), 
-				$websoccer->getConfig("db_prefix") . "_spieler", "id = %d", $playerId);
+        $playerColumns = array(
+            "verein_id" => $targetClubId,
+            "vertrag_spiele" => $websoccer->getConfig("transferoffers_contract_matches")
+        );
+        TransferBlockadeDataService::addCompletedTransferColumns($websoccer, $playerColumns);
+
+		$db->queryUpdate(
+            $playerColumns,
+				$websoccer->getConfig("db_prefix") . "_spieler",
+            "id = %d",
+            $playerId
+        );
 		
 		// create log
 		$db->queryInsert(array(

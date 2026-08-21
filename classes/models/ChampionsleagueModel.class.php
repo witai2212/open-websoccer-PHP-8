@@ -30,6 +30,12 @@ class ChampionsleagueModel implements IModel {
     }
 
     public function getTemplateParameters() {
+        InternationalCupPhaseHelper::selectCurrentPhase(
+            $this->_websoccer,
+            $this->_db,
+            'Champions League'
+        );
+
         return EuropeanCupDataService::getCupOverview(
             $this->_websoccer,
             $this->_db,

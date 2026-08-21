@@ -24,6 +24,12 @@ class CopaSudamericanaModel implements IModel {
     }
 
     public function getTemplateParameters() {
+        InternationalCupPhaseHelper::selectCurrentPhase(
+            $this->_websoccer,
+            $this->_db,
+            ConmebolDataService::COPA_SUDAMERICANA
+        );
+
         return EuropeanCupDataService::getCupOverview(
             $this->_websoccer,
             $this->_db,

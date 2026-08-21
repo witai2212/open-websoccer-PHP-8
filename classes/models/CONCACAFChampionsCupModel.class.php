@@ -28,6 +28,12 @@ class CONCACAFChampionsCupModel implements IModel {
             ? ConcacafDataService::CONCACAF_CHAMPIONS_CUP
             : 'CONCACAF Champions Cup';
 
+        InternationalCupPhaseHelper::selectCurrentPhase(
+            $this->_websoccer,
+            $this->_db,
+            $cupName
+        );
+
         return EuropeanCupDataService::getCupOverview(
             $this->_websoccer,
             $this->_db,

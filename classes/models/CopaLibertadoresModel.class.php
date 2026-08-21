@@ -5,6 +5,8 @@ This file is part of OpenWebSoccer-Sim.
 
 ******************************************************/
 
+require_once __DIR__ . '/../services/InternationalCupPhaseHelper.class.php';
+
 /**
  * Provides Copa Libertadores overview data.
  */

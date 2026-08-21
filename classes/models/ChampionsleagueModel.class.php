@@ -11,6 +11,8 @@ the License, or any later version.
 
 ******************************************************/
 
+require_once __DIR__ . '/../services/InternationalCupPhaseHelper.class.php';
+
 /**
  * Provides Champions League overview data.
  */

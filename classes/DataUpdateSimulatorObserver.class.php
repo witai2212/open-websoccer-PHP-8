@@ -415,8 +415,18 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 			return $newMatches;
 		}
 
-		// Ohne Konkurrenzangebot verlängert ein CPU-Verein weiterhin automatisch.
-		if ($newMatches <= 5) {
+		$hasActivePrecontract = PlayerPrecontractDataService::getOpenOfferCount(
+			$this->_websoccer,
+			$this->_db,
+			(int) $playerId
+		) > 0 || PlayerPrecontractDataService::hasAcceptedAgreement(
+			$this->_websoccer,
+			$this->_db,
+			(int) $playerId
+		);
+
+		// Ohne aktiven Pre-Contract verlängert ein CPU-Verein weiterhin automatisch.
+		if ($newMatches <= 5 && !$hasActivePrecontract) {
 			return $maxContractMatches;
 		}
 
@@ -703,28 +713,20 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 				BadgesDataService::awardBadgeIfApplicable($this->_websoccer, $this->_db, $homeUser['u_id'], 'win_with_x_goals_difference', $goalsDiff);
 			} else if ($match->homeTeam->getGoals() == $match->guestTeam->getGoals()) {
 				$homeColumns['highscore'] = max(0, $homeUser['highscore'] + $highscoreDraw);
-				
-				// fans react on strength difference.
 				$popFactor = 1.0;
 				if ($homeGuestStrengthDiff >= 20) {
-					// if much stronger, they dislike it
 					$popFactor = 0.95;
 				} else if ($homeGuestStrengthDiff <= -20) {
-					// if much weaker, they like it! it is an achievement
 					$popFactor = 1.05;
 				}
 				
 				$homeColumns['fanbeliebtheit'] = min(100, round($homeUser['popularity'] * $popFactor));
 			} else {
 				$homeColumns['highscore'] = max(0, $homeUser['highscore'] + $highscoreLoss);
-				
-				// fans react on strength difference.
 				$popFactor = 0.95;
 				if ($homeGuestStrengthDiff >= 20) {
-					// if much stronger, they dislike it even more
 					$popFactor = 0.90;
 				} else if ($homeGuestStrengthDiff <= -20) {
-					// if much weaker, it is ok for them
 					$popFactor = 1.00;
 				}
 				$homeColumns['fanbeliebtheit'] = max(1, round($homeUser['popularity'] * $popFactor));
@@ -734,7 +736,6 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 				$this->_db->queryUpdate($homeColumns, $updateTable, $updateCondition, $homeUser['u_id']);
 			}
 			
-			// send notification about soon ending contracts
 			if (isset($this->_teamsWithSoonEndingContracts[$match->homeTeam->id])) {
 				$this->notifyAboutSoonEndingContracts($homeUser['u_id'], $match->homeTeam->id);
 			}
@@ -746,7 +747,6 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 		
 		if (!empty($guestUser['u_id']) && !$match->guestTeam->noFormationSet) {
 			if ($match->guestTeam->getGoals() > $match->homeTeam->getGoals()) {
-				// fans only get excited if team was not much stronger
 				$popFactor = 1.1;
 				if ($homeGuestStrengthDiff <= -20) {
 					$popFactor = 1.05;
@@ -755,17 +755,13 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 				$guestColumns['highscore'] = max(0, $guestUser['highscore'] + $highscoreWin);
 				$guestColumns['fanbeliebtheit'] = min(100, round($guestUser['popularity'] * $popFactor));
 				
-				// badge applicable?
 				$goalsDiff = $match->guestTeam->getGoals() - $match->homeTeam->getGoals();
 				BadgesDataService::awardBadgeIfApplicable($this->_websoccer, $this->_db, $guestUser['u_id'], 'win_with_x_goals_difference', $goalsDiff);
 			} else if ($match->guestTeam->getGoals() == $match->homeTeam->getGoals()) {
-				// fans react on strength difference.
 				$popFactor = 1.0;
 				if ($homeGuestStrengthDiff <= -20) {
-					// if much stronger, they dislike it
 					$popFactor = 0.95;
 				} else if ($homeGuestStrengthDiff >= 20) {
-					// if much weaker, they like it! it is an achievement
 					$popFactor = 1.05;
 				}
 				
@@ -773,14 +769,10 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 				$guestColumns['fanbeliebtheit'] = min(100, round($guestUser['popularity'] * $popFactor));
 			} else {
 				$guestColumns['highscore'] = max(0, $guestUser['highscore'] + $highscoreLoss);
-				
-				// fans react on strength difference.
 				$popFactor = 0.95;
 				if ($homeGuestStrengthDiff <= -20) {
-					// if much stronger, they dislike it even more
 					$popFactor = 0.90;
 				} else if ($homeGuestStrengthDiff >= 20) {
-					// if much weaker, it is ok for them
 					$popFactor = 1.00;
 				}
 				$guestColumns['fanbeliebtheit'] = max(1, round($guestUser['popularity'] * $popFactor));
@@ -790,19 +782,16 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 				$this->_db->queryUpdate($guestColumns, $updateTable, $updateCondition, $guestUser['u_id']);
 			}
 			
-			// send notification about soon ending contracts
 			if (isset($this->_teamsWithSoonEndingContracts[$match->guestTeam->id])) {
 				$this->notifyAboutSoonEndingContracts($guestUser['u_id'], $match->guestTeam->id);
 			}
 		}
 	}
 	
-	// updates $columns and expects that player changes get saved afterwards.
 	private function handleBorrowedPlayer(&$columns, $playerinfo, SimulationMatch $match, $player = NULL) {
 		LoanDataService::recordMatchAndApplyDevelopment($this->_websoccer, $this->_db, $match, $columns, $playerinfo, $player);
 		$columns['lending_matches'] = max(0, $playerinfo['lending_matches'] - 1);
 		
-		// move back to original team
 		if ($columns['lending_matches'] == 0) {
 			$columns['lending_fee'] = 0;
 			$columns['lending_owner_id'] = 0;
@@ -813,7 +802,6 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 				return;
 			}
 			
-			// get manager IDs in order to send notification
 			$borrower = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $playerinfo['verein_id']);
 			$lender = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $playerinfo['lending_owner_id']);
 			

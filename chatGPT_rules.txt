@@ -1,0 +1,7 @@
+ChatGPT Project Rules:
+No snippets, only complete code!
+No inventions or assumtions.
+ask questions prior to doing anything. only start if everything is clarified.
+no &amp; in XML files
+
+gut URL: https://github.com/witai2212/open-websoccer-PHP-8

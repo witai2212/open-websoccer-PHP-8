@@ -52,10 +52,20 @@ class ExtendContractController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("extend-contract_player_is_unhappy"));
 		}
 		
-        if (PlayerPrecontractDataService::hasAcceptedAgreement($this->_websoccer, $this->_db, $player["player_id"])) {
-            throw new Exception($this->_i18n->getMessage("precontract_locked"));
-        }
-        
+		$hasPrecontractOffers = PlayerPrecontractDataService::getOpenOfferCount(
+			$this->_websoccer,
+			$this->_db,
+			(int) $player["player_id"]
+		) > 0;
+		$hasAcceptedPrecontract = PlayerPrecontractDataService::hasAcceptedAgreement(
+			$this->_websoccer,
+			$this->_db,
+			(int) $player["player_id"]
+		);
+		if ($hasPrecontractOffers || $hasAcceptedPrecontract) {
+			throw new Exception($this->_i18n->getMessage("precontract_locked"));
+		}
+		
 		// check if player is already on market
 		if ($player["player_transfermarket"]) {
 			throw new Exception($this->_i18n->getMessage("sell_player_already_on_list"));
@@ -112,39 +122,14 @@ class ExtendContractController implements IActionController {
 			throw new Exception($this->_i18n->getMessage("extend-contract_goalbonus_too_low"));
 		}
 		
-		$hasExternalOffers = PlayerPrecontractDataService::hasOpenExternalOffers(
-			$this->_websoccer,
-			$this->_db,
-			(int) $player["player_id"],
-			(int) $clubId
+		$this->updatePlayer(
+			$player["player_id"],
+			$player["player_strength_satisfaction"],
+			$parameters["salary"],
+			$parameters["goal_bonus"],
+			$newMatches
 		);
-
-		if ($hasExternalOffers) {
-			// Bei offenen Angeboten anderer Vereine wird die Verlängerung nicht
-			// sofort erzwungen. Das Angebot des aktuellen Vereins nimmt als
-			// Gegenangebot an der Spielerentscheidung teil.
-			PlayerPrecontractDataService::placeRetentionOffer(
-				$this->_websoccer,
-				$this->_db,
-				(int) $player["player_id"],
-				(int) $clubId,
-				(int) $user->id,
-				(int) $parameters["salary"],
-				(int) $parameters["goal_bonus"],
-				(int) $newMatches,
-				false
-			);
-			$successMessage = $this->_i18n->getMessage("extend-contract_counteroffer_success");
-		} else {
-			$this->updatePlayer(
-				$player["player_id"],
-				$player["player_strength_satisfaction"],
-				$parameters["salary"],
-				$parameters["goal_bonus"],
-				$newMatches
-			);
-			$successMessage = $this->_i18n->getMessage("extend-contract_success");
-		}
+		$successMessage = $this->_i18n->getMessage("extend-contract_success");
 
 		// reset inactivity
 		UserInactivityDataService::resetContractExtensionField($this->_websoccer, $this->_db, $user->id);

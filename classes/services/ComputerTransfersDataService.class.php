@@ -510,6 +510,13 @@ class ComputerTransfersDataService {
             return;
         }
 
+        if (
+            PlayerPrecontractDataService::getOpenOfferCount($websoccer, $db, (int) $playerId) > 0
+            || PlayerPrecontractDataService::hasAcceptedAgreement($websoccer, $db, (int) $playerId)
+        ) {
+            return;
+        }
+
         $transfermarket_duration_days = $websoccer->getConfig("transfermarket_duration_days");
 
         $transfer_start = $websoccer->getNowAsTimestamp();

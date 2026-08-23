@@ -54,7 +54,17 @@ class SellPlayerController implements IActionController {
             $player["player_id"]
         );
 		
-        if (PlayerPrecontractDataService::hasAcceptedAgreement($this->_websoccer, $this->_db, $player["player_id"])) {
+        $hasPrecontractOffers = PlayerPrecontractDataService::getOpenOfferCount(
+            $this->_websoccer,
+            $this->_db,
+            (int) $player["player_id"]
+        ) > 0;
+        $hasAcceptedPrecontract = PlayerPrecontractDataService::hasAcceptedAgreement(
+            $this->_websoccer,
+            $this->_db,
+            (int) $player["player_id"]
+        );
+        if ($hasPrecontractOffers || $hasAcceptedPrecontract) {
             throw new Exception($this->_i18n->getMessage("precontract_locked"));
         }
         

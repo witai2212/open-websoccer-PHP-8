@@ -1,4 +1,4 @@
-{# CM23 Task 1005 | 2026-08-24 | Revision 1 #}
+{# CM23 Task 1005 | 2026-08-24 | Revision 2 #}
 <h3>{{ i18n.getMessage("financialforecast_title") }}</h3>
 <p class="muted">
     {{ i18n.getMessage("financialforecast_intro") }}
@@ -49,7 +49,6 @@
 </div>
 
 {% if forecast_rows|length > 0 %}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <canvas id="financialForecastChart" width="900" height="300"></canvas>
     <script>
         var financialForecastCanvas = document.getElementById('financialForecastChart');

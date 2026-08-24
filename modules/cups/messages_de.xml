@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../messages.dtd">
+<!-- Task 1001 - Revision 1 - 2026-08-24 -->
 <messages>
     <message id="cup_firstround_only_date">Datum</message>
     <message id="cup_firstround">Hinspiel</message>
@@ -18,6 +19,40 @@
 	<message id="cups_title">Pokal</message>
 	<message id="select_cup">Pokal wählen</message>
 	<message id="cup_select_choose">Bitte Pokal wählen</message>
+
+    <message id="cups_intro">Alle Runden, Ergebnisse und kommenden Spiele des nationalen Pokals auf einen Blick.</message>
+    <message id="cups_no_cup_found">Der ausgewählte nationale Pokal wurde nicht gefunden.</message>
+    <message id="cups_current_phase">Aktuelle Ansicht</message>
+    <message id="cups_matches_played">Spiele gespielt</message>
+    <message id="cups_participants">Teilnehmer</message>
+    <message id="cups_teams">Vereine</message>
+    <message id="cups_rounds">Runden</message>
+    <message id="cups_rounds_subtitle">inkl. Gruppenphase</message>
+    <message id="cups_winner">Titelträger</message>
+    <message id="cups_winner_open">noch offen</message>
+    <message id="cups_prize_winner">Siegerprämie</message>
+    <message id="cups_my_club">Mein Verein</message>
+    <message id="cups_still_in_competition">noch im Wettbewerb</message>
+    <message id="cups_eliminated">ausgeschieden</message>
+    <message id="cups_not_participating">nicht teilgenommen</message>
+    <message id="cups_my_group">Gruppe</message>
+    <message id="cups_my_next_match">Nächstes Spiel</message>
+    <message id="cups_my_last_match">Letztes Spiel</message>
+    <message id="cups_standings">Tabelle</message>
+    <message id="cups_fixtures">Spielplan</message>
+    <message id="cups_latest_results">Letzte Ergebnisse</message>
+    <message id="cups_next_matches">Nächste Spiele</message>
+    <message id="cups_no_group_table">Für diese Gruppe ist noch keine Tabelle vorhanden.</message>
+
+    <message id="cups_grouptable_team">Verein</message>
+    <message id="cups_grouptable_matches">Sp.</message>
+    <message id="cups_grouptable_points">Punkte</message>
+    <message id="cups_grouptable_wins">Siege</message>
+    <message id="cups_grouptable_draws">Unentsch.</message>
+    <message id="cups_grouptable_losses">Niederl.</message>
+    <message id="cups_grouptable_goals">Tore</message>
+    <message id="cups_grouptable_goalsreceived">kassierte Tore</message>
+    <message id="cups_grouptable_goaldiff">Diff.</message>
 	
 	<message id="entity_match_cup_round">Pokalrunde</message>
 	

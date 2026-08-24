@@ -1,4 +1,5 @@
 <?php
+// CM23 revision: 1 | 2026-08-24
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -86,6 +87,7 @@ class WithdrawBidController implements IActionController {
 		$delStr = "DELETE FROM ". $this->_websoccer->getConfig("db_prefix") ."_transfer_angebot
                         WHERE spieler_id='".$playerId."' AND verein_id='".$clubId."' AND id='".$offer['id']."'";
 		$this->_db->executeQuery($delStr);
+		TransfermarketDataService::updateHighestOffer($this->_websoccer, $this->_db, $playerId);
 		
 		// show success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, $this->_i18n->getMessage("transferoffers_offer_withdraw_success"), ""));

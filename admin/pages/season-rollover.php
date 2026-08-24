@@ -2,6 +2,7 @@
 /******************************************************
 
   Season rollover wizard for OpenWebSoccer-Sim.
+  CM23 Task 1002 | 24.08.2026 | Revision 1
 
 ******************************************************/
 
@@ -145,6 +146,10 @@ function seasonRolloverRenderOptionsForm($site, $options, $step = 'validate') {
     echo '<input type="hidden" name="show" value="execute">';
     echo '<input type="hidden" name="site" value="' . escapeOutput($site) . '">';
 
+    echo '<div class="alert alert-info">';
+    echo '<strong>Automatischer Saisonkalender:</strong> Ligaspiele Freitag bis Dienstag um 11:00 Uhr; nationale und internationale Pokalspiele Dienstag bis Donnerstag um 20:00 Uhr. Das Ligaende wird für alle neuen Saisons synchronisiert, anschließend folgen die Pokalfinals.';
+    echo '</div>';
+
     echo '<fieldset>';
     echo '<legend>Einstellungen</legend>';
 
@@ -155,27 +160,27 @@ function seasonRolloverRenderOptionsForm($site, $options, $step = 'validate') {
 
     echo '<div class="control-group"><label class="control-label" for="league_start_date">Liga-Start</label><div class="controls">';
     echo '<input type="text" id="league_start_date" name="league_start_date" value="' . escapeOutput($options['league_start_date']) . '">';
-    echo '<p class="help-block">Freitag/Samstag/Sonntag, wöchentlicher Rhythmus.</p>';
+    echo '<p class="help-block">Freitag bis Dienstag, jeweils 11:00 Uhr. Kleinere Ligen erhalten automatisch spielfreie Wochen; alle Ligen enden am selben Dienstag.</p>';
     echo '</div></div>';
 
     echo '<div class="control-group"><label class="control-label" for="national_cup_start_date">Nationaler Pokal-Start</label><div class="controls">';
     echo '<input type="text" id="national_cup_start_date" name="national_cup_start_date" value="' . escapeOutput($options['national_cup_start_date']) . '">';
-    echo '<p class="help-block">Dienstag.</p>';
+    echo '<p class="help-block">Dienstag bis Donnerstag, 20:00 Uhr. Das Finale wird automatisch auf den ersten Dienstag nach dem gemeinsamen Ligaende gelegt.</p>';
     echo '</div></div>';
 
     echo '<div class="control-group"><label class="control-label" for="cl_start_date">Champions League-Start</label><div class="controls">';
     echo '<input type="text" id="cl_start_date" name="cl_start_date" value="' . escapeOutput($options['cl_start_date']) . '">';
-    echo '<p class="help-block">Mittwoch.</p>';
+    echo '<p class="help-block">Mittwoch, 20:00 Uhr. Das Finale liegt in der Woche nach dem nationalen Pokalfinale.</p>';
     echo '</div></div>';
 
     echo '<div class="control-group"><label class="control-label" for="ul_start_date">UEFA League-Start</label><div class="controls">';
     echo '<input type="text" id="ul_start_date" name="ul_start_date" value="' . escapeOutput($options['ul_start_date']) . '">';
-    echo '<p class="help-block">Donnerstag.</p>';
+    echo '<p class="help-block">Donnerstag, 20:00 Uhr. Das Finale liegt in der Woche nach dem nationalen Pokalfinale.</p>';
     echo '</div></div>';
 
     echo '<div class="control-group"><label class="control-label" for="conmebol_lib_start_date">Copa Libertadores-Start</label><div class="controls">';
     echo '<input type="text" id="conmebol_lib_start_date" name="conmebol_lib_start_date" value="' . escapeOutput($options['conmebol_lib_start_date']) . '">';
-    echo '<p class="help-block">CONMEBOL-Gruppenspiele, sofern Pokal und Gruppenrunde angelegt sind.</p>';
+    echo '<p class="help-block">CONMEBOL, 20:00 Uhr; Pokalrunden werden automatisch auf Dienstag bis Donnerstag verteilt. Finale nach dem nationalen Pokalfinale.</p>';
     echo '</div></div>';
 
     echo '<div class="control-group"><label class="control-label" for="conmebol_sud_start_date">Copa Sudamericana-Start</label><div class="controls">';
@@ -185,7 +190,7 @@ function seasonRolloverRenderOptionsForm($site, $options, $step = 'validate') {
 
     echo '<div class="control-group"><label class="control-label" for="concacaf_start_date">CONCACAF-Start</label><div class="controls">';
     echo '<input type="text" id="concacaf_start_date" name="concacaf_start_date" value="' . escapeOutput($options['concacaf_start_date']) . '">';
-    echo '<p class="help-block">Temp-Tabelle, Cup und Gruppenrunde werden vorbereitet, sofern die SQL-Daten eingespielt wurden.</p>';
+    echo '<p class="help-block">CONCACAF, 20:00 Uhr; Pokalrunden werden automatisch auf Dienstag bis Donnerstag verteilt. Finale nach dem nationalen Pokalfinale.</p>';
     echo '</div></div>';
 
     echo '<div class="control-group"><label class="control-label" for="league_rounds">Liga-Runden</label><div class="controls">';

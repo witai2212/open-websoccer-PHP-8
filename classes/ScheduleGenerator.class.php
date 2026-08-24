@@ -2,6 +2,7 @@
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
+  CM23 Task 1002 | 24.08.2026 | Revision 1
 
   OpenWebSoccer-Sim is free software: you can redistribute it 
   and/or modify it under the terms of the 
@@ -462,8 +463,11 @@ class ScheduleGenerator {
 	                $db,
 	                array($homeTeamId, $guestTeamId),
 	                $baseTimestamp,
-	                array(2),
-	                array(array((int) date('G', $baseTimestamp), (int) date('i', $baseTimestamp))),
+	                SeasonRolloverScheduleService::getCupWeekdays(),
+	                array(array(
+	                    SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+	                    SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+	                )),
 	                42
 	            );
 	        }

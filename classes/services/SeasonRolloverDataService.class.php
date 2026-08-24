@@ -2,6 +2,7 @@
 /******************************************************
 
   Season rollover orchestration for OpenWebSoccer-Sim.
+  CM23 Task 1002 | 24.08.2026 | Revision 1
 
 ******************************************************/
 
@@ -12,13 +13,48 @@ class SeasonRolloverDataService {
 
     public static function getDefaultOptions() {
         $now = time();
-        $leagueStart = SeasonRolloverScheduleService::nextWeekday($now, 5, 18, 0);
-        $cupStart = SeasonRolloverScheduleService::nextWeekday($leagueStart + 86400, 2, 19, 0);
-        $clStart = SeasonRolloverScheduleService::nextWeekday($leagueStart + 86400, 3, 20, 0);
-        $ulStart = SeasonRolloverScheduleService::nextWeekday($leagueStart + 86400, 4, 20, 0);
-        $libStart = SeasonRolloverScheduleService::nextWeekday($leagueStart + 86400, 2, 20, 0);
-        $sudStart = SeasonRolloverScheduleService::nextWeekday($leagueStart + 86400, 4, 20, 0);
-        $concacafStart = SeasonRolloverScheduleService::nextWeekday($leagueStart + 86400, 2, 19, 0);
+        $leagueStart = SeasonRolloverScheduleService::nextWeekday(
+            $now,
+            5,
+            SeasonRolloverScheduleService::LEAGUE_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::LEAGUE_KICKOFF_MINUTE
+        );
+        $cupStart = SeasonRolloverScheduleService::nextWeekday(
+            $leagueStart + 86400,
+            2,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
+        $clStart = SeasonRolloverScheduleService::nextWeekday(
+            $leagueStart + 86400,
+            3,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
+        $ulStart = SeasonRolloverScheduleService::nextWeekday(
+            $leagueStart + 86400,
+            4,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
+        $libStart = SeasonRolloverScheduleService::nextWeekday(
+            $leagueStart + 86400,
+            2,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
+        $sudStart = SeasonRolloverScheduleService::nextWeekday(
+            $leagueStart + 86400,
+            4,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
+        $concacafStart = SeasonRolloverScheduleService::nextWeekday(
+            $leagueStart + 86400,
+            2,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
 
         return array(
             'season_year' => (int) date('Y'),
@@ -816,28 +852,90 @@ class SeasonRolloverDataService {
                 return self::createNewSeasonsForAllLeagues($websoccer, $db, (int) $options['season_year']);
 
             case 'national_cups':
+                $leagueStartTimestamp = SeasonRolloverScheduleService::parseGermanDate(
+                    $options['league_start_date'],
+                    SeasonRolloverScheduleService::LEAGUE_KICKOFF_HOUR,
+                    SeasonRolloverScheduleService::LEAGUE_KICKOFF_MINUTE
+                );
+                $commonLeagueEndTimestamp = SeasonRolloverScheduleService::calculateCommonLeagueEndTimestamp(
+                    $websoccer,
+                    $db,
+                    $leagueStartTimestamp,
+                    (int) $options['league_rounds']
+                );
+                $nationalCupFinalTimestamp = SeasonRolloverScheduleService::getNationalCupFinalTimestamp(
+                    $commonLeagueEndTimestamp
+                );
+
                 return SeasonRolloverCupService::generateNationalCups(
                     $websoccer,
                     $db,
-                    SeasonRolloverScheduleService::parseGermanDate($options['national_cup_start_date'], 19, 0)
+                    SeasonRolloverScheduleService::parseGermanDate(
+                        $options['national_cup_start_date'],
+                        SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                        SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                    ),
+                    $nationalCupFinalTimestamp,
+                    $commonLeagueEndTimestamp
                 );
 
             case 'european_cups':
+                $leagueStartTimestamp = SeasonRolloverScheduleService::parseGermanDate(
+                    $options['league_start_date'],
+                    SeasonRolloverScheduleService::LEAGUE_KICKOFF_HOUR,
+                    SeasonRolloverScheduleService::LEAGUE_KICKOFF_MINUTE
+                );
+                $commonLeagueEndTimestamp = SeasonRolloverScheduleService::calculateCommonLeagueEndTimestamp(
+                    $websoccer,
+                    $db,
+                    $leagueStartTimestamp,
+                    (int) $options['league_rounds']
+                );
+                $nationalCupFinalTimestamp = SeasonRolloverScheduleService::getNationalCupFinalTimestamp(
+                    $commonLeagueEndTimestamp
+                );
+
                 return SeasonRolloverCupService::generateEuropeanCups(
                     $websoccer,
                     $db,
-                    SeasonRolloverScheduleService::parseGermanDate($options['cl_start_date'], 20, 0),
-                    SeasonRolloverScheduleService::parseGermanDate($options['ul_start_date'], 20, 0),
-                    SeasonRolloverScheduleService::parseGermanDate($options['conmebol_lib_start_date'], 20, 0),
-                    SeasonRolloverScheduleService::parseGermanDate($options['conmebol_sud_start_date'], 20, 0),
-                    SeasonRolloverScheduleService::parseGermanDate($options['concacaf_start_date'], 19, 0)
+                    SeasonRolloverScheduleService::parseGermanDate(
+                        $options['cl_start_date'],
+                        SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                        SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                    ),
+                    SeasonRolloverScheduleService::parseGermanDate(
+                        $options['ul_start_date'],
+                        SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                        SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                    ),
+                    SeasonRolloverScheduleService::parseGermanDate(
+                        $options['conmebol_lib_start_date'],
+                        SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                        SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                    ),
+                    SeasonRolloverScheduleService::parseGermanDate(
+                        $options['conmebol_sud_start_date'],
+                        SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                        SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                    ),
+                    SeasonRolloverScheduleService::parseGermanDate(
+                        $options['concacaf_start_date'],
+                        SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                        SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                    ),
+                    $nationalCupFinalTimestamp,
+                    $commonLeagueEndTimestamp
                 );
 
             case 'league_schedules':
                 return SeasonRolloverScheduleService::generateLeagueSchedulesForOpenSeasons(
                     $websoccer,
                     $db,
-                    SeasonRolloverScheduleService::parseGermanDate($options['league_start_date'], 18, 0),
+                    SeasonRolloverScheduleService::parseGermanDate(
+                        $options['league_start_date'],
+                        SeasonRolloverScheduleService::LEAGUE_KICKOFF_HOUR,
+                        SeasonRolloverScheduleService::LEAGUE_KICKOFF_MINUTE
+                    ),
                     (int) $options['league_rounds']
                 );
         }

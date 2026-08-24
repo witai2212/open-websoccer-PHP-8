@@ -1,28 +1,52 @@
--- Revision 1 - 2026-08-24
--- Task 1000: Scout-Kompetenz nach dem ersten vollständig abgelaufenen Vertrag dauerhaft sichtbar.
-
-ALTER TABLE `cm23_scout`
-    ADD COLUMN `expertise_known` TINYINT(1) NOT NULL DEFAULT 0 AFTER `expertise`;
-
--- Bereits beschäftigte Scouts, deren Vertrag aktuell auf 0 steht, haben nachweislich
--- mindestens einen Vereinsvertrag vollständig erreicht. Freie Scouts mit 0 Spielen
--- werden bewusst nicht rückwirkend als bekannt markiert.
-UPDATE `cm23_scout`
-SET `expertise_known` = 1
-WHERE `team_id` > 0
-  AND `team_matches` <= 0;
+-- Revision 2 - 2026-08-24
+-- Task 1000: Scout-Kompetenz nur fuer den User sichtbar, der den Scout eingestellt hat.
+--
+-- Diese Revision ersetzt die globale expertise_known-Loesung aus Revision 1.
+-- Bestehende aktive Altvertraege werden NICHT einem User zugeordnet, weil aus dem
+-- aktuellen Scout-Datensatz nicht verlaesslich hervorgeht, welcher User den Vertrag
+-- urspruenglich abgeschlossen hat. Die Zuordnung erfolgt fuer alle neuen Vertraege
+-- ab Einspielen dieser Revision korrekt beim Einstellen.
 
 DROP TRIGGER IF EXISTS `cm23_scout_reveal_expertise_before_update`;
 
-DELIMITER //
-CREATE TRIGGER `cm23_scout_reveal_expertise_before_update`
-BEFORE UPDATE ON `cm23_scout`
-FOR EACH ROW
-BEGIN
-    IF OLD.team_id > 0
-       AND OLD.team_matches > 0
-       AND NEW.team_matches <= 0 THEN
-        SET NEW.expertise_known = 1;
-    END IF;
-END//
-DELIMITER ;
+CREATE TABLE IF NOT EXISTS `cm23_scout_expertise_knowledge` (
+    `id` INT(10) NOT NULL AUTO_INCREMENT,
+    `user_id` INT(10) NOT NULL,
+    `scout_id` INT(10) NOT NULL,
+    `revealed_date` INT(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_scout_expertise_knowledge_user_scout` (`user_id`, `scout_id`),
+    KEY `idx_scout_expertise_knowledge_scout` (`scout_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+SET @column_exists := (
+    SELECT COUNT(*)
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'cm23_scout'
+      AND COLUMN_NAME = 'hired_by_user_id'
+);
+SET @sql := IF(
+    @column_exists = 0,
+    'ALTER TABLE `cm23_scout` ADD COLUMN `hired_by_user_id` INT(10) NOT NULL DEFAULT 0 AFTER `team_matches`',
+    'SELECT 1'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @old_column_exists := (
+    SELECT COUNT(*)
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'cm23_scout'
+      AND COLUMN_NAME = 'expertise_known'
+);
+SET @sql := IF(
+    @old_column_exists > 0,
+    'ALTER TABLE `cm23_scout` DROP COLUMN `expertise_known`',
+    'SELECT 1'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

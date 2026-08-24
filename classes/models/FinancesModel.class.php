@@ -1,4 +1,5 @@
 <?php
+// CM23 Task 1005 | 2026-08-24 | Revision 1
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -79,8 +80,11 @@ class FinancesModel implements IModel {
 		    );
 		
 		$transferPenaltySummary = $this->_getTransferPenaltySummary($teamId, $team);
+
+		$forecastModel = new FinancialForecastModel($this->_db, $this->_i18n, $this->_websoccer);
+		$forecast = $forecastModel->getTemplateParameters();
 		
-		return array(
+		$parameters = array(
 		    "budget" => $team["team_budget"],
 		    "team_id" => $teamId,
 		    "statements" => $statements,
@@ -100,6 +104,8 @@ class FinancesModel implements IModel {
 		    "cash_chart_season_start" => $cashDevelopment["season_start"],
 		    "transfer_penalty_summary" => $transferPenaltySummary
 		);
+
+		return array_merge($parameters, $forecast);
 		
 	}
 	

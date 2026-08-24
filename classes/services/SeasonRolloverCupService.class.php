@@ -2,7 +2,7 @@
 /******************************************************
 
   Season rollover cup helpers for OpenWebSoccer-Sim.
-  CM23 Task 1002 | 24.08.2026 | Revision 1
+  CM23 Task 1002 | 24.08.2026 | Revision 2
 
 ******************************************************/
 
@@ -492,39 +492,6 @@ class SeasonRolloverCupService {
                 $concacafFinal,
                 $blackouts
             );
-        }
-
-        return $results;
-    }
-
-    public static function generateEuropeanCups(WebSoccer $websoccer, DbConnection $db, $firstClWednesdayTimestamp, $firstUlThursdayTimestamp, $firstLibertadoresTimestamp = 0, $firstSudamericanaTimestamp = 0, $firstConcacafTimestamp = 0) {
-        $results = array();
-
-        $results[] = self::generateEuropeanCup(
-            $websoccer,
-            $db,
-            'Champions League',
-            UefaDataService::UEFA_CL_CUP_ID,
-            SeasonRolloverScheduleService::nextWeekday((int) $firstClWednesdayTimestamp, 3, 20, 0)
-        );
-
-        $results[] = self::generateEuropeanCup(
-            $websoccer,
-            $db,
-            'UEFA Euro League',
-            UefaDataService::UEFA_UL_CUP_ID,
-            SeasonRolloverScheduleService::nextWeekday((int) $firstUlThursdayTimestamp, 4, 20, 0)
-        );
-
-        if (class_exists('ConmebolDataService')) {
-            $libStart = ((int) $firstLibertadoresTimestamp > 0) ? (int) $firstLibertadoresTimestamp : (int) $firstClWednesdayTimestamp;
-            $sudStart = ((int) $firstSudamericanaTimestamp > 0) ? (int) $firstSudamericanaTimestamp : (int) $firstUlThursdayTimestamp;
-            $results[] = self::generateConmebolCup($websoccer, $db, ConmebolDataService::COPA_LIBERTADORES, $libStart);
-            $results[] = self::generateConmebolCup($websoccer, $db, ConmebolDataService::COPA_SUDAMERICANA, $sudStart);
-        }
-
-        if (class_exists('ConcacafDataService') && (int) $firstConcacafTimestamp > 0) {
-            $results[] = self::generateConcacafCupIfReady($websoccer, $db, ConcacafDataService::CONCACAF_CHAMPIONS_CUP, (int) $firstConcacafTimestamp);
         }
 
         return $results;

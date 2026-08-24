@@ -1,4 +1,5 @@
 <?php
+// CM23 revision: 1 | 2026-08-24
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -56,6 +57,21 @@ class TransferBidController implements IActionController {
 		
 		// check if it is not own player
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $playerId);
+		if (!$player) {
+			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
+		}
+
+		// Never trust hidden or manually submitted form values. A contracted player
+		// can only receive a transfer-fee offer; a free agent can only receive hand
+		// money and a contract offer.
+		$parameters['amount'] = isset($parameters['amount']) ? max(0, (int) $parameters['amount']) : 0;
+		$parameters['handmoney'] = isset($parameters['handmoney']) ? max(0, (int) $parameters['handmoney']) : 0;
+		if ((int) $player['team_id'] > 0) {
+			$parameters['handmoney'] = 0;
+		} else {
+			$parameters['amount'] = 0;
+		}
+
 		if ($user->id == $player['team_user_id']) {
 			throw new Exception($this->_i18n->getMessage('transfer_bid_on_own_player'));
 		}

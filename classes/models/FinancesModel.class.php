@@ -1,5 +1,5 @@
 <?php
-// CM23 Task 1005 | 2026-08-24 | Revision 1
+// CM23 Task 1004 | 2026-08-24 | Revision 2
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -41,7 +41,8 @@ class FinancesModel implements IModel {
 	
 	public function getTemplateParameters() {
 		
-		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		$user = $this->_websoccer->getUser();
+		$teamId = $user->getClubId($this->_websoccer, $this->_db);
 		if ($teamId < 1) {
 			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
 		}
@@ -83,6 +84,12 @@ class FinancesModel implements IModel {
 
 		$forecastModel = new FinancialForecastModel($this->_db, $this->_i18n, $this->_websoccer);
 		$forecast = $forecastModel->getTemplateParameters();
+		$privateAccount = PrivateAccountDataService::getPageData(
+			$this->_websoccer,
+			$this->_db,
+			$teamId,
+			(int) $user->id
+		);
 		
 		$parameters = array(
 		    "budget" => $team["team_budget"],
@@ -102,7 +109,8 @@ class FinancesModel implements IModel {
 		    "cash_chart_labels" => $cashDevelopment["labels"],
 		    "cash_chart_values" => $cashDevelopment["values"],
 		    "cash_chart_season_start" => $cashDevelopment["season_start"],
-		    "transfer_penalty_summary" => $transferPenaltySummary
+		    "transfer_penalty_summary" => $transferPenaltySummary,
+		    "private_account" => $privateAccount
 		);
 
 		return array_merge($parameters, $forecast);

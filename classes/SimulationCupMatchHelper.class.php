@@ -2,6 +2,7 @@
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
+  CM23 Task 1002 | 24.08.2026 | Revision 1
 
   OpenWebSoccer-Sim is free software: you can redistribute it 
   and/or modify it under the terms of the 
@@ -261,6 +262,44 @@ class SimulationCupMatchHelper {
     }
     
     /**
+     * Resolves a conflict-free evening cup timestamp on Tuesday, Wednesday or Thursday.
+     */
+    private static function resolveCupMatchTimestamp(
+            WebSoccer $websoccer,
+            DbConnection $db,
+            array $teamIds,
+            $configuredTimestamp) {
+
+        $configuredTimestamp = (int) $configuredTimestamp;
+
+        if (
+            $configuredTimestamp <= 0
+            || !class_exists('SeasonRolloverScheduleService')
+            || !SeasonRolloverScheduleService::teamsHaveMatchOnDay(
+                $websoccer,
+                $db,
+                $teamIds,
+                $configuredTimestamp
+            )
+        ) {
+            return $configuredTimestamp;
+        }
+
+        return SeasonRolloverScheduleService::findAvailableTimestampForTeams(
+            $websoccer,
+            $db,
+            $teamIds,
+            $configuredTimestamp,
+            SeasonRolloverScheduleService::getCupWeekdays(),
+            array(array(
+                SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+            )),
+            8
+        );
+    }
+
+    /**
      * Checks if this match is the last of a group-stage round and, if so, creates
      * the following round's matches based on group standings.
      *
@@ -355,6 +394,13 @@ class SimulationCupMatchHelper {
                 $homeTeam  = array_pop($teams);
                 $guestTeam = array_pop($teams);
                 
+                $firstRoundDate = self::resolveCupMatchTimestamp(
+                    $websoccer,
+                    $db,
+                    array($homeTeam, $guestTeam),
+                    $roundInfo['firstround_date']
+                );
+
                 // create first-leg match
                 $db->queryInsert(array(
                         'spieltyp'    => $type,
@@ -362,18 +408,25 @@ class SimulationCupMatchHelper {
                         'pokalrunde'  => $roundInfo['name'],
                         'home_verein' => $homeTeam,
                         'gast_verein' => $guestTeam,
-                        'datum'       => $roundInfo['firstround_date']
+                        'datum'       => $firstRoundDate
                 ), $matchTable);
                     
                 // create second-leg match (if applicable)
                 if ($roundInfo['secondround_date']) {
+                    $secondRoundDate = self::resolveCupMatchTimestamp(
+                        $websoccer,
+                        $db,
+                        array($homeTeam, $guestTeam),
+                        $roundInfo['secondround_date']
+                    );
+
                     $db->queryInsert(array(
                             'spieltyp'    => $type,
                             'pokalname'   => $match->cupName,
                             'pokalrunde'  => $roundInfo['name'],
                             'home_verein' => $guestTeam,
                             'gast_verein' => $homeTeam,
-                            'datum'       => $roundInfo['secondround_date']
+                            'datum'       => $secondRoundDate
                     ), $matchTable);
                 }
             }
@@ -420,6 +473,13 @@ class SimulationCupMatchHelper {
                 $guestTeam = $teamId;
             }
             
+            $firstRoundDate = self::resolveCupMatchTimestamp(
+                $websoccer,
+                $db,
+                array($homeTeam, $guestTeam),
+                $firstRoundDate
+            );
+
             // create first-leg match
             $db->queryInsert(array(
                     'spieltyp'    => $type,
@@ -432,6 +492,13 @@ class SimulationCupMatchHelper {
             
             // create second-leg match (roles reversed) if a date is set
             if ($secondRoundDate) {
+                $secondRoundDate = self::resolveCupMatchTimestamp(
+                    $websoccer,
+                    $db,
+                    array($homeTeam, $guestTeam),
+                    $secondRoundDate
+                );
+
                 $db->queryInsert(array(
                         'spieltyp'    => $type,
                         'pokalname'   => $cupName,

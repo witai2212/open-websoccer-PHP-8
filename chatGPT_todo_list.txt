@@ -1,14 +1,18 @@
-# CM23 Task List | 2026-08-24 | Revision 1
+# CM23 Task List | 2026-08-24 | Revision 2
 Open Tasks:
 
 1002: Match Schedules/Spielpläne
   - da die ligen und pokale unterschiedlich sind (unterschiedliche anzahl teams, runden), wäre es gut die Spielpläne daran anzupassen. In der Art dass die Saisons alle gleichzeitig enden.
     Saisonabschluss sollten die nationalen und anschl. internationalen Cups sein.
   - ausserdem prüfen ob saison beenden in admin sektion redundant ist.
-1003: Beobachtungsliste:
-  - spieler auf beaobachtungsliste setzen oder löchen führt zu einer separaten page. Allerdings, wenn man dann wieder zurück will auf vorherige seite, dann gibt es die nicht mehr. Die "actions" sollten dann über eine popup dialog erfolgen, statt zu einer separaten seite, von de man nciht wieder zurück kann. (bitte vorher fragen ob Task verstanden wurde.)
 
 Finalised taskes:
+1003: Beobachtungsliste
+  - Hinzufügen und Entfernen von Spielern erfolgt über einen Bestätigungsdialog und AJAX, ohne die aktuelle Seite zu verlassen.
+  - Nach erfolgreicher Aktion wird der auslösende Button bzw. Link direkt auf die Gegenaktion umgestellt.
+  - Auf der Beobachtungsliste wird ein entfernter Spieler direkt aus der Tabelle entfernt; bei leerer Liste erscheint die Leermeldung.
+  - Der zentrale Handler berücksichtigt Formulare und Links mit den Watchlist-Actions auf allen Seiten.
+
 1004: windiger Finanzberater
   - Windige Finanzberater sind als Merkmal vorhandener Finanzberater umgesetzt.
   - Privates Managerkonto: cm23_user.konto.

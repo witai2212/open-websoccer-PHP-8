@@ -10,6 +10,11 @@
 
 ******************************************************/
 
+/*
+ * Revision 1 - 2026-08-24
+ * Task 1000: Scout-Kompetenz nach dem ersten vollständig abgelaufenen Vertrag dauerhaft sichtbar.
+ */
+
 /**
  * Provides data for the scouting department page.
  */
@@ -58,8 +63,12 @@ class ScoutingModel implements IModel {
             $nextLevel = ScoutingDataService::getDepartmentLevel($this->_websoccer, $this->_db, 1);
         }
 
-        $teamScouts = ScoutingDataService::getTeamScouts($this->_websoccer, $this->_db, $teamId);
-        $freeScouts = ScoutingDataService::getAvailableScouts($this->_websoccer, $this->_db);
+        $teamScouts = $this->addScoutExpertiseVisibility(
+            ScoutingDataService::getTeamScouts($this->_websoccer, $this->_db, $teamId)
+        );
+        $freeScouts = $this->addScoutExpertiseVisibility(
+            ScoutingDataService::getAvailableScouts($this->_websoccer, $this->_db)
+        );
         $coveredSpecialities = array();
         foreach ($teamScouts as $teamScout) {
             if (isset($teamScout['speciality']) && strlen($teamScout['speciality'])) {
@@ -89,6 +98,35 @@ class ScoutingModel implements IModel {
             'max_camps' => ScoutingDataService::getMaxCampsForTeam($this->_websoccer, $this->_db, $teamId),
             'position_options' => self::getPositionOptions()
         );
+    }
+
+    private function addScoutExpertiseVisibility($scouts) {
+        $scoutTable = $this->_websoccer->getConfig('db_prefix') . '_scout';
+
+        foreach ($scouts as $index => $scout) {
+            $scouts[$index]['expertise_known'] = 0;
+
+            if (!isset($scout['id'])) {
+                continue;
+            }
+
+            $result = $this->_db->querySelect(
+                'expertise, expertise_known',
+                $scoutTable,
+                'id = %d',
+                (int) $scout['id'],
+                1
+            );
+            $row = $result->fetch_array();
+            $result->free();
+
+            if ($row && isset($row['expertise_known']) && (int) $row['expertise_known'] === 1) {
+                $scouts[$index]['expertise_known'] = 1;
+                $scouts[$index]['expertise'] = (int) $row['expertise'];
+            }
+        }
+
+        return $scouts;
     }
 
     private static function getPositionOptions() {

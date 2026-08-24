@@ -1,2 +1,8 @@
 Scouts: /?page=scouting#scouting-scouts
   - once club has employed a scout and contract expires (no more matches left, the competence of scout shall be visible and remain visible)
+Pokal:
+  - Vergleiche internationale Pokale mit nationalen (?page=cups). Die Nationalen Pokale sollten in der view ähnlich aufgebaut sein.
+    - aktuelle übersicht, teilnehmer, runden, titelträger, mein verein, letzte ergebnissse, nächste spiele, usw.
+
+
+  

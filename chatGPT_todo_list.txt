@@ -1,9 +1,5 @@
-Tasks:
-1000: Scouts: /?page=scouting#scouting-scouts
-  - once club has employed a scout and contract expires (no more matches left, the competence of scout shall be visible and remain visible)
-1001: Pokal:
-  - Vergleiche internationale Pokale mit nationalen (?page=cups). Die Nationalen Pokale sollten in der view ähnlich aufgebaut sein.
-    - aktuelle übersicht, teilnehmer, runden, titelträger, mein verein, letzte ergebnissse, nächste spiele, usw.
+Open Tasks:
+
 1002: Match Schedules/Spielpläne
   - da die ligen und pokale unterschiedlich sind (unterschiedliche anzahl teams, runden), wäre es gut die Spielpläne daran anzupassen. In der Art dass die Saisons alle gleichzeitig enden.
     Saisonabschluss sollten die nationalen und anschl. internationalen Cups sein.
@@ -11,7 +7,17 @@ Tasks:
   - spieler auf beaobachtungsliste setzen oder löchen führt zu einer separaten page. Allerdings, wenn man dann wieder zurück will auf vorherige seite, dann gibt es die nicht mehr. Die "actions" sollten dann über eine popup dialog erfolgen, statt zu einer separaten seite, von de man nciht wieder zurück kann. (bitte vorher fragen ob Task verstanden wurde.)
 1004: windiger Finanzberater
   - user sollten die möglichkeit haben einen windige finanzberater einzustellen. Dieser sollte vereinsgeld auf das user-konto (privates konto vorschlag: cm23_users.konto) verschieben können. Dann kann der user bei einem vereinswechsel Geld mitbringen in den neuen klub --> Möglichkeit geld auch in verein einzuzahlen (mit windigem finanzberater). 
+
+
+
+
+Finalised taskes:
 1005: Finanzprognore:
   - ?page=financialforecast kann teil eines tabs in ?page=finance seine --> also ?page=finance#financialforecast
 1006: check main/actions
   - there are classes that seem to be wrong here. are the missing somewehre else?
+1000: Scouts: /?page=scouting#scouting-scouts
+  - once club has employed a scout and contract expires (no more matches left, the competence of scout shall be visible and remain visible)
+1001: Pokal:
+  - Vergleiche internationale Pokale mit nationalen (?page=cups). Die Nationalen Pokale sollten in der view ähnlich aufgebaut sein.
+    - aktuelle übersicht, teilnehmer, runden, titelträger, mein verein, letzte ergebnissse, nächste spiele, usw.

@@ -1,3 +1,4 @@
+{# CM23 Task 1004 | 2026-08-24 | Revision 1 #}
 {% extends "base.twig" %}
 
 {% block page_title %}
@@ -77,6 +78,9 @@
                 <td>{{ i18n.getMessage("clubstaff_role_" ~ staff.role) }}</td>
                 <td>
                     <strong>{{ staff.name }}</strong>
+                    {% if staff.role == 'financial_advisor' and staff.shady == '1' %}
+                        <span class="label label-warning">{{ i18n.getMessage("clubstaff_shady_badge") }}</span>
+                    {% endif %}
                     {% if staff.description|length > 0 %}<br><small>{{ staff.description }}</small>{% endif %}
                 </td>
                 <td>{{ staff.level }}</td>
@@ -117,7 +121,12 @@
             <tbody>
             {% for staff in stafflist %}
                 <tr>
-                    <td><strong>{{ staff.name }}</strong></td>
+                    <td>
+                        <strong>{{ staff.name }}</strong>
+                        {% if staff.role == 'financial_advisor' and staff.shady == '1' %}
+                            <span class="label label-warning">{{ i18n.getMessage("clubstaff_shady_badge") }}</span>
+                        {% endif %}
+                    </td>
                     <td>{{ staff.level }}</td>
                     <td>+{{ staff.bonus }}%</td>
                     <td>{{ staff.salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>

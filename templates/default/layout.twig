@@ -1,3 +1,4 @@
+{# CM23 Task 1003 | 2026-08-24 | Revision 1 #}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -106,10 +107,41 @@
 		</div>
 		
 		<div id="ajaxLoaderPage"></div>
+
+		<div id="watchlistActionModal"
+			 class="modal hide fade"
+			 tabindex="-1"
+			 role="dialog"
+			 aria-labelledby="watchlistActionModalLabel"
+			 aria-hidden="true"
+			 data-add-title="{{ i18n.getMessage("watchlist_dialog_add_title") }}"
+			 data-add-message="{{ i18n.getMessage("watchlist_dialog_add_message") }}"
+			 data-remove-title="{{ i18n.getMessage("watchlist_dialog_remove_title") }}"
+			 data-remove-message="{{ i18n.getMessage("watchlist_dialog_remove_message") }}"
+			 data-confirm-add="{{ i18n.getMessage("watchlist_dialog_confirm_add") }}"
+			 data-confirm-remove="{{ i18n.getMessage("watchlist_dialog_confirm_remove") }}"
+			 data-add-label="{{ i18n.getMessage("button_put_on_watchlist") }}"
+			 data-remove-label="{{ i18n.getMessage("button_delete_from_watchlist") }}"
+			 data-empty-label="{{ i18n.getMessage("no_items") }}"
+			 data-request-error="{{ i18n.getMessage("watchlist_dialog_request_error") }}"
+			 data-error-title="{{ i18n.getMessage("errorpage_title") }}">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="watchlistActionModalLabel"></h3>
+			</div>
+			<div class="modal-body">
+				<p id="watchlistActionModalMessage"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn" data-dismiss="modal">{{ i18n.getMessage("watchlist_dialog_cancel") }}</button>
+				<button type="button" class="btn btn-primary" id="watchlistActionConfirm"></button>
+			</div>
+		</div>
 		
 		{% for jsSource in skin.getJavaScriptSources() %}
 		<script src="{{ jsSource }}" ></script>
 		{% endfor %}
+		<script src="{{ env.getConfig("context_root") }}/js/watchlist-dialogs.js"></script>
 		{% if scriptReferences is defined %}
 			{% for jsSource in scriptReferences %}
 			<script src="{{ env.getConfig("context_root") }}/js/{{ jsSource }}" ></script>

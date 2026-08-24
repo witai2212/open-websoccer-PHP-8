@@ -2,6 +2,7 @@
 /******************************************************
 
 This file is part of OpenWebSoccer-Sim.
+CM23 Task 1002 | 24.08.2026 | Revision 1
 
 OpenWebSoccer-Sim is free software: you can redistribute it
 and/or modify it under the terms of the
@@ -720,6 +721,9 @@ $show = isset($_REQUEST['show'])
 : '';
 
 echo '<h1>' . escapeOutput($mainTitle) . '</h1>';
+echo '<div class="alert alert-error">';
+echo '<strong>Notfallfunktion:</strong> Dieses Einzeltool nur für Reparatur- oder Notfälle verwenden. Der reguläre Saisonabschluss erfolgt über den Saisonwechsel-Assistenten, damit Liga- und Pokaltermine gemeinsam geprüft werden.';
+echo '</div>';
 
 if (!$admin['r_admin'] && !$admin['r_demo'] && !$admin[$page['permissionrole']]) {
     throw new Exception($i18n->getMessage('error_access_denied'));

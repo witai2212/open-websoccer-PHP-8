@@ -11,7 +11,7 @@
 ******************************************************/
 
 /*
- * Revision 1 - 2026-08-24
+ * Revision 2 - 2026-08-24
  * Task 1000: Scout-Kompetenz nach dem ersten vollständig abgelaufenen Vertrag dauerhaft sichtbar.
  */
 
@@ -64,10 +64,12 @@ class ScoutingModel implements IModel {
         }
 
         $teamScouts = $this->addScoutExpertiseVisibility(
-            ScoutingDataService::getTeamScouts($this->_websoccer, $this->_db, $teamId)
+            ScoutingDataService::getTeamScouts($this->_websoccer, $this->_db, $teamId),
+            (int) $user->id
         );
         $freeScouts = $this->addScoutExpertiseVisibility(
-            ScoutingDataService::getAvailableScouts($this->_websoccer, $this->_db)
+            ScoutingDataService::getAvailableScouts($this->_websoccer, $this->_db),
+            (int) $user->id
         );
         $coveredSpecialities = array();
         foreach ($teamScouts as $teamScout) {
@@ -100,27 +102,27 @@ class ScoutingModel implements IModel {
         );
     }
 
-    private function addScoutExpertiseVisibility($scouts) {
-        $scoutTable = $this->_websoccer->getConfig('db_prefix') . '_scout';
+    private function addScoutExpertiseVisibility($scouts, $userId) {
+        $prefix = $this->_websoccer->getConfig('db_prefix') . '_';
 
         foreach ($scouts as $index => $scout) {
             $scouts[$index]['expertise_known'] = 0;
 
-            if (!isset($scout['id'])) {
+            if (!isset($scout['id']) || $userId < 1) {
                 continue;
             }
 
             $result = $this->_db->querySelect(
-                'expertise, expertise_known',
-                $scoutTable,
-                'id = %d',
-                (int) $scout['id'],
+                'S.expertise',
+                $prefix . 'scout AS S INNER JOIN ' . $prefix . 'scout_expertise_knowledge AS K ON K.scout_id = S.id',
+                'S.id = %d AND K.user_id = %d',
+                array((int) $scout['id'], (int) $userId),
                 1
             );
             $row = $result->fetch_array();
             $result->free();
 
-            if ($row && isset($row['expertise_known']) && (int) $row['expertise_known'] === 1) {
+            if ($row && isset($row['expertise'])) {
                 $scouts[$index]['expertise_known'] = 1;
                 $scouts[$index]['expertise'] = (int) $row['expertise'];
             }

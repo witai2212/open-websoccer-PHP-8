@@ -1,3 +1,4 @@
+{# CM23 Task 1005 | 2026-08-24 | Revision 1 #}
 {% extends "base.twig" %}
 
 {% import "macros/messagebox.twig" as messagebox %}
@@ -16,6 +17,7 @@
 			data-ajaxtarget="account_statementlist" data-ajaxblock="account_statement">{{ i18n.getMessage("finance_account_statement") }}</a></li>
 
   <li><a href="#finance_development" data-toggle="tab">{{ i18n.getMessage("finance_cash_development") }}</a></li>
+  <li><a href="#financialforecast" data-toggle="tab">{{ i18n.getMessage("financialforecast_navlabel") }}</a></li>
 </ul>
 
 
@@ -299,6 +301,38 @@
 	{% endif %}
 
 </div>
+
+	<div class="tab-pane" id="financialforecast">
+		{% include "views/financialforecast.twig" %}
+	</div>
 	
 </div>
+
+<script>
+(function($) {
+	function activateFinanceTabFromHash() {
+		var hash = window.location.hash;
+		if (hash && $('#financesTab a[href="' + hash + '"]').length) {
+			$('#financesTab a[href="' + hash + '"]').tab('show');
+		}
+	}
+
+	$(function() {
+		activateFinanceTabFromHash();
+
+		$('#financesTab a[data-toggle="tab"]').on('shown', function(e) {
+			var target = $(e.target).attr('href');
+			if (!target || target.charAt(0) !== '#') {
+				return;
+			}
+
+			if (window.history && window.history.replaceState) {
+				window.history.replaceState(null, null, target);
+			} else {
+				window.location.hash = target;
+			}
+		});
+	});
+})(jQuery);
+</script>
 {% endblock %}

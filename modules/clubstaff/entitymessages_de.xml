@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- CM23 Task 1004 | 2026-08-24 | Revision 1 -->
 <messages>
 
     <message id="clubstaff_navlabel">Mitarbeiterstab</message>
@@ -16,6 +17,8 @@
     <message id="entity_clubstaff_bonus_help">Kleiner Bonuswert in Prozentpunkten. Je nach Rolle wird er auf passende Systeme angewendet.</message>
     <message id="entity_clubstaff_description">Beschreibung</message>
     <message id="entity_clubstaff_description_help">Kurzer Hinweis, was dieser Mitarbeiter besonders gut kann.</message>
+    <message id="entity_clubstaff_shady">Windig</message>
+    <message id="entity_clubstaff_shady_help">Erlaubt bei Finanzberatern den Zugriff auf das private Managerkonto. Bei anderen Rollen wird dieses Merkmal ignoriert.</message>
     <message id="entity_clubstaff_active">Aktiv</message>
     <message id="entity_clubstaff_active_help">Nur aktive Mitarbeiter können von Vereinen eingestellt werden.</message>
 

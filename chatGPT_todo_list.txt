@@ -11,3 +11,5 @@ Tasks:
   - spieler auf beaobachtungsliste setzen oder löchen führt zu einer separaten page. Allerdings, wenn man dann wieder zurück will auf vorherige seite, dann gibt es die nicht mehr. Die "actions" sollten dann über eine popup dialog erfolgen, statt zu einer separaten seite, von de man nciht wieder zurück kann. (bitte vorher fragen ob Task verstanden wurde.)
 1004: windiger Finanzberater
   - user sollten die möglichkeit haben einen windige finanzberater einzustellen. Dieser sollte vereinsgeld auf das user-konto (privates konto vorschlag: cm23_users.konto) verschieben können. Dann kann der user bei einem vereinswechsel Geld mitbringen in den neuen klub --> Möglichkeit geld auch in verein einzuzahlen (mit windigem finanzberater). 
+1005: Finanzprognore:
+  - ?page=financialforecast kann teil eines tabs in ?page=finance seine --> also ?page=finance#financialforecast

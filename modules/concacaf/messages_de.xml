@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- Task 1001 - Revision 1 - 2026-08-24 -->
 <messages>
     <message id="concacaf_navlabel">CONCACAF</message>
     <message id="concacaf_ranking_navlabel">CONCACAF Ranking</message>
@@ -28,8 +29,9 @@
     <message id="concacafchampionscup_winner_open">noch offen</message>
     <message id="concacafchampionscup_prize_winner">Siegerprämie</message>
     <message id="concacafchampionscup_my_club">Mein Verein</message>
-    <message id="concacafchampionscup_still_in_competition">Teilnehmer</message>
-    <message id="concacafchampionscup_not_participating">nicht im Wettbewerb</message>
+    <message id="concacafchampionscup_still_in_competition">noch im Wettbewerb</message>
+    <message id="concacafchampionscup_eliminated">ausgeschieden</message>
+    <message id="concacafchampionscup_not_participating">nicht teilgenommen</message>
     <message id="concacafchampionscup_my_group">Gruppe</message>
     <message id="concacafchampionscup_my_next_match">Nächstes Spiel</message>
     <message id="concacafchampionscup_my_last_match">Letztes Spiel</message>

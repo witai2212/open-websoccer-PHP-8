@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
+    <!-- CM23 Task 1002 | 24.08.2026 | Revision 1 -->
     
     <message id="category_season_navlabel">Saisons</message>
-	<message id="complete-season_navlabel">Saison beenden</message>
-    <message id="season_complete_title">Saisons beenden</message>
-	<message id="season_complete_introduction">Durch auswählen einer Saison wird diese als "beendet" markiert, Statistiken aktualisiert und Sponsorenprämien ausbezahlt. Für folgende Saisons gibt es keine Ligaspiele mehr zu berechnen:</message>
+	<message id="complete-season_navlabel">NOTFALL: Saison beenden</message>
+    <message id="season_complete_title">NOTFALLFUNKTION: Saisons beenden</message>
+	<message id="season_complete_introduction">Nur im Notfall verwenden. Durch Auswählen einer Saison wird diese als "beendet" markiert, Statistiken aktualisiert und Sponsorenprämien ausbezahlt. Der reguläre Saisonabschluss erfolgt über den Saisonwechsel-Assistenten. Für folgende Saisons gibt es keine Ligaspiele mehr zu berechnen:</message>
     <message id="season_complete_noseasons">Keine beendbare Saison vorhanden.</message>
-	<message id="season_complete_submit">Saison beenden</message>
+	<message id="season_complete_submit">NOTFALL: Saison beenden</message>
     <message id="season_complete_label_playerdisableage">Spielerrentenalter</message>
 	<message id="season_complete_label_playerdisableage_help">Spieler ab diesem Alter werden deaktiviert.</message>
 	

@@ -2,7 +2,7 @@
 /******************************************************
 
   Season rollover wizard for OpenWebSoccer-Sim.
-  CM23 Task 1002 | 24.08.2026 | Revision 1
+  CM23 Task 1002 | 24.08.2026 | Revision 2
 
 ******************************************************/
 
@@ -185,7 +185,7 @@ function seasonRolloverRenderOptionsForm($site, $options, $step = 'validate') {
 
     echo '<div class="control-group"><label class="control-label" for="conmebol_sud_start_date">Copa Sudamericana-Start</label><div class="controls">';
     echo '<input type="text" id="conmebol_sud_start_date" name="conmebol_sud_start_date" value="' . escapeOutput($options['conmebol_sud_start_date']) . '">';
-    echo '<p class="help-block">CONMEBOL-Gruppenspiele, sofern Pokal und Gruppenrunde angelegt sind.</p>';
+    echo '<p class="help-block">CONMEBOL, 20:00 Uhr; Pokalrunden werden automatisch auf Dienstag bis Donnerstag verteilt. Finale nach dem nationalen Pokalfinale.</p>';
     echo '</div></div>';
 
     echo '<div class="control-group"><label class="control-label" for="concacaf_start_date">CONCACAF-Start</label><div class="controls">';

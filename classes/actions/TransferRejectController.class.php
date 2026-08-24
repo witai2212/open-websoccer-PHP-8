@@ -1,4 +1,5 @@
 <?php
+// CM23 revision: 1 | 2026-08-24
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -85,6 +86,7 @@ class TransferRejectController implements IActionController {
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_transfer_angebot";
 		$whereCondition = "id = %d";
 		$this->_db->queryDelete($fromTable, $whereCondition, $offer['id']);
+		TransfermarketDataService::updateHighestOffer($this->_websoccer, $this->_db, $offer['spieler_id']);
 		
 		// show success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, $this->_i18n->getMessage("transferoffers_offer_reject_success"), ""));

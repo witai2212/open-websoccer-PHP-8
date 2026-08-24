@@ -1,3 +1,4 @@
+{# Task 1001 - Revision 1 - 2026-08-24 #}
 {% import "macros/messagebox.twig" as messagebox %}
 
 {% if not cup_found %}
@@ -17,8 +18,12 @@
 	{% if phases|length > 0 %}
 		<ul class="nav nav-pills">
 		{% for phase in phases %}
+			{% set phase_query = "phase=" ~ phase.key %}
+			{% if selected_cup_id is defined and selected_cup_id > 0 %}
+				{% set phase_query = "cup=" ~ selected_cup_id ~ "&phase=" ~ phase.key %}
+			{% endif %}
 			<li{% if phase.key == selected_phase %} class="active"{% endif %}>
-				<a href="{{ env.getInternalUrl(page_id, "phase=" ~ phase.key) }}">{{ phase.label }}</a>
+				<a href="{{ env.getInternalUrl(page_id, phase_query) }}">{{ phase.label }}</a>
 			</li>
 		{% endfor %}
 		</ul>
@@ -61,6 +66,8 @@
 				<a href="{{ env.getInternalUrl("team", "id=" ~ my_team.id) }}"><strong>{{ my_team.name }}</strong></a>
 				{% if my_team.participating %}
 					<span class="label label-success">{{ i18n.getMessage(message_prefix ~ "_still_in_competition") }}</span>
+				{% elseif my_team.participated %}
+					<span class="label label-important">{{ i18n.getMessage(message_prefix ~ "_eliminated") }}</span>
 				{% else %}
 					<span class="label">{{ i18n.getMessage(message_prefix ~ "_not_participating") }}</span>
 				{% endif %}

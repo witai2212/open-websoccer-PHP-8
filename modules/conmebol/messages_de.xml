@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- Task 1001 - Revision 1 - 2026-08-24 -->
 <messages>
     <message id="conmebol_navlabel">CONMEBOL</message>
     <message id="conmebol_ranking_navlabel">CONMEBOL Ranking</message>
@@ -29,8 +30,9 @@
     <message id="copalibertadores_winner_open">noch offen</message>
     <message id="copalibertadores_prize_winner">Siegerprämie</message>
     <message id="copalibertadores_my_club">Mein Verein</message>
-    <message id="copalibertadores_still_in_competition">Teilnehmer</message>
-    <message id="copalibertadores_not_participating">nicht im Wettbewerb</message>
+    <message id="copalibertadores_still_in_competition">noch im Wettbewerb</message>
+    <message id="copalibertadores_eliminated">ausgeschieden</message>
+    <message id="copalibertadores_not_participating">nicht teilgenommen</message>
     <message id="copalibertadores_my_group">Gruppe</message>
     <message id="copalibertadores_my_next_match">Nächstes Spiel</message>
     <message id="copalibertadores_my_last_match">Letztes Spiel</message>
@@ -63,8 +65,9 @@
     <message id="copasudamericana_winner_open">noch offen</message>
     <message id="copasudamericana_prize_winner">Siegerprämie</message>
     <message id="copasudamericana_my_club">Mein Verein</message>
-    <message id="copasudamericana_still_in_competition">Teilnehmer</message>
-    <message id="copasudamericana_not_participating">nicht im Wettbewerb</message>
+    <message id="copasudamericana_still_in_competition">noch im Wettbewerb</message>
+    <message id="copasudamericana_eliminated">ausgeschieden</message>
+    <message id="copasudamericana_not_participating">nicht teilgenommen</message>
     <message id="copasudamericana_my_group">Gruppe</message>
     <message id="copasudamericana_my_next_match">Nächstes Spiel</message>
     <message id="copasudamericana_my_last_match">Letztes Spiel</message>

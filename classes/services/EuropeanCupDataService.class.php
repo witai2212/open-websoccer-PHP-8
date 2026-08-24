@@ -11,6 +11,11 @@
 
 ******************************************************/
 
+/*
+ * Task 1001 - National/international cup participation status
+ * Revision 1 - 2026-08-24
+ */
+
 /**
  * Shared data service for European cup overview pages.
  */
@@ -327,6 +332,7 @@ class EuropeanCupDataService {
         }
 
         $team['group_name'] = '';
+        $team['participated'] = false;
         $team['participating'] = false;
         $team['next_match'] = array();
         $team['last_match'] = array();
@@ -344,7 +350,23 @@ class EuropeanCupDataService {
 
             if ($group) {
                 $team['group_name'] = $group['name'];
-                $team['participating'] = true;
+                $team['participated'] = true;
+
+                $activeGroupMatches = MatchesDataService::getMatchesByCondition(
+                    $websoccer,
+                    $db,
+                    "M.pokalname = '%s' AND M.pokalrunde = '%s' AND M.pokalgruppe = '%s' AND M.berechnet != '1' ORDER BY M.datum ASC",
+                    array(
+                        $cupName,
+                        (string) $groupRound['name'],
+                        (string) $group['name']
+                    ),
+                    1
+                );
+
+                if (isset($activeGroupMatches[0])) {
+                    $team['participating'] = true;
+                }
             }
         }
 
@@ -358,6 +380,7 @@ class EuropeanCupDataService {
 
         if (isset($nextMatches[0])) {
             $team['next_match'] = $nextMatches[0];
+            $team['participated'] = true;
             $team['participating'] = true;
         }
 
@@ -371,7 +394,7 @@ class EuropeanCupDataService {
 
         if (isset($lastMatches[0])) {
             $team['last_match'] = $lastMatches[0];
-            $team['participating'] = true;
+            $team['participated'] = true;
         }
 
         return $team;

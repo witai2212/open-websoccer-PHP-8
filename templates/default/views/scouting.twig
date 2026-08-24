@@ -1,3 +1,4 @@
+{# Revision 2 - 2026-08-24 | Task 1000: Scout-Kompetenz nur für den einstellenden User sichtbar. #}
 {% extends "base.twig" %}
 
 {# Revision 1 - 2026-08-24: Task 1000 - Scout-Kompetenz nach erstem vollständig abgelaufenen Vertrag dauerhaft sichtbar. #}
@@ -226,7 +227,7 @@
             </div>
         {% endif %}
 
-        <p><i class="icon-info-sign"></i> Die Kompetenz eines Scouts bleibt unbekannt, bis erstmals ein Vertrag vollständig ausgelaufen ist. Danach bleibt sie dauerhaft sichtbar.</p>
+        <p><i class="icon-info-sign"></i> Die Kompetenz eines Scouts bleibt für dich unbekannt, bis erstmals ein von dir abgeschlossener Vertrag vollständig ausgelaufen ist. Danach bleibt sie für dich dauerhaft sichtbar.</p>
     </div>
 
     {% if department.id is defined %}

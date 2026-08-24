@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../messages.dtd">
+<!-- CM23 Task 1004 | 2026-08-24 | Revision 1 -->
 <messages>
     <message id="finance_navlabel">Finanzen</message>
     
@@ -255,4 +256,31 @@
     <message id="account_statement_daily_balance">Tagessaldo</message>
     <message id="account_statement_amount">Betrag</message>
     <message id="account_statement_no_entries">Keine Kontobuchungen vorhanden.</message>
+
+    <message id="private_account_tab">Privatkonto</message>
+    <message id="private_account_title">Privates Managerkonto</message>
+    <message id="private_account_intro">Geld auf diesem Konto gehört dem Manager und bleibt bei einem Vereinswechsel erhalten.</message>
+    <message id="private_account_balance">Privates Guthaben</message>
+    <message id="private_account_club_balance">Vereinsguthaben</message>
+    <message id="private_account_min_reserve">Mindestreserve im Verein</message>
+    <message id="private_account_max_withdrawal">Maximal entnehmbar</message>
+    <message id="private_account_advisor_required">Für Ein- und Auszahlungen muss dein aktueller Verein einen windigen Finanzberater beschäftigen.</message>
+    <message id="private_account_advisor_active">Ein windiger Finanzberater ist aktiv. Ein- und Auszahlungen sind möglich.</message>
+    <message id="private_account_withdraw_title">Vereinsgeld auf Privatkonto</message>
+    <message id="private_account_deposit_title">Privatgeld in den Verein</message>
+    <message id="private_account_amount">Betrag</message>
+    <message id="private_account_withdraw_button">Auf Privatkonto verschieben</message>
+    <message id="private_account_deposit_button">In Verein einzahlen</message>
+    <message id="private_account_no_withdrawal">Wegen der Mindestreserve von 5.000.000 EUR kann derzeit kein Vereinsgeld entnommen werden.</message>
+    <message id="private_account_no_deposit">Auf dem Privatkonto ist derzeit kein Guthaben vorhanden.</message>
+    <message id="private_account_no_statement_hint">Diese Transfers werden nicht im Vereins-Kontoauszug protokolliert.</message>
+    <message id="private_account_success_withdraw">Der Betrag wurde auf dein Privatkonto verschoben.</message>
+    <message id="private_account_success_deposit">Der Betrag wurde in den Verein eingezahlt.</message>
+    <message id="private_account_error_invalid_amount">Der Betrag ist ungültig.</message>
+    <message id="private_account_error_invalid_direction">Die Transferrichtung ist ungültig.</message>
+    <message id="private_account_error_no_shady_advisor">Dein Verein beschäftigt keinen aktiven windigen Finanzberater.</message>
+    <message id="private_account_error_min_reserve">Die Vereinsreserve von mindestens 5.000.000 EUR muss erhalten bleiben.</message>
+    <message id="private_account_error_insufficient_private_funds">Das Guthaben auf deinem Privatkonto reicht dafür nicht aus.</message>
+    <message id="private_account_error_user_not_found">Das Managerkonto wurde nicht gefunden.</message>
+    <message id="private_account_error_team_not_owned">Der ausgewählte Verein gehört nicht zu diesem Managerkonto.</message>
 </messages>

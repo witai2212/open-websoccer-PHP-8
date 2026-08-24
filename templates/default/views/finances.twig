@@ -1,4 +1,4 @@
-{# CM23 Task 1005 | 2026-08-24 | Revision 2 #}
+{# CM23 Task 1004 | 2026-08-24 | Revision 3 #}
 {% extends "base.twig" %}
 
 {% import "macros/messagebox.twig" as messagebox %}
@@ -17,6 +17,7 @@
 			data-ajaxtarget="account_statementlist" data-ajaxblock="account_statement">{{ i18n.getMessage("finance_account_statement") }}</a></li>
 
   <li><a href="#finance_development" data-toggle="tab">{{ i18n.getMessage("finance_cash_development") }}</a></li>
+  <li><a href="#private_account" data-toggle="tab">{{ i18n.getMessage("private_account_tab") }}</a></li>
   <li><a href="#financialforecast" data-toggle="tab">{{ i18n.getMessage("financialforecast_navlabel") }}</a></li>
 </ul>
 
@@ -304,6 +305,95 @@
 	{% endif %}
 
 </div>
+
+	<div class="tab-pane" id="private_account">
+		<h4>{{ i18n.getMessage("private_account_title") }}</h4>
+		<p>{{ i18n.getMessage("private_account_intro") }}</p>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="well">
+					<strong>{{ i18n.getMessage("private_account_balance") }}</strong><br>
+					{{ private_account.private_balance|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+				</div>
+			</div>
+			<div class="span3">
+				<div class="well">
+					<strong>{{ i18n.getMessage("private_account_club_balance") }}</strong><br>
+					{{ private_account.club_balance|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+				</div>
+			</div>
+			<div class="span3">
+				<div class="well">
+					<strong>{{ i18n.getMessage("private_account_min_reserve") }}</strong><br>
+					{{ private_account.minimum_club_reserve|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+				</div>
+			</div>
+			<div class="span3">
+				<div class="well">
+					<strong>{{ i18n.getMessage("private_account_max_withdrawal") }}</strong><br>
+					{{ private_account.max_withdrawal|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+				</div>
+			</div>
+		</div>
+
+		{% if not private_account.has_shady_advisor %}
+			<div class="alert alert-warning">
+				<i class="icon-warning-sign"></i>
+				{{ i18n.getMessage("private_account_advisor_required") }}
+			</div>
+		{% else %}
+			<div class="alert alert-success">
+				<i class="icon-ok"></i>
+				{{ i18n.getMessage("private_account_advisor_active") }}
+			</div>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="well">
+						<h5>{{ i18n.getMessage("private_account_withdraw_title") }}</h5>
+						{% if private_account.max_withdrawal > 0 %}
+							<form method="post" action="{{ env.getInternalUrl("finance") }}#private_account">
+								<label for="private_account_withdraw_amount">{{ i18n.getMessage("private_account_amount") }}</label>
+								<input id="private_account_withdraw_amount" type="number" name="amount" min="1" max="{{ private_account.max_withdrawal }}" step="1" required>
+								<input type="hidden" name="direction" value="club_to_private">
+								<input type="hidden" name="action" value="private_account_transfer">
+								<div class="form-actions">
+									<button type="submit" class="btn btn-primary">{{ i18n.getMessage("private_account_withdraw_button") }}</button>
+								</div>
+							</form>
+						{% else %}
+							<p class="muted">{{ i18n.getMessage("private_account_no_withdrawal") }}</p>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="span6">
+					<div class="well">
+						<h5>{{ i18n.getMessage("private_account_deposit_title") }}</h5>
+						{% if private_account.max_deposit > 0 %}
+							<form method="post" action="{{ env.getInternalUrl("finance") }}#private_account">
+								<label for="private_account_deposit_amount">{{ i18n.getMessage("private_account_amount") }}</label>
+								<input id="private_account_deposit_amount" type="number" name="amount" min="1" max="{{ private_account.max_deposit }}" step="1" required>
+								<input type="hidden" name="direction" value="private_to_club">
+								<input type="hidden" name="action" value="private_account_transfer">
+								<div class="form-actions">
+									<button type="submit" class="btn btn-primary">{{ i18n.getMessage("private_account_deposit_button") }}</button>
+								</div>
+							</form>
+						{% else %}
+							<p class="muted">{{ i18n.getMessage("private_account_no_deposit") }}</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			<p class="muted">
+				<i class="icon-info-sign"></i>
+				{{ i18n.getMessage("private_account_no_statement_hint") }}
+			</p>
+		{% endif %}
+	</div>
 
 	<div class="tab-pane" id="financialforecast">
 		{% include "views/financialforecast.twig" %}

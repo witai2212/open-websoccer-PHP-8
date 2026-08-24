@@ -1,5 +1,7 @@
 {% extends "base.twig" %}
 
+{# Revision 1 - 2026-08-24: Task 1000 - Scout-Kompetenz nach erstem vollständig abgelaufenen Vertrag dauerhaft sichtbar. #}
+
 {% block page_title %}
 {{ i18n.getMessage("scouting_title") }}
 {% endblock %}
@@ -189,7 +191,7 @@
                             <th>#</th>
                             <th>{{ i18n.getMessage("scouting_name") }}</th>
                             <th>{{ i18n.getMessage("scouting_nation") }}</th>
-                            <th>{{ i18n.getMessage("scouting_profile") }}</th>
+                            <th>Kompetenz</th>
                             <th>{{ i18n.getMessage("scouting_speciality") }}</th>
                             <th>{{ i18n.getMessage("scouting_team_matches") }}</th>
                             <th>{{ i18n.getMessage("scouting_fee") }}</th>
@@ -202,7 +204,13 @@
                             <td>{{ loop.index }}</td>
                             <td>{{ scout.name }}</td>
                             <td>{{ scout.nation }}</td>
-                            <td>{{ i18n.getMessage(scout.profile) }}</td>
+                            <td>
+                                {% if scout.expertise_known %}
+                                    {{ scout.expertise }}
+                                {% else %}
+                                    {{ i18n.getMessage(scout.profile) }}
+                                {% endif %}
+                            </td>
                             <td>{{ scout.speciality }}</td>
                             <td>{{ scout.team_matches }}</td>
                             <td>{{ scout.fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
@@ -218,7 +226,7 @@
             </div>
         {% endif %}
 
-        <p><i class="icon-info-sign"></i> {{ i18n.getMessage("scouting_competence_hidden") }}</p>
+        <p><i class="icon-info-sign"></i> Die Kompetenz eines Scouts bleibt unbekannt, bis erstmals ein Vertrag vollständig ausgelaufen ist. Danach bleibt sie dauerhaft sichtbar.</p>
     </div>
 
     {% if department.id is defined %}
@@ -238,7 +246,7 @@
                                 <th>#</th>
                                 <th>{{ i18n.getMessage("scouting_name") }}</th>
                                 <th>{{ i18n.getMessage("scouting_nation") }}</th>
-                                <th>{{ i18n.getMessage("scouting_profile") }}</th>
+                                <th>Kompetenz</th>
                                 <th>{{ i18n.getMessage("scouting_speciality") }}</th>
                                 <th>{{ i18n.getMessage("scouting_fee") }}</th>
                                 <th>{{ i18n.getMessage("scouting_hire_fee") }}</th>
@@ -251,7 +259,13 @@
                                 <td>{{ loop.index }}</td>
                                 <td>{{ free.name }}</td>
                                 <td>{{ free.nation }}</td>
-                                <td>{{ i18n.getMessage(free.profile) }}</td>
+                                <td>
+                                    {% if free.expertise_known %}
+                                        {{ free.expertise }}
+                                    {% else %}
+                                        {{ i18n.getMessage(free.profile) }}
+                                    {% endif %}
+                                </td>
                                 <td>{{ free.speciality }}</td>
                                 <td>{{ free.fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
                                 <td>{{ free.hire_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>

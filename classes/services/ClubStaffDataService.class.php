@@ -1,4 +1,5 @@
 <?php
+// CM23 Task 1004 | 2026-08-24 | Revision 1
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -148,6 +149,7 @@ class ClubStaffDataService {
             'S.salary' => 'salary',
             'S.bonus' => 'bonus',
             'S.description' => 'description',
+            'S.shady' => 'shady',
             'S.active' => 'active'
         );
         $from = $prefix . '_club_staff_assignment AS A INNER JOIN ' . $prefix . '_club_staff AS S ON S.id = A.staff_id';
@@ -232,6 +234,35 @@ class ClubStaffDataService {
     public static function getLoanInterestDiscount(WebSoccer $websoccer, DbConnection $db, $teamId) {
         $bonus = self::getRoleBonus($websoccer, $db, $teamId, self::ROLE_FINANCIAL_ADVISOR);
         return min(1.00, max(0, $bonus * 0.05)); // 0.25 points at bonus 5.
+    }
+
+    /**
+     * Returns whether the team currently employs an active shady financial advisor.
+     * Only the financial_advisor role is eligible, even if another staff row was
+     * accidentally marked as shady by an administrator.
+     */
+    public static function hasShadyFinancialAdvisor(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $teamId = (int) $teamId;
+        if ($teamId < 1 || !self::isEnabled($websoccer)) {
+            return false;
+        }
+
+        self::ensureSchema($websoccer, $db);
+        $prefix = $websoccer->getConfig('db_prefix');
+        $from = $prefix . '_club_staff_assignment AS A'
+            . ' INNER JOIN ' . $prefix . '_club_staff AS S ON S.id = A.staff_id';
+
+        $result = $db->querySelect(
+            'S.id AS staff_id',
+            $from,
+            "A.team_id = %d AND A.role = 'financial_advisor' AND S.role = 'financial_advisor' AND S.active = '1' AND S.shady = '1'",
+            $teamId,
+            1
+        );
+        $row = $result->fetch_array();
+        $result->free();
+
+        return ($row && isset($row['staff_id']) && (int) $row['staff_id'] > 0);
     }
 
     public static function getChemistryStaffScore(WebSoccer $websoccer, DbConnection $db, $teamId) {
@@ -441,6 +472,7 @@ class ClubStaffDataService {
         $row['bonus'] = isset($row['bonus']) ? (int) $row['bonus'] : 0;
         $row['level'] = isset($row['level']) ? (int) $row['level'] : 1;
         $row['description'] = isset($row['description']) ? $row['description'] : '';
+        $row['shady'] = (isset($row['shady']) && (string) $row['shady'] === '1') ? '1' : '0';
         $row['active'] = isset($row['active']) ? $row['active'] : '1';
         return $row;
     }
@@ -516,10 +548,20 @@ class ClubStaffDataService {
             salary INT(10) NOT NULL DEFAULT 0,
             bonus TINYINT(3) NOT NULL DEFAULT 2,
             description VARCHAR(255) DEFAULT NULL,
+            shady ENUM('1','0') NOT NULL DEFAULT '0',
             active ENUM('1','0') NOT NULL DEFAULT '1',
             PRIMARY KEY (id),
             KEY idx_club_staff_role_active (role, active)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
+
+        $columnResult = $db->executeQuery("SHOW COLUMNS FROM " . $staffTable . " LIKE 'shady'");
+        $hasShadyColumn = ($columnResult && $columnResult->num_rows > 0);
+        if ($columnResult) {
+            $columnResult->free();
+        }
+        if (!$hasShadyColumn) {
+            $db->executeQuery("ALTER TABLE " . $staffTable . " ADD COLUMN shady ENUM('1','0') NOT NULL DEFAULT '0' AFTER description");
+        }
 
         $db->executeQuery("CREATE TABLE IF NOT EXISTS " . $assignmentTable . " (
             team_id INT(10) NOT NULL,

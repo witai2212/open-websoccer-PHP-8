@@ -2,7 +2,7 @@
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
-  CM23 Task 1002 | 24.08.2026 | Revision 1
+  CM23 Task 1002 | 24.08.2026 | Revision 2
 
   OpenWebSoccer-Sim is free software: you can redistribute it 
   and/or modify it under the terms of the 
@@ -447,14 +447,13 @@ class ScheduleGenerator {
 	    
 	    $matchTable = $website->getConfig("db_prefix") . "_spiel";
 	    $baseTimestamp = (int) $matchdate;
-	    $slotMinutes = 10;
 	    
 	    foreach ($matches as $matchIndex => $clubs) {
 	        $homeTeamId = (int) $clubs[0];
 	        $guestTeamId = (int) $clubs[1];
 	        
-	        // Spread kick-off times slightly to avoid creating every first-round cup match at the exact same timestamp.
-	        $matchTimestamp = $baseTimestamp + ($matchIndex * $slotMinutes * 60);
+	        // Task 1002: national cup matches are evening fixtures at 20:00.
+	        $matchTimestamp = $baseTimestamp;
 	        
 	        if (class_exists('SeasonRolloverScheduleService')
 	            && SeasonRolloverScheduleService::teamsHaveMatchOnDay($website, $db, array($homeTeamId, $guestTeamId), $matchTimestamp)) {

@@ -2,6 +2,7 @@
 /******************************************************
 
   Season rollover cup helpers for OpenWebSoccer-Sim.
+  CM23 Task 1002 | 24.08.2026 | Revision 1
 
 ******************************************************/
 
@@ -124,13 +125,108 @@ class SeasonRolloverCupService {
         return count($matchIds);
     }
 
-    public static function generateNationalCups(WebSoccer $websoccer, DbConnection $db, $firstCupTuesdayTimestamp) {
+    public static function rescheduleCupRounds(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $cupName,
+        $firstRoundTimestamp,
+        $finalTimestamp,
+        array $blackoutTimestamps = array()
+    ) {
+        $cupId = CupsDataService::getCupIdByName($websoccer, $db, (string) $cupName);
+
+        if (!$cupId) {
+            return array();
+        }
+
+        $prefix = $websoccer->getConfig('db_prefix');
+        $result = $db->querySelect(
+            'id, name, firstround_date, secondround_date, finalround, groupmatches',
+            $prefix . '_cup_round',
+            'cup_id = %d ORDER BY firstround_date ASC, id ASC',
+            (int) $cupId
+        );
+
+        $rounds = array();
+        while ($round = $result->fetch_array()) {
+            $rounds[] = $round;
+        }
+        $result->free();
+
+        if (empty($rounds)) {
+            return array();
+        }
+
+        $roundDates = SeasonRolloverScheduleService::buildEvenlyDistributedCupRoundDates(
+            (int) $firstRoundTimestamp,
+            (int) $finalTimestamp,
+            count($rounds),
+            $blackoutTimestamps
+        );
+
+        $updatedRounds = array();
+
+        foreach ($rounds as $index => $round) {
+            $firstLegTimestamp = (int) $roundDates[$index];
+            $secondLegTimestamp = 0;
+
+            if (!empty($round['secondround_date'])) {
+                $secondLegTimestamp = SeasonRolloverScheduleService::addDays(
+                    $firstLegTimestamp,
+                    7,
+                    SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                    SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                );
+
+                if (isset($roundDates[$index + 1]) && $secondLegTimestamp >= (int) $roundDates[$index + 1]) {
+                    throw new Exception(
+                        'Pokaltermine für ' . $cupName . ' sind zu dicht für Hin- und Rückspiele.'
+                    );
+                }
+            }
+
+            $db->queryUpdate(
+                array(
+                    'firstround_date' => $firstLegTimestamp,
+                    'secondround_date' => $secondLegTimestamp
+                ),
+                $prefix . '_cup_round',
+                'id = %d',
+                (int) $round['id']
+            );
+
+            $updatedRounds[] = array(
+                'round_id' => (int) $round['id'],
+                'round_name' => (string) $round['name'],
+                'first_date' => SeasonRolloverScheduleService::formatGermanDate($firstLegTimestamp) . ' 20:00',
+                'second_date' => $secondLegTimestamp > 0
+                    ? SeasonRolloverScheduleService::formatGermanDate($secondLegTimestamp) . ' 20:00'
+                    : '',
+                'finalround' => !empty($round['finalround']) ? 1 : 0
+            );
+        }
+
+        return $updatedRounds;
+    }
+
+    public static function generateNationalCups(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $firstCupTuesdayTimestamp,
+        $nationalCupFinalTimestamp = 0,
+        $commonLeagueEndTimestamp = 0
+    ) {
         $countries = TeamsDataService::getNumberOfTeamsByCountry($websoccer, $db);
         if (!is_array($countries)) {
             $countries = array();
         }
 
-        $firstCupTuesdayTimestamp = SeasonRolloverScheduleService::nextWeekday((int) $firstCupTuesdayTimestamp, 2, 19, 0);
+        $firstCupTuesdayTimestamp = SeasonRolloverScheduleService::nextWeekday(
+            (int) $firstCupTuesdayTimestamp,
+            2,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
         $firstDate = SeasonRolloverScheduleService::formatGermanDate($firstCupTuesdayTimestamp);
 
         $createdCups = array();
@@ -174,14 +270,35 @@ class SeasonRolloverCupService {
                 $land,
                 $rounds,
                 $firstDate,
-                19,
-                0
+                SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
             );
+
+            $scheduledRounds = array();
+            if ((int) $nationalCupFinalTimestamp > 0) {
+                $blackouts = array();
+                if ((int) $commonLeagueEndTimestamp > 0) {
+                    $blackouts[] = (int) $commonLeagueEndTimestamp;
+                }
+
+                $scheduledRounds = self::rescheduleCupRounds(
+                    $websoccer,
+                    $db,
+                    $land,
+                    $firstCupTuesdayTimestamp,
+                    (int) $nationalCupFinalTimestamp,
+                    $blackouts
+                );
+            }
 
             $createdCups[] = array(
                 'country' => $land,
                 'teams' => $cupTeams,
-                'rounds' => $rounds
+                'rounds' => $rounds,
+                'scheduled_rounds' => $scheduledRounds,
+                'final_date' => (int) $nationalCupFinalTimestamp > 0
+                    ? SeasonRolloverScheduleService::formatGermanDate((int) $nationalCupFinalTimestamp) . ' 20:00'
+                    : ''
             );
         }
 
@@ -251,6 +368,135 @@ class SeasonRolloverCupService {
         $db->queryDelete($prefix . '_cup_round_group', 'cup_round_id = %d', $roundId);
     }
 
+    public static function generateEuropeanCups(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $firstClWednesdayTimestamp,
+        $firstUlThursdayTimestamp,
+        $firstLibertadoresTimestamp = 0,
+        $firstSudamericanaTimestamp = 0,
+        $firstConcacafTimestamp = 0,
+        $nationalCupFinalTimestamp = 0,
+        $commonLeagueEndTimestamp = 0
+    ) {
+        $results = array();
+        $blackouts = array();
+
+        if ((int) $commonLeagueEndTimestamp > 0) {
+            $blackouts[] = (int) $commonLeagueEndTimestamp;
+        }
+        if ((int) $nationalCupFinalTimestamp > 0) {
+            $blackouts[] = (int) $nationalCupFinalTimestamp;
+        }
+
+        $clStart = SeasonRolloverScheduleService::nextWeekday(
+            (int) $firstClWednesdayTimestamp,
+            3,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
+        $ulStart = SeasonRolloverScheduleService::nextWeekday(
+            (int) $firstUlThursdayTimestamp,
+            4,
+            SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+            SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+        );
+
+        $clFinal = (int) $nationalCupFinalTimestamp > 0
+            ? SeasonRolloverScheduleService::getInternationalCupFinalTimestamp((int) $nationalCupFinalTimestamp, 3)
+            : 0;
+        $ulFinal = (int) $nationalCupFinalTimestamp > 0
+            ? SeasonRolloverScheduleService::getInternationalCupFinalTimestamp((int) $nationalCupFinalTimestamp, 4)
+            : 0;
+
+        $results[] = self::generateEuropeanCup(
+            $websoccer,
+            $db,
+            'Champions League',
+            UefaDataService::UEFA_CL_CUP_ID,
+            $clStart,
+            $clFinal,
+            $blackouts
+        );
+
+        $results[] = self::generateEuropeanCup(
+            $websoccer,
+            $db,
+            'UEFA Euro League',
+            UefaDataService::UEFA_UL_CUP_ID,
+            $ulStart,
+            $ulFinal,
+            $blackouts
+        );
+
+        if (class_exists('ConmebolDataService')) {
+            $libStart = ((int) $firstLibertadoresTimestamp > 0)
+                ? SeasonRolloverScheduleService::nextWeekday(
+                    (int) $firstLibertadoresTimestamp,
+                    2,
+                    SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                    SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                )
+                : $clStart;
+
+            $sudStart = ((int) $firstSudamericanaTimestamp > 0)
+                ? SeasonRolloverScheduleService::nextWeekday(
+                    (int) $firstSudamericanaTimestamp,
+                    4,
+                    SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                    SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+                )
+                : $ulStart;
+
+            $libFinal = (int) $nationalCupFinalTimestamp > 0
+                ? SeasonRolloverScheduleService::getInternationalCupFinalTimestamp((int) $nationalCupFinalTimestamp, 2)
+                : 0;
+            $sudFinal = (int) $nationalCupFinalTimestamp > 0
+                ? SeasonRolloverScheduleService::getInternationalCupFinalTimestamp((int) $nationalCupFinalTimestamp, 4)
+                : 0;
+
+            $results[] = self::generateConmebolCup(
+                $websoccer,
+                $db,
+                ConmebolDataService::COPA_LIBERTADORES,
+                $libStart,
+                $libFinal,
+                $blackouts
+            );
+            $results[] = self::generateConmebolCup(
+                $websoccer,
+                $db,
+                ConmebolDataService::COPA_SUDAMERICANA,
+                $sudStart,
+                $sudFinal,
+                $blackouts
+            );
+        }
+
+        if (class_exists('ConcacafDataService') && (int) $firstConcacafTimestamp > 0) {
+            $concacafStart = SeasonRolloverScheduleService::nextWeekday(
+                (int) $firstConcacafTimestamp,
+                2,
+                SeasonRolloverScheduleService::CUP_KICKOFF_HOUR,
+                SeasonRolloverScheduleService::CUP_KICKOFF_MINUTE
+            );
+            $concacafFinal = (int) $nationalCupFinalTimestamp > 0
+                ? SeasonRolloverScheduleService::getInternationalCupFinalTimestamp((int) $nationalCupFinalTimestamp, 2)
+                : 0;
+
+            $results[] = self::generateConcacafCupIfReady(
+                $websoccer,
+                $db,
+                ConcacafDataService::CONCACAF_CHAMPIONS_CUP,
+                $concacafStart,
+                $concacafFinal,
+                $blackouts
+            );
+        }
+
+        return $results;
+    }
+
     public static function generateEuropeanCups(WebSoccer $websoccer, DbConnection $db, $firstClWednesdayTimestamp, $firstUlThursdayTimestamp, $firstLibertadoresTimestamp = 0, $firstSudamericanaTimestamp = 0, $firstConcacafTimestamp = 0) {
         $results = array();
 
@@ -284,7 +530,7 @@ class SeasonRolloverCupService {
         return $results;
     }
 
-    public static function generateEuropeanCup(WebSoccer $websoccer, DbConnection $db, $cupName, $cupId, $firstMatchTimestamp) {
+    public static function generateEuropeanCup(WebSoccer $websoccer, DbConnection $db, $cupName, $cupId, $firstMatchTimestamp, $finalTimestamp = 0, array $blackoutTimestamps = array()) {
         $cupId = (int) $cupId;
         $prefix = $websoccer->getConfig('db_prefix');
 
@@ -308,6 +554,17 @@ class SeasonRolloverCupService {
         }
 
         UefaDataService::putTempTeamsInGroups($websoccer, $db, $roundId, $tempTeams);
+
+        if ((int) $finalTimestamp > 0) {
+            self::rescheduleCupRounds(
+                $websoccer,
+                $db,
+                $cupName,
+                (int) $firstMatchTimestamp,
+                (int) $finalTimestamp,
+                $blackoutTimestamps
+            );
+        }
 
         $firstDate = SeasonRolloverScheduleService::formatGermanDate($firstMatchTimestamp);
         $groups = array('A', 'B', 'C', 'D');
@@ -355,7 +612,7 @@ class SeasonRolloverCupService {
         );
     }
 
-    public static function generateConmebolCup(WebSoccer $websoccer, DbConnection $db, $cupName, $firstMatchTimestamp) {
+    public static function generateConmebolCup(WebSoccer $websoccer, DbConnection $db, $cupName, $firstMatchTimestamp, $finalTimestamp = 0, array $blackoutTimestamps = array()) {
         $resolvedCupId = CupsDataService::getCupIdByName($websoccer, $db, $cupName);
         if (!$resolvedCupId) {
             return array(
@@ -389,6 +646,18 @@ class SeasonRolloverCupService {
 
         $groups = array('A', 'B', 'C', 'D');
         self::putTeamsInCupGroups($websoccer, $db, $roundId, $tempTeams, $groups);
+
+        if ((int) $finalTimestamp > 0) {
+            self::rescheduleCupRounds(
+                $websoccer,
+                $db,
+                $cupName,
+                (int) $firstMatchTimestamp,
+                (int) $finalTimestamp,
+                $blackoutTimestamps
+            );
+        }
+
         $firstDate = SeasonRolloverScheduleService::formatGermanDate($firstMatchTimestamp);
         $groupsGenerated = 0;
 
@@ -418,7 +687,7 @@ class SeasonRolloverCupService {
         return self::buildCupGenerationResult($websoccer, $db, $cupName, count($tempTeams), $groupsGenerated, $deletedMatches, $winnerStored);
     }
 
-    public static function generateConcacafCupIfReady(WebSoccer $websoccer, DbConnection $db, $cupName, $firstMatchTimestamp) {
+    public static function generateConcacafCupIfReady(WebSoccer $websoccer, DbConnection $db, $cupName, $firstMatchTimestamp, $finalTimestamp = 0, array $blackoutTimestamps = array()) {
         $resolvedCupId = CupsDataService::getCupIdByName($websoccer, $db, $cupName);
         if (!$resolvedCupId) {
             return array(
@@ -450,6 +719,18 @@ class SeasonRolloverCupService {
 
         $groups = array('A', 'B', 'C', 'D');
         self::putTeamsInCupGroups($websoccer, $db, $roundId, $tempTeams, $groups);
+
+        if ((int) $finalTimestamp > 0) {
+            self::rescheduleCupRounds(
+                $websoccer,
+                $db,
+                $cupName,
+                (int) $firstMatchTimestamp,
+                (int) $finalTimestamp,
+                $blackoutTimestamps
+            );
+        }
+
         $firstDate = SeasonRolloverScheduleService::formatGermanDate($firstMatchTimestamp);
         $groupsGenerated = 0;
 
@@ -458,7 +739,7 @@ class SeasonRolloverCupService {
             if (!is_array($groupTeams) || empty($groupTeams)) {
                 continue;
             }
-            ScheduleGenerator::createUEFACupGroupSchedule($websoccer, $db, $groupTeams, $firstDate, 19, 0, 7, $cupName, max(1, count($groupTeams) - 1), $groupName, 'Gruppen');
+            ScheduleGenerator::createUEFACupGroupSchedule($websoccer, $db, $groupTeams, $firstDate, 20, 0, 7, $cupName, max(1, count($groupTeams) - 1), $groupName, 'Gruppen');
             $groupsGenerated++;
         }
 

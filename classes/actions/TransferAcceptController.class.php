@@ -1,4 +1,5 @@
 <?php
+// CM23 revision: 1 | 2026-08-24
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -80,6 +81,10 @@ class TransferAcceptController implements IActionController {
 
 		// transfermarket watchdog, with explicit seller club before the player is moved
 		TransfermarketDataService::transferWatchdog($this->_websoccer, $this->_db, $offer['id'], $oldTeam['team_id']);
+
+		// This controller accepts an offer for a player owned by the selling club.
+		// Ignore legacy hand-money values because this is not a free transfer.
+		$offer['handgeld'] = 0;
 
 		// get player name for notification
 		if ($player["player_pseudonym"]) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
+<!-- CM23 Task 1005 | 2026-08-24 | Revision 1 -->
 <module version="1.0.0">
 
     <settings>
@@ -85,15 +86,6 @@
     			 </page>
 			</page>
 
-	        <page
-	            id="financialforecast"
-	            template="financialforecast"
-	            model="FinancialForecastModel"
-	            navitem="true"
-	            navweight="4"
-	            role="user">
-	        </page>
-			
 	        <page
 	            id="bank-loans"
 	            template="bank-loans"

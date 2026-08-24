@@ -1,8 +1,8 @@
+{# Task 1001 - Revision 1 - 2026-08-24 #}
 {% extends "base.twig" %}
-{% import "macros/messagebox.twig" as messagebox %}
 
 {% block page_title %}
-{{ i18n.getMessage("cups_navlabel") }}
+{% if cup_found and cup.name|default('')|length > 0 %}{{ cup.name }}{% else %}{{ i18n.getMessage("cups_navlabel") }}{% endif %}
 {% endblock %}
 
 {% block page_content %}
@@ -13,89 +13,22 @@ function updateCupSelection() {
     if (selectElement.value) {
         var currentURL = new URL(window.location.href);
         currentURL.searchParams.set("cup", selectElement.value);
+        currentURL.searchParams.delete("phase");
         window.location.href = currentURL.toString();
     }
 }
 </script>
-
-<div class="row-fluid">
-    <div class="span9">
-        <h1>{{ cup.name }}</h1>
-    </div>
-    {% if cup.logo|default('')|length > 0 %}
-        <div class="span3" style="text-align: right">
-            <img src="{{ env.getConfig("context_root") }}/uploads/cup/{{ cup.logo }}" alt="{{ cup.name }}" style="max-height: 80px" />
-        </div>
-    {% endif %}
-</div>
 
 <form class="form-inline">
     <label for="cup">{{ i18n.getMessage("select_cup") }}:</label>
     <select id="cup" onchange="updateCupSelection()">
         <option value="">{{ i18n.getMessage("cup_select_choose") }}</option>
         {% for cup_list in cups %}
-            <option value="{{ cup_list.id }}"{% if cup_list.id == cup.id %} selected="selected"{% endif %}>{{ cup_list.name }}</option>
+            <option value="{{ cup_list.id }}"{% if cup_list.id == selected_cup_id %} selected="selected"{% endif %}>{{ cup_list.name }}</option>
         {% endfor %}
     </select>
 </form>
 
-{% if match_round_groups is defined and match_round_groups|length > 0 %}
-    <div class="accordion" id="cupRoundGroups">
-    {% for group in match_round_groups %}
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#cupRoundGroups" href="#cupRound{{ group.key }}">
-                    <i class="icon-trophy"></i> <strong>{{ group.name }}</strong>
-                    <span class="badge pull-right">{{ group.matches|length }}</span>
-                </a>
-            </div>
-            <div id="cupRound{{ group.key }}" class="accordion-body collapse{% if group.is_open %} in{% endif %}">
-                <div class="accordion-inner">
-                    <table class="table table-striped table-condensed">
-                        <thead>
-                            <tr>
-                                <th>{{ i18n.getMessage("entity_match_datum") }}</th>
-                                <th>{{ i18n.getMessage("entity_match_home_verein") }}</th>
-                                <th>{{ i18n.getMessage("entity_match_gast_verein") }}</th>
-                                <th>{{ i18n.getMessage("match_result") }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for match in group.matches %}
-                            <tr>
-                                <td>{{ env.getFormattedDatetime(match.date, i18n) }}</td>
-                                <td>
-                                    {% if match.home_team_picture|default('')|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" alt="{{ match.home_team_name }}" style="max-width: 20px; max-height: 20px" /> {% endif %}
-                                    <a href="{{ env.getInternalUrl("team", "id=" ~ match.home_verein) }}">{{ match.home_team_name }}</a>
-                                    {% if match.home_noformation %}<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.home_team_name) }}"></i>{% endif %}
-                                </td>
-                                <td>
-                                    {% if match.guest_team_picture|default('')|length > 0 %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" alt="{{ match.away_team_name }}" style="max-width: 20px; max-height: 20px" /> {% endif %}
-                                    <a href="{{ env.getInternalUrl("team", "id=" ~ match.gast_verein) }}">{{ match.away_team_name }}</a>
-                                    {% if match.guest_noformation %}<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.away_team_name) }}"></i>{% endif %}
-                                </td>
-                                <td>
-                                    <a href="{{ env.getInternalUrl("match", "id=" ~ match.id) }}" title="{{ i18n.getMessage("match_navlabel") }}">
-                                    {% if match.berechnet == 1 %}
-                                        <strong>{{ match.home_tore }} - {{ match.gast_tore }}</strong>
-                                    {% elseif match.minutes > 0 %}
-                                        <span class="label label-important">{{ i18n.getMessage("match_live_label") }}</span> {{ match.home_tore }} - {{ match.gast_tore }}
-                                    {% else %}
-                                        {{ i18n.getMessage("match_navlabel") }}
-                                    {% endif %}
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    </div>
-{% else %}
-    {{ messagebox.box(i18n.getMessage("results_no_matches_found"), "", "info") }}
-{% endif %}
+{% include 'blocks/european-cup-overview.twig' %}
 
 {% endblock %}

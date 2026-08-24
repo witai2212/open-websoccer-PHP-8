@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- CM23 Task 1003 | 2026-08-24 | Revision 1 -->
 <messages>
     <message id="mywatchlist_navlabel">Beobachtungsliste</message>
     <message id="mywatchlist_title">Beobachtungsliste</message>
@@ -31,5 +32,14 @@
 	<message id="button_put_on_watchlist">Spieler auf Beobachtungsliste setzen</message>
 	<message id="button_delete_from_watchlist">Spieler von Beobachtungsliste löschen</message>
 	<message id="watchlist_put_on_success">Der Spieler ist jetzt auf deiner Beobachtungsliste</message>
+
+	<message id="watchlist_dialog_add_title">Beobachtungsliste</message>
+	<message id="watchlist_dialog_add_message">Diesen Spieler zur Beobachtungsliste hinzufügen?</message>
+	<message id="watchlist_dialog_remove_title">Beobachtungsliste</message>
+	<message id="watchlist_dialog_remove_message">Diesen Spieler von der Beobachtungsliste entfernen?</message>
+	<message id="watchlist_dialog_confirm_add">Hinzufügen</message>
+	<message id="watchlist_dialog_confirm_remove">Entfernen</message>
+	<message id="watchlist_dialog_cancel">Abbrechen</message>
+	<message id="watchlist_dialog_request_error">Die Beobachtungsliste konnte nicht aktualisiert werden.</message>
     
 </messages>

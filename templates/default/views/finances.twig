@@ -1,4 +1,4 @@
-{# CM23 Task 1005 | 2026-08-24 | Revision 1 #}
+{# CM23 Task 1005 | 2026-08-24 | Revision 2 #}
 {% extends "base.twig" %}
 
 {% import "macros/messagebox.twig" as messagebox %}
@@ -21,6 +21,10 @@
 </ul>
 
 
+
+{% if cash_chart_values|length > 0 or forecast_rows|length > 0 %}
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endif %}
 
 <div class="tab-content">
 	<h3>{{ i18n.getMessage("entity_club_finanz_budget") }}: {{ budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</h3>
@@ -254,7 +258,6 @@
 
 	{% if cash_chart_values|length > 0 %}
 
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 		<canvas id="financeCashLineChart" width="900" height="400"></canvas>
 

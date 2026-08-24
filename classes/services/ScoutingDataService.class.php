@@ -10,6 +10,11 @@ either version 3 of the License, or any later version.
 
 ******************************************************/
 
+/*
+ * Revision 1 - 2026-08-24
+ * Task 1000: Scout-Kompetenz pro Einsteller nach vollständig abgelaufenem Vertrag.
+ */
+
 /**
  * Data service for the new scouting system.
  *
@@ -80,6 +85,61 @@ class ScoutingDataService {
         }
         $result->free();
         return $rows;
+    }
+
+    private static function getTeamManagerUserId(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $team = self::getSingleRow(
+            $db,
+            'user_id',
+            self::tablePrefix($websoccer) . 'verein',
+            'id = %d',
+            (int) $teamId
+        );
+
+        return (isset($team['user_id'])) ? (int) $team['user_id'] : 0;
+    }
+
+    private static function rememberScoutExpertiseForHiringUser(WebSoccer $websoccer, DbConnection $db, $scout) {
+        if (!$scout || !isset($scout['id']) || !isset($scout['hired_by_user_id'])) {
+            return;
+        }
+
+        $userId = (int) $scout['hired_by_user_id'];
+        $scoutId = (int) $scout['id'];
+
+        if ($userId < 1 || $scoutId < 1) {
+            return;
+        }
+
+        $db->executeQuery(
+            'INSERT IGNORE INTO ' . self::tablePrefix($websoccer) . 'scout_expertise_knowledge ' .
+            '(user_id, scout_id, revealed_date) VALUES (' .
+            $userId . ', ' . $scoutId . ', ' . self::now($websoccer) . ')'
+        );
+    }
+
+    private static function releaseExpiredScouts(WebSoccer $websoccer, DbConnection $db) {
+        $expiredScouts = self::getRows(
+            $db,
+            '*',
+            self::tablePrefix($websoccer) . 'scout',
+            'team_matches <= 0 AND team_id > 0'
+        );
+
+        foreach ($expiredScouts as $scout) {
+            self::rememberScoutExpertiseForHiringUser($websoccer, $db, $scout);
+
+            $db->queryUpdate(
+                array(
+                    'team_id' => 0,
+                    'team_matches' => 0,
+                    'hired_by_user_id' => 0
+                ),
+                self::tablePrefix($websoccer) . 'scout',
+                'id = %d',
+                (int) $scout['id']
+            );
+        }
     }
     
     public static function getTeamBudget(WebSoccer $websoccer, DbConnection $db, $teamId) {
@@ -273,13 +333,8 @@ class ScoutingDataService {
     }
     
     public static function getTeamScouts(WebSoccer $websoccer, DbConnection $db, $teamId) {
-        // Release expired scouts first.
-        $db->queryUpdate(
-            array('team_id' => 0),
-            self::tablePrefix($websoccer) . 'scout',
-            'team_matches <= 0 AND team_id > 0',
-            0
-            );
+        // Release expired scouts first and reveal their competence only to the user who hired them.
+        self::releaseExpiredScouts($websoccer, $db);
         
         $rows = self::getRows(
             $db,
@@ -382,10 +437,12 @@ class ScoutingDataService {
         
         // The normal scout fee is still charged per matchday.
         $matches = self::configInt($websoccer, 'scouts_matches', 20);
+        $hiredByUserId = self::getTeamManagerUserId($websoccer, $db, $teamId);
         
         $db->queryUpdate(array(
             'team_id' => (int) $teamId,
-            'team_matches' => $matches
+            'team_matches' => $matches,
+            'hired_by_user_id' => $hiredByUserId
         ), self::tablePrefix($websoccer) . 'scout', 'id = %d', (int) $scoutId);
     }
     
@@ -401,14 +458,15 @@ class ScoutingDataService {
         
         $db->queryUpdate(array(
             'team_id' => 0,
-            'team_matches' => self::configInt($websoccer, 'scouts_matches', 20)
+            'team_matches' => self::configInt($websoccer, 'scouts_matches', 20),
+            'hired_by_user_id' => 0
         ), self::tablePrefix($websoccer) . 'scout', 'id = %d', (int) $scoutId);
     }
     
     public static function reduceTeamMatches(WebSoccer $websoccer, DbConnection $db) {
         // Backwards-compatible method. New code should call processMatchdayScouting().
         $db->executeQuery('UPDATE ' . self::tablePrefix($websoccer) . 'scout SET team_matches = team_matches - 1 WHERE team_matches > 0 AND team_id > 0');
-        $db->executeQuery('UPDATE ' . self::tablePrefix($websoccer) . 'scout SET team_id = 0 WHERE team_matches <= 0 AND team_id > 0');
+        self::releaseExpiredScouts($websoccer, $db);
     }
     
     /* ---------------------------------------------------------------------
@@ -906,7 +964,7 @@ class ScoutingDataService {
                 // No money: deactivate scouting infrastructure and release scouts.
                 $db->queryUpdate(array('status' => '0'), self::tablePrefix($websoccer) . 'scouting_department', 'team_id = %d', $teamId);
                 $db->queryUpdate(array('status' => '0'), self::tablePrefix($websoccer) . 'scouting_camp', 'team_id = %d AND status = \'1\'', $teamId);
-                $db->queryUpdate(array('team_id' => 0), self::tablePrefix($websoccer) . 'scout', 'team_id = %d', $teamId);
+                $db->queryUpdate(array('team_id' => 0, 'hired_by_user_id' => 0), self::tablePrefix($websoccer) . 'scout', 'team_id = %d', $teamId);
             }
         }
     }
@@ -926,13 +984,20 @@ class ScoutingDataService {
             if (!self::debitIfPossible($websoccer, $db, $teamId, $fee, 'scouting_scout_fee', $scout['name'])) {
                 $db->queryUpdate(array('status' => '0'), self::tablePrefix($websoccer) . 'scouting_camp',
                     'team_id = %d AND scout_id = %d AND status = \'1\'', array($teamId, (int) $scout['id']));
-                $db->queryUpdate(array('team_id' => 0), self::tablePrefix($websoccer) . 'scout', 'id = %d', (int) $scout['id']);
+                $db->queryUpdate(array('team_id' => 0, 'hired_by_user_id' => 0), self::tablePrefix($websoccer) . 'scout', 'id = %d', (int) $scout['id']);
                 continue;
             }
             
             $newMatches = max(0, ((int) $scout['team_matches']) - 1);
             if ($newMatches <= 0) {
-                $db->queryUpdate(array('team_id' => 0, 'team_matches' => 0), self::tablePrefix($websoccer) . 'scout', 'id = %d', (int) $scout['id']);
+                $scout['team_matches'] = 0;
+                self::rememberScoutExpertiseForHiringUser($websoccer, $db, $scout);
+                $db->queryUpdate(
+                    array('team_id' => 0, 'team_matches' => 0, 'hired_by_user_id' => 0),
+                    self::tablePrefix($websoccer) . 'scout',
+                    'id = %d',
+                    (int) $scout['id']
+                );
                 $db->queryUpdate(array('status' => '0'), self::tablePrefix($websoccer) . 'scouting_camp',
                     'team_id = %d AND scout_id = %d AND status = \'1\'', array($teamId, (int) $scout['id']));
             } else {

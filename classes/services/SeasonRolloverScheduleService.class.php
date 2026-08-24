@@ -2,7 +2,7 @@
 /******************************************************
 
   Season rollover schedule helpers for OpenWebSoccer-Sim.
-  CM23 Task 1002 | 24.08.2026 | Revision 1
+  CM23 Task 1002 | 24.08.2026 | Revision 2
 
 ******************************************************/
 
@@ -273,11 +273,18 @@ class SeasonRolloverScheduleService {
         );
     }
 
-    public static function getInternationalCupFinalTimestamp($nationalCupFinalTimestamp) {
+    public static function getInternationalCupFinalTimestamp($nationalCupFinalTimestamp, $targetWeekday = 4) {
+        $targetWeekday = (int) $targetWeekday;
+
+        if (!in_array($targetWeekday, self::getCupWeekdays(), true)) {
+            throw new Exception('Ungültiger Wochentag für internationales Pokalfinale.');
+        }
+
         $oneWeekLater = self::addDays((int) $nationalCupFinalTimestamp, 7, 0, 0);
+
         return self::nextWeekday(
             $oneWeekLater,
-            4,
+            $targetWeekday,
             self::CUP_KICKOFF_HOUR,
             self::CUP_KICKOFF_MINUTE
         );

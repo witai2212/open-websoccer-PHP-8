@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- CM23 Task 1004 | 2026-08-24 | Revision 1 -->
 <messages>
 
     <message id="clubstaff_navlabel">Mitarbeiterstab</message>
@@ -23,6 +24,7 @@
     <message id="clubstaff_description">Beschreibung</message>
     <message id="clubstaff_action">Aktion</message>
     <message id="clubstaff_hired_since">Eingestellt seit</message>
+    <message id="clubstaff_shady_badge">windig</message>
     <message id="clubstaff_budget">Vereinsbudget</message>
     <message id="clubstaff_info_costs">Die Gehälter werden automatisch nach neuen absolvierten Spielen gebucht und erscheinen in den Finanzen.</message>
     <message id="clubstaff_info_simple">Die Boni sind bewusst klein gehalten, damit der Mitarbeiterstab eine Ergänzung bleibt und kein Verwaltungsmonster wird.</message>

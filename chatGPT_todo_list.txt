@@ -1,0 +1,2 @@
+Scouts: /?page=scouting#scouting-scouts
+  - once club has employed a scout and contract expires (no more matches left, the competence of scout shall be visible and remain visible)

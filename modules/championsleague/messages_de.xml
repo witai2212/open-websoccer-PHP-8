@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- Task 1001 - Revision 1 - 2026-08-24 -->
 <messages>
 	<message id="championsleague_navlabel">Champions League</message>
 	<message id="championsleague_title">Champions League</message>
@@ -38,8 +39,9 @@
 	<message id="championsleague_winner_open">noch offen</message>
 	<message id="championsleague_prize_winner">Siegerprämie</message>
 	<message id="championsleague_my_club">Mein Verein</message>
-	<message id="championsleague_still_in_competition">Teilnehmer</message>
-	<message id="championsleague_not_participating">nicht im Wettbewerb</message>
+	<message id="championsleague_still_in_competition">noch im Wettbewerb</message>
+	<message id="championsleague_eliminated">ausgeschieden</message>
+	<message id="championsleague_not_participating">nicht teilgenommen</message>
 	<message id="championsleague_my_group">Gruppe</message>
 	<message id="championsleague_my_next_match">Nächstes Spiel</message>
 	<message id="championsleague_my_last_match">Letztes Spiel</message>

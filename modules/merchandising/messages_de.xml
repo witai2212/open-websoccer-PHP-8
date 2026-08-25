@@ -178,16 +178,18 @@
 
     <message id="merchandising_notification_development_ready">Eine Merchandising-Kollektion ist fertig entwickelt und kann bestellt werden.</message>
     <message id="merchandising_notification_delivery">Eine Warenlieferung mit {quantity} Artikeln ist eingetroffen.</message>
+    <message id="merchandising_notification_delivery_summary">Warenlieferung eingetroffen: {products}</message>
     <message id="merchandising_notification_clearance">Eine saisonale Kollektion wurde in den Schlussverkauf übernommen.</message>
     <message id="merchandising_notification_player_left">Nach dem Abgang eines Spielers wurde dessen Trikotkollektion in den Schlussverkauf übernommen.</message>
     <message id="merchandising_notification_missed_sales">Bei {product} konnten {units} Käufe wegen fehlenden Lagerbestands nicht bedient werden.</message>
     <message id="merchandising_notification_low_stock">Der Lagerbestand von {product} ist auf {stock} Artikel gesunken.</message>
+    <message id="merchandising_notification_matchday_stock_summary">Bestandswarnung nach dem Spieltag: {products}</message>
 
     <message id="activitylog_save-merchandising-settings">%s hat die Merchandising-Steuerung geändert.</message>
     <message id="activitylog_start-merchandising-development">%s hat eine Merchandising-Kollektion entwickelt.</message>
     <message id="activitylog_order-merchandising-stock">%s hat Merchandising-Ware bestellt.</message>
     <message id="activitylog_update-merchandising-collection">%s hat eine Merchandising-Kollektion geändert.</message>
     <message id="activitylog_liquidate-merchandising-collection">%s hat einen Merchandising-Restbestand liquidiert.</message>
-    <message id="activitylog_start-merchandising-campaign">%s hat eine Merchandising-Kampagne gestartet.</message>
+    <message id="activitylog_start-merchandising-campaign">%s hat eine Marketingkampagne gestartet.</message>
 
 </messages>

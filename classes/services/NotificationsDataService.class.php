@@ -44,7 +44,6 @@ class NotificationsDataService {
         $merchandisingNotification = self::prepareMerchandisingNotification(
             $websoccer,
             $db,
-            $userId,
             $teamId,
             $messageKey,
             $messageData,
@@ -95,7 +94,7 @@ class NotificationsDataService {
 		$db->queryInsert($columns, $websoccer->getConfig('db_prefix') . '_notification');
 	}
 
-    private static function prepareMerchandisingNotification(WebSoccer $websoccer, DbConnection $db, $userId, $teamId, $messageKey, $messageData, $type) {
+    private static function prepareMerchandisingNotification(WebSoccer $websoccer, DbConnection $db, $teamId, $messageKey, $messageData, $type) {
         if ($teamId === null || $type === null || strpos((string) $type, 'merchandising_') !== 0) {
             return null;
         }
@@ -106,7 +105,10 @@ class NotificationsDataService {
         }
 
         if ($messageKey === 'merchandising_notification_delivery') {
-            $timestamp = $websoccer->getNowAsTimestamp();
+            $timestamp = self::getLatestMerchandisingDeliveryTimestamp($websoccer, $db, $teamId);
+            if ($timestamp < 1) {
+                return null;
+            }
             $products = self::getDeliveredMerchandisingProducts($websoccer, $db, $teamId, $timestamp);
             if (!$products) {
                 return null;
@@ -205,6 +207,18 @@ class NotificationsDataService {
         $db->queryInsert($columns, $table);
     }
 
+    private static function getLatestMerchandisingDeliveryTimestamp(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $result = $db->querySelect(
+            'MAX(delivered_date) AS delivered_date',
+            $websoccer->getConfig('db_prefix') . '_merchandising_order',
+            "team_id = %d AND status = 'delivered'",
+            (int) $teamId
+        );
+        $row = $result->fetch_array();
+        $result->free();
+        return $row ? (int) $row['delivered_date'] : 0;
+    }
+
     private static function getDeliveredMerchandisingProducts(WebSoccer $websoccer, DbConnection $db, $teamId, $timestamp) {
         $prefix = $websoccer->getConfig('db_prefix');
         $select = 'P.name AS product_name';
@@ -299,6 +313,7 @@ class NotificationsDataService {
 		
 		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_notification', 
 				'user_id = %d AND seen = \'0\' AND (team_id = %d OR team_id IS NULL)', array($userId, $teamId));
+		$rows = $result->fetch_array();
 		$rows = $result->fetch_array();
 		$result->free();
 		

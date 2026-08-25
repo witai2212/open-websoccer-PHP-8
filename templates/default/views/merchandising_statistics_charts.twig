@@ -1,0 +1,160 @@
+{# CM23 Task 1009 | 2026-08-25 | Revision 1 #}
+{% if productStatistics is defined and productStatistics|length > 0 %}
+<hr>
+<div id="merchandising-statistics-charts">
+    {% if merchandisingTrendStatistics is defined and merchandisingTrendStatistics|length > 0 %}
+    <div class="well well-small">
+        <h4><i class="icon-signal"></i> {{ i18n.getMessage("merchandising_statistics_title") }} – {{ i18n.getMessage("merchandising_summary_demand") }} / {{ i18n.getMessage("merchandising_summary_units_sold") }}</h4>
+        <div style="position: relative; width: 100%; height: 320px;">
+            <canvas id="merchandisingTrendChart"></canvas>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row-fluid">
+        <div class="span7">
+            <div class="well well-small">
+                <h4>{{ i18n.getMessage("merchandising_product_name") }} – {{ i18n.getMessage("merchandising_summary_demand") }} / {{ i18n.getMessage("merchandising_summary_units_sold") }}</h4>
+                <div style="position: relative; width: 100%; height: {{ max(320, productStatistics|length * 38) }}px;">
+                    <canvas id="merchandisingProductChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="span5">
+            <div class="well well-small">
+                <h4>{{ i18n.getMessage("merchandising_summary_fulfilment") }}</h4>
+                <div style="position: relative; width: 100%; height: {{ max(320, productStatistics|length * 38) }}px;">
+                    <canvas id="merchandisingFulfilmentChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function () {
+    if (typeof Chart === 'undefined') {
+        return;
+    }
+
+    var demandLabel = '{{ i18n.getMessage("merchandising_summary_demand")|e("js") }}';
+    var soldLabel = '{{ i18n.getMessage("merchandising_summary_units_sold")|e("js") }}';
+    var missedLabel = '{{ i18n.getMessage("merchandising_summary_missed")|e("js") }}';
+    var fulfilmentLabel = '{{ i18n.getMessage("merchandising_summary_fulfilment")|e("js") }}';
+
+    {% if merchandisingTrendStatistics is defined and merchandisingTrendStatistics|length > 0 %}
+    var trendElement = document.getElementById('merchandisingTrendChart');
+    if (trendElement) {
+        new Chart(trendElement.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [{% for row in merchandisingTrendStatistics %}'{{ row.period_label|e("js") }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [
+                    {
+                        label: demandLabel,
+                        data: [{% for row in merchandisingTrendStatistics %}{{ row.demand_units }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                        borderColor: '#337ab7',
+                        backgroundColor: 'rgba(51, 122, 183, 0.12)',
+                        fill: false,
+                        tension: 0.2
+                    },
+                    {
+                        label: soldLabel,
+                        data: [{% for row in merchandisingTrendStatistics %}{{ row.units_sold }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                        borderColor: '#5cb85c',
+                        backgroundColor: 'rgba(92, 184, 92, 0.12)',
+                        fill: false,
+                        tension: 0.2
+                    },
+                    {
+                        label: missedLabel,
+                        data: [{% for row in merchandisingTrendStatistics %}{{ row.missed_units }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                        borderColor: '#d9534f',
+                        backgroundColor: 'rgba(217, 83, 79, 0.12)',
+                        fill: false,
+                        tension: 0.2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+    {% endif %}
+
+    var productElement = document.getElementById('merchandisingProductChart');
+    if (productElement) {
+        new Chart(productElement.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: [{% for row in productStatistics %}'{{ row.product_name|e("js") }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [
+                    {
+                        label: demandLabel,
+                        data: [{% for row in productStatistics %}{{ row.demand_units }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                        backgroundColor: 'rgba(51, 122, 183, 0.70)'
+                    },
+                    {
+                        label: soldLabel,
+                        data: [{% for row in productStatistics %}{{ row.units_sold }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                        backgroundColor: 'rgba(92, 184, 92, 0.70)'
+                    },
+                    {
+                        label: missedLabel,
+                        data: [{% for row in productStatistics %}{{ row.missed_units }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                        backgroundColor: 'rgba(217, 83, 79, 0.70)'
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { x: { beginAtZero: true } }
+            }
+        });
+    }
+
+    var fulfilmentElement = document.getElementById('merchandisingFulfilmentChart');
+    if (fulfilmentElement) {
+        new Chart(fulfilmentElement.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: [{% for row in productStatistics %}'{{ row.product_name|e("js") }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [{
+                    label: fulfilmentLabel,
+                    data: [{% for row in productStatistics %}{% if row.fulfilment_percent is not null %}{{ row.fulfilment_percent }}{% else %}0{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}],
+                    backgroundColor: 'rgba(91, 192, 222, 0.75)'
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function (value) { return value + ' %'; }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) { return fulfilmentLabel + ': ' + context.parsed.x + ' %'; }
+                        }
+                    }
+                }
+            }
+        });
+    }
+}());
+</script>
+{% endif %}

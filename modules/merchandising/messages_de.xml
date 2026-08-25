@@ -96,7 +96,7 @@
     <message id="merchandising_order_status_pending">Unterwegs</message>
     <message id="merchandising_order_status_delivered">Geliefert</message>
     <message id="merchandising_order_status_cancelled">Storniert</message>
-    <message id="merchandising_no_orders">Bisher wurden keine Waren bestellt.</message>
+    <message id="merchandising_no_orders">Bisher wurden noch keine Waren bestellt.</message>
 
     <message id="merchandising_players_title">Starspieler-Trikots</message>
     <message id="merchandising_players_intro">Nur die aktuell stärksten und populärsten Spieler dürfen eine eigene Trikotkollektion erhalten. Der Sternwert berücksichtigt Stärke, Saisonleistung, Einsätze, Kapitänsamt, Nationalmannschaft und Persönlichkeit.</message>
@@ -190,6 +190,6 @@
     <message id="activitylog_order-merchandising-stock">%s hat Merchandising-Ware bestellt.</message>
     <message id="activitylog_update-merchandising-collection">%s hat eine Merchandising-Kollektion geändert.</message>
     <message id="activitylog_liquidate-merchandising-collection">%s hat einen Merchandising-Restbestand liquidiert.</message>
-    <message id="activitylog_start-merchandising-campaign">%s hat eine Marketingkampagne gestartet.</message>
+    <message id="activitylog_start-merchandising-campaign">%s hat eine Merchandising-Kampagne gestartet.</message>
 
 </messages>

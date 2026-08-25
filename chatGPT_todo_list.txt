@@ -1,5 +1,9 @@
 # CM23 Task List | 2026-08-25 | Revision 5
 Open Tasks:
+1010: "keine aufstellung abgegeben"
+die kennzeichnung dass ein Team keine Aufstellung abgegeben hat, ist nur sinnvol bei nicht CPU-Teams.
+Das sollte angepasst werden.
+
 1009: Merchandising:
 stats shall be underligned and supported by graphs, lines etc.
 

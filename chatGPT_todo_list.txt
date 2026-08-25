@@ -1,4 +1,4 @@
-# CM23 Task List | 2026-08-25 | Revision 5
+# CM23 Task List | 2026-08-25 | Revision 6
 Open Tasks:
 1012: Kader ansicht
 in ?page=team&id=xyz sieht man bei den Spieler nur die werte stärke, technik, frische, konditin, zufriedenheit + alter + ausfall.
@@ -14,10 +14,13 @@ Das sollte angepasst werden.
 1009: Merchandising:
 stats shall be underligned and supported by graphs, lines etc.
 
-1008: Warenlieferung
-Messages about "Warenlieferung" shall be bundled. No need to send a notification for each good received or bought or whatever.
-
 Finalised taskes:
+1008: Warenlieferung
+  - Warenlieferungs-Meldungen werden pro Lieferlauf gebündelt statt je geliefertem Artikel einzeln erzeugt.
+  - Die Sammelmeldung enthält nur die Bezeichnungen der betroffenen Artikel, keine Mengen oder Preise.
+  - Bestehende/historische Meldungen bleiben unverändert; die Bündelung gilt nur für neu erzeugte Meldungen.
+  - Vergleichbare Bestandswarnungen aus Merchandising-Verkäufen werden pro Spiel gebündelt und nennen ebenfalls nur die betroffenen Artikel.
+
 1007: Endspielstadien internationaler Wettbewerbe
   - UEFA Champions League / Europa League / Conference League: neutrales Stadion in einem UEFA-Land mit mehr als 60.000 Plätzen.
   - Copa Libertadores / Copa Sudamericana: neutrales Stadion in einem CONMEBOL-Land mit mehr als 50.000 Plätzen.

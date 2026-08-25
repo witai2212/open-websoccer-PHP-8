@@ -1,3 +1,4 @@
+{# Task 1010 - Revision 1 - 2026-08-25 #}
 {% extends "base.twig" %}
 
 {% import "macros/profileelements.twig" as profile %}
@@ -60,10 +61,10 @@
 	</div>
 	
 	<div style="margin-top: 10px">
-	{% if match.match_home_noformation %}
+	{% if match.match_home_noformation and match.match_home_user_id > 0 %}
 	{{ msgbox.box("", i18n.getMessage("match_details_noformation", match.match_home_name), "warning") }}
 	{% endif %}
-	{% if match.match_guest_noformation %}
+	{% if match.match_guest_noformation and match.match_guest_user_id > 0 %}
 	{{ msgbox.box("", i18n.getMessage("match_details_noformation", match.match_guest_name), "warning") }}
 	{% endif %}
 	</div>

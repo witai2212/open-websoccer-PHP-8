@@ -5,6 +5,7 @@
 
 ******************************************************/
 
+// CM23 Task 1009 | 2026-08-25 | Revision 1
 /**
  * Provides the complete merchandising management page.
  */
@@ -41,6 +42,27 @@ class MerchandisingModel implements IModel {
         $tab = (string) $this->_websoccer->getRequestParameter('tab');
         $allowedTabs = array('overview','collections','development','warehouse','players','marketing','statistics');
         $data['activeTab'] = in_array($tab, $allowedTabs, true) ? $tab : 'overview';
+        $data['merchandisingTrendStatistics'] = array();
+
+        if ($data['activeTab'] === 'statistics') {
+            $data['merchandisingTrendStatistics'] = MerchandisingStatisticsDataService::getTrendStatistics(
+                $this->_websoccer,
+                $this->_db,
+                $teamId,
+                30
+            );
+
+            if (isset($data['productStatistics']) && is_array($data['productStatistics'])) {
+                foreach ($data['productStatistics'] as $index => $row) {
+                    $demand = isset($row['demand_units']) ? max(0, (int) $row['demand_units']) : 0;
+                    $sold = isset($row['units_sold']) ? max(0, (int) $row['units_sold']) : 0;
+                    $data['productStatistics'][$index]['fulfilment_percent'] = $demand > 0
+                        ? round(($sold / $demand) * 100, 1)
+                        : NULL;
+                }
+            }
+        }
+
         return $data;
     }
 }

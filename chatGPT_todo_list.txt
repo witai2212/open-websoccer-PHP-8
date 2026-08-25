@@ -1,5 +1,9 @@
 # CM23 Task List | 2026-08-25 | Revision 5
 Open Tasks:
+1012: Kader ansicht
+in ?page=team&id=xyz sieht man bei den Spieler nur die werte stärke, technik, frische, konditin, zufriedenheit + alter + ausfall.
+Es gibt aber wesentlich mehr attribute. kann man die alle klever auf der kleinen Fläche darstellen, sodass es noch lesbar und übersichtlich ist?
+
 1011: w_... werte größer 100
 spieler w_... werte dürfen nciht >100 sein. Es muss einen automatismus geben, der diesen zurück auf 100 setzt oder limitiert.
 

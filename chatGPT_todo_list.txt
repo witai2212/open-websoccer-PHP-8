@@ -1,12 +1,15 @@
-# CM23 Task List | 2026-08-24 | Revision 2
+# CM23 Task List | 2026-08-25 | Revision 3
 Open Tasks:
 
-1002: Match Schedules/Spielpläne
-  - da die ligen und pokale unterschiedlich sind (unterschiedliche anzahl teams, runden), wäre es gut die Spielpläne daran anzupassen. In der Art dass die Saisons alle gleichzeitig enden.
-    Saisonabschluss sollten die nationalen und anschl. internationalen Cups sein.
-  - ausserdem prüfen ob saison beenden in admin sektion redundant ist.
-
 Finalised taskes:
+1002: Match Schedules/Spielpläne
+  - Spielpläne neuer Saisons werden automatisch an unterschiedliche Liga- und Pokalgrößen angepasst.
+  - Ligaspiele werden Freitag bis Dienstag um 11:00 Uhr verteilt; kleinere Ligen erhalten zusätzliche freie Wochen, sodass alle Ligen am selben Dienstag enden.
+  - Nationale und internationale Pokalspiele werden Dienstag bis Donnerstag um 20:00 Uhr terminiert.
+  - Nationale Pokalfinals folgen nach dem gemeinsamen Ligaende; internationale Pokalfinals anschließend in der Folgewoche.
+  - Die laufende Saison wird nicht verändert; die Logik greift nur bei neu erzeugten Saisons.
+  - "Saison beenden" bleibt im Adminbereich als ausdrücklich gekennzeichnete Notfallfunktion erhalten.
+
 1003: Beobachtungsliste
   - Hinzufügen und Entfernen von Spielern erfolgt über einen Bestätigungsdialog und AJAX, ohne die aktuelle Seite zu verlassen.
   - Nach erfolgreicher Aktion wird der auslösende Button bzw. Link direkt auf die Gegenaktion umgestellt.

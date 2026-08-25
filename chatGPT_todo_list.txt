@@ -1,5 +1,10 @@
-# CM23 Task List | 2026-08-25 | Revision 3
+# CM23 Task List | 2026-08-25 | Revision 4
 Open Tasks:
+Task 1007: Cup finals
+  - Champions League: in largest stadium in Europe
+  - Euro League: in second largest stadium in europe
+  - CONCACAF Final in largest stadium in CONCACAF
+  - CONMEBOL final in largest stadium of CONMEBOL
 
 Finalised taskes:
 1002: Match Schedules/Spielpläne

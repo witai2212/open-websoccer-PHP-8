@@ -1,5 +1,8 @@
 # CM23 Task List | 2026-08-25 | Revision 5
 Open Tasks:
+1009: Merchandising:
+stats shall be underligned and supported by graphs, lines etc.
+
 1008: Warenlieferung
 Messages about "Warenlieferung" shall be bundled. No need to send a notification for each good received or bought or whatever.
 

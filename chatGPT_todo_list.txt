@@ -1,5 +1,7 @@
 # CM23 Task List | 2026-08-25 | Revision 5
 Open Tasks:
+1008: Warenlieferung
+Messages about "Warenlieferung" shall be bundled. No need to send a notification for each good received or bought or whatever.
 
 Finalised taskes:
 1007: Endspielstadien internationaler Wettbewerbe

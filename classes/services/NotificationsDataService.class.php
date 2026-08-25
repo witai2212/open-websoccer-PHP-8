@@ -41,6 +41,31 @@ class NotificationsDataService {
 	public static function createNotification(WebSoccer $websoccer, DbConnection $db, $userId, $messageKey, 
 			$messageData = null, $type = null, $targetPageId = null, $targetPageQueryString = null, $teamId = null) {
 		
+        $merchandisingNotification = self::prepareMerchandisingNotification(
+            $websoccer,
+            $db,
+            $userId,
+            $teamId,
+            $messageKey,
+            $messageData,
+            $type
+        );
+        if ($merchandisingNotification !== null) {
+            self::createOrMergeGroupedNotification(
+                $websoccer,
+                $db,
+                $userId,
+                $teamId,
+                $merchandisingNotification['message_key'],
+                $merchandisingNotification['message_data'],
+                $merchandisingNotification['type'],
+                $merchandisingNotification['group_key'],
+                $targetPageId,
+                $targetPageQueryString
+            );
+            return;
+        }
+
 		$columns = array(
 				'user_id' => $userId,
 				'eventdate' => $websoccer->getNowAsTimestamp(),
@@ -69,6 +94,160 @@ class NotificationsDataService {
 		
 		$db->queryInsert($columns, $websoccer->getConfig('db_prefix') . '_notification');
 	}
+
+    private static function prepareMerchandisingNotification(WebSoccer $websoccer, DbConnection $db, $userId, $teamId, $messageKey, $messageData, $type) {
+        if ($teamId === null || $type === null || strpos((string) $type, 'merchandising_') !== 0) {
+            return null;
+        }
+
+        $teamId = (int) $teamId;
+        if ($teamId < 1) {
+            return null;
+        }
+
+        if ($messageKey === 'merchandising_notification_delivery') {
+            $timestamp = $websoccer->getNowAsTimestamp();
+            $products = self::getDeliveredMerchandisingProducts($websoccer, $db, $teamId, $timestamp);
+            if (!$products) {
+                return null;
+            }
+            return array(
+                'message_key' => 'merchandising_notification_delivery_summary',
+                'message_data' => array('products' => $products),
+                'type' => 'merchandising_delivery',
+                'group_key' => 'delivery:' . $teamId . ':' . $timestamp
+            );
+        }
+
+        if ($messageKey === 'merchandising_notification_missed_sales' || $messageKey === 'merchandising_notification_low_stock') {
+            $product = is_array($messageData) && !empty($messageData['product']) ? trim((string) $messageData['product']) : '';
+            if ($product === '') {
+                return null;
+            }
+            $matchId = self::getLatestMerchandisingMatchId($websoccer, $db, $teamId);
+            if ($matchId < 1) {
+                return null;
+            }
+            return array(
+                'message_key' => 'merchandising_notification_matchday_stock_summary',
+                'message_data' => array('products' => array($product)),
+                'type' => 'merchandising_matchday_stock',
+                'group_key' => 'match:' . $teamId . ':' . $matchId
+            );
+        }
+
+        return null;
+    }
+
+    private static function createOrMergeGroupedNotification(WebSoccer $websoccer, DbConnection $db, $userId, $teamId, $messageKey, $messageData, $type, $groupKey, $targetPageId, $targetPageQueryString) {
+        $table = $websoccer->getConfig('db_prefix') . '_notification';
+        $result = $db->querySelect(
+            'id, message_data',
+            $table,
+            "user_id = %d AND team_id = %d AND eventtype = '%s' AND message_key = '%s' ORDER BY id DESC",
+            array((int) $userId, (int) $teamId, $type, $messageKey),
+            20
+        );
+
+        $existingId = 0;
+        $existingData = array();
+        while ($row = $result->fetch_array()) {
+            $decoded = !empty($row['message_data']) ? json_decode($row['message_data'], true) : array();
+            if (is_array($decoded) && isset($decoded['_group']) && $decoded['_group'] === $groupKey) {
+                $existingId = (int) $row['id'];
+                $existingData = $decoded;
+                break;
+            }
+        }
+        $result->free();
+
+        $products = array();
+        if (!empty($existingData['products']) && is_array($existingData['products'])) {
+            $products = $existingData['products'];
+        }
+        if (!empty($messageData['products']) && is_array($messageData['products'])) {
+            $products = array_merge($products, $messageData['products']);
+        }
+        $products = self::normalizeMerchandisingProducts($products);
+        if (!$products) {
+            return;
+        }
+
+        $storedData = array(
+            '_group' => $groupKey,
+            'products' => $products
+        );
+        $encodedData = json_encode($storedData);
+
+        if ($existingId > 0) {
+            $db->queryUpdate(array(
+                'eventdate' => $websoccer->getNowAsTimestamp(),
+                'message_data' => $encodedData,
+                'seen' => '0'
+            ), $table, 'id = %d', $existingId);
+            return;
+        }
+
+        $columns = array(
+            'user_id' => (int) $userId,
+            'eventdate' => $websoccer->getNowAsTimestamp(),
+            'message_key' => $messageKey,
+            'message_data' => $encodedData,
+            'eventtype' => $type,
+            'team_id' => (int) $teamId
+        );
+        if ($targetPageId != null) {
+            $columns['target_pageid'] = $targetPageId;
+        }
+        if ($targetPageQueryString != null) {
+            $columns['target_querystr'] = $targetPageQueryString;
+        }
+        $db->queryInsert($columns, $table);
+    }
+
+    private static function getDeliveredMerchandisingProducts(WebSoccer $websoccer, DbConnection $db, $teamId, $timestamp) {
+        $prefix = $websoccer->getConfig('db_prefix');
+        $select = 'P.name AS product_name';
+        $from = $prefix . '_merchandising_order AS O INNER JOIN ' . $prefix . '_merchandising_collection AS C ON C.id = O.collection_id INNER JOIN ' . $prefix . '_merchandising_product AS P ON P.id = C.product_id';
+        $result = $db->querySelect(
+            $select,
+            $from,
+            "O.team_id = %d AND O.status = 'delivered' AND O.delivered_date = %d ORDER BY O.id ASC",
+            array((int) $teamId, (int) $timestamp)
+        );
+        $products = array();
+        while ($row = $result->fetch_array()) {
+            if (!empty($row['product_name'])) {
+                $products[] = (string) $row['product_name'];
+            }
+        }
+        $result->free();
+        return self::normalizeMerchandisingProducts($products);
+    }
+
+    private static function getLatestMerchandisingMatchId(WebSoccer $websoccer, DbConnection $db, $teamId) {
+        $result = $db->querySelect(
+            'match_id',
+            $websoccer->getConfig('db_prefix') . '_merchandising_sales',
+            'team_id = %d ORDER BY id DESC',
+            (int) $teamId,
+            1
+        );
+        $row = $result->fetch_array();
+        $result->free();
+        return $row ? (int) $row['match_id'] : 0;
+    }
+
+    private static function normalizeMerchandisingProducts($products) {
+        $normalized = array();
+        foreach ($products as $product) {
+            $product = trim((string) $product);
+            if ($product !== '' && !in_array($product, $normalized, true)) {
+                $normalized[] = $product;
+            }
+        }
+        return $normalized;
+    }
 	
 	/**
 	 * Resolves placeholder values before rendering notifications.

@@ -1,4 +1,4 @@
-# CM23 Task List | 2026-08-25 | Revision 6
+# CM23 Task List | 2026-08-25 | Revision 7
 Open Tasks:
 1012: Kader ansicht
 in ?page=team&id=xyz sieht man bei den Spieler nur die werte stärke, technik, frische, konditin, zufriedenheit + alter + ausfall.
@@ -11,10 +11,15 @@ spieler w_... werte dürfen nciht >100 sein. Es muss einen automatismus geben, d
 die kennzeichnung dass ein Team keine Aufstellung abgegeben hat, ist nur sinnvol bei nicht CPU-Teams.
 Das sollte angepasst werden.
 
-1009: Merchandising:
-stats shall be underligned and supported by graphs, lines etc.
-
 Finalised taskes:
+1009: Merchandising-Statistik mit grafischer Unterstützung
+  - Die bestehende Produktstatistik bleibt vollständig erhalten und wird durch responsive Diagramme ergänzt.
+  - Nachfrage, tatsächliche Verkäufe und nicht bediente Nachfrage werden je Produkt direkt miteinander verglichen.
+  - Die Erfüllungsquote wird je Produkt berechnet und grafisch dargestellt.
+  - Die letzten 30 Verkaufstage werden als Zeitreihe für Nachfrage, Verkäufe und nicht bediente Nachfrage dargestellt.
+  - Nachfrage und Fehlmengen stammen direkt aus cm23_merchandising_sales; es werden keine Nachfragewerte aus Verkäufen abgeleitet.
+  - Es ist keine SQL-/Schema-Erweiterung erforderlich, da demand_units, missed_units und created_date bereits historisiert werden.
+
 1008: Warenlieferung
   - Warenlieferungs-Meldungen werden pro Lieferlauf gebündelt statt je geliefertem Artikel einzeln erzeugt.
   - Die Sammelmeldung enthält nur die Bezeichnungen der betroffenen Artikel, keine Mengen oder Preise.

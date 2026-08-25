@@ -11,10 +11,11 @@ spieler w_... werte dürfen nciht >100 sein. Es muss einen automatismus geben, d
 die kennzeichnung dass ein Team keine Aufstellung abgegeben hat, ist nur sinnvol bei nicht CPU-Teams.
 Das sollte angepasst werden.
 
+_____________________________________________________________________________________________________________________________________________________
+Finalised taskes:
 1009: Merchandising:
 stats shall be underligned and supported by graphs, lines etc.
 
-Finalised taskes:
 1008: Warenlieferung
   - Warenlieferungs-Meldungen werden pro Lieferlauf gebündelt statt je geliefertem Artikel einzeln erzeugt.
   - Die Sammelmeldung enthält nur die Bezeichnungen der betroffenen Artikel, keine Mengen oder Preise.

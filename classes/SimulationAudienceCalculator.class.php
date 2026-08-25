@@ -2,6 +2,7 @@
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
+  CM23 Task 1007 | 25.08.2026 | Revision 1
 
   OpenWebSoccer-Sim is free software: you can redistribute it 
   and/or modify it under the terms of the 
@@ -39,8 +40,19 @@ class SimulationAudienceCalculator {
 	 * @param SimulationMatch $match Simulation match for that the audience shall be computed.
 	 */
 	public static function computeAndSaveAudience(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match) {
+		// Task 1007: use the configured neutral final stadium only for finals generated
+		// after the next season rollover. A positive ID also activates 50/50 revenue sharing.
+		$finalStadiumId = 0;
+		if (class_exists('InternationalCupFinalDataService')) {
+			$finalStadiumId = InternationalCupFinalDataService::getManagedFinalStadiumIdForMatch(
+				$websoccer,
+				$db,
+				$match->id
+			);
+		}
+
 		// get stadium, user and team info
-		$homeInfo = self::getHomeInfo($websoccer, $db, $match->homeTeam->id);
+		$homeInfo = self::getHomeInfo($websoccer, $db, $match->homeTeam->id, $finalStadiumId);
 		if (!$homeInfo) {
 			return;
 		}
@@ -150,19 +162,38 @@ class SimulationAudienceCalculator {
 		$revenue += $tickets_stands_grand * $homeInfo['price_stands_grand'];
 		$revenue += $tickets_seats_grand * $homeInfo['price_seats_grand'];
 		$revenue += $tickets_vip * $homeInfo['price_vip'];
+		$revenue = (int) round($revenue);
 		
-		BankAccountDataService::creditAmount($websoccer, $db, $match->homeTeam->id,
-				$revenue,
-				'match_ticketrevenue_subject',
-				'match_ticketrevenue_sender');
+		if ($finalStadiumId > 0) {
+			$homeRevenue = (int) floor($revenue / 2);
+			$guestRevenue = $revenue - $homeRevenue;
+
+			BankAccountDataService::creditAmount($websoccer, $db, $match->homeTeam->id,
+					$homeRevenue,
+					'match_ticketrevenue_subject',
+					'match_ticketrevenue_sender');
+			BankAccountDataService::creditAmount($websoccer, $db, $match->guestTeam->id,
+					$guestRevenue,
+					'match_ticketrevenue_subject',
+					'match_ticketrevenue_sender');
+		} else {
+			BankAccountDataService::creditAmount($websoccer, $db, $match->homeTeam->id,
+					$revenue,
+					'match_ticketrevenue_subject',
+					'match_ticketrevenue_sender');
+		}
 		
 		self::weakenPlayersDueToGrassQuality($websoccer, $homeInfo, $match);
 		self::updateMaintenanceStatus($websoccer, $db, $homeInfo);
 	}	
 	
-	private static function getHomeInfo($websoccer, $db, $teamId) {
+	private static function getHomeInfo($websoccer, $db, $teamId, $customStadiumId = 0) {
 		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS T';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON S.id = T.stadion_id';
+		if ((int) $customStadiumId > 0) {
+			$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON S.id = ' . (int) $customStadiumId;
+		} else {
+			$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON S.id = T.stadion_id';
+		}
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON L.id = T.liga_id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_user AS U ON U.id = T.user_id';
 		$whereCondition = 'T.id = %d';

@@ -1,12 +1,18 @@
-# CM23 Task List | 2026-08-25 | Revision 4
+# CM23 Task List | 2026-08-25 | Revision 5
 Open Tasks:
-Task 1007: Cup finals
-  - Champions League: in largest stadium in Europe
-  - Euro League: in second largest stadium in europe
-  - CONCACAF Final in largest stadium in CONCACAF
-  - CONMEBOL final in largest stadium of CONMEBOL
 
 Finalised taskes:
+1007: Endspielstadien internationaler Wettbewerbe
+  - UEFA Champions League / Europa League / Conference League: neutrales Stadion in einem UEFA-Land mit mehr als 60.000 Plätzen.
+  - Copa Libertadores / Copa Sudamericana: neutrales Stadion in einem CONMEBOL-Land mit mehr als 50.000 Plätzen.
+  - AFC Champions League: neutrales Stadion in einem AFC-Land mit mehr als 50.000 Plätzen.
+  - CAF Champions League: neutrales Stadion in einem CAF-Land mit mehr als 50.000 Plätzen.
+  - FIFA Klub-WM / Club World Cup: neutrales Stadion mit mehr als 60.000 Plätzen weltweit.
+  - Stadien der beiden Finalisten werden von der Auswahl ausgeschlossen.
+  - Die Auswahl erfolgt beim Erzeugen des Finalspiels; vorherige Runden bleiben unverändert.
+  - Die laufende Saison bleibt unverändert; die neue Regel greift erst für anschließend erzeugte Saisons.
+  - Stadioneinnahmen des betroffenen Endspiels werden exakt 50/50 auf beide Finalisten verteilt.
+
 1002: Match Schedules/Spielpläne
   - Spielpläne neuer Saisons werden automatisch an unterschiedliche Liga- und Pokalgrößen angepasst.
   - Ligaspiele werden Freitag bis Dienstag um 11:00 Uhr verteilt; kleinere Ligen erhalten zusätzliche freie Wochen, sodass alle Ligen am selben Dienstag enden.

@@ -20,6 +20,8 @@
 
 ******************************************************/
 
+// Task 1010 - Revision 1 - 2026-08-25
+
 /**
  * @author Ingo Hofmann
  */
@@ -58,6 +60,22 @@ class MatchDetailsModel implements IModel {
 		if (!isset($match['match_id'])) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
+
+		$managerColumns = array(
+			'home_user_id' => 'match_home_user_id',
+			'gast_user_id' => 'match_guest_user_id'
+		);
+		$managerResult = $this->_db->querySelect(
+			$managerColumns,
+			$this->_websoccer->getConfig('db_prefix') . '_spiel',
+			'id = %d',
+			array($matchId),
+			1
+		);
+		$managerSnapshot = $managerResult->fetch_array();
+		$managerResult->free();
+		$match['match_home_user_id'] = ($managerSnapshot && isset($managerSnapshot['match_home_user_id'])) ? (int) $managerSnapshot['match_home_user_id'] : 0;
+		$match['match_guest_user_id'] = ($managerSnapshot && isset($managerSnapshot['match_guest_user_id'])) ? (int) $managerSnapshot['match_guest_user_id'] : 0;
 		
 		$allowTacticChanges = FALSE;
 		

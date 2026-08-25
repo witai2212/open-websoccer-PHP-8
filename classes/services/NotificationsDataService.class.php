@@ -314,7 +314,6 @@ class NotificationsDataService {
 		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_notification', 
 				'user_id = %d AND seen = \'0\' AND (team_id = %d OR team_id IS NULL)', array($userId, $teamId));
 		$rows = $result->fetch_array();
-		$rows = $result->fetch_array();
 		$result->free();
 		
 		if ($rows) {

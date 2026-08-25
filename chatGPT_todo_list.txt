@@ -1,5 +1,8 @@
 # CM23 Task List | 2026-08-25 | Revision 5
 Open Tasks:
+1011: w_... werte größer 100
+spieler w_... werte dürfen nciht >100 sein. Es muss einen automatismus geben, der diesen zurück auf 100 setzt oder limitiert.
+
 1010: "keine aufstellung abgegeben"
 die kennzeichnung dass ein Team keine Aufstellung abgegeben hat, ist nur sinnvol bei nicht CPU-Teams.
 Das sollte angepasst werden.

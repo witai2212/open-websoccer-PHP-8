@@ -1,4 +1,4 @@
-{# CM23 Task 1003 | 2026-08-24 | Revision 1 #}
+{# CM23 Task 1009 | 2026-08-25 | Revision 2 #}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -69,6 +69,9 @@
 				
 						
 						{{ block("page_content") }}
+						{% if activeTab is defined and activeTab == "statistics" and productStatistics is defined %}
+							{% include 'views/merchandising_statistics_charts.twig' %}
+						{% endif %}
 						
 						{% if blocks.content_bottom is defined %}
 							{% for uiBlock in blocks.content_bottom %}

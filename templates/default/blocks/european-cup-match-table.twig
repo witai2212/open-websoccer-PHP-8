@@ -1,3 +1,4 @@
+{# Task 1010 - Revision 1 - 2026-08-25 #}
 {% import "macros/messagebox.twig" as messagebox %}
 
 {% if match_table_matches is defined and match_table_matches|length > 0 %}
@@ -28,7 +29,7 @@
 					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px" />
 				{% endif %}
 				<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a>
-				{% if match.home_noformation %}
+				{% if match.home_noformation and match.home_user_id > 0 %}
 					<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.home_team) }}"></i>
 				{% endif %}
 				{% if match.home_user_id > 0 %}
@@ -44,7 +45,7 @@
 					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px" />
 				{% endif %}
 				<a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
-				{% if match.guest_noformation %}
+				{% if match.guest_noformation and match.guest_user_id > 0 %}
 					<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.guest_team) }}"></i>
 				{% endif %}
 				{% if match.guest_user_id > 0 %}

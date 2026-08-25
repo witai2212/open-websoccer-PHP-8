@@ -1,4 +1,5 @@
 <?php
+// CM23 Finance Assets | 2026-08-25 | Revision 1
 /******************************************************
 
 This file is part of OpenWebSoccer-Sim.
@@ -487,37 +488,49 @@ class BankAccountDataService {
 	 * @return array
 	 */
 	public static function getCashDevelopmentOfCurrentSeason(WebSoccer $websoccer, DbConnection $db, $teamId, $currentBudget) {
-	    
+	    $teamId = (int) $teamId;
 	    $currentBudget = (int) $currentBudget;
+	    $now = (int) $websoccer->getNowAsTimestamp();
+	    $seasonStart = self::getCurrentSeasonStartDateOfTeam($websoccer, $db, $teamId);
 	    
-	    // 1. Sum of all existing transactions of this team
-	    $result = $db->querySelect(
-	        "SUM(betrag) AS transaction_sum",
-	        $websoccer->getConfig("db_prefix") . "_konto",
-	        "verein_id = %d",
-	        $teamId,
-	        1
+	    if ($seasonStart < 1) {
+	        $result = $db->querySelect(
+	            "MIN(datum) AS first_date",
+	            $websoccer->getConfig("db_prefix") . "_konto",
+	            "verein_id = %d",
+	            $teamId,
+	            1
 	        );
+	        $firstRow = $result->fetch_array();
+	        $result->free();
+	        
+	        if ($firstRow && isset($firstRow["first_date"]) && (int) $firstRow["first_date"] > 0) {
+	            $seasonStart = (int) $firstRow["first_date"];
+	        }
+	    }
+	    
+	    if ($seasonStart < 1) {
+	        $seasonStart = $now;
+	    }
+	    
+	    $result = $db->querySelect(
+	        "COALESCE(SUM(betrag), 0) AS transaction_sum",
+	        $websoccer->getConfig("db_prefix") . "_konto",
+	        "verein_id = %d AND datum >= %d",
+	        array($teamId, $seasonStart),
+	        1
+	    );
 	    
 	    $sumRow = $result->fetch_array();
 	    $result->free();
 	    
 	    $transactionSum = 0;
-	    
-	    if (isset($sumRow["transaction_sum"]) && $sumRow["transaction_sum"] !== null) {
+	    if ($sumRow && isset($sumRow["transaction_sum"]) && $sumRow["transaction_sum"] !== null) {
 	        $transactionSum = (int) $sumRow["transaction_sum"];
 	    }
 	    
-	    // 2. Reconstruct start budget
 	    $startBudget = $currentBudget - $transactionSum;
 	    
-	    $labels = array();
-	    $values = array();
-	    
-	    $labels[] = "Start";
-	    $values[] = $startBudget;
-	    
-	    // 3. Load all transactions chronologically
 	    $columns = array();
 	    $columns["datum"] = "date";
 	    $columns["betrag"] = "amount";
@@ -525,17 +538,14 @@ class BankAccountDataService {
 	    $result = $db->querySelect(
 	        $columns,
 	        $websoccer->getConfig("db_prefix") . "_konto",
-	        "verein_id = %d ORDER BY datum ASC, id ASC",
-	        $teamId
-	        );
+	        "verein_id = %d AND datum >= %d ORDER BY datum ASC, id ASC",
+	        array($teamId, $seasonStart)
+	    );
 	    
 	    $dailyTransactions = array();
-	    
 	    while ($statement = $result->fetch_array()) {
-	        
 	        $timestamp = (int) $statement["date"];
 	        $amount = (int) $statement["amount"];
-	        
 	        $dateKey = date("Y-m-d", $timestamp);
 	        
 	        if (!isset($dailyTransactions[$dateKey])) {
@@ -546,33 +556,124 @@ class BankAccountDataService {
 	        }
 	        
 	        $dailyTransactions[$dateKey]["amount"] += $amount;
+	        if ($timestamp > $dailyTransactions[$dateKey]["timestamp"]) {
+	            $dailyTransactions[$dateKey]["timestamp"] = $timestamp;
+	        }
 	    }
-	    
 	    $result->free();
 	    
-	    // 4. Build running cash balance day by day
-	    $runningBalance = $startBudget;
+	    $portfolioDevelopment = array(
+	        "tracking_start" => 0,
+	        "start_value" => null,
+	        "daily_values" => array(),
+	        "current_value" => 0
+	    );
 	    
-	    foreach ($dailyTransactions as $dailyTransaction) {
-	        
-	        $runningBalance += (int) $dailyTransaction["amount"];
-	        
-	        $labels[] = date("d.m.Y", (int) $dailyTransaction["timestamp"]);
-	        $values[] = $runningBalance;
+	    if (class_exists("StockMarketDataService")) {
+	        $portfolioDevelopment = StockMarketDataService::getPortfolioDevelopmentForPeriod(
+	            $websoccer,
+	            $db,
+	            $teamId,
+	            $seasonStart,
+	            $now
+	        );
 	    }
 	    
-	    // 5. Ensure final point is the exact current budget
-	    $labels[] = "Heute";
-	    $values[] = $currentBudget;
+	    $allDateKeys = array();
+	    foreach ($dailyTransactions as $dateKey => $dailyTransaction) {
+	        $allDateKeys[$dateKey] = true;
+	    }
+	    if (isset($portfolioDevelopment["daily_values"]) && is_array($portfolioDevelopment["daily_values"])) {
+	        foreach ($portfolioDevelopment["daily_values"] as $dateKey => $portfolioValue) {
+	            $allDateKeys[$dateKey] = true;
+	        }
+	    }
+	    
+	    $todayKey = date("Y-m-d", $now);
+	    $allDateKeys[$todayKey] = true;
+	    ksort($allDateKeys);
+	    
+	    $labels = array();
+	    $cashValues = array();
+	    $portfolioValues = array();
+	    $totalAssetValues = array();
+	    
+	    $labels[] = "Start";
+	    $cashValues[] = $startBudget;
+	    
+	    $trackingStart = isset($portfolioDevelopment["tracking_start"])
+	        ? (int) $portfolioDevelopment["tracking_start"]
+	        : 0;
+	    $startPortfolioValue = array_key_exists("start_value", $portfolioDevelopment)
+	        ? $portfolioDevelopment["start_value"]
+	        : null;
+	    
+	    if ($trackingStart > 0 && $trackingStart <= $seasonStart && $startPortfolioValue !== null) {
+	        $startPortfolioValue = (int) round($startPortfolioValue, 0);
+	        $portfolioValues[] = $startPortfolioValue;
+	        $totalAssetValues[] = $startBudget + $startPortfolioValue;
+	    } else {
+	        $portfolioValues[] = null;
+	        $totalAssetValues[] = null;
+	    }
+	    
+	    $runningCash = $startBudget;
+	    $runningPortfolio = ($startPortfolioValue !== null) ? (int) round($startPortfolioValue, 0) : 0;
+	    $portfolioKnown = ($trackingStart > 0 && $trackingStart <= $seasonStart && $startPortfolioValue !== null);
+	    
+	    foreach (array_keys($allDateKeys) as $dateKey) {
+	        if (isset($dailyTransactions[$dateKey])) {
+	            $runningCash += (int) $dailyTransactions[$dateKey]["amount"];
+	        }
+	        
+	        if (isset($portfolioDevelopment["daily_values"][$dateKey])) {
+	            $runningPortfolio = (int) round($portfolioDevelopment["daily_values"][$dateKey], 0);
+	            $portfolioKnown = true;
+	        }
+	        
+	        $timestamp = strtotime($dateKey . " 12:00:00");
+	        if ($dateKey === $todayKey) {
+	            $timestamp = $now;
+	            $runningCash = $currentBudget;
+	            if (isset($portfolioDevelopment["current_value"])) {
+	                $runningPortfolio = (int) round($portfolioDevelopment["current_value"], 0);
+	                if ($trackingStart > 0) {
+	                    $portfolioKnown = true;
+	                }
+	            }
+	        }
+	        
+	        $labels[] = ($dateKey === $todayKey) ? "Heute" : date("d.m.Y", $timestamp);
+	        $cashValues[] = $runningCash;
+	        
+	        if ($portfolioKnown) {
+	            $portfolioValues[] = $runningPortfolio;
+	            $totalAssetValues[] = $runningCash + $runningPortfolio;
+	        } else {
+	            $portfolioValues[] = null;
+	            $totalAssetValues[] = null;
+	        }
+	    }
+	    
+	    $currentPortfolioValue = isset($portfolioDevelopment["current_value"])
+	        ? (int) round($portfolioDevelopment["current_value"], 0)
+	        : 0;
 	    
 	    return array(
 	        "labels" => $labels,
-	        "values" => $values,
+	        "values" => $cashValues,
+	        "cash_values" => $cashValues,
+	        "portfolio_values" => $portfolioValues,
+	        "total_asset_values" => $totalAssetValues,
 	        "start_budget" => $startBudget,
-	        "current_budget" => $currentBudget
+	        "current_budget" => $currentBudget,
+	        "current_portfolio_value" => $currentPortfolioValue,
+	        "current_total_assets" => $currentBudget + $currentPortfolioValue,
+	        "portfolio_tracking_start" => $trackingStart,
+	        "season_start" => $seasonStart
 	    );
 	}
-	
+
 	
 	/**
 	 * Returns the first scheduled league match date of the currently active season

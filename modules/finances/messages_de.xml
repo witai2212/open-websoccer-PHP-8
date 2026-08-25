@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../messages.dtd">
-<!-- CM23 Task 1004 | 2026-08-24 | Revision 1 -->
+<!-- CM23 Task 1004 + Finance Assets | 2026-08-25 | Revision 2 -->
 <messages>
     <message id="finance_navlabel">Finanzen</message>
     
@@ -96,8 +96,15 @@
 	<message id="deposit_matches">verbl. Spiele</message>
     
     <message id="finance_cash_development">Finanzentwicklung</message>
-	<message id="finance_cash_chart_title">Kontostand im Saisonverlauf</message>
-	<message id="finance_cash_chart_no_data">Für die laufende Saison liegen noch keine auswertbaren Finanzdaten vor.</message>    
+	<message id="finance_cash_chart_title">Finanzvermögen im Saisonverlauf</message>
+	<message id="finance_cash_chart_no_data">Für die laufende Saison liegen noch keine auswertbaren Finanzdaten vor.</message>
+	<message id="finance_asset_cash_current">Aktueller Kontostand</message>
+	<message id="finance_asset_portfolio_current">Aktueller Aktienwert</message>
+	<message id="finance_asset_total_current">Aktuelles Finanzvermögen</message>
+	<message id="finance_asset_cash_curve">Kontostand</message>
+	<message id="finance_asset_portfolio_curve">Aktienvermögen</message>
+	<message id="finance_asset_total_curve">Gesamtvermögen</message>
+	<message id="finance_asset_tracking_hint">Eine exakte historische Bewertung des Aktiendepots ist ab folgendem Datum verfügbar:</message>    
 
     <message id="financialforecast_title">Finanzprognose</message>
     <message id="financialforecast_navlabel">Finanzprognose</message>

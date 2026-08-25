@@ -1,4 +1,5 @@
 <?php
+// CM23 Finance Assets | 2026-08-25 | Revision 1
 /******************************************************
 
 This file is part of OpenWebSoccer-Sim.
@@ -95,6 +96,8 @@ class StockMarketDataService {
             }
         }
         
+        self::recordCurrentPriceSnapshots($websoccer, $db, $now, true);
+
         $updSql = "UPDATE ". $websoccer->getConfig("db_prefix") ."_stockmarket_date
                                 SET date=$now";
         $db->executeQuery($updSql);
@@ -1123,7 +1126,7 @@ class StockMarketDataService {
         
         $portfolio_value = 0;
         
-        $sqlStr = "SELECT us.qty*sm.v1 AS value
+        $sqlStr = "SELECT us.qty*REPLACE(sm.v1, ',', '.') AS value
                     FROM ". $websoccer->getConfig("db_prefix") ."_user_stock AS us, ". $websoccer->getConfig("db_prefix") ."_stockmarket AS sm
                     WHERE us.user_id='$teamId'
                         AND us.stock_id=sm.id; ";
@@ -1268,6 +1271,482 @@ class StockMarketDataService {
         $profit = $result->fetch_array();
         $result->free();
         return ($profit && isset($profit['profit'])) ? (int) $profit['profit'] : 0;
+    }
+
+    public static function recordCurrentPriceSnapshots(WebSoccer $websoccer, DbConnection $db, $timestamp = 0, $recordChangedPrice = false) {
+        if (!self::tableExists($websoccer, $db, 'stockmarket_price_history')) {
+            return;
+        }
+
+        $timestamp = (int) $timestamp;
+        if ($timestamp < 1) {
+            $timestamp = (int) $websoccer->getNowAsTimestamp();
+        }
+
+        $dayStart = mktime(0, 0, 0, (int) date('m', $timestamp), (int) date('d', $timestamp), (int) date('Y', $timestamp));
+        $dayEnd = mktime(0, 0, 0, (int) date('m', $timestamp), (int) date('d', $timestamp) + 1, (int) date('Y', $timestamp));
+
+        $result = $db->executeQuery(
+            "SELECT id, v1 FROM " . $websoccer->getConfig("db_prefix") . "_stockmarket ORDER BY id ASC"
+        );
+
+        while ($stock = $result->fetch_array()) {
+            $stockId = isset($stock['id']) ? (int) $stock['id'] : 0;
+            $price = isset($stock['v1']) ? self::normalizePrice($stock['v1']) : 0;
+
+            if ($stockId < 1 || $price <= 0) {
+                continue;
+            }
+
+            $historyResult = $db->querySelect(
+                "id, price",
+                $websoccer->getConfig("db_prefix") . "_stockmarket_price_history",
+                "stock_id = %d AND recorded_date >= %d AND recorded_date < %d ORDER BY recorded_date DESC, id DESC",
+                array($stockId, $dayStart, $dayEnd),
+                1
+            );
+            $existing = $historyResult->fetch_array();
+            $historyResult->free();
+
+            if ($existing) {
+                $existingPrice = isset($existing['price']) ? (float) $existing['price'] : 0;
+                if (!$recordChangedPrice || abs($existingPrice - $price) < 0.0001) {
+                    continue;
+                }
+            }
+
+            $columns = array();
+            $columns['stock_id'] = $stockId;
+            $columns['price'] = $price;
+            $columns['recorded_date'] = $timestamp;
+            $db->queryInsert(
+                $columns,
+                $websoccer->getConfig("db_prefix") . "_stockmarket_price_history"
+            );
+        }
+        $result->free();
+    }
+
+    public static function getPortfolioDevelopmentForPeriod(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $teamId,
+        $fromTimestamp,
+        $toTimestamp
+    ) {
+        $teamId = (int) $teamId;
+        $fromTimestamp = (int) $fromTimestamp;
+        $toTimestamp = (int) $toTimestamp;
+
+        if ($toTimestamp < 1) {
+            $toTimestamp = (int) $websoccer->getNowAsTimestamp();
+        }
+
+        $currentValue = (int) round(self::getPortfolioValue($websoccer, $db, $teamId), 0);
+
+        $emptyResult = array(
+            'tracking_start' => 0,
+            'start_value' => null,
+            'daily_values' => array(),
+            'current_value' => $currentValue
+        );
+
+        if (
+            $teamId < 1
+            || !self::tableExists($websoccer, $db, 'stockmarket_price_history')
+            || !self::tableExists($websoccer, $db, 'stockmarket_transaction_history')
+        ) {
+            return $emptyResult;
+        }
+
+        self::recordCurrentPriceSnapshots($websoccer, $db, $toTimestamp);
+        self::ensurePortfolioOpeningHistory($websoccer, $db, $teamId, $toTimestamp);
+
+        $transactionTable = $websoccer->getConfig("db_prefix") . "_stockmarket_transaction_history";
+        $priceTable = $websoccer->getConfig("db_prefix") . "_stockmarket_price_history";
+
+        $transactions = array();
+        $stockIds = array();
+        $trackingStart = 0;
+
+        $result = $db->querySelect(
+            "stock_id, transaction_type, qty, unit_price, created_date, id",
+            $transactionTable,
+            "team_id = %d AND created_date <= %d ORDER BY created_date ASC, CASE WHEN transaction_type = 'opening' THEN 0 ELSE 1 END ASC, id ASC",
+            array($teamId, $toTimestamp)
+        );
+
+        while ($row = $result->fetch_array()) {
+            $stockId = isset($row['stock_id']) ? (int) $row['stock_id'] : 0;
+            $createdDate = isset($row['created_date']) ? (int) $row['created_date'] : 0;
+
+            if ($stockId < 1 || $createdDate < 1) {
+                continue;
+            }
+
+            $transactions[] = array(
+                'timestamp' => $createdDate,
+                'stock_id' => $stockId,
+                'transaction_type' => isset($row['transaction_type']) ? (string) $row['transaction_type'] : '',
+                'qty' => isset($row['qty']) ? (int) $row['qty'] : 0,
+                'unit_price' => isset($row['unit_price']) ? (float) $row['unit_price'] : 0
+            );
+            $stockIds[$stockId] = true;
+
+            if ($trackingStart < 1 || $createdDate < $trackingStart) {
+                $trackingStart = $createdDate;
+            }
+        }
+        $result->free();
+
+        if (!count($transactions)) {
+            return $emptyResult;
+        }
+
+        $stockIdList = implode(',', array_map('intval', array_keys($stockIds)));
+        $priceEvents = array();
+
+        if ($stockIdList !== '') {
+            $sql = "SELECT stock_id, price, recorded_date
+                      FROM " . $priceTable . "
+                     WHERE stock_id IN (" . $stockIdList . ")
+                       AND recorded_date <= " . $toTimestamp . "
+                     ORDER BY recorded_date ASC, id ASC";
+            $priceResult = $db->executeQuery($sql);
+
+            while ($row = $priceResult->fetch_array()) {
+                $stockId = isset($row['stock_id']) ? (int) $row['stock_id'] : 0;
+                $recordedDate = isset($row['recorded_date']) ? (int) $row['recorded_date'] : 0;
+                $price = isset($row['price']) ? (float) $row['price'] : 0;
+
+                if ($stockId < 1 || $recordedDate < 1 || $price <= 0) {
+                    continue;
+                }
+
+                $priceEvents[] = array(
+                    'timestamp' => $recordedDate,
+                    'stock_id' => $stockId,
+                    'price' => $price
+                );
+            }
+            $priceResult->free();
+        }
+
+        $events = array();
+        foreach ($priceEvents as $priceEvent) {
+            $events[] = array(
+                'timestamp' => (int) $priceEvent['timestamp'],
+                'order' => 0,
+                'type' => 'price',
+                'stock_id' => (int) $priceEvent['stock_id'],
+                'price' => (float) $priceEvent['price']
+            );
+        }
+
+        foreach ($transactions as $transaction) {
+            $events[] = array(
+                'timestamp' => (int) $transaction['timestamp'],
+                'order' => ($transaction['transaction_type'] === 'opening') ? 1 : 2,
+                'type' => 'transaction',
+                'stock_id' => (int) $transaction['stock_id'],
+                'transaction_type' => (string) $transaction['transaction_type'],
+                'qty' => (int) $transaction['qty'],
+                'unit_price' => (float) $transaction['unit_price']
+            );
+        }
+
+        usort($events, function($first, $second) {
+            if ((int) $first['timestamp'] === (int) $second['timestamp']) {
+                if ((int) $first['order'] === (int) $second['order']) {
+                    return 0;
+                }
+                return ((int) $first['order'] < (int) $second['order']) ? -1 : 1;
+            }
+            return ((int) $first['timestamp'] < (int) $second['timestamp']) ? -1 : 1;
+        });
+
+        $holdings = array();
+        $prices = array();
+        $dailyValues = array();
+        $startValue = null;
+
+        foreach ($events as $event) {
+            $eventTimestamp = (int) $event['timestamp'];
+
+            if ($eventTimestamp > $toTimestamp) {
+                break;
+            }
+
+            if ($event['type'] === 'price') {
+                $prices[(int) $event['stock_id']] = (float) $event['price'];
+            } else {
+                $stockId = (int) $event['stock_id'];
+                $qty = (int) $event['qty'];
+
+                if (!isset($holdings[$stockId])) {
+                    $holdings[$stockId] = 0;
+                }
+
+                if ($event['transaction_type'] === 'sell') {
+                    $holdings[$stockId] -= $qty;
+                } else {
+                    $holdings[$stockId] += $qty;
+                }
+
+                if ($holdings[$stockId] < 0) {
+                    $holdings[$stockId] = 0;
+                }
+
+                if ((float) $event['unit_price'] > 0) {
+                    $prices[$stockId] = (float) $event['unit_price'];
+                }
+            }
+
+            if ($eventTimestamp < $fromTimestamp) {
+                $startValue = self::calculateHistoricalPortfolioValue($holdings, $prices);
+                continue;
+            }
+
+            $dateKey = date('Y-m-d', $eventTimestamp);
+            $dailyValues[$dateKey] = self::calculateHistoricalPortfolioValue($holdings, $prices);
+        }
+
+        if ($trackingStart > 0 && $trackingStart <= $fromTimestamp && $startValue === null) {
+            $startValue = 0;
+        }
+
+        $todayKey = date('Y-m-d', $toTimestamp);
+        $dailyValues[$todayKey] = $currentValue;
+
+        return array(
+            'tracking_start' => $trackingStart,
+            'start_value' => $startValue,
+            'daily_values' => $dailyValues,
+            'current_value' => $currentValue
+        );
+    }
+
+    private static function ensurePortfolioOpeningHistory(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $teamId,
+        $timestamp
+    ) {
+        $teamId = (int) $teamId;
+        $timestamp = (int) $timestamp;
+
+        if ($teamId < 1 || $timestamp < 1) {
+            return;
+        }
+
+        $currentQuantities = array();
+        $result = $db->querySelect(
+            "stock_id, COALESCE(SUM(qty), 0) AS qty",
+            $websoccer->getConfig("db_prefix") . "_user_stock",
+            "user_id = %d GROUP BY stock_id",
+            $teamId
+        );
+        while ($row = $result->fetch_array()) {
+            $stockId = isset($row['stock_id']) ? (int) $row['stock_id'] : 0;
+            if ($stockId > 0) {
+                $currentQuantities[$stockId] = isset($row['qty']) ? (int) $row['qty'] : 0;
+            }
+        }
+        $result->free();
+
+        $historyQuantities = array();
+        $firstTransactions = array();
+        $transactionTable = $websoccer->getConfig("db_prefix") . "_stockmarket_transaction_history";
+
+        $sql = "SELECT stock_id,
+                       COALESCE(SUM(CASE
+                           WHEN transaction_type IN ('buy', 'opening') THEN qty
+                           WHEN transaction_type = 'sell' THEN -qty
+                           ELSE 0
+                       END), 0) AS history_qty,
+                       MIN(created_date) AS first_date
+                  FROM " . $transactionTable . "
+                 WHERE team_id = " . $teamId . "
+                 GROUP BY stock_id";
+        $result = $db->executeQuery($sql);
+        while ($row = $result->fetch_array()) {
+            $stockId = isset($row['stock_id']) ? (int) $row['stock_id'] : 0;
+            if ($stockId > 0) {
+                $historyQuantities[$stockId] = isset($row['history_qty']) ? (int) $row['history_qty'] : 0;
+                $firstTransactions[$stockId] = isset($row['first_date']) ? (int) $row['first_date'] : 0;
+            }
+        }
+        $result->free();
+
+        $stockIds = array();
+        foreach ($currentQuantities as $stockId => $qty) {
+            $stockIds[(int) $stockId] = true;
+        }
+        foreach ($historyQuantities as $stockId => $qty) {
+            $stockIds[(int) $stockId] = true;
+        }
+
+        foreach (array_keys($stockIds) as $stockId) {
+            $currentQty = isset($currentQuantities[$stockId]) ? (int) $currentQuantities[$stockId] : 0;
+            $historyQty = isset($historyQuantities[$stockId]) ? (int) $historyQuantities[$stockId] : 0;
+            $openingQty = $currentQty - $historyQty;
+
+            if ($openingQty <= 0) {
+                continue;
+            }
+
+            $openingDate = $timestamp;
+            if (isset($firstTransactions[$stockId]) && (int) $firstTransactions[$stockId] > 1) {
+                $openingDate = (int) $firstTransactions[$stockId] - 1;
+            }
+
+            $unitPrice = self::getHistoricalOpeningPrice(
+                $websoccer,
+                $db,
+                $teamId,
+                $stockId,
+                $openingDate
+            );
+
+            if ($unitPrice <= 0) {
+                continue;
+            }
+
+            $value = (int) round($openingQty * $unitPrice, 0);
+            $referenceKey = 'finance-opening-' . $teamId . '-' . $stockId;
+
+            $sql = "INSERT IGNORE INTO " . $transactionTable . "
+                        (team_id, stock_id, transaction_type, qty, unit_price, gross_amount, net_amount, fee_amount, created_date, reference_key)
+                    VALUES
+                        (" . $teamId . ", " . (int) $stockId . ", 'opening', " . (int) $openingQty . ", "
+                        . (float) $unitPrice . ", " . $value . ", " . $value . ", 0, " . $openingDate . ", '"
+                        . $referenceKey . "')";
+            $db->executeQuery($sql);
+        }
+    }
+
+    private static function getHistoricalOpeningPrice(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $teamId,
+        $stockId,
+        $timestamp
+    ) {
+        $teamId = (int) $teamId;
+        $stockId = (int) $stockId;
+        $timestamp = (int) $timestamp;
+
+        $result = $db->querySelect(
+            "unit_price",
+            $websoccer->getConfig("db_prefix") . "_stockmarket_transaction_history",
+            "team_id = %d AND stock_id = %d AND unit_price > 0 ORDER BY created_date ASC, id ASC",
+            array($teamId, $stockId),
+            1
+        );
+        $row = $result->fetch_array();
+        $result->free();
+
+        if ($row && isset($row['unit_price']) && (float) $row['unit_price'] > 0) {
+            return (float) $row['unit_price'];
+        }
+
+        $result = $db->querySelect(
+            "price",
+            $websoccer->getConfig("db_prefix") . "_stockmarket_price_history",
+            "stock_id = %d AND recorded_date <= %d ORDER BY recorded_date DESC, id DESC",
+            array($stockId, $timestamp),
+            1
+        );
+        $row = $result->fetch_array();
+        $result->free();
+
+        if ($row && isset($row['price']) && (float) $row['price'] > 0) {
+            return (float) $row['price'];
+        }
+
+        $result = $db->querySelect(
+            "v1",
+            $websoccer->getConfig("db_prefix") . "_stockmarket",
+            "id = %d",
+            $stockId,
+            1
+        );
+        $row = $result->fetch_array();
+        $result->free();
+
+        if ($row && isset($row['v1'])) {
+            return self::normalizePrice($row['v1']);
+        }
+
+        return 0;
+    }
+
+    private static function recordStockTransactionHistory(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $teamId,
+        $stockId,
+        $transactionType,
+        $qty,
+        $unitPrice,
+        $grossAmount,
+        $netAmount,
+        $feeAmount
+    ) {
+        if (!self::tableExists($websoccer, $db, 'stockmarket_transaction_history')) {
+            return;
+        }
+
+        $teamId = (int) $teamId;
+        $stockId = (int) $stockId;
+        $qty = (int) $qty;
+        $unitPrice = (float) $unitPrice;
+
+        if (
+            $teamId < 1
+            || $stockId < 1
+            || $qty < 1
+            || $unitPrice <= 0
+            || !in_array($transactionType, array('buy', 'sell'), true)
+        ) {
+            return;
+        }
+
+        $columns = array();
+        $columns['team_id'] = $teamId;
+        $columns['stock_id'] = $stockId;
+        $columns['transaction_type'] = $transactionType;
+        $columns['qty'] = $qty;
+        $columns['unit_price'] = $unitPrice;
+        $columns['gross_amount'] = (int) round($grossAmount, 0);
+        $columns['net_amount'] = (int) round($netAmount, 0);
+        $columns['fee_amount'] = (int) round($feeAmount, 0);
+        $columns['created_date'] = (int) $websoccer->getNowAsTimestamp();
+
+        $db->queryInsert(
+            $columns,
+            $websoccer->getConfig("db_prefix") . "_stockmarket_transaction_history"
+        );
+    }
+
+    private static function calculateHistoricalPortfolioValue($holdings, $prices) {
+        $value = 0;
+
+        foreach ($holdings as $stockId => $qty) {
+            $qty = (int) $qty;
+            if ($qty <= 0 || !isset($prices[$stockId])) {
+                continue;
+            }
+
+            $price = (float) $prices[$stockId];
+            if ($price <= 0) {
+                continue;
+            }
+
+            $value += $qty * $price;
+        }
+
+        return (int) round($value, 0);
     }
 
     private static function tableExists(WebSoccer $websoccer, DbConnection $db, $tableNameWithoutPrefix) {

@@ -1,4 +1,4 @@
-{# CM23 Task 1004 | 2026-08-24 | Revision 3 #}
+{# CM23 Task 1004 + Finance Assets | 2026-08-25 | Revision 4 #}
 {% extends "base.twig" %}
 
 {% import "macros/messagebox.twig" as messagebox %}
@@ -257,9 +257,36 @@
 
 	<h4>{{ i18n.getMessage("finance_cash_chart_title") }}</h4>
 
+	<div class="row-fluid">
+		<div class="span4">
+			<div class="well">
+				<strong>{{ i18n.getMessage("finance_asset_cash_current") }}</strong><br>
+				{{ budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+			</div>
+		</div>
+		<div class="span4">
+			<div class="well">
+				<strong>{{ i18n.getMessage("finance_asset_portfolio_current") }}</strong><br>
+				{{ current_portfolio_value|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+			</div>
+		</div>
+		<div class="span4">
+			<div class="well">
+				<strong>{{ i18n.getMessage("finance_asset_total_current") }}</strong><br>
+				{{ current_total_assets|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+			</div>
+		</div>
+	</div>
+
+	{% if portfolio_tracking_start > cash_chart_season_start %}
+		<div class="alert alert-info">
+			<i class="icon-info-sign"></i>
+			{{ i18n.getMessage("finance_asset_tracking_hint") }}
+			{{ env.getFormattedDate(portfolio_tracking_start) }}
+		</div>
+	{% endif %}
+
 	{% if cash_chart_values|length > 0 %}
-
-
 		<canvas id="financeCashLineChart" width="900" height="400"></canvas>
 
 		<script>
@@ -273,19 +300,49 @@
 						{% if not loop.first %}, {% endif %}'{{ label }}'
 					{% endfor %}
 				],
-				datasets: [{
-					label: '{{ i18n.getMessage("entity_club_finanz_budget") }}',
-					data: [
-						{% for value in cash_chart_values %}
-							{% if not loop.first %}, {% endif %}{{ value }}
-						{% endfor %}
-					],
-					fill: false,
-					borderColor: 'rgba(75, 192, 192, 1)',
-					tension: 0.1
-				}]
+				datasets: [
+					{
+						label: '{{ i18n.getMessage("finance_asset_cash_curve") }}',
+						data: [
+							{% for value in cash_chart_values %}
+								{% if not loop.first %}, {% endif %}{{ value }}
+							{% endfor %}
+						],
+						fill: false,
+						borderColor: 'rgba(75, 192, 192, 1)',
+						tension: 0.1
+					},
+					{
+						label: '{{ i18n.getMessage("finance_asset_portfolio_curve") }}',
+						data: [
+							{% for value in portfolio_chart_values %}
+								{% if not loop.first %}, {% endif %}{% if value is null %}null{% else %}{{ value }}{% endif %}
+							{% endfor %}
+						],
+						fill: false,
+						borderColor: 'rgba(255, 159, 64, 1)',
+						tension: 0.1,
+						spanGaps: false
+					},
+					{
+						label: '{{ i18n.getMessage("finance_asset_total_curve") }}',
+						data: [
+							{% for value in total_asset_chart_values %}
+								{% if not loop.first %}, {% endif %}{% if value is null %}null{% else %}{{ value }}{% endif %}
+							{% endfor %}
+						],
+						fill: false,
+						borderColor: 'rgba(54, 162, 235, 1)',
+						tension: 0.1,
+						spanGaps: false
+					}
+				]
 			},
 			options: {
+				interaction: {
+					mode: 'index',
+					intersect: false
+				},
 				scales: {
 					y: {
 						beginAtZero: false
@@ -294,14 +351,11 @@
 			}
 		});
 		</script>
-
 	{% else %}
-
 		<p>
 			<i class="icon-info-sign"></i>
 			{{ i18n.getMessage("finance_cash_chart_no_data") }}
 		</p>
-
 	{% endif %}
 
 </div>

@@ -1,5 +1,5 @@
 <?php
-// CM23 Task 1004 | 2026-08-24 | Revision 2
+// CM23 Task 1004 + Finance Assets | 2026-08-25 | Revision 3
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -107,7 +107,12 @@ class FinancesModel implements IModel {
 		    "paginator" => $paginator,
 		    
 		    "cash_chart_labels" => $cashDevelopment["labels"],
-		    "cash_chart_values" => $cashDevelopment["values"],
+		    "cash_chart_values" => $cashDevelopment["cash_values"],
+		    "portfolio_chart_values" => $cashDevelopment["portfolio_values"],
+		    "total_asset_chart_values" => $cashDevelopment["total_asset_values"],
+		    "current_portfolio_value" => $cashDevelopment["current_portfolio_value"],
+		    "current_total_assets" => $cashDevelopment["current_total_assets"],
+		    "portfolio_tracking_start" => $cashDevelopment["portfolio_tracking_start"],
 		    "cash_chart_season_start" => $cashDevelopment["season_start"],
 		    "transfer_penalty_summary" => $transferPenaltySummary,
 		    "private_account" => $privateAccount

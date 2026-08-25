@@ -1,4 +1,4 @@
-# CM23 Task List | 2026-08-25 | Revision 6
+# CM23 Task List | 2026-08-25 | Revision 7
 Open Tasks:
 1012: Kader ansicht
 in ?page=team&id=xyz sieht man bei den Spieler nur die werte stärke, technik, frische, konditin, zufriedenheit + alter + ausfall.
@@ -7,12 +7,15 @@ Es gibt aber wesentlich mehr attribute. kann man die alle klever auf der kleinen
 1011: w_... werte größer 100
 spieler w_... werte dürfen nciht >100 sein. Es muss einen automatismus geben, der diesen zurück auf 100 setzt oder limitiert.
 
-1010: "keine aufstellung abgegeben"
-die kennzeichnung dass ein Team keine Aufstellung abgegeben hat, ist nur sinnvol bei nicht CPU-Teams.
-Das sollte angepasst werden.
-
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+1010: "keine aufstellung abgegeben"
+  - Die Kennzeichnung wird nur noch angezeigt, wenn zum Zeitpunkt des Spiels ein User dem betroffenen Team zugeordnet war.
+  - CPU-geführte Teams erhalten keinen Hinweis mehr, auch wenn home_noformation bzw. guest_noformation technisch gesetzt ist.
+  - Die Match-Detailseite verwendet dafür die im Spiel gespeicherten home_user_id/gast_user_id.
+  - Nationale Pokale sowie Champions League, UEFA Euro League, Copa Libertadores, Copa Sudamericana und CONCACAF Champions Cup verwenden dieselbe CPU-sichere Anzeigeprüfung.
+  - Spielberechnung, CPU-Aufstellungen und die noformation-Datenbankwerte bleiben unverändert.
+
 1009: Merchandising:
 stats shall be underligned and supported by graphs, lines etc.
 

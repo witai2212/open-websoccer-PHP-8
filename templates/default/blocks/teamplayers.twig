@@ -1,3 +1,4 @@
+{# CM23 Task 1012 | 2026-08-26 | Revision 1 #}
 {% import "macros/playerlists.twig" as playerlists %}
 
 {% if players is defined and players|length > 0 %}
@@ -29,7 +30,7 @@
 		<tbody>
 		
 			{% for player in players %}
-				{{ playerlists.teamlistItem(player, show_personality, show_traits is defined and show_traits)  }}
+				{{ playerlists.teamlistItem(player, show_personality, show_traits is defined and show_traits, show_talent is defined and show_talent)  }}
 			{% endfor %}
 		
 		</tbody>

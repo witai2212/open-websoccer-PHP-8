@@ -1,4 +1,5 @@
 <?php
+// CM23 Task 1012 | 2026-08-26 | Revision 1
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -57,8 +58,10 @@ class TeamPlayersModel implements IModel {
 			$userTeamId = (int) $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 		}
 		
-		return array("players" => $players, "show_personality" => ($userTeamId > 0 && $userTeamId === $this->_teamid),
-		             "show_traits" => ($userTeamId > 0 && $userTeamId === $this->_teamid));
+		$isOwnTeam = ($userTeamId > 0 && $userTeamId === $this->_teamid);
+
+		return array("players" => $players, "show_personality" => $isOwnTeam,
+		             "show_traits" => $isOwnTeam, "show_talent" => $isOwnTeam);
 	}
 	
 }

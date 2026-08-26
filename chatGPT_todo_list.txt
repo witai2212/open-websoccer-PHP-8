@@ -1,5 +1,8 @@
 # CM23 Task List | 2026-08-26 | Revision 13
 Open Tasks:
+1017: standard line-up/formation of CPU clubs
+there should be a pre-defined formation per CPU club (e.g. 4-4-2, 3-4-3) this should be then taken as standard for automatic lineup and transfer philisophy of cpu clubs. Selling and buying players, individually per club then.
+
 1015: spielplan generierung.
 bisher freitag - Dienstag liga spiele, dienstag nationale pokalspiele, mi-do internationale pokalspiel
 es sollte darauf geachtet werden, dass besonders bei den liga- und nationalen pokalen, diese spiele nicht alle zu gleichen uhrzeit stattfinden.

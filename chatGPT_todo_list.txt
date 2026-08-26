@@ -1,9 +1,10 @@
-# CM23 Task List | 2026-08-26 | Revision 11
+# CM23 Task List | 2026-08-26 | Revision 12
 Open Tasks:
-1013: User salary. Users have a salry. This shall be paid to users account (konto/budget) every matchday. and deducted from clubs budget, shown in finances....
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+1013: User salary. Users have a salry. This shall be paid to users account (konto/budget) every matchday. and deducted from clubs budget, shown in finances....
+
 1012: Kaderansicht
   - Die bisherigen Kernwerte bleiben direkt in der Spielertabelle sichtbar.
   - Alle weiteren spielerischen Attribute werden in einer kompakten zweiten Zeile je Spieler dargestellt.

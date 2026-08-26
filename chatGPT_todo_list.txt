@@ -1,14 +1,19 @@
-# CM23 Task List | 2026-08-25 | Revision 7
+# CM23 Task List | 2026-08-26 | Revision 8
 Open Tasks:
 1012: Kader ansicht
 in ?page=team&id=xyz sieht man bei den Spieler nur die werte stärke, technik, frische, konditin, zufriedenheit + alter + ausfall.
 Es gibt aber wesentlich mehr attribute. kann man die alle klever auf der kleinen Fläche darstellen, sodass es noch lesbar und übersichtlich ist?
 
-1011: w_... werte größer 100
-spieler w_... werte dürfen nciht >100 sein. Es muss einen automatismus geben, der diesen zurück auf 100 setzt oder limitiert.
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+1011: w_... Werte auf 0 bis 100 begrenzen
+  - Alle w_*-Felder der Spielertabelle werden automatisch auf den Wertebereich 0 bis 100 begrenzt.
+  - Werte über 100 werden auf 100, Werte unter 0 auf 0 gesetzt.
+  - Die Begrenzung läuft im neuen PlayerAttributeLimitsJob einmal täglich.
+  - Die bisherige Stärkekorrektur und Marktwert-Wartung wurden in denselben Tagesjob übernommen.
+  - Der bisher jede Minute ausgeführte CorrectPlayerValuesJob entfällt.
+
 1010: "keine aufstellung abgegeben"
   - Die Kennzeichnung wird nur noch angezeigt, wenn zum Zeitpunkt des Spiels ein User dem betroffenen Team zugeordnet war.
   - CPU-geführte Teams erhalten keinen Hinweis mehr, auch wenn home_noformation bzw. guest_noformation technisch gesetzt ist.
@@ -67,3 +72,4 @@ stats shall be underligned and supported by graphs, lines etc.
 1001: Pokal:
   - Vergleiche internationale Pokale mit nationalen (?page=cups). Die Nationalen Pokale sollten in der view ähnlich aufgebaut sein.
     - aktuelle übersicht, teilnehmer, runden, titelträger, mein verein, letzte ergebnissse, nächste spiele, usw.
+

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- CM23 jobs | 2026-08-26 | Revision 1 -->
 <!DOCTYPE jobs SYSTEM "jobs.dtd">
 <jobs>
-    <job id="correctplayers" name="Recalculate player market values" name_de="Marktwerte neu berechnen" class="CorrectPlayerValuesJob" interval="1" last_ping="1785871237" stop="0" error="" inittime="0"/>
+    <job id="playerattributelimits" name="Limit player attributes and recalculate market values" name_de="Spielerwerte begrenzen und Marktwerte neu berechnen" class="PlayerAttributeLimitsJob" interval="1440" last_ping="" stop="0" error="" inittime="0"/>
     
     <job id="addplyr" name="Add players without team to transfer market" name_de="Vereinslose Spieler auf die Transferliste setzen" class="AddPlayerWithoutTeamToTransfermarketJob" interval="5" last_ping="" stop="1" error="" inittime="0"/>
     

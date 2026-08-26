@@ -2,6 +2,11 @@
 Open Tasks:
 1014: Aktiendept
 zu prüfen: wenn ich aktien im depo habe mit einem wert x und neue aktien vom gleiche nindex dazu kaufe mit dem wert y<x und dieser wert niedriger ist als x, dann müsste sich doch portfolio-wert verringern. ist das so? es shceibt dem nicht so zu sein.
+
+1015: spielplan generierung.
+bisher freitag - Dienstag liga spiele, dienstag nationale pokalspiele, mi-do internationale pokalspiel
+es sollte darauf geachtet werden, dass besonders bei den liga- und nationalen pokalen, diese spiele nicht alle zu gleichen uhrzeit stattfinden.
+wenn wir von einer höchstzahl von 1.000 spielen pro spieltag ausgehen, dann macht es keinen sinn dass diese all um 11:00 stattfinden. es muss dann so sein dass diese um 09:00 beginnen und um 16:00 enden.
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
 1013: User salary. Users have a salry. This shall be paid to users account (konto/budget) every matchday. and deducted from clubs budget, shown in finances....

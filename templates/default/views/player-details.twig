@@ -1,3 +1,4 @@
+{# CM23 Player attributes compact view | 2026-08-26 | Revision 1 #}
 {% extends "base.twig" %}
 
 {% import "macros/statisticelements.twig" as statisticelements %}
@@ -25,6 +26,20 @@
 .cm23-partnership-box { margin-top: 10px; }
 .cm23-partnership-effects { margin: 5px 0 0 0; }
 .cm23-trait-label { display: inline-block; margin: 0 4px 4px 0; }
+.cm23-attributes-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 14px; }
+.cm23-attribute-item { min-width: 0; }
+.cm23-attribute-item-featured { grid-column: 1 / -1; font-weight: bold; }
+.cm23-attribute-label { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 2px; font-size: 12px; line-height: 16px; }
+.cm23-attribute-item .progress { height: 10px; margin: 0; }
+.cm23-attribute-item .progress .bar { min-height: 10px; line-height: 10px; font-size: 0; }
+.cm23-attribute-item-featured .progress { height: 14px; }
+.cm23-attribute-item-featured .progress .bar { min-height: 14px; line-height: 14px; }
+@media (max-width: 979px) {
+	.cm23-attributes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+	.cm23-attributes-grid { grid-template-columns: minmax(0, 1fr); }
+}
 </style>
 
 <ul class="nav nav-tabs" id="playerTab">
@@ -233,56 +248,75 @@
 			</div>
 		{% endif %}
   
-  		{% if env.getConfig("hide_strength_attributes") != "1" %}
+		{% if env.getConfig("hide_strength_attributes") != "1" %}
 			<h4>{{ i18n.getMessage("player_details_strength_title") }}</h4>
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_staerke') }} ({{ player.player_strength }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_technik') }} ({{ player.player_strength_technique }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_technique) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_kondition') }} ({{ player.player_strength_stamina }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_stamina) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_frische') }} ({{ player.player_strength_freshness }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_freshness) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_zufriedenheit') }} ({{ player.player_strength_satisfaction }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_satisfaction) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_passing') }} ({{ player.player_strength_passing }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_passing) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_shooting') }} ({{ player.player_strength_shooting }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_shooting) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_heading') }} ({{ player.player_strength_heading}}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_heading) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_tackling') }} ({{ player.player_strength_tackling }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_tackling) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_freekick') }} ({{ player.player_strength_freekick }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_freekick) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_pace') }} ({{ player.player_strength_pace }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_pace) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_creativity') }} ({{ player.player_strength_creativity }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_creativity) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_influence') }} ({{ player.player_strength_influence }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_influence) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_flair') }} ({{ player.player_strength_flair }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_flair) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_penalty') }} ({{ player.player_strength_penalty }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_penalty) }}
-			
-			<p><em>{{ i18n.getMessage('entity_player_w_penalty_killing') }} ({{ player.player_strength_penalty_killing }}%)</em></p>
-			{{ statisticelements.progressbar(player.player_strength_penalty_killing) }}
+
+			<div class="cm23-attributes-grid">
+				<div class="cm23-attribute-item cm23-attribute-item-featured">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_staerke') }}</span><span>{{ player.player_strength }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_technik') }}</span><span>{{ player.player_strength_technique }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_technique) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_kondition') }}</span><span>{{ player.player_strength_stamina }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_stamina) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_frische') }}</span><span>{{ player.player_strength_freshness }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_freshness) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_zufriedenheit') }}</span><span>{{ player.player_strength_satisfaction }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_satisfaction) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_passing') }}</span><span>{{ player.player_strength_passing }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_passing) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_shooting') }}</span><span>{{ player.player_strength_shooting }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_shooting) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_heading') }}</span><span>{{ player.player_strength_heading }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_heading) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_tackling') }}</span><span>{{ player.player_strength_tackling }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_tackling) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_freekick') }}</span><span>{{ player.player_strength_freekick }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_freekick) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_pace') }}</span><span>{{ player.player_strength_pace }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_pace) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_creativity') }}</span><span>{{ player.player_strength_creativity }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_creativity) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_influence') }}</span><span>{{ player.player_strength_influence }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_influence) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_flair') }}</span><span>{{ player.player_strength_flair }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_flair) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_penalty') }}</span><span>{{ player.player_strength_penalty }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_penalty) }}
+				</div>
+				<div class="cm23-attribute-item">
+					<div class="cm23-attribute-label"><span>{{ i18n.getMessage('entity_player_w_penalty_killing') }}</span><span>{{ player.player_strength_penalty_killing }}%</span></div>
+					{{ statisticelements.progressbar(player.player_strength_penalty_killing) }}
+				</div>
+			</div>
 
 		{% endif %}
 

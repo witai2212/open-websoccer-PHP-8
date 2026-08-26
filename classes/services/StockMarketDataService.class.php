@@ -1,5 +1,5 @@
 <?php
-// CM23 Finance Assets | 2026-08-25 | Revision 1
+// CM23 Finance Assets | 2026-08-26 | Revision 2
 /******************************************************
 
 This file is part of OpenWebSoccer-Sim.
@@ -191,8 +191,10 @@ class StockMarketDataService {
         $i=0;
         //(index.v1*index.qty*0.95
 		
-        $sqlStr = "SELECT us.*, SUM(us.qty) index_qty, AVG(us.price) AS avg_price, 
-                            SUM(us.qty)*AVG(us.price) AS value_bought, 
+        $sqlStr = "SELECT us.*, SUM(us.qty) index_qty,
+                            SUM(us.qty * CAST(REPLACE(us.price, ',', '.') AS DECIMAL(18,6)))
+                                / NULLIF(SUM(us.qty), 0) AS avg_price,
+                            SUM(us.qty * CAST(REPLACE(us.price, ',', '.') AS DECIMAL(18,6))) AS value_bought, 
                             (REPLACE(sm.v1,',','.')*SUM(us.qty)) AS curr_value,
                             sm.name,
                             sm.team_id,

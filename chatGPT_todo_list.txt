@@ -1,8 +1,5 @@
-# CM23 Task List | 2026-08-26 | Revision 12
+# CM23 Task List | 2026-08-26 | Revision 13
 Open Tasks:
-1014: Aktiendept
-zu prüfen: wenn ich aktien im depo habe mit einem wert x und neue aktien vom gleiche nindex dazu kaufe mit dem wert y<x und dieser wert niedriger ist als x, dann müsste sich doch portfolio-wert verringern. ist das so? es shceibt dem nicht so zu sein.
-
 1015: spielplan generierung.
 bisher freitag - Dienstag liga spiele, dienstag nationale pokalspiele, mi-do internationale pokalspiel
 es sollte darauf geachtet werden, dass besonders bei den liga- und nationalen pokalen, diese spiele nicht alle zu gleichen uhrzeit stattfinden.
@@ -13,6 +10,12 @@ User kann bisher zwischen 3 möglichkeiten bei der automatischen aufstellung wä
 Gerne noch weitere Vorschläge.
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+1014: Aktiendepot
+  - Der aktuelle Portfolio-Wert wird weiterhin aus aktuellem Kurs × Gesamtbestand berechnet.
+  - Der durchschnittliche Kaufpreis wird mengen-gewichtet berechnet.
+  - Der gesamte Kaufwert wird direkt aus Menge × jeweiligem Kaufpreis summiert.
+  - Unterschiedlich große Käufe werden damit korrekt berücksichtigt.
+
 1013: User salary. Users have a salry. This shall be paid to users account (konto/budget) every matchday. and deducted from clubs budget, shown in finances....
 
 1012: Kaderansicht

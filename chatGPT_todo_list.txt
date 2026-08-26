@@ -1,6 +1,7 @@
 # CM23 Task List | 2026-08-26 | Revision 12
 Open Tasks:
-
+1014: Aktiendept
+zu prüfen: wenn ich aktien im depo habe mit einem wert x und neue aktien vom gleiche nindex dazu kaufe mit dem wert y<x und dieser wert niedriger ist als x, dann müsste sich doch portfolio-wert verringern. ist das so? es shceibt dem nicht so zu sein.
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
 1013: User salary. Users have a salry. This shall be paid to users account (konto/budget) every matchday. and deducted from clubs budget, shown in finances....

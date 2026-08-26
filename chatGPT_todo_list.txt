@@ -1,4 +1,4 @@
-# CM23 Task List | 2026-08-26 | Revision 9
+# CM23 Task List | 2026-08-26 | Revision 10
 Open Tasks:
 
 
@@ -8,6 +8,7 @@ Finalised taskes:
   - Die bisherigen Kernwerte bleiben direkt in der Spielertabelle sichtbar.
   - Alle weiteren spielerischen Attribute werden in einer kompakten zweiten Zeile je Spieler dargestellt.
   - Abkürzungen und Tooltips halten die Darstellung trotz der zusätzlichen Werte übersichtlich.
+  - Die zweite Attributzeile ist rechtsbündig ausgerichtet, damit sie optisch eindeutig dem jeweiligen Spieler zugeordnet werden kann.
   - Die Zusatzwerte brechen auf kleinen Bildschirmen automatisch auf mehrere Zeilen um; horizontales Scrollen ist nicht erforderlich.
   - Talent, Persönlichkeit und Traits werden ausschließlich beim eigenen Verein angezeigt.
 

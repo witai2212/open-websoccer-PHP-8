@@ -1,12 +1,16 @@
-# CM23 Task List | 2026-08-26 | Revision 8
+# CM23 Task List | 2026-08-26 | Revision 9
 Open Tasks:
-1012: Kader ansicht
-in ?page=team&id=xyz sieht man bei den Spieler nur die werte stärke, technik, frische, konditin, zufriedenheit + alter + ausfall.
-Es gibt aber wesentlich mehr attribute. kann man die alle klever auf der kleinen Fläche darstellen, sodass es noch lesbar und übersichtlich ist?
 
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+1012: Kaderansicht
+  - Die bisherigen Kernwerte bleiben direkt in der Spielertabelle sichtbar.
+  - Alle weiteren spielerischen Attribute werden in einer kompakten zweiten Zeile je Spieler dargestellt.
+  - Abkürzungen und Tooltips halten die Darstellung trotz der zusätzlichen Werte übersichtlich.
+  - Die Zusatzwerte brechen auf kleinen Bildschirmen automatisch auf mehrere Zeilen um; horizontales Scrollen ist nicht erforderlich.
+  - Talent, Persönlichkeit und Traits werden ausschließlich beim eigenen Verein angezeigt.
+
 1011: w_... Werte auf 0 bis 100 begrenzen
   - Alle w_*-Felder der Spielertabelle werden automatisch auf den Wertebereich 0 bis 100 begrenzt.
   - Werte über 100 werden auf 100, Werte unter 0 auf 0 gesetzt.
@@ -72,4 +76,3 @@ stats shall be underligned and supported by graphs, lines etc.
 1001: Pokal:
   - Vergleiche internationale Pokale mit nationalen (?page=cups). Die Nationalen Pokale sollten in der view ähnlich aufgebaut sein.
     - aktuelle übersicht, teilnehmer, runden, titelträger, mein verein, letzte ergebnissse, nächste spiele, usw.
-

@@ -8,4 +8,4 @@ every newly transmitted file to github shall contain date and a revision in a co
 each time document has been udated or revised, the revision shall be incremented.
 nach fertigstellung/änderung, immer neue odergeänderte dateien als zip zur verfügung stellen.
 
-gut URL: https://github.com/witai2212/open-websoccer-PHP-8
+github URL: https://github.com/witai2212/open-websoccer-PHP-8

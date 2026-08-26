@@ -1,5 +1,5 @@
 
-{# CM23 Task 1012 | 2026-08-26 | Revision 1 #}
+{# CM23 Task 1012 | 2026-08-26 | Revision 2 #}
 {% macro teamlistItem(player, showPersonality, showTraits, showTalent) %}
 	{% import _self as playerlists %}
 	{% set detailColumnCount = 4 %}
@@ -56,7 +56,7 @@
 			{% if env.getConfig("hide_strength_attributes") != "1" %}
 			<tr class="player-attribute-details">
 				<td colspan="{{ detailColumnCount }}" style="padding-top: 3px; padding-bottom: 7px;">
-					<div style="display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 11px; line-height: 18px;">
+					<div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 10px; font-size: 11px; line-height: 18px; text-align: right;">
 						<span title="{{ i18n.getMessage('entity_player_w_passing') }}"><strong>{{ i18n.getMessage('entity_player_w_passing_abbrev') }}</strong> {{ player.strength_passing }}</span>
 						<span title="{{ i18n.getMessage('entity_player_w_shooting') }}"><strong>{{ i18n.getMessage('entity_player_w_shooting_abbrev') }}</strong> {{ player.strength_shooting }}</span>
 						<span title="{{ i18n.getMessage('entity_player_w_heading') }}"><strong>{{ i18n.getMessage('entity_player_w_heading_abbrev') }}</strong> {{ player.strength_heading }}</span>

@@ -7,6 +7,10 @@ zu prüfen: wenn ich aktien im depo habe mit einem wert x und neue aktien vom gl
 bisher freitag - Dienstag liga spiele, dienstag nationale pokalspiele, mi-do internationale pokalspiel
 es sollte darauf geachtet werden, dass besonders bei den liga- und nationalen pokalen, diese spiele nicht alle zu gleichen uhrzeit stattfinden.
 wenn wir von einer höchstzahl von 1.000 spielen pro spieltag ausgehen, dann macht es keinen sinn dass diese all um 11:00 stattfinden. es muss dann so sein dass diese um 09:00 beginnen und um 16:00 enden.
+
+1016: aufstellung
+User kann bisher zwischen 3 möglichkeiten bei der automatischen aufstellung wählen. Es sollte noch eine 4. dazukommen. "junge spieler", damit immer die jüngsten pro position automatisch aufgestellt werden.
+Gerne noch weitere Vorschläge.
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
 1013: User salary. Users have a salry. This shall be paid to users account (konto/budget) every matchday. and deducted from clubs budget, shown in finances....

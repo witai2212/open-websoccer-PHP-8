@@ -112,7 +112,7 @@ class FormationDataService {
 	 * @param boolean $isNationalteam TRUE if team is a national team.
 	 * @return array array of players. Each player is an array with keys {id, position}.
 	 */
-	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	// CM23 | 2026-08-31 | Revision 2 | Task 1016
 	public static function getFormationProposalForTeamId(WebSoccer $websoccer, DbConnection $db, $teamId, $setupDefense, 
 			$setupDM, $setupMidfield, $setupOM, $setupStriker, $setupOutsideforward, $sortColumn, $sortDirection = 'DESC', 
 			$isNationalteam = FALSE, $isCupMatch = FALSE) {
@@ -132,7 +132,7 @@ class FormationDataService {
 		}
 		
 		if (!$isNationalteam) {
-			$columns = 'id,position,position_main,position_second,w_staerke,w_frische,w_zufriedenheit,w_talent,geburtstag,note_last,note_schnitt';
+			$columns = 'id,position,position_main,position_second,w_staerke,w_frische,w_zufriedenheit,w_talent,TIMESTAMPDIFF(YEAR,geburtstag,CURDATE()) AS age_years,note_last,note_schnitt';
 			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
 			$whereCondition = 'verein_id = %d AND gesperrt';
 			if ($isCupMatch) {
@@ -142,7 +142,7 @@ class FormationDataService {
 		} else {
 			$columns = 'P.id AS id,P.position AS position,P.position_main AS position_main,P.position_second AS position_second,'
 					. 'P.w_staerke AS w_staerke,P.w_frische AS w_frische,P.w_zufriedenheit AS w_zufriedenheit,'
-					. 'P.w_talent AS w_talent,P.geburtstag AS geburtstag,P.note_last AS note_last,P.note_schnitt AS note_schnitt';
+					. 'P.w_talent AS w_talent,TIMESTAMPDIFF(YEAR,P.geburtstag,CURDATE()) AS age_years,P.note_last AS note_last,P.note_schnitt AS note_schnitt';
 			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
 			$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_nationalplayer AS NP ON NP.player_id = P.id';
 			$whereCondition = 'NP.team_id = %d AND P.gesperrt_nationalteam = 0 AND P.verletzt = 0 AND P.status = 1';
@@ -275,7 +275,7 @@ class FormationDataService {
 		return $players;
 	}
 	
-	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	// CM23 | 2026-08-31 | Revision 2 | Task 1016
 	private static function _compareProposalPlayers($playerA, $playerB, $selectionMode, $recentMinutes) {
 		$compareValues = array();
 		
@@ -307,16 +307,10 @@ class FormationDataService {
 			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
 		} elseif ($selectionMode == 'developtalent') {
 			$compareValues[] = array((int) $playerA['w_talent'], (int) $playerB['w_talent'], 'DESC');
-			$birthCompare = strcmp($playerB['geburtstag'], $playerA['geburtstag']);
-			if ($birthCompare != 0) {
-				return $birthCompare;
-			}
+			$compareValues[] = array((int) $playerA['age_years'], (int) $playerB['age_years'], 'ASC');
 			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
 		} elseif ($selectionMode == 'youngest') {
-			$birthCompare = strcmp($playerB['geburtstag'], $playerA['geburtstag']);
-			if ($birthCompare != 0) {
-				return $birthCompare;
-			}
+			$compareValues[] = array((int) $playerA['age_years'], (int) $playerB['age_years'], 'ASC');
 			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
 		} elseif ($selectionMode == 'freshest') {
 			$compareValues[] = array((float) $playerA['w_frische'], (float) $playerB['w_frische'], 'DESC');
@@ -341,7 +335,7 @@ class FormationDataService {
 		return ((int) $playerA['id'] <=> (int) $playerB['id']);
 	}
 	
-	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	// CM23 | 2026-08-31 | Revision 2 | Task 1016
 	private static function _getRecentCompetitiveMinutes(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		$matchIds = array();
 		$matches = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_spiel',
@@ -370,7 +364,7 @@ class FormationDataService {
 		return $minutes;
 	}
 	
-	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	// CM23 | 2026-08-31 | Revision 2 | Task 1016
 	private static function _getGenericPositions($genericPosition) {
 		if ($genericPosition == 'Torwart') {
 			return array('T');
@@ -384,7 +378,7 @@ class FormationDataService {
 		return array('LS', 'MS', 'RS');
 	}
 	
-	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	// CM23 | 2026-08-31 | Revision 2 | Task 1016
 	private static function _getPositionFit($player, $targetPosition) {
 		if ($player['position_main'] == $targetPosition) {
 			return 0;
@@ -403,7 +397,7 @@ class FormationDataService {
 		return 4;
 	}
 	
-	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	// CM23 | 2026-08-31 | Revision 2 | Task 1016
 	private static function _getPositionArea($position) {
 		if ($position == 'T') {
 			return 'goalkeeper';

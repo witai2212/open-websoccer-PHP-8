@@ -20,6 +20,8 @@
 
 ******************************************************/
 
+// CM23 | 2026-08-31 | Revision 1 | Task 1016
+
 /**
  * Provides data for the match formation form.
  */
@@ -135,6 +137,8 @@ class FormationModel implements IModel {
 				$sortColumn = 'w_staerke';
 			} elseif ($criteria == 'freshest') {
 				$sortColumn = 'w_frische';
+			} elseif ($criteria == 'youngest') {
+				$sortColumn = 'geburtstag';
 			} else {
 				$sortColumn = 'w_zufriedenheit';
 			}

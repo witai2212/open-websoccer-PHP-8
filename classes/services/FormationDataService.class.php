@@ -112,13 +112,27 @@ class FormationDataService {
 	 * @param boolean $isNationalteam TRUE if team is a national team.
 	 * @return array array of players. Each player is an array with keys {id, position}.
 	 */
+	// CM23 | 2026-08-31 | Revision 1 | Task 1016
 	public static function getFormationProposalForTeamId(WebSoccer $websoccer, DbConnection $db, $teamId, $setupDefense, 
 			$setupDM, $setupMidfield, $setupOM, $setupStriker, $setupOutsideforward, $sortColumn, $sortDirection = 'DESC', 
 			$isNationalteam = FALSE, $isCupMatch = FALSE) {
-				
-		$columns = 'id,position,position_main,position_second';
+		
+		$selectionMode = $websoccer->getRequestParameter('preselect');
+		$supportedModes = array('strongest', 'freshest', 'motivated', 'youngest', 'bestform', 'savefitness', 'developtalent', 'rotation');
+		if (!in_array($selectionMode, $supportedModes, TRUE)) {
+			if ($sortColumn == 'w_frische') {
+				$selectionMode = 'freshest';
+			} elseif ($sortColumn == 'geburtstag') {
+				$selectionMode = 'youngest';
+			} elseif ($sortColumn == 'w_zufriedenheit') {
+				$selectionMode = 'motivated';
+			} else {
+				$selectionMode = 'strongest';
+			}
+		}
 		
 		if (!$isNationalteam) {
+			$columns = 'id,position,position_main,position_second,w_staerke,w_frische,w_zufriedenheit,w_talent,geburtstag,note_last,note_schnitt';
 			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
 			$whereCondition = 'verein_id = %d AND gesperrt';
 			if ($isCupMatch) {
@@ -126,14 +140,30 @@ class FormationDataService {
 			}
 			$whereCondition .= ' = 0 AND verletzt = 0 AND status = 1';
 		} else {
+			$columns = 'P.id AS id,P.position AS position,P.position_main AS position_main,P.position_second AS position_second,'
+					. 'P.w_staerke AS w_staerke,P.w_frische AS w_frische,P.w_zufriedenheit AS w_zufriedenheit,'
+					. 'P.w_talent AS w_talent,P.geburtstag AS geburtstag,P.note_last AS note_last,P.note_schnitt AS note_schnitt';
 			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
 			$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_nationalplayer AS NP ON NP.player_id = P.id';
-			$whereCondition = 'NP.team_id = %d AND gesperrt_nationalteam = 0 AND verletzt = 0 AND status = 1';
+			$whereCondition = 'NP.team_id = %d AND P.gesperrt_nationalteam = 0 AND P.verletzt = 0 AND P.status = 1';
 		}
 		
-		$whereCondition .=	' ORDER BY '. $sortColumn . ' ' . $sortDirection;
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $teamId);
-
+		$availablePlayers = array();
+		while ($player = $result->fetch_array()) {
+			$availablePlayers[] = $player;
+		}
+		$result->free();
+		
+		$recentMinutes = array();
+		if ($selectionMode == 'savefitness' || $selectionMode == 'rotation') {
+			$recentMinutes = self::_getRecentCompetitiveMinutes($websoccer, $db, $teamId);
+		}
+		
+		usort($availablePlayers, function($playerA, $playerB) use ($selectionMode, $recentMinutes) {
+			return self::_compareProposalPlayers($playerA, $playerB, $selectionMode, $recentMinutes);
+		});
+		
 		// determine open positions
 		$openPositions['T'] = 1;
 		
@@ -148,7 +178,7 @@ class FormationDataService {
 			$openPositions['IV'] = $setupDefense - 2;
 		}
 		
-		// defensive midfield positions
+		// defensive/offensive midfield positions
 		$openPositions['DM'] = $setupDM;
 		$openPositions['OM'] = $setupOM;
 		
@@ -172,10 +202,7 @@ class FormationDataService {
 			$openPositions['RM'] = 0;
 		}
 		
-		// strikers
 		$openPositions['MS'] = $setupStriker;
-		
-		// outside forward
 		if ($setupOutsideforward == 2) {
 			$openPositions['LS'] = 1;
 			$openPositions['RS'] = 1;
@@ -186,62 +213,211 @@ class FormationDataService {
 		
 		$players = array();
 		$unusedPlayers = array();
-		while ($player = $result->fetch_array()) {
-			
+		foreach ($availablePlayers as $player) {
 			$added = FALSE;
 			
 			// handle players without main position (all-rounder)
 			if (!strlen($player['position_main'])) {
-				
-				if ($player['position'] == 'Torwart') {
-					$possiblePositions = array('T');
-				} elseif ($player['position'] == 'Abwehr') {
-					$possiblePositions = array('LV', 'IV', 'RV');
-				} elseif ($player['position'] == 'Mittelfeld') {
-					$possiblePositions = array('RM', 'ZM', 'LM', 'RM', 'DM', 'OM');
-				} else {
-					$possiblePositions = array('LS', 'MS', 'RS');
-				}
-				
-				foreach($possiblePositions as $possiblePosition) {
-					if ($openPositions[$possiblePosition]) {
-						$openPositions[$possiblePosition] = $openPositions[$possiblePosition] - 1;
+				$possiblePositions = self::_getGenericPositions($player['position']);
+				foreach ($possiblePositions as $possiblePosition) {
+					if (isset($openPositions[$possiblePosition]) && $openPositions[$possiblePosition]) {
+						$openPositions[$possiblePosition]--;
 						$players[] = array('id' => $player['id'], 'position' => $possiblePosition);
 						$added = TRUE;
 						break;
 					}
 				}
-				
-				// add at main position
-			} elseif (strlen($player['position_main']) && isset($openPositions[$player['position_main']]) && $openPositions[$player['position_main']]) {
-				$openPositions[$player['position_main']] = $openPositions[$player['position_main']] - 1;
+			} elseif (isset($openPositions[$player['position_main']]) && $openPositions[$player['position_main']]) {
+				$openPositions[$player['position_main']]--;
 				$players[] = array('id' => $player['id'], 'position' => $player['position_main']);
 				$added = TRUE;
 			}
 			
-			// remember player for later if no space on his main position. Might be used with his secondary position, if he has any.
-			if (!$added && strlen($player['position_second'])) {
+			if (!$added) {
 				$unusedPlayers[] = $player;
 			}
-			
 		}
-		$result->free();
 		
-		// there might not be enough players with matching main positions, hence use players with secondary position
+		// Use secondary positions before broader fallback positions.
 		foreach ($openPositions as $position => $requiredPlayers) {
 			for ($i = 0; $i < $requiredPlayers; $i++) {
-				for ($playerIndex = 0; $playerIndex < count($unusedPlayers); $playerIndex++) {
-					if ($unusedPlayer[$playerIndex]['position_second'] == $position) {
-						$players[] = array('id' => $unusedPlayer[$playerIndex]['id'], 'position' => $unusedPlayer[$playerIndex]['position_second']);
-						unset($unusedPlayer[$playerIndex]);
+				foreach ($unusedPlayers as $playerIndex => $unusedPlayer) {
+					if ($unusedPlayer['position_second'] == $position) {
+						$players[] = array('id' => $unusedPlayer['id'], 'position' => $position);
+						unset($unusedPlayers[$playerIndex]);
+						$openPositions[$position]--;
 						break;
 					}
-					
 				}
 			}
 		}
 		
+		// Fill remaining slots with the best available positional fit. This also guarantees a goalkeeper slot when enough players exist.
+		foreach ($openPositions as $position => $requiredPlayers) {
+			for ($i = 0; $i < $requiredPlayers; $i++) {
+				$bestPlayerIndex = NULL;
+				$bestFit = PHP_INT_MAX;
+				foreach ($unusedPlayers as $playerIndex => $unusedPlayer) {
+					$fit = self::_getPositionFit($unusedPlayer, $position);
+					if ($fit < $bestFit) {
+						$bestFit = $fit;
+						$bestPlayerIndex = $playerIndex;
+					}
+				}
+				if ($bestPlayerIndex === NULL) {
+					break;
+				}
+				$players[] = array('id' => $unusedPlayers[$bestPlayerIndex]['id'], 'position' => $position);
+				unset($unusedPlayers[$bestPlayerIndex]);
+			}
+		}
+		
 		return $players;
+	}
+	
+	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	private static function _compareProposalPlayers($playerA, $playerB, $selectionMode, $recentMinutes) {
+		$compareValues = array();
+		
+		if ($selectionMode == 'bestform') {
+			$aLast = (float) $playerA['note_last'];
+			$bLast = (float) $playerB['note_last'];
+			if (($aLast > 0) != ($bLast > 0)) {
+				return ($aLast > 0) ? -1 : 1;
+			}
+			if ($aLast > 0 && $aLast != $bLast) {
+				return ($aLast < $bLast) ? -1 : 1;
+			}
+			$aAverage = (float) $playerA['note_schnitt'];
+			$bAverage = (float) $playerB['note_schnitt'];
+			if (($aAverage > 0) != ($bAverage > 0)) {
+				return ($aAverage > 0) ? -1 : 1;
+			}
+			if ($aAverage > 0 && $aAverage != $bAverage) {
+				return ($aAverage < $bAverage) ? -1 : 1;
+			}
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		} elseif ($selectionMode == 'savefitness') {
+			$compareValues[] = array((float) $playerA['w_frische'], (float) $playerB['w_frische'], 'DESC');
+			$compareValues[] = array((int) ($recentMinutes[$playerA['id']] ?? 0), (int) ($recentMinutes[$playerB['id']] ?? 0), 'ASC');
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		} elseif ($selectionMode == 'rotation') {
+			$compareValues[] = array((int) ($recentMinutes[$playerA['id']] ?? 0), (int) ($recentMinutes[$playerB['id']] ?? 0), 'ASC');
+			$compareValues[] = array((float) $playerA['w_frische'], (float) $playerB['w_frische'], 'DESC');
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		} elseif ($selectionMode == 'developtalent') {
+			$compareValues[] = array((int) $playerA['w_talent'], (int) $playerB['w_talent'], 'DESC');
+			$birthCompare = strcmp($playerB['geburtstag'], $playerA['geburtstag']);
+			if ($birthCompare != 0) {
+				return $birthCompare;
+			}
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		} elseif ($selectionMode == 'youngest') {
+			$birthCompare = strcmp($playerB['geburtstag'], $playerA['geburtstag']);
+			if ($birthCompare != 0) {
+				return $birthCompare;
+			}
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		} elseif ($selectionMode == 'freshest') {
+			$compareValues[] = array((float) $playerA['w_frische'], (float) $playerB['w_frische'], 'DESC');
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		} elseif ($selectionMode == 'motivated') {
+			$compareValues[] = array((float) $playerA['w_zufriedenheit'], (float) $playerB['w_zufriedenheit'], 'DESC');
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		} else {
+			$compareValues[] = array((float) $playerA['w_staerke'], (float) $playerB['w_staerke'], 'DESC');
+		}
+		
+		foreach ($compareValues as $values) {
+			if ($values[0] == $values[1]) {
+				continue;
+			}
+			if ($values[2] == 'ASC') {
+				return ($values[0] < $values[1]) ? -1 : 1;
+			}
+			return ($values[0] > $values[1]) ? -1 : 1;
+		}
+		
+		return ((int) $playerA['id'] <=> (int) $playerB['id']);
+	}
+	
+	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	private static function _getRecentCompetitiveMinutes(WebSoccer $websoccer, DbConnection $db, $teamId) {
+		$matchIds = array();
+		$matches = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_spiel',
+				"berechnet = '1' AND spieltyp <> 'Freundschaft' AND (home_verein = %d OR gast_verein = %d) ORDER BY datum DESC, id DESC",
+				array($teamId, $teamId), 5);
+		while ($match = $matches->fetch_array()) {
+			$matchIds[] = (int) $match['id'];
+		}
+		$matches->free();
+		
+		if (!count($matchIds)) {
+			return array();
+		}
+		
+		$placeholders = implode(',', array_fill(0, count($matchIds), '%d'));
+		$parameters = array_merge(array($teamId), $matchIds);
+		$minutes = array();
+		$result = $db->querySelect('spieler_id,SUM(minuten_gespielt) AS recent_minutes',
+				$websoccer->getConfig('db_prefix') . '_spiel_berechnung',
+				'team_id = %d AND spiel_id IN (' . $placeholders . ') GROUP BY spieler_id', $parameters);
+		while ($playerMinutes = $result->fetch_array()) {
+			$minutes[(int) $playerMinutes['spieler_id']] = (int) $playerMinutes['recent_minutes'];
+		}
+		$result->free();
+		
+		return $minutes;
+	}
+	
+	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	private static function _getGenericPositions($genericPosition) {
+		if ($genericPosition == 'Torwart') {
+			return array('T');
+		}
+		if ($genericPosition == 'Abwehr') {
+			return array('LV', 'IV', 'RV');
+		}
+		if ($genericPosition == 'Mittelfeld') {
+			return array('RM', 'ZM', 'LM', 'RM', 'DM', 'OM');
+		}
+		return array('LS', 'MS', 'RS');
+	}
+	
+	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	private static function _getPositionFit($player, $targetPosition) {
+		if ($player['position_main'] == $targetPosition) {
+			return 0;
+		}
+		if ($player['position_second'] == $targetPosition) {
+			return 1;
+		}
+		
+		$targetArea = self::_getPositionArea($targetPosition);
+		if (!strlen($player['position_main']) && in_array($targetPosition, self::_getGenericPositions($player['position']), TRUE)) {
+			return 2;
+		}
+		if (self::_getPositionArea($player['position_main']) == $targetArea || self::_getPositionArea($player['position_second']) == $targetArea) {
+			return 3;
+		}
+		return 4;
+	}
+	
+	// CM23 | 2026-08-31 | Revision 1 | Task 1016
+	private static function _getPositionArea($position) {
+		if ($position == 'T') {
+			return 'goalkeeper';
+		}
+		if (in_array($position, array('LV', 'IV', 'RV'), TRUE)) {
+			return 'defense';
+		}
+		if (in_array($position, array('LM', 'ZM', 'RM', 'DM', 'OM'), TRUE)) {
+			return 'midfield';
+		}
+		if (in_array($position, array('LS', 'MS', 'RS'), TRUE)) {
+			return 'attack';
+		}
+		return '';
 	}
 	
 }

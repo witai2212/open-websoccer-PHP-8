@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
-<!-- CM23 | 2026-08-31 | Revision 1 | Task 1016 -->
+<!-- CM23 | 2026-08-31 | Revision 2 | Task 1016 -->
 <messages>
     <message id="formation_navlabel">Aufstellung</message>
     <message id="formation_title">Aufstellung und Taktik</message>
@@ -67,6 +67,10 @@
     <message id="formation_setup_freshest">Frischeste Spieler</message>
     <message id="formation_setup_motivated">Motivierteste Spieler</message>
     <message id="formation_setup_youngest">Junge Spieler</message>
+    <message id="formation_setup_bestform">Beste Form</message>
+    <message id="formation_setup_savefitness">Fitness schonen</message>
+    <message id="formation_setup_developtalent">Talente fördern</message>
+    <message id="formation_setup_rotation">Rotation</message>
     
     <message id="formation_setup_altered_warn_title">Die angegebene Formation wurde vom System angepasst!</message>
     <message id="formation_setup_altered_warn_details">Ihre gewählte Formation umfasst nicht genau 10 Feldspieler, weshalb das System Ihre Auswahl automatisch korrigiert hat.</message>

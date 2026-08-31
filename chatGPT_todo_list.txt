@@ -1,4 +1,4 @@
-# CM23 Task List | 2026-08-26 | Revision 13
+# CM23 Task List | 2026-08-31 | Revision 14
 Open Tasks:
 1018: stadionumfeld
 - gebäude welche noc gebaut werden sollten, sollen als tabelle dargestellt werden und mehr infos zu kosten, einnahmen und eigenschaften. mit kleinen Logos (gerne generieren im zweiten schritt)
@@ -66,11 +66,14 @@ bisher freitag - Dienstag liga spiele, dienstag nationale pokalspiele, mi-do int
 es sollte darauf geachtet werden, dass besonders bei den liga- und nationalen pokalen, diese spiele nicht alle zu gleichen uhrzeit stattfinden.
 wenn wir von einer höchstzahl von 1.000 spielen pro spieltag ausgehen, dann macht es keinen sinn dass diese all um 11:00 stattfinden. es muss dann so sein dass diese um 09:00 beginnen und um 16:00 enden.
 
-1016: aufstellung
-User kann bisher zwischen 3 möglichkeiten bei der automatischen aufstellung wählen. Es sollte noch eine 4. dazukommen. "junge spieler", damit immer die jüngsten pro position automatisch aufgestellt werden.
-Gerne noch weitere Vorschläge.
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+1016: Aufstellung
+  - Die automatische Aufstellung bietet zusätzlich die Auswahl "Junge Spieler".
+  - Dabei werden die jüngsten verfügbaren Spieler passend zur gewählten Formation und Position bevorzugt.
+  - Gesperrte, verletzte und nicht aktive Spieler bleiben wie bei den bestehenden Automatiken ausgeschlossen.
+  - Die bestehende Formation wird nicht verändert; nur die Spielerbesetzung wird automatisch gewählt.
+
 1014: Aktiendepot
   - Der aktuelle Portfolio-Wert wird weiterhin aus aktuellem Kurs × Gesamtbestand berechnet.
   - Der durchschnittliche Kaufpreis wird mengen-gewichtet berechnet.

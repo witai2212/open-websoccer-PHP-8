@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- CM23 | 2026-08-31 | Revision 1 | Task 1016 -->
 <messages>
     <message id="formation_navlabel">Formation</message>
     <message id="formation_title">Formation and tactics</message>
@@ -65,6 +66,11 @@
     <message id="formation_setup_strongest">Strongest players</message>
     <message id="formation_setup_freshest">Freshest players</message>
     <message id="formation_setup_motivated">Most motivated players</message>
+    <message id="formation_setup_youngest">Young players</message>
+    <message id="formation_setup_bestform">Best form</message>
+    <message id="formation_setup_savefitness">Protect fitness</message>
+    <message id="formation_setup_developtalent">Develop talents</message>
+    <message id="formation_setup_rotation">Rotation</message>
     
     <message id="formation_setup_altered_warn_title">The specified formation was adjusted by the system!</message>
     <message id="formation_setup_altered_warn_details">Your selected formation does not contain exactly 10 outfield players, so the system corrected your selection automatically.</message>

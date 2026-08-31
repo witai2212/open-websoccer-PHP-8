@@ -58,7 +58,8 @@ INSERT INTO `cm23_stadiumbuilding` (`id`, `name`, `description`, `picture`, `req
 
 
 1017: standard line-up/formation of CPU clubs
-there should be a pre-defined formation per CPU club (e.g. 4-4-2, 3-4-3) this should be then taken as standard for automatic lineup and transfer philisophy of cpu clubs. Selling and buying players, individually per club then.
+- there should be a pre-defined formation per CPU club (e.g. 4-4-2, 3-4-3) this should be then taken as standard for automatic lineup and transfer philisophy of cpu clubs. Selling and buying players, individually per club then.
+- e.g. cm23_verein.formation
 
 1015: spielplan generierung.
 bisher freitag - Dienstag liga spiele, dienstag nationale pokalspiele, mi-do internationale pokalspiel

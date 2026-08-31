@@ -1,5 +1,62 @@
 # CM23 Task List | 2026-08-26 | Revision 13
 Open Tasks:
+1018: stadionumfeld
+- gebäude welche noc gebaut werden sollten, sollen als tabelle dargestellt werden und mehr infos zu kosten, einnahmen und eigenschaften. mit kleinen Logos (gerne generieren im zweiten schritt)
+- gerne vorschlag unterbreiten. hier bisherige:
+CREATE TABLE `cm23_stadiumbuilding` (
+  `id` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  `required_building_id` int(10) DEFAULT NULL,
+  `costs` int(10) NOT NULL,
+  `premiumfee` int(10) NOT NULL DEFAULT 0,
+  `construction_time_days` int(5) NOT NULL DEFAULT 0,
+  `effect_training` varchar(5) NOT NULL DEFAULT '0.000',
+  `effect_youthscouting` tinyint(3) NOT NULL DEFAULT 0,
+  `effect_tickets` tinyint(3) NOT NULL DEFAULT 0,
+  `effect_fanpopularity` tinyint(3) NOT NULL DEFAULT 0,
+  `effect_injury` tinyint(3) NOT NULL DEFAULT 0,
+  `effect_income` int(10) NOT NULL DEFAULT 0,
+  `effect_merchandising` int(10) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Daten für Tabelle `cm23_stadiumbuilding`
+--
+
+INSERT INTO `cm23_stadiumbuilding` (`id`, `name`, `description`, `picture`, `required_building_id`, `costs`, `premiumfee`, `construction_time_days`, `effect_training`, `effect_youthscouting`, `effect_tickets`, `effect_fanpopularity`, `effect_injury`, `effect_income`, `effect_merchandising`) VALUES
+(1, 'Bürogebäude', 'Erwirtschaftet Mieteinnahmen', '4e16c05663792c2f719f10f971dc7a02.png', NULL, 6250000, 0, 210, '0.000', 0, 0, 10, 0, 31250, 0),
+(2, 'Bürokomplex', 'Erwirtschaftet Mieteinnahmen', '07825d2936b521b50a5069261d667ebe.png', NULL, 15000000, 0, 300, '0.000', 0, 0, 10, 0, 75000, 0),
+(3, 'Hochhaus', 'Erwirtschaftet Mieteinnahmen', '6dbb9bd1936211ad866e4f0b7cd3354e.png', NULL, 50000000, 0, 500, '0.000', 0, 0, 10, 0, 250000, 0),
+(4, 'kleiner Fanshop', 'Verkauf von Merchandising Artikeln', '7726263e025449708ae27396918485b5.png', NULL, 4375000, 0, 150, '0.000', 0, 5, 2, 0, 21875, 0),
+(5, 'grosser Fanshop', 'Verkauf von Merchandising Artikeln', 'e123d167eda43ea9964b0d521171a43b.png', 4, 8750000, 0, 300, '0.000', 0, 5, 2, 0, 43750, 0),
+(6, 'Ticketshop', 'Verkauf von Tickets', '5a8b9cb171c0cb7bf0fbf86bd513dc33.png', NULL, 21875, 0, 25, '0.000', 0, 5, 0, 0, 109, 0),
+(7, 'Würstchenbude', NULL, '8457ba91b2aef7495925a15154c3cd92.png', NULL, 20000, 0, 25, '0.000', 0, 1, 1, 0, 100, 0),
+(8, 'Bierzelt', 'Getränkeversorgung vor, während und nach dem Spiel', '0a64aad0089d8647fe34fa2cf6e81d79.png', NULL, 50000, 0, 50, '0.000', 0, 2, 1, 0, 250, 0),
+(9, 'Pommesbude', 'Verkauf von Burger, Pommes', '715f76da33ea44d65c070cfaec9902ec.png', NULL, 25000, 0, 30, '0.000', 0, 2, 1, 0, 125, 0),
+(10, 'Kneipe', 'Fankneipe und Treffpunkt', '8edca625acff90d5ccabc1a98b7fe395.png', NULL, 75000, 0, 60, '0.000', 0, 2, 5, 0, 375, 0),
+(11, 'Nachwuchsleistungszentrum', 'Steigert die Stärke des gescouteten Nachwuchses', 'f84412907f70b612e5a2be87989defbb.jpg', NULL, 7500000, 0, 250, '0.000', 10, 0, 5, 0, 0, 0),
+(12, 'kleines Fitness Studio', 'Damit alles ausdefiniert ist, wenn im Mai die Schwimmbäder aufmachen.', 'dcc52c228fc1c3261e499ac71ac6c143.png', NULL, 4000000, 0, 45, '0.500', 0, 0, 0, 0, 0, 0),
+(13, 'grosses Fitnessstudio', 'Damit noch mehr ausdefiniert ist.', '452b8a8a5a1b4630a737c44523895656.png', 12, 8000000, 0, 90, '0.500', 0, 0, 0, 0, 0, 0),
+(14, 'Dr. Werner Mang', 'Reduziert die Verletzungsdauer', '4feaf044100ab15e0ce8b8a324ff83ca.png', 14, 5000000, 0, 55, '0.000', 0, 0, 0, 1, 0, 0),
+(15, 'Uni Klinik', 'Heilt so ziemlich alles was es gibt', '704026193641db2cbed319795bf95011.png', NULL, 20000000, 0, 300, '0.000', 0, 0, 0, 2, 0, 0),
+(16, 'Biertempel', 'Bier, gibts hier!', 'a7abea5895335325609963bb83085a03.png', 10, 10000000, 0, 500, '0.000', 0, 5, 5, 0, 50000, 0),
+(17, 'Trainingsgelände', 'Verbessert die Fitnes', '098bcdd4686307e08ab7efb0d8d3e0e8.png', NULL, 100000, 0, 25, '5', 0, 0, 0, 0, 0, 0),
+(18, 'Sauerstoffzelt', 'Verbessert die Fitness', '8c8c3735f0b4efaa4412a7305af5af0e.png', 17, 250000, 0, 25, '5', 0, 0, 0, 0, 1250, 0),
+(19, 'stadiumfacility_youthacademy_name', 'stadiumfacility_youthacademy_desc', NULL, NULL, 4500000, 0, 35, '0.000', 2, 0, 0, 0, 0, 0),
+(20, 'stadiumfacility_medicalcenter_name', 'stadiumfacility_medicalcenter_desc', NULL, NULL, 3500000, 0, 28, '0.000', 0, 0, 0, 1, 0, 0),
+(21, 'stadiumfacility_trainingcenter_name', 'stadiumfacility_trainingcenter_desc', NULL, NULL, 4000000, 0, 28, '0.150', 0, 0, 0, 0, 0, 0),
+(22, 'stadiumfacility_fanshop_name', 'stadiumfacility_fanshop_desc', NULL, NULL, 2500000, 0, 21, '0.000', 0, 0, 0, 0, 12500, 22),
+(23, 'stadiumfacility_mediacenter_name', 'stadiumfacility_mediacenter_desc', NULL, NULL, 2200000, 0, 21, '0.000', 0, 0, 5, 0, 11000, 0),
+(24, 'stadiumfacility_viplounge_name', 'stadiumfacility_viplounge_desc', NULL, NULL, 5000000, 0, 35, '0.000', 0, 3, 0, 0, 25000, 0),
+(25, 'stadiumfacility_pitchheating_name', 'stadiumfacility_pitchheating_desc', NULL, NULL, 1800000, 0, 14, '0.000', 0, 1, 0, 1, 0, 0),
+(26, 'stadiumfacility_scoutingoffice_name', 'stadiumfacility_scoutingoffice_desc', NULL, NULL, 3000000, 0, 24, '0.000', 1, 0, 0, 0, 0, 0),
+(27, 'Medizinisches Zentrum', 'Verbessert Regeneration und senkt Verletzungsrisiken im medizinischen Zentrum.', NULL, NULL, 2500000, 0, 21, '0.000', 0, 0, 0, 1, 0, 0);
+
+--
+
+
 1017: standard line-up/formation of CPU clubs
 there should be a pre-defined formation per CPU club (e.g. 4-4-2, 3-4-3) this should be then taken as standard for automatic lineup and transfer philisophy of cpu clubs. Selling and buying players, individually per club then.
 

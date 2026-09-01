@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
-<!-- CM23 | 2026-09-01 | Revision 1 | Task 1017 -->
+<!-- CM23 | 2026-09-01 | Revision 2 | Task 1017 -->
 <messages>
     <message id="entity_club">Verein</message>
 	<message id="entity_club_name">Name</message>
@@ -47,7 +47,7 @@
 	<message id="entity_club_last_steh">Zuschauer letztes Spiel: Stehplätze</message>
 	<message id="entity_club_last_sitz">Zuschauer letztes Spiel: Sitzplätze</message>
 	<message id="entity_club_last_haupt_steh">Zuschauer letztes Spiel: Stehplätze (Haupt)</message>
-	<message id="entity_club_last_haupt_sitz">Zuschauer letztes Spiel: Stehplätze (Haupt)</message>
+	<message id="entity_club_last_haupt_sitz">Zuschauer letztes Spiel: Sitzplätze (Haupt)</message>
 	<message id="entity_club_last_vip">Zuschauer letztes Spiel: VIP-Lounge</message>
 	<message id="entity_club_meisterschaften">Gewonnene Meisterschaften</message>
 	<message id="entity_club_st_tore">Tore (gesamt)</message>

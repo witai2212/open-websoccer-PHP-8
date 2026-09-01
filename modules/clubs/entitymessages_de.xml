@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
+<!-- CM23 | 2026-09-01 | Revision 1 | Task 1017 -->
 <messages>
     <message id="entity_club">Verein</message>
 	<message id="entity_club_name">Name</message>
 	<message id="entity_club_kurz">Kürzel</message>
 	<message id="entity_club_liga_id">Liga</message>
 	<message id="entity_club_user_id">Benutzer</message>
+	<message id="entity_club_formation">Standardformation</message>
+	<message id="entity_club_formation_help">Internes Aufstellungsformat: Abwehr-DM-Mittelfeld-OM-Sturm-Außensturm, zum Beispiel 4-0-4-0-2-0 für 4-4-2.</message>
 	<message id="entity_club_parent_club_id">Mutterverein</message>
 	<message id="entity_club_parent_club_id_help">Optionaler, nur durch Admin definierter Mutterverein. Mutter- und Partnerverein dürfen nicht in derselben Division spielen.</message>
 	<message id="entity_club_parent_club_status">Mutterverein-Status</message>
@@ -44,7 +47,7 @@
 	<message id="entity_club_last_steh">Zuschauer letztes Spiel: Stehplätze</message>
 	<message id="entity_club_last_sitz">Zuschauer letztes Spiel: Sitzplätze</message>
 	<message id="entity_club_last_haupt_steh">Zuschauer letztes Spiel: Stehplätze (Haupt)</message>
-	<message id="entity_club_last_haupt_sitz">Zuschauer letztes Spiel: Sitzplätze (Haupt)</message>
+	<message id="entity_club_last_haupt_sitz">Zuschauer letztes Spiel: Stehplätze (Haupt)</message>
 	<message id="entity_club_last_vip">Zuschauer letztes Spiel: VIP-Lounge</message>
 	<message id="entity_club_meisterschaften">Gewonnene Meisterschaften</message>
 	<message id="entity_club_st_tore">Tore (gesamt)</message>

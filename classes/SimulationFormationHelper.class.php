@@ -20,6 +20,8 @@
 
 ******************************************************/
 
+// CM23 | 2026-09-01 | Revision 1 | Task 1017
+
 /**
  * Helper functions for setting formations for the match simulation.
  * 
@@ -30,7 +32,9 @@ class SimulationFormationHelper {
 	/**
 	 * Generates a new formation for the specified team, which will be directly stored both in the database and in the internal model.
 	 * 
-	 * It is a 4-4-2 formation. It always selects the freshest players of the team.
+	 * CPU clubs use their configured standard formation when possible.
+	 * Human-controlled clubs and national teams keep the previous 4-4-2 fallback behaviour.
+	 * The freshest available players are preferred.
 	 * 
 	 * @param WebSoccer $websoccer request context.
 	 * @param DbConnection $db database connection.
@@ -71,6 +75,13 @@ class SimulationFormationHelper {
 		}
 		$columns[$ageColumn] = 'age';
 		
+		$formationQuotas = array(
+			PLAYER_POSITION_GOALY => 1,
+			PLAYER_POSITION_DEFENCE => 4,
+			PLAYER_POSITION_MIDFIELD => 4,
+			PLAYER_POSITION_STRIKER => 2
+		);
+		
 		// get players from usual team
 		if (!$team->isNationalTeam) {
 			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
@@ -94,11 +105,21 @@ class SimulationFormationHelper {
 			
 			$nation = $db->connection->escape_string($team->name);
 			$dbPrefix = $websoccer->getConfig('db_prefix');
-			$queryStr = '(SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Torwart\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 1)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Abwehr\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Mittelfeld\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Sturm\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 2)';
+			$queryStr = '(SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation .'\' AND position = \'Torwart\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 1)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation .'\' AND position = \'Abwehr\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation .'\' AND position = \'Mittelfeld\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation .'\' AND position = \'Sturm\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 2)';
 			$result = $db->executeQuery($queryStr);
+		}
+		
+		$playerInfos = array();
+		while ($playerinfo = $result->fetch_array()) {
+			$playerInfos[] = $playerinfo;
+		}
+		$result->free();
+		
+		if (!$team->isNationalTeam) {
+			$formationQuotas = self::getFormationQuotasForClub($websoccer, $db, $team->id, $playerInfos);
 		}
 		
 		$lvExists = FALSE;
@@ -108,25 +129,18 @@ class SimulationFormationHelper {
 		$ivPlayers = 0;
 		$zmPlayers = 0;
 		
-		while ($playerinfo = $result->fetch_array()) {
+		foreach ($playerInfos as $playerinfo) {
 			$position = $playerinfo['position'];
 			
-			// generate a 4-4-2 formation
-			if ($position == PLAYER_POSITION_GOALY 
-					&& isset($team->positionsAndPlayers[PLAYER_POSITION_GOALY])
-					&& count($team->positionsAndPlayers[PLAYER_POSITION_GOALY]) == 1
-					|| $position == PLAYER_POSITION_DEFENCE 
-						&& isset($team->positionsAndPlayers[PLAYER_POSITION_DEFENCE])
-						&& count($team->positionsAndPlayers[PLAYER_POSITION_DEFENCE]) >= 4
-					|| $position == PLAYER_POSITION_MIDFIELD 
-						&& isset($team->positionsAndPlayers[PLAYER_POSITION_MIDFIELD])
-						&& count($team->positionsAndPlayers[PLAYER_POSITION_MIDFIELD]) >= 4
-					|| $position == PLAYER_POSITION_STRIKER
-						&& isset($team->positionsAndPlayers[PLAYER_POSITION_STRIKER])
-						&& count($team->positionsAndPlayers[PLAYER_POSITION_STRIKER]) >= 2) {
+			if (isset($formationQuotas[$position])
+					&& isset($team->positionsAndPlayers[$position])
+					&& count($team->positionsAndPlayers[$position]) >= $formationQuotas[$position]) {
 				continue;
 			}
 			
+			if (!isset($formationQuotas[$position]) || $formationQuotas[$position] <= 0) {
+				continue;
+			}
 			
 			$mainPosition = $playerinfo['mainPosition'];
 			//prevent double LV/RV/LM/RM
@@ -201,11 +215,126 @@ class SimulationFormationHelper {
 				$player->name = $playerinfo['firstName'] . ' ' . $playerinfo['lastName'];
 			}
 			
-			
 			$team->positionsAndPlayers[$player->position][] = $player;
 			SimulationStateHelper::createSimulationRecord($websoccer, $db, $matchId, $player);
 		}
+	}
+	
+	/**
+	 * Returns the broad-position quotas for a club.
+	 * Only CPU clubs use the configured club formation.
+	 */
+	private static function getFormationQuotasForClub(WebSoccer $websoccer, DbConnection $db, $clubId, $playerInfos) {
+		$defaultQuotas = array(
+			PLAYER_POSITION_GOALY => 1,
+			PLAYER_POSITION_DEFENCE => 4,
+			PLAYER_POSITION_MIDFIELD => 4,
+			PLAYER_POSITION_STRIKER => 2
+		);
+		
+		$columns = array(
+			'formation' => 'formation',
+			'user_id' => 'user_id'
+		);
+		$clubTable = $websoccer->getConfig('db_prefix') . '_verein';
+		$result = $db->querySelect($columns, $clubTable, 'id = %d', $clubId);
+		$club = $result->fetch_array();
 		$result->free();
+		
+		// Human-controlled clubs keep the previous automatic 4-4-2 fallback.
+		if (!$club || (isset($club['user_id']) && (int) $club['user_id'] > 0)) {
+			return $defaultQuotas;
+		}
+		
+		$available = array(
+			PLAYER_POSITION_GOALY => 0,
+			PLAYER_POSITION_DEFENCE => 0,
+			PLAYER_POSITION_MIDFIELD => 0,
+			PLAYER_POSITION_STRIKER => 0
+		);
+		foreach ($playerInfos as $playerinfo) {
+			if (isset($available[$playerinfo['position']])) {
+				$available[$playerinfo['position']]++;
+			}
+		}
+		
+		$candidates = array();
+		if (isset($club['formation']) && strlen(trim($club['formation']))) {
+			$candidates[] = trim($club['formation']);
+		}
+		
+		// Supported fallback formations using the same six-part setup format as the formation page.
+		$fallbackSetups = array(
+			'4-0-4-0-2-0',
+			'4-0-3-0-3-0',
+			'3-0-4-0-3-0',
+			'3-0-5-0-2-0',
+			'5-0-3-0-2-0',
+			'4-0-5-0-1-0'
+		);
+		
+		foreach ($fallbackSetups as $fallbackSetup) {
+			if (!in_array($fallbackSetup, $candidates, TRUE)) {
+				$candidates[] = $fallbackSetup;
+			}
+		}
+		
+		foreach ($candidates as $setup) {
+			$quotas = self::parseFormationSetup($setup);
+			if ($quotas !== FALSE && self::isFormationPlayable($quotas, $available)) {
+				return $quotas;
+			}
+		}
+		
+		return $defaultQuotas;
+	}
+	
+	/**
+	 * Converts the existing six-part formation setup into broad-position quotas.
+	 * Format: defence-defensive midfield-midfield-offensive midfield-striker-outside forward.
+	 */
+	private static function parseFormationSetup($setup) {
+		$parts = explode('-', $setup);
+		if (count($parts) == 5) {
+			$parts[] = 0;
+		}
+		
+		if (count($parts) != 6) {
+			return FALSE;
+		}
+		
+		$values = array();
+		foreach ($parts as $part) {
+			if ($part === '' || !ctype_digit((string) $part)) {
+				return FALSE;
+			}
+			$value = (int) $part;
+			if ($value < 0) {
+				return FALSE;
+			}
+			$values[] = $value;
+		}
+		
+		if (array_sum($values) != 10) {
+			return FALSE;
+		}
+		
+		return array(
+			PLAYER_POSITION_GOALY => 1,
+			PLAYER_POSITION_DEFENCE => $values[0],
+			PLAYER_POSITION_MIDFIELD => $values[1] + $values[2] + $values[3],
+			PLAYER_POSITION_STRIKER => $values[4] + $values[5]
+		);
+	}
+	
+	private static function isFormationPlayable($quotas, $available) {
+		foreach ($quotas as $position => $required) {
+			if (!isset($available[$position]) || $available[$position] < $required) {
+				return FALSE;
+			}
+		}
+		
+		return TRUE;
 	}
 	
 }

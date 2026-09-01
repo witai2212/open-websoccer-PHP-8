@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- CM23 | 2026-09-01 | Revision 1 -->
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_stadiumbuilding">Gebäude</message>
@@ -7,14 +8,15 @@
 	<message id="entity_stadiumbuilding_description">Beschreibung</message>
 	<message id="entity_stadiumbuilding_description_help">Kann auch ein Messages-Key sein.</message>
 	<message id="entity_stadiumbuilding_picture">Bild</message>
-	
+
 	<message id="entity_stadiumbuilding_required_building_id">Erforderliches Gebäude</message>
-	<message id="entity_stadiumbuilding_required_building_id_help">Ein ausgewähltes Gebäude muss dann vorher gebaut werden. Beachten Sie, dass das vorher gebaute Gebäude auch nach Bau des neuen Gebäudes erhalten bleibt. Die unten eingegebenen Auswirkungen werden dann aufaddiert.</message>
-	
+	<message id="entity_stadiumbuilding_required_building_id_help">Ein ausgewähltes Vorgängergebäude muss vollständig fertiggestellt sein. Nach Fertigstellung des neuen Ausbaugebäudes bleibt das Vorgängergebäude sichtbar, seine laufenden Auswirkungen werden aber durch die neue Stufe ersetzt.</message>
+
 	<message id="entity_stadiumbuilding_costs">Baukosten</message>
 	<message id="entity_stadiumbuilding_premiumfee">Premiumkosten</message>
 	<message id="entity_stadiumbuilding_premiumfee_help">Das Premiumkonto des Benutzers wird dann zusätzlich zum Vereinskonto belastet.</message>
 	<message id="entity_stadiumbuilding_construction_time_days">Bauzeit (Tage)</message>
+
 	<message id="entity_stadiumbuilding_effect_training">Auswirkung: Training</message>
 	<message id="entity_stadiumbuilding_effect_training_help">Wieviele Stärkepunkte an Frische und Zufriedenheit pro Trainingseinheit zusätzlich gewonnen werden kann.</message>
 	<message id="entity_stadiumbuilding_effect_youthscouting">Auswirkung: Jugendscouting</message>

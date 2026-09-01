@@ -15,6 +15,7 @@
   License along with OpenWebSoccer-Sim.  
   If not, see <http://www.gnu.org/licenses/>.
 ******************************************************/
+// CM23 | 2026-09-01 | Revision 1 | Task 1017 phase 2
 /**
  * Process computer transfers.
  * 
@@ -25,7 +26,10 @@ class ComputerTransfersJob extends AbstractJob {
 	/**
 	 * @see AbstractJob::execute()
 	 */
-	function execute() {	    	    ComputerTransfersDataService::executeComputerBids($this->_websoccer, $this->_db);
+	function execute() {
+        ComputerFormationTransferStrategyDataService::prepareFormationDrivenTransfers($this->_websoccer, $this->_db);
+        ComputerTransfersDataService::executeComputerBids($this->_websoccer, $this->_db);
+        ComputerFormationTransferStrategyDataService::cleanupFormationDrivenTransfers($this->_websoccer, $this->_db);
 	}
 }
 

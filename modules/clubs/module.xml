@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
+<!-- CM23 | 2026-09-01 | Revision 1 | Task 1017 -->
 <module version="1.0.0">
 
     <dependencies>
@@ -79,6 +80,7 @@
                     <field id="name" type="text" required="true" />
 					<field id="kurz" type="text" required="true" />
 					<field id="nationalteam" type="boolean" required="false" />
+					<field id="formation" type="text" required="false" />
 					<field id="liga_id" type="foreign_key" entity="league" jointable="liga" cascade="delete" labelcolumns="land, name" required="false" default="0" />
 					<field id="parent_club_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" required="false" default="0" validator="ParentClubValidator" />
 					<field id="parent_club_status" type="select" selection="active,suspended" default="active" />

@@ -1,4 +1,4 @@
-{# CM23 | 2026-09-01 | Revision 1 #}
+{# CM23 | 2026-09-01 | Revision 2 #}
 {% import "macros/premium.twig" as premium %}
 {% extends "base.twig" %}
 
@@ -24,6 +24,35 @@
 	</div>
 	<p class="muted" style="margin-top: 10px; margin-bottom: 0;">{{ i18n.getMessage("stadiumenvironment_effect_summary_hint") }}</p>
 </div>
+
+<h3>{{ i18n.getMessage("stadiumenvironment_ground") }}</h3>
+<p class="muted">{{ i18n.getMessage("stadiumenvironment_ground_hint") }}</p>
+{% if existingBuildings|length == 0 %}
+	<div class="well">{{ i18n.getMessage("stadiumenvironment_ground_empty") }}</div>
+{% else %}
+	<div class="well" style="background-color: #eef5e8; padding: 15px;">
+		{% for building in existingBuildings %}
+			<div style="display: inline-block; vertical-align: top; width: 145px; min-height: 165px; margin: 5px; padding: 10px; text-align: center; background: #fff; border: 1px solid #d5d5d5; border-radius: 4px;">
+				<div style="height: 76px; line-height: 76px; margin-bottom: 6px;">
+				{% if building.picture|length > 0 %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/stadiumbuilding/{{ building.picture }}" alt="{{ building.name }}" title="{{ building.description }}" style="max-width: 72px; max-height: 72px; vertical-align: middle;">
+				{% else %}
+					<i class="icon-home" title="{{ i18n.getMessage("stadiumenvironment_ground_placeholder") }}" style="font-size: 40px; vertical-align: middle;"></i>
+				{% endif %}
+				</div>
+				<strong>{{ building.name }}</strong><br>
+				{% if building.under_construction %}
+					<span class="label label-warning"><i class="icon-wrench icon-white"></i> {{ i18n.getMessage("stadiumenvironment_status_construction") }}</span><br>
+					<small>{{ env.getFormattedDatetime(building.construction_deadline, i18n) }}</small>
+				{% elseif building.superseded %}
+					<span class="label">{{ i18n.getMessage("stadiumenvironment_status_replaced") }}</span>
+				{% else %}
+					<span class="label label-success">{{ i18n.getMessage("stadiumenvironment_status_active") }}</span>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}
 
 <h3>{{ i18n.getMessage("stadiumenvironment_existingbuildings") }}</h3>
 

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- CM23 | 2026-09-01 | Revision 1 -->
+<!-- CM23 | 2026-09-01 | Revision 2 -->
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="stadiumenvironment_navlabel">Stadionumfeld</message>
+
+    <message id="stadiumenvironment_ground">Stadiongelände</message>
+    <message id="stadiumenvironment_ground_hint">Fertiggestellte Gebäude und aktuelle Baustellen auf einen Blick.</message>
+    <message id="stadiumenvironment_ground_empty">Auf dem Stadiongelände wurden noch keine Gebäude errichtet.</message>
+    <message id="stadiumenvironment_ground_placeholder">Noch kein Gebäudebild vorhanden.</message>
 
     <message id="stadiumenvironment_existingbuildings">Vorhandene Gebäude / im Bau</message>
     <message id="stadiumenvironment_existingbuildings_none">Es wurden noch keine Gebäude in Auftrag gegeben.</message>

@@ -1,7 +1,9 @@
 # CM23 Task List | 2026-08-31 | Revision 14
 Open Tasks:
 1018: stadionumfeld
-- gebäude welche noc gebaut werden sollten, sollen als tabelle dargestellt werden und mehr infos zu kosten, einnahmen und eigenschaften. mit kleinen Logos (gerne generieren im zweiten schritt)
+- gebäude welche noch gebaut werden sollten, sollen als tabelle dargestellt werden und mehr infos zu kosten, einnahmen und eigenschaften. mit kleinen Logos (gerne generieren im zweiten schritt)
+- vlt ein Stadiongelände zeigen mit icons darauf was gebaut wurde und was noch im baus ist (baustellen icon), ebenfalls tabelle mit dem was gebaut wurde mit angaben von features.
+- summe der features?
 - gerne vorschlag unterbreiten. hier bisherige:
 CREATE TABLE `cm23_stadiumbuilding` (
   `id` int(10) NOT NULL,

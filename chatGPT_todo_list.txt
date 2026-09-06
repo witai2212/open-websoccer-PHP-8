@@ -1,5 +1,8 @@
 # CM23 Task List | 2026-09-01 | Revision 15
 Open Tasks:
+Task 1018: ?page=bestplayers
+- Anzeigen ob Spieler auf Transferliste (Symbol wie auf watchlist)
+- anzeigen ob spieler auf user's whatchlist
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:

@@ -20,7 +20,7 @@
 
 ******************************************************/
 
-// CM23 | 2026-09-01 | Revision 1
+// CM23 | 2026-09-06 | Revision 2 | Task 1020
 
 /**
  * Validates and stores a building order for the stadium environment.
@@ -42,7 +42,7 @@ class OrderBuildingController implements IActionController {
 	 */
 	public function executeAction($parameters) {
 
-		$buildingId = $parameters['id'];
+		$buildingId = (int) $parameters['id'];
 		$user = $this->_websoccer->getUser();
 		$teamId = $user->getClubId($this->_websoccer, $this->_db);
 		if (!$teamId) {
@@ -73,12 +73,16 @@ class OrderBuildingController implements IActionController {
 		}
 
 		// A required predecessor must exist and its construction must be completed.
-		if ($building['required_building_id']) {
+		// Invalid legacy self-references are treated as no prerequisite. Task 1018
+		// already repairs building 14 by SQL, but the runtime must remain safe if
+		// that one-time SQL has not yet been executed on an instance.
+		$requiredBuildingId = (int) $building['required_building_id'];
+		if ($requiredBuildingId > 0 && $requiredBuildingId !== $buildingId) {
 			$result = $this->_db->querySelect(
 				'*',
 				$dbPrefix . '_buildings_of_team',
-				'team_id = %d AND building_id = %d AND construction_deadline < %d',
-				array($teamId, $building['required_building_id'], $this->_websoccer->getNowAsTimestamp())
+				'team_id = %d AND building_id = %d AND construction_deadline <= %d',
+				array($teamId, $requiredBuildingId, $this->_websoccer->getNowAsTimestamp())
 			);
 			$requiredBuildingCompleted = $result->fetch_array();
 			$result->free();

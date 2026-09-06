@@ -1,10 +1,14 @@
-# CM23 Task List | 2026-09-01 | Revision 15
+# CM23 Task List | 2026-09-06 | Revision 16
 Open Tasks:
-Task 1020: stadionumfeld
-- warum kann man einige sachen nicht bauen (gesperrt), obwohl bedingungen erfüllt sind? siehe task 1018
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+Task 1020: stadionumfeld
+- Fehlerursache: Die in Task 1018 bekannte Selbstreferenz eines Gebäudes konnte auf Instanzen ohne ausgeführtes Einmal-SQL weiterhin die Voraussetzungskette blockieren.
+- Selbstreferenzen werden in Anzeige und Bauauftrag jetzt defensiv wie „keine Voraussetzung“ behandelt.
+- Die serverseitige Prüfung verwendet für fertiggestellte Voraussetzungen konsistent construction_deadline <= aktueller Zeitpunkt.
+- Zusätzlich korrigiert task_1020_stadiumenvironment.sql alle vorhandenen Selbstreferenzen dauerhaft in der Datenbank.
+
 Task 1019: ?page=bestplayers
 - Anzeigen ob Spieler auf Transferliste (Symbol wie auf watchlist)
 - anzeigen ob spieler auf user's whatchlist

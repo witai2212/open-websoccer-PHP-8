@@ -20,7 +20,7 @@
 
 ******************************************************/
 
-// CM23 | 2026-09-01 | Revision 1
+// CM23 | 2026-09-06 | Revision 2 | Task 1020
 
 /**
  * Provides available and built buildings of current club.
@@ -101,8 +101,9 @@ class StadiumEnvironmentModel implements IModel {
 		// The predecessor stays visible as historical/built infrastructure.
 		$supersededBuildingIds = array();
 		foreach ($existingBuildings as $building) {
+			$buildingId = (int) $building['building_id'];
 			$requiredBuildingId = (int) $building['required_building_id'];
-			if ($building['completed'] && $requiredBuildingId > 0) {
+			if ($building['completed'] && $requiredBuildingId > 0 && $requiredBuildingId !== $buildingId) {
 				$supersededBuildingIds[$requiredBuildingId] = TRUE;
 			}
 		}
@@ -146,6 +147,9 @@ class StadiumEnvironmentModel implements IModel {
 			}
 
 			$requiredBuildingId = (int) $building['required_building_id'];
+			if ($requiredBuildingId === (int) $buildingId) {
+				$requiredBuildingId = 0;
+			}
 			$building['required_building_name'] = $this->getRequiredBuildingName($building, $buildingDefinitions);
 			$building['requirement_met'] = $requiredBuildingId < 1 || isset($completedBuildingIds[$requiredBuildingId]);
 			$availableBuildings[] = $building;
@@ -176,7 +180,8 @@ class StadiumEnvironmentModel implements IModel {
 
 	private function getRequiredBuildingName($building, $buildingDefinitions) {
 		$requiredBuildingId = (int) $building['required_building_id'];
-		if ($requiredBuildingId < 1 || !isset($buildingDefinitions[$requiredBuildingId])) {
+		$buildingId = isset($building['building_id']) ? (int) $building['building_id'] : (int) $building['id'];
+		if ($requiredBuildingId < 1 || $requiredBuildingId === $buildingId || !isset($buildingDefinitions[$requiredBuildingId])) {
 			return '';
 		}
 		return $buildingDefinitions[$requiredBuildingId]['name'];

@@ -1,11 +1,14 @@
 # CM23 Task List | 2026-09-01 | Revision 15
 Open Tasks:
-Task 1018: ?page=bestplayers
-- Anzeigen ob Spieler auf Transferliste (Symbol wie auf watchlist)
-- anzeigen ob spieler auf user's whatchlist
+Task 1020: stadionumfeld
+- warum kann man einige sachen nicht bauen (gesperrt), obwohl bedingungen erfüllt sind? siehe task 1018
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+Task 1019: ?page=bestplayers
+- Anzeigen ob Spieler auf Transferliste (Symbol wie auf watchlist)
+- anzeigen ob spieler auf user's whatchlist
+
 1017: standard line-up/formation of CPU clubs
 - there should be a pre-defined formation per CPU club (e.g. 4-4-2, 3-4-3) this should be then taken as standard for automatic lineup and transfer philisophy of cpu clubs. Selling and buying players, individually per club then.
 - e.g. cm23_verein.formation

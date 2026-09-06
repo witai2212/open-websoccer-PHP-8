@@ -1,5 +1,8 @@
 # CM23 Task List | 2026-09-06 | Revision 16
 Open Tasks:
+Task 1022: Entwicklung Spieler Markwert
+- auf der seite: ?page=player&id=25564#statistic soll man die jährliche entwicklung des marktwerts der spieler sehen können. in einer Grafik, wie z.B. die Noten
+
 Task 1021: angebote ablösefreie spieler
 - wenn user ein angebot für einen spieler abgibt. Also ein Angebot in tabelle "_player_precontract" abgespeichert ist, dann sollen diese Angebote in einem separaten Reiter auf der Seite "?page=transfermarket#offers" zu sehe sein.
 

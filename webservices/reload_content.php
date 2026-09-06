@@ -1,4 +1,6 @@
 <?php
+// CM23 | 2026-09-06 | Revision 1 | Task 1011 follow-up
+
 define('BASE_FOLDER', __DIR__ .'/..');
 include(BASE_FOLDER . '/admin/config/global.inc.php');
 include(BASE_FOLDER . '/generated/config.inc.php');
@@ -196,10 +198,6 @@ if($conf["offline"]=="online") {
                 echo "[ManagerCareerJob] sack checks: " . getTrainingResultValue($careerResult, 'sack_checks') . "\n";
                 echo "[ManagerCareerJob] sacked managers: " . getTrainingResultValue($careerResult, 'sacked') . "\n";
                 echo "[ManagerCareerJob] awards created: " . getTrainingResultValue($careerResult, 'awards_created') . "\n";
-            });
-            
-            executeSafeOperation('[CorrectPlayerValuesJob] Correcting player values and updating market values...', function() use ($website, $db, $i18n) {
-                executeConfiguredJobOnce($website, $db, $i18n, 'correctplayers', 'CorrectPlayerValuesJob');
             });
             
             executeSafeOperation('[UpdateStatisticsJob] Updating league statistics...', function() use ($website, $db, $i18n) {

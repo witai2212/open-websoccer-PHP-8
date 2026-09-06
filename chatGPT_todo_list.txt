@@ -1,5 +1,8 @@
 # CM23 Task List | 2026-09-01 | Revision 15
 Open Tasks:
+
+_____________________________________________________________________________________________________________________________________________________
+Finalised taskes:
 1017: standard line-up/formation of CPU clubs
 - there should be a pre-defined formation per CPU club (e.g. 4-4-2, 3-4-3) this should be then taken as standard for automatic lineup and transfer philisophy of cpu clubs. Selling and buying players, individually per club then.
 - e.g. cm23_verein.formation
@@ -9,8 +12,6 @@ bisher freitag - Dienstag liga spiele, dienstag nationale pokalspiele, mi-do int
 es sollte darauf geachtet werden, dass besonders bei den liga- und nationalen pokalen, diese spiele nicht alle zu gleichen uhrzeit stattfinden.
 wenn wir von einer höchstzahl von 1.000 spielen pro spieltag ausgehen, dann macht es keinen sinn dass diese all um 11:00 stattfinden. es muss dann so sein dass diese um 09:00 beginnen und um 16:00 enden.
 
-_____________________________________________________________________________________________________________________________________________________
-Finalised taskes:
 1018: Stadionumfeld
   - Vorhandene und im Bau befindliche Gebäude werden auf einem kompakten Stadiongelände mit vorhandenem Gebäudebild oder neutralem Platzhalter dargestellt; Baustellen sind eindeutig gekennzeichnet.
   - Vorhandene und noch baubare Gebäude werden tabellarisch mit Baukosten, Bauzeit, Voraussetzung, Einnahmen und allen Gebäudeeffekten dargestellt.

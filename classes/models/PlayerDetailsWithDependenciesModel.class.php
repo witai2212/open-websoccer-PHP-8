@@ -19,6 +19,7 @@
   If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
+// CM23 | 2026-09-07 | Revision 1 | Task 1022
 
 /**
  * @author Ingo Hofmann
@@ -62,6 +63,7 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		}
 		
 		$grades = $this->_getGrades($playerId);
+		$marketValueHistory = $this->_getMarketValueHistory($playerId);
 		
 		$transfers = TransfermarketDataService::getCompletedTransfersOfPlayer($this->_websoccer, $this->_db, $playerId);
 		
@@ -77,7 +79,8 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 			? PlayerPrecontractDataService::getOfferByPlayerAndTeam($this->_websoccer, $this->_db, $playerId, $userTeam)
 			: array();
 
-		return array("player" => $player, "grades" => $grades, "completedtransfers" => $transfers, "watchlist" => $watchlist,
+		return array("player" => $player, "grades" => $grades, "marketValueHistory" => $marketValueHistory,
+		              "completedtransfers" => $transfers, "watchlist" => $watchlist,
 		              "onmywatchlist" => $onMyWhatchlist, "scouting" => $scouting, "show_personality" => $showPersonality,
 		              "show_traits" => $showTraits, "talent_visibility" => $talentVisibility,
 		              "precontract_eligible" => $precontractEligible, "accepted_precontract" => $acceptedPrecontract,
@@ -102,6 +105,25 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		$grades = array_reverse($grades);
 		
 		return $grades;
+	}
+
+	private function _getMarketValueHistory($playerId) {
+		$history = array();
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_spieler_marktwert_historie";
+		$columns = array(
+			"snapshot_date" => "snapshot_date",
+			"marktwert" => "marketvalue"
+		);
+		$whereCondition = "spieler_id = %d ORDER BY snapshot_date DESC";
+		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $playerId, 90);
+		while ($row = $result->fetch_array()) {
+			$history[] = array(
+				"date" => $row["snapshot_date"],
+				"value" => (int) $row["marketvalue"]
+			);
+		}
+		$result->free();
+		return array_reverse($history);
 	}
 	
 }

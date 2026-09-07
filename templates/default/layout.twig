@@ -1,4 +1,4 @@
-{# CM23 Task 1003 | 2026-08-24 | Revision 1 #}
+{# CM23 Task 1003/1022 | 2026-09-07 | Revision 2 #}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -69,6 +69,13 @@
 				
 						
 						{{ block("page_content") }}
+
+						{% if marketValueHistory is defined and marketValueHistory|length > 0 %}
+						<div id="marketvalueHistorySource" style="display:none"
+							data-currency="{{ env.getConfig("game_currency") }}"
+							data-series="[{% for point in marketValueHistory %}{% if loop.index > 1 %}, {% endif %}[{{ loop.index }}, {{ point.value }}]{% endfor %}]"
+							data-labels="[{% for point in marketValueHistory %}{% if loop.index > 1 %}, {% endif %}'{{ point.date }}'{% endfor %}]"></div>
+						{% endif %}
 						
 						{% if blocks.content_bottom is defined %}
 							{% for uiBlock in blocks.content_bottom %}

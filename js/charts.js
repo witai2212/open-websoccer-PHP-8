@@ -1,3 +1,4 @@
+// CM23 | 2026-09-07 | Revision 1 | Task 1022
 $(function() {
 	
 	/**
@@ -52,6 +53,63 @@ $(function() {
 			opacity: 0.80
 		}).appendTo("body").fadeIn(200);
 	};
+
+	/**
+	 * Player market-value history (Task 1022).
+	 */
+	$('#marketvalueHistorySource').each(function(index, source) {
+		var statisticTab = $('#statistic');
+		if (!statisticTab.length) {
+			return;
+		}
+
+		var series = $.parseJSON($(source).attr('data-series'));
+		var labels = $.parseJSON($(source).attr('data-labels').replace(/'/g, '"'));
+		var currency = $(source).attr('data-currency') || '';
+		if (!series.length) {
+			return;
+		}
+
+		var chartBlock = $('<div class="cm23-marketvalue-history"><h4>Marktwertentwicklung</h4><div id="marketvalueHistoryChart" style="width: 600px; height: 300px; margin-left: 30px; margin-bottom: 30px"></div></div>');
+		statisticTab.append(chartBlock);
+
+		var ticks = [];
+		var step = Math.max(1, Math.ceil(labels.length / 6));
+		for (var i = 0; i < labels.length; i += step) {
+			ticks.push([i + 1, labels[i]]);
+		}
+		if (labels.length > 1 && ticks[ticks.length - 1][0] !== labels.length) {
+			ticks.push([labels.length, labels[labels.length - 1]]);
+		}
+
+		$.plot('#marketvalueHistoryChart', [series], {
+			xaxis: {
+				ticks: ticks,
+				tickDecimals: 0
+			},
+			yaxis: {
+				tickDecimals: 0
+			},
+			lines: { show: true },
+			points: { show: true },
+			grid: { hoverable: true }
+		});
+
+		$('#marketvalueHistoryChart').bind('plothover', function(event, pos, item) {
+			if (item) {
+				if (previousPoint != 'marketvalue-' + item.dataIndex) {
+					previousPoint = 'marketvalue-' + item.dataIndex;
+					$('#graphtooltip').remove();
+					var dateLabel = labels[item.dataIndex] || '';
+					var valueLabel = Math.round(item.datapoint[1]).toLocaleString('de-DE');
+					showGrpahTooltip(item.pageX, item.pageY, dateLabel + ': ' + valueLabel + ' ' + currency);
+				}
+			} else {
+				$('#graphtooltip').remove();
+				previousPoint = null;
+			}
+		});
+	});
 	
 	/**
 	 * Initialize Pie Charts

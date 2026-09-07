@@ -19,7 +19,7 @@
   If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
-// CM23 | 2026-09-07 | Revision 2 | Task 1022
+// CM23 | 2026-09-07 | Revision 3 | Task 1022
 
 /**
  * @author Ingo Hofmann
@@ -120,8 +120,8 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 			"snapshot_date" => "snapshot_date",
 			"marktwert" => "marketvalue"
 		);
-		$whereCondition = "spieler_id = %d ORDER BY snapshot_date DESC";
-		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $playerId, 90);
+		$whereCondition = "spieler_id = %d AND snapshot_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR) ORDER BY snapshot_date DESC";
+		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $playerId, 370);
 		while ($row = $result->fetch_array()) {
 			$history[] = array(
 				"date" => $row["snapshot_date"],

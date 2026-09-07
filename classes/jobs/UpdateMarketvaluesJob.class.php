@@ -15,6 +15,7 @@
   License along with OpenWebSoccer-Sim.  
   If not, see <http://www.gnu.org/licenses/>.
 ******************************************************/
+// CM23 | 2026-09-07 | Revision 1 | Task 1022
 /**
  * Process computer transfers.
  *
@@ -35,6 +36,13 @@ class UpdateMarketvaluesJob extends AbstractJob {
             
         }*/
         PlayerMarketValueDataService::recalculateAfterLatestMatch($this->_websoccer, $this->_db);
+
+        // Keep one market-value snapshot per player and calendar day.
+        $prefix = $this->_websoccer->getConfig('db_prefix');
+        $sqlStr = "INSERT INTO ". $prefix ."_spieler_marktwert_historie (spieler_id, snapshot_date, marktwert) "
+            . "SELECT id, CURDATE(), marktwert FROM ". $prefix ."_spieler "
+            . "ON DUPLICATE KEY UPDATE marktwert = VALUES(marktwert)";
+        $this->_db->executeQuery($sqlStr);
         
 	}
 }

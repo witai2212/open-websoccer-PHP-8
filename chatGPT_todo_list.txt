@@ -1,13 +1,14 @@
 # CM23 Task List | 2026-09-07 | Revision 18
 Open Tasks:
-Task 1023: Bewerbung
+Task 1024: Bewerbung
 - Wenn man auf den Bewerben button unter Managerkarriere klickt, dann spring man automatisch zurpck auf Managerkarriere. Ma sollte aber auf der Seite "mc-applications" bleiben.
+
+_____________________________________________________________________________________________________________________________________________________
+Finalised taskes:
 
 Task 1022: Entwicklung Spieler Markwert
 - auf der seite: ?page=player&id=25564#statistic soll man die jährliche entwicklung des marktwerts der spieler sehen können. in einer Grafik, wie z.B. die Noten
 
-_____________________________________________________________________________________________________________________________________________________
-Finalised taskes:
 Task 1023: Kaderansicht
 - Die zusätzlichen Spielerwerte PA, SCHU, KB, ZK, FS, SCHN, KR, EF, CH, 11m und EK verwenden nun dieselben Farbklassen wie die ursprünglichen Spielerwerte.
 - Talent verwendet in der eigenen Kaderansicht ebenfalls dieselbe vorhandene strengthClass-Darstellung.

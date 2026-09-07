@@ -1,5 +1,8 @@
 # CM23 Task List | 2026-09-06 | Revision 16
 Open Tasks:
+Task 1023: Kaderansicht
+in task 1012: Kaderansicht haben wir die zusätzlichen spieler werte und attribute eingebracht. können wir diese jetzt genaus o farbig gestalten wir die ursprünglichen?
+
 Task 1022: Entwicklung Spieler Markwert
 - auf der seite: ?page=player&id=25564#statistic soll man die jährliche entwicklung des marktwerts der spieler sehen können. in einer Grafik, wie z.B. die Noten
 

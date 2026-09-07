@@ -3,6 +3,8 @@
 
   This file is part of OpenWebSoccer-Sim.
 
+  CM23 | 2026-09-07 | Revision 1 | Task 1024
+
 ******************************************************/
 
 class ApplyManagerJobController implements IActionController {
@@ -28,7 +30,7 @@ class ApplyManagerJobController implements IActionController {
             $this->_i18n->getMessage('managercareer_application_msg_success')
         );
         $this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, $message, ''));
-        return 'managercareer';
+        return 'mc-applications';
     }
 }
 ?>

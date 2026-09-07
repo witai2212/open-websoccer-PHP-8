@@ -100,6 +100,7 @@ class TransfermarketOverviewModel implements IModel {
 		$offers = TransfermarketDataService::getTransferOffers($this->_websoccer, $this->_db, $teamId);
 		$bids = TransfermarketDataService::getCurrentBidsOfTeam($this->_websoccer, $this->_db, $teamId);
 		$myplayers = TransfermarketDataService::getPlayersOnTLByTeamId($this->_websoccer, $this->_db, $teamId);
+		$precontractOffers = $this->_getPrecontractOffers($teamId);
 		$activeTab = $this->_websoccer->getRequestParameter("tab");
 		if (!in_array($activeTab, array("market", "offers", "lasttransfers", "mytransfers"))) {
 			$activeTab = "market";
@@ -115,8 +116,45 @@ class TransfermarketOverviewModel implements IModel {
 			"offers" => $offers,
 			"bids" => $bids,
 			"myplayers" => $myplayers,
+			"precontractoffers" => $precontractOffers,
 			"active_tab" => $activeTab
 		);
+	}
+	
+	private function _getPrecontractOffers($teamId) {
+		$columns = array();
+		$columns['PC.id'] = 'id';
+		$columns['PC.player_id'] = 'player_id';
+		$columns['PC.current_team_id'] = 'current_team_id';
+		$columns['PC.contract_salary'] = 'contract_salary';
+		$columns['PC.contract_goal_bonus'] = 'contract_goal_bonus';
+		$columns['PC.hand_money'] = 'hand_money';
+		$columns['PC.contract_matches'] = 'contract_matches';
+		$columns['PC.created_date'] = 'created_date';
+		$columns['PC.decision_after_matches'] = 'decision_after_matches';
+		$columns['PC.waited_matches'] = 'waited_matches';
+		$columns['PC.decision_date'] = 'decision_date';
+		$columns['PC.status'] = 'status';
+		$columns['P.vorname'] = 'player_firstname';
+		$columns['P.nachname'] = 'player_lastname';
+		$columns['P.kunstname'] = 'player_pseudonym';
+		$columns['P.position_main'] = 'position_main';
+		$columns['P.position_second'] = 'position_second';
+		$columns['C.name'] = 'current_team_name';
+		
+		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_player_precontract AS PC';
+		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_spieler AS P ON P.id = PC.player_id';
+		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = PC.current_team_id';
+		$whereCondition = 'PC.destination_team_id = %d ORDER BY PC.created_date DESC, PC.id DESC';
+		
+		$offers = array();
+		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, array($teamId));
+		while ($offer = $result->fetch_array()) {
+			$offers[] = $offer;
+		}
+		$result->free();
+		
+		return $offers;
 	}
 	
 	private function _getNumericRequestParameter($parameterName) {

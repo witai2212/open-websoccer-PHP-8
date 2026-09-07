@@ -1,12 +1,14 @@
 <div class="row-fluid" style="margin-bottom:15px">
-    <div class="span4"><div class="well well-small"><strong>{{ offers|length }}</strong><br><span class="muted">{{ i18n.getMessage("transferoffers_tab_received") }}</span></div></div>
-    <div class="span4"><div class="well well-small"><strong>{{ bids|length }}</strong><br><span class="muted">{{ i18n.getMessage("transferoffers_tab_sent") }}</span></div></div>
-    <div class="span4"><div class="well well-small"><strong>{{ myplayers|length }}</strong><br><span class="muted">{{ i18n.getMessage("myplayers_on_transferlist") }}</span></div></div>
+    <div class="span3"><div class="well well-small"><strong>{{ offers|length }}</strong><br><span class="muted">{{ i18n.getMessage("transferoffers_tab_received") }}</span></div></div>
+    <div class="span3"><div class="well well-small"><strong>{{ bids|length }}</strong><br><span class="muted">{{ i18n.getMessage("transferoffers_tab_sent") }}</span></div></div>
+    <div class="span3"><div class="well well-small"><strong>{{ precontractoffers|length }}</strong><br><span class="muted">Vorvertragsangebote</span></div></div>
+    <div class="span3"><div class="well well-small"><strong>{{ myplayers|length }}</strong><br><span class="muted">{{ i18n.getMessage("myplayers_on_transferlist") }}</span></div></div>
 </div>
 
 <ul class="nav nav-pills" id="myOffersTabs">
     <li class="active"><a href="#receivedOffers" data-toggle="tab"><i class="icon-inbox"></i> {{ i18n.getMessage("transferoffers_tab_received") }}</a></li>
     <li><a href="#sentOffers" data-toggle="tab"><i class="icon-share"></i> {{ i18n.getMessage("transferoffers_tab_sent") }}</a></li>
+    <li><a href="#precontractOffers" data-toggle="tab"><i class="icon-file"></i> Vorvertragsangebote</a></li>
     <li><a href="#listedPlayers" data-toggle="tab"><i class="icon-list"></i> {{ i18n.getMessage("myplayers_on_transferlist") }}</a></li>
 </ul>
 
@@ -48,6 +50,75 @@
     </div>
     <div class="tab-pane" id="sentOffers">
         {% if bids|length > 0 %}{% include "blocks/mybids.twig" %}{% else %}<div class="alert alert-info">{{ i18n.getMessage("transfermarket_no_sent_offers") }}</div>{% endif %}
+    </div>
+    <div class="tab-pane" id="precontractOffers">
+        {% if precontractoffers|length == 0 %}
+            <div class="alert alert-info">Du hast derzeit keine Vorvertragsangebote abgegeben.</div>
+        {% else %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Spieler</th>
+                    <th>Position</th>
+                    <th>Aktueller Verein</th>
+                    <th>Vertragsangebot</th>
+                    <th>Prüfung</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for offer in precontractoffers %}
+                <tr>
+                    <td><strong>{{ loop.index }}</strong></td>
+                    <td>
+                        <a href="{{ env.getInternalUrl("player", "id=" ~ offer.player_id) }}">
+                            {% if offer.player_pseudonym|length > 0 %}{{ offer.player_pseudonym }}{% else %}{{ offer.player_firstname }} {{ offer.player_lastname }}{% endif %}
+                        </a>
+                    </td>
+                    <td>{{ offer.position_main }}{% if offer.position_second|length > 0 %} ({{ offer.position_second }}){% endif %}</td>
+                    <td>
+                        {% if offer.current_team_id > 0 %}
+                            <a href="{{ env.getInternalUrl("team", "id=" ~ offer.current_team_id) }}">{{ offer.current_team_name }}</a>
+                        {% else %}
+                            –
+                        {% endif %}
+                    </td>
+                    <td>
+                        <strong>{{ offer.contract_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</strong> Gehalt<br>
+                        {{ offer.contract_goal_bonus|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }} Torprämie<br>
+                        {{ offer.hand_money|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }} Handgeld<br>
+                        <small>{{ offer.contract_matches }} Spiele</small>
+                    </td>
+                    <td>
+                        {% if offer.status == 'open' %}
+                            {{ offer.waited_matches }} / {{ offer.decision_after_matches }} Spiele
+                        {% elseif offer.decision_date > 0 %}
+                            {{ env.getFormattedDatetime(offer.decision_date) }}
+                        {% else %}
+                            –
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if offer.status == 'open' %}
+                            <span class="label label-info">Offen</span>
+                        {% elseif offer.status == 'accepted' %}
+                            <span class="label label-success">Angenommen</span>
+                        {% elseif offer.status == 'rejected' %}
+                            <span class="label label-important">Abgelehnt</span>
+                        {% elseif offer.status == 'completed' %}
+                            <span class="label label-success">Abgeschlossen</span>
+                        {% elseif offer.status == 'cancelled' %}
+                            <span class="label">Storniert</span>
+                        {% else %}
+                            <span class="label">{{ offer.status }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
     <div class="tab-pane" id="listedPlayers">
         {% if myplayers|length > 0 %}{% include "blocks/myplayersontl.twig" %}{% else %}<div class="alert alert-info">{{ i18n.getMessage("transfermarket_no_own_listed_players") }}</div>{% endif %}

@@ -19,7 +19,7 @@
   If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
-// CM23 | 2026-09-07 | Revision 1 | Task 1022
+// CM23 | 2026-09-07 | Revision 2 | Task 1022
 
 /**
  * @author Ingo Hofmann
@@ -64,6 +64,12 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 		
 		$grades = $this->_getGrades($playerId);
 		$marketValueHistory = $this->_getMarketValueHistory($playerId);
+		if (count($marketValueHistory) === 0) {
+			$marketValueHistory[] = array(
+				"date" => date("Y-m-d"),
+				"value" => (int) $player["player_marketvalue"]
+			);
+		}
 		
 		$transfers = TransfermarketDataService::getCompletedTransfersOfPlayer($this->_websoccer, $this->_db, $playerId);
 		

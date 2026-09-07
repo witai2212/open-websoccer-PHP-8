@@ -1,57 +1,89 @@
 <?php
-// CM23 | 2026-09-01 | Revision 1 | Task 1017 phase 2
+// CM23 | 2026-09-07 | Revision 2 | Task 1017 formation-driven CPU transfer market
 
 class ComputerFormationTransferStrategyDataService {
 
     const DEFAULT_FORMATION = '4-0-4-0-2-0';
-    const SQUAD_DEPTH_FACTOR = 1.70;
+    const SQUAD_DEPTH_PER_STARTER = 2;
     const MAX_TRANSFER_LIST_PLAYERS = 3;
+    const MIN_ACTIVE_SQUAD_SIZE = 20;
+    const DEFAULT_MARKET_REFRESH_CHANCE = 15;
     const DEFAULT_MAX_ACTIVE_OFFERS = 3;
     const DEFAULT_MAX_OFFERS_PER_PLAYER = 3;
+    const DEFAULT_MAX_PLAYERS_ON_TRANSFERMARKET = 800;
 
     private static $processedTeamIds = array();
 
     public static function prepareFormationDrivenTransfers(WebSoccer $websoccer, DbConnection $db) {
         self::$processedTeamIds = self::getComputerTeams($websoccer, $db);
 
+        $marketLimit = max(
+            1,
+            self::getOptionalConfigInt(
+                $websoccer,
+                'transfermarket_max_players_on_tl',
+                self::DEFAULT_MAX_PLAYERS_ON_TRANSFERMARKET
+            )
+        );
+        $playersOnMarket = self::getTransferMarketPlayerCount($websoccer, $db);
+
         foreach (self::$processedTeamIds as $teamId) {
             $formation = self::getTeamFormation($websoccer, $db, $teamId);
-            $targets = self::getFormationDepthTargets($formation);
+            $startingTargets = self::getFormationStartingTargets($formation);
+            $depthTargets = self::getFormationDepthTargets($formation);
             $squad = self::getTeamSquad($websoccer, $db, $teamId);
 
-            self::manageFormationTransferList($websoccer, $db, $teamId, $squad, $targets);
-            self::placeFormationNeedOffers($websoccer, $db, $teamId, $squad, $targets);
+            $availableMarketSlots = max(0, $marketLimit - $playersOnMarket);
+            if ($availableMarketSlots > 0) {
+                $newListings = self::manageFormationTransferList(
+                    $websoccer,
+                    $db,
+                    $teamId,
+                    $squad,
+                    $startingTargets,
+                    $depthTargets,
+                    $availableMarketSlots
+                );
+                $playersOnMarket += $newListings;
+            }
+
+            // Reload after transfer-list changes. Players already listed are treated as
+            // planned departures when formation-specific replacement needs are calculated.
+            $squad = self::getTeamSquad($websoccer, $db, $teamId);
+            self::placeFormationNeedOffers($websoccer, $db, $teamId, $squad, $depthTargets);
         }
     }
 
     public static function cleanupFormationDrivenTransfers(WebSoccer $websoccer, DbConnection $db) {
         foreach (self::$processedTeamIds as $teamId) {
             $formation = self::getTeamFormation($websoccer, $db, $teamId);
-            $targets = self::getFormationDepthTargets($formation);
+            $startingTargets = self::getFormationStartingTargets($formation);
             $squad = self::getTeamSquad($websoccer, $db, $teamId);
-            $counts = self::countPositions($squad);
-
-            $query = "SELECT id, position
-                      FROM ". $websoccer->getConfig('db_prefix') ."_spieler
-                      WHERE verein_id = '". (int) $teamId ."'
-                        AND status = '1'
-                        AND transfermarkt = '1'";
-            $result = $db->executeQuery($query);
+            $unlistedAnalysis = self::analyseSquadForFormation($squad, $startingTargets, true);
+            $availableCounts = $unlistedAnalysis['counts'];
             $removeIds = array();
 
-            while ($player = $result->fetch_assoc()) {
-                $position = isset($player['position']) ? $player['position'] : '';
-                if (!isset($targets[$position]) || !isset($counts[$position])) {
+            foreach ($squad as $player) {
+                if ((int) $player['transfermarkt'] !== 1) {
                     continue;
                 }
 
-                if ($counts[$position] <= $targets[$position]) {
+                $role = self::findBestDeficitRoleForPlayer($player, $startingTargets, $availableCounts);
+                if (!strlen($role)) {
+                    continue;
+                }
+
+                // A listed player is taken off the market only when he is needed to keep
+                // the formation's starting XI positionally viable. Backup depth may be sold.
+                if (
+                    isset($startingTargets[$role])
+                    && isset($availableCounts[$role])
+                    && $availableCounts[$role] < $startingTargets[$role]
+                ) {
                     $removeIds[] = (int) $player['id'];
-                } else {
-                    $counts[$position]--;
+                    $availableCounts[$role]++;
                 }
             }
-            $result->free();
 
             if (count($removeIds)) {
                 $db->executeQuery(
@@ -99,23 +131,69 @@ class ComputerFormationTransferStrategyDataService {
         return trim($team['formation']);
     }
 
-    private static function getFormationDepthTargets($formation) {
+    private static function getFormationStartingTargets($formation) {
         $parts = self::parseFormation($formation);
-        $defenders = $parts[0];
-        $midfielders = $parts[1] + $parts[2] + $parts[3];
-        $strikers = $parts[4] + $parts[5];
+        $targets = self::getEmptyDetailedPositionCounts();
 
-        return array(
-            'Torwart' => 2,
-            'Abwehr' => max($defenders, (int) ceil($defenders * self::SQUAD_DEPTH_FACTOR)),
-            'Mittelfeld' => max($midfielders, (int) ceil($midfielders * self::SQUAD_DEPTH_FACTOR)),
-            'Sturm' => max($strikers, (int) ceil($strikers * self::SQUAD_DEPTH_FACTOR))
-        );
+        $targets['T'] = 1;
+
+        // Same positional distribution as FormationDataService::getFormationProposalForTeamId().
+        $setupDefense = $parts[0];
+        if ($setupDefense < 4) {
+            $targets['IV'] = $setupDefense;
+        } else {
+            $targets['LV'] = 1;
+            $targets['RV'] = 1;
+            $targets['IV'] = $setupDefense - 2;
+        }
+
+        $targets['DM'] = $parts[1];
+
+        $setupMidfield = $parts[2];
+        if ($setupMidfield === 1) {
+            $targets['ZM'] = 1;
+        } elseif ($setupMidfield === 2) {
+            $targets['LM'] = 1;
+            $targets['RM'] = 1;
+        } elseif ($setupMidfield === 3) {
+            $targets['LM'] = 1;
+            $targets['ZM'] = 1;
+            $targets['RM'] = 1;
+        } elseif ($setupMidfield >= 4) {
+            $targets['LM'] = 1;
+            $targets['ZM'] = $setupMidfield - 2;
+            $targets['RM'] = 1;
+        }
+
+        $targets['OM'] = $parts[3];
+        $targets['MS'] = $parts[4];
+
+        if ($parts[5] === 2) {
+            $targets['LS'] = 1;
+            $targets['RS'] = 1;
+        }
+
+        return $targets;
+    }
+
+    private static function getFormationDepthTargets($formation) {
+        $startingTargets = self::getFormationStartingTargets($formation);
+        $depthTargets = self::getEmptyDetailedPositionCounts();
+
+        foreach ($startingTargets as $position => $startingCount) {
+            $depthTargets[$position] = (int) $startingCount * self::SQUAD_DEPTH_PER_STARTER;
+        }
+
+        return $depthTargets;
     }
 
     private static function parseFormation($formation) {
-        $parts = explode('-', (string) $formation);
-        if (count($parts) === 5) {
+        $parts = explode('-', trim((string) $formation));
+
+        // Support the common short notation stored or entered as e.g. 4-4-2 / 3-4-3.
+        if (count($parts) === 3) {
+            $parts = array($parts[0], 0, $parts[1], 0, $parts[2], 0);
+        } elseif (count($parts) === 5) {
             $parts[] = 0;
         }
 
@@ -136,11 +214,17 @@ class ComputerFormationTransferStrategyDataService {
             return self::parseFormation(self::DEFAULT_FORMATION);
         }
 
+        // FormationDataService supports outside forwards as a left/right pair.
+        if ($parts[5] !== 0 && $parts[5] !== 2) {
+            return self::parseFormation(self::DEFAULT_FORMATION);
+        }
+
         return $parts;
     }
 
     private static function getTeamSquad(WebSoccer $websoccer, DbConnection $db, $teamId) {
-        $query = "SELECT id, position, w_technik, w_staerke, w_kondition, w_frische,
+        $query = "SELECT id, position, position_main, position_second,
+                         w_technik, w_staerke, w_kondition, w_frische,
                          transfermarkt, transfer_blocked_until, lending_owner_id
                   FROM ". $websoccer->getConfig('db_prefix') ."_spieler
                   WHERE verein_id = '". (int) $teamId ."'
@@ -156,52 +240,224 @@ class ComputerFormationTransferStrategyDataService {
         return $squad;
     }
 
-    private static function countPositions($squad) {
-        $counts = array(
-            'Torwart' => 0,
-            'Abwehr' => 0,
-            'Mittelfeld' => 0,
-            'Sturm' => 0
+    private static function getEmptyDetailedPositionCounts() {
+        return array(
+            'T' => 0,
+            'LV' => 0,
+            'IV' => 0,
+            'RV' => 0,
+            'LM' => 0,
+            'DM' => 0,
+            'ZM' => 0,
+            'OM' => 0,
+            'RM' => 0,
+            'LS' => 0,
+            'MS' => 0,
+            'RS' => 0
         );
+    }
 
-        foreach ($squad as $player) {
-            if (isset($counts[$player['position']])) {
-                $counts[$player['position']]++;
+    private static function getGenericPositions($genericPosition) {
+        if ($genericPosition === 'Torwart') {
+            return array('T');
+        }
+        if ($genericPosition === 'Abwehr') {
+            return array('LV', 'IV', 'RV');
+        }
+        if ($genericPosition === 'Mittelfeld') {
+            return array('RM', 'ZM', 'LM', 'DM', 'OM');
+        }
+        if ($genericPosition === 'Sturm') {
+            return array('LS', 'MS', 'RS');
+        }
+        return array();
+    }
+
+    private static function getPositionArea($position) {
+        if ($position === 'T') {
+            return 'Torwart';
+        }
+        if (in_array($position, array('LV', 'IV', 'RV'), true)) {
+            return 'Abwehr';
+        }
+        if (in_array($position, array('LM', 'DM', 'ZM', 'OM', 'RM'), true)) {
+            return 'Mittelfeld';
+        }
+        if (in_array($position, array('LS', 'MS', 'RS'), true)) {
+            return 'Sturm';
+        }
+        return '';
+    }
+
+    private static function analyseSquadForFormation($squad, $targets, $excludeTransferListed = false) {
+        $counts = self::getEmptyDetailedPositionCounts();
+        $roles = array();
+        $unassigned = array();
+
+        // First reserve players on their actual main position. This prevents all-rounders
+        // or secondary positions from hiding a shortage where a true specialist exists.
+        foreach ($squad as $index => $player) {
+            if ($excludeTransferListed && (int) $player['transfermarkt'] === 1) {
+                continue;
+            }
+
+            $main = isset($player['position_main']) ? trim($player['position_main']) : '';
+            if (
+                strlen($main)
+                && isset($counts[$main])
+                && isset($targets[$main])
+                && $targets[$main] > 0
+                && $counts[$main] < $targets[$main]
+            ) {
+                $counts[$main]++;
+                $roles[(int) $player['id']] = $main;
+            } else {
+                $unassigned[$index] = $player;
             }
         }
 
-        return $counts;
-    }
-
-    private static function manageFormationTransferList(WebSoccer $websoccer, DbConnection $db, $teamId, $squad, $targets) {
-        $targetTotal = array_sum($targets);
-        if (count($squad) <= $targetTotal) {
-            return;
+        // Then use explicit secondary positions to cover remaining formation depth.
+        foreach ($unassigned as $index => $player) {
+            $second = isset($player['position_second']) ? trim($player['position_second']) : '';
+            if (
+                strlen($second)
+                && isset($counts[$second])
+                && isset($targets[$second])
+                && $targets[$second] > 0
+                && $counts[$second] < $targets[$second]
+            ) {
+                $counts[$second]++;
+                $roles[(int) $player['id']] = $second;
+                unset($unassigned[$index]);
+            }
         }
 
-        $counts = self::countPositions($squad);
+        // Players without a detailed main position are allocated like FormationDataService.
+        foreach ($unassigned as $index => $player) {
+            $main = isset($player['position_main']) ? trim($player['position_main']) : '';
+            if (strlen($main)) {
+                continue;
+            }
+
+            foreach (self::getGenericPositions(isset($player['position']) ? $player['position'] : '') as $position) {
+                if (
+                    isset($targets[$position])
+                    && $targets[$position] > 0
+                    && $counts[$position] < $targets[$position]
+                ) {
+                    $counts[$position]++;
+                    $roles[(int) $player['id']] = $position;
+                    unset($unassigned[$index]);
+                    break;
+                }
+            }
+        }
+
+        // Remaining players are genuine positional surplus for this formation. Count them
+        // on their preferred usable role so sales can reduce that surplus deliberately.
+        foreach ($unassigned as $player) {
+            $role = self::getPreferredRoleForPlayer($player);
+            if (!strlen($role)) {
+                continue;
+            }
+            $counts[$role]++;
+            $roles[(int) $player['id']] = $role;
+        }
+
+        return array(
+            'counts' => $counts,
+            'roles' => $roles
+        );
+    }
+
+    private static function getPreferredRoleForPlayer($player) {
+        $validPositions = self::getEmptyDetailedPositionCounts();
+        $main = isset($player['position_main']) ? trim($player['position_main']) : '';
+        if (isset($validPositions[$main])) {
+            return $main;
+        }
+
+        $second = isset($player['position_second']) ? trim($player['position_second']) : '';
+        if (isset($validPositions[$second])) {
+            return $second;
+        }
+
+        $generic = self::getGenericPositions(isset($player['position']) ? $player['position'] : '');
+        return count($generic) ? $generic[0] : '';
+    }
+
+    private static function findBestDeficitRoleForPlayer($player, $targets, $counts) {
+        $candidates = array();
+        $main = isset($player['position_main']) ? trim($player['position_main']) : '';
+        $second = isset($player['position_second']) ? trim($player['position_second']) : '';
+
+        if (strlen($main)) {
+            $candidates[] = $main;
+        }
+        if (strlen($second) && !in_array($second, $candidates, true)) {
+            $candidates[] = $second;
+        }
+        if (!strlen($main)) {
+            foreach (self::getGenericPositions(isset($player['position']) ? $player['position'] : '') as $genericPosition) {
+                if (!in_array($genericPosition, $candidates, true)) {
+                    $candidates[] = $genericPosition;
+                }
+            }
+        }
+
+        foreach ($candidates as $position) {
+            if (
+                isset($targets[$position])
+                && isset($counts[$position])
+                && $targets[$position] > 0
+                && $counts[$position] < $targets[$position]
+            ) {
+                return $position;
+            }
+        }
+
+        return '';
+    }
+
+    private static function manageFormationTransferList(
+        WebSoccer $websoccer,
+        DbConnection $db,
+        $teamId,
+        $squad,
+        $startingTargets,
+        $depthTargets,
+        $availableMarketSlots
+    ) {
+        if ($availableMarketSlots <= 0) {
+            return 0;
+        }
+
         $currentListed = 0;
         foreach ($squad as $player) {
             if ((int) $player['transfermarkt'] === 1) {
                 $currentListed++;
-                if (isset($counts[$player['position']]) && $counts[$player['position']] > 0) {
-                    $counts[$player['position']]--;
-                }
             }
         }
         if ($currentListed >= self::MAX_TRANSFER_LIST_PLAYERS) {
-            return;
+            return 0;
+        }
+
+        $analysis = self::analyseSquadForFormation($squad, $depthTargets, true);
+        $counts = $analysis['counts'];
+        $roles = $analysis['roles'];
+        $futureSquadSize = count($squad) - $currentListed;
+        $targetTotal = array_sum($depthTargets);
+        $maxNewListings = min(
+            self::MAX_TRANSFER_LIST_PLAYERS - $currentListed,
+            $availableMarketSlots,
+            max(0, $futureSquadSize - self::MIN_ACTIVE_SQUAD_SIZE)
+        );
+        if ($maxNewListings <= 0) {
+            return 0;
         }
 
         $candidates = array();
         foreach ($squad as $player) {
-            $position = isset($player['position']) ? $player['position'] : '';
-            if (!isset($targets[$position]) || !isset($counts[$position])) {
-                continue;
-            }
-            if ($counts[$position] <= $targets[$position]) {
-                continue;
-            }
             if ((int) $player['transfermarkt'] === 1) {
                 continue;
             }
@@ -220,28 +476,124 @@ class ComputerFormationTransferStrategyDataService {
                 }
             }
 
-            $player['cpu_strength'] = self::calculateSimpleStrength($player);
-            $candidates[] = $player;
+            $playerId = (int) $player['id'];
+            $role = isset($roles[$playerId]) ? $roles[$playerId] : self::getPreferredRoleForPlayer($player);
+            if (!strlen($role) || !isset($counts[$role])) {
+                continue;
+            }
+
+            // Normal formation rebalancing: players above the two-deep target are expendable.
+            if (isset($depthTargets[$role]) && $counts[$role] > $depthTargets[$role]) {
+                $player['cpu_formation_role'] = $role;
+                $player['cpu_sale_priority'] = 2;
+                $player['cpu_strength'] = self::calculateSimpleStrength($player);
+                $candidates[] = $player;
+            }
         }
 
-        usort($candidates, array('ComputerFormationTransferStrategyDataService', 'sortWeakestFirst'));
+        // If the squad is already correctly balanced and two-deep, occasionally create one
+        // controlled replacement cycle. The outgoing player must leave enough starters behind.
+        if (!count($candidates) && $futureSquadSize >= $targetTotal && $currentListed === 0) {
+            $refreshChance = max(
+                0,
+                min(
+                    100,
+                    self::getOptionalConfigInt(
+                        $websoccer,
+                        'computer_transfers_formation_refresh_chance',
+                        self::DEFAULT_MARKET_REFRESH_CHANCE
+                    )
+                )
+            );
 
-        $remainingSquadSize = count($squad) - $currentListed;
+            if ($refreshChance > 0 && rand(1, 100) <= $refreshChance) {
+                foreach ($squad as $player) {
+                    if ((int) $player['transfermarkt'] === 1) {
+                        continue;
+                    }
+                    if (!empty($player['lending_owner_id'])) {
+                        continue;
+                    }
+                    if ((int) $player['transfer_blocked_until'] > $websoccer->getNowAsTimestamp()) {
+                        continue;
+                    }
+                    if (class_exists('PlayerPrecontractDataService')) {
+                        if (PlayerPrecontractDataService::getOpenOfferCount($websoccer, $db, (int) $player['id']) > 0) {
+                            continue;
+                        }
+                        if (PlayerPrecontractDataService::hasAcceptedAgreement($websoccer, $db, (int) $player['id'])) {
+                            continue;
+                        }
+                    }
+
+                    $playerId = (int) $player['id'];
+                    $role = isset($roles[$playerId]) ? $roles[$playerId] : self::getPreferredRoleForPlayer($player);
+                    if (
+                        !strlen($role)
+                        || !isset($counts[$role])
+                        || !isset($startingTargets[$role])
+                        || $counts[$role] <= $startingTargets[$role]
+                    ) {
+                        continue;
+                    }
+
+                    $player['cpu_formation_role'] = $role;
+                    $player['cpu_sale_priority'] = 1;
+                    $player['cpu_strength'] = self::calculateSimpleStrength($player);
+                    $candidates[] = $player;
+                }
+                $maxNewListings = min($maxNewListings, 1);
+            }
+        }
+
+        if (!count($candidates)) {
+            return 0;
+        }
+
+        usort($candidates, array('ComputerFormationTransferStrategyDataService', 'sortSaleCandidates'));
+
+        $newListings = 0;
         foreach ($candidates as $player) {
-            if ($currentListed >= self::MAX_TRANSFER_LIST_PLAYERS || $remainingSquadSize <= $targetTotal) {
+            if ($newListings >= $maxNewListings) {
                 break;
             }
 
-            $position = $player['position'];
-            if ($counts[$position] <= $targets[$position]) {
+            $role = $player['cpu_formation_role'];
+            $isSurplus = isset($depthTargets[$role]) && $counts[$role] > $depthTargets[$role];
+            $isRefresh = (
+                !$isSurplus
+                && isset($startingTargets[$role])
+                && $counts[$role] > $startingTargets[$role]
+                && $futureSquadSize >= $targetTotal
+            );
+
+            if (!$isSurplus && !$isRefresh) {
                 continue;
             }
 
             self::listPlayerForTransfer($websoccer, $db, (int) $player['id']);
-            $counts[$position]--;
-            $remainingSquadSize--;
-            $currentListed++;
+            $counts[$role]--;
+            $futureSquadSize--;
+            $newListings++;
+
+            // A refresh cycle deliberately lists only one player. Positional surplus may
+            // create more listings, but never below the active-squad safety threshold.
+            if ($isRefresh) {
+                break;
+            }
         }
+
+        return $newListings;
+    }
+
+    public static function sortSaleCandidates($a, $b) {
+        $priorityA = isset($a['cpu_sale_priority']) ? (int) $a['cpu_sale_priority'] : 0;
+        $priorityB = isset($b['cpu_sale_priority']) ? (int) $b['cpu_sale_priority'] : 0;
+        if ($priorityA !== $priorityB) {
+            return ($priorityA > $priorityB) ? -1 : 1;
+        }
+
+        return self::sortWeakestFirst($a, $b);
     }
 
     public static function sortWeakestFirst($a, $b) {
@@ -266,7 +618,8 @@ class ComputerFormationTransferStrategyDataService {
     }
 
     private static function placeFormationNeedOffers(WebSoccer $websoccer, DbConnection $db, $teamId, $squad, $targets) {
-        $counts = self::countPositions($squad);
+        $analysis = self::analyseSquadForFormation($squad, $targets, true);
+        $counts = $analysis['counts'];
         $needs = array();
         foreach ($targets as $position => $target) {
             $current = isset($counts[$position]) ? (int) $counts[$position] : 0;
@@ -288,8 +641,19 @@ class ComputerFormationTransferStrategyDataService {
 
         $budget = self::getTeamBudget($websoccer, $db, $teamId);
         $teamStrength = self::calculateAverageStrength($squad);
-        $positionSql = array();
+        $broadPositions = array();
         foreach (array_keys($needs) as $position) {
+            $area = self::getPositionArea($position);
+            if (strlen($area) && !in_array($area, $broadPositions, true)) {
+                $broadPositions[] = $area;
+            }
+        }
+        if (!count($broadPositions)) {
+            return;
+        }
+
+        $positionSql = array();
+        foreach ($broadPositions as $position) {
             $positionSql[] = "'". str_replace("'", "''", $position) ."'";
         }
 
@@ -302,29 +666,34 @@ class ComputerFormationTransferStrategyDataService {
                     AND P.transfer_blocked_until <= '". (int) $websoccer->getNowAsTimestamp() ."'
                     AND P.position IN (". implode(',', $positionSql) .")
                   ORDER BY RAND()
-                  LIMIT 120";
+                  LIMIT 200";
         $result = $db->executeQuery($query);
         $candidates = array();
         while ($player = $result->fetch_assoc()) {
+            $match = self::getPlayerNeedMatch($player, $needs);
+            if ($match === null) {
+                continue;
+            }
+            $player['cpu_formation_need_position'] = $match['position'];
+            $player['cpu_formation_fit'] = $match['fit'];
+            $player['cpu_formation_need'] = $needs[$match['position']];
             $candidates[] = $player;
         }
         $result->free();
 
-        usort($candidates, function($a, $b) use ($needs) {
-            $needA = isset($needs[$a['position']]) ? (int) $needs[$a['position']] : 0;
-            $needB = isset($needs[$b['position']]) ? (int) $needs[$b['position']] : 0;
-            if ($needA == $needB) {
-                return 0;
-            }
-            return ($needA > $needB) ? -1 : 1;
-        });
+        usort($candidates, array('ComputerFormationTransferStrategyDataService', 'sortFormationOfferCandidates'));
 
         foreach ($candidates as $player) {
             if ($currentOffers >= $maxOffersPerTeam) {
                 break;
             }
-            $position = $player['position'];
-            if (!isset($needs[$position]) || $needs[$position] <= 0) {
+
+            $match = self::getPlayerNeedMatch($player, $needs);
+            if ($match === null) {
+                continue;
+            }
+            $neededPosition = $match['position'];
+            if (!isset($needs[$neededPosition]) || $needs[$neededPosition] <= 0) {
                 continue;
             }
             if (self::hasTeamOffer($websoccer, $db, $teamId, $player['id'])) {
@@ -347,8 +716,50 @@ class ComputerFormationTransferStrategyDataService {
             self::insertOffer($websoccer, $db, $teamId, $player, $bid);
             $budget -= $bid;
             $currentOffers++;
-            $needs[$position]--;
+            $needs[$neededPosition]--;
         }
+    }
+
+    private static function getPlayerNeedMatch($player, $needs) {
+        if (!count($needs)) {
+            return null;
+        }
+
+        $main = isset($player['position_main']) ? trim($player['position_main']) : '';
+        if (strlen($main) && isset($needs[$main]) && $needs[$main] > 0) {
+            return array('position' => $main, 'fit' => 0);
+        }
+
+        $second = isset($player['position_second']) ? trim($player['position_second']) : '';
+        if (strlen($second) && isset($needs[$second]) && $needs[$second] > 0) {
+            return array('position' => $second, 'fit' => 1);
+        }
+
+        if (!strlen($main)) {
+            foreach (self::getGenericPositions(isset($player['position']) ? $player['position'] : '') as $position) {
+                if (isset($needs[$position]) && $needs[$position] > 0) {
+                    return array('position' => $position, 'fit' => 2);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static function sortFormationOfferCandidates($a, $b) {
+        $fitA = isset($a['cpu_formation_fit']) ? (int) $a['cpu_formation_fit'] : 99;
+        $fitB = isset($b['cpu_formation_fit']) ? (int) $b['cpu_formation_fit'] : 99;
+        if ($fitA !== $fitB) {
+            return ($fitA < $fitB) ? -1 : 1;
+        }
+
+        $needA = isset($a['cpu_formation_need']) ? (int) $a['cpu_formation_need'] : 0;
+        $needB = isset($b['cpu_formation_need']) ? (int) $b['cpu_formation_need'] : 0;
+        if ($needA !== $needB) {
+            return ($needA > $needB) ? -1 : 1;
+        }
+
+        return 0;
     }
 
     private static function calculateBid($player) {
@@ -449,6 +860,18 @@ class ComputerFormationTransferStrategyDataService {
         $team = $result->fetch_assoc();
         $result->free();
         return isset($team['finanz_budget']) ? ((float) $team['finanz_budget'] * 100) : 0;
+    }
+
+    private static function getTransferMarketPlayerCount(WebSoccer $websoccer, DbConnection $db) {
+        $query = "SELECT COUNT(*) AS players
+                  FROM ". $websoccer->getConfig('db_prefix') ."_spieler
+                  WHERE status = '1'
+                    AND transfermarkt = '1'";
+        $result = $db->executeQuery($query);
+        $row = $result->fetch_assoc();
+        $result->free();
+
+        return isset($row['players']) ? (int) $row['players'] : 0;
     }
 
     private static function calculateAverageStrength($squad) {

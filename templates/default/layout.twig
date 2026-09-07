@@ -1,19 +1,19 @@
-{# CM23 Task 1003/1022 | 2026-09-07 | Revision 2 #}
+{# CM23 Task 1003/1022 | 2026-09-07 | Revision 3 #}
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>{% block browser_title %}{{ block("page_title") }} - {{ env.getConfig("projectname") }}{% endblock %}</title>
-		
+
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
+
 		{% if env.getRequestParameter("id") != null %}
 			{% set url = env.getInternalUrl(null, "id=" ~ env.getRequestParameter("id"), TRUE) %}
 		{% else %}
 			{% set url = env.getInternalUrl(null, null, TRUE) %}
 		{% endif %}
 		<link rel="canonical" href="{{ url }}"/>
-		
+
 		{% for cssSource in skin.getCssSources() %}
 		<link href="{{ cssSource }}" media="all" rel="stylesheet" type="text/css" />
 		{% endfor %}
@@ -22,42 +22,42 @@
 			<link href="{{ env.getConfig("context_root") }}/css/{{ cssSource }}" media="all" rel="stylesheet" type="text/css" />
 			{% endfor %}
 		{% endif %}
-		
+
 		<link rel="shortcut icon" type="image/x-icon" href="{{ env.getConfig("context_root") }}/favicon.ico" />
-		
+
 		{% if env.getConfig("facebook_appid") %}
 		<meta property="fb:app_id" content="{{ env.getConfig("facebook_appid") }}"/>
 		{% endif %}
 		{{ env.getConfig("head_code")|raw }}
 	</head>
 	<body>
-	
+
 		{% block navigation %}
 		{% include 'navigationbar.twig' %}
 		{% endblock %}
-	
+
 		<div class="container">	
-		
+
 			{% block page_header %}
 			{% endblock %}
-		
+
 			{% block page_columns %}
 			<div class="row">
 				<div class="span8" id="contentArea">
 					<div class="box">
-					
+
 						{% include 'breadcrumb.twig' %}
-					
+
 						<div class="page-header">
 						<h1>{{ block("page_title") }}</h1>
 						</div>
-						
+
 						<div id="messages">
 						{% block messages_block %}
 						{{ viewHandler.renderBlock("messagesblock")|raw }}
 						{% endblock %}
 						</div>
-						
+
 						<div id="pagecontent">
 						{% if blocks.content_top is defined %}
 							{% for uiBlock in blocks.content_top %}
@@ -66,8 +66,8 @@
 								</div>
 							{% endfor %}
 						{% endif %}
-				
-						
+
+
 						{{ block("page_content") }}
 
 						{% if marketValueHistory is defined and marketValueHistory|length > 0 %}
@@ -75,8 +75,13 @@
 							data-currency="{{ env.getConfig("game_currency") }}"
 							data-series="[{% for point in marketValueHistory %}{% if loop.index > 1 %}, {% endif %}[{{ loop.index }}, {{ point.value }}]{% endfor %}]"
 							data-labels="[{% for point in marketValueHistory %}{% if loop.index > 1 %}, {% endif %}'{{ point.date }}'{% endfor %}]"></div>
+						{% elseif player is defined and player.player_marketvalue is defined %}
+						<div id="marketvalueHistorySource" style="display:none"
+							data-currency="{{ env.getConfig("game_currency") }}"
+							data-series="[[1, {{ player.player_marketvalue }}]]"
+							data-labels="['aktuell']"></div>
 						{% endif %}
-						
+
 						{% if blocks.content_bottom is defined %}
 							{% for uiBlock in blocks.content_bottom %}
 								<div id="{{ uiBlock.id }}_block">
@@ -85,11 +90,11 @@
 							{% endfor %}
 						{% endif %}
 						</div>
-					
+
 					</div>
 				</div>
 				<div class="span4">
-				
+
 					{% if blocks.sidebar is defined %}
 						{% for uiBlock in blocks.sidebar %}
 							<div id="{{ uiBlock.id }}_block">
@@ -100,7 +105,7 @@
 				</div>
 			</div>
 			{% endblock %}
-			
+
 			<hr/>
 			<footer>
 	        	<p><a href="{{ env.getInternalUrl("termsandconditions") }}">{{ i18n.getMessage("termsandconditions_navlabel") }}</a> 
@@ -110,9 +115,9 @@
 	        	| <i class="icon-time"></i> {{ env.getFormattedDatetime(null) }}
 	        	</p>
 			</footer>
-			
+
 		</div>
-		
+
 		<div id="ajaxLoaderPage"></div>
 
 		<div id="watchlistActionModal"
@@ -144,7 +149,7 @@
 				<button type="button" class="btn btn-primary" id="watchlistActionConfirm"></button>
 			</div>
 		</div>
-		
+
 		{% for jsSource in skin.getJavaScriptSources() %}
 		<script src="{{ jsSource }}" ></script>
 		{% endfor %}
@@ -154,7 +159,7 @@
 			<script src="{{ env.getConfig("context_root") }}/js/{{ jsSource }}" ></script>
 			{% endfor %}
 		{% endif %}
-		
+
 		<!--[if lt IE 9]>
 		<script src="js/extcanvas/excanvas.compiled.js"></script>
 		<![endif]-->

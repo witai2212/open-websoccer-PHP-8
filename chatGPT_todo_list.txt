@@ -1,10 +1,12 @@
 # CM23 Task List | 2026-09-07 | Revision 18
 Open Tasks:
-Task 1024: Bewerbung
-- Wenn man auf den Bewerben button unter Managerkarriere klickt, dann spring man automatisch zurpck auf Managerkarriere. Ma sollte aber auf der Seite "mc-applications" bleiben.
-
+Task 1025: Titel:
+- auf seite: ?page=team&id=64#halloffame gibt eines anzahl titel. wenn die >0 ist dann sollte dort ein link sein zu einer separaten seite, die die titel sammlung zeige. welche totel in welche saison gewonnen wurden. hübsch dargestellt. nicht nur eine list
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+
+Task 1024: Bewerbung
+- Wenn man auf den Bewerben button unter Managerkarriere klickt, dann spring man automatisch zurpck auf Managerkarriere. Ma sollte aber auf der Seite "mc-applications" bleiben.
 
 Task 1022: Entwicklung Spieler Markwert
 - auf der seite: ?page=player&id=25564#statistic soll man die jährliche entwicklung des marktwerts der spieler sehen können. in einer Grafik, wie z.B. die Noten

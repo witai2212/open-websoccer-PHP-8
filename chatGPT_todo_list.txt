@@ -1,4 +1,4 @@
-# CM23 Task List | 2026-09-06 | Revision 16
+# CM23 Task List | 2026-09-07 | Revision 17
 Open Tasks:
 Task 1023: Kaderansicht
 in task 1012: Kaderansicht haben wir die zusätzlichen spieler werte und attribute eingebracht. können wir diese jetzt genaus o farbig gestalten wir die ursprünglichen?
@@ -6,11 +6,13 @@ in task 1012: Kaderansicht haben wir die zusätzlichen spieler werte und attribu
 Task 1022: Entwicklung Spieler Markwert
 - auf der seite: ?page=player&id=25564#statistic soll man die jährliche entwicklung des marktwerts der spieler sehen können. in einer Grafik, wie z.B. die Noten
 
-Task 1021: angebote ablösefreie spieler
-- wenn user ein angebot für einen spieler abgibt. Also ein Angebot in tabelle "_player_precontract" abgespeichert ist, dann sollen diese Angebote in einem separaten Reiter auf der Seite "?page=transfermarket#offers" zu sehe sein.
-
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+Task 1021: angebote ablösefreie spieler
+- Vorvertragsangebote aus _player_precontract werden unter ?page=transfermarket#offers in einem eigenen Reiter angezeigt.
+- Angezeigt werden Spieler, Position, aktueller Verein, Vertragsangebot, Prüfungsfortschritt und Status.
+- Es werden die Vorvertragsangebote des aktuell angemeldeten Vereins geladen; eine Datenbankänderung ist nicht erforderlich.
+
 Task 1020: stadionumfeld
 - Fehlerursache: Die in Task 1018 bekannte Selbstreferenz eines Gebäudes konnte auf Instanzen ohne ausgeführtes Einmal-SQL weiterhin die Voraussetzungskette blockieren.
 - Selbstreferenzen werden in Anzeige und Bauauftrag jetzt defensiv wie „keine Voraussetzung“ behandelt.

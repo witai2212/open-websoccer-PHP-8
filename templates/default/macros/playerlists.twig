@@ -1,5 +1,5 @@
 
-{# CM23 Task 1012 | 2026-08-26 | Revision 2 #}
+{# CM23 Task 1023 | 2026-09-07 | Revision 3 #}
 {% macro teamlistItem(player, showPersonality, showTraits, showTalent) %}
 	{% import _self as playerlists %}
 	{% set detailColumnCount = 4 %}
@@ -57,19 +57,19 @@
 			<tr class="player-attribute-details">
 				<td colspan="{{ detailColumnCount }}" style="padding-top: 3px; padding-bottom: 7px;">
 					<div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 10px; font-size: 11px; line-height: 18px; text-align: right;">
-						<span title="{{ i18n.getMessage('entity_player_w_passing') }}"><strong>{{ i18n.getMessage('entity_player_w_passing_abbrev') }}</strong> {{ player.strength_passing }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_shooting') }}"><strong>{{ i18n.getMessage('entity_player_w_shooting_abbrev') }}</strong> {{ player.strength_shooting }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_heading') }}"><strong>{{ i18n.getMessage('entity_player_w_heading_abbrev') }}</strong> {{ player.strength_heading }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_tackling') }}"><strong>{{ i18n.getMessage('entity_player_w_tackling_abbrev') }}</strong> {{ player.strength_tackling }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_freekick') }}"><strong>{{ i18n.getMessage('entity_player_w_freekick_abbrev') }}</strong> {{ player.strength_freekick }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_pace') }}"><strong>{{ i18n.getMessage('entity_player_w_pace_abbrev') }}</strong> {{ player.strength_pace }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_creativity') }}"><strong>{{ i18n.getMessage('entity_player_w_creativity_abbrev') }}</strong> {{ player.strength_creativity }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_influence') }}"><strong>{{ i18n.getMessage('entity_player_w_influence_abbrev') }}</strong> {{ player.strength_influence }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_flair') }}"><strong>{{ i18n.getMessage('entity_player_w_flair_abbrev') }}</strong> {{ player.strength_flair }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_penalty') }}"><strong>{{ i18n.getMessage('entity_player_w_penalty_abbrev') }}</strong> {{ player.strength_penalty }}</span>
-						<span title="{{ i18n.getMessage('entity_player_w_penalty_killing') }}"><strong>{{ i18n.getMessage('entity_player_w_penalty_killing_abbrev') }}</strong> {{ player.strength_penalty_killing }}</span>
+						<span {{ playerlists.strengthClass(player.strength_passing) }} title="{{ i18n.getMessage('entity_player_w_passing') }}"><strong>{{ i18n.getMessage('entity_player_w_passing_abbrev') }}</strong> {{ player.strength_passing }}</span>
+						<span {{ playerlists.strengthClass(player.strength_shooting) }} title="{{ i18n.getMessage('entity_player_w_shooting') }}"><strong>{{ i18n.getMessage('entity_player_w_shooting_abbrev') }}</strong> {{ player.strength_shooting }}</span>
+						<span {{ playerlists.strengthClass(player.strength_heading) }} title="{{ i18n.getMessage('entity_player_w_heading') }}"><strong>{{ i18n.getMessage('entity_player_w_heading_abbrev') }}</strong> {{ player.strength_heading }}</span>
+						<span {{ playerlists.strengthClass(player.strength_tackling) }} title="{{ i18n.getMessage('entity_player_w_tackling') }}"><strong>{{ i18n.getMessage('entity_player_w_tackling_abbrev') }}</strong> {{ player.strength_tackling }}</span>
+						<span {{ playerlists.strengthClass(player.strength_freekick) }} title="{{ i18n.getMessage('entity_player_w_freekick') }}"><strong>{{ i18n.getMessage('entity_player_w_freekick_abbrev') }}</strong> {{ player.strength_freekick }}</span>
+						<span {{ playerlists.strengthClass(player.strength_pace) }} title="{{ i18n.getMessage('entity_player_w_pace') }}"><strong>{{ i18n.getMessage('entity_player_w_pace_abbrev') }}</strong> {{ player.strength_pace }}</span>
+						<span {{ playerlists.strengthClass(player.strength_creativity) }} title="{{ i18n.getMessage('entity_player_w_creativity') }}"><strong>{{ i18n.getMessage('entity_player_w_creativity_abbrev') }}</strong> {{ player.strength_creativity }}</span>
+						<span {{ playerlists.strengthClass(player.strength_influence) }} title="{{ i18n.getMessage('entity_player_w_influence') }}"><strong>{{ i18n.getMessage('entity_player_w_influence_abbrev') }}</strong> {{ player.strength_influence }}</span>
+						<span {{ playerlists.strengthClass(player.strength_flair) }} title="{{ i18n.getMessage('entity_player_w_flair') }}"><strong>{{ i18n.getMessage('entity_player_w_flair_abbrev') }}</strong> {{ player.strength_flair }}</span>
+						<span {{ playerlists.strengthClass(player.strength_penalty) }} title="{{ i18n.getMessage('entity_player_w_penalty') }}"><strong>{{ i18n.getMessage('entity_player_w_penalty_abbrev') }}</strong> {{ player.strength_penalty }}</span>
+						<span {{ playerlists.strengthClass(player.strength_penalty_killing) }} title="{{ i18n.getMessage('entity_player_w_penalty_killing') }}"><strong>{{ i18n.getMessage('entity_player_w_penalty_killing_abbrev') }}</strong> {{ player.strength_penalty_killing }}</span>
 						{% if showTalent %}
-							<span title="{{ i18n.getMessage('entity_player_w_talent') }}"><strong>{{ i18n.getMessage('entity_player_w_talent') }}</strong> {{ player.strength_talent }}</span>
+							<span {{ playerlists.strengthClass(player.strength_talent) }} title="{{ i18n.getMessage('entity_player_w_talent') }}"><strong>{{ i18n.getMessage('entity_player_w_talent') }}</strong> {{ player.strength_talent }}</span>
 						{% endif %}
 					</div>
 				</td>

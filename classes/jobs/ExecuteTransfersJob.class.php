@@ -18,10 +18,13 @@
   License along with OpenWebSoccer-Sim.  
   If not, see <http://www.gnu.org/licenses/>.
 
+  CM23 Task 1027 | 08.09.2026 | Revision 1
+
 ******************************************************/
 
 /**
  * Process open transfers.
+ * Accepted precontracts are executed as soon as the current contract reaches zero.
  * 
  * @author Ingo Hofmann
  */
@@ -32,7 +35,8 @@ class ExecuteTransfersJob extends AbstractJob {
 	 */
 	function execute() {
 		TransfermarketDataService::executeOpenTransfers($this->_websoccer, $this->_db);
-        PlayerPrecontractDataService::processOpenOffers($this->_websoccer, $this->_db);
+		PlayerPrecontractDataService::processOpenOffers($this->_websoccer, $this->_db);
+		PlayerPrecontractDataService::executeAcceptedTransfers($this->_websoccer, $this->_db);
 		ComputerTransfersDataService::executeComputerBids($this->_websoccer, $this->_db);
 	}
 }

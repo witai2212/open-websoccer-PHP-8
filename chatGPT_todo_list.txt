@@ -4,6 +4,30 @@ Open Tasks:
 - ausserdem sollte man vorab ein backup der db erstellen können, was man bei einem fehlerhaften durchlauf wieder zurücksetzen kann.
 - ausserdem zu jeder aktivität ein logging damit man nachvollziehen kann, wo ein fehler aufgetreten ist
 
+Der Saisonwechsel darf nicht mehr komplett „blind“ in einem einzigen Durchlauf ausgeführt werden.
+Die einzelnen Saisonwechsel-Schritte werden nacheinander ausgeführt.
+Nach jedem Schritt gibt es einen klaren Status, z. B. ✓ erledigt / Fehler / noch offen.
+Vor dem nächsten relevanten bzw. destruktiven Schritt erfolgt eine Bestätigung.
+Vor Beginn des Saisonwechsels wird ein Datenbank-Backup erstellt.
+Das Backup muss eindeutig nachvollziehbar sein, z. B. mit Zeitpunkt/ID.
+Es muss eine Möglichkeit geben, dieses Backup bei Bedarf wiederherzustellen.
+Der gesamte Ablauf wird protokolliert: Schritt, Zeitpunkt, Ergebnis und ggf. Fehlermeldung.
+Bei einem Fehler stoppt der Prozess sauber; bereits erledigte Schritte bleiben nachvollziehbar.
+Die bisherige fachliche Funktion des Saisonwechsels bleibt grundsätzlich erhalten.
+
+Zusätzlich für den letzten Schritt „Liga-Spieltage erstellen“:
+
+Es dürfen maximal 5 Ligen pro PHP-Request verarbeitet werden.
+Danach wird der Lauf beendet und der aktuelle Fortschritt gespeichert.
+Anzeige z. B. „10 von 37 Ligen verarbeitet“.
+Mit „Weiter“ werden die nächsten maximal 5 Ligen erzeugt.
+Bereits abgearbeitete Ligen werden nicht erneut verarbeitet.
+Das wird wiederholt, bis alle Ligen abgeschlossen sind.
+Erst danach gilt der Schritt „Liga-Spieltage erstellen“ als vollständig erledigt.
+
+Nicht Bestandteil von Task 1026:
+Das Pre-Contract-Thema wird komplett ignoriert und in diesem Task weder geprüft noch geändert.
+
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
 Task 1025: Titel:

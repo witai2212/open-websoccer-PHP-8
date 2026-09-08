@@ -1,13 +1,13 @@
 # CM23 Task List | 2026-09-07 | Revision 18
 Open Tasks:
+Task 1025: Titel:
+- auf seite: ?page=team&id=64#halloffame gibt eines anzahl titel. die Liste der Titel sollte etwas repräsentanter sein. Immerhin handelt es sich hier um die großen Erfolge des Vereins.
+
+_____________________________________________________________________________________________________________________________________________________
+Finalised taskes:
 Task 1026: Neue saison: - Pokale + Liagspiele
 - beim neu Generieren neuer Saisons uns spielpläne gibt es 6 schritte. schritte 4-6 funktionieren nicht. es gibt folgende Meldung "Fehler. Es gibt noch 84 offene Saison(en). Neue Saisons, Pokale und Spielpläne dürfen erst nach dem vollständigen Saisonabschluss erzeugt werden". das muss korrigiert werden.
 - precontract angebote müssen dort ausgewertet werden + die wechsel oder nicht.
-
-Task 1025: Titel:
-- auf seite: ?page=team&id=64#halloffame gibt eines anzahl titel. wenn die >0 ist dann sollte dort ein link sein zu einer separaten seite, die die titel sammlung zeige. welche totel in welche saison gewonnen wurden. hübsch dargestellt. nicht nur eine list
-_____________________________________________________________________________________________________________________________________________________
-Finalised taskes:
 
 Task 1024: Bewerbung
 - Wenn man auf den Bewerben button unter Managerkarriere klickt, dann spring man automatisch zurpck auf Managerkarriere. Ma sollte aber auf der Seite "mc-applications" bleiben.

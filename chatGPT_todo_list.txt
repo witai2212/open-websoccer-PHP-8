@@ -1,6 +1,12 @@
 # CM23 Task List | 2026-09-07 | Revision 18
 Open Tasks:
-- reopen 1026: "Aller Schritte ausführen sollte trotzdem 1 Schritt nach dem anderen erfolgen + User soll bestätigen.
+task 1027: pre-contrac
+- prüfen on vertrag_spiele trotzdem reduziert wird, obwohl spieler ein pre-contract angebot hat
+- wenn spiele pro spiel reduziert werden, bei 0, pre-contract auswertung und anschl. wecsel. 
+- das statt am ende der saison, als job und nach jedem spieltag abfrage. 
+- oder gegenvorschlag.
+
+task 1026 reopen: "Aller Schritte ausführen sollte trotzdem 1 Schritt nach dem anderen erfolgen + User soll bestätigen.
 - ausserdem sollte man vorab ein backup der db erstellen können, was man bei einem fehlerhaften durchlauf wieder zurücksetzen kann.
 - ausserdem zu jeder aktivität ein logging damit man nachvollziehen kann, wo ein fehler aufgetreten ist
 

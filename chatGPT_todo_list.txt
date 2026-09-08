@@ -1,6 +1,6 @@
 # CM23 Task List | 2026-09-08 | Revision 19
 Open Tasks:
-task 1027: pre-contrac
+task 1027: pre-contract
 - prüfen on vertrag_spiele trotzdem reduziert wird, obwohl spieler ein pre-contract angebot hat
 - wenn spiele pro spiel reduziert werden, bei 0, pre-contract auswertung und anschl. wecsel. 
 - das statt am ende der saison, als job und nach jedem spieltag abfrage. 

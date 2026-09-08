@@ -1,10 +1,14 @@
 # CM23 Task List | 2026-09-07 | Revision 18
 Open Tasks:
-Task 1025: Titel:
-- auf seite: ?page=team&id=64#halloffame gibt eines anzahl titel. die Liste der Titel sollte etwas repräsentanter sein. Immerhin handelt es sich hier um die großen Erfolge des Vereins.
+- reopen 1026: "Aller Schritte ausführen sollte trotzdem 1 Schritt nach dem anderen erfolgen + User soll bestätigen.
+- ausserdem sollte man vorab ein backup der db erstellen können, was man bei einem fehlerhaften durchlauf wieder zurücksetzen kann.
+- ausserdem zu jeder aktivität ein logging damit man nachvollziehen kann, wo ein fehler aufgetreten ist
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+Task 1025: Titel:
+- auf seite: ?page=team&id=64#halloffame gibt eines anzahl titel. die Liste der Titel sollte etwas repräsentanter sein. Immerhin handelt es sich hier um die großen Erfolge des Vereins.
+
 Task 1026: Neue saison: - Pokale + Liagspiele
 - beim neu Generieren neuer Saisons uns spielpläne gibt es 6 schritte. schritte 4-6 funktionieren nicht. es gibt folgende Meldung "Fehler. Es gibt noch 84 offene Saison(en). Neue Saisons, Pokale und Spielpläne dürfen erst nach dem vollständigen Saisonabschluss erzeugt werden". das muss korrigiert werden.
 - precontract angebote müssen dort ausgewertet werden + die wechsel oder nicht.

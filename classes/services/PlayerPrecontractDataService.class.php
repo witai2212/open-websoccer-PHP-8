@@ -1,5 +1,8 @@
 <?php
-/** Vorverträge für ablösefreie Wechsel zum globalen Saisonwechsel. */
+/**
+ * Vorverträge für ablösefreie Wechsel bei Vertragsende.
+ * CM23 Task 1027 | 08.09.2026 | Revision 1
+ */
 class PlayerPrecontractDataService {
     const STATUS_OPEN = 'open';
     const STATUS_ACCEPTED = 'accepted';
@@ -590,7 +593,12 @@ class PlayerPrecontractDataService {
 
     public static function executeAcceptedTransfers(WebSoccer $websoccer, DbConnection $db) {
         $prefix = $websoccer->getConfig('db_prefix');
-        $result = $db->executeQuery("SELECT * FROM {$prefix}_player_precontract WHERE status = 'accepted'");
+        $sql = "SELECT A.*
+                FROM {$prefix}_player_precontract A
+                INNER JOIN {$prefix}_spieler P ON P.id = A.player_id
+                WHERE A.status = 'accepted'
+                  AND P.vertrag_spiele <= 0";
+        $result = $db->executeQuery($sql);
         $count = 0;
 
         while ($agreement = $result->fetch_array()) {

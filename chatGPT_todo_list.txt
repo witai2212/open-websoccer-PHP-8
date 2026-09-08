@@ -1,13 +1,16 @@
-# CM23 Task List | 2026-09-08 | Revision 19
+# CM23 Task List | 2026-09-08 | Revision 20
 Open Tasks:
-task 1027: pre-contract
-- prüfen on vertrag_spiele trotzdem reduziert wird, obwohl spieler ein pre-contract angebot hat
-- wenn spiele pro spiel reduziert werden, bei 0, pre-contract auswertung und anschl. wecsel. 
-- das statt am ende der saison, als job und nach jedem spieltag abfrage. 
-- oder gegenvorschlag.
 
 _____________________________________________________________________________________________________________________________________________________
 Finalised taskes:
+Task 1027: pre-contract
+- `vertrag_spiele` wird bei Pflichtspielen weiterhin unabhängig von vorhandenen Vorvertragsangeboten reduziert und kann bis 0 sinken.
+- `ExecuteTransfersJob` wertet offene Vorverträge aus und prüft anschließend im selben Lauf akzeptierte Vorverträge auf Fälligkeit.
+- Ein akzeptierter Vorvertrag wird erst ausgeführt, wenn der Spieler `vertrag_spiele <= 0` erreicht hat; vorher bleibt die Vereinbarung bestehen.
+- Der vorhandene Saisonwechsel-Aufruf kann dadurch keinen vorzeitigen Vorvertragswechsel mehr auslösen; die reguläre Ausführung ist nicht mehr an den Saisonwechsel gebunden.
+- Gegenangebote des aktuellen Vereins bleiben Bestandteil der bestehenden Vorvertragsauswertung.
+- Keine Datenbankänderung erforderlich.
+
 Task 1026 reopen: kontrollierter Saisonwechsel
 - Der Saisonwechsel wird nicht mehr blind in einem einzigen Request ausgeführt; alle sechs Schritte laufen strikt nacheinander und jeder nächste Schritt muss vom Administrator bestätigt werden.
 - Vor dem ersten Schritt wird automatisch ein eindeutig identifiziertes Datenbank-Backup der CM23-Tabellen erstellt; vorhandene Backups werden im Assistenten angezeigt und können nach separater Bestätigung wiederhergestellt werden.

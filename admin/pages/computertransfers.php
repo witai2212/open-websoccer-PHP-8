@@ -1,4 +1,5 @@
 <?php
+// CM23 | 2026-09-09 | Revision 1 | Run complete formation-driven CPU transfer process
 /******************************************************
 
   This file is part of OpenWebSoccer-Sim.
@@ -82,8 +83,11 @@ elseif ($show == "generate") {
             echo "<li>Durchlauf: ". $i + 1;
             
             try {
-                //TestDataService::executeComputerBids($website, $db);
+                // Keep the individual formation of every CPU team as the basis for
+                // transfer-list decisions and positional demand, also for manual runs.
+                ComputerFormationTransferStrategyDataService::prepareFormationDrivenTransfers($website, $db);
                 ComputerTransfersDataService::executeComputerBids($website, $db);
+                ComputerFormationTransferStrategyDataService::cleanupFormationDrivenTransfers($website, $db);
                 echo " - " . $i18n->getMessage("generator_success") . "</li>";
             } catch (Exception $e) {
                 echo " - " . $i18n->getMessage("generator_error") . ": " . $e->getMessage() . "</li>";

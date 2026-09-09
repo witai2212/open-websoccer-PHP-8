@@ -1,4 +1,5 @@
 <?php
+// CM23 | 2026-09-09 | Revision 1 | CPU transfer offer generation fix
 
 class ComputerTransfersDataService {
 
@@ -113,19 +114,11 @@ class ComputerTransfersDataService {
 
 				    $playerId = $player['id'];
 
-				    $attributes['w_passing'] = $player['w_passing'];
-				    $attributes['shooting'] = $player['shooting'];
-				    $attributes['heading'] = $player['heading'];
-				    $attributes['tackling'] = $player['tackling'];
-				    $attributes['freekick'] = $player['freekick'];
-				    $attributes['pace'] = $player['pace'];
-				    $attributes['creativity'] = $player['creativity'];
-				    $attributes['influence'] = $player['influence'];
-				    $attributes['flair'] = $player['flair'];
-				    $attributes['penalty'] = $player['penalty'];
-				    $attributes['penalty_killing'] = $player['penalty_killing'];
-
-					$playerStrength = PlayersStrengthDataService::calculatePlayerStrength2($websoccer, $db, $playerId);
+					// Compare like with like. The squad average above uses the four current
+					// core values, therefore a market candidate must use the same scale.
+					// calculatePlayerStrength2() additionally multiplies by the remaining
+					// contract duration and made otherwise suitable players appear too weak.
+					$playerStrength = self::calculatePlayerStrengthX($player);
 
 					// Check if player's strength is within the acceptable range
 					if (!self::isStrengthWithinRange($playerStrength, $teamStrength)) continue;

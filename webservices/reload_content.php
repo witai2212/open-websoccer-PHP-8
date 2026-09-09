@@ -9,7 +9,7 @@ if (!defined('JOBS_CONFIG_FILE')) {
     define('JOBS_CONFIG_FILE', BASE_FOLDER . '/admin/config/jobs.xml');
 }
 
-if($conf["offline"]=="online") {
+if($conf["offline"]=="online" && $conf["auto_simulation"]=="on") {
 
     $sec = 5000;
     $session_id = isset($_GET['session']) && !empty($_GET['session']) ? $_GET['session'] : null;
